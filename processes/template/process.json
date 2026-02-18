@@ -1,0 +1,72 @@
+{
+  "process_id": "process-template",
+  "version": "0.1.0",
+  "objective_ref": "obj-template",
+  "owner": "bpm",
+  "priority": "P1",
+  "input_contract": {
+    "format": "json",
+    "required": ["objective_ref", "input_payload"]
+  },
+  "output_contract": {
+    "format": "json",
+    "required": ["final_output", "evidence_refs", "verdict"]
+  },
+  "phases": [
+    {
+      "phase_id": "p1",
+      "name": "clarify-objective",
+      "actor": "architect",
+      "skill_or_process": "manual-task",
+      "sipoc": {
+        "supplier": "initiator",
+        "input": "input_payload",
+        "process": "clarify objective and constraints",
+        "output": "normalized_requirement",
+        "client": "p2"
+      },
+      "acceptance_criteria": "objective and constraints are explicit"
+    },
+    {
+      "phase_id": "p2",
+      "name": "execute-main",
+      "actor": "kernel-dev",
+      "skill_or_process": "manual-task",
+      "sipoc": {
+        "supplier": "p1",
+        "input": "normalized_requirement",
+        "process": "execute implementation workflow",
+        "output": "deliverable",
+        "client": "p3"
+      },
+      "acceptance_criteria": "deliverable is produced"
+    },
+    {
+      "phase_id": "p3",
+      "name": "verify-objective",
+      "actor": "qa",
+      "skill_or_process": "llm-judging",
+      "sipoc": {
+        "supplier": "p2",
+        "input": "deliverable",
+        "process": "objective-aligned verification",
+        "output": "verdict_and_feedback",
+        "client": "initiator"
+      },
+      "acceptance_criteria": "verdict and improvement actions are generated"
+    }
+  ],
+  "control": {
+    "mode": "sequence",
+    "retries": {
+      "max_attempts": 2
+    }
+  },
+  "failure_policy": {
+    "mode": "fail_closed",
+    "escalation_chain": ["actor", "owner", "bpm", "admin"]
+  },
+  "evidence_policy": {
+    "required_fields": ["timestamp", "phase_id", "actor", "input_ref", "output_ref", "decision"]
+  }
+}
