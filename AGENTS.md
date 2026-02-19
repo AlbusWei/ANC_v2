@@ -34,8 +34,8 @@ ANC v2 是一个可反身自开发、可自进化的 Agentic 系统。
 
 ## 5. OpenClaw 操作基线
 
-1. 配置读取：`openclaw config get --json`
-2. 配置补丁：`openclaw gateway call config.patch '{...}'`
+1. 配置读取：`openclaw config get agents.list --json`
+2. 配置补丁：`openclaw gateway call config.patch --params '{\"raw\":\"...\",\"baseHash\":\"...\"}' --json`
 3. 网关健康检查：`openclaw health --json`
 4. 会话检查：`openclaw sessions --json`
 5. 代理执行：`openclaw agent --message \"...\"`

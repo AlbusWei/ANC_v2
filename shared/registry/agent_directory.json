@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "registry": "agent_directory",
-  "updated_at": "2026-02-18T00:00:00Z",
+  "updated_at": "2026-02-18T04:20:00Z",
   "entry_contract": {
     "required": [
       "agent_id",
@@ -25,5 +25,66 @@
       "retired"
     ]
   },
-  "entries": []
+  "entries": [
+    {
+      "agent_id": "admin",
+      "layer": "kernel",
+      "path": "/Users/albus/MyProjects/ANC_v2/agents/kernel/admin",
+      "default_model": "rightcode/gpt-5.3-codex",
+      "owner": "human",
+      "status": "draft",
+      "permissions": "system-root",
+      "bindings": []
+    },
+    {
+      "agent_id": "architect",
+      "layer": "kernel",
+      "path": "/Users/albus/MyProjects/ANC_v2/agents/kernel/architect",
+      "default_model": "rightcode/gpt-5.3-codex",
+      "owner": "admin",
+      "status": "draft",
+      "permissions": "architecture-governance",
+      "bindings": []
+    },
+    {
+      "agent_id": "hr",
+      "layer": "kernel",
+      "path": "/Users/albus/MyProjects/ANC_v2/agents/kernel/hr",
+      "default_model": "rightcode/gpt-5.3-codex",
+      "owner": "admin",
+      "status": "draft",
+      "permissions": "lifecycle-governance",
+      "bindings": []
+    },
+    {
+      "agent_id": "kernel-dev",
+      "layer": "kernel",
+      "path": "/Users/albus/MyProjects/ANC_v2/agents/kernel/kernel-dev",
+      "default_model": "rightcode/gpt-5.3-codex",
+      "owner": "architect",
+      "status": "draft",
+      "permissions": "implementation-kernel",
+      "bindings": []
+    },
+    {
+      "agent_id": "bpm",
+      "layer": "control",
+      "path": "/Users/albus/MyProjects/ANC_v2/agents/control/BPM",
+      "default_model": "rightcode/gpt-5.3-codex",
+      "owner": "admin",
+      "status": "draft",
+      "permissions": "orchestration-control",
+      "bindings": []
+    },
+    {
+      "agent_id": "qa",
+      "layer": "kernel",
+      "path": "/Users/albus/MyProjects/ANC_v2/agents/kernel/qa",
+      "default_model": "rightcode/gpt-5.3-codex",
+      "owner": "admin",
+      "status": "draft",
+      "permissions": "quality-governance",
+      "bindings": []
+    }
+  ]
 }

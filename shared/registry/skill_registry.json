@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "registry": "skill_registry",
-  "updated_at": "2026-02-18T00:00:00Z",
+  "updated_at": "2026-02-18T04:10:00Z",
   "entry_contract": {
     "required": [
       "skill_id",
@@ -29,26 +29,81 @@
   },
   "entries": [
     {
-      "skill_id": "meta.authoring.skill-creator",
-      "name": "skill-creator",
-      "path": "/Users/albus/MyProjects/ANC_v2/skills/skill-creator/SKILL.md",
+      "skill_id": "meta.qa.llm-judge",
+      "name": "llm-judge",
+      "path": "/Users/albus/MyProjects/ANC_v2/skills/meta/llm-judge/SKILL.md",
+      "layer": "meta",
+      "owner": "qa",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "description": "Evaluate outputs against objective/spec and return structured verdict",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "entry_name": "llm-judge",
+        "source": "/Users/albus/MyProjects/ANC_v2/skills/meta/llm-judge",
+        "install_strategy": "lazy"
+      },
+      "tests": {
+        "test_doc": "/Users/albus/MyProjects/ANC_v2/skills/meta/llm-judge/TEST.md",
+        "methodology_ref": "/Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "meta.arch.spec-writer",
+      "name": "spec-writer",
+      "path": "/Users/albus/MyProjects/ANC_v2/skills/meta/spec-writer/SKILL.md",
       "layer": "meta",
       "owner": "architect",
       "version": "0.1.0",
       "status": "draft",
       "agentskills": {
-        "description": "创建或更新技能资产，确保与 Objective->Spec->Test->Development 链路及 OpenClaw/Agent Skills 规范对齐。",
+        "description": "Generate objective-aligned technical spec with enforceable constraints",
         "license": "Apache-2.0",
-        "compatibility": "openclaw>=0.0.0; agentskills>=0.2"
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
       },
       "openclaw": {
-        "entry_name": "skill-creator",
-        "source": "local",
-        "install_strategy": "directory"
+        "entry_name": "spec-writer",
+        "source": "/Users/albus/MyProjects/ANC_v2/skills/meta/spec-writer",
+        "install_strategy": "lazy"
       },
       "tests": {
-        "path": "/Users/albus/MyProjects/ANC_v2/tests/skill-creator/TEST.md",
-        "methodology": "/Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md"
+        "test_doc": "/Users/albus/MyProjects/ANC_v2/skills/meta/spec-writer/TEST.md",
+        "methodology_ref": "/Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "meta.qa.test-designer",
+      "name": "test-designer",
+      "path": "/Users/albus/MyProjects/ANC_v2/skills/meta/test-designer/SKILL.md",
+      "layer": "meta",
+      "owner": "qa",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "description": "Design objective-aligned test cases before implementation",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "entry_name": "test-designer",
+        "source": "/Users/albus/MyProjects/ANC_v2/skills/meta/test-designer",
+        "install_strategy": "lazy"
+      },
+      "tests": {
+        "test_doc": "/Users/albus/MyProjects/ANC_v2/skills/meta/test-designer/TEST.md",
+        "methodology_ref": "/Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md"
       }
     }
   ]

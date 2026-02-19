@@ -1,0 +1,40 @@
+{
+  "agents": {
+    "list": [
+      {
+        "id": "admin",
+        "workspace": "/Users/albus/MyProjects/ANC_v2/agents/kernel/admin"
+      },
+      {
+        "id": "architect",
+        "workspace": "/Users/albus/MyProjects/ANC_v2/agents/kernel/architect"
+      },
+      {
+        "id": "hr",
+        "workspace": "/Users/albus/MyProjects/ANC_v2/agents/kernel/hr"
+      },
+      {
+        "id": "kernel-dev",
+        "workspace": "/Users/albus/MyProjects/ANC_v2/agents/kernel/kernel-dev"
+      },
+      {
+        "id": "bpm",
+        "workspace": "/Users/albus/MyProjects/ANC_v2/agents/control/BPM"
+      },
+      {
+        "id": "qa",
+        "workspace": "/Users/albus/MyProjects/ANC_v2/agents/kernel/qa"
+      }
+    ]
+  },
+  "skills": {
+    "entries": {
+      "anc-v2-meta-skills": {
+        "source": "/Users/albus/MyProjects/ANC_v2/skills/meta"
+      },
+      "anc-v2-meta-processes": {
+        "source": "/Users/albus/MyProjects/ANC_v2/processes/meta"
+      }
+    }
+  }
+}

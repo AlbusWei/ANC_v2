@@ -176,8 +176,8 @@ control:
 1. 网关状态：`openclaw health --json`
 2. 查看会话：`openclaw sessions --json`
 3. 发送执行消息：`openclaw agent --message \"...\"`
-4. 配置读取：`openclaw config get --json`
-5. 配置变更：`openclaw gateway call config.patch '{...}'`
+4. 配置读取：`openclaw config get agents.list --json`
+5. 配置变更：`openclaw gateway call config.patch --params '{\"raw\":\"...\",\"baseHash\":\"...\"}' --json`
 
 ## 7. 栈帧式递归隔离
 

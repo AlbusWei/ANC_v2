@@ -7,9 +7,9 @@
 
 ## 当前阶段
 
-`Phase 0 - 手动自举`
+`Phase 1 - 最小能力建设`
 
-目标：完成架构塑形，建立统一施工平面与最小治理骨架。
+目标：基于已完成的 0.5 骨架，跑通最小可执行能力链（角色 + P0 meta-skill + development-process）。
 
 ## 已完成（Done）
 
@@ -23,22 +23,37 @@
 - [x] OpenClaw 接口契约文档（配置/CLI/技能加载）补齐
 - [x] Registry 契约文档补齐并回填字段级 contract
 - [x] Skill/Process 模板升级为 Agent Skills 规范兼容格式
+- [x] Kernel/Control 最小角色目录落盘（admin/architect/hr/kernel-dev/qa/bpm）
+- [x] P0 meta-skill 草案落盘（llm-judge/spec-writer/test-designer）
+- [x] `development-process` 元流程实例化（SKILL.md + process.json + PROCESS.md）
+- [x] Phase 0.5 dry-run 证据链落盘（含 context/state/evidence/artifacts）
+- [x] OpenClaw Phase 0.5 配置片段落盘（`agents.list` + `skills.entries`）
+
+## Phase 0.5 完成判定
+
+1. 角色基线：`admin/architect/hr/kernel-dev/qa/bpm` 均有目录与最小五件套。`完成`
+2. P0 meta-skill：`llm-judge/spec-writer/test-designer` 均有 `SKILL.md + TEST.md`。`完成`
+3. 元流程：`development-process` 具备 `SKILL.md + process.json + PROCESS.md`。`完成`
+4. 证据链：存在可回放 dry-run 实例目录。`完成`
+5. OpenClaw 咬合：存在 `agents.list + skills.entries` 配置片段。`完成`
 - [x] 模板职责澄清：`TEST.md` 迁移到 `/Users/albus/MyProjects/ANC_v2/tests/template/`，并将说明文档上移到 `skills/`、`processes/`、`tests/` 根目录
 - [x] 首个真实示例资产落盘：`skills/skill-creator`、`processes/development-process` 与对应 `tests/`、registry 条目
 
 ## 进行中（In Progress）
 
-- [ ] 定义 Kernel/Control 最小角色集与职责分配
-- [ ] 确认第一个端到端流程（development-process 最简版）
-- [ ] 根据 OpenClaw 本地配置落地第一版 `skills.entries` 与 `agents.list`
+- [ ] 将 `openclaw.phase05.fragment.json` 合并到本机运行配置并验证 gateway 生效
+- [ ] 用真实 `llm-judge` 调用替换 dry-run 的手工 verdict
+- [ ] 为 `development-process` 增加一轮失败回环样例证据（p4 fail -> p3 retry）
+
+说明：第一项会影响当前本机 OpenClaw 全局配置，执行前需明确是否覆盖现有 ANC v1 运行配置。
 
 ## 下一步（Next）
 
-`Phase 0.5 - 模板与注册表基线`
+`Phase 1 - 最小可运行闭环`
 
-1. 锁定第一批 P0 meta-skill：`llm-judge`, `spec-writer`, `test-designer`。
-2. 定义第一个 meta-process：`development-process` 最简版。
-3. 完成一次端到端 dry-run（手动触发，文档全链路留痕）。
+1. 在 OpenClaw 本地配置中启用 ANC_v2 的 `skills.entries` 与 `agents.list`。
+2. 触发一次真实流程执行（非 dry-run），并保留运行日志证据。
+3. 将流程结果接入测试报告模板，形成 M1 判定依据。
 
 ## 后续（Later）
 
@@ -59,8 +74,9 @@
 
 | 编号 | 里程碑 | 判定标准 | 状态 |
 |---|---|---|---|
-| M0 | 骨架就绪 | SSOT + 支撑文档 + 模板/registry 基线到位 | 进行中 |
-| M1 | 第一次 LLM 评估 | `llm-judge` 可输出 pass/fail + remarks + suggestions | 待开始 |
+| M0 | 骨架就绪 | SSOT + 支撑文档 + 模板/registry 基线到位 | 已完成 |
+| M0.5 | 施工基线 | 角色目录 + P0 meta-skill + development-process + dry-run | 已完成 |
+| M1 | 第一次 LLM 评估 | `llm-judge` 可输出 pass/fail + remarks + suggestions | 进行中 |
 | M2 | 第一次 TDD 闭环 | 一个 Skill 完成 Test 先行 -> 开发 -> 复测通过 | 待开始 |
 | M3 | 第一次流程编排 | BPM 成功调度 3+ Phase 流程 | 待开始 |
 | M4 | 第一次自开发 | 系统用 development-process 开发并上线新 Skill | 待开始 |
@@ -82,6 +98,7 @@
 | Q-001 | OpenClaw session 是否足够支撑严格实例隔离？ | Phase 1 | Albus |
 | Q-002 | LLM Judge 多轮评估并发策略如何控成本？ | Phase 1 | Albus |
 | Q-003 | 元层自修改审批阈值如何量化？ | Phase 4 | TBD |
+| Q-004 | 现有 `processes/development-process` 与 `processes/meta/development-process` 的归一化策略 | Phase 1 | architect |
 
 ## 风险与应对
 
