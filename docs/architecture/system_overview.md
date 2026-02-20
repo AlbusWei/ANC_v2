@@ -1,7 +1,7 @@
 # ANC v2 系统架构总览（SSOT）
 
-最后更新：2026-02-18  
-版本：2.0.1-alpha
+最后更新：2026-02-19
+版本：2.0.2-alpha
 
 > 本文档是 ANC v2 的架构唯一信源（SSOT）。
 > 任何架构级变更必须先修改本文件，再修改实现与资产。
@@ -86,9 +86,9 @@ L0 Infrastructure Layer
 各层职责：
 
 1. L0：OpenClaw runtime、CLI、session、文件系统、模型接口。
-2. L1：Skill/Agent/Process 定义与模板资产。
-3. L2：BPM、Registry、权限治理、生命周期治理。
-4. L3：需求 -> Spec -> Test -> Dev -> Verify -> Release 的开发闭环。
+2. L1：Skill/Agent/Process 定义与模板资产；测试执行底座（Scenario Runner）位于该层。
+3. L2：BPM、Registry、权限治理、生命周期治理；Scenario 原始结果必须经 ANC 契约归一化后才能门禁流转。
+4. L3：需求 -> Spec -> Test -> Dev -> Verify -> Release 的开发闭环；Verify 阶段默认使用 Scenario 执行 + ANC 裁决。
 5. L4：监控 -> 分析 -> 规划 -> 触发开发的运营闭环。
 6. L5：业务交付与外部价值实现。
 
@@ -98,7 +98,7 @@ L0 Infrastructure Layer
 
 | 模块 | 职责 | 当前优先级 |
 |---|---|---|
-| M1 测试体系 | 目标达成判定、报告与改进建议生成 | P0 |
+| M1 测试体系 | 目标达成判定、Scenario 执行、报告与改进建议生成 | P0 |
 | M2 BPM 引擎 | 流程编排、实例治理、督办恢复 | P0 |
 | M3 反身自开发 | 系统开发系统的流程与能力 | P1 |
 | M4 生命周期管理 | 注册表、版本、健康度与上下架治理 | P1 |
@@ -121,6 +121,20 @@ BPM 是 Control 层专职 Agent，不是业务 Agent。
 4. 维护证据链与归档。
 5. 处理超时、死锁、重试、升级和终止。
 6. 在流程间传递文档化上下文摘要。
+
+### 8.1 测试执行底座（Scenario）集成规则
+
+Scenario 在 ANC 中定位为“执行底座”，而非“治理中枢”。
+
+1. Scenario 负责仿真执行、会话采样与原始评估结果产出。
+2. `llm-judge` 负责将 Scenario 结果归一化为 ANC 标准 verdict：
+   1. `pass`
+   2. `confidence`
+   3. `remarks`
+   4. `suggestions`
+3. BPM 仅消费 ANC 标准 verdict，拒绝直接消费 Scenario 原始结果。
+4. 证据最小集合必须落盘并可追溯：`transcript`、`raw_result`、`normalized_verdict`、`fail_closed_guard_log`。
+5. 外部可视化平台不可作为门禁依赖；即使上报失败，门禁流程仍需在本地证据链完成裁决。
 
 ## 9. 元层自修改门禁（Gated Self-Modification）
 
@@ -184,7 +198,7 @@ BPM 是 Control 层专职 Agent，不是业务 Agent。
 阶段路线：
 
 1. Phase 0：手动自举（目录、SSOT、模板、registry 空壳）。
-2. Phase 1：最小能力（BPM + llm-judge + spec/test 核心技能）。
+2. Phase 1：最小能力（BPM + llm-judge + scenario-runner + spec/test 核心技能）。
 3. Phase 2：自开发闭环可跑通。
 4. Phase 3：产品化治理（版本、健康度、退役机制）。
 5. Phase 4：自进化启动。

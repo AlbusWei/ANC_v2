@@ -26,15 +26,17 @@ allowed-tools:
 ## Input Contract
 
 - Format: json
-- Required fields: objective_ref, input_payload
+- Required fields: objective_ref, input_payload, test_case_ref
 
 ## Output Contract
 
 - Format: json
-- Required fields: final_output, evidence_refs, verdict
+- Required fields: final_output, evidence_refs, verdict, fail_closed
 
 ## Runtime Rules
 
 1. 必须经 BPM 调度。
 2. Phase 执行必须满足 SIPOC 与验收条件。
-3. 缺证据或校验失败时 Fail-Closed。
+3. `p4` Verify 阶段默认后端为 `scenario_python`，并由 `llm-judge` 归一化输出 ANC verdict。
+4. 门禁仅接受标准化 verdict，不直接消费 Scenario 原始结果。
+5. 缺证据或校验失败时 Fail-Closed。

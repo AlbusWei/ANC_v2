@@ -14,10 +14,11 @@
 1. `p1` write-spec (`spec-writer`)
 2. `p2` design-tests (`test-designer`)
 3. `p3` implement (`manual-task`)
-4. `p4` verify (`llm-judge`)
+4. `p4` verify-with-scenario-gate (`llm-judge`)
 
 ## Control Rules
 
 - 默认顺序执行。
 - `p4` 失败时最多回环到 `p3` 两次。
+- `p4` 必须落盘 Scenario 证据：`transcript/raw_result/normalized_verdict/fail_closed_guard`。
 - 任一阶段缺证据则 Fail-Closed。

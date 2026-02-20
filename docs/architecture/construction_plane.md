@@ -1,6 +1,6 @@
 # ANC v2 施工平面（Construction Plane）
 
-最后更新：2026-02-18
+最后更新：2026-02-19
 
 > 本文档是 ANC v2 的活施工板，记录当前进展、下一步计划、边界和风险。
 > 任何实质推进后应同步更新本文件。
@@ -28,6 +28,11 @@
 - [x] `development-process` 元流程实例化（SKILL.md + process.json + PROCESS.md）
 - [x] Phase 0.5 dry-run 证据链落盘（含 context/state/evidence/artifacts）
 - [x] OpenClaw Phase 0.5 配置片段落盘（`agents.list` + `skills.entries`）
+- [x] 新增 `scenario-runner` 元技能与测试资产（`SKILL.md` + `tests/scenario-runner/TEST.md`）
+- [x] `llm-judge` 升级到 v0.2 契约并补齐 Scenario 归一化规则与 schema
+- [x] `processes/meta/development-process/process.json` 升级到 v0.2（Scenario Verify 门禁版）
+- [x] `processes/development-process` 标注为 Phase 0.5 示例归档，运行 SSOT 固定为 `processes/meta/*`
+- [x] registry 与 openclaw 片段同步：`scenario-runner`、`llm-judge@0.2.0`、`development-process@0.2.0`
 
 ## Phase 0.5 完成判定
 
@@ -41,23 +46,22 @@
 
 ## 进行中（In Progress）
 
-- [ ] 将 `openclaw.phase05.fragment.json` 合并到本机运行配置并验证 gateway 生效
-- [ ] 用真实 `llm-judge` 调用替换 dry-run 的手工 verdict
+- [ ] 将 `development-process(p4)` 接入 Scenario 执行 + 归一化门禁链
 - [ ] 为 `development-process` 增加一轮失败回环样例证据（p4 fail -> p3 retry）
 
-说明：第一项会影响当前本机 OpenClaw 全局配置，执行前需明确是否覆盖现有 ANC v1 运行配置。
+说明：以上两项需要一次真实流程执行与证据回放验证，完成前不应标记为“门禁已上线”。
 
 ## 下一步（Next）
 
 `Phase 1 - 最小可运行闭环`
 
-1. 在 OpenClaw 本地配置中启用 ANC_v2 的 `skills.entries` 与 `agents.list`。
-2. 触发一次真实流程执行（非 dry-run），并保留运行日志证据。
-3. 将流程结果接入测试报告模板，形成 M1 判定依据。
+1. 在 OpenClaw 本地配置中启用 ANC_v2 的 `skills.entries`（含 `scenario-runner`）与 `agents.list`。
+2. 触发一次真实流程执行（非 dry-run），验证 `p4` 输出 `normalized_verdict.json`。
+3. 形成 Scenario objective 评估证据链（`transcript/raw_result/guard_log`）并接入测试报告模板。
 
 ## 后续（Later）
 
-1. Phase 1：BPM + P0 meta-skill 跑通最简闭环。
+1. Phase 1.2：启用 subjective A/B 多轮评估（默认 N=9）并接入统计裁决。
 2. Phase 2：首次“系统用自身流程开发新 Skill”。
 3. Phase 3：产品化治理（版本、健康度、退役）。
 4. Phase 4：自进化闭环接入。
@@ -77,6 +81,8 @@
 | M0 | 骨架就绪 | SSOT + 支撑文档 + 模板/registry 基线到位 | 已完成 |
 | M0.5 | 施工基线 | 角色目录 + P0 meta-skill + development-process + dry-run | 已完成 |
 | M1 | 第一次 LLM 评估 | `llm-judge` 可输出 pass/fail + remarks + suggestions | 进行中 |
+| M1.1 | Scenario Objective 门禁 | `p4` 可输出标准化 verdict + fail-closed guard + 证据链 | 进行中 |
+| M1.2 | Scenario Subjective A/B | 9 轮盲测可输出胜率裁决与 human-review 分流 | 待开始 |
 | M2 | 第一次 TDD 闭环 | 一个 Skill 完成 Test 先行 -> 开发 -> 复测通过 | 待开始 |
 | M3 | 第一次流程编排 | BPM 成功调度 3+ Phase 流程 | 待开始 |
 | M4 | 第一次自开发 | 系统用 development-process 开发并上线新 Skill | 待开始 |
@@ -96,7 +102,7 @@
 | 编号 | 问题 | 计划处理阶段 | Owner |
 |---|---|---|---|
 | Q-001 | OpenClaw session 是否足够支撑严格实例隔离？ | Phase 1 | Albus |
-| Q-002 | LLM Judge 多轮评估并发策略如何控成本？ | Phase 1 | Albus |
+| Q-002 | LLM Judge 多轮评估并发策略如何控成本？ | Phase 1.2 | Albus |
 | Q-003 | 元层自修改审批阈值如何量化？ | Phase 4 | TBD |
 | Q-004 | 现有 `processes/development-process` 与 `processes/meta/development-process` 的归一化策略 | Phase 1 | architect |
 

@@ -1,7 +1,7 @@
 # ANC v2 流程架构（SSOT-Process）
 
-最后更新：2026-02-18  
-版本：2.0.1-alpha
+最后更新：2026-02-19
+版本：2.0.2-alpha
 
 > 本文档定义 ANC v2 的流程原语、实例治理、调度协议、门禁规则与证据规范。
 > 与系统 SSOT 冲突时，以 `/Users/albus/MyProjects/ANC_v2/docs/architecture/system_overview.md` 为准。
@@ -198,7 +198,7 @@ control:
 建议目录：
 
 ```text
-/Users/albus/MyProjects/ANC_v2/agents/control/BPM/process_instances/<instance-id>/
+/Users/albus/MyProjects/ANC_v2/agents/control/BPM/memory/process_instances/<instance-id>/
   context.md
   state.json
   evidence/
@@ -206,13 +206,18 @@ control:
       input.md
       output.md
       log.md
+      scenario/
+        transcript.json
+        raw_result.json
+        normalized_verdict.json
+        fail_closed_guard.json
   artifacts/
 ```
 
 归档目录建议：
 
 ```text
-/Users/albus/MyProjects/ANC_v2/agents/control/BPM/process_instances/archive/<instance-id>/
+/Users/albus/MyProjects/ANC_v2/agents/control/BPM/memory/process_instances/archive/<instance-id>/
 ```
 
 证据最小字段：
@@ -225,6 +230,12 @@ control:
 6. `decision`
 7. `reason`
 
+Verify（`p4`）阶段附加要求：
+
+1. 若评估后端是 Scenario，必须写入 `scenario/raw_result.json`。
+2. 门禁输入必须来自 `scenario/normalized_verdict.json`，禁止直接消费 Scenario 原始结果。
+3. Fail-Closed 守卫日志必须写入 `scenario/fail_closed_guard.json`。
+
 ## 9. Fail-Closed 与恢复升级
 
 Fail-Closed 触发：
@@ -234,6 +245,8 @@ Fail-Closed 触发：
 3. I/O 校验失败且无法修复。
 4. 关键证据缺失。
 5. Objective/Spec/Test 追溯断链。
+6. Verify 阶段 verdict 归一化失败（Scenario -> ANC 契约）。
+7. Verify 超时且无可替代证据。
 
 恢复升级链：
 
@@ -258,6 +271,7 @@ Fail-Closed 触发：
 2. 无 Spec 不得设计正式 Test。
 3. 无 Test 不得进入实现。
 4. Verify 必须验证 Objective 达成，不是仅验证格式正确。
+   1. 当 Verify 使用 Scenario 时，必须先做契约归一化与 fail-closed guard。
 5. Release 必须双门槛通过（目标达成 + 评审通过）。
 
 ## 11. 预定义原子流程（初始化建议）

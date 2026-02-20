@@ -1,16 +1,27 @@
 {
   "process_id": "development-process",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "objective_ref": "obj-phase0.5-development-process",
   "owner": "bpm",
   "priority": "P0",
+  "runtime_baseline": false,
+  "example_only": true,
+  "deprecation_note": "Phase 0.5 example only. Runtime SSOT is /Users/albus/MyProjects/ANC_v2/processes/meta/development-process/process.json",
   "input_contract": {
     "format": "json",
-    "required": ["objective_ref", "input_payload", "target_skill_name"]
+    "required": [
+      "objective_ref",
+      "input_payload",
+      "target_skill_name"
+    ]
   },
   "output_contract": {
     "format": "json",
-    "required": ["final_output", "evidence_refs", "verdict"]
+    "required": [
+      "final_output",
+      "evidence_refs",
+      "verdict"
+    ]
   },
   "phases": [
     {
@@ -78,9 +89,21 @@
   },
   "failure_policy": {
     "mode": "fail_closed",
-    "escalation_chain": ["actor", "owner", "bpm", "admin"]
+    "escalation_chain": [
+      "actor",
+      "owner",
+      "bpm",
+      "admin"
+    ]
   },
   "evidence_policy": {
-    "required_fields": ["timestamp", "phase_id", "actor", "input_ref", "output_ref", "decision"]
+    "required_fields": [
+      "timestamp",
+      "phase_id",
+      "actor",
+      "input_ref",
+      "output_ref",
+      "decision"
+    ]
   }
 }

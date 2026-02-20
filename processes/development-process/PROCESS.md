@@ -4,6 +4,8 @@
 
 为 Phase 0.5 提供可执行的最简自开发流程，确保 Skill 资产从需求到 registry 同步有完整证据链。
 
+> 状态说明：本目录为 Phase 0.5 示例归档，不作为运行时流程 SSOT。运行基线请使用 `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/`。
+
 ## Assets
 
 - Runtime skill entry: `SKILL.md`

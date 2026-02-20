@@ -1,7 +1,7 @@
 # ANC v2 测试方法论
 
-最后更新：2026-02-18  
-版本：2.0.0-alpha
+最后更新：2026-02-19
+版本：2.0.1-alpha
 
 > 本文档定义 ANC 中测试的定位、执行方式、评估协议和报告规范。
 
@@ -99,6 +99,42 @@
 2. 技术评审：准确性与完整性。
 3. 产品视角：目标对齐度。
 
+### 4.4 Scenario 执行协议（Phase 1 默认）
+
+ANC 将 Scenario 作为测试执行底座，默认后端为 `scenario_python`。
+
+输入建议（v0.2）：
+
+```json
+{
+  "objective": "...",
+  "spec_ref": "/abs/path/spec.md",
+  "expected_conditions": ["..."],
+  "actual_output_ref": "/abs/path/output.md",
+  "test_case_ref": "/abs/path/TEST.md",
+  "evaluation_mode": "objective",
+  "backend": "scenario_python",
+  "timeout_seconds": 600,
+  "evidence_root": "/abs/path/process_instances/<id>/evidence/p4"
+}
+```
+
+约束：
+
+1. Scenario 原始结果不得直接作为 BPM 门禁输入。
+2. 必须先经 `llm-judge` 归一化为 ANC 标准 verdict 后再流转。
+3. 外部事件上报失败不影响门禁判定，门禁证据以本地落盘为准。
+
+### 4.5 归一化规则（Scenario -> ANC Verdict）
+
+固定映射：
+
+1. `pass = success && unmet_criteria.length == 0`
+2. `remarks = reasoning`
+3. `suggestions = unmet_criteria -> actionable fixes`
+4. `confidence = ANC confidence calculator`（非 Scenario 原生字段）
+5. `evidence_refs = [transcript, raw_result, normalized_verdict, guard_log]`（绝对路径）
+
 ## 5. 测试报告规范
 
 测试报告必须包含可执行改进建议，不得只给 pass/fail。
@@ -138,6 +174,18 @@
 | 标准 | 发布前 | 全量用例 | 多轮客观评估 |
 | 深度 | 重大变更 | 全量 + A/B | 多轮 + 多视角 |
 
+### 6.4 主观 A/B 多轮编排（Scenario 模式）
+
+`subjective_ab` 模式执行规则：
+
+1. 同任务输出 A/B 必须随机映射为 X/Y 并隐藏来源。
+2. 默认执行 `N=9` 轮，允许并发但必须会话隔离。
+3. 统计胜率后按阈值裁决：
+   1. 新版本胜率 `>= 2/3`：接受
+   2. 新版本胜率 `< 1/2`：拒绝
+   3. 中间区间：`human-review`
+4. 任一轮触发 Fail-Closed，则整组裁决直接 Fail-Closed。
+
 ## 7. Fail-Closed 条件
 
 以下情况默认测试失败：
@@ -146,3 +194,5 @@
 2. 关键输入缺失（Objective/Spec/Output）。
 3. 证据缺失或不可追溯。
 4. 评估超时且无替代证据。
+5. Scenario 返回结构不可解析或归一化失败。
+6. `evidence_root` 缺失关键证据文件（`raw_result`/`normalized_verdict`/`guard_log`）。

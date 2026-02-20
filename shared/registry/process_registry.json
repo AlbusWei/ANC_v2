@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "registry": "process_registry",
-  "updated_at": "2026-02-18T04:10:00Z",
+  "updated_at": "2026-02-19T00:00:00Z",
   "entry_contract": {
     "required": [
       "process_id",
@@ -33,8 +33,8 @@
       "manifest_path": "/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/process.json",
       "objective_ref": "obj-phase1-min-loop",
       "owner": "bpm",
-      "version": "0.1.0",
-      "status": "draft",
+      "version": "0.2.0",
+      "status": "active",
       "phase_count": 4,
       "openclaw": {
         "entry_name": "development-process",

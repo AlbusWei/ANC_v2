@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "registry": "skill_registry",
-  "updated_at": "2026-02-18T04:10:00Z",
+  "updated_at": "2026-02-19T00:00:00Z",
   "entry_contract": {
     "required": [
       "skill_id",
@@ -34,10 +34,10 @@
       "path": "/Users/albus/MyProjects/ANC_v2/skills/meta/llm-judge/SKILL.md",
       "layer": "meta",
       "owner": "qa",
-      "version": "0.1.0",
-      "status": "draft",
+      "version": "0.2.0",
+      "status": "active",
       "agentskills": {
-        "description": "Evaluate outputs against objective/spec and return structured verdict",
+        "description": "Run scenario-backed evaluation and normalize results into ANC gate verdict",
         "license": "Apache-2.0",
         "compatibility": {
           "openclaw": ">=2026.2",
@@ -51,6 +51,32 @@
       },
       "tests": {
         "test_doc": "/Users/albus/MyProjects/ANC_v2/skills/meta/llm-judge/TEST.md",
+        "methodology_ref": "/Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "meta.qa.scenario-runner",
+      "name": "scenario-runner",
+      "path": "/Users/albus/MyProjects/ANC_v2/skills/meta/scenario-runner/SKILL.md",
+      "layer": "meta",
+      "owner": "qa",
+      "version": "0.1.0",
+      "status": "active",
+      "agentskills": {
+        "description": "Execute scenario-python simulations and persist raw evaluation evidence for ANC gate",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "entry_name": "scenario-runner",
+        "source": "/Users/albus/MyProjects/ANC_v2/skills/meta/scenario-runner",
+        "install_strategy": "lazy"
+      },
+      "tests": {
+        "test_doc": "/Users/albus/MyProjects/ANC_v2/tests/scenario-runner/TEST.md",
         "methodology_ref": "/Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md"
       }
     },

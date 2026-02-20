@@ -34,6 +34,9 @@
       },
       "anc-v2-meta-processes": {
         "source": "/Users/albus/MyProjects/ANC_v2/processes/meta"
+      },
+      "anc-v2-scenario-runner": {
+        "source": "/Users/albus/MyProjects/ANC_v2/skills/meta/scenario-runner"
       }
     }
   }

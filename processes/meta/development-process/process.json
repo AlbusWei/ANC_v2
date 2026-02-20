@@ -1,16 +1,26 @@
 {
   "process_id": "development-process",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "objective_ref": "obj-phase1-min-loop",
   "owner": "bpm",
   "priority": "P0",
+  "runtime_baseline": true,
   "input_contract": {
     "format": "json",
-    "required": ["objective_ref", "input_payload"]
+    "required": [
+      "objective_ref",
+      "input_payload",
+      "test_case_ref"
+    ]
   },
   "output_contract": {
     "format": "json",
-    "required": ["final_output", "evidence_refs", "verdict"]
+    "required": [
+      "final_output",
+      "evidence_refs",
+      "verdict",
+      "fail_closed"
+    ]
   },
   "phases": [
     {
@@ -57,17 +67,40 @@
     },
     {
       "phase_id": "p4",
-      "name": "verify",
+      "name": "verify-with-scenario-gate",
       "actor": "qa",
       "skill_or_process": "llm-judge",
       "sipoc": {
         "supplier": "p3",
-        "input": "candidate_output",
-        "process": "evaluate against objective and test conditions",
-        "output": "verdict",
+        "input": "candidate_output + test_plan",
+        "process": "run scenario backend evaluation and normalize into ANC gate verdict",
+        "output": "normalized_verdict",
         "client": "initiator"
       },
-      "acceptance_criteria": "verdict has pass/fail, confidence and improvement suggestions"
+      "phase_contract": {
+        "input_required": [
+          "objective",
+          "spec_ref",
+          "expected_conditions",
+          "actual_output_ref",
+          "test_case_ref",
+          "evaluation_mode",
+          "backend",
+          "timeout_seconds",
+          "evidence_root"
+        ],
+        "output_required": [
+          "pass",
+          "confidence",
+          "remarks",
+          "suggestions",
+          "evidence_refs",
+          "judge_backend",
+          "fail_closed",
+          "fail_closed_reason"
+        ]
+      },
+      "acceptance_criteria": "normalized verdict contains pass/confidence/remarks/suggestions/evidence_refs and fail-closed guard status"
     }
   ],
   "control": {
@@ -80,9 +113,34 @@
   },
   "failure_policy": {
     "mode": "fail_closed",
-    "escalation_chain": ["actor", "owner", "bpm", "admin"]
+    "escalation_chain": [
+      "actor",
+      "owner",
+      "bpm",
+      "admin"
+    ]
+  },
+  "runtime_policy": {
+    "verify_backend_default": "scenario_python",
+    "gate_requires_normalized_verdict": true,
+    "forbid_direct_scenario_result": true
   },
   "evidence_policy": {
-    "required_fields": ["timestamp", "phase_id", "actor", "input_ref", "output_ref", "decision", "reason"]
+    "required_fields": [
+      "timestamp",
+      "phase_id",
+      "actor",
+      "input_ref",
+      "output_ref",
+      "decision",
+      "reason",
+      "evidence_refs"
+    ],
+    "verify_required_artifacts": [
+      "scenario/transcript.json",
+      "scenario/raw_result.json",
+      "scenario/normalized_verdict.json",
+      "scenario/fail_closed_guard.json"
+    ]
   }
 }
