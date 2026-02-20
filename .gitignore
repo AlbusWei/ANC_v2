@@ -63,3 +63,7 @@ tests/artifacts/
 # Local tooling state
 .openclaw/
 .codex/
+
+# bmad
+_bmad/
+_bmad-output/

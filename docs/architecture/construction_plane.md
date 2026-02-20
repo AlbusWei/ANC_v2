@@ -1,6 +1,6 @@
 # ANC v2 施工平面（Construction Plane）
 
-最后更新：2026-02-19
+最后更新：2026-02-20
 
 > 本文档是 ANC v2 的活施工板，记录当前进展、下一步计划、边界和风险。
 > 任何实质推进后应同步更新本文件。
@@ -33,6 +33,7 @@
 - [x] `processes/meta/development-process/process.json` 升级到 v0.2（Scenario Verify 门禁版）
 - [x] `processes/development-process` 标注为 Phase 0.5 示例归档，运行 SSOT 固定为 `processes/meta/*`
 - [x] registry 与 openclaw 片段同步：`scenario-runner`、`llm-judge@0.2.0`、`development-process@0.2.0`
+- [x] 产品叙事纠偏落盘：新增 `/Users/albus/MyProjects/ANC_v2/docs/architecture/product_design_blueprint.md`，明确 ANC v2 为 Process-First Company OS，测试定位回归治理门禁
 
 ## Phase 0.5 完成判定
 
@@ -58,6 +59,7 @@
 1. 在 OpenClaw 本地配置中启用 ANC_v2 的 `skills.entries`（含 `scenario-runner`）与 `agents.list`。
 2. 触发一次真实流程执行（非 dry-run），验证 `p4` 输出 `normalized_verdict.json`。
 3. 形成 Scenario objective 评估证据链（`transcript/raw_result/guard_log`）并接入测试报告模板。
+4. 将北极星指标（Objective Lead Time / First Pass Yield / Reuse Rate）接入 Phase 1 周报模板。
 
 ## 后续（Later）
 
