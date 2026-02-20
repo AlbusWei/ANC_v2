@@ -44,3 +44,24 @@ ANC v2 是一个可反身自开发、可自进化的 Agentic 系统。
 ## 6. 当前阶段边界
 
 当前处于 Phase 0/0.5：优先构建治理骨架，不做大规模业务功能实现。
+
+## 7. Entire 管理基线（Codex 强制）
+
+> 目标：确保 Codex 在本仓库的每次开发变更都纳入 Entire 会话管理并可审计。
+
+1. 任务开始前必须检查 Entire 状态：
+   - `entire status --detailed`
+   - 期望：`Enabled (manual-commit)`；否则执行：`entire enable --strategy manual-commit`
+2. 使用 Codex 时必须走桥接脚本启动会话：
+   - `python3 /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/scripts/entire_codex_bridge.py start`
+3. 每个有意义开发回合（有代码变更）后、提交前，必须执行一次同步：
+   - `python3 /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/scripts/entire_codex_bridge.py sync --prompt "<本回合需求>" --summary "<本回合实现>" --files <changed-file-1> <changed-file-2>`
+4. 每次提交后必须执行校验：
+   - `git log -1 --pretty=raw`
+   - 提交信息中必须包含：`Entire-Checkpoint: <id>`
+5. 任务结束时必须关闭桥接会话：
+   - `python3 /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/scripts/entire_codex_bridge.py end`
+6. Fail-Closed：若 `start/sync/end` 任一步失败，或提交缺失 `Entire-Checkpoint`，本次任务不得宣告完成，必须先修复再继续。
+7. 协议文档：
+   - `/Users/albus/MyProjects/ANC_v2/docs/design/interfaces/entire-codex-sync-protocol.md`
+   - `/Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/references/bridge-contract.md`
