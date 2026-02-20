@@ -12,14 +12,16 @@
 ## 阅读顺序
 
 1. `/Users/albus/MyProjects/ANC_v2/docs/architecture/system_overview.md`
-2. `/Users/albus/MyProjects/ANC_v2/docs/architecture/product_design_blueprint.md`
-3. `/Users/albus/MyProjects/ANC_v2/docs/architecture/process_architecture.md`
-4. `/Users/albus/MyProjects/ANC_v2/docs/architecture/openclaw_interface.md`
-5. `/Users/albus/MyProjects/ANC_v2/docs/architecture/registry_contracts.md`
-6. `/Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md`
-7. `/Users/albus/MyProjects/ANC_v2/docs/architecture/context_protocol.md`
-8. `/Users/albus/MyProjects/ANC_v2/docs/architecture/construction_plane.md`
-9. `/Users/albus/MyProjects/ANC_v2/docs/architecture/glossary.md`
+2. `/Users/albus/MyProjects/ANC_v2/docs/architecture/product_brief.md`
+3. `/Users/albus/MyProjects/ANC_v2/docs/architecture/product_requirements.md`
+4. `/Users/albus/MyProjects/ANC_v2/docs/architecture/product_design_blueprint.md`
+5. `/Users/albus/MyProjects/ANC_v2/docs/architecture/process_architecture.md`
+6. `/Users/albus/MyProjects/ANC_v2/docs/architecture/openclaw_interface.md`
+7. `/Users/albus/MyProjects/ANC_v2/docs/architecture/registry_contracts.md`
+8. `/Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md`
+9. `/Users/albus/MyProjects/ANC_v2/docs/architecture/context_protocol.md`
+10. `/Users/albus/MyProjects/ANC_v2/docs/architecture/construction_plane.md`
+11. `/Users/albus/MyProjects/ANC_v2/docs/architecture/glossary.md`
 
 ## 变更规则
 

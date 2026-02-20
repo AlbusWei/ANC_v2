@@ -34,6 +34,8 @@
 - [x] `processes/development-process` 标注为 Phase 0.5 示例归档，运行 SSOT 固定为 `processes/meta/*`
 - [x] registry 与 openclaw 片段同步：`scenario-runner`、`llm-judge@0.2.0`、`development-process@0.2.0`
 - [x] 产品叙事纠偏落盘：新增 `/Users/albus/MyProjects/ANC_v2/docs/architecture/product_design_blueprint.md`，明确 ANC v2 为 Process-First Company OS，测试定位回归治理门禁
+- [x] BMM 产品简报落盘：新增 `/Users/albus/MyProjects/ANC_v2/docs/architecture/product_brief.md`，固化目标用户、价值主张、MVP 范围、指标与里程碑
+- [x] BMM-PRD 落盘：新增 `/Users/albus/MyProjects/ANC_v2/docs/architecture/product_requirements.md`，固化 Epic、需求编号、验收标准、发布门槛与追踪矩阵
 
 ## Phase 0.5 完成判定
 
@@ -60,6 +62,8 @@
 2. 触发一次真实流程执行（非 dry-run），验证 `p4` 输出 `normalized_verdict.json`。
 3. 形成 Scenario objective 评估证据链（`transcript/raw_result/guard_log`）并接入测试报告模板。
 4. 将北极星指标（Objective Lead Time / First Pass Yield / Reuse Rate）接入 Phase 1 周报模板。
+5. 基于 `product_brief.md` 形成 Phase 1 对外叙事版本（1 页版）并与里程碑口径对齐。
+6. 基于 `product_requirements.md` 将 Epic A-E 拆解为执行工单，并绑定需求编号（A-FR/B-FR/C-FR/D-FR/E-FR）。
 
 ## 后续（Later）
 
