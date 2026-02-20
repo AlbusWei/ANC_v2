@@ -39,3 +39,12 @@ build/
 # Project Specific Artifacts
 # Run artifacts from BPM
 process_instances/
+
+# Local AI workspace state
+.claude/
+.gemini/
+.opencode/
+.entire/logs/
+.entire/metadata/
+.entire/tmp/
+.entire/settings.local.json

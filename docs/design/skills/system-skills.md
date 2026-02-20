@@ -13,6 +13,7 @@
 7. sys.qa.regression-runner
 8. sys.arch.impact-analyzer
 9. sys.admin.release-manager
+10. system.integration.entire-codex-sync
 
 ## 目标
 

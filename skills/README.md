@@ -4,6 +4,7 @@
 
 1. `/Users/albus/MyProjects/ANC_v2/skills/template/`：模板资产（脚手架）。
 2. `/Users/albus/MyProjects/ANC_v2/skills/skill-creator/`：真实示例（meta skill）。
+3. `/Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/`：Entire x Codex 同步桥接技能。
 
 ## Rule
 

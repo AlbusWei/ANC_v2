@@ -7,6 +7,7 @@
 1. meta.qa.llm-judge
 2. meta.arch.spec-writer
 3. meta.qa.test-designer
+4. system.integration.entire-codex-sync
 
 ## 待注册但已落盘
 

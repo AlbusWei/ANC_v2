@@ -21,6 +21,7 @@
 - [x] App 层 Agent 从占位升级为独立角色文档（evolution + delivery）
 - [x] 更新 design 索引、layers/modules/skills/processes/inventories 核心文档
 - [x] `development-process` canonical 路径固定为 `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/`
+- [x] 完成 Entire 项目接入基线（`.entire/settings.json` + git hooks）并落盘 Codex 桥接协议/技能（`entire-codex-sync`）
 
 ## 进行中（In Progress）
 
