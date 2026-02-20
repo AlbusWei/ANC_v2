@@ -16,6 +16,7 @@ ANC v2 是一个可反身自开发、可自进化的 Agentic 系统。
 6. 术语表：`/Users/albus/MyProjects/ANC_v2/docs/architecture/glossary.md`
 7. OpenClaw 接口：`/Users/albus/MyProjects/ANC_v2/docs/architecture/openclaw_interface.md`
 8. registry 契约：`/Users/albus/MyProjects/ANC_v2/docs/architecture/registry_contracts.md`
+9. 详细设计索引：`/Users/albus/MyProjects/ANC_v2/docs/design/README.md`
 
 ## 3. 执行原则
 

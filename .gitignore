@@ -1,0 +1,41 @@
+# OS Specific
+.DS_Store
+Thumbs.db
+._*
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.history/
+
+# Logs and Temp
+*.log
+logs/
+tmp/
+temp/
+
+# Node.js (Common, even if not used yet)
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn.lock
+package-lock.json
+
+# Python (Common, even if not used yet)
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.env
+*.egg-info/
+dist/
+build/
+
+# Project Specific Artifacts
+# Run artifacts from BPM
+process_instances/

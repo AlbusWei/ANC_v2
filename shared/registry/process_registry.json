@@ -16,6 +16,7 @@
     ],
     "status_enum": [
       "draft",
+      "review",
       "active",
       "deprecated",
       "retired"
