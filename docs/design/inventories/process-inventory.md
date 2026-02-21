@@ -1,12 +1,13 @@
 # Process 全量清单
 
-> 版本: v0.2.0 | SSOT 上游: `/Users/albus/MyProjects/ANC_v2/shared/registry/process_registry.json`
+> 版本: v0.3.0 | SSOT 上游: `/Users/albus/MyProjects/ANC_v2/shared/registry/process_registry.json`
 
 ## Canonical Process Paths
 
 | process_id | canonical_path | status |
 |---|---|---|
 | development-process | `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/` | canonical |
+| governed-config-change | `/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change/` | canonical |
 
 ## Legacy Paths
 
@@ -19,6 +20,7 @@
 | process_id | 名称 | 类型 | owner | 阶段数 | 状态 | 路径 |
 |---|---|---|---|---|---|---|
 | development-process | development-process | 复合 | bpm | 4 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/` |
+| governed-config-change | governed-config-change | 复合 | bpm | 5 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change/` |
 
 ## 规划中 Process — 元流程
 

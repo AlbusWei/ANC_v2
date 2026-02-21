@@ -1,6 +1,10 @@
 # App Agents Index
 
-> 版本: v0.2.0
+> 版本: v0.3.0
+
+## Entry Agents (Default Human Entry)
+
+1. `/Users/albus/MyProjects/ANC_v2/docs/design/agents/app/entry/personal-assistant.md`
 
 ## Evolution Agents (L4)
 

@@ -39,7 +39,7 @@ Request → Validate → Check Prerequisites → Approve/Reject → Execute
 - **适用**: 生命周期转换、权限变更
 - **约束**: 每步有明确的通过/拒绝条件
 - **Fail-Closed**: 任一校验失败即拒绝
-- **实例**: lifecycle-review
+- **实例**: lifecycle-review, governed-config-change
 
 ## 模式 4: 升级链 (Escalation Chain)
 
@@ -61,4 +61,4 @@ Establish Baseline → Make Change → Regression Verify
 - **适用**: 重构、升级、配置变更
 - **约束**: 基线测试必须先通过
 - **Fail-Closed**: 回归测试失败则回滚变更
-- **实例**: refactor
+- **实例**: refactor, governed-config-change

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "registry": "agent_directory",
-  "updated_at": "2026-02-18T04:20:00Z",
+  "updated_at": "2026-02-20T00:00:00Z",
   "entry_contract": {
     "required": [
       "agent_id",
@@ -75,6 +75,16 @@
       "owner": "admin",
       "status": "draft",
       "permissions": "orchestration-control",
+      "bindings": []
+    },
+    {
+      "agent_id": "personal-assistant",
+      "layer": "app",
+      "path": "/Users/albus/MyProjects/ANC_v2/agents/app/entry/personal-assistant",
+      "default_model": "rightcode/gpt-5.3-codex",
+      "owner": "admin",
+      "status": "draft",
+      "permissions": "entry-assistance-read-heavy",
       "bindings": []
     },
     {

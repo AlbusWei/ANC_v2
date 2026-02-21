@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "registry": "process_registry",
-  "updated_at": "2026-02-18T04:10:00Z",
+  "updated_at": "2026-02-20T00:00:00Z",
   "entry_contract": {
     "required": [
       "process_id",
@@ -40,6 +40,21 @@
       "openclaw": {
         "entry_name": "development-process",
         "source": "/Users/albus/MyProjects/ANC_v2/processes/meta/development-process"
+      }
+    },
+    {
+      "process_id": "governed-config-change",
+      "skill_name": "governed-config-change",
+      "skill_path": "/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change/SKILL.md",
+      "manifest_path": "/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change/process.json",
+      "objective_ref": "obj-governed-openclaw-config-change",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 5,
+      "openclaw": {
+        "entry_name": "governed-config-change",
+        "source": "/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change"
       }
     }
   ]

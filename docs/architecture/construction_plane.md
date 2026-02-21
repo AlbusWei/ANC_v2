@@ -23,6 +23,8 @@
 - [x] `development-process` canonical 路径固定为 `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/`
 - [x] 完成 Entire 项目接入基线（`.entire/settings.json` + git hooks）并落盘 Codex 桥接协议/技能（`entire-codex-sync`）
 - [x] 在 `/Users/albus/MyProjects/ANC_v2/AGENTS.md` 增加 Codex 强制 Entire 管理流程（start/sync/commit-check/end + Fail-Closed）
+- [x] 明确 OpenClaw 配置治理分工（App -> BPM -> Admin），并新增 personal-assistant 入口角色设计与 registry 记录
+- [x] 新增 `governed-config-change` 可执行流程资产（`processes/meta/governed-config-change/`）并注册到 `process_registry`
 
 ## 进行中（In Progress）
 
@@ -34,6 +36,7 @@
 1. 为 P6 原子流程补充 process.json 样板定义。
 2. 将 lifecycle-review、registry-sync、escalation 具象化为可执行流程资产。
 3. 触发一次双主线 dry-run（文档级）并沉淀证据目录。
+4. 执行一次 governed-config-change 文档级 dry-run，补齐标准证据包模板。
 
 ## 里程碑
 
