@@ -22,6 +22,7 @@
 2. 可治理：状态、owner、版本、测试引用可追溯。
 3. 可投影：可从 registry 自动生成运行时受管配置。
 4. Fail-Closed：字段不合法或证据不足时拒绝写入。
+5. 双层门禁：Registry Contract 与 Capability Contract 必须同时通过。
 
 ## 2. 机器真相源（SSOT）
 
@@ -142,6 +143,12 @@ profile 定义：
 3. agent 状态白名单。
 
 ## 9. 验证命令
+
+说明：
+
+1. `verify` 除了 registry/schema/projection 一致性外，还会校验 `skills/**/SKILL.md` 的 Capability Contract。
+2. Capability Contract 规则：固定标题 `## Capability Contract (Machine-Readable)` + `yaml` fenced block。
+3. 对已注册 skill，`test_mount` 必须与 registry `tests` 字段一致。
 
 ```bash
 python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py validate

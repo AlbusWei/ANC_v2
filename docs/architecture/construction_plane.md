@@ -1,6 +1,6 @@
 # ANC v2 施工平面（Construction Plane）
 
-最后更新：2026-02-20
+最后更新：2026-02-21
 
 > 本文档是 ANC v2 的活施工板，记录当前进展、下一步计划、边界和风险。
 
@@ -25,6 +25,8 @@
 - [x] 在 `/Users/albus/MyProjects/ANC_v2/AGENTS.md` 增加 Codex 强制 Entire 管理流程（start/sync/commit-check/end + Fail-Closed）
 - [x] 明确 OpenClaw 配置治理分工（App -> BPM -> Admin），并新增 personal-assistant 入口角色设计与 registry 记录
 - [x] 新增 `governed-config-change` 可执行流程资产（`processes/meta/governed-config-change/`）并注册到 `process_registry`
+- [x] 落盘 Skill 双层契约设计（Registry Contract + Capability Contract）并新增 ADR-11/ADR-12
+- [x] 将 Capability Contract 固定为 `SKILL.md` 机器块（固定标题 + YAML），并纳入 `registry_contract_tool.py verify` 全量校验
 
 ## 进行中（In Progress）
 

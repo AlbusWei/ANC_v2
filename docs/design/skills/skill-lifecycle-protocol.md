@@ -1,10 +1,16 @@
 # Skill 生命周期协议
 
-> 版本: v0.1.0 | SSOT 上游: [system_overview.md](../../architecture/system_overview.md) §统一生命周期
+> 版本: v0.2.0 | SSOT 上游: [system_overview.md](../../architecture/system_overview.md) §统一生命周期
 
 ## 概述
 
 所有 Skill 遵循统一生命周期: `Draft → Review → Active → Deprecated → Retired`。本协议定义每个阶段的准入条件、操作和产出。
+
+设计意图：
+
+1. `draft` 允许快速迭代，但不允许越过能力契约门禁直接进入 `review`。
+2. `review` 是“可治理”门槛，要求结构契约与能力契约同时成立。
+3. `active` 是“可运行”门槛，要求测试证据完成并可追溯。
 
 ## 创建协议
 
@@ -17,9 +23,10 @@
 ### 创建步骤
 
 1. **资产创建**: 使用 skill-creator 或手动创建 SKILL.md + TEST.md
-2. **模板校验**: 确认目录结构符合 skills/template/ 规范
-3. **注册**: 在 skill_registry.json 添加条目（status: draft）
-4. **Inventory 更新**: 在 skill-inventory.md 添加条目
+2. **能力契约写入**: 在 `SKILL.md` 中写入 `## Capability Contract (Machine-Readable)` + YAML 块
+3. **模板校验**: 确认目录结构符合 skills/template/ 规范
+4. **注册**: 在 skill_registry.json 添加条目（status: draft）
+5. **Inventory 更新**: 在 skill-inventory.md 添加条目
 
 ### 产出
 
@@ -33,9 +40,13 @@
 ### 准入条件
 
 - SKILL.md 完整（frontmatter + 所有必需节）
+- Capability Contract YAML 块存在且可解析（固定标题 + `yaml` fenced block）
+- Capability Contract 字段完整：`contract_version/objective_ref/input_contract/output_contract/fail_closed_rules/test_mount`
 - TEST.md 存在且包含至少 1 个 P0 测试用例
 - Registry 条目存在且字段完整
 - SKILL.md frontmatter 与 registry 条目一致
+- SKILL.md `test_mount` 与 registry `tests` 字段一致
+- `python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py verify` 通过
 
 ### 审查内容
 

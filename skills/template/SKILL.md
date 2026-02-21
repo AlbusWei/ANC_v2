@@ -12,6 +12,43 @@ version: "0.1.0"
 
 用于初始化新 Skill 的标准写法与结构约束。
 
+## Capability Contract (Machine-Readable)
+
+```yaml
+contract_version: 1.0.0
+objective_ref: obj-template-skill
+input_contract:
+  format: markdown
+  required:
+    - skill_name
+    - objective_ref
+    - scope
+    - constraints
+  validation:
+    - skill_name must use kebab-case
+    - objective_ref must be non-empty
+    - constraints must declare prohibited behavior
+output_contract:
+  format: markdown_and_file_layout
+  required:
+    - skill_md
+    - test_doc
+    - registry_entry_plan
+  machine_judgement:
+    - capability contract block is parseable
+    - frontmatter contains minimum required fields
+    - test and registry references are traceable
+fail_closed_rules:
+  - required inputs missing
+  - frontmatter parse failure
+  - test/registry references missing
+test_mount:
+  test_doc: /Users/albus/MyProjects/ANC_v2/tests/template/TEST.md
+  methodology_ref: /Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md
+references:
+  agentskills_spec: /Users/albus/MyProjects/ANC_v2/skills/template/SKILL.md
+```
+
 ## Objective
 
 - 提供一个可被 Agent Skills/OpenClaw 识别的最小技能骨架。

@@ -9,12 +9,15 @@
 ## 输出检查
 
 - `SKILL.md` frontmatter 可解析。
+- `SKILL.md` 包含 `Capability Contract (Machine-Readable)` YAML 块且可解析。
 - `tests/<skill-name>/TEST.md` 已创建。
 - registry 条目字段完整且路径可达。
+- `test_mount` 与 registry `tests` 字段一致。
 
 ## 失败模式
 
 - `frontmatter_invalid`
+- `capability_contract_invalid`
 - `missing_test_asset`
 - `registry_not_synced`
 

@@ -135,6 +135,47 @@
 1. 在上游设计仍迭代时避免过早硬化。
 2. 先稳住治理骨架，再收紧流程语义细节。
 
+## ADR-11：Skill 双层契约门禁（Registry + Capability）
+
+决策：
+
+1. Skill 治理采用双层契约：
+   - `Registry Contract`：注册、状态、投影与路径治理。
+   - `Capability Contract`：能力声明、Fail-Closed 规则、测试挂载与可判定输出。
+2. `Registry Contract` 继续以 registry `entry_contract` 为机器真相源。
+3. `Capability Contract` 以 `SKILL.md` 正文固定块为机器真相源（固定标题 + YAML fenced block）。
+4. 生命周期 `draft -> review` 必须同时通过两层契约校验。
+
+动机：
+
+1. 解决“已注册但能力未证明”的治理盲区。
+2. 保持运行入口与能力契约在同一资产文件，降低文档分裂。
+3. 让能力门禁可被工具执行，而不依赖纯人工评审。
+
+非目标：
+
+1. 不把全部能力细节内联到 registry 字段，避免 registry 过载。
+2. 不以运行时投影结果反向定义能力契约。
+
+## ADR-12：全量技能文件校验而非仅注册项校验
+
+决策：
+
+1. `verify` 对象覆盖 `skills/**/SKILL.md` 全量文件。
+2. 已注册 skill 额外强制 `SKILL.md.test_mount` 与 `skill_registry.tests` 一致。
+3. 未注册示例/模板同样必须满足 Capability Contract 基线。
+
+动机：
+
+1. 示例与模板会复制扩散到未来资产，必须在源头治理。
+2. 仅校验已注册项会放过“未来污染源”，导致标准漂移。
+3. 在 Phase 0/1 阶段全量收敛成本最低、收益最高。
+
+权衡：
+
+1. 短期增加迁移成本。
+2. 长期减少返工和多标准并存风险。
+
 ## 使用方式
 
 1. 架构讨论先引用本决策，再落字段与命令。

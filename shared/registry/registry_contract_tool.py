@@ -5,7 +5,7 @@ Commands:
   - validate: strict contract validation for registry files.
   - generate-docs: render human-readable schema docs from entry_contract.
   - project-openclaw: project registry data to managed OpenClaw config paths.
-  - verify: run validate + docs check + projection check.
+  - verify: run validate + capability check + docs check + projection check.
 """
 
 from __future__ import annotations
@@ -18,17 +18,31 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
+try:
+    import yaml
+except Exception:  # pragma: no cover - dependency check
+    yaml = None
+
 
 ROOT = Path(__file__).resolve().parents[2]
 REGISTRY_DIR = ROOT / "shared" / "registry"
 CONFIG_DIR = ROOT / "config"
 DOC_PATH = ROOT / "docs" / "design" / "data-models" / "registry-schemas.md"
 PROFILE_PATH = CONFIG_DIR / "openclaw.projection.profiles.json"
+SKILLS_DIR = ROOT / "skills"
 
 AGENT_REGISTRY = REGISTRY_DIR / "agent_directory.json"
 SKILL_REGISTRY = REGISTRY_DIR / "skill_registry.json"
 PROCESS_REGISTRY = REGISTRY_DIR / "process_registry.json"
 REGISTRY_FILES = [AGENT_REGISTRY, SKILL_REGISTRY, PROCESS_REGISTRY]
+
+CAPABILITY_HEADING = "## Capability Contract (Machine-Readable)"
+CAPABILITY_BLOCK_RE = re.compile(
+    r"^## Capability Contract \(Machine-Readable\)\s*\n```yaml\s*\n(?P<body>.*?)\n```",
+    re.MULTILINE | re.DOTALL,
+)
+SEMVER_RE = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+$")
+REPO_PATH_RE = re.compile(r"^/Users/albus/MyProjects/ANC_v2/.+")
 
 
 class ContractError(Exception):
@@ -176,6 +190,169 @@ def path_exists(path_str: str) -> bool:
     return Path(path_str).exists()
 
 
+def _skill_relative_key(path: Path) -> str:
+    normalized = path.as_posix()
+    marker = "/skills/"
+    if marker not in normalized:
+        return normalized
+    return normalized.split(marker, 1)[1]
+
+
+def _expect_non_empty_string(value: Any, path: str, errors: List[str]) -> None:
+    if not isinstance(value, str) or not value.strip():
+        errors.append(f"{path}: expected non-empty string")
+
+
+def _expect_string_list(value: Any, path: str, errors: List[str]) -> None:
+    if not isinstance(value, list) or not value:
+        errors.append(f"{path}: expected non-empty list of strings")
+        return
+    for index, item in enumerate(value):
+        if not isinstance(item, str) or not item.strip():
+            errors.append(f"{path}[{index}]: expected non-empty string")
+
+
+def _expect_repo_path(value: Any, path: str, errors: List[str]) -> None:
+    if not isinstance(value, str):
+        errors.append(f"{path}: expected path string")
+        return
+    if re.match(REPO_PATH_RE, value) is None:
+        errors.append(f"{path}: path {value!r} must be under /Users/albus/MyProjects/ANC_v2/")
+        return
+    if not path_exists(value):
+        errors.append(f"{path}: missing path {value}")
+
+
+def _validate_capability_contract(contract: Dict[str, Any], skill_path: Path, errors: List[str]) -> None:
+    prefix = f"{skill_path}: capability_contract"
+    required_keys = [
+        "contract_version",
+        "objective_ref",
+        "input_contract",
+        "output_contract",
+        "fail_closed_rules",
+        "test_mount",
+    ]
+
+    for key in required_keys:
+        if key not in contract:
+            errors.append(f"{prefix}: missing required key {key!r}")
+
+    version = contract.get("contract_version")
+    if not isinstance(version, str) or re.match(SEMVER_RE, version) is None:
+        errors.append(f"{prefix}.contract_version: expected semver (x.y.z)")
+
+    _expect_non_empty_string(contract.get("objective_ref"), f"{prefix}.objective_ref", errors)
+
+    input_contract = contract.get("input_contract")
+    if not isinstance(input_contract, dict):
+        errors.append(f"{prefix}.input_contract: expected object")
+    else:
+        _expect_non_empty_string(input_contract.get("format"), f"{prefix}.input_contract.format", errors)
+        _expect_string_list(input_contract.get("required"), f"{prefix}.input_contract.required", errors)
+        _expect_string_list(input_contract.get("validation"), f"{prefix}.input_contract.validation", errors)
+
+    output_contract = contract.get("output_contract")
+    if not isinstance(output_contract, dict):
+        errors.append(f"{prefix}.output_contract: expected object")
+    else:
+        _expect_non_empty_string(output_contract.get("format"), f"{prefix}.output_contract.format", errors)
+        _expect_string_list(output_contract.get("required"), f"{prefix}.output_contract.required", errors)
+        _expect_string_list(
+            output_contract.get("machine_judgement"),
+            f"{prefix}.output_contract.machine_judgement",
+            errors,
+        )
+
+    _expect_string_list(contract.get("fail_closed_rules"), f"{prefix}.fail_closed_rules", errors)
+
+    test_mount = contract.get("test_mount")
+    if not isinstance(test_mount, dict):
+        errors.append(f"{prefix}.test_mount: expected object")
+    else:
+        _expect_repo_path(test_mount.get("test_doc"), f"{prefix}.test_mount.test_doc", errors)
+        _expect_repo_path(
+            test_mount.get("methodology_ref"),
+            f"{prefix}.test_mount.methodology_ref",
+            errors,
+        )
+
+    references = contract.get("references")
+    if references is None:
+        return
+    if not isinstance(references, dict):
+        errors.append(f"{prefix}.references: expected object when present")
+        return
+    for key, value in references.items():
+        _expect_repo_path(value, f"{prefix}.references.{key}", errors)
+
+
+def _load_capability_contract(skill_path: Path, errors: List[str]) -> Optional[Dict[str, Any]]:
+    content = skill_path.read_text(encoding="utf-8")
+    matches = list(CAPABILITY_BLOCK_RE.finditer(content))
+    if not matches:
+        errors.append(f"{skill_path}: missing '{CAPABILITY_HEADING}' yaml block")
+        return None
+    if len(matches) > 1:
+        errors.append(f"{skill_path}: multiple '{CAPABILITY_HEADING}' blocks found")
+        return None
+    if yaml is None:
+        errors.append(f"{skill_path}: PyYAML is required to parse capability contract")
+        return None
+
+    body = matches[0].group("body")
+    try:
+        payload = yaml.safe_load(body)
+    except Exception as exc:
+        errors.append(f"{skill_path}: capability contract yaml parse error: {exc}")
+        return None
+
+    if not isinstance(payload, dict):
+        errors.append(f"{skill_path}: capability contract must be a yaml object")
+        return None
+
+    _validate_capability_contract(payload, skill_path, errors)
+    return payload
+
+
+def validate_skill_capabilities(skill_entries: List[Dict[str, Any]], errors: List[str]) -> None:
+    skill_files = sorted(SKILLS_DIR.rglob("SKILL.md"))
+    if not skill_files:
+        errors.append(f"{SKILLS_DIR}: no SKILL.md found")
+        return
+
+    capabilities_by_relpath: Dict[str, Dict[str, Any]] = {}
+    for skill_path in skill_files:
+        rel_key = _skill_relative_key(skill_path)
+        contract = _load_capability_contract(skill_path, errors)
+        if contract is None:
+            continue
+        capabilities_by_relpath[rel_key] = contract
+
+    for entry in skill_entries:
+        rel_key = _skill_relative_key(Path(entry["path"]))
+        capability = capabilities_by_relpath.get(rel_key)
+        if capability is None:
+            errors.append(
+                f"skill_registry: {entry['skill_id']} missing capability contract at {entry['path']}"
+            )
+            continue
+
+        test_mount = capability.get("test_mount", {})
+        expected_test_doc = entry["tests"]["test_doc"]
+        expected_methodology = entry["tests"]["methodology_ref"]
+        if test_mount.get("test_doc") != expected_test_doc:
+            errors.append(
+                f"skill_registry: {entry['skill_id']} test_doc mismatch "
+                f"({test_mount.get('test_doc')!r} != {expected_test_doc!r})"
+            )
+        if test_mount.get("methodology_ref") != expected_methodology:
+            errors.append(
+                f"skill_registry: {entry['skill_id']} methodology_ref mismatch "
+                f"({test_mount.get('methodology_ref')!r} != {expected_methodology!r})"
+            )
+
+
 def _status_projectable_for_agent(status: str) -> bool:
     return status in {"draft", "review", "active"}
 
@@ -293,6 +470,7 @@ def validate_all_registries() -> Tuple[Dict[str, Any], Dict[str, Any], Dict[str,
         cross_validate_registries(
             payloads[AGENT_REGISTRY], payloads[SKILL_REGISTRY], payloads[PROCESS_REGISTRY], errors
         )
+        validate_skill_capabilities(payloads[SKILL_REGISTRY]["entries"], errors)
 
     if errors:
         raise ContractError("\n".join(errors))

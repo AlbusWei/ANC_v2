@@ -17,6 +17,40 @@ allowed-tools:
 
 基于 Objective 与 Spec 设计先行测试用例，为 TDD 阶段提供准入门禁。
 
+## Capability Contract (Machine-Readable)
+
+```yaml
+contract_version: 1.0.0
+objective_ref: obj-phase1-min-loop
+input_contract:
+  format: json
+  required:
+    - objective_ref
+    - spec_ref
+    - risk_focus
+  validation:
+    - objective_ref must be provided
+    - spec_ref must point to an existing spec
+    - risk_focus must include at least one P0 scenario
+output_contract:
+  format: markdown
+  required:
+    - objective_alignment
+    - test_cases
+    - evaluation_config
+  machine_judgement:
+    - each critical spec clause has at least one test case
+    - output includes explicit P0 test scenarios
+    - evaluation method is executable
+fail_closed_rules:
+  - missing objective_ref or spec_ref
+  - no P0 risk scenario in output
+  - output cannot be mapped to test template
+test_mount:
+  test_doc: /Users/albus/MyProjects/ANC_v2/skills/meta/test-designer/TEST.md
+  methodology_ref: /Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md
+```
+
 ## Input Contract
 
 - Format: json

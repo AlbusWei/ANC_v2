@@ -1,6 +1,6 @@
 # Registry 读写协议
 
-> 版本: v0.2.0 | SSOT 上游: [registry_contracts.md](../../architecture/registry_contracts.md)
+> 版本: v0.3.0 | SSOT 上游: [registry_contracts.md](../../architecture/registry_contracts.md)
 
 ## 概述
 
@@ -40,9 +40,10 @@
 
 1. 编辑 registry 条目与 `entry_contract`。
 2. 执行 `registry_contract_tool.py validate`。
-3. 执行 `registry_contract_tool.py generate-docs`（更新人类可读 schema）。
-4. 执行 `registry_contract_tool.py project-openclaw --all`（更新受管配置区）。
-5. 执行 `registry_contract_tool.py verify`（最终一致性校验）。
+3. 更新对应 `SKILL.md` 的 Capability Contract（若为 skill 资产）。
+4. 执行 `registry_contract_tool.py generate-docs`（更新人类可读 schema）。
+5. 执行 `registry_contract_tool.py project-openclaw --all`（更新受管配置区）。
+6. 执行 `registry_contract_tool.py verify`（最终一致性校验）。
 
 ### 写入约束
 
@@ -52,6 +53,8 @@
 4. `status` 变更必须遵循统一生命周期状态机。
 5. `agentskills.name` 必须等于 `entries[].name`。
 6. pin 模式下 `openclaw.entry_key` 必须分别等于 `skill_id` / `process_id`。
+7. `skills/**/SKILL.md` 必须包含 `Capability Contract (Machine-Readable)` YAML 块。
+8. 对已注册 skill，`SKILL.md` 中 `test_mount` 必须与 registry `tests` 一致。
 
 ## 投影协议（Registry -> OpenClaw）
 

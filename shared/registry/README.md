@@ -13,6 +13,8 @@
 2. `entry_contract` 是机器真相源，字段校验以 `entry_contract.properties` 为准。
 3. `entry_contract.additionalProperties` 必须为 `false`（Fail-Closed）。
 4. skill/process 条目必须与 `SKILL.md` frontmatter 对齐。
+5. `skills/**/SKILL.md` 必须包含 `Capability Contract (Machine-Readable)` YAML 块并可被工具解析。
+6. `skill_registry.entries[].tests` 必须与对应 `SKILL.md` 的 `test_mount` 一致。
 
 ## 与 OpenClaw 映射
 

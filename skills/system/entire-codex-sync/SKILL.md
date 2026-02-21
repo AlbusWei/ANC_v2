@@ -18,6 +18,42 @@ version: "0.1.0"
 
 为 Codex 场景提供 Entire 可追踪会话桥接能力，确保开发变更可生成 `Entire-Checkpoint` 并可回溯。
 
+## Capability Contract (Machine-Readable)
+
+```yaml
+contract_version: 1.0.0
+objective_ref: obj-phase1-entire-codex-sync
+input_contract:
+  format: command_invocation
+  required:
+    - prompt
+    - summary
+    - files
+  validation:
+    - current directory must be a git repository
+    - entire status must be enabled
+    - sync command must include prompt and summary
+output_contract:
+  format: git_trailer_and_local_artifacts
+  required:
+    - entire_checkpoint_trailer
+    - bridge_session_state
+    - bridge_transcript
+  machine_judgement:
+    - git log includes Entire-Checkpoint trailer after commit
+    - .entire/codex-bridge/session.json exists
+    - .entire/codex-bridge/transcript.json exists
+fail_closed_rules:
+  - entire command unavailable or not enabled
+  - repository preconditions fail
+  - bridge script returns non-zero exit
+test_mount:
+  test_doc: /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/TEST.md
+  methodology_ref: /Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md
+references:
+  bridge_contract: /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/references/bridge-contract.md
+```
+
 ## Input Contract
 
 - Format: command invocation
