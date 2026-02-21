@@ -1,6 +1,6 @@
 # 元流程清单与设计
 
-> 版本: v0.5.0 | 分类: Meta Processes | 最后更新: 2026-02-21
+> 版本: v0.6.0 | 分类: Meta Processes | 最后更新: 2026-02-21
 
 ## 已有元流程
 
@@ -51,6 +51,16 @@
 - design_doc: `docs/design/processes/refactor-process.md`
 - level: P4
 - phases: refactor-objective-and-scope -> refactor-spec-authoring -> refactor-test-preparation -> refactor-implementation -> refactor-gate-evaluation -> lifecycle-gate-sync
+
+### construction-plane-governance（本轮新增）
+
+- process_id: construction-plane-governance
+- canonical_path: `processes/meta/construction-plane-governance/`
+- design_doc: `docs/design/processes/construction-plane-governance-process.md`
+- protocol_ref: `docs/design/interfaces/openspec-collaboration-protocol.md`
+- owner: architect
+- level: P4
+- phases: scope-intake-and-baseline -> run-construction-audit -> execute-linked-updates -> sync-openspec-state -> verify-and-close
 
 ## 递归组合规则
 

@@ -1,0 +1,175 @@
+{
+  "process_id": "construction-plane-governance",
+  "version": "0.1.0",
+  "process_level": "P4",
+  "parent_process_id": null,
+  "composed_processes": [],
+  "lineage_policy": {
+    "stack_depth_limit": 8,
+    "context_isolation": "strict",
+    "output_handoff_mode": "contract_only"
+  },
+  "objective_ref": "obj-m6-construction-plane-governance",
+  "owner": "architect",
+  "priority": "P0",
+  "input_contract": {
+    "format": "json",
+    "required": [
+      "round_goal",
+      "change_scope_ref",
+      "changed_assets",
+      "linkage_targets",
+      "owner",
+      "openspec_ref"
+    ]
+  },
+  "output_contract": {
+    "format": "json",
+    "required": [
+      "m6_update_bundle_ref",
+      "linkage_report_ref",
+      "openspec_sync_ref",
+      "registry_verify_report_ref",
+      "construction_plane_delta_ref",
+      "open_questions_ref"
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1",
+      "name": "scope-intake-and-baseline",
+      "actor": "bpm",
+      "target_type": "skill",
+      "target_id": "system.ops.manual-task",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/construction-plane-governance-process.md#连续性与-phase-闭合",
+      "sipoc": {
+        "supplier": "initiator",
+        "input": "round_goal + change_scope_ref + changed_assets + openspec_ref",
+        "process": "baseline the scope and boundary for this governance round",
+        "output": "scope_baseline_ref",
+        "client": "p2"
+      },
+      "acceptance_criteria": "scope baseline includes module boundary and linkage targets"
+    },
+    {
+      "phase_id": "p2",
+      "name": "run-construction-audit",
+      "actor": "architect",
+      "target_type": "skill",
+      "target_id": "sys.arch.construction-audit",
+      "requires_spec": true,
+      "spec_ref": "docs/design/skills/construction-plane-skills.md#1-sysarchconstruction-audit",
+      "sipoc": {
+        "supplier": "p1",
+        "input": "scope_baseline_ref + linkage_targets",
+        "process": "audit linkage completeness and identify blocking gaps",
+        "output": "linkage_report_ref",
+        "client": "p3"
+      },
+      "acceptance_criteria": "linkage report contains missing items and blocking risks"
+    },
+    {
+      "phase_id": "p3",
+      "name": "execute-linked-updates",
+      "actor": "architect",
+      "target_type": "skill",
+      "target_id": "system.ops.manual-task",
+      "requires_spec": true,
+      "spec_ref": "docs/architecture/construction_plane.md#更新纪律",
+      "sipoc": {
+        "supplier": "p2",
+        "input": "linkage_report_ref + changed_assets",
+        "process": "apply linked updates across design docs, inventories and registries",
+        "output": "m6_update_bundle_ref",
+        "client": "p4"
+      },
+      "acceptance_criteria": "all required linked artifacts are updated in the same round"
+    },
+    {
+      "phase_id": "p4",
+      "name": "sync-openspec-state",
+      "actor": "architect",
+      "target_type": "skill",
+      "target_id": "system.integration.openspec-sync",
+      "requires_spec": true,
+      "spec_ref": "docs/design/interfaces/openspec-collaboration-protocol.md#41-完整-schema强制",
+      "sipoc": {
+        "supplier": "p3",
+        "input": "m6_update_bundle_ref + openspec_ref + decision_snapshot_ref",
+        "process": "execute openspec sync and generate machine-readable sync record",
+        "output": "openspec_sync_ref",
+        "client": "p5"
+      },
+      "acceptance_criteria": "openspec sync record is generated and schema-compliant"
+    },
+    {
+      "phase_id": "p5",
+      "name": "verify-and-close",
+      "actor": "bpm",
+      "target_type": "skill",
+      "target_id": "system.ops.manual-task",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/construction-plane-governance-process.md#fail-closed",
+      "sipoc": {
+        "supplier": "p4",
+        "input": "m6_update_bundle_ref + openspec_sync_ref",
+        "process": "run registry verification, update construction plane and close round with open questions",
+        "output": "registry_verify_report_ref + construction_plane_delta_ref + open_questions_ref",
+        "client": "initiator"
+      },
+      "acceptance_criteria": "registry verification passed and open questions are owned"
+    }
+  ],
+  "control_flow": [
+    {
+      "from": "p1",
+      "to": "p2",
+      "on": "success"
+    },
+    {
+      "from": "p2",
+      "to": "p3",
+      "on": "success"
+    },
+    {
+      "from": "p3",
+      "to": "p4",
+      "on": "success"
+    },
+    {
+      "from": "p4",
+      "to": "p5",
+      "on": "success"
+    },
+    {
+      "from": "p5",
+      "to": "end",
+      "on": "success"
+    }
+  ],
+  "fail_policy": {
+    "mode": "fail_closed",
+    "retry": {
+      "max_attempts": 1
+    },
+    "escalation_chain": [
+      "actor",
+      "owner",
+      "bpm",
+      "admin",
+      "human"
+    ]
+  },
+  "evidence_policy": {
+    "required_fields": [
+      "timestamp",
+      "phase_id",
+      "actor",
+      "input_ref",
+      "output_ref",
+      "decision",
+      "reason"
+    ]
+  }
+}

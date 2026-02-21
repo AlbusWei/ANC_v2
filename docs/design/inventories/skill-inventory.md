@@ -1,6 +1,6 @@
 # Skill 全量清单
 
-> 版本: v0.7.0 | SSOT: `shared/registry/skill_registry.json`
+> 版本: v0.9.0 | SSOT: `shared/registry/skill_registry.json`
 
 ## 已注册 Skill
 
@@ -22,6 +22,8 @@
 16. sys.bpm.evidence-recorder
 17. sys.bpm.catchup-scheduler
 18. sys.bpm.escalation-handler
+19. sys.arch.construction-audit
+20. system.integration.openspec-sync
 
 ## 规划 Skill（节选）
 
@@ -50,6 +52,10 @@ BPM Runtime 技能包设计文档：
 Self-Development 技能包设计文档：
 
 - `docs/design/skills/self-development-skills.md`
+
+Construction Plane 技能包设计文档：
+
+- `docs/design/skills/construction-plane-skills.md`
 
 ## 生命周期规则
 

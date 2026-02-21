@@ -35,12 +35,16 @@ BPM_PROTOCOL_PATH = ROOT / "docs" / "design" / "interfaces" / "bpm-actor-protoco
 CONTEXT_SCHEMAS_PATH = ROOT / "docs" / "design" / "data-models" / "context-schemas.md"
 PROCESS_SCHEMAS_PATH = ROOT / "docs" / "design" / "data-models" / "process-instance-schemas.md"
 ROLE_HANDOFF_PATH = ROOT / "docs" / "design" / "interfaces" / "role-handoff-protocol.md"
+OPENSPEC_PROTOCOL_PATH = ROOT / "docs" / "design" / "interfaces" / "openspec-collaboration-protocol.md"
+OPENSPEC_SCHEMA_PATH = ROOT / "docs" / "design" / "data-models" / "openspec-collaboration-schema.json"
+M6_MANIFEST_PATH = ROOT / "processes" / "meta" / "construction-plane-governance" / "process.json"
 PROCESS_MANIFESTS = [
     ROOT / "processes" / "meta" / "development-process" / "process.json",
     ROOT / "processes" / "meta" / "full-development" / "process.json",
     ROOT / "processes" / "meta" / "hotfix" / "process.json",
     ROOT / "processes" / "meta" / "refactor" / "process.json",
     ROOT / "processes" / "meta" / "governed-config-change" / "process.json",
+    ROOT / "processes" / "meta" / "construction-plane-governance" / "process.json",
     ROOT / "processes" / "control" / "trigger-schedule-runtime" / "process.json",
     ROOT / "processes" / "control" / "trigger-event-runtime" / "process.json",
 ]
@@ -795,6 +799,140 @@ def check_protocol_consistency(
         raise ContractError("\n".join(errors))
 
 
+def check_openspec_collaboration_consistency(
+    skills_payload: Dict[str, Any],
+    processes_payload: Dict[str, Any],
+) -> None:
+    errors: List[str] = []
+
+    if not OPENSPEC_SCHEMA_PATH.exists():
+        errors.append(f"{OPENSPEC_SCHEMA_PATH}: missing schema file")
+    else:
+        schema_payload = load_json(OPENSPEC_SCHEMA_PATH)
+        if not isinstance(schema_payload, dict):
+            errors.append(f"{OPENSPEC_SCHEMA_PATH}: schema root must be object")
+        else:
+            required_top = ["$schema", "$id", "type", "required", "properties", "additionalProperties"]
+            for key in required_top:
+                if key not in schema_payload:
+                    errors.append(f"{OPENSPEC_SCHEMA_PATH}: missing top-level key {key!r}")
+
+            if schema_payload.get("type") != "object":
+                errors.append(f"{OPENSPEC_SCHEMA_PATH}: type must be 'object'")
+            if schema_payload.get("additionalProperties") is not False:
+                errors.append(f"{OPENSPEC_SCHEMA_PATH}: additionalProperties must be false")
+
+            expected_required = {
+                "record_id",
+                "round_goal",
+                "module_scope",
+                "owner",
+                "openspec_ref",
+                "anc_design_refs",
+                "decision_snapshot_ref",
+                "sync_status",
+                "sync_timestamp",
+                "sync_actor",
+                "trigger_mode",
+                "inspection_profile",
+                "risk_level",
+                "conflict_state",
+                "evidence_bundle",
+                "sync_actions",
+            }
+            required_fields = set(schema_payload.get("required", []))
+            if required_fields != expected_required:
+                errors.append(
+                    f"{OPENSPEC_SCHEMA_PATH}: required fields must exactly match complete schema set "
+                    f"(expected {sorted(expected_required)!r}, got {sorted(required_fields)!r})"
+                )
+
+            props = schema_payload.get("properties", {})
+            if not isinstance(props, dict):
+                errors.append(f"{OPENSPEC_SCHEMA_PATH}: properties must be object")
+            else:
+                sync_status_enum = props.get("sync_status", {}).get("enum", [])
+                if sync_status_enum != ["in_sync", "needs_sync", "conflict", "blocked"]:
+                    errors.append(
+                        f"{OPENSPEC_SCHEMA_PATH}: sync_status enum must be "
+                        "['in_sync','needs_sync','conflict','blocked']"
+                    )
+
+                trigger_mode_enum = props.get("trigger_mode", {}).get("enum", [])
+                if trigger_mode_enum != ["change_triggered", "analyst_inspection"]:
+                    errors.append(
+                        f"{OPENSPEC_SCHEMA_PATH}: trigger_mode enum must be "
+                        "['change_triggered','analyst_inspection']"
+                    )
+
+                conflict_required = props.get("conflict_state", {}).get("required", [])
+                if set(conflict_required) != {"has_conflict", "resolved", "resolution_ref"}:
+                    errors.append(
+                        f"{OPENSPEC_SCHEMA_PATH}: conflict_state.required must include "
+                        "'has_conflict', 'resolved', 'resolution_ref'"
+                    )
+
+                evidence_required = props.get("evidence_bundle", {}).get("required", [])
+                if set(evidence_required) != {
+                    "openspec_linkage_ref",
+                    "anc_delta_index_ref",
+                    "sync_check_report_ref",
+                    "status_report_ref",
+                }:
+                    errors.append(
+                        f"{OPENSPEC_SCHEMA_PATH}: evidence_bundle.required must include all evidence refs"
+                    )
+
+    if not OPENSPEC_PROTOCOL_PATH.exists():
+        errors.append(f"{OPENSPEC_PROTOCOL_PATH}: missing protocol document")
+    else:
+        protocol_text = OPENSPEC_PROTOCOL_PATH.read_text(encoding="utf-8")
+        if "docs/design/data-models/openspec-collaboration-schema.json" not in protocol_text:
+            errors.append(f"{OPENSPEC_PROTOCOL_PATH}: must reference OpenSpec collaboration schema path")
+
+    skill_ids = {entry["skill_id"] for entry in skills_payload.get("entries", [])}
+    for required_skill in ["sys.arch.construction-audit", "system.integration.openspec-sync"]:
+        if required_skill not in skill_ids:
+            errors.append(f"skill_registry: missing required OpenSpec governance skill {required_skill!r}")
+
+    process_entries = {entry["process_id"]: entry for entry in processes_payload.get("entries", [])}
+    m6_entry = process_entries.get("construction-plane-governance")
+    if m6_entry is None:
+        errors.append("process_registry: missing required process 'construction-plane-governance'")
+    else:
+        if m6_entry.get("owner") != "architect":
+            errors.append("process_registry: construction-plane-governance owner must be 'architect'")
+        if m6_entry.get("phase_count", 0) < 5:
+            errors.append("process_registry: construction-plane-governance phase_count must be >= 5")
+
+    if not M6_MANIFEST_PATH.exists():
+        errors.append(f"{M6_MANIFEST_PATH}: missing process manifest")
+    else:
+        m6_manifest = load_json(M6_MANIFEST_PATH)
+        input_required = set(m6_manifest.get("input_contract", {}).get("required", []))
+        output_required = set(m6_manifest.get("output_contract", {}).get("required", []))
+        if "openspec_ref" not in input_required:
+            errors.append(f"{M6_MANIFEST_PATH}: input_contract.required must include 'openspec_ref'")
+        if "openspec_sync_ref" not in output_required:
+            errors.append(f"{M6_MANIFEST_PATH}: output_contract.required must include 'openspec_sync_ref'")
+
+        phases = m6_manifest.get("phases", [])
+        has_openspec_phase = any(
+            isinstance(phase, dict)
+            and phase.get("target_type") == "skill"
+            and phase.get("target_id") == "system.integration.openspec-sync"
+            for phase in phases
+        )
+        if not has_openspec_phase:
+            errors.append(
+                f"{M6_MANIFEST_PATH}: phases must include a skill phase targeting "
+                "'system.integration.openspec-sync'"
+            )
+
+    if errors:
+        raise ContractError("\n".join(errors))
+
+
 def _schema_type(schema: Dict[str, Any]) -> str:
     t = schema.get("type", "any")
     if isinstance(t, list):
@@ -1169,6 +1307,7 @@ def _run_project_cmd(args: argparse.Namespace) -> int:
 def _run_protocol_consistency_cmd(_args: argparse.Namespace) -> int:
     _, skills_payload, processes_payload = validate_all_registries()
     check_protocol_consistency(skills_payload, processes_payload)
+    check_openspec_collaboration_consistency(skills_payload, processes_payload)
     print("Protocol consistency passed.")
     return 0
 
@@ -1176,6 +1315,7 @@ def _run_protocol_consistency_cmd(_args: argparse.Namespace) -> int:
 def _run_verify_cmd(_args: argparse.Namespace) -> int:
     agents_payload, skills_payload, processes_payload = validate_all_registries()
     check_protocol_consistency(skills_payload, processes_payload)
+    check_openspec_collaboration_consistency(skills_payload, processes_payload)
 
     docs_content = generate_docs(agents_payload, skills_payload, processes_payload)
     docs_changed = write_if_changed(DOC_PATH, docs_content, check=True)
