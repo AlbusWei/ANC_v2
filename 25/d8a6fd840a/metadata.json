@@ -3,7 +3,7 @@
   "checkpoint_id": "25d8a6fd840a",
   "strategy": "manual-commit",
   "branch": "codex/review-processes-business",
-  "checkpoints_count": 4,
+  "checkpoints_count": 5,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/design/business/README.md",
@@ -46,6 +46,13 @@
       "context": "/25/d8a6fd840a/3/context.md",
       "content_hash": "/25/d8a6fd840a/3/content_hash.txt",
       "prompt": "/25/d8a6fd840a/3/prompt.txt"
+    },
+    {
+      "metadata": "/25/d8a6fd840a/4/metadata.json",
+      "transcript": "/25/d8a6fd840a/4/full.jsonl",
+      "context": "/25/d8a6fd840a/4/context.md",
+      "content_hash": "/25/d8a6fd840a/4/content_hash.txt",
+      "prompt": "/25/d8a6fd840a/4/prompt.txt"
     }
   ],
   "token_usage": {
