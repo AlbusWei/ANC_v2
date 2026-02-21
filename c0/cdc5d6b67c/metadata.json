@@ -1,0 +1,54 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "c0cdc5d6b67c",
+  "strategy": "manual-commit",
+  "branch": "codex/review-agents",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "agents/app/entry/personal-assistant/AGENTS.md",
+    "agents/app/entry/personal-assistant/IDENTITY.md",
+    "agents/app/entry/personal-assistant/MEMORY.md",
+    "agents/app/entry/personal-assistant/SOUL.md",
+    "agents/app/entry/personal-assistant/TOOLS.md",
+    "agents/app/entry/personal-assistant/USER.md",
+    "agents/app/entry/personal-assistant/memory/2026-02-20.md",
+    "agents/control/BPM/AGENTS.md",
+    "agents/kernel/admin/AGENTS.md",
+    "config/README.md",
+    "config/openclaw.phase05.with-entry.fragment.json",
+    "docs/architecture/construction_plane.md",
+    "docs/architecture/openclaw_interface.md",
+    "docs/design/agents/agent-collaboration-patterns.md",
+    "docs/design/agents/app/README.md",
+    "docs/design/agents/app/_placeholder.md",
+    "docs/design/agents/app/entry/personal-assistant.md",
+    "docs/design/agents/control/bpm.md",
+    "docs/design/agents/kernel/admin.md",
+    "docs/design/inventories/agent-inventory.md",
+    "docs/design/inventories/process-inventory.md",
+    "docs/design/processes/governance-processes.md",
+    "docs/design/processes/process-patterns.md",
+    "processes/README.md",
+    "processes/meta/governed-config-change/PROCESS.md",
+    "processes/meta/governed-config-change/SKILL.md",
+    "processes/meta/governed-config-change/process.json",
+    "shared/registry/agent_directory.json",
+    "shared/registry/process_registry.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/c0/cdc5d6b67c/0/metadata.json",
+      "transcript": "/c0/cdc5d6b67c/0/full.jsonl",
+      "context": "/c0/cdc5d6b67c/0/context.md",
+      "content_hash": "/c0/cdc5d6b67c/0/content_hash.txt",
+      "prompt": "/c0/cdc5d6b67c/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
