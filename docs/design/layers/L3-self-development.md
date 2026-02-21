@@ -1,6 +1,6 @@
 # L3 — 自开发层详细设计
 
-> 版本: v0.2.0
+> 版本: v0.3.0 | 最后更新: 2026-02-21
 
 ## 层级定位
 
@@ -19,8 +19,9 @@
 ## 核心流程
 
 1. development-process（canonical: `processes/meta/development-process/`）
-2. full-development（规划中）
-3. hotfix/refactor（规划中）
+2. full-development（canonical: `processes/meta/full-development/`）
+3. hotfix（canonical: `processes/meta/hotfix/`）
+4. refactor（canonical: `processes/meta/refactor/`）
 
 ## 约束
 

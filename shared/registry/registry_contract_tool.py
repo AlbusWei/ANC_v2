@@ -37,6 +37,9 @@ PROCESS_SCHEMAS_PATH = ROOT / "docs" / "design" / "data-models" / "process-insta
 ROLE_HANDOFF_PATH = ROOT / "docs" / "design" / "interfaces" / "role-handoff-protocol.md"
 PROCESS_MANIFESTS = [
     ROOT / "processes" / "meta" / "development-process" / "process.json",
+    ROOT / "processes" / "meta" / "full-development" / "process.json",
+    ROOT / "processes" / "meta" / "hotfix" / "process.json",
+    ROOT / "processes" / "meta" / "refactor" / "process.json",
     ROOT / "processes" / "meta" / "governed-config-change" / "process.json",
     ROOT / "processes" / "control" / "trigger-schedule-runtime" / "process.json",
     ROOT / "processes" / "control" / "trigger-event-runtime" / "process.json",

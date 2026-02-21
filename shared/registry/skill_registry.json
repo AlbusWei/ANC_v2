@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "skill_registry",
-  "updated_at": "2026-02-21T23:59:00Z",
+  "updated_at": "2026-02-21T23:59:59Z",
   "entry_contract": {
     "required": [
       "skill_id",
@@ -578,6 +578,159 @@
       },
       "tests": {
         "test_doc": "skills/system/manual-task/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "meta.arch.objective-writer",
+      "name": "objective-writer",
+      "path": "skills/meta/objective-writer/SKILL.md",
+      "layer": "meta",
+      "owner": "architect",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "objective-writer",
+        "description": "Draft objective contracts with measurable success criteria and fail-closed boundaries",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-skills",
+        "bundle_source": "skills/meta",
+        "entry_key": "meta.arch.objective-writer",
+        "source": "skills/meta/objective-writer",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/meta/objective-writer/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "meta.arch.agent-creator",
+      "name": "agent-creator",
+      "path": "skills/meta/agent-creator/SKILL.md",
+      "layer": "meta",
+      "owner": "architect",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "agent-creator",
+        "description": "Create or update agent design assets with lifecycle and registry-ready contracts",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-skills",
+        "bundle_source": "skills/meta",
+        "entry_key": "meta.arch.agent-creator",
+        "source": "skills/meta/agent-creator",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/meta/agent-creator/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "meta.arch.process-creator",
+      "name": "process-creator",
+      "path": "skills/meta/process-creator/SKILL.md",
+      "layer": "meta",
+      "owner": "architect",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "process-creator",
+        "description": "Create process assets with continuity and phase-closure constraints",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-skills",
+        "bundle_source": "skills/meta",
+        "entry_key": "meta.arch.process-creator",
+        "source": "skills/meta/process-creator",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/meta/process-creator/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "meta.arch.template-validator",
+      "name": "template-validator",
+      "path": "skills/meta/template-validator/SKILL.md",
+      "layer": "meta",
+      "owner": "architect",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "template-validator",
+        "description": "Validate templates and contract bundles before lifecycle and registry handoff",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-skills",
+        "bundle_source": "skills/meta",
+        "entry_key": "meta.arch.template-validator",
+        "source": "skills/meta/template-validator",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/meta/template-validator/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "meta.arch.skill-creator",
+      "name": "skill-creator",
+      "path": "skills/skill-creator/SKILL.md",
+      "layer": "meta",
+      "owner": "architect",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "skill-creator",
+        "description": "创建或更新技能资产，确保与 Objective->Spec->Test->Development 链路及 OpenClaw/Agent Skills 规范对齐。",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "pin",
+        "entry_key": "meta.arch.skill-creator",
+        "source": "skills/skill-creator",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "tests/skill-creator/TEST.md",
         "methodology_ref": "docs/architecture/test_methodology.md"
       }
     }

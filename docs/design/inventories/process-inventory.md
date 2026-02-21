@@ -1,12 +1,15 @@
 # Process 全量清单
 
-> 版本: v0.7.0 | SSOT 上游: `shared/registry/process_registry.json`
+> 版本: v0.8.0 | SSOT 上游: `shared/registry/process_registry.json`
 
 ## Canonical Process Paths
 
 | process_id | canonical_path | status |
 |---|---|---|
 | development-process | `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/` | canonical |
+| full-development | `/Users/albus/MyProjects/ANC_v2/processes/meta/full-development/` | canonical |
+| hotfix | `/Users/albus/MyProjects/ANC_v2/processes/meta/hotfix/` | canonical |
+| refactor | `/Users/albus/MyProjects/ANC_v2/processes/meta/refactor/` | canonical |
 | governed-config-change | `/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change/` | canonical |
 | trigger-schedule-runtime | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-schedule-runtime/` | canonical |
 | trigger-event-runtime | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-event-runtime/` | canonical |
@@ -22,6 +25,9 @@
 | process_id | 名称 | 类型 | owner | 阶段数 | 状态 | 路径 |
 |---|---|---|---|---|---|---|
 | development-process | development-process | 复合 | bpm | 4 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/` |
+| full-development | full-development | 复合 | bpm | 8 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/full-development/` |
+| hotfix | hotfix | 复合 | bpm | 7 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/hotfix/` |
+| refactor | refactor | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/refactor/` |
 | governed-config-change | governed-config-change | 复合 | bpm | 5 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change/` |
 | trigger-schedule-runtime | trigger-schedule-runtime | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-schedule-runtime/` |
 | trigger-event-runtime | trigger-event-runtime | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-event-runtime/` |
@@ -32,9 +38,6 @@
 |---|---|---|---|
 | quality-gate-preparation | 复合 | Phase 1 | 开发前质量门禁准备流程（AP-005/018/019） |
 | quality-gate-evaluation | 复合 | Phase 1 | 实现后质量评测与总聚合流程（AP-007/008/009/020） |
-| full-development | 复合 | Phase 2 | 全链路开发流程 |
-| hotfix | 复合 | Phase 2 | 紧急修复 |
-| refactor | 复合 | Phase 2 | 重构流程 |
 
 ## 规划中 Process — 治理流程
 
@@ -68,6 +71,9 @@
 5. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/trigger-event-runtime-process.md`
 6. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/trigger-runtime-supervisor-pattern.md`
 7. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/runtime-policy-calibration-process.md`
+8. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/full-development-process.md`
+9. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/hotfix-process.md`
+10. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/refactor-process.md`
 
 新增策略参考文档：
 

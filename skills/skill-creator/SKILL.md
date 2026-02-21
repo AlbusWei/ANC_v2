@@ -2,9 +2,13 @@
 name: "skill-creator"
 description: "创建或更新技能资产，确保与 Objective->Spec->Test->Development 链路及 OpenClaw/Agent Skills 规范对齐。"
 license: "Apache-2.0"
-compatibility: "openclaw>=0.0.0; agentskills>=0.2"
-metadata: {"category":"meta","owner":"architect","stability":"draft"}
-allowed-tools: "Read Write Bash"
+compatibility:
+  openclaw: ">=2026.2"
+  agentskills: ">=0.2"
+allowed-tools:
+  - Read
+  - Write
+  - Bash
 version: "0.1.0"
 ---
 
