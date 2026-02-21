@@ -824,6 +824,7 @@ def check_openspec_collaboration_consistency(
 
             expected_required = {
                 "record_id",
+                "round_id",
                 "round_goal",
                 "module_scope",
                 "owner",
@@ -837,6 +838,8 @@ def check_openspec_collaboration_consistency(
                 "inspection_profile",
                 "risk_level",
                 "conflict_state",
+                "checkpoint_count",
+                "commit_count",
                 "evidence_bundle",
                 "sync_actions",
             }
@@ -851,6 +854,13 @@ def check_openspec_collaboration_consistency(
             if not isinstance(props, dict):
                 errors.append(f"{OPENSPEC_SCHEMA_PATH}: properties must be object")
             else:
+                round_id_pattern = props.get("round_id", {}).get("pattern")
+                if round_id_pattern != "^R-\\d{8}-M6-[a-z0-9-]+-\\d{2}$":
+                    errors.append(
+                        f"{OPENSPEC_SCHEMA_PATH}: round_id pattern must be "
+                        "'^R-\\\\d{8}-M6-[a-z0-9-]+-\\\\d{2}$'"
+                    )
+
                 sync_status_enum = props.get("sync_status", {}).get("enum", [])
                 if sync_status_enum != ["in_sync", "needs_sync", "conflict", "blocked"]:
                     errors.append(
@@ -878,6 +888,7 @@ def check_openspec_collaboration_consistency(
                     "anc_delta_index_ref",
                     "sync_check_report_ref",
                     "status_report_ref",
+                    "round_evidence_log_ref",
                 }:
                     errors.append(
                         f"{OPENSPEC_SCHEMA_PATH}: evidence_bundle.required must include all evidence refs"
@@ -911,10 +922,16 @@ def check_openspec_collaboration_consistency(
         m6_manifest = load_json(M6_MANIFEST_PATH)
         input_required = set(m6_manifest.get("input_contract", {}).get("required", []))
         output_required = set(m6_manifest.get("output_contract", {}).get("required", []))
+        if "round_id" not in input_required:
+            errors.append(f"{M6_MANIFEST_PATH}: input_contract.required must include 'round_id'")
         if "openspec_ref" not in input_required:
             errors.append(f"{M6_MANIFEST_PATH}: input_contract.required must include 'openspec_ref'")
         if "openspec_sync_ref" not in output_required:
             errors.append(f"{M6_MANIFEST_PATH}: output_contract.required must include 'openspec_sync_ref'")
+        if "round_evidence_log_ref" not in output_required:
+            errors.append(f"{M6_MANIFEST_PATH}: output_contract.required must include 'round_evidence_log_ref'")
+        if "round_close_summary_ref" not in output_required:
+            errors.append(f"{M6_MANIFEST_PATH}: output_contract.required must include 'round_close_summary_ref'")
 
         phases = m6_manifest.get("phases", [])
         has_openspec_phase = any(

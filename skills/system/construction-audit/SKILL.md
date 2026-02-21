@@ -25,6 +25,7 @@ objective_ref: obj-m6-construction-plane-governance
 input_contract:
   format: json
   required:
+    - round_id
     - change_scope_ref
     - changed_assets
     - linkage_targets
@@ -43,7 +44,6 @@ output_contract:
     - missing_items
     - blocking_risks
     - recommended_actions
-    - openspec_sync_ref
   machine_judgement:
     - linkage_report_ref is present and reachable
     - missing_items and blocking_risks are arrays

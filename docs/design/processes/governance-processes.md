@@ -102,11 +102,11 @@ owner：`architect`（语义），`bpm`（编排执行）
 
 阶段：
 
-1. scope-intake-and-baseline（manual-task）
-2. run-construction-audit（sys.arch.construction-audit）
-3. execute-linked-updates（manual-task）
-4. sync-openspec-state（system.integration.openspec-sync）
-5. verify-and-close（manual-task）
+1. scope-intake-and-baseline（AP-032 / manual-task）
+2. run-construction-audit（AP-033 / sys.arch.construction-audit）
+3. execute-linked-updates（AP-034 / manual-task）
+4. sync-openspec-state（AP-035 / system.integration.openspec-sync）
+5. verify-and-close（AP-036 / manual-task）
 
 关键约束：
 
@@ -117,6 +117,7 @@ owner：`architect`（语义），`bpm`（编排执行）
 5. `registry_contract_tool.py verify` 失败时禁止关闭回合。
 6. 开放问题必须落盘 owner 与下一步动作。
 7. 巡检采用“变更触发 + system-analyst 可调频巡检”，不固定周频。
+8. 回合契约固定为 `1 round = 1 OpenSpec change = N Entire checkpoints = N commits`。
 
 ## trigger-runtime-supervisor（P5 模式，规划）
 

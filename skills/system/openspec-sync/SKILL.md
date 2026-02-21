@@ -25,19 +25,26 @@ objective_ref: obj-m6-construction-plane-governance
 input_contract:
   format: json
   required:
+    - round_id
+    - round_goal
     - openspec_ref
     - anc_design_refs
     - decision_snapshot_ref
     - sync_actor
     - trigger_mode
     - risk_level
+    - checkpoint_count
+    - commit_count
+    - round_evidence_log_ref
     - output_ref
   validation:
+    - round_id must match ^R-\\d{8}-M6-[a-z0-9-]+-\\d{2}$
     - openspec_ref must resolve to an OpenSpec change or spec item
     - anc_design_refs must be non-empty repo-relative paths
     - decision_snapshot_ref must be reachable
     - trigger_mode must be change_triggered or analyst_inspection
     - risk_level must be low or medium or high or critical
+    - checkpoint_count must equal commit_count
 output_contract:
   format: json
   required:
@@ -54,6 +61,7 @@ fail_closed_rules:
   - openspec project not initialized
   - openspec validation failed in strict mode
   - required sync fields missing in output record
+  - checkpoint_count not equal commit_count
 test_mount:
   test_doc: skills/system/openspec-sync/TEST.md
   methodology_ref: docs/architecture/test_methodology.md

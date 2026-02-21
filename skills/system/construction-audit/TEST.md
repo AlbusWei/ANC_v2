@@ -10,7 +10,7 @@
 
 - Type: Objective
 - Priority: P0
-- Input: 提供完整 `change_scope_ref/changed_assets/linkage_targets/round_goal`
+- Input: 提供完整 `round_id/change_scope_ref/changed_assets/linkage_targets/round_goal`
 - Expected: 产出 `linkage_report_ref`，`missing_items=[]`，`blocking_risks=[]`
 - Evaluation Method: Exact Match
 
