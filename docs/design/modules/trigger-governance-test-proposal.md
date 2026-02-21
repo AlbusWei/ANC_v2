@@ -96,4 +96,4 @@
 2. 在 M2/M4 文档固化运行时/策略治理拆分。
 3. 在层间接口契约补充 Trigger/Hook 入口与 Fail-Closed 约束。
 4. 使用评审清单模板执行逐项审查：
-`/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/trigger-governance-review-checklist.md`
+`../review-layers-modules/docs/design/modules/trigger-governance-review-checklist.md`

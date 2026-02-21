@@ -1,6 +1,6 @@
 # Agent 全量清单
 
-> 版本: v0.4.0 | SSOT: `/Users/albus/MyProjects/ANC_v2/shared/registry/agent_directory.json`
+> 版本: v0.4.0 | SSOT: `shared/registry/agent_directory.json`
 
 ## 已注册 Agent
 

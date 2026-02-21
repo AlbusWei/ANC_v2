@@ -28,13 +28,13 @@
       },
       "skill_path": {
         "type": "string",
-        "pattern": "^/Users/albus/MyProjects/ANC_v2/.+",
-        "description": "absolute process SKILL.md path"
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$",
+        "description": "repo-relative process SKILL.md path"
       },
       "manifest_path": {
         "type": "string",
-        "pattern": "^/Users/albus/MyProjects/ANC_v2/.+",
-        "description": "absolute process manifest path"
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$",
+        "description": "repo-relative process manifest path"
       },
       "objective_ref": {
         "type": "string",
@@ -88,7 +88,7 @@
           },
           "source": {
             "type": "string",
-            "pattern": "^/Users/albus/MyProjects/ANC_v2/.+",
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$",
             "description": "OpenClaw source path"
           },
           "bundle_key": {
@@ -97,7 +97,7 @@
           },
           "bundle_source": {
             "type": "string",
-            "pattern": "^/Users/albus/MyProjects/ANC_v2/.+",
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$",
             "description": "bundle source when projection_mode=bundle"
           },
           "allow_draft_projection": {
@@ -115,8 +115,8 @@
     {
       "process_id": "development-process",
       "skill_name": "development-process",
-      "skill_path": "/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/SKILL.md",
-      "manifest_path": "/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/process.json",
+      "skill_path": "processes/meta/development-process/SKILL.md",
+      "manifest_path": "processes/meta/development-process/process.json",
       "objective_ref": "obj-phase1-min-loop",
       "owner": "bpm",
       "version": "0.1.0",
@@ -125,17 +125,17 @@
       "openclaw": {
         "projection_mode": "bundle",
         "bundle_key": "anc-v2-meta-processes",
-        "bundle_source": "/Users/albus/MyProjects/ANC_v2/processes/meta",
+        "bundle_source": "processes/meta",
         "entry_key": "development-process",
-        "source": "/Users/albus/MyProjects/ANC_v2/processes/meta/development-process",
+        "source": "processes/meta/development-process",
         "allow_draft_projection": true
       }
     },
     {
       "process_id": "governed-config-change",
       "skill_name": "governed-config-change",
-      "skill_path": "/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change/SKILL.md",
-      "manifest_path": "/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change/process.json",
+      "skill_path": "processes/meta/governed-config-change/SKILL.md",
+      "manifest_path": "processes/meta/governed-config-change/process.json",
       "objective_ref": "obj-governed-openclaw-config-change",
       "owner": "bpm",
       "version": "0.1.0",
@@ -144,9 +144,9 @@
       "openclaw": {
         "projection_mode": "bundle",
         "bundle_key": "anc-v2-meta-processes",
-        "bundle_source": "/Users/albus/MyProjects/ANC_v2/processes/meta",
+        "bundle_source": "processes/meta",
         "entry_key": "governed-config-change",
-        "source": "/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change",
+        "source": "processes/meta/governed-config-change",
         "allow_draft_projection": true
       }
     }

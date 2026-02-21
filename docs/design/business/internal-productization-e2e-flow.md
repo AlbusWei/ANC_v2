@@ -12,7 +12,7 @@
 
 ## 规范绑定
 
-1. 义务模型与触发规则来源：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/development-loop-core-standard.md`
+1. 义务模型与触发规则来源：`docs/design/processes/development-loop-core-standard.md`
 2. 建议流程类型：`dev.internal-productization`
 
 ## 阶段

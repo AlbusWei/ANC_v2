@@ -36,4 +36,4 @@
 ## 当前测试提案锚点
 
 触发治理测试提案见：
-`/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/trigger-governance-test-proposal.md`
+`../review-layers-modules/docs/design/modules/trigger-governance-test-proposal.md`

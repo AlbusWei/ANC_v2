@@ -9,5 +9,5 @@
 
 ## Runtime Paths
 
-- process_instances: /Users/albus/MyProjects/ANC_v2/agents/control/BPM/memory/process_instances
-- archive: /Users/albus/MyProjects/ANC_v2/agents/control/BPM/memory/process_instances/archive
+- process_instances: agents/control/BPM/memory/process_instances
+- archive: agents/control/BPM/memory/process_instances/archive

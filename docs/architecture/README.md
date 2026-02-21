@@ -4,21 +4,21 @@
 
 ## 文档定位
 
-`/Users/albus/MyProjects/ANC_v2/docs/architecture/system_overview.md` 是架构唯一信源（SSOT）。
+`docs/architecture/system_overview.md` 是架构唯一信源（SSOT）。
 其余文档是执行细则、协议和协作视图，不得与 SSOT 冲突。
 
-项目入口文件：`/Users/albus/MyProjects/ANC_v2/AGENTS.md`。
+项目入口文件：`AGENTS.md`。
 
 ## 阅读顺序
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/architecture/system_overview.md`
-2. `/Users/albus/MyProjects/ANC_v2/docs/architecture/process_architecture.md`
-3. `/Users/albus/MyProjects/ANC_v2/docs/architecture/openclaw_interface.md`
-4. `/Users/albus/MyProjects/ANC_v2/docs/architecture/registry_contracts.md`
-5. `/Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md`
-6. `/Users/albus/MyProjects/ANC_v2/docs/architecture/context_protocol.md`
-7. `/Users/albus/MyProjects/ANC_v2/docs/architecture/construction_plane.md`
-8. `/Users/albus/MyProjects/ANC_v2/docs/architecture/glossary.md`
+1. `docs/architecture/system_overview.md`
+2. `docs/architecture/process_architecture.md`
+3. `docs/architecture/openclaw_interface.md`
+4. `docs/architecture/registry_contracts.md`
+5. `docs/architecture/test_methodology.md`
+6. `docs/architecture/context_protocol.md`
+7. `docs/architecture/construction_plane.md`
+8. `docs/architecture/glossary.md`
 
 ## 变更规则
 
@@ -38,6 +38,6 @@ ANC v2 当前目标是先完成可执行约束体系，再进入能力实现，�
 
 架构文档定义"是什么"和"为什么"，详细设计文档定义"具体包含什么"和"怎么交互"。
 
-详细设计索引：`/Users/albus/MyProjects/ANC_v2/docs/design/README.md`
+详细设计索引：`docs/design/README.md`
 
 包含：六层详细设计、六模块详细设计、Agent/Skill/Process 详细设计、数据模型、接口协议、资产清单。

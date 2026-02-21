@@ -1,6 +1,6 @@
 # BPM ↔ Actor 通信协议
 
-> 版本: v0.2.0 | SSOT 上游: `/Users/albus/MyProjects/ANC_v2/docs/architecture/process_architecture.md`
+> 版本: v0.2.0 | SSOT 上游: `docs/architecture/process_architecture.md`
 
 ## 概述
 

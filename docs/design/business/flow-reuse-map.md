@@ -12,7 +12,7 @@
 
 ## 规则
 
-1. 外部流程复用必须以 `/Users/albus/MyProjects/ANC_v2/docs/design/processes/development-loop-core-standard.md` 为规范真相源。
+1. 外部流程复用必须以 `docs/design/processes/development-loop-core-standard.md` 为规范真相源。
 2. internal 映射仅为示例，不构成唯一依赖。
 3. 外部流程复用内部流程时不得绕过质量门禁。
 4. 复用节点必须保留父子实例引用。

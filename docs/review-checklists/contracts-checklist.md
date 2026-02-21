@@ -1,7 +1,7 @@
 # Contracts Review Checklist
 
 > Branch: `codex/review-contracts`
-> Worktree: `/Users/albus/MyProjects/ANC_v2_worktrees/review-contracts`
+> Worktree: `../review-contracts`
 
 ## 1. 目标
 
@@ -10,26 +10,26 @@
 ## 2. Entire 执行要求（每次会话）
 
 1. `entire status --detailed`
-2. `python3 /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/scripts/entire_codex_bridge.py start`
+2. `python3 skills/system/entire-codex-sync/scripts/entire_codex_bridge.py start`
 3. 有改动回合后执行 `sync`（带 prompt/summary/files）
 4. `git commit` 后检查 `Entire-Checkpoint`
-5. `python3 /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/scripts/entire_codex_bridge.py end`
+5. `python3 skills/system/entire-codex-sync/scripts/entire_codex_bridge.py end`
 
 ## 3. 允许修改范围
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/architecture/process_architecture.md`
-2. `/Users/albus/MyProjects/ANC_v2/docs/architecture/registry_contracts.md`
-3. `/Users/albus/MyProjects/ANC_v2/docs/design/data-models/`
-4. `/Users/albus/MyProjects/ANC_v2/docs/design/interfaces/`
-5. `/Users/albus/MyProjects/ANC_v2/shared/registry/`
-6. `/Users/albus/MyProjects/ANC_v2/config/`
+1. `docs/architecture/process_architecture.md`
+2. `docs/architecture/registry_contracts.md`
+3. `docs/design/data-models/`
+4. `docs/design/interfaces/`
+5. `shared/registry/`
+6. `config/`
 
 ## 4. 禁止修改范围
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/design/agents/`
-2. `/Users/albus/MyProjects/ANC_v2/docs/design/skills/`
-3. `/Users/albus/MyProjects/ANC_v2/docs/design/business/`
-4. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/atomic/`
+1. `docs/design/agents/`
+2. `docs/design/skills/`
+3. `docs/design/business/`
+4. `docs/design/processes/atomic/`
 
 ## 5. 核对项
 

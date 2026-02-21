@@ -14,7 +14,7 @@
 
 1. 主流程可视为 `biz.*` 命名空间流程（预留）。
 2. `delivery-iterations` 阶段建议使用 `phase_process_type=dev.external-delivery-iteration`。
-3. 义务规则来源：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/development-loop-core-standard.md`。
+3. 义务规则来源：`docs/design/processes/development-loop-core-standard.md`。
 
 ## 阶段
 

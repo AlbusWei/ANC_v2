@@ -9,11 +9,11 @@
 
 ## 2. 规范来源
 
-1. 义务与触发规则：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/development-loop-core-standard.md`
+1. 义务与触发规则：`docs/design/processes/development-loop-core-standard.md`
 2. 示例流程：
-   - `/Users/albus/MyProjects/ANC_v2/docs/design/business/internal-productization-e2e-flow.md`
-   - `/Users/albus/MyProjects/ANC_v2/docs/design/business/software-vendor-e2e-flow.md`
-3. 原子流程目录：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/p-levels/P6-atomic-process-catalog.md`
+   - `docs/design/business/internal-productization-e2e-flow.md`
+   - `docs/design/business/software-vendor-e2e-flow.md`
+3. 原子流程目录：`docs/design/processes/p-levels/P6-atomic-process-catalog.md`
 
 ## 3. Trace Matrix
 

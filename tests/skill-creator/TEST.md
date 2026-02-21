@@ -22,7 +22,7 @@
 - Evaluation Method: LLM-Judge
 - Judge Payload:
   - objective: skill-creator must output traceable skill assets
-  - spec_ref: `/Users/albus/MyProjects/ANC_v2/skills/skill-creator/SKILL.md`
+  - spec_ref: `skills/skill-creator/SKILL.md`
   - expected_conditions:
     - required files exist
     - frontmatter contains name/description/license/compatibility

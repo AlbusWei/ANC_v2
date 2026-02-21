@@ -102,7 +102,7 @@ P1-P6 是流程设计抽象层，支持 top-down 建模：
 
 建议目录：
 
-`/Users/albus/MyProjects/ANC_v2/agents/control/BPM/process_instances/<instance-id>/`
+`agents/control/BPM/process_instances/<instance-id>/`
 
 最小字段：
 
@@ -130,9 +130,9 @@ P1-P6 是流程设计抽象层，支持 top-down 建模：
 ## 9. Canonical 路径约束
 
 `development-process` 唯一 canonical 路径：
-`/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/`
+`processes/meta/development-process/`
 
-`/Users/albus/MyProjects/ANC_v2/processes/development-process/` 视为 legacy。
+`processes/development-process/` 视为 legacy。
 
 ## 10. 双主线流程
 

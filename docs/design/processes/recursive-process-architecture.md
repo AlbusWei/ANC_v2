@@ -1,6 +1,6 @@
 # Recursive Process Architecture
 
-> 版本: v0.3.0 | 上游: `/Users/albus/MyProjects/ANC_v2/docs/architecture/process_architecture.md`
+> 版本: v0.3.0 | 上游: `docs/architecture/process_architecture.md`
 
 ## 1. 总览
 

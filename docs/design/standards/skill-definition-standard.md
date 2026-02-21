@@ -39,7 +39,7 @@ Capability Contract 最小必填字段：
 ## 4. 资产结构要求
 
 1. `SKILL.md`（能力定义与机器契约）
-2. `TEST.md`（建议位于 `/Users/albus/MyProjects/ANC_v2/tests/<skill-name>/TEST.md` 或 skill 内）
+2. `TEST.md`（建议位于 `tests/<skill-name>/TEST.md` 或 skill 内）
 3. 可选 `references/`（复杂 schema 与补充材料）
 
 ## 5. 生命周期门禁要求

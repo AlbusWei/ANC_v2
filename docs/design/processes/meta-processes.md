@@ -7,7 +7,7 @@
 ### development-process
 
 - process_id: development-process
-- canonical_path: `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/`
+- canonical_path: `processes/meta/development-process/`
 - level: P4
 - phases: write-spec -> design-tests -> implement -> verify
 - loop: p4 fail 回到 p3，max 2

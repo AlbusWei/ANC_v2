@@ -31,7 +31,7 @@
 
 ## 4. 与 Registry 咬合
 
-1. 文档字段必须与 `/Users/albus/MyProjects/ANC_v2/shared/registry/agent_directory.json` 一致。
+1. 文档字段必须与 `shared/registry/agent_directory.json` 一致。
 2. 生命周期状态统一为：`draft -> review -> active -> deprecated -> retired`。
 3. owner 与 permissions 字段必须可映射到治理流程。
 

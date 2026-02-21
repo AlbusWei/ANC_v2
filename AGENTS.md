@@ -8,15 +8,15 @@ ANC v2 是一个可反身自开发、可自进化的 Agentic 系统。
 
 ## 2. SSOT 与核心文档
 
-1. 架构 SSOT：`/Users/albus/MyProjects/ANC_v2/docs/architecture/system_overview.md`
-2. 流程 SSOT：`/Users/albus/MyProjects/ANC_v2/docs/architecture/process_architecture.md`
-3. 测试方法：`/Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md`
-4. 上下文协议：`/Users/albus/MyProjects/ANC_v2/docs/architecture/context_protocol.md`
-5. 施工平面：`/Users/albus/MyProjects/ANC_v2/docs/architecture/construction_plane.md`
-6. 术语表：`/Users/albus/MyProjects/ANC_v2/docs/architecture/glossary.md`
-7. OpenClaw 接口：`/Users/albus/MyProjects/ANC_v2/docs/architecture/openclaw_interface.md`
-8. registry 契约：`/Users/albus/MyProjects/ANC_v2/docs/architecture/registry_contracts.md`
-9. 详细设计索引：`/Users/albus/MyProjects/ANC_v2/docs/design/README.md`
+1. 架构 SSOT：`docs/architecture/system_overview.md`
+2. 流程 SSOT：`docs/architecture/process_architecture.md`
+3. 测试方法：`docs/architecture/test_methodology.md`
+4. 上下文协议：`docs/architecture/context_protocol.md`
+5. 施工平面：`docs/architecture/construction_plane.md`
+6. 术语表：`docs/architecture/glossary.md`
+7. OpenClaw 接口：`docs/architecture/openclaw_interface.md`
+8. registry 契约：`docs/architecture/registry_contracts.md`
+9. 详细设计索引：`docs/design/README.md`
 
 ## 3. 执行原则
 
@@ -53,15 +53,15 @@ ANC v2 是一个可反身自开发、可自进化的 Agentic 系统。
    - `entire status --detailed`
    - 期望：`Enabled (manual-commit)`；否则执行：`entire enable --strategy manual-commit`
 2. 使用 Codex 时必须走桥接脚本启动会话：
-   - `python3 /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/scripts/entire_codex_bridge.py start`
+   - `python3 skills/system/entire-codex-sync/scripts/entire_codex_bridge.py start`
 3. 每个有意义开发回合（有代码变更）后、提交前，必须执行一次同步：
-   - `python3 /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/scripts/entire_codex_bridge.py sync --prompt "<本回合需求>" --summary "<本回合实现>" --files <changed-file-1> <changed-file-2>`
+   - `python3 skills/system/entire-codex-sync/scripts/entire_codex_bridge.py sync --prompt "<本回合需求>" --summary "<本回合实现>" --files <changed-file-1> <changed-file-2>`
 4. 每次提交后必须执行校验：
    - `git log -1 --pretty=raw`
    - 提交信息中必须包含：`Entire-Checkpoint: <id>`
 5. 任务结束时必须关闭桥接会话：
-   - `python3 /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/scripts/entire_codex_bridge.py end`
+   - `python3 skills/system/entire-codex-sync/scripts/entire_codex_bridge.py end`
 6. Fail-Closed：若 `start/sync/end` 任一步失败，或提交缺失 `Entire-Checkpoint`，本次任务不得宣告完成，必须先修复再继续。
 7. 协议文档：
-   - `/Users/albus/MyProjects/ANC_v2/docs/design/interfaces/entire-codex-sync-protocol.md`
-   - `/Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/references/bridge-contract.md`
+   - `docs/design/interfaces/entire-codex-sync-protocol.md`
+   - `skills/system/entire-codex-sync/references/bridge-contract.md`

@@ -34,7 +34,7 @@ openclaw gateway call config.get --params '{}' --json
 
 ```bash
 openclaw gateway call config.patch --params '{
-  "raw": "{\"skills\":{\"entries\":{\"anc-v2-meta\":{\"source\":\"/Users/albus/MyProjects/ANC_v2/skills/meta\"}}}}",
+  "raw": "{\"skills\":{\"entries\":{\"anc-v2-meta\":{\"source\":\"skills/meta\"}}}}",
   "baseHash": "<hash-from-config.get>"
 }' --json
 ```
@@ -156,11 +156,11 @@ ANC 要求：Kernel/Control/App 三层 Agent 均按模板落盘，并可在 regi
 
 本仓库提供 Phase 0.5 配置片段：
 
-`/Users/albus/MyProjects/ANC_v2/config/openclaw.phase05.fragment.json`
+`config/openclaw.phase05.fragment.json`
 
 可选入口代理版本：
 
-`/Users/albus/MyProjects/ANC_v2/config/openclaw.phase05.with-entry.fragment.json`
+`config/openclaw.phase05.with-entry.fragment.json`
 
 用途：
 

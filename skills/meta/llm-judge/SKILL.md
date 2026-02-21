@@ -51,8 +51,8 @@ fail_closed_rules:
   - actual_output_ref not resolvable
   - verdict payload cannot be parsed
 test_mount:
-  test_doc: /Users/albus/MyProjects/ANC_v2/skills/meta/llm-judge/TEST.md
-  methodology_ref: /Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md
+  test_doc: skills/meta/llm-judge/TEST.md
+  methodology_ref: docs/architecture/test_methodology.md
 ```
 
 ## Input Contract

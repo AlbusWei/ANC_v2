@@ -13,9 +13,9 @@
 
 ## 规范绑定
 
-1. 开发闭环义务与条件触发规则以 `/Users/albus/MyProjects/ANC_v2/docs/design/processes/development-loop-core-standard.md` 为真相源。
+1. 开发闭环义务与条件触发规则以 `docs/design/processes/development-loop-core-standard.md` 为真相源。
 2. 样板流程用于参考映射，不承担规范真相职责。
-3. 统一追溯表：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/p4-p6-obligation-traceability-matrix.md`。
+3. 统一追溯表：`docs/design/processes/p4-p6-obligation-traceability-matrix.md`。
 
 ## 复用规则
 

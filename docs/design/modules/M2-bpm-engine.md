@@ -65,4 +65,4 @@
 - [ ] Skill `review -> active` 事件触发证据归集且去重生效（设计提案）
 
 测试提案文档：
-`/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/trigger-governance-test-proposal.md`
+`../review-layers-modules/docs/design/modules/trigger-governance-test-proposal.md`

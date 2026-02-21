@@ -1,6 +1,6 @@
 # Skill 全量清单
 
-> 版本: v0.2.0 | SSOT: `/Users/albus/MyProjects/ANC_v2/shared/registry/skill_registry.json`
+> 版本: v0.2.0 | SSOT: `shared/registry/skill_registry.json`
 
 ## 已注册 Skill
 

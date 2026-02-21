@@ -1,7 +1,7 @@
 # Processes & Business Review Checklist
 
 > Branch: `codex/review-processes-business`
-> Worktree: `/Users/albus/MyProjects/ANC_v2_worktrees/review-processes-business`
+> Worktree: `.`
 
 ## 1. 目标
 
@@ -28,15 +28,15 @@
 
 ## 3. 允许修改范围
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/`
-2. `/Users/albus/MyProjects/ANC_v2/docs/design/business/`
-3. `/Users/albus/MyProjects/ANC_v2/docs/design/inventories/process-inventory.md`
+1. `docs/design/processes/`
+2. `docs/design/business/`
+3. `docs/design/inventories/process-inventory.md`
 
 ## 4. 禁止修改范围
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/design/data-models/`
-2. `/Users/albus/MyProjects/ANC_v2/docs/design/interfaces/`
-3. `/Users/albus/MyProjects/ANC_v2/shared/registry/`
+1. `docs/design/data-models/`
+2. `docs/design/interfaces/`
+3. `shared/registry/`
 
 ## 5. 核对项
 
@@ -56,7 +56,7 @@
 ## 6. 完成定义（DoD）
 
 - [x] 形成“P4→P6 追溯表”并在文档中可见。
-- [ ] 所有业务流程引用路径均可达（新增 canonical 文档在 `/Users/albus/MyProjects/ANC_v2` 主工作区尚未落位）。
+- [ ] 所有业务流程引用路径均可达（需在主工作区完成同名文档落位后复核）。
 - [x] 提交只含流程与业务相关文件。
 - [x] checklist 中包含“流程开发与治理元流程”的背景、约束与后续工作清单。
 

@@ -4,13 +4,13 @@
 
 ## Entry Agents (Default Human Entry)
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/design/agents/app/entry/personal-assistant.md`
+1. `docs/design/agents/app/entry/personal-assistant.md`
 
 ## Evolution Agents (L4)
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/design/agents/app/evolution/monitor.md`
-2. `/Users/albus/MyProjects/ANC_v2/docs/design/agents/app/evolution/analyst.md`
-3. `/Users/albus/MyProjects/ANC_v2/docs/design/agents/app/evolution/planner.md`
+1. `docs/design/agents/app/evolution/monitor.md`
+2. `docs/design/agents/app/evolution/analyst.md`
+3. `docs/design/agents/app/evolution/planner.md`
 
 ## Delivery Agents (L5)
 
@@ -30,4 +30,4 @@
 
 ## 标准
 
-所有 App Agent 文档遵循 `/Users/albus/MyProjects/ANC_v2/docs/design/standards/agent-definition-standard.md`。
+所有 App Agent 文档遵循 `docs/design/standards/agent-definition-standard.md`。

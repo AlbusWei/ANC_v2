@@ -30,8 +30,8 @@
       },
       "path": {
         "type": "string",
-        "pattern": "^/Users/albus/MyProjects/ANC_v2/.+",
-        "description": "absolute agent workspace path"
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$",
+        "description": "repo-relative agent workspace path"
       },
       "default_model": {
         "type": "string",
@@ -91,7 +91,7 @@
     {
       "agent_id": "admin",
       "layer": "kernel",
-      "path": "/Users/albus/MyProjects/ANC_v2/agents/kernel/admin",
+      "path": "agents/kernel/admin",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "human",
       "status": "draft",
@@ -106,7 +106,7 @@
     {
       "agent_id": "architect",
       "layer": "kernel",
-      "path": "/Users/albus/MyProjects/ANC_v2/agents/kernel/architect",
+      "path": "agents/kernel/architect",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "admin",
       "status": "draft",
@@ -121,7 +121,7 @@
     {
       "agent_id": "hr",
       "layer": "kernel",
-      "path": "/Users/albus/MyProjects/ANC_v2/agents/kernel/hr",
+      "path": "agents/kernel/hr",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "admin",
       "status": "draft",
@@ -136,7 +136,7 @@
     {
       "agent_id": "kernel-dev",
       "layer": "kernel",
-      "path": "/Users/albus/MyProjects/ANC_v2/agents/kernel/kernel-dev",
+      "path": "agents/kernel/kernel-dev",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "architect",
       "status": "draft",
@@ -151,7 +151,7 @@
     {
       "agent_id": "bpm",
       "layer": "control",
-      "path": "/Users/albus/MyProjects/ANC_v2/agents/control/BPM",
+      "path": "agents/control/BPM",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "admin",
       "status": "draft",
@@ -166,7 +166,7 @@
     {
       "agent_id": "personal-assistant",
       "layer": "app",
-      "path": "/Users/albus/MyProjects/ANC_v2/agents/app/entry/personal-assistant",
+      "path": "agents/app/entry/personal-assistant",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "admin",
       "status": "draft",
@@ -181,7 +181,7 @@
     {
       "agent_id": "qa",
       "layer": "kernel",
-      "path": "/Users/albus/MyProjects/ANC_v2/agents/kernel/qa",
+      "path": "agents/kernel/qa",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "admin",
       "status": "draft",

@@ -140,9 +140,9 @@ BPM 是 Control 层专职 Agent，不是业务 Agent。
 
 注册表是可发现性入口：
 
-1. `/Users/albus/MyProjects/ANC_v2/shared/registry/agent_directory.json`
-2. `/Users/albus/MyProjects/ANC_v2/shared/registry/skill_registry.json`
-3. `/Users/albus/MyProjects/ANC_v2/shared/registry/process_registry.json`
+1. `shared/registry/agent_directory.json`
+2. `shared/registry/skill_registry.json`
+3. `shared/registry/process_registry.json`
 
 治理规则：
 
@@ -163,7 +163,7 @@ BPM 是 Control 层专职 Agent，不是业务 Agent。
 4. `skills.entries` 必须显式声明 ANC 技能入口，禁止仅依赖隐式扫描。
 5. 运行时执行和运维命令必须通过 OpenClaw CLI 统一入口。
 
-详见：`/Users/albus/MyProjects/ANC_v2/docs/architecture/openclaw_interface.md`。
+详见：`docs/architecture/openclaw_interface.md`。
 
 ### 10.2 Skill/Process 规范咬合（强制）
 
@@ -174,9 +174,9 @@ BPM 是 Control 层专职 Agent，不是业务 Agent。
 3. `SKILL.md` frontmatter 至少包含：`name`, `description`, `license`, `compatibility`。
 4. registry 必须镜像 frontmatter 核心字段，确保文档与运行时一致。
 5. 模板职责分离（避免目录语义歧义）：
-   1. `/Users/albus/MyProjects/ANC_v2/skills/template`：只放 Skill 模板（`SKILL.md`）。
-   2. `/Users/albus/MyProjects/ANC_v2/processes/template`：放 Process 模板包（`SKILL.md` + `process.json` + 可选 `PROCESS.md`）。
-   3. `/Users/albus/MyProjects/ANC_v2/tests/template`：放测试模板（`TEST.md`）。
+   1. `skills/template`：只放 Skill 模板（`SKILL.md`）。
+   2. `processes/template`：放 Process 模板包（`SKILL.md` + `process.json` + 可选 `PROCESS.md`）。
+   3. `tests/template`：放测试模板（`TEST.md`）。
 6. `template` 目录仅用于脚手架，不直接注册到 registry。
 
 ## 11. Phase 路线与里程碑

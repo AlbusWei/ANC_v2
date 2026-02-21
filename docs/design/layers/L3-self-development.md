@@ -18,7 +18,7 @@
 
 ## 核心流程
 
-1. development-process（canonical: `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/`）
+1. development-process（canonical: `processes/meta/development-process/`）
 2. full-development（规划中）
 3. hotfix/refactor（规划中）
 

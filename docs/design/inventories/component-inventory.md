@@ -5,22 +5,22 @@
 ## 基础设施
 
 1. OpenClaw Gateway（外部）
-2. OpenClaw 配置片段（`/Users/albus/MyProjects/ANC_v2/config/openclaw.phase05.fragment.json`）
+2. OpenClaw 配置片段（`config/openclaw.phase05.fragment.json`）
 
 ## 注册表
 
-1. `/Users/albus/MyProjects/ANC_v2/shared/registry/agent_directory.json`
-2. `/Users/albus/MyProjects/ANC_v2/shared/registry/skill_registry.json`
-3. `/Users/albus/MyProjects/ANC_v2/shared/registry/process_registry.json`
+1. `shared/registry/agent_directory.json`
+2. `shared/registry/skill_registry.json`
+3. `shared/registry/process_registry.json`
 
 ## 模板与标准
 
-1. `/Users/albus/MyProjects/ANC_v2/agents/template/`
-2. `/Users/albus/MyProjects/ANC_v2/skills/template/`
-3. `/Users/albus/MyProjects/ANC_v2/processes/template/`
-4. `/Users/albus/MyProjects/ANC_v2/tests/template/TEST.md`
-5. `/Users/albus/MyProjects/ANC_v2/docs/design/standards/`
+1. `agents/template/`
+2. `skills/template/`
+3. `processes/template/`
+4. `tests/template/TEST.md`
+5. `docs/design/standards/`
 
 ## 证据与实例存储
 
-1. `/Users/albus/MyProjects/ANC_v2/agents/control/BPM/memory/process_instances/`
+1. `agents/control/BPM/memory/process_instances/`

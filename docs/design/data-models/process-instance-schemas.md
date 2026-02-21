@@ -1,6 +1,6 @@
 # 流程实例 Schema
 
-> 版本: v0.2.0 | SSOT 上游: `/Users/albus/MyProjects/ANC_v2/docs/architecture/process_architecture.md`
+> 版本: v0.2.0 | SSOT 上游: `docs/architecture/process_architecture.md`
 
 ## 流程定义 Schema (process.json)
 

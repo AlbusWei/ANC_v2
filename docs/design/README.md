@@ -1,6 +1,6 @@
 # ANC v2 详细设计文档体系
 
-> 版本: v0.2.0 | 状态: Active Draft | SSOT 上游: `/Users/albus/MyProjects/ANC_v2/docs/architecture/system_overview.md`
+> 版本: v0.2.0 | 状态: Active Draft | SSOT 上游: `docs/architecture/system_overview.md`
 
 ## 定位
 
@@ -23,15 +23,15 @@
 
 ## 推荐阅读顺序
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/design/standards/README.md`
-2. `/Users/albus/MyProjects/ANC_v2/docs/design/layers/layer-minimum-definition-matrix.md`
-3. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/recursive-process-architecture.md`
-4. `/Users/albus/MyProjects/ANC_v2/docs/design/business/README.md`
+1. `docs/design/standards/README.md`
+2. `docs/design/layers/layer-minimum-definition-matrix.md`
+3. `docs/design/processes/recursive-process-architecture.md`
+4. `docs/design/business/README.md`
 5. inventories 与 interfaces/data-models
 
 ## 强制规则
 
 1. 关键变更先更新 SSOT，再更新 design。
 2. 任何资产变更必须回写 registry 与 inventory。
-3. `development-process` canonical 路径固定为 `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/`。
+3. `development-process` canonical 路径固定为 `processes/meta/development-process/`。
 4. 生命周期统一为 5 态：`draft -> review -> active -> deprecated -> retired`。

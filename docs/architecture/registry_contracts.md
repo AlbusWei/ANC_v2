@@ -9,7 +9,7 @@
 
 本文件的架构动机与可复用决策见：
 
-`/Users/albus/MyProjects/ANC_v2/docs/architecture/registry_governance_decisions.md`
+`docs/architecture/registry_governance_decisions.md`
 
 阅读顺序建议：
 
@@ -32,7 +32,7 @@
    - `properties`
    - `additionalProperties: false`
 3. 人类可读 schema 文档由工具生成，不得手工漂移：
-   - `/Users/albus/MyProjects/ANC_v2/docs/design/data-models/registry-schemas.md`
+   - `docs/design/data-models/registry-schemas.md`
 
 ## 3. 统一生命周期（强制）
 
@@ -104,14 +104,14 @@
 ### canonical 约束
 
 `development-process` 的 canonical 路径：
-`/Users/albus/MyProjects/ANC_v2/processes/meta/development-process`
+`processes/meta/development-process`
 
 ## 7. Registry 到 OpenClaw 的投影规则
 
 投影目标文件：
 
-1. `/Users/albus/MyProjects/ANC_v2/config/openclaw.phase05.fragment.json`
-2. `/Users/albus/MyProjects/ANC_v2/config/openclaw.phase05.with-entry.fragment.json`
+1. `config/openclaw.phase05.fragment.json`
+2. `config/openclaw.phase05.with-entry.fragment.json`
 
 受管区仅包含：
 
@@ -134,7 +134,7 @@
 
 profile 文件：
 
-`/Users/albus/MyProjects/ANC_v2/config/openclaw.projection.profiles.json`
+`config/openclaw.projection.profiles.json`
 
 profile 定义：
 
@@ -151,8 +151,8 @@ profile 定义：
 3. 对已注册 skill，`test_mount` 必须与 registry `tests` 字段一致。
 
 ```bash
-python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py validate
-python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py generate-docs --check
-python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py project-openclaw --all --check
-python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py verify
+python3 shared/registry/registry_contract_tool.py validate
+python3 shared/registry/registry_contract_tool.py generate-docs --check
+python3 shared/registry/registry_contract_tool.py project-openclaw --all --check
+python3 shared/registry/registry_contract_tool.py verify
 ```

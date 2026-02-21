@@ -1,6 +1,6 @@
 # 上下文传递 Schema
 
-> 版本: v0.2.0 | SSOT 上游: `/Users/albus/MyProjects/ANC_v2/docs/architecture/context_protocol.md`
+> 版本: v0.2.0 | SSOT 上游: `docs/architecture/context_protocol.md`
 
 ## 概述
 

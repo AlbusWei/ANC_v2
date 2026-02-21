@@ -4,14 +4,14 @@
 
 ## 双主线（参考实现）
 
-1. 内部产品孵化（reference example）：`/Users/albus/MyProjects/ANC_v2/docs/design/business/internal-productization-e2e-flow.md`
-2. 外部软件交付（reference example）：`/Users/albus/MyProjects/ANC_v2/docs/design/business/software-vendor-e2e-flow.md`
+1. 内部产品孵化（reference example）：`docs/design/business/internal-productization-e2e-flow.md`
+2. 外部软件交付（reference example）：`docs/design/business/software-vendor-e2e-flow.md`
 
 ## 规范真相来源
 
-1. 开发闭环标准：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/development-loop-core-standard.md`
-2. 递归语义标准：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/recursive-process-architecture.md`
-3. P4→P6 统一追溯表：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/p4-p6-obligation-traceability-matrix.md`
+1. 开发闭环标准：`docs/design/processes/development-loop-core-standard.md`
+2. 递归语义标准：`docs/design/processes/recursive-process-architecture.md`
+3. P4→P6 统一追溯表：`docs/design/processes/p4-p6-obligation-traceability-matrix.md`
 
 ## 复用约束
 

@@ -47,8 +47,8 @@ fail_closed_rules:
   - no P0 risk scenario in output
   - output cannot be mapped to test template
 test_mount:
-  test_doc: /Users/albus/MyProjects/ANC_v2/skills/meta/test-designer/TEST.md
-  methodology_ref: /Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md
+  test_doc: skills/meta/test-designer/TEST.md
+  methodology_ref: docs/architecture/test_methodology.md
 ```
 
 ## Input Contract

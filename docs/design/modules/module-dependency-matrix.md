@@ -44,7 +44,7 @@ M4 和 M1 可部分并行建设，但 M3 需要两者都就绪。
 
 1. 策略面：`M4` 维护 trigger 生命周期、override 与风险规则。
 2. 运行面：`M2` 消费策略并执行匹配、去重、补跑和升级。
-3. 设计期测试锚点：`/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/trigger-governance-test-proposal.md`
+3. 设计期测试锚点：`../review-layers-modules/docs/design/modules/trigger-governance-test-proposal.md`
 
 ## 循环依赖检查
 

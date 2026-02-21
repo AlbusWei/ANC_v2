@@ -11,7 +11,7 @@
 | Reviewer(s) |  |
 | Branch |  |
 | Scope |  |
-| Related Proposal | `/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/trigger-governance-test-proposal.md` |
+| Related Proposal | `../review-layers-modules/docs/design/modules/trigger-governance-test-proposal.md` |
 
 ## 2. Review Objective
 
@@ -66,12 +66,12 @@
 
 ## 8. Consistency Review (Layers & Modules)
 
-- [ ] `/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/layers/L2-orchestration-governance.md` 与提案一致。
-- [ ] `/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/layers/L4-self-evolution.md` 的 analyst 分工无冲突。
-- [ ] `/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/layers/layer-interface-contracts.md` 的 Trigger/Hook 契约一致。
-- [ ] `/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/M2-bpm-engine.md` 与 M2 运行时边界一致。
-- [ ] `/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/M4-lifecycle-management.md` 与 M4 策略边界一致。
-- [ ] `/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/module-dependency-matrix.md` 的触发治理路径说明一致。
+- [ ] `../review-layers-modules/docs/design/layers/L2-orchestration-governance.md` 与提案一致。
+- [ ] `../review-layers-modules/docs/design/layers/L4-self-evolution.md` 的 analyst 分工无冲突。
+- [ ] `../review-layers-modules/docs/design/layers/layer-interface-contracts.md` 的 Trigger/Hook 契约一致。
+- [ ] `../review-layers-modules/docs/design/modules/M2-bpm-engine.md` 与 M2 运行时边界一致。
+- [ ] `../review-layers-modules/docs/design/modules/M4-lifecycle-management.md` 与 M4 策略边界一致。
+- [ ] `../review-layers-modules/docs/design/modules/module-dependency-matrix.md` 的触发治理路径说明一致。
 
 ## 9. Evidence Matrix (Fill-In)
 

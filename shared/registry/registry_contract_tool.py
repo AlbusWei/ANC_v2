@@ -42,7 +42,9 @@ CAPABILITY_BLOCK_RE = re.compile(
     re.MULTILINE | re.DOTALL,
 )
 SEMVER_RE = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+$")
-REPO_PATH_RE = re.compile(r"^/Users/albus/MyProjects/ANC_v2/.+")
+REPO_PATH_RE = re.compile(
+    r"^(?!/)(?!.*(?:^|/)\.\.(?:/|$))[A-Za-z0-9._/-]+$"
+)
 
 
 class ContractError(Exception):
@@ -187,11 +189,16 @@ def validate_registry_contract(registry_path: Path, payload: Dict[str, Any], err
 
 
 def path_exists(path_str: str) -> bool:
-    return Path(path_str).exists()
+    path = Path(path_str)
+    if not path.is_absolute():
+        path = ROOT / path
+    return path.exists()
 
 
 def _skill_relative_key(path: Path) -> str:
     normalized = path.as_posix()
+    if normalized.startswith("skills/"):
+        return normalized.split("skills/", 1)[1]
     marker = "/skills/"
     if marker not in normalized:
         return normalized
@@ -217,7 +224,7 @@ def _expect_repo_path(value: Any, path: str, errors: List[str]) -> None:
         errors.append(f"{path}: expected path string")
         return
     if re.match(REPO_PATH_RE, value) is None:
-        errors.append(f"{path}: path {value!r} must be under /Users/albus/MyProjects/ANC_v2/")
+        errors.append(f"{path}: path {value!r} must be a repo-relative path")
         return
     if not path_exists(value):
         errors.append(f"{path}: missing path {value}")
@@ -531,9 +538,7 @@ def generate_docs(agents_payload: Dict[str, Any], skills_payload: Dict[str, Any]
     lines: List[str] = []
     lines.append("# 注册表 Schema 详细定义")
     lines.append("")
-    lines.append(
-        "> 本文档由 `/Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py` 自动生成。"
-    )
+    lines.append("> 本文档由 `shared/registry/registry_contract_tool.py` 自动生成。")
     lines.append("> 机器真相源：`shared/registry/*_registry.json` 中的 `entry_contract`。")
     lines.append("")
 
@@ -567,12 +572,12 @@ def generate_docs(agents_payload: Dict[str, Any], skills_payload: Dict[str, Any]
     lines.append("## 校验命令")
     lines.append("")
     lines.append("```bash")
-    lines.append("python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py validate")
+    lines.append("python3 shared/registry/registry_contract_tool.py validate")
     lines.append(
-        "python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py generate-docs --check"
+        "python3 shared/registry/registry_contract_tool.py generate-docs --check"
     )
     lines.append(
-        "python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py project-openclaw --all --check"
+        "python3 shared/registry/registry_contract_tool.py project-openclaw --all --check"
     )
     lines.append("```")
     lines.append("")

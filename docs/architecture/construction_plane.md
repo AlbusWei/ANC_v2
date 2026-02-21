@@ -20,9 +20,9 @@
 - [x] 新增 role handoff 协议与 role responsibility schema
 - [x] App 层 Agent 从占位升级为独立角色文档（evolution + delivery）
 - [x] 更新 design 索引、layers/modules/skills/processes/inventories 核心文档
-- [x] `development-process` canonical 路径固定为 `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/`
+- [x] `development-process` canonical 路径固定为 `processes/meta/development-process/`
 - [x] 完成 Entire 项目接入基线（`.entire/settings.json` + git hooks）并落盘 Codex 桥接协议/技能（`entire-codex-sync`）
-- [x] 在 `/Users/albus/MyProjects/ANC_v2/AGENTS.md` 增加 Codex 强制 Entire 管理流程（start/sync/commit-check/end + Fail-Closed）
+- [x] 在 `AGENTS.md` 增加 Codex 强制 Entire 管理流程（start/sync/commit-check/end + Fail-Closed）
 - [x] 明确 OpenClaw 配置治理分工（App -> BPM -> Admin），并新增 personal-assistant 入口角色设计与 registry 记录
 - [x] 新增 `governed-config-change` 可执行流程资产（`processes/meta/governed-config-change/`）并注册到 `process_registry`
 - [x] 落盘 Skill 双层契约设计（Registry Contract + Capability Contract）并新增 ADR-11/ADR-12

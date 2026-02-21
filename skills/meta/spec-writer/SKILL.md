@@ -49,8 +49,8 @@ fail_closed_rules:
   - output missing required sections
   - objective conflicts with SSOT
 test_mount:
-  test_doc: /Users/albus/MyProjects/ANC_v2/skills/meta/spec-writer/TEST.md
-  methodology_ref: /Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md
+  test_doc: skills/meta/spec-writer/TEST.md
+  methodology_ref: docs/architecture/test_methodology.md
 ```
 
 ## Input Contract
