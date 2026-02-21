@@ -1,6 +1,14 @@
 {
   "process_id": "development-process",
   "version": "0.1.0",
+  "process_level": "P4",
+  "parent_process_id": null,
+  "composed_processes": [],
+  "lineage_policy": {
+    "stack_depth_limit": 8,
+    "context_isolation": "strict",
+    "output_handoff_mode": "contract_only"
+  },
   "objective_ref": "obj-phase1-min-loop",
   "owner": "bpm",
   "priority": "P0",
@@ -70,6 +78,49 @@
       "acceptance_criteria": "verdict has pass/fail, confidence and improvement suggestions"
     }
   ],
+  "control_flow": [
+    {
+      "from": "p1",
+      "to": "p2",
+      "on": "success"
+    },
+    {
+      "from": "p2",
+      "to": "p3",
+      "on": "success"
+    },
+    {
+      "from": "p3",
+      "to": "p4",
+      "on": "success"
+    },
+    {
+      "from": "p4",
+      "to": "p3",
+      "on": "failure",
+      "condition": "iterations < 2"
+    },
+    {
+      "from": "p4",
+      "to": "end",
+      "on": "success"
+    }
+  ],
+  "fail_policy": {
+    "mode": "fail_closed",
+    "retry": {
+      "max_iterations": 2,
+      "from_phase": "p4",
+      "to_phase": "p3"
+    },
+    "escalation_chain": [
+      "actor",
+      "owner",
+      "bpm",
+      "admin",
+      "human"
+    ]
+  },
   "control": {
     "mode": "sequence",
     "loop_on_failure": {
@@ -80,7 +131,13 @@
   },
   "failure_policy": {
     "mode": "fail_closed",
-    "escalation_chain": ["actor", "owner", "bpm", "admin"]
+    "escalation_chain": [
+      "actor",
+      "owner",
+      "bpm",
+      "admin",
+      "human"
+    ]
   },
   "evidence_policy": {
     "required_fields": ["timestamp", "phase_id", "actor", "input_ref", "output_ref", "decision", "reason"]

@@ -1,6 +1,6 @@
 # Trigger Governance Review Checklist (Template)
 
-> 版本: v0.1.0 | 用途: 评审 `trigger-governance-test-proposal.md` 的执行充分性与治理一致性
+> 版本: v0.2.1 | 用途: 评审 `trigger-governance-test-proposal.md` 的执行充分性与治理一致性
 
 ## 1. Review Metadata
 
@@ -11,7 +11,8 @@
 | Reviewer(s) |  |
 | Branch |  |
 | Scope |  |
-| Related Proposal | `../review-layers-modules/docs/design/modules/trigger-governance-test-proposal.md` |
+| Related Proposal | `docs/design/modules/trigger-governance-test-proposal.md` |
+| Historical Record | `docs/design/modules/evidence/trigger-governance/review-round-1.md` |
 
 ## 2. Review Objective
 
@@ -66,12 +67,12 @@
 
 ## 8. Consistency Review (Layers & Modules)
 
-- [ ] `../review-layers-modules/docs/design/layers/L2-orchestration-governance.md` 与提案一致。
-- [ ] `../review-layers-modules/docs/design/layers/L4-self-evolution.md` 的 analyst 分工无冲突。
-- [ ] `../review-layers-modules/docs/design/layers/layer-interface-contracts.md` 的 Trigger/Hook 契约一致。
-- [ ] `../review-layers-modules/docs/design/modules/M2-bpm-engine.md` 与 M2 运行时边界一致。
-- [ ] `../review-layers-modules/docs/design/modules/M4-lifecycle-management.md` 与 M4 策略边界一致。
-- [ ] `../review-layers-modules/docs/design/modules/module-dependency-matrix.md` 的触发治理路径说明一致。
+- [ ] `docs/design/layers/L2-orchestration-governance.md` 与提案一致。
+- [ ] `docs/design/layers/L4-self-evolution.md` 的 analyst 分工无冲突。
+- [ ] `docs/design/layers/layer-interface-contracts.md` 的 Trigger/Hook 契约一致。
+- [ ] `docs/design/modules/M2-bpm-engine.md` 与 M2 运行时边界一致。
+- [ ] `docs/design/modules/M4-lifecycle-management.md` 与 M4 策略边界一致。
+- [ ] `docs/design/modules/module-dependency-matrix.md` 的触发治理路径说明一致。
 
 ## 9. Evidence Matrix (Fill-In)
 
@@ -95,5 +96,5 @@
 
 - [ ] Checklist 全项完成评审或明确标注 N/A。
 - [ ] 所有 FAIL/BLOCKED 条目进入 Findings Register 并指定 Owner。
-- [ ] 形成一页“差异关闭计划”并附路径引用。
+- [ ] 形成一页“差异关闭计划”并附路径引用：`docs/design/modules/trigger-governance-diff-closure-plan.md`。
 - [ ] 本轮结论通过 Entire sync 落盘。

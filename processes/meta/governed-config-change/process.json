@@ -1,6 +1,14 @@
 {
   "process_id": "governed-config-change",
   "version": "0.1.0",
+  "process_level": "P4",
+  "parent_process_id": null,
+  "composed_processes": [],
+  "lineage_policy": {
+    "stack_depth_limit": 8,
+    "context_isolation": "strict",
+    "output_handoff_mode": "contract_only"
+  },
   "objective_ref": "obj-governed-openclaw-config-change",
   "owner": "bpm",
   "priority": "P0",
@@ -95,6 +103,46 @@
       "acceptance_criteria": "health verification pass and evidence bundle is complete"
     }
   ],
+  "control_flow": [
+    {
+      "from": "p1",
+      "to": "p2",
+      "on": "success"
+    },
+    {
+      "from": "p2",
+      "to": "p3",
+      "on": "success"
+    },
+    {
+      "from": "p3",
+      "to": "p4",
+      "on": "success"
+    },
+    {
+      "from": "p4",
+      "to": "p5",
+      "on": "success"
+    },
+    {
+      "from": "p5",
+      "to": "end",
+      "on": "success"
+    }
+  ],
+  "fail_policy": {
+    "mode": "fail_closed",
+    "retry": {
+      "max_attempts": 1
+    },
+    "escalation_chain": [
+      "actor",
+      "owner",
+      "bpm",
+      "admin",
+      "human"
+    ]
+  },
   "control": {
     "mode": "sequence",
     "retries": {

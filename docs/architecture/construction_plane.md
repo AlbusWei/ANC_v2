@@ -31,6 +31,8 @@
 - [x] 完成双主线语义重构：示例流程与规范真相分层，`delivery-iterations` 改为复用标准义务而非绑定 internal 示例
 - [x] 完成统一追溯资产：新增 `p4-p6-obligation-traceability-matrix` 并挂载到 P4/业务流程总览入口
 - [x] 在流程架构文档固化 `phase -> subprocess` 语法约束与 skill 原子包装原则
+- [x] 将模块依赖矩阵升级为类型化依赖并明确 `M3/M4` 并行建设与汇合门（`M1` 统一门禁复用）
+- [x] 收敛 canonical process manifest 到标准字段（`process_level/control_flow/fail_policy/lineage_policy`）
 
 ## 进行中（In Progress）
 
@@ -39,6 +41,7 @@
 - [ ] `development-process` canonical/legacy 同名异义风险收敛（legacy 执行语义冻结/退役）
 - [ ] 开发型流程 `process.json` 落地 `process_type + governance_bundle`，完成样例校验
 - [ ] canonical 路径可达性策略收敛（worktree 评审期 vs 主工作区合并后）
+- [ ] 将 trigger governance 最小 dry-run 从文档级证据升级到运行级证据
 
 ## 下一步（Next）
 
