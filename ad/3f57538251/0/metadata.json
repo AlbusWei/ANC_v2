@@ -1,0 +1,31 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "ad3f57538251",
+  "session_id": "codex-4b15f50cdf12",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-21T15:57:27.775646Z",
+  "branch": "codex/review-agents",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/review-checklists/agents-checklist.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "4abacd4fa95e",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T15:57:27.756581Z",
+    "agent_lines": 0,
+    "human_added": 0,
+    "human_modified": 30,
+    "human_removed": 22,
+    "total_committed": 0,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-agents/.entire/codex-bridge/transcript.json"
+}
