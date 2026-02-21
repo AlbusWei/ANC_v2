@@ -1,9 +1,11 @@
 {
   "cli_version": "0.4.5",
   "checkpoint_id": "8ac56993f7a8",
+  "session_id": "codex-84f0e81f60c7",
   "strategy": "manual-commit",
+  "created_at": "2026-02-21T11:57:42.162851Z",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 5,
+  "checkpoints_count": 1,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/architecture/system_overview.md",
@@ -19,34 +21,24 @@
     "processes/meta/development-process/process.json",
     "processes/meta/governed-config-change/process.json"
   ],
-  "sessions": [
-    {
-      "metadata": "/8a/c56993f7a8/0/metadata.json",
-      "transcript": "/8a/c56993f7a8/0/full.jsonl",
-      "context": "/8a/c56993f7a8/0/context.md",
-      "content_hash": "/8a/c56993f7a8/0/content_hash.txt",
-      "prompt": "/8a/c56993f7a8/0/prompt.txt"
-    },
-    {
-      "metadata": "/8a/c56993f7a8/1/metadata.json",
-      "transcript": "/8a/c56993f7a8/1/full.jsonl",
-      "context": "/8a/c56993f7a8/1/context.md",
-      "content_hash": "/8a/c56993f7a8/1/content_hash.txt",
-      "prompt": "/8a/c56993f7a8/1/prompt.txt"
-    },
-    {
-      "metadata": "/8a/c56993f7a8/2/metadata.json",
-      "transcript": "/8a/c56993f7a8/2/full.jsonl",
-      "context": "/8a/c56993f7a8/2/context.md",
-      "content_hash": "/8a/c56993f7a8/2/content_hash.txt",
-      "prompt": "/8a/c56993f7a8/2/prompt.txt"
-    }
-  ],
+  "agent": "Gemini CLI",
+  "turn_id": "788eb0c07240",
+  "transcript_identifier_at_start": "gemini-ad94b21e21",
   "token_usage": {
     "input_tokens": 0,
     "cache_creation_tokens": 0,
     "cache_read_tokens": 0,
     "output_tokens": 0,
     "api_call_count": 0
-  }
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T11:57:42.152486Z",
+    "agent_lines": 531,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 531,
+    "agent_percentage": 100
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
 }
