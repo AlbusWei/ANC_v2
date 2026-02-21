@@ -1,6 +1,6 @@
 # Architect Agent 详细设计
 
-> 版本: v0.3.0 | agent_id: architect | 层级: kernel | 权限: architecture-governance
+> 版本: v0.4.0 | agent_id: architect | 层级: kernel | 权限: architecture-governance
 
 ## 1. 角色定位与权限
 
@@ -23,6 +23,7 @@ Architect 对架构治理的核心产出工件如下：
 | `architecture_prd_ref` | 架构本身作为内部产品时的需求规格 | hr, qa, kernel-dev |
 | `architecture_objective_tree_ref` | 架构目标树与分层 OKR | qa, bpm, product-manager |
 | `architecture_principles_ref` | 不可突破的架构原则与协议约束 | 全体 agent |
+| `m6_construction_governance_ref` | M6 施工治理语义与裁决记录 | bpm, system-analyst, admin |
 
 说明：`architecture_prd_ref` 仅用于“架构本身作为内部产品”的迭代场景。
 
@@ -64,6 +65,14 @@ Architect 负责定义与维护目标树，不负责直接执行实现。
 | development-process (Phase 1) | 架构规格定义者 | 仅负责架构要求与约束，不接管实现 |
 | lifecycle-review | 架构审查者 | 审查资产是否满足架构原则与协议 |
 | meta-self-modification-protocol | Step 2 影响分析者 | 对元层改动提供影响分析与风险结论 |
+| construction-plane-governance | 模块 owner / 语义裁决者 | 负责 M6 施工治理语义收敛与冲突裁决 |
+
+## 5.1 Hybrid OpenSpec 协同职责
+
+1. Architect 负责 Hybrid OpenSpec 的“单点语义裁决”。
+2. OpenSpec 侧用于协同提案与评审线程，ANC 文档侧用于治理契约落盘。
+3. 若 OpenSpec 与 ANC 语义冲突，Architect 必须先在 ANC 文档写入裁决，再驱动回写 OpenSpec。
+4. 缺少双向映射或裁决快照时，Architect 有权阻断回合关闭（Fail-Closed）。
 
 ## 6. 架构迭代闭环
 
@@ -85,6 +94,7 @@ Architect 负责定义与维护目标树，不负责直接执行实现。
 - **下游要求接收方**: hr（Agent 产品治理）, product-manager（产品排期）, qa（验证对齐）, kernel-dev（实现落地）
 - **平级协作**: bpm（流程门禁）, system-analyst（系统反馈输入）
 - **分工约束**: Architect 不直接承担非架构类 Agent 资产生产职责。
+- **M6 特殊约束**: Architect 是 M6 模块语义 owner，bpm 负责编排执行，system-analyst 提供可调频巡检输入。
 
 ## 8. 决策权限边界
 
