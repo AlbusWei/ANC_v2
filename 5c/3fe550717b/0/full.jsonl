@@ -1,0 +1,24 @@
+{
+  "messages": [
+    {
+      "id": "user-ad8bcccd02",
+      "type": "user",
+      "content": "rebuild \u56de\u8865 QA/M1 \u4fee\u590d\u540e\uff0c\u540c\u6b65\u5230 review \u5206\u652f\u5e76\u8865\u9f50 checkpoint\u3002"
+    },
+    {
+      "id": "gemini-143c87d19d",
+      "type": "gemini",
+      "content": "\u5408\u5165 rebuild \u7684 QA/M1 \u6062\u590d\u4fee\u590d\uff083dbf584\uff09\uff0c\u5e76\u8865\u7a7a\u63d0\u4ea4\u7ed1\u5b9a Entire checkpoint\u3002",
+      "toolCalls": [
+        {
+          "id": "tool-1-9233871d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/M1-test-system.md"
+          },
+          "status": "success"
+        }
+      ]
+    }
+  ]
+}
