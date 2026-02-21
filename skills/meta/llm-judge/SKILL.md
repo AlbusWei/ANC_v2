@@ -17,6 +17,44 @@ allowed-tools:
 
 为 ANC 测试门禁提供客观/主观评估能力：调用 Scenario 执行仿真评估，并输出 ANC 标准化 verdict。
 
+## Capability Contract (Machine-Readable)
+
+```yaml
+contract_version: 1.0.0
+objective_ref: obj-phase1-min-loop
+input_contract:
+  format: json
+  required:
+    - objective
+    - spec_ref
+    - expected_conditions
+    - actual_output_ref
+  validation:
+    - objective must be non-empty
+    - spec_ref must be resolvable
+    - expected_conditions must be a non-empty list
+    - actual_output_ref must be resolvable
+output_contract:
+  format: json
+  required:
+    - pass
+    - confidence
+    - remarks
+    - suggestions
+  machine_judgement:
+    - output must be valid json
+    - pass must be boolean
+    - confidence must be numeric
+    - suggestions must be actionable when pass=false
+fail_closed_rules:
+  - missing critical input fields
+  - actual_output_ref not resolvable
+  - verdict payload cannot be parsed
+test_mount:
+  test_doc: skills/meta/llm-judge/TEST.md
+  methodology_ref: docs/architecture/test_methodology.md
+```
+
 ## Input Contract
 
 - Format: json

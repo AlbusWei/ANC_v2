@@ -16,6 +16,7 @@ ANC v2 是一个可反身自开发、可自进化的 Agentic 系统。
 6. 术语表：`/Users/albus/MyProjects/ANC_v2/docs/architecture/glossary.md`
 7. OpenClaw 接口：`/Users/albus/MyProjects/ANC_v2/docs/architecture/openclaw_interface.md`
 8. registry 契约：`/Users/albus/MyProjects/ANC_v2/docs/architecture/registry_contracts.md`
+9. 详细设计索引：`/Users/albus/MyProjects/ANC_v2/docs/design/README.md`
 
 ## 3. 执行原则
 
@@ -24,6 +25,19 @@ ANC v2 是一个可反身自开发、可自进化的 Agentic 系统。
 3. 文档即真相：关键结论必须落盘。
 4. Fail-Closed：证据不足或协议错误时默认失败并回退。
 5. Skill/Process 必须遵循 Agent Skills 规范并与 OpenClaw 配置咬合。
+
+### 3.1 Skill/Process 工程标准入口（强制）
+
+1. Skill 设计前必须先读：`/Users/albus/MyProjects/ANC_v2/docs/design/standards/skill-definition-standard.md`
+2. Process 设计前必须先读：`/Users/albus/MyProjects/ANC_v2/docs/design/standards/process-definition-standard.md`
+3. Process 设计必须满足新增硬约束：
+   - 连续性约束（单复合流程不得跨非连续生命周期段）
+   - phase 闭合约束（每个 phase 必须映射到已定义 AP/子流程）
+   - 断点处理规则（跨断点必须拆流程，由上级流程编排）
+4. Skill 命名必须满足语义约束：
+   - 可复用 `skill_id` 禁止模块标记型命名（如 `m1-*`）
+5. 汇总技能文档（若采用）必须为每个 `skill_id` 提供定义卡：
+   - 输入契约、输出契约、Fail-Closed、test_mount（可为计划字段）
 
 ## 4. 协作约束
 
@@ -43,3 +57,44 @@ ANC v2 是一个可反身自开发、可自进化的 Agentic 系统。
 ## 6. 当前阶段边界
 
 当前处于 Phase 0/0.5：优先构建治理骨架，不做大规模业务功能实现。
+
+## 7. Entire 管理基线（Codex 强制）
+
+> 目标：确保 Codex 在本仓库的每次开发变更都纳入 Entire 会话管理并可审计。
+
+1. 任务开始前必须检查 Entire 状态：
+   - `entire status --detailed`
+   - 期望：`Enabled (manual-commit)`；否则执行：`entire enable --strategy manual-commit`
+2. 使用 Codex 时必须走桥接脚本启动会话：
+   - `python3 /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/scripts/entire_codex_bridge.py start`
+3. 每个有意义开发回合（有代码变更）后、提交前，必须执行一次同步：
+   - `python3 /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/scripts/entire_codex_bridge.py sync --prompt "<本回合需求>" --summary "<本回合实现>" --files <changed-file-1> <changed-file-2>`
+4. 每次提交后必须执行校验：
+   - `git log -1 --pretty=raw`
+   - 提交信息中必须包含：`Entire-Checkpoint: <id>`
+5. 任务结束时必须关闭桥接会话：
+   - `python3 /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/scripts/entire_codex_bridge.py end`
+6. Fail-Closed：若 `start/sync/end` 任一步失败，或提交缺失 `Entire-Checkpoint`，本次任务不得宣告完成，必须先修复再继续。
+7. 协议文档：
+   - `/Users/albus/MyProjects/ANC_v2/docs/design/interfaces/entire-codex-sync-protocol.md`
+   - `/Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/references/bridge-contract.md`
+
+## 8. Layer/Module 联动文档门禁（新增）
+
+> 目标：避免“module/layer 已落盘，但新增 skill/process/agent 未同步设计文档”的倒挂。
+
+1. 触发条件（任一满足即触发门禁）：
+   - 修改 `/Users/albus/MyProjects/ANC_v2/docs/design/layers/` 或 `/Users/albus/MyProjects/ANC_v2/docs/design/modules/` 下文档，且涉及职责、边界、依赖、接口变化。
+   - 新增或重构 `/Users/albus/MyProjects/ANC_v2/skills/`、`/Users/albus/MyProjects/ANC_v2/processes/`、`/Users/albus/MyProjects/ANC_v2/agents/` 下资产。
+2. 同回合必须完成的联动更新：
+   - 受影响的设计文档：`/Users/albus/MyProjects/ANC_v2/docs/design/skills/`、`/Users/albus/MyProjects/ANC_v2/docs/design/processes/`、`/Users/albus/MyProjects/ANC_v2/docs/design/agents/`。
+   - 清单文档：`/Users/albus/MyProjects/ANC_v2/docs/design/inventories/skill-inventory.md`、`/Users/albus/MyProjects/ANC_v2/docs/design/inventories/process-inventory.md`、`/Users/albus/MyProjects/ANC_v2/docs/design/inventories/agent-inventory.md`。
+   - 注册表：`/Users/albus/MyProjects/ANC_v2/shared/registry/skill_registry.json`、`/Users/albus/MyProjects/ANC_v2/shared/registry/process_registry.json`、`/Users/albus/MyProjects/ANC_v2/shared/registry/agent_directory.json`。
+   - 施工平面：`/Users/albus/MyProjects/ANC_v2/docs/architecture/construction_plane.md` 对应条目必须同步更新。
+3. 状态门禁：
+   - 新增 skill/process/agent 若缺设计文档，生命周期只能停留 `draft`，禁止推进到 `review/active`。
+4. 提交前最小校验：
+   - `python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py verify`
+   - `rg -n "<asset-id>" /Users/albus/MyProjects/ANC_v2/docs/design /Users/albus/MyProjects/ANC_v2/shared/registry`
+5. Fail-Closed：
+   - 任一联动项缺失（设计文档、inventory、registry、施工平面）即判定任务未完成，不得宣告 Done 或合入。

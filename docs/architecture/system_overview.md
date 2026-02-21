@@ -1,7 +1,7 @@
 # ANC v2 系统架构总览（SSOT）
 
-最后更新：2026-02-20
-版本：2.0.3-alpha
+最后更新：2026-02-21
+版本：2.0.2-alpha
 
 > 本文档是 ANC v2 的架构唯一信源（SSOT）。
 > 任何架构级变更必须先修改本文件，再修改实现与资产。
@@ -112,6 +112,12 @@ L0 Infrastructure Layer
 
 `M6 -> M2 -> M1 -> M3 -> M4 -> M5`
 
+Phase 1 实施注记（与模块矩阵保持一致）：
+
+1. `M3` 与 `M4` 可并行建设。
+2. 汇合门：`M3` 产出的新资产进入 `review/active` 前，必须通过 `M4` 生命周期门禁。
+3. `M1` 作为统一测试与门禁平台被 `M3/M4/M5` 复用，不重复建设评估能力。
+
 ## 8. BPM 作为控制中枢
 
 BPM 是 Control 层专职 Agent，不是业务 Agent。
@@ -157,9 +163,9 @@ Scenario 在 ANC 中定位为“执行底座”，而非“治理中枢”。
 
 注册表是可发现性入口：
 
-1. `/Users/albus/MyProjects/ANC_v2/shared/registry/agent_directory.json`
-2. `/Users/albus/MyProjects/ANC_v2/shared/registry/skill_registry.json`
-3. `/Users/albus/MyProjects/ANC_v2/shared/registry/process_registry.json`
+1. `shared/registry/agent_directory.json`
+2. `shared/registry/skill_registry.json`
+3. `shared/registry/process_registry.json`
 
 治理规则：
 
@@ -180,7 +186,7 @@ Scenario 在 ANC 中定位为“执行底座”，而非“治理中枢”。
 4. `skills.entries` 必须显式声明 ANC 技能入口，禁止仅依赖隐式扫描。
 5. 运行时执行和运维命令必须通过 OpenClaw CLI 统一入口。
 
-详见：`/Users/albus/MyProjects/ANC_v2/docs/architecture/openclaw_interface.md`。
+详见：`docs/architecture/openclaw_interface.md`。
 
 ### 10.2 Skill/Process 规范咬合（强制）
 
@@ -191,9 +197,9 @@ Scenario 在 ANC 中定位为“执行底座”，而非“治理中枢”。
 3. `SKILL.md` frontmatter 至少包含：`name`, `description`, `license`, `compatibility`。
 4. registry 必须镜像 frontmatter 核心字段，确保文档与运行时一致。
 5. 模板职责分离（避免目录语义歧义）：
-   1. `/Users/albus/MyProjects/ANC_v2/skills/template`：只放 Skill 模板（`SKILL.md`）。
-   2. `/Users/albus/MyProjects/ANC_v2/processes/template`：放 Process 模板包（`SKILL.md` + `process.json` + 可选 `PROCESS.md`）。
-   3. `/Users/albus/MyProjects/ANC_v2/tests/template`：放测试模板（`TEST.md`）。
+   1. `skills/template`：只放 Skill 模板（`SKILL.md`）。
+   2. `processes/template`：放 Process 模板包（`SKILL.md` + `process.json` + 可选 `PROCESS.md`）。
+   3. `tests/template`：放测试模板（`TEST.md`）。
 6. `template` 目录仅用于脚手架，不直接注册到 registry。
 
 ## 11. Phase 路线与里程碑

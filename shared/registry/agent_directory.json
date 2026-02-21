@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "registry": "agent_directory",
-  "updated_at": "2026-02-18T04:20:00Z",
+  "updated_at": "2026-02-21T21:30:00Z",
   "entry_contract": {
     "required": [
       "agent_id",
@@ -13,78 +13,185 @@
       "permissions",
       "bindings"
     ],
-    "layer_enum": [
-      "kernel",
-      "control",
-      "app"
-    ],
-    "status_enum": [
-      "draft",
-      "active",
-      "deprecated",
-      "retired"
-    ]
+    "properties": {
+      "agent_id": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$",
+        "description": "stable agent identifier"
+      },
+      "layer": {
+        "type": "string",
+        "enum": [
+          "kernel",
+          "control",
+          "app"
+        ],
+        "description": "layer classification"
+      },
+      "path": {
+        "type": "string",
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+",
+        "description": "repo-relative agent workspace path"
+      },
+      "default_model": {
+        "type": "string",
+        "description": "default llm model"
+      },
+      "owner": {
+        "type": "string",
+        "description": "owner agent_id or human"
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "draft",
+          "review",
+          "active",
+          "deprecated",
+          "retired"
+        ],
+        "description": "lifecycle status"
+      },
+      "permissions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1,
+        "uniqueItems": true,
+        "description": "permission scopes"
+      },
+      "bindings": {
+        "type": "object",
+        "required": [
+          "channels",
+          "channelsConfig"
+        ],
+        "properties": {
+          "channels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true,
+            "description": "referenced channel names"
+          },
+          "channelsConfig": {
+            "type": "object",
+            "description": "channel-level agent config"
+          }
+        },
+        "additionalProperties": false,
+        "description": "openclaw channel bindings"
+      }
+    },
+    "additionalProperties": false
   },
   "entries": [
     {
       "agent_id": "admin",
       "layer": "kernel",
-      "path": "/Users/albus/MyProjects/ANC_v2/agents/kernel/admin",
+      "path": "agents/kernel/admin",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "human",
       "status": "draft",
-      "permissions": "system-root",
-      "bindings": []
+      "permissions": [
+        "system-root"
+      ],
+      "bindings": {
+        "channels": [],
+        "channelsConfig": {}
+      }
     },
     {
       "agent_id": "architect",
       "layer": "kernel",
-      "path": "/Users/albus/MyProjects/ANC_v2/agents/kernel/architect",
+      "path": "agents/kernel/architect",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "admin",
       "status": "draft",
-      "permissions": "architecture-governance",
-      "bindings": []
+      "permissions": [
+        "architecture-governance"
+      ],
+      "bindings": {
+        "channels": [],
+        "channelsConfig": {}
+      }
     },
     {
       "agent_id": "hr",
       "layer": "kernel",
-      "path": "/Users/albus/MyProjects/ANC_v2/agents/kernel/hr",
+      "path": "agents/kernel/hr",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "admin",
       "status": "draft",
-      "permissions": "lifecycle-governance",
-      "bindings": []
+      "permissions": [
+        "lifecycle-governance"
+      ],
+      "bindings": {
+        "channels": [],
+        "channelsConfig": {}
+      }
     },
     {
       "agent_id": "kernel-dev",
       "layer": "kernel",
-      "path": "/Users/albus/MyProjects/ANC_v2/agents/kernel/kernel-dev",
+      "path": "agents/kernel/kernel-dev",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "architect",
       "status": "draft",
-      "permissions": "implementation-kernel",
-      "bindings": []
+      "permissions": [
+        "implementation-kernel"
+      ],
+      "bindings": {
+        "channels": [],
+        "channelsConfig": {}
+      }
     },
     {
       "agent_id": "bpm",
       "layer": "control",
-      "path": "/Users/albus/MyProjects/ANC_v2/agents/control/BPM",
+      "path": "agents/control/BPM",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "admin",
       "status": "draft",
-      "permissions": "orchestration-control",
-      "bindings": []
+      "permissions": [
+        "orchestration-control"
+      ],
+      "bindings": {
+        "channels": [],
+        "channelsConfig": {}
+      }
+    },
+    {
+      "agent_id": "personal-assistant",
+      "layer": "app",
+      "path": "agents/app/entry/personal-assistant",
+      "default_model": "rightcode/gpt-5.3-codex",
+      "owner": "admin",
+      "status": "draft",
+      "permissions": [
+        "entry-assistance-read-heavy"
+      ],
+      "bindings": {
+        "channels": [],
+        "channelsConfig": {}
+      }
     },
     {
       "agent_id": "qa",
       "layer": "kernel",
-      "path": "/Users/albus/MyProjects/ANC_v2/agents/kernel/qa",
+      "path": "agents/kernel/qa",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "admin",
       "status": "draft",
-      "permissions": "quality-governance",
-      "bindings": []
+      "permissions": [
+        "quality-governance"
+      ],
+      "bindings": {
+        "channels": [],
+        "channelsConfig": {}
+      }
     }
   ]
 }

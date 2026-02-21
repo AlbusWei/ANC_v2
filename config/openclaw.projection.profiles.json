@@ -1,0 +1,42 @@
+{
+  "version": "1.0.0",
+  "managed_paths": {
+    "agents_list": "agents.list",
+    "skills_entries": "skills.entries"
+  },
+  "profiles": {
+    "phase05-base": {
+      "output_file": "config/openclaw.phase05.fragment.json",
+      "include_agents": [
+        "admin",
+        "architect",
+        "hr",
+        "kernel-dev",
+        "bpm",
+        "qa"
+      ],
+      "allow_agent_status": [
+        "draft",
+        "review",
+        "active"
+      ]
+    },
+    "phase05-with-entry": {
+      "output_file": "config/openclaw.phase05.with-entry.fragment.json",
+      "include_agents": [
+        "admin",
+        "architect",
+        "hr",
+        "kernel-dev",
+        "bpm",
+        "qa",
+        "personal-assistant"
+      ],
+      "allow_agent_status": [
+        "draft",
+        "review",
+        "active"
+      ]
+    }
+  }
+}

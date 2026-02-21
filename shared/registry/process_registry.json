@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "registry": "process_registry",
-  "updated_at": "2026-02-19T00:00:00Z",
+  "updated_at": "2026-02-21T23:50:00Z",
   "entry_contract": {
     "required": [
       "process_id",
@@ -12,33 +12,199 @@
       "owner",
       "version",
       "status",
+      "phase_count",
       "openclaw"
     ],
-    "status_enum": [
-      "draft",
-      "active",
-      "deprecated",
-      "retired"
-    ],
-    "notes": {
-      "skill_name": "must match processes/<name>/SKILL.md frontmatter.name",
-      "manifest_path": "must point to process.json or process.yaml"
-    }
+    "properties": {
+      "process_id": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$",
+        "description": "stable process identifier"
+      },
+      "skill_name": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$",
+        "description": "process skill frontmatter name"
+      },
+      "skill_path": {
+        "type": "string",
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+",
+        "description": "repo-relative process SKILL.md path"
+      },
+      "manifest_path": {
+        "type": "string",
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+",
+        "description": "repo-relative process manifest path"
+      },
+      "objective_ref": {
+        "type": "string",
+        "description": "objective identifier"
+      },
+      "owner": {
+        "type": "string",
+        "description": "owner agent_id"
+      },
+      "version": {
+        "type": "string",
+        "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+        "description": "semantic version"
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "draft",
+          "review",
+          "active",
+          "deprecated",
+          "retired"
+        ],
+        "description": "lifecycle status"
+      },
+      "phase_count": {
+        "type": "integer",
+        "minimum": 1,
+        "description": "declared phase count"
+      },
+      "openclaw": {
+        "type": "object",
+        "required": [
+          "projection_mode",
+          "entry_key",
+          "source"
+        ],
+        "properties": {
+          "projection_mode": {
+            "type": "string",
+            "enum": [
+              "bundle",
+              "pin",
+              "off"
+            ],
+            "description": "projection strategy"
+          },
+          "entry_key": {
+            "type": "string",
+            "description": "stable OpenClaw entry key"
+          },
+          "source": {
+            "type": "string",
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+",
+            "description": "repo-relative OpenClaw source path"
+          },
+          "bundle_key": {
+            "type": "string",
+            "description": "bundle key when projection_mode=bundle"
+          },
+          "bundle_source": {
+            "type": "string",
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+",
+            "description": "repo-relative bundle source when projection_mode=bundle"
+          },
+          "allow_draft_projection": {
+            "type": "boolean",
+            "description": "allow draft assets in runtime projection"
+          }
+        },
+        "additionalProperties": false,
+        "description": "OpenClaw projection metadata"
+      }
+    },
+    "additionalProperties": false
   },
   "entries": [
     {
       "process_id": "development-process",
       "skill_name": "development-process",
-      "skill_path": "/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/SKILL.md",
-      "manifest_path": "/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/process.json",
+      "skill_path": "processes/meta/development-process/SKILL.md",
+      "manifest_path": "processes/meta/development-process/process.json",
       "objective_ref": "obj-phase1-min-loop",
       "owner": "bpm",
       "version": "0.2.0",
       "status": "active",
       "phase_count": 4,
       "openclaw": {
-        "entry_name": "development-process",
-        "source": "/Users/albus/MyProjects/ANC_v2/processes/meta/development-process"
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "development-process",
+        "source": "processes/meta/development-process",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "governed-config-change",
+      "skill_name": "governed-config-change",
+      "skill_path": "processes/meta/governed-config-change/SKILL.md",
+      "manifest_path": "processes/meta/governed-config-change/process.json",
+      "objective_ref": "obj-governed-openclaw-config-change",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 5,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "governed-config-change",
+        "source": "processes/meta/governed-config-change",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "quality-gate-preparation",
+      "skill_name": "quality-gate-preparation",
+      "skill_path": "processes/meta/quality-gate-preparation/SKILL.md",
+      "manifest_path": "processes/meta/quality-gate-preparation/process.json",
+      "objective_ref": "obj-m1-unified-quality-gate",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 3,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "quality-gate-preparation",
+        "source": "processes/meta/quality-gate-preparation",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "quality-gate-evaluation",
+      "skill_name": "quality-gate-evaluation",
+      "skill_path": "processes/meta/quality-gate-evaluation/SKILL.md",
+      "manifest_path": "processes/meta/quality-gate-evaluation/process.json",
+      "objective_ref": "obj-m1-unified-quality-gate",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 5,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "quality-gate-evaluation",
+        "source": "processes/meta/quality-gate-evaluation",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "hold-governance",
+      "skill_name": "hold-governance",
+      "skill_path": "processes/meta/hold-governance/SKILL.md",
+      "manifest_path": "processes/meta/hold-governance/process.json",
+      "objective_ref": "obj-m1-unified-quality-gate",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 5,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "hold-governance",
+        "source": "processes/meta/hold-governance",
+        "allow_draft_projection": true
       }
     }
   ]

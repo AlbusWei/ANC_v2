@@ -17,6 +17,42 @@ allowed-tools:
 
 将 Objective 形式化为可执行、可测试、可审计的规范文档。
 
+## Capability Contract (Machine-Readable)
+
+```yaml
+contract_version: 1.0.0
+objective_ref: obj-phase1-min-loop
+input_contract:
+  format: json
+  required:
+    - objective_ref
+    - problem_statement
+    - constraints
+  validation:
+    - objective_ref must be provided
+    - problem_statement must be specific and testable
+    - constraints must be explicit
+output_contract:
+  format: markdown
+  required:
+    - scope
+    - input_contract
+    - output_contract
+    - acceptance_criteria
+    - risks
+  machine_judgement:
+    - output includes all required sections
+    - acceptance_criteria are testable
+    - risks include rollback direction
+fail_closed_rules:
+  - missing required input fields
+  - output missing required sections
+  - objective conflicts with SSOT
+test_mount:
+  test_doc: skills/meta/spec-writer/TEST.md
+  methodology_ref: docs/architecture/test_methodology.md
+```
+
 ## Input Contract
 
 - Format: json

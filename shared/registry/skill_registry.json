@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "registry": "skill_registry",
-  "updated_at": "2026-02-19T00:00:00Z",
+  "updated_at": "2026-02-21T23:50:00Z",
   "entry_contract": {
     "required": [
       "skill_id",
@@ -12,32 +12,186 @@
       "version",
       "status",
       "agentskills",
-      "openclaw"
+      "openclaw",
+      "tests"
     ],
-    "agentskills_required_frontmatter": [
-      "name",
-      "description",
-      "license",
-      "compatibility"
-    ],
-    "status_enum": [
-      "draft",
-      "active",
-      "deprecated",
-      "retired"
-    ]
+    "properties": {
+      "skill_id": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$",
+        "description": "stable skill identifier"
+      },
+      "name": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$",
+        "description": "skill display name"
+      },
+      "path": {
+        "type": "string",
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+",
+        "description": "repo-relative SKILL.md path"
+      },
+      "layer": {
+        "type": "string",
+        "enum": [
+          "meta",
+          "system",
+          "business"
+        ],
+        "description": "skill layer"
+      },
+      "owner": {
+        "type": "string",
+        "description": "owner agent_id"
+      },
+      "version": {
+        "type": "string",
+        "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+        "description": "semantic version"
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "draft",
+          "review",
+          "active",
+          "deprecated",
+          "retired"
+        ],
+        "description": "lifecycle status"
+      },
+      "agentskills": {
+        "type": "object",
+        "required": [
+          "name",
+          "description",
+          "license",
+          "compatibility"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "frontmatter name"
+          },
+          "description": {
+            "type": "string",
+            "description": "frontmatter description"
+          },
+          "license": {
+            "type": "string",
+            "description": "frontmatter license"
+          },
+          "compatibility": {
+            "type": "object",
+            "required": [
+              "openclaw",
+              "agentskills"
+            ],
+            "properties": {
+              "openclaw": {
+                "type": "string",
+                "description": "openclaw compatibility range"
+              },
+              "agentskills": {
+                "type": "string",
+                "description": "agentskills compatibility range"
+              }
+            },
+            "additionalProperties": false,
+            "description": "compatibility matrix"
+          }
+        },
+        "additionalProperties": false,
+        "description": "agent skills frontmatter snapshot"
+      },
+      "openclaw": {
+        "type": "object",
+        "required": [
+          "projection_mode",
+          "entry_key",
+          "source",
+          "install_strategy"
+        ],
+        "properties": {
+          "projection_mode": {
+            "type": "string",
+            "enum": [
+              "bundle",
+              "pin",
+              "off"
+            ],
+            "description": "projection strategy"
+          },
+          "entry_key": {
+            "type": "string",
+            "description": "stable OpenClaw entry key"
+          },
+          "source": {
+            "type": "string",
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+",
+            "description": "repo-relative OpenClaw source path"
+          },
+          "install_strategy": {
+            "type": "string",
+            "enum": [
+              "lazy",
+              "eager"
+            ],
+            "description": "OpenClaw install strategy"
+          },
+          "bundle_key": {
+            "type": "string",
+            "description": "bundle key when projection_mode=bundle"
+          },
+          "bundle_source": {
+            "type": "string",
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+",
+            "description": "repo-relative bundle source when projection_mode=bundle"
+          },
+          "allow_draft_projection": {
+            "type": "boolean",
+            "description": "allow draft assets in runtime projection"
+          }
+        },
+        "additionalProperties": false,
+        "description": "OpenClaw projection metadata"
+      },
+      "tests": {
+        "type": "object",
+        "required": [
+          "test_doc",
+          "methodology_ref"
+        ],
+        "properties": {
+          "test_doc": {
+            "type": "string",
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+",
+            "description": "repo-relative skill test doc path"
+          },
+          "methodology_ref": {
+            "type": "string",
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+",
+            "description": "repo-relative test methodology reference"
+          }
+        },
+        "additionalProperties": false,
+        "description": "test references"
+      }
+    },
+    "additionalProperties": false
   },
   "entries": [
     {
       "skill_id": "meta.qa.llm-judge",
       "name": "llm-judge",
-      "path": "/Users/albus/MyProjects/ANC_v2/skills/meta/llm-judge/SKILL.md",
+      "path": "skills/meta/llm-judge/SKILL.md",
       "layer": "meta",
       "owner": "qa",
       "version": "0.2.0",
       "status": "active",
       "agentskills": {
-        "description": "Run scenario-backed evaluation and normalize results into ANC gate verdict",
+        "name": "llm-judge",
+        "description": "Evaluate outputs against objective/spec and return structured verdict",
         "license": "Apache-2.0",
         "compatibility": {
           "openclaw": ">=2026.2",
@@ -45,13 +199,17 @@
         }
       },
       "openclaw": {
-        "entry_name": "llm-judge",
-        "source": "/Users/albus/MyProjects/ANC_v2/skills/meta/llm-judge",
-        "install_strategy": "lazy"
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-skills",
+        "bundle_source": "skills/meta",
+        "entry_key": "meta.qa.llm-judge",
+        "source": "skills/meta/llm-judge",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
       },
       "tests": {
-        "test_doc": "/Users/albus/MyProjects/ANC_v2/skills/meta/llm-judge/TEST.md",
-        "methodology_ref": "/Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md"
+        "test_doc": "skills/meta/llm-judge/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
       }
     },
     {
@@ -83,12 +241,13 @@
     {
       "skill_id": "meta.arch.spec-writer",
       "name": "spec-writer",
-      "path": "/Users/albus/MyProjects/ANC_v2/skills/meta/spec-writer/SKILL.md",
+      "path": "skills/meta/spec-writer/SKILL.md",
       "layer": "meta",
       "owner": "architect",
       "version": "0.1.0",
       "status": "draft",
       "agentskills": {
+        "name": "spec-writer",
         "description": "Generate objective-aligned technical spec with enforceable constraints",
         "license": "Apache-2.0",
         "compatibility": {
@@ -97,24 +256,29 @@
         }
       },
       "openclaw": {
-        "entry_name": "spec-writer",
-        "source": "/Users/albus/MyProjects/ANC_v2/skills/meta/spec-writer",
-        "install_strategy": "lazy"
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-skills",
+        "bundle_source": "skills/meta",
+        "entry_key": "meta.arch.spec-writer",
+        "source": "skills/meta/spec-writer",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
       },
       "tests": {
-        "test_doc": "/Users/albus/MyProjects/ANC_v2/skills/meta/spec-writer/TEST.md",
-        "methodology_ref": "/Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md"
+        "test_doc": "skills/meta/spec-writer/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
       }
     },
     {
       "skill_id": "meta.qa.test-designer",
       "name": "test-designer",
-      "path": "/Users/albus/MyProjects/ANC_v2/skills/meta/test-designer/SKILL.md",
+      "path": "skills/meta/test-designer/SKILL.md",
       "layer": "meta",
       "owner": "qa",
       "version": "0.1.0",
       "status": "draft",
       "agentskills": {
+        "name": "test-designer",
         "description": "Design objective-aligned test cases before implementation",
         "license": "Apache-2.0",
         "compatibility": {
@@ -123,13 +287,355 @@
         }
       },
       "openclaw": {
-        "entry_name": "test-designer",
-        "source": "/Users/albus/MyProjects/ANC_v2/skills/meta/test-designer",
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-skills",
+        "bundle_source": "skills/meta",
+        "entry_key": "meta.qa.test-designer",
+        "source": "skills/meta/test-designer",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/meta/test-designer/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "system.integration.entire-codex-sync",
+      "name": "entire-codex-sync",
+      "path": "skills/system/entire-codex-sync/SKILL.md",
+      "layer": "system",
+      "owner": "admin",
+      "version": "0.1.0",
+      "status": "review",
+      "agentskills": {
+        "name": "entire-codex-sync",
+        "description": "Bridge Codex development turns into Entire checkpoints and commit-linked session evidence",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "pin",
+        "entry_key": "system.integration.entire-codex-sync",
+        "source": "skills/system/entire-codex-sync",
         "install_strategy": "lazy"
       },
       "tests": {
-        "test_doc": "/Users/albus/MyProjects/ANC_v2/skills/meta/test-designer/TEST.md",
-        "methodology_ref": "/Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md"
+        "test_doc": "skills/system/entire-codex-sync/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "system.ops.manual-task",
+      "name": "manual-task",
+      "path": "skills/system/manual-task/SKILL.md",
+      "layer": "system",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "manual-task",
+        "description": "Execute controlled human-in-the-loop task with evidence output",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "system.ops.manual-task",
+        "source": "skills/system/manual-task",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/manual-task/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "system.control.config-change-gatekeeper",
+      "name": "config-change-gatekeeper",
+      "path": "skills/system/config-change-gatekeeper/SKILL.md",
+      "layer": "system",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "config-change-gatekeeper",
+        "description": "Validate config change prerequisites and classify risk",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "system.control.config-change-gatekeeper",
+        "source": "skills/system/config-change-gatekeeper",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/config-change-gatekeeper/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "system.admin.system-config-updater",
+      "name": "system-config-updater",
+      "path": "skills/system/system-config-updater/SKILL.md",
+      "layer": "system",
+      "owner": "admin",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "system-config-updater",
+        "description": "Apply OpenClaw config patch with hash-safe guardrails",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "system.admin.system-config-updater",
+        "source": "skills/system/system-config-updater",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/system-config-updater/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.qa.test-compiler",
+      "name": "test-compiler",
+      "path": "skills/system/test-compiler/SKILL.md",
+      "layer": "system",
+      "owner": "qa",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "test-compiler",
+        "description": "Compile TEST.md into executable datapoints and profile bindings",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.qa.test-compiler",
+        "source": "skills/system/test-compiler",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/test-compiler/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.qa.evaluation-runner",
+      "name": "evaluation-runner",
+      "path": "skills/system/evaluation-runner/SKILL.md",
+      "layer": "system",
+      "owner": "qa",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "evaluation-runner",
+        "description": "Run objective/subjective/regression evaluations through unified runner contract",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.qa.evaluation-runner",
+        "source": "skills/system/evaluation-runner",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/evaluation-runner/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.qa.verdict-normalizer",
+      "name": "verdict-normalizer",
+      "path": "skills/system/verdict-normalizer/SKILL.md",
+      "layer": "system",
+      "owner": "qa",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "verdict-normalizer",
+        "description": "Normalize evaluation outputs into unified gate decision",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.qa.verdict-normalizer",
+        "source": "skills/system/verdict-normalizer",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/verdict-normalizer/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.qa.regression-runner",
+      "name": "regression-runner",
+      "path": "skills/system/regression-runner/SKILL.md",
+      "layer": "system",
+      "owner": "qa",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "regression-runner",
+        "description": "Run cross-module regression and emit release gate candidate",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.qa.regression-runner",
+        "source": "skills/system/regression-runner",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/regression-runner/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.qa.hold-triage",
+      "name": "hold-triage",
+      "path": "skills/system/hold-triage/SKILL.md",
+      "layer": "system",
+      "owner": "qa",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "hold-triage",
+        "description": "Collect progress signals and classify hold actions",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.qa.hold-triage",
+        "source": "skills/system/hold-triage",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/hold-triage/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.bpm.process-instance-manager",
+      "name": "process-instance-manager",
+      "path": "skills/system/process-instance-manager/SKILL.md",
+      "layer": "system",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "process-instance-manager",
+        "description": "Maintain runtime health and recovery state for governed process instances",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.bpm.process-instance-manager",
+        "source": "skills/system/process-instance-manager",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/process-instance-manager/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.bpm.escalation-handler",
+      "name": "escalation-handler",
+      "path": "skills/system/escalation-handler/SKILL.md",
+      "layer": "system",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "escalation-handler",
+        "description": "Close hold cases or escalate through governed escalation chain",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.bpm.escalation-handler",
+        "source": "skills/system/escalation-handler",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/escalation-handler/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
       }
     }
   ]

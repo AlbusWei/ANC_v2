@@ -1,0 +1,174 @@
+{
+  "process_id": "governed-config-change",
+  "version": "0.1.0",
+  "process_level": "P4",
+  "parent_process_id": null,
+  "composed_processes": [],
+  "lineage_policy": {
+    "stack_depth_limit": 8,
+    "context_isolation": "strict",
+    "output_handoff_mode": "contract_only"
+  },
+  "objective_ref": "obj-governed-openclaw-config-change",
+  "owner": "bpm",
+  "priority": "P0",
+  "input_contract": {
+    "format": "json",
+    "required": [
+      "objective_ref",
+      "change_request",
+      "requester",
+      "target_scope",
+      "rollback_plan"
+    ]
+  },
+  "output_contract": {
+    "format": "json",
+    "required": [
+      "final_output",
+      "evidence_refs",
+      "verdict",
+      "change_receipt"
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1",
+      "name": "intake-and-normalize",
+      "actor": "bpm",
+      "target_type": "skill",
+      "target_id": "system.ops.manual-task",
+      "requires_spec": false,
+      "sipoc": {
+        "supplier": "initiator",
+        "input": "change_request",
+        "process": "normalize request into structured config_change_request",
+        "output": "normalized_request",
+        "client": "p2"
+      },
+      "acceptance_criteria": "request includes target scope, expected impact and rollback plan"
+    },
+    {
+      "phase_id": "p2",
+      "name": "gate-and-risk-classification",
+      "actor": "bpm",
+      "target_type": "skill",
+      "target_id": "system.control.config-change-gatekeeper",
+      "requires_spec": true,
+      "spec_ref": "docs/architecture/registry_contracts.md#9-验证命令",
+      "sipoc": {
+        "supplier": "p1",
+        "input": "normalized_request",
+        "process": "validate required evidence and classify risk",
+        "output": "approved_request",
+        "client": "p3"
+      },
+      "acceptance_criteria": "objective/spec/test chain complete and risk level recorded"
+    },
+    {
+      "phase_id": "p3",
+      "name": "authorize-change",
+      "actor": "admin",
+      "target_type": "skill",
+      "target_id": "system.ops.manual-task",
+      "requires_spec": true,
+      "spec_ref": "docs/architecture/openclaw_interface.md#3-2-1-anc-治理约束配置写路径",
+      "sipoc": {
+        "supplier": "p2",
+        "input": "approved_request",
+        "process": "approve or reject execution window and scope",
+        "output": "authorization_decision",
+        "client": "p4"
+      },
+      "acceptance_criteria": "authorization decision includes approval, constraints and rollback trigger"
+    },
+    {
+      "phase_id": "p4",
+      "name": "execute-config-change",
+      "actor": "admin",
+      "target_type": "skill",
+      "target_id": "system.admin.system-config-updater",
+      "requires_spec": true,
+      "spec_ref": "docs/architecture/openclaw_interface.md#2-2-config-rpc经-openclaw-gateway-call",
+      "sipoc": {
+        "supplier": "p3",
+        "input": "authorization_decision",
+        "process": "apply OpenClaw config change with baseHash and capture receipt",
+        "output": "change_receipt",
+        "client": "p5"
+      },
+      "acceptance_criteria": "change receipt contains hash_before/hash_after, patch summary and execution status"
+    },
+    {
+      "phase_id": "p5",
+      "name": "verify-and-archive",
+      "actor": "bpm",
+      "target_type": "skill",
+      "target_id": "system.ops.manual-task",
+      "requires_spec": true,
+      "spec_ref": "docs/architecture/registry_contracts.md#9-验证命令",
+      "sipoc": {
+        "supplier": "p4",
+        "input": "change_receipt",
+        "process": "verify post-change health, archive evidence and notify requester",
+        "output": "final_output",
+        "client": "initiator"
+      },
+      "acceptance_criteria": "health verification pass and evidence bundle is complete"
+    }
+  ],
+  "control_flow": [
+    {
+      "from": "p1",
+      "to": "p2",
+      "on": "success"
+    },
+    {
+      "from": "p2",
+      "to": "p3",
+      "on": "success"
+    },
+    {
+      "from": "p3",
+      "to": "p4",
+      "on": "success"
+    },
+    {
+      "from": "p4",
+      "to": "p5",
+      "on": "success"
+    },
+    {
+      "from": "p5",
+      "to": "end",
+      "on": "success"
+    }
+  ],
+  "fail_policy": {
+    "mode": "fail_closed",
+    "retry": {
+      "max_attempts": 1
+    },
+    "escalation_chain": [
+      "actor",
+      "owner",
+      "bpm",
+      "admin",
+      "human"
+    ]
+  },
+  "evidence_policy": {
+    "required_fields": [
+      "timestamp",
+      "phase_id",
+      "actor",
+      "input_ref",
+      "output_ref",
+      "decision",
+      "reason",
+      "hash_before",
+      "hash_after",
+      "rollback_status"
+    ]
+  }
+}

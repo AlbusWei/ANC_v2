@@ -1,10 +1,9 @@
 # ANC v2 测试方法论
 
-最后更新：2026-02-20
-版本：2.0.2-alpha
+最后更新：2026-02-21  
+版本：2.1.0-alpha
 
-> 本文档定义 ANC 中测试的定位、执行方式、评估协议和报告规范。
-> 测试在 ANC v2 中属于治理与门禁能力，不是产品主定位。
+> 本文档定义 ANC 中测试的定位、执行方式、评估协议、门禁规则与证据规范。
 
 ## 1. 测试在因果链中的位置
 
@@ -33,6 +32,12 @@
 1. BPM 不允许跳过测试阶段直接发布。
 2. 任何“先上线后补测”默认视为治理违规。
 
+### 2.3 门禁优先于报告格式
+
+1. 首要目标是门禁真实生效并可阻断推进。
+2. verdict 允许非严格 JSON，只要可稳定解析为统一输出契约。
+3. 输出可读性和格式完整性服从于门禁可用性。
+
 ## 3. 双轨评估机制
 
 ### 3.1 客观评估（Objective Evaluation）
@@ -44,20 +49,23 @@
 ```json
 {
   "objective": "...",
-  "spec": "...",
+  "spec_ref": "...",
   "expected_conditions": ["..."],
-  "actual_output": "..."
+  "actual_output_ref": "..."
 }
 ```
 
-输出建议：
+统一输出（M1 verdict）：
 
 ```json
 {
-  "pass": true,
-  "confidence": 0.84,
-  "remarks": "...",
-  "suggestions": ["..."]
+  "gate_decision": "pass|fail|hold|test_invalid",
+  "evidence_ref": "path/to/evidence/package",
+  "reasons": ["..."],
+  "raw_eval_ref": "optional",
+  "retry_hint": "optional",
+  "profile_id": "optional",
+  "parser_notes": "optional"
 }
 ```
 
@@ -67,15 +75,16 @@
 
 执行规则：
 
-1. A/B 输出盲测，隐藏来源。
-2. 多轮评估（建议 N >= 9）。
-3. 统计胜率后再做裁决。
+1. A/B 输出盲测，隐藏来源并随机化 X/Y。
+2. 轮次按任务复杂度由测试计划定义，`9` 轮仅作为推荐基线。
+3. 必须记录随机种子，保证可复现。
+4. 统计胜率后再做裁决。
 
 裁决建议：
 
-1. 新版本胜率 >= 2/3：接受。
-2. 新版本胜率 < 1/2：拒绝。
-3. 中间区间：人类介入。
+1. 新版本胜率 `>= 2/3`：接受。
+2. 新版本胜率 `< 1/2`：拒绝。
+3. 中间区间：进入 `architect + admin` 审查。
 
 ## 4. LLM-as-Judge 协议
 
@@ -83,14 +92,15 @@
 
 1. 给出 Objective。
 2. 给出 Spec 与验收条件。
-3. 给出实际输出。
-4. 要求返回 pass/confidence/reason/suggestions。
+3. 给出实际输出引用。
+4. 要求返回可解析判定依据（由适配层归一为统一 verdict）。
 
 ### 4.2 主观评估提示框架
 
 1. 给出同一任务目标。
 2. 给出随机化后的输出 X/Y。
 3. 要求选择优者并解释理由。
+4. 输出中必须带可复现元数据（seed、轮次、样本标识）。
 
 ### 4.3 多视角评估（可选）
 
@@ -143,15 +153,16 @@ ANC 将 Scenario 作为测试执行底座，默认后端为 `scenario_python`。
 建议结构：
 
 1. 摘要：测试类型、总体结论。
-2. 用例结果：每个 TC 的 verdict、confidence、reason。
+2. 用例结果：每个 TC 的 gate_decision、reasons、evidence_ref。
 3. 汇总分析：共性问题与风险。
 4. 改进行动：可执行的下一步修复建议。
-5. 发布建议：accept/rework/human-review。
+5. 发布建议：pass/fail/hold/test_invalid。
 
 测试模板基线：
 
-1. 统一模板路径：`/Users/albus/MyProjects/ANC_v2/tests/template/TEST.md`。
+1. 统一模板路径：`tests/template/TEST.md`。
 2. `TEST.md` 与 `SKILL.md` 分离存放，避免“能力定义模板”和“验收模板”耦合。
+3. `TEST.md` 是唯一测试定义源，`1 TC -> 1 datapoint`。
 
 ## 6. 执行策略
 
@@ -161,19 +172,24 @@ ANC 将 Scenario 作为测试执行底座，默认后端为 `scenario_python`。
 2. 多轮主观评估可并发。
 3. 各并发任务使用隔离会话，避免上下文污染。
 
-### 6.2 轮询与超时
+### 6.2 活性检测与 HOLD 治理（替代硬超时）
 
-1. 评测任务应有轮询机制。
-2. 超时任务标记 `TIMEOUT` 并进入失败分析。
-3. 不允许静默丢弃超时结果。
+1. 评测任务应有轮询机制与运行活性检测。
+2. 禁止以固定时长作为失败判据。
+3. 最小进展信号：
+   - 日志增量
+   - 阶段状态推进
+   - 输出流心跳
+4. `hold` 由 `qa` 负责 triage，必要时升级 `bpm -> admin`。
+5. triage 决策：`continue/retry/debug/fail`。
 
 ### 6.3 分级测试
 
 | 级别 | 触发 | 范围 | 深度 |
 |---|---|---|---|
 | 冒烟 | 日常迭代后 | P0 用例 | 单轮客观评估 |
-| 标准 | 发布前 | 全量用例 | 多轮客观评估 |
-| 深度 | 重大变更 | 全量 + A/B | 多轮 + 多视角 |
+| 标准 | 发布前 | 全量用例 | 客观评估 + 必要重试 |
+| 深度 | 重大变更 | 全量 + A/B | 动态轮次 + 多视角 |
 
 ### 6.4 主观 A/B 多轮编排（Scenario 模式）
 
@@ -189,11 +205,14 @@ ANC 将 Scenario 作为测试执行底座，默认后端为 `scenario_python`。
 
 ## 7. Fail-Closed 条件
 
-以下情况默认测试失败：
+以下情况默认失败：
 
 1. 判定结果不可解析。
 2. 关键输入缺失（Objective/Spec/Output）。
 3. 证据缺失或不可追溯。
-4. 评估超时且无替代证据。
-5. Scenario 返回结构不可解析或归一化失败。
-6. `evidence_root` 缺失关键证据文件（`raw_result`/`normalized_verdict`/`guard_log`）。
+
+补充：
+
+1. 编译期/运行前契约错误返回 `test_invalid` 并阻断。
+2. `hold -> fail` 仅在确认异常或无进展证据时触发。
+3. 长时运行本身不构成失败。

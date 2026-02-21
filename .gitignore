@@ -1,69 +1,50 @@
-# Python
+# OS Specific
+.DS_Store
+Thumbs.db
+._*
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.history/
+
+# Logs and Temp
+*.log
+logs/
+tmp/
+temp/
+
+# Node.js (Common, even if not used yet)
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn.lock
+package-lock.json
+
+# Python (Common, even if not used yet)
 __pycache__/
 *.py[cod]
 *$py.class
-*.so
-.Python
-env/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-.pytest_cache/
-.coverage
-htmlcov/
-.tox/
-.nox/
-.venv
 venv/
-ENV/
-
-# OS
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-.trae/
-
-# Test artifacts
-tests/artifacts/
-
-# Logs and temporary files
-*.log
-*.tmp
-*.temp
-*.bak
-*.orig
-
-# Local environment files
+.venv/
+env/
 .env
-.env.*
-!.env.example
+*.egg-info/
+dist/
+build/
 
-# Local tooling state
-.openclaw/
-.codex/
+# Project Specific Artifacts
+# Run artifacts from BPM
+process_instances/
 
-# bmad
-_bmad/
-_bmad-output/
+# Local AI workspace state
+.claude/
+.gemini/
+.opencode/
+.entire/logs/
+.entire/metadata/
+.entire/tmp/
+.entire/settings.local.json
