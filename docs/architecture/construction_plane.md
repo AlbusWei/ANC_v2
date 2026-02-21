@@ -33,6 +33,9 @@
 - [x] 完成 M1 质量门禁二次重构：`quality-gate-preparation` + `quality-gate-evaluation` + `hold-governance` 连续性闭合
 - [x] 完成 M2 触发运行时骨架落盘：`trigger-schedule-runtime` + `trigger-event-runtime` + AP-026~AP-031 + 6 个 `sys.bpm.*` 核心技能
 - [x] 完成 M3 自开发骨架落盘：`full-development/hotfix/refactor` 流程资产 + `objective-writer/agent-creator/process-creator/template-validator/skill-creator` 技能注册
+- [x] 完成 M6 施工治理资产落盘：`construction-plane-governance` 流程 + `sys.arch.construction-audit` 技能 + M6 详细设计重构
+- [x] 建立 M6 × OpenSpec Hybrid 协同协议并明确 Architect 语义 owner 机制
+- [x] 完成 OpenSpec 协同完整 schema 与包装技能落盘：`openspec-collaboration-schema` + `system.integration.openspec-sync`
 
 ## 进行中（In Progress）
 
@@ -43,6 +46,8 @@
 - [ ] 完成 trigger runtime 动态策略实证校准并形成参数回写节奏
 - [ ] 建立 `runtime-policy-calibration` 治理节奏并纳入 M1/M2 首批后验议题
 - [ ] 触发 M3 `full-development/hotfix/refactor` 首轮运行级 dry-run 并沉淀证据
+- [ ] 按“文档级先行”策略完成 M6 × OpenSpec 双向映射样板与冲突裁决模板
+- [ ] 触发 `construction-plane-governance` 首轮运行级 dry-run 并沉淀证据（后置）
 
 ## 下一步（Next）
 
@@ -54,6 +59,8 @@
 6. 将 quality gate 相关技能资产从设计落盘推进到 `registry draft`（含 `SKILL.md/TEST.md`）。
 7. 进行 trigger runtime 动态策略回放并回写 `catchup_policy_ref` 校准证据。
 8. 将 M1 测试时长估计与 M2 动态策略问题统一纳入 `runtime-policy-calibration` 治理回路。
+9. 收敛 M6 周期审查节奏与 owner 责任模型，并写入治理流程基线。
+10. 与 OpenSpec 协同线程联调一次“冲突裁决 -> 双向回写”演练。
 
 ## 里程碑
 
@@ -79,6 +86,11 @@
 | Q-006 | `sys.bpm.process-parser/process-scheduler/lineage-guard` 应拆分为独立技能还是并入 `process-instance-manager`？ | Phase 1 | Closed（已决策并入 `process-instance-manager` 子能力） |
 | Q-007 | `trigger-schedule-runtime` 与 `trigger-event-runtime` 是否继续拆分出统一父流程（如 `trigger-runtime-supervisor`）？ | Phase 1 | Closed（结论：当前保持双 P4 流程；如需收口，引入 P5 `trigger-runtime-supervisor` 模式） |
 | Q-008 | 动态 `catchup_policy_ref` 的校准周期与最小样本量如何设定，才能兼顾稳定性与响应速度？ | Phase 1 | system-analyst -> architect/admin/bpm |
+| Q-009 | `construction-plane-governance` 在 Phase 1 先文档级演练还是直接运行级 dry-run？ | Phase 1 | Closed（文档级先行，运行级后置） |
+| Q-010 | `sys.arch.construction-audit` 长期 owner 固定 architect 还是 architect+bpm 双 owner？ | Phase 1 | Closed（architect 为语义 owner，bpm 负责编排执行） |
+| Q-011 | M6 审查节奏采用“变更触发”还是“周节奏+变更触发”双轨？ | Phase 1 | Closed（变更触发 + system-analyst 可调频巡检） |
+| Q-012 | OpenSpec 双向映射的最小字段是否固化为强制 schema（如 `openspec_ref/decision_snapshot_ref/sync_status`）？ | Phase 1 | Closed（已升级为完整强制 schema） |
+| Q-013 | OpenSpec 巡检触发阈值如何分级（变更密度、风险等级、未决项数量）？ | Phase 1 | system-analyst -> architect |
 
 ## 更新纪律
 
