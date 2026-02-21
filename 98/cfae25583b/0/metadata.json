@@ -1,0 +1,40 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "98cfae25583b",
+  "session_id": "codex-52854411f76b",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-21T09:02:23.552388Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/layers/L2-orchestration-governance.md",
+    "docs/design/layers/L4-self-evolution.md",
+    "docs/design/layers/layer-interface-contracts.md",
+    "docs/design/modules/M2-bpm-engine.md",
+    "docs/design/modules/M4-lifecycle-management.md",
+    "docs/design/modules/module-dependency-matrix.md",
+    "docs/design/modules/trigger-governance-review-checklist.md",
+    "docs/design/modules/trigger-governance-test-proposal.md",
+    "docs/review-checklists/layers-modules-checklist.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "6024c06ca260",
+  "transcript_identifier_at_start": "gemini-ddd00219b0",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T09:02:23.534511Z",
+    "agent_lines": 362,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 362,
+    "agent_percentage": 100
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}

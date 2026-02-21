@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "98cfae25583b",
+  "strategy": "manual-commit",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/layers/L2-orchestration-governance.md",
+    "docs/design/layers/L4-self-evolution.md",
+    "docs/design/layers/layer-interface-contracts.md",
+    "docs/design/modules/M2-bpm-engine.md",
+    "docs/design/modules/M4-lifecycle-management.md",
+    "docs/design/modules/module-dependency-matrix.md",
+    "docs/design/modules/trigger-governance-review-checklist.md",
+    "docs/design/modules/trigger-governance-test-proposal.md",
+    "docs/review-checklists/layers-modules-checklist.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/98/cfae25583b/0/metadata.json",
+      "transcript": "/98/cfae25583b/0/full.jsonl",
+      "context": "/98/cfae25583b/0/context.md",
+      "content_hash": "/98/cfae25583b/0/content_hash.txt",
+      "prompt": "/98/cfae25583b/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
