@@ -1,6 +1,6 @@
 # 模块依赖矩阵
 
-> 版本: v0.3.0 | 权威顺序来源: `/Users/albus/MyProjects/ANC_v2/docs/architecture/system_overview.md` §7
+> 版本: v0.3.0 | 权威顺序来源: `docs/architecture/system_overview.md` §7
 
 ## 1. 使用说明
 
@@ -90,8 +90,8 @@ M6 (Construction Plane) → M2 (BPM Engine) → M1 (Test System) → M3 (Self-De
 
 1. 策略面：`M4` 维护 trigger 生命周期、override 与风险规则。
 2. 运行面：`M2` 执行触发匹配、去重、补跑、升级与证据归档。
-3. 评审锚点：`/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/trigger-governance-review-checklist.md`
-4. 测试提案：`/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/trigger-governance-test-proposal.md`
+3. 评审锚点：`docs/design/modules/trigger-governance-review-checklist.md`
+4. 测试提案：`docs/design/modules/trigger-governance-test-proposal.md`
 5. 本轮最小 dry-run 建议：`TG-SCH-002` + `TG-EVT-003`。
 
 ## 9. 循环依赖检查

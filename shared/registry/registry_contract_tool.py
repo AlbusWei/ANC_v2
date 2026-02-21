@@ -5,7 +5,8 @@ Commands:
   - validate: strict contract validation for registry files.
   - generate-docs: render human-readable schema docs from entry_contract.
   - project-openclaw: project registry data to managed OpenClaw config paths.
-  - verify: run validate + capability check + docs check + projection check.
+  - check-protocol-consistency: enforce BPM/context/process protocol canonical contract.
+  - verify: run validate + capability check + protocol check + docs check + projection check.
 """
 
 from __future__ import annotations
@@ -14,7 +15,6 @@ import argparse
 import json
 import re
 import sys
-from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
@@ -30,6 +30,15 @@ CONFIG_DIR = ROOT / "config"
 DOC_PATH = ROOT / "docs" / "design" / "data-models" / "registry-schemas.md"
 PROFILE_PATH = CONFIG_DIR / "openclaw.projection.profiles.json"
 SKILLS_DIR = ROOT / "skills"
+PROCESS_ARCH_PATH = ROOT / "docs" / "architecture" / "process_architecture.md"
+BPM_PROTOCOL_PATH = ROOT / "docs" / "design" / "interfaces" / "bpm-actor-protocol.md"
+CONTEXT_SCHEMAS_PATH = ROOT / "docs" / "design" / "data-models" / "context-schemas.md"
+PROCESS_SCHEMAS_PATH = ROOT / "docs" / "design" / "data-models" / "process-instance-schemas.md"
+ROLE_HANDOFF_PATH = ROOT / "docs" / "design" / "interfaces" / "role-handoff-protocol.md"
+PROCESS_MANIFESTS = [
+    ROOT / "processes" / "meta" / "development-process" / "process.json",
+    ROOT / "processes" / "meta" / "governed-config-change" / "process.json",
+]
 
 AGENT_REGISTRY = REGISTRY_DIR / "agent_directory.json"
 SKILL_REGISTRY = REGISTRY_DIR / "skill_registry.json"
@@ -42,7 +51,15 @@ CAPABILITY_BLOCK_RE = re.compile(
     re.MULTILINE | re.DOTALL,
 )
 SEMVER_RE = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+$")
-REPO_PATH_RE = re.compile(r"^/Users/albus/MyProjects/ANC_v2/.+")
+REPO_REL_PATH_RE = re.compile(r"^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+")
+PROTOCOL_BLOCK_RE = re.compile(
+    r"^### BPM Protocol Canonical Schema \(Machine-Readable\)\s*\n```yaml\s*\n(?P<body>.*?)\n```",
+    re.MULTILINE | re.DOTALL,
+)
+JSON_BLOCK_RE = re.compile(
+    r"```json\s*\n(?P<body>.*?)\n```",
+    re.MULTILINE | re.DOTALL,
+)
 
 
 class ContractError(Exception):
@@ -186,16 +203,34 @@ def validate_registry_contract(registry_path: Path, payload: Dict[str, Any], err
         validate_by_schema(entry, entry_contract, f"{registry_path.name}.entries[{index}]", errors)
 
 
+def _resolve_repo_path(path_str: str) -> Path:
+    path = Path(path_str)
+    if path.is_absolute():
+        return path
+    return ROOT / path
+
+
+def _is_repo_relative_path(path_str: str) -> bool:
+    if re.match(REPO_REL_PATH_RE, path_str) is None:
+        return False
+    return True
+
+
 def path_exists(path_str: str) -> bool:
-    return Path(path_str).exists()
+    return _resolve_repo_path(path_str).exists()
 
 
 def _skill_relative_key(path: Path) -> str:
+    if path.is_absolute():
+        try:
+            return path.relative_to(SKILLS_DIR).as_posix()
+        except ValueError:
+            return path.as_posix()
+
     normalized = path.as_posix()
-    marker = "/skills/"
-    if marker not in normalized:
-        return normalized
-    return normalized.split(marker, 1)[1]
+    if normalized.startswith("skills/"):
+        return normalized.split("skills/", 1)[1]
+    return normalized
 
 
 def _expect_non_empty_string(value: Any, path: str, errors: List[str]) -> None:
@@ -216,8 +251,8 @@ def _expect_repo_path(value: Any, path: str, errors: List[str]) -> None:
     if not isinstance(value, str):
         errors.append(f"{path}: expected path string")
         return
-    if re.match(REPO_PATH_RE, value) is None:
-        errors.append(f"{path}: path {value!r} must be under /Users/albus/MyProjects/ANC_v2/")
+    if not _is_repo_relative_path(value):
+        errors.append(f"{path}: path {value!r} must be repo-relative and cannot use '..'")
         return
     if not path_exists(value):
         errors.append(f"{path}: missing path {value}")
@@ -478,6 +513,283 @@ def validate_all_registries() -> Tuple[Dict[str, Any], Dict[str, Any], Dict[str,
     return payloads[AGENT_REGISTRY], payloads[SKILL_REGISTRY], payloads[PROCESS_REGISTRY]
 
 
+def _load_protocol_canonical_contract(errors: List[str]) -> Optional[Dict[str, Any]]:
+    if not PROCESS_ARCH_PATH.exists():
+        errors.append(f"{PROCESS_ARCH_PATH}: missing file")
+        return None
+    content = PROCESS_ARCH_PATH.read_text(encoding="utf-8")
+    match = PROTOCOL_BLOCK_RE.search(content)
+    if not match:
+        errors.append(
+            f"{PROCESS_ARCH_PATH}: missing canonical yaml block under "
+            "'### BPM Protocol Canonical Schema (Machine-Readable)'"
+        )
+        return None
+    if yaml is None:
+        errors.append(f"{PROCESS_ARCH_PATH}: PyYAML is required to parse canonical schema block")
+        return None
+
+    try:
+        payload = yaml.safe_load(match.group("body"))
+    except Exception as exc:
+        errors.append(f"{PROCESS_ARCH_PATH}: canonical schema yaml parse error: {exc}")
+        return None
+
+    if not isinstance(payload, dict):
+        errors.append(f"{PROCESS_ARCH_PATH}: canonical schema payload must be yaml object")
+        return None
+
+    for required in ["task_dispatch", "task_completion", "lineage"]:
+        if required not in payload:
+            errors.append(f"{PROCESS_ARCH_PATH}: canonical schema missing key {required!r}")
+    return payload
+
+
+def _extract_json_blocks(path: Path, errors: List[str]) -> List[Dict[str, Any]]:
+    if not path.exists():
+        errors.append(f"{path}: missing file")
+        return []
+    content = path.read_text(encoding="utf-8")
+    blocks: List[Dict[str, Any]] = []
+    for match in JSON_BLOCK_RE.finditer(content):
+        body = match.group("body")
+        try:
+            parsed = json.loads(body)
+        except Exception as exc:
+            errors.append(f"{path}: json code block parse error: {exc}")
+            continue
+        if isinstance(parsed, dict):
+            blocks.append(parsed)
+    if not blocks:
+        errors.append(f"{path}: no parseable json code block found")
+    return blocks
+
+
+def _assert_required_fields(payload: Dict[str, Any], required: Sequence[str], path: str, errors: List[str]) -> None:
+    for field in required:
+        if field not in payload:
+            errors.append(f"{path}: missing required field {field!r}")
+
+
+def _assert_no_legacy_aliases(content: str, path: Path, errors: List[str]) -> None:
+    aliases = [
+        r'"skill"\s*:',
+        r'"skill_or_process"\s*:',
+        r'"skill_or_subprocess"\s*:',
+    ]
+    for alias in aliases:
+        if re.search(alias, content):
+            errors.append(f"{path}: legacy alias detected ({alias})")
+
+
+def _is_relative_anchor(value: str) -> bool:
+    if not isinstance(value, str) or "#" not in value:
+        return False
+    ref_path, anchor = value.split("#", 1)
+    if not ref_path or not anchor:
+        return False
+    return _is_repo_relative_path(ref_path)
+
+
+def check_protocol_consistency(
+    skills_payload: Dict[str, Any],
+    processes_payload: Dict[str, Any],
+) -> None:
+    errors: List[str] = []
+    canonical = _load_protocol_canonical_contract(errors)
+    if canonical is None:
+        raise ContractError("\n".join(errors))
+
+    dispatch_required = canonical.get("task_dispatch", {}).get("required", [])
+    completion_required = canonical.get("task_completion", {}).get("required", [])
+    self_check_required = canonical.get("task_completion", {}).get("self_check_required", [])
+    lineage_required = canonical.get("lineage", {}).get("recursive_requires", [])
+
+    if not isinstance(dispatch_required, list) or not isinstance(completion_required, list):
+        errors.append(f"{PROCESS_ARCH_PATH}: canonical schema required fields must be arrays")
+
+    bpm_blocks = _extract_json_blocks(BPM_PROTOCOL_PATH, errors)
+    context_blocks = _extract_json_blocks(CONTEXT_SCHEMAS_PATH, errors)
+    process_blocks = _extract_json_blocks(PROCESS_SCHEMAS_PATH, errors)
+
+    dispatch_block = next((b for b in bpm_blocks if b.get("type") == "task_dispatch"), None)
+    completion_block = next((b for b in bpm_blocks if b.get("type") == "task_completion"), None)
+    if dispatch_block is None:
+        errors.append(f"{BPM_PROTOCOL_PATH}: missing task_dispatch block")
+    else:
+        _assert_required_fields(
+            dispatch_block,
+            dispatch_required,
+            f"{BPM_PROTOCOL_PATH}:task_dispatch",
+            errors,
+        )
+    if completion_block is None:
+        errors.append(f"{BPM_PROTOCOL_PATH}: missing task_completion block")
+    else:
+        _assert_required_fields(
+            completion_block,
+            completion_required,
+            f"{BPM_PROTOCOL_PATH}:task_completion",
+            errors,
+        )
+        self_check = completion_block.get("self_check")
+        if not isinstance(self_check, dict):
+            errors.append(f"{BPM_PROTOCOL_PATH}:task_completion.self_check must be object")
+        else:
+            _assert_required_fields(
+                self_check,
+                self_check_required,
+                f"{BPM_PROTOCOL_PATH}:task_completion.self_check",
+                errors,
+            )
+            refs = self_check.get("rule_refs", [])
+            if not isinstance(refs, list) or not refs:
+                errors.append(f"{BPM_PROTOCOL_PATH}:task_completion.self_check.rule_refs must be non-empty array")
+            else:
+                for idx, ref in enumerate(refs):
+                    if not isinstance(ref, str) or not _is_relative_anchor(ref):
+                        errors.append(
+                            f"{BPM_PROTOCOL_PATH}:task_completion.self_check.rule_refs[{idx}] "
+                            "must be repo_relative_path#anchor"
+                        )
+        if "evidence" in completion_block:
+            errors.append(f"{BPM_PROTOCOL_PATH}: legacy field 'evidence' is forbidden")
+
+    phase_handoff = next((b for b in context_blocks if "process_lineage" in b), None)
+    context_dispatch = next((b for b in context_blocks if "target_type" in b and "target_id" in b), None)
+    context_completion = next((b for b in context_blocks if "self_check" in b), None)
+    if phase_handoff is None:
+        errors.append(f"{CONTEXT_SCHEMAS_PATH}: missing phase handoff block with process_lineage")
+    else:
+        lineage = phase_handoff.get("process_lineage")
+        if not isinstance(lineage, dict):
+            errors.append(f"{CONTEXT_SCHEMAS_PATH}: process_lineage must be object")
+        else:
+            _assert_required_fields(
+                lineage,
+                lineage_required,
+                f"{CONTEXT_SCHEMAS_PATH}:process_lineage",
+                errors,
+            )
+    if context_dispatch is None:
+        errors.append(f"{CONTEXT_SCHEMAS_PATH}: missing task dispatch block")
+    else:
+        _assert_required_fields(
+            context_dispatch,
+            dispatch_required,
+            f"{CONTEXT_SCHEMAS_PATH}:task_dispatch",
+            errors,
+        )
+    if context_completion is None:
+        errors.append(f"{CONTEXT_SCHEMAS_PATH}: missing task completion block")
+    else:
+        _assert_required_fields(
+            context_completion,
+            completion_required,
+            f"{CONTEXT_SCHEMAS_PATH}:task_completion",
+            errors,
+        )
+
+    for path in [BPM_PROTOCOL_PATH, CONTEXT_SCHEMAS_PATH, PROCESS_SCHEMAS_PATH]:
+        _assert_no_legacy_aliases(path.read_text(encoding="utf-8"), path, errors)
+
+    required_handoff = [
+        "instance_id",
+        "lineage_ref",
+        "stack_depth",
+        "phase_id",
+        "objective_ref",
+        "input_ref",
+        "output_ref",
+        "output_contract",
+        "from_role",
+        "to_role",
+        "deadline",
+        "risk_notes",
+        "evidence_ref",
+    ]
+    role_handoff_text = ROLE_HANDOFF_PATH.read_text(encoding="utf-8") if ROLE_HANDOFF_PATH.exists() else ""
+    if not role_handoff_text:
+        errors.append(f"{ROLE_HANDOFF_PATH}: missing file or empty content")
+    for field in required_handoff:
+        if f"`{field}`" not in role_handoff_text:
+            errors.append(f"{ROLE_HANDOFF_PATH}: missing required handoff field `{field}`")
+
+    if process_blocks:
+        process_schema = process_blocks[0]
+        if "fail_policy" not in process_schema:
+            errors.append(f"{PROCESS_SCHEMAS_PATH}: process schema must include fail_policy")
+        if "control_flow" not in process_schema:
+            errors.append(f"{PROCESS_SCHEMAS_PATH}: process schema must include control_flow")
+        if "control" in process_schema:
+            errors.append(f"{PROCESS_SCHEMAS_PATH}: legacy top-level field 'control' is forbidden")
+        if "failure_policy" in process_schema:
+            errors.append(f"{PROCESS_SCHEMAS_PATH}: legacy top-level field 'failure_policy' is forbidden")
+        phases = process_schema.get("phases", [])
+        if not isinstance(phases, list) or not phases:
+            errors.append(f"{PROCESS_SCHEMAS_PATH}: phases must be non-empty array")
+        else:
+            phase_schema = phases[0]
+            for field in ["target_type", "target_id", "requires_spec"]:
+                if field not in phase_schema:
+                    errors.append(f"{PROCESS_SCHEMAS_PATH}: phase schema missing field {field!r}")
+
+    skill_ids = {entry["skill_id"] for entry in skills_payload.get("entries", [])}
+    process_ids = {entry["process_id"] for entry in processes_payload.get("entries", [])}
+    for manifest_path in PROCESS_MANIFESTS:
+        if not manifest_path.exists():
+            errors.append(f"{manifest_path}: missing process manifest")
+            continue
+        payload = load_json(manifest_path)
+
+        if "control" in payload:
+            errors.append(f"{manifest_path}: legacy top-level field 'control' is forbidden")
+        if "failure_policy" in payload:
+            errors.append(f"{manifest_path}: legacy top-level field 'failure_policy' is forbidden")
+        if "control_flow" not in payload:
+            errors.append(f"{manifest_path}: missing required top-level field 'control_flow'")
+        if "fail_policy" not in payload:
+            errors.append(f"{manifest_path}: missing required top-level field 'fail_policy'")
+
+        phases = payload.get("phases", [])
+        if not isinstance(phases, list) or not phases:
+            errors.append(f"{manifest_path}: phases must be non-empty array")
+            continue
+
+        for idx, phase in enumerate(phases):
+            prefix = f"{manifest_path}:phases[{idx}]"
+            for field in ["phase_id", "actor", "target_type", "target_id", "requires_spec"]:
+                if field not in phase:
+                    errors.append(f"{prefix}: missing required field {field!r}")
+            for legacy in ["skill", "skill_or_process", "skill_or_subprocess"]:
+                if legacy in phase:
+                    errors.append(f"{prefix}: legacy field {legacy!r} is forbidden")
+
+            target_type = phase.get("target_type")
+            target_id = phase.get("target_id")
+            if target_type == "skill":
+                if target_id not in skill_ids:
+                    errors.append(f"{prefix}: target_id {target_id!r} not found in skill_registry.skill_id")
+            elif target_type == "subprocess":
+                if target_id not in process_ids:
+                    errors.append(f"{prefix}: target_id {target_id!r} not found in process_registry.process_id")
+            else:
+                errors.append(f"{prefix}: target_type must be 'skill' or 'subprocess'")
+
+            requires_spec = phase.get("requires_spec")
+            if not isinstance(requires_spec, bool):
+                errors.append(f"{prefix}: requires_spec must be boolean")
+            elif requires_spec:
+                spec_ref = phase.get("spec_ref")
+                if not isinstance(spec_ref, str) or not spec_ref.strip():
+                    errors.append(f"{prefix}: spec_ref is required when requires_spec=true")
+                elif not _is_relative_anchor(spec_ref):
+                    errors.append(f"{prefix}: spec_ref must be repo_relative_path#anchor")
+
+    if errors:
+        raise ContractError("\n".join(errors))
+
+
 def _schema_type(schema: Dict[str, Any]) -> str:
     t = schema.get("type", "any")
     if isinstance(t, list):
@@ -532,7 +844,7 @@ def generate_docs(agents_payload: Dict[str, Any], skills_payload: Dict[str, Any]
     lines.append("# 注册表 Schema 详细定义")
     lines.append("")
     lines.append(
-        "> 本文档由 `/Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py` 自动生成。"
+        "> 本文档由 `shared/registry/registry_contract_tool.py` 自动生成。"
     )
     lines.append("> 机器真相源：`shared/registry/*_registry.json` 中的 `entry_contract`。")
     lines.append("")
@@ -567,13 +879,17 @@ def generate_docs(agents_payload: Dict[str, Any], skills_payload: Dict[str, Any]
     lines.append("## 校验命令")
     lines.append("")
     lines.append("```bash")
-    lines.append("python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py validate")
+    lines.append("python3 shared/registry/registry_contract_tool.py validate")
     lines.append(
-        "python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py generate-docs --check"
+        "python3 shared/registry/registry_contract_tool.py generate-docs --check"
     )
     lines.append(
-        "python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py project-openclaw --all --check"
+        "python3 shared/registry/registry_contract_tool.py project-openclaw --all --check"
     )
+    lines.append(
+        "python3 shared/registry/registry_contract_tool.py check-protocol-consistency"
+    )
+    lines.append("python3 shared/registry/registry_contract_tool.py verify")
     lines.append("```")
     lines.append("")
     return "\n".join(lines)
@@ -845,8 +1161,16 @@ def _run_project_cmd(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_protocol_consistency_cmd(_args: argparse.Namespace) -> int:
+    _, skills_payload, processes_payload = validate_all_registries()
+    check_protocol_consistency(skills_payload, processes_payload)
+    print("Protocol consistency passed.")
+    return 0
+
+
 def _run_verify_cmd(_args: argparse.Namespace) -> int:
     agents_payload, skills_payload, processes_payload = validate_all_registries()
+    check_protocol_consistency(skills_payload, processes_payload)
 
     docs_content = generate_docs(agents_payload, skills_payload, processes_payload)
     docs_changed = write_if_changed(DOC_PATH, docs_content, check=True)
@@ -874,7 +1198,7 @@ def _run_verify_cmd(_args: argparse.Namespace) -> int:
     if failed:
         return 1
 
-    print("Verify passed: contracts, docs, and projections are consistent.")
+    print("Verify passed: contracts, protocols, docs, and projections are consistent.")
     return 0
 
 
@@ -894,6 +1218,12 @@ def build_parser() -> argparse.ArgumentParser:
     p_project.add_argument("--all", action="store_true", help="Project all profiles")
     p_project.add_argument("--check", action="store_true", help="Fail if projection would change")
     p_project.set_defaults(func=_run_project_cmd)
+
+    p_protocol = sub.add_parser(
+        "check-protocol-consistency",
+        help="Validate protocol consistency across docs and process manifests",
+    )
+    p_protocol.set_defaults(func=_run_protocol_consistency_cmd)
 
     p_verify = sub.add_parser("verify", help="Run full consistency checks")
     p_verify.set_defaults(func=_run_verify_cmd)

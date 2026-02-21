@@ -6,7 +6,7 @@
 
 证据目录固定为：
 
-`/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/evidence/trigger-governance/`
+`docs/design/modules/evidence/trigger-governance/`
 
 命名规则：
 

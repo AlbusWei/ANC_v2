@@ -36,7 +36,9 @@
       "phase_id": "p1",
       "name": "intake-and-normalize",
       "actor": "bpm",
-      "skill_or_process": "manual-task",
+      "target_type": "skill",
+      "target_id": "system.ops.manual-task",
+      "requires_spec": false,
       "sipoc": {
         "supplier": "initiator",
         "input": "change_request",
@@ -50,7 +52,10 @@
       "phase_id": "p2",
       "name": "gate-and-risk-classification",
       "actor": "bpm",
-      "skill_or_process": "config-change-gatekeeper",
+      "target_type": "skill",
+      "target_id": "system.control.config-change-gatekeeper",
+      "requires_spec": true,
+      "spec_ref": "docs/architecture/registry_contracts.md#9-验证命令",
       "sipoc": {
         "supplier": "p1",
         "input": "normalized_request",
@@ -64,7 +69,10 @@
       "phase_id": "p3",
       "name": "authorize-change",
       "actor": "admin",
-      "skill_or_process": "manual-task",
+      "target_type": "skill",
+      "target_id": "system.ops.manual-task",
+      "requires_spec": true,
+      "spec_ref": "docs/architecture/openclaw_interface.md#3-2-1-anc-治理约束配置写路径",
       "sipoc": {
         "supplier": "p2",
         "input": "approved_request",
@@ -78,7 +86,10 @@
       "phase_id": "p4",
       "name": "execute-config-change",
       "actor": "admin",
-      "skill_or_process": "system-config-updater",
+      "target_type": "skill",
+      "target_id": "system.admin.system-config-updater",
+      "requires_spec": true,
+      "spec_ref": "docs/architecture/openclaw_interface.md#2-2-config-rpc经-openclaw-gateway-call",
       "sipoc": {
         "supplier": "p3",
         "input": "authorization_decision",
@@ -92,7 +103,10 @@
       "phase_id": "p5",
       "name": "verify-and-archive",
       "actor": "bpm",
-      "skill_or_process": "manual-task",
+      "target_type": "skill",
+      "target_id": "system.ops.manual-task",
+      "requires_spec": true,
+      "spec_ref": "docs/architecture/registry_contracts.md#9-验证命令",
       "sipoc": {
         "supplier": "p4",
         "input": "change_receipt",
@@ -135,22 +149,6 @@
     "retry": {
       "max_attempts": 1
     },
-    "escalation_chain": [
-      "actor",
-      "owner",
-      "bpm",
-      "admin",
-      "human"
-    ]
-  },
-  "control": {
-    "mode": "sequence",
-    "retries": {
-      "max_attempts": 1
-    }
-  },
-  "failure_policy": {
-    "mode": "fail_closed",
     "escalation_chain": [
       "actor",
       "owner",

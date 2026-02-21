@@ -1,7 +1,7 @@
 # Skills Review Checklist
 
 > Branch: `codex/review-skills`
-> Worktree: `/Users/albus/MyProjects/ANC_v2_worktrees/review-skills`
+> Worktree: `review-skills`
 
 ## 1. 目标
 
@@ -17,15 +17,15 @@
 
 ## 3. 允许修改范围
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/design/skills/`
-2. `/Users/albus/MyProjects/ANC_v2/docs/design/inventories/skill-inventory.md`
-3. 可选：`/Users/albus/MyProjects/ANC_v2/skills/skill-creator/SKILL.md`（仅在确需对齐时）
+1. `docs/design/skills/`
+2. `docs/design/inventories/skill-inventory.md`
+3. 可选：`skills/skill-creator/SKILL.md`（仅在确需对齐时）
 
 ## 4. 禁止修改范围
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/design/agents/`
-2. `/Users/albus/MyProjects/ANC_v2/docs/design/business/`
-3. `/Users/albus/MyProjects/ANC_v2/shared/registry/`
+1. `docs/design/agents/`
+2. `docs/design/business/`
+3. `shared/registry/`
 
 ## 5. 核对项
 
@@ -41,7 +41,7 @@
 ## 6. 完成定义（DoD）
 
 1. 形成“技能契约差异清单”并关闭。
-2. `python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py verify` 通过。
+2. `python3 shared/registry/registry_contract_tool.py verify` 通过。
 3. 测试路径引用可达。
 4. 提交仅包含 skills 与 skill inventory 相关文件（如有跨域修改须在变更说明中注明原因）。
 

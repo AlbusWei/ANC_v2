@@ -19,7 +19,7 @@
 
 ## 复用规则
 
-`delivery-iterations` 必须组合 `/Users/albus/MyProjects/ANC_v2/docs/design/business/internal-productization-e2e-flow.md` 的核心开发闭环。
+`delivery-iterations` 必须组合 `docs/design/business/internal-productization-e2e-flow.md` 的核心开发闭环。
 
 ## 阶段到原子流程映射
 

@@ -6,20 +6,20 @@
 
 1. M2/M4 边界与层间契约对齐  
 引用：
-`/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/layers/L2-orchestration-governance.md`  
-`/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/M2-bpm-engine.md`  
-`/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/M4-lifecycle-management.md`  
-`/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/layers/layer-interface-contracts.md`
+`docs/design/layers/L2-orchestration-governance.md`  
+`docs/design/modules/M2-bpm-engine.md`  
+`docs/design/modules/M4-lifecycle-management.md`  
+`docs/design/layers/layer-interface-contracts.md`
 
 2. 触发治理路径写入模块依赖矩阵并挂验证锚点  
 引用：
-`/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/module-dependency-matrix.md`
+`docs/design/modules/module-dependency-matrix.md`
 
 3. 最小 dry-run 证据路径落盘（TG-SCH-002 / TG-EVT-003）  
 引用：
-`/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/evidence/trigger-governance/README.md`  
-`/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/evidence/trigger-governance/TG-SCH-002-dry-run.md`  
-`/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/evidence/trigger-governance/TG-EVT-003-dry-run.md`
+`docs/design/modules/evidence/trigger-governance/README.md`  
+`docs/design/modules/evidence/trigger-governance/TG-SCH-002-dry-run.md`  
+`docs/design/modules/evidence/trigger-governance/TG-EVT-003-dry-run.md`
 
 ## 2. 未关闭差异（进入下一轮）
 

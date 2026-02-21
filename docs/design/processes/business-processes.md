@@ -4,8 +4,8 @@
 
 ## 双主线
 
-1. 内部产品孵化：`/Users/albus/MyProjects/ANC_v2/docs/design/business/internal-productization-e2e-flow.md`
-2. 外部软件交付：`/Users/albus/MyProjects/ANC_v2/docs/design/business/software-vendor-e2e-flow.md`
+1. 内部产品孵化：`docs/design/business/internal-productization-e2e-flow.md`
+2. 外部软件交付：`docs/design/business/software-vendor-e2e-flow.md`
 
 ## 复用约束
 

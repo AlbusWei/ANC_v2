@@ -1,26 +1,26 @@
 # Process 全量清单
 
-> 版本: v0.3.0 | SSOT 上游: `/Users/albus/MyProjects/ANC_v2/shared/registry/process_registry.json`
+> 版本: v0.3.0 | SSOT 上游: `shared/registry/process_registry.json`
 
 ## Canonical Process Paths
 
 | process_id | canonical_path | status |
 |---|---|---|
-| development-process | `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/` | canonical |
-| governed-config-change | `/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change/` | canonical |
+| development-process | `processes/meta/development-process/` | canonical |
+| governed-config-change | `processes/meta/governed-config-change/` | canonical |
 
 ## Legacy Paths
 
 | path | status | 说明 |
 |---|---|---|
-| `/Users/albus/MyProjects/ANC_v2/processes/development-process/` | legacy | Phase 0.5 历史路径，仅保留参考，不再作为 registry 真相源 |
+| `processes/development-process/` | legacy | Phase 0.5 历史路径，仅保留参考，不再作为 registry 真相源 |
 
 ## 已注册 Process
 
 | process_id | 名称 | 类型 | owner | 阶段数 | 状态 | 路径 |
 |---|---|---|---|---|---|---|
-| development-process | development-process | 复合 | bpm | 4 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/` |
-| governed-config-change | governed-config-change | 复合 | bpm | 5 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change/` |
+| development-process | development-process | 复合 | bpm | 4 | draft | `processes/meta/development-process/` |
+| governed-config-change | governed-config-change | 复合 | bpm | 5 | draft | `processes/meta/governed-config-change/` |
 
 ## 规划中 Process — 元流程
 
@@ -48,7 +48,7 @@
 
 ## P6 原子流程目录
 
-详见 `/Users/albus/MyProjects/ANC_v2/docs/design/processes/p-levels/P6-atomic-process-catalog.md`。
+详见 `docs/design/processes/p-levels/P6-atomic-process-catalog.md`。
 
 ## 校验规则
 

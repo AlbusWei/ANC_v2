@@ -3,44 +3,47 @@
     "list": [
       {
         "id": "admin",
-        "workspace": "/Users/albus/MyProjects/ANC_v2/agents/kernel/admin"
+        "workspace": "agents/kernel/admin"
       },
       {
         "id": "architect",
-        "workspace": "/Users/albus/MyProjects/ANC_v2/agents/kernel/architect"
+        "workspace": "agents/kernel/architect"
       },
       {
         "id": "hr",
-        "workspace": "/Users/albus/MyProjects/ANC_v2/agents/kernel/hr"
+        "workspace": "agents/kernel/hr"
       },
       {
         "id": "kernel-dev",
-        "workspace": "/Users/albus/MyProjects/ANC_v2/agents/kernel/kernel-dev"
+        "workspace": "agents/kernel/kernel-dev"
       },
       {
         "id": "bpm",
-        "workspace": "/Users/albus/MyProjects/ANC_v2/agents/control/BPM"
+        "workspace": "agents/control/BPM"
       },
       {
         "id": "qa",
-        "workspace": "/Users/albus/MyProjects/ANC_v2/agents/kernel/qa"
+        "workspace": "agents/kernel/qa"
       },
       {
         "id": "personal-assistant",
-        "workspace": "/Users/albus/MyProjects/ANC_v2/agents/app/entry/personal-assistant"
+        "workspace": "agents/app/entry/personal-assistant"
       }
     ]
   },
   "skills": {
     "entries": {
       "anc-v2-meta-processes": {
-        "source": "/Users/albus/MyProjects/ANC_v2/processes/meta"
+        "source": "processes/meta"
       },
       "anc-v2-meta-skills": {
-        "source": "/Users/albus/MyProjects/ANC_v2/skills/meta"
+        "source": "skills/meta"
+      },
+      "anc-v2-system-skills": {
+        "source": "skills/system"
       },
       "system.integration.entire-codex-sync": {
-        "source": "/Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync"
+        "source": "skills/system/entire-codex-sync"
       }
     }
   }

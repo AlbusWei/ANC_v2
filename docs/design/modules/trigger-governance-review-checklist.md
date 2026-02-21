@@ -11,7 +11,7 @@
 | Reviewer(s) | Codex |
 | Branch | `codex/review-layers-modules` |
 | Scope | 触发治理文档一致性评审 + `TG-SCH-002` / `TG-EVT-003` 最小 dry-run |
-| Related Proposal | `/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/trigger-governance-test-proposal.md` |
+| Related Proposal | `docs/design/modules/trigger-governance-test-proposal.md` |
 
 ## 2. Review Objective
 
@@ -66,24 +66,24 @@
 
 ## 8. Consistency Review (Layers & Modules)
 
-- [x] `/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/layers/L2-orchestration-governance.md` 与提案一致。
-- [x] `/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/layers/L4-self-evolution.md` 的 analyst 分工无冲突。
-- [x] `/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/layers/layer-interface-contracts.md` 的 Trigger/Hook 契约一致。
-- [x] `/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/M2-bpm-engine.md` 与 M2 运行时边界一致。
-- [x] `/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/M4-lifecycle-management.md` 与 M4 策略边界一致。
-- [x] `/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/module-dependency-matrix.md` 的触发治理路径说明一致。
+- [x] `docs/design/layers/L2-orchestration-governance.md` 与提案一致。
+- [x] `docs/design/layers/L4-self-evolution.md` 的 analyst 分工无冲突。
+- [x] `docs/design/layers/layer-interface-contracts.md` 的 Trigger/Hook 契约一致。
+- [x] `docs/design/modules/M2-bpm-engine.md` 与 M2 运行时边界一致。
+- [x] `docs/design/modules/M4-lifecycle-management.md` 与 M4 策略边界一致。
+- [x] `docs/design/modules/module-dependency-matrix.md` 的触发治理路径说明一致。
 
 ## 9. Evidence Matrix (Fill-In)
 
 | Item ID | Expected Evidence | Evidence Path | Result (PASS/FAIL/BLOCKED/N/A) | Notes |
 |---|---|---|---|---|
 | TG-SCH-001 | trigger log + instance + admin forward | N/A（本轮未执行） | N/A | 仅完成提案级审查；执行留到下一轮 |
-| TG-SCH-002 | trigger ledger heartbeat | `/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/evidence/trigger-governance/TG-SCH-002-dry-run.md` | PASS | 文档级 dry-run，覆盖无异常仅记账 |
+| TG-SCH-002 | trigger ledger heartbeat | `docs/design/modules/evidence/trigger-governance/TG-SCH-002-dry-run.md` | PASS | 文档级 dry-run，覆盖无异常仅记账 |
 | TG-SCH-003 | override decision record | N/A（本轮未执行） | N/A | 仅完成提案级审查；执行留到下一轮 |
 | TG-SCH-004 | catchup run record | N/A（本轮未执行） | N/A | 仅完成提案级审查；执行留到下一轮 |
 | TG-EVT-001 | event + instance record | N/A（本轮未执行） | N/A | 仅完成提案级审查；执行留到下一轮 |
 | TG-EVT-002 | dedupe reject log | N/A（本轮未执行） | N/A | 仅完成提案级审查；执行留到下一轮 |
-| TG-EVT-003 | fail-closed + backfill request | `/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/evidence/trigger-governance/TG-EVT-003-dry-run.md` | PASS | 文档级 dry-run，覆盖缺证据 Fail-Closed |
+| TG-EVT-003 | fail-closed + backfill request | `docs/design/modules/evidence/trigger-governance/TG-EVT-003-dry-run.md` | PASS | 文档级 dry-run，覆盖缺证据 Fail-Closed |
 
 ## 10. Findings Register (Fill-In)
 
@@ -95,5 +95,5 @@
 
 - [x] Checklist 全项完成评审或明确标注 N/A。
 - [x] 所有 FAIL/BLOCKED 条目进入 Findings Register 并指定 Owner。
-- [x] 形成一页“差异关闭计划”并附路径引用：`/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/trigger-governance-diff-closure-plan.md`
+- [x] 形成一页“差异关闭计划”并附路径引用：`docs/design/modules/trigger-governance-diff-closure-plan.md`
 - [x] 本轮结论通过 Entire sync 落盘。

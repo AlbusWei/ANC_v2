@@ -3,7 +3,7 @@
 ## 管理方式
 
 `openclaw.phase05.fragment.json` 与 `openclaw.phase05.with-entry.fragment.json` 的受管区由
-`/Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py`
+`shared/registry/registry_contract_tool.py`
 根据 registry 自动投影生成。
 
 受管区仅包含：
@@ -17,7 +17,7 @@
 
 profile 定义文件：
 
-`/Users/albus/MyProjects/ANC_v2/config/openclaw.projection.profiles.json`
+`config/openclaw.projection.profiles.json`
 
 当前包含：
 
@@ -27,9 +27,9 @@ profile 定义文件：
 ## 生成与校验命令
 
 ```bash
-python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py project-openclaw --all
-python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py project-openclaw --all --check
-python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py verify
+python3 shared/registry/registry_contract_tool.py project-openclaw --all
+python3 shared/registry/registry_contract_tool.py project-openclaw --all --check
+python3 shared/registry/registry_contract_tool.py verify
 ```
 
 ## 应用方式建议

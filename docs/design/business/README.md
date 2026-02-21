@@ -4,9 +4,9 @@
 
 ## 文档
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/design/business/internal-productization-e2e-flow.md`
-2. `/Users/albus/MyProjects/ANC_v2/docs/design/business/software-vendor-e2e-flow.md`
-3. `/Users/albus/MyProjects/ANC_v2/docs/design/business/flow-reuse-map.md`
+1. `docs/design/business/internal-productization-e2e-flow.md`
+2. `docs/design/business/software-vendor-e2e-flow.md`
+3. `docs/design/business/flow-reuse-map.md`
 
 ## 原则
 

@@ -8,7 +8,7 @@
 
 架构决策背景见：
 
-`/Users/albus/MyProjects/ANC_v2/docs/architecture/registry_governance_decisions.md`
+`docs/architecture/registry_governance_decisions.md`
 
 ## 读取协议
 

@@ -1,7 +1,7 @@
 # Agents Review Checklist
 
 > Branch: `codex/review-agents`
-> Worktree: `/Users/albus/MyProjects/ANC_v2_worktrees/review-agents`
+> Worktree: `review-agents`
 
 ## 1. 目标
 
@@ -17,15 +17,15 @@
 
 ## 3. 允许修改范围
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/design/agents/`
-2. `/Users/albus/MyProjects/ANC_v2/docs/design/inventories/agent-inventory.md`
-3. `/Users/albus/MyProjects/ANC_v2/docs/review-checklists/agents-checklist.md`
+1. `docs/design/agents/`
+2. `docs/design/inventories/agent-inventory.md`
+3. `docs/review-checklists/agents-checklist.md`
 
 ## 4. 禁止修改范围
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/design/skills/`
-2. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/`
-3. `/Users/albus/MyProjects/ANC_v2/shared/registry/`
+1. `docs/design/skills/`
+2. `docs/design/processes/`
+3. `shared/registry/`
 
 ## 5. 核对项
 

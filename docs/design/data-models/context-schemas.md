@@ -1,6 +1,6 @@
 # 上下文传递 Schema
 
-> 版本: v0.2.0 | SSOT 上游: `/Users/albus/MyProjects/ANC_v2/docs/architecture/context_protocol.md`
+> 版本: v0.3.0 | SSOT 上游: `docs/architecture/context_protocol.md`
 
 ## 概述
 
@@ -15,10 +15,10 @@
   "input_ref": "string (required)",
   "output_ref": "string (required)",
   "process_lineage": {
-    "instance_id": "string",
-    "parent_instance_id": "string",
-    "lineage_ref": "string",
-    "stack_depth": "integer"
+    "instance_id": "string (required)",
+    "parent_instance_id": "string (required when recursive)",
+    "lineage_ref": "string (required)",
+    "stack_depth": "integer (required)"
   },
   "upstream_decision_refs": ["string"],
   "acceptance_criteria": ["string"],
@@ -32,17 +32,18 @@
 ```json
 {
   "instance_id": "string (required)",
-  "parent_instance_id": "string (optional)",
-  "lineage_ref": "string (required)",
-  "stack_depth": "integer (required)",
   "phase_id": "string (required)",
   "actor": "string (required)",
-  "skill": "string (required)",
-  "input": {
-    "objective_ref": "string",
-    "spec_ref": "string",
-    "additional_context": {}
-  },
+  "target_type": "string (skill|subprocess, required)",
+  "target_id": "string (registry stable id, required)",
+  "input_ref": "string (required)",
+  "objective_ref": "string (required)",
+  "output_contract": "string (contract_ref, required)",
+  "lineage_ref": "string (required)",
+  "stack_depth": "integer (required)",
+  "evidence_dir": "string (required)",
+  "parent_instance_id": "string (optional)",
+  "spec_ref": "string (required when phase.requires_spec=true)",
   "constraints": {
     "max_retries": "integer",
     "timeout": "string"
@@ -55,16 +56,19 @@
 ```json
 {
   "instance_id": "string (required)",
-  "lineage_ref": "string (required)",
-  "stack_depth": "integer (required)",
   "phase_id": "string (required)",
   "actor": "string (required)",
+  "lineage_ref": "string (required)",
+  "stack_depth": "integer (required)",
   "status": "string (completed|failed, required)",
   "output_ref": "string (required)",
-  "evidence": {
-    "timestamp": "string",
-    "decision": "string",
-    "reason": "string"
+  "evidence_ref": "string (required)",
+  "self_check": {
+    "decision": "string (required)",
+    "reason": "string (required)",
+    "rule_refs": [
+      "docs/architecture/process_architecture.md#bpm-protocol-canonical-schema-machine-readable"
+    ]
   }
 }
 ```

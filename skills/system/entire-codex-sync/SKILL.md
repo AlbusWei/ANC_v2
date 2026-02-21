@@ -48,10 +48,10 @@ fail_closed_rules:
   - repository preconditions fail
   - bridge script returns non-zero exit
 test_mount:
-  test_doc: /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/TEST.md
-  methodology_ref: /Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md
+  test_doc: skills/system/entire-codex-sync/TEST.md
+  methodology_ref: docs/architecture/test_methodology.md
 references:
-  bridge_contract: /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/references/bridge-contract.md
+  bridge_contract: skills/system/entire-codex-sync/references/bridge-contract.md
 ```
 
 ## Input Contract
@@ -83,18 +83,18 @@ references:
 ## Execution Steps
 
 1. 启动/复用会话：
-   - `python3 /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/scripts/entire_codex_bridge.py start`
+   - `python3 skills/system/entire-codex-sync/scripts/entire_codex_bridge.py start`
 2. 同步开发回合：
-   - `python3 /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/scripts/entire_codex_bridge.py sync --prompt "<需求>" --summary "<实现摘要>" --files <file1> <file2>`
+   - `python3 skills/system/entire-codex-sync/scripts/entire_codex_bridge.py sync --prompt "<需求>" --summary "<实现摘要>" --files <file1> <file2>`
 3. 提交并验证：
    - `git commit ...`
    - `git log -1 --pretty=raw`（检查 `Entire-Checkpoint`）
 4. 结束会话：
-   - `python3 /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/scripts/entire_codex_bridge.py end`
+   - `python3 skills/system/entire-codex-sync/scripts/entire_codex_bridge.py end`
 
 ## Observability
 
 - Status command:
-  - `python3 /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/scripts/entire_codex_bridge.py status`
+  - `python3 skills/system/entire-codex-sync/scripts/entire_codex_bridge.py status`
 - Contract reference:
-  - `/Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/references/bridge-contract.md`
+  - `skills/system/entire-codex-sync/references/bridge-contract.md`

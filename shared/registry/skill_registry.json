@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "skill_registry",
-  "updated_at": "2026-02-21T18:00:00Z",
+  "updated_at": "2026-02-21T21:30:00Z",
   "entry_contract": {
     "required": [
       "skill_id",
@@ -28,8 +28,8 @@
       },
       "path": {
         "type": "string",
-        "pattern": "^/Users/albus/MyProjects/ANC_v2/.+",
-        "description": "absolute SKILL.md path"
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+",
+        "description": "repo-relative SKILL.md path"
       },
       "layer": {
         "type": "string",
@@ -128,8 +128,8 @@
           },
           "source": {
             "type": "string",
-            "pattern": "^/Users/albus/MyProjects/ANC_v2/.+",
-            "description": "OpenClaw source path"
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+",
+            "description": "repo-relative OpenClaw source path"
           },
           "install_strategy": {
             "type": "string",
@@ -145,8 +145,8 @@
           },
           "bundle_source": {
             "type": "string",
-            "pattern": "^/Users/albus/MyProjects/ANC_v2/.+",
-            "description": "bundle source when projection_mode=bundle"
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+",
+            "description": "repo-relative bundle source when projection_mode=bundle"
           },
           "allow_draft_projection": {
             "type": "boolean",
@@ -165,13 +165,13 @@
         "properties": {
           "test_doc": {
             "type": "string",
-            "pattern": "^/Users/albus/MyProjects/ANC_v2/.+",
-            "description": "skill test doc path"
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+",
+            "description": "repo-relative skill test doc path"
           },
           "methodology_ref": {
             "type": "string",
-            "pattern": "^/Users/albus/MyProjects/ANC_v2/.+",
-            "description": "test methodology reference"
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+",
+            "description": "repo-relative test methodology reference"
           }
         },
         "additionalProperties": false,
@@ -184,7 +184,7 @@
     {
       "skill_id": "meta.qa.llm-judge",
       "name": "llm-judge",
-      "path": "/Users/albus/MyProjects/ANC_v2/skills/meta/llm-judge/SKILL.md",
+      "path": "skills/meta/llm-judge/SKILL.md",
       "layer": "meta",
       "owner": "qa",
       "version": "0.1.0",
@@ -201,21 +201,21 @@
       "openclaw": {
         "projection_mode": "bundle",
         "bundle_key": "anc-v2-meta-skills",
-        "bundle_source": "/Users/albus/MyProjects/ANC_v2/skills/meta",
+        "bundle_source": "skills/meta",
         "entry_key": "meta.qa.llm-judge",
-        "source": "/Users/albus/MyProjects/ANC_v2/skills/meta/llm-judge",
+        "source": "skills/meta/llm-judge",
         "install_strategy": "lazy",
         "allow_draft_projection": true
       },
       "tests": {
-        "test_doc": "/Users/albus/MyProjects/ANC_v2/skills/meta/llm-judge/TEST.md",
-        "methodology_ref": "/Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md"
+        "test_doc": "skills/meta/llm-judge/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
       }
     },
     {
       "skill_id": "meta.arch.spec-writer",
       "name": "spec-writer",
-      "path": "/Users/albus/MyProjects/ANC_v2/skills/meta/spec-writer/SKILL.md",
+      "path": "skills/meta/spec-writer/SKILL.md",
       "layer": "meta",
       "owner": "architect",
       "version": "0.1.0",
@@ -232,21 +232,21 @@
       "openclaw": {
         "projection_mode": "bundle",
         "bundle_key": "anc-v2-meta-skills",
-        "bundle_source": "/Users/albus/MyProjects/ANC_v2/skills/meta",
+        "bundle_source": "skills/meta",
         "entry_key": "meta.arch.spec-writer",
-        "source": "/Users/albus/MyProjects/ANC_v2/skills/meta/spec-writer",
+        "source": "skills/meta/spec-writer",
         "install_strategy": "lazy",
         "allow_draft_projection": true
       },
       "tests": {
-        "test_doc": "/Users/albus/MyProjects/ANC_v2/skills/meta/spec-writer/TEST.md",
-        "methodology_ref": "/Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md"
+        "test_doc": "skills/meta/spec-writer/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
       }
     },
     {
       "skill_id": "meta.qa.test-designer",
       "name": "test-designer",
-      "path": "/Users/albus/MyProjects/ANC_v2/skills/meta/test-designer/SKILL.md",
+      "path": "skills/meta/test-designer/SKILL.md",
       "layer": "meta",
       "owner": "qa",
       "version": "0.1.0",
@@ -263,21 +263,21 @@
       "openclaw": {
         "projection_mode": "bundle",
         "bundle_key": "anc-v2-meta-skills",
-        "bundle_source": "/Users/albus/MyProjects/ANC_v2/skills/meta",
+        "bundle_source": "skills/meta",
         "entry_key": "meta.qa.test-designer",
-        "source": "/Users/albus/MyProjects/ANC_v2/skills/meta/test-designer",
+        "source": "skills/meta/test-designer",
         "install_strategy": "lazy",
         "allow_draft_projection": true
       },
       "tests": {
-        "test_doc": "/Users/albus/MyProjects/ANC_v2/skills/meta/test-designer/TEST.md",
-        "methodology_ref": "/Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md"
+        "test_doc": "skills/meta/test-designer/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
       }
     },
     {
       "skill_id": "system.integration.entire-codex-sync",
       "name": "entire-codex-sync",
-      "path": "/Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/SKILL.md",
+      "path": "skills/system/entire-codex-sync/SKILL.md",
       "layer": "system",
       "owner": "admin",
       "version": "0.1.0",
@@ -294,12 +294,105 @@
       "openclaw": {
         "projection_mode": "pin",
         "entry_key": "system.integration.entire-codex-sync",
-        "source": "/Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync",
+        "source": "skills/system/entire-codex-sync",
         "install_strategy": "lazy"
       },
       "tests": {
-        "test_doc": "/Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/TEST.md",
-        "methodology_ref": "/Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md"
+        "test_doc": "skills/system/entire-codex-sync/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "system.ops.manual-task",
+      "name": "manual-task",
+      "path": "skills/system/manual-task/SKILL.md",
+      "layer": "system",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "manual-task",
+        "description": "Execute controlled human-in-the-loop task with evidence output",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "system.ops.manual-task",
+        "source": "skills/system/manual-task",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/manual-task/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "system.control.config-change-gatekeeper",
+      "name": "config-change-gatekeeper",
+      "path": "skills/system/config-change-gatekeeper/SKILL.md",
+      "layer": "system",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "config-change-gatekeeper",
+        "description": "Validate config change prerequisites and classify risk",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "system.control.config-change-gatekeeper",
+        "source": "skills/system/config-change-gatekeeper",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/config-change-gatekeeper/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "system.admin.system-config-updater",
+      "name": "system-config-updater",
+      "path": "skills/system/system-config-updater/SKILL.md",
+      "layer": "system",
+      "owner": "admin",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "system-config-updater",
+        "description": "Apply OpenClaw config patch with hash-safe guardrails",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "system.admin.system-config-updater",
+        "source": "skills/system/system-config-updater",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/system-config-updater/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
       }
     }
   ]

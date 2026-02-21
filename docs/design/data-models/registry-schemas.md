@@ -1,19 +1,19 @@
 # 注册表 Schema 详细定义
 
-> 本文档由 `/Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py` 自动生成。
+> 本文档由 `shared/registry/registry_contract_tool.py` 自动生成。
 > 机器真相源：`shared/registry/*_registry.json` 中的 `entry_contract`。
 
 ## agent_directory.json
 
 - schema_version: `1.1.0`
-- updated_at: `2026-02-21T18:00:00Z`
+- updated_at: `2026-02-21T21:30:00Z`
 - strict mode: `true`
 
 | 字段 | 类型 | 必填 | 约束 | 说明 |
 |---|---|---|---|---|
 | `agent_id` | `string` | `true` | `pattern=^[a-z0-9-]+$` | stable agent identifier |
 | `layer` | `string` | `true` | `enum=kernel,control,app` | layer classification |
-| `path` | `string` | `true` | `pattern=^/Users/albus/MyProjects/ANC_v2/.+` | absolute agent workspace path |
+| `path` | `string` | `true` | `pattern=^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+` | repo-relative agent workspace path |
 | `default_model` | `string` | `true` | `` | default llm model |
 | `owner` | `string` | `true` | `` | owner agent_id or human |
 | `status` | `string` | `true` | `enum=draft,review,active,deprecated,retired` | lifecycle status |
@@ -28,7 +28,7 @@
 {
   "agent_id": "admin",
   "layer": "kernel",
-  "path": "/Users/albus/MyProjects/ANC_v2/agents/kernel/admin",
+  "path": "agents/kernel/admin",
   "default_model": "rightcode/gpt-5.3-codex",
   "owner": "human",
   "status": "draft",
@@ -45,14 +45,14 @@
 ## skill_registry.json
 
 - schema_version: `1.1.0`
-- updated_at: `2026-02-21T18:00:00Z`
+- updated_at: `2026-02-21T21:30:00Z`
 - strict mode: `true`
 
 | 字段 | 类型 | 必填 | 约束 | 说明 |
 |---|---|---|---|---|
 | `skill_id` | `string` | `true` | `pattern=^[a-z0-9]+(\.[a-z0-9-]+)+$` | stable skill identifier |
 | `name` | `string` | `true` | `pattern=^[a-z0-9-]+$` | skill display name |
-| `path` | `string` | `true` | `pattern=^/Users/albus/MyProjects/ANC_v2/.+` | absolute SKILL.md path |
+| `path` | `string` | `true` | `pattern=^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+` | repo-relative SKILL.md path |
 | `layer` | `string` | `true` | `enum=meta,system,business` | skill layer |
 | `owner` | `string` | `true` | `` | owner agent_id |
 | `version` | `string` | `true` | `pattern=^[0-9]+\.[0-9]+\.[0-9]+$` | semantic version |
@@ -67,14 +67,14 @@
 | `openclaw` | `object` | `true` | `` | OpenClaw projection metadata |
 | `openclaw.projection_mode` | `string` | `true` | `enum=bundle,pin,off` | projection strategy |
 | `openclaw.entry_key` | `string` | `true` | `` | stable OpenClaw entry key |
-| `openclaw.source` | `string` | `true` | `pattern=^/Users/albus/MyProjects/ANC_v2/.+` | OpenClaw source path |
+| `openclaw.source` | `string` | `true` | `pattern=^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+` | repo-relative OpenClaw source path |
 | `openclaw.install_strategy` | `string` | `true` | `enum=lazy,eager` | OpenClaw install strategy |
 | `openclaw.bundle_key` | `string` | `false` | `` | bundle key when projection_mode=bundle |
-| `openclaw.bundle_source` | `string` | `false` | `pattern=^/Users/albus/MyProjects/ANC_v2/.+` | bundle source when projection_mode=bundle |
+| `openclaw.bundle_source` | `string` | `false` | `pattern=^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+` | repo-relative bundle source when projection_mode=bundle |
 | `openclaw.allow_draft_projection` | `boolean` | `false` | `` | allow draft assets in runtime projection |
 | `tests` | `object` | `true` | `` | test references |
-| `tests.test_doc` | `string` | `true` | `pattern=^/Users/albus/MyProjects/ANC_v2/.+` | skill test doc path |
-| `tests.methodology_ref` | `string` | `true` | `pattern=^/Users/albus/MyProjects/ANC_v2/.+` | test methodology reference |
+| `tests.test_doc` | `string` | `true` | `pattern=^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+` | repo-relative skill test doc path |
+| `tests.methodology_ref` | `string` | `true` | `pattern=^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+` | repo-relative test methodology reference |
 
 示例条目：
 
@@ -82,7 +82,7 @@
 {
   "skill_id": "meta.qa.llm-judge",
   "name": "llm-judge",
-  "path": "/Users/albus/MyProjects/ANC_v2/skills/meta/llm-judge/SKILL.md",
+  "path": "skills/meta/llm-judge/SKILL.md",
   "layer": "meta",
   "owner": "qa",
   "version": "0.1.0",
@@ -99,15 +99,15 @@
   "openclaw": {
     "projection_mode": "bundle",
     "bundle_key": "anc-v2-meta-skills",
-    "bundle_source": "/Users/albus/MyProjects/ANC_v2/skills/meta",
+    "bundle_source": "skills/meta",
     "entry_key": "meta.qa.llm-judge",
-    "source": "/Users/albus/MyProjects/ANC_v2/skills/meta/llm-judge",
+    "source": "skills/meta/llm-judge",
     "install_strategy": "lazy",
     "allow_draft_projection": true
   },
   "tests": {
-    "test_doc": "/Users/albus/MyProjects/ANC_v2/skills/meta/llm-judge/TEST.md",
-    "methodology_ref": "/Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md"
+    "test_doc": "skills/meta/llm-judge/TEST.md",
+    "methodology_ref": "docs/architecture/test_methodology.md"
   }
 }
 ```
@@ -115,15 +115,15 @@
 ## process_registry.json
 
 - schema_version: `1.1.0`
-- updated_at: `2026-02-21T18:00:00Z`
+- updated_at: `2026-02-21T21:30:00Z`
 - strict mode: `true`
 
 | 字段 | 类型 | 必填 | 约束 | 说明 |
 |---|---|---|---|---|
 | `process_id` | `string` | `true` | `pattern=^[a-z0-9-]+$` | stable process identifier |
 | `skill_name` | `string` | `true` | `pattern=^[a-z0-9-]+$` | process skill frontmatter name |
-| `skill_path` | `string` | `true` | `pattern=^/Users/albus/MyProjects/ANC_v2/.+` | absolute process SKILL.md path |
-| `manifest_path` | `string` | `true` | `pattern=^/Users/albus/MyProjects/ANC_v2/.+` | absolute process manifest path |
+| `skill_path` | `string` | `true` | `pattern=^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+` | repo-relative process SKILL.md path |
+| `manifest_path` | `string` | `true` | `pattern=^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+` | repo-relative process manifest path |
 | `objective_ref` | `string` | `true` | `` | objective identifier |
 | `owner` | `string` | `true` | `` | owner agent_id |
 | `version` | `string` | `true` | `pattern=^[0-9]+\.[0-9]+\.[0-9]+$` | semantic version |
@@ -132,9 +132,9 @@
 | `openclaw` | `object` | `true` | `` | OpenClaw projection metadata |
 | `openclaw.projection_mode` | `string` | `true` | `enum=bundle,pin,off` | projection strategy |
 | `openclaw.entry_key` | `string` | `true` | `` | stable OpenClaw entry key |
-| `openclaw.source` | `string` | `true` | `pattern=^/Users/albus/MyProjects/ANC_v2/.+` | OpenClaw source path |
+| `openclaw.source` | `string` | `true` | `pattern=^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+` | repo-relative OpenClaw source path |
 | `openclaw.bundle_key` | `string` | `false` | `` | bundle key when projection_mode=bundle |
-| `openclaw.bundle_source` | `string` | `false` | `pattern=^/Users/albus/MyProjects/ANC_v2/.+` | bundle source when projection_mode=bundle |
+| `openclaw.bundle_source` | `string` | `false` | `pattern=^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+` | repo-relative bundle source when projection_mode=bundle |
 | `openclaw.allow_draft_projection` | `boolean` | `false` | `` | allow draft assets in runtime projection |
 
 示例条目：
@@ -143,8 +143,8 @@
 {
   "process_id": "development-process",
   "skill_name": "development-process",
-  "skill_path": "/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/SKILL.md",
-  "manifest_path": "/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/process.json",
+  "skill_path": "processes/meta/development-process/SKILL.md",
+  "manifest_path": "processes/meta/development-process/process.json",
   "objective_ref": "obj-phase1-min-loop",
   "owner": "bpm",
   "version": "0.1.0",
@@ -153,9 +153,9 @@
   "openclaw": {
     "projection_mode": "bundle",
     "bundle_key": "anc-v2-meta-processes",
-    "bundle_source": "/Users/albus/MyProjects/ANC_v2/processes/meta",
+    "bundle_source": "processes/meta",
     "entry_key": "development-process",
-    "source": "/Users/albus/MyProjects/ANC_v2/processes/meta/development-process",
+    "source": "processes/meta/development-process",
     "allow_draft_projection": true
   }
 }
@@ -164,7 +164,9 @@
 ## 校验命令
 
 ```bash
-python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py validate
-python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py generate-docs --check
-python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py project-openclaw --all --check
+python3 shared/registry/registry_contract_tool.py validate
+python3 shared/registry/registry_contract_tool.py generate-docs --check
+python3 shared/registry/registry_contract_tool.py project-openclaw --all --check
+python3 shared/registry/registry_contract_tool.py check-protocol-consistency
+python3 shared/registry/registry_contract_tool.py verify
 ```

@@ -2,9 +2,9 @@
 
 ## Layout
 
-1. `/Users/albus/MyProjects/ANC_v2/tests/template/TEST.md`：测试模板。
-2. `/Users/albus/MyProjects/ANC_v2/tests/skill-creator/TEST.md`：`skill-creator` 测试用例。
-3. `/Users/albus/MyProjects/ANC_v2/tests/development-process/TEST.md`：`development-process` 测试用例。
+1. `tests/template/TEST.md`：测试模板。
+2. `tests/skill-creator/TEST.md`：`skill-creator` 测试用例。
+3. `tests/development-process/TEST.md`：`development-process` 测试用例。
 
 ## Rule
 

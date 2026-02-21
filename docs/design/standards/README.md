@@ -6,11 +6,11 @@
 
 ## 文档清单
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/design/standards/agent-definition-standard.md`
-2. `/Users/albus/MyProjects/ANC_v2/docs/design/standards/skill-definition-standard.md`
-3. `/Users/albus/MyProjects/ANC_v2/docs/design/standards/process-definition-standard.md`
-4. `/Users/albus/MyProjects/ANC_v2/docs/design/standards/recursive-process-standard-p1-p6.md`
-5. `/Users/albus/MyProjects/ANC_v2/docs/design/standards/reference-implementation-skill-creator.md`
+1. `docs/design/standards/agent-definition-standard.md`
+2. `docs/design/standards/skill-definition-standard.md`
+3. `docs/design/standards/process-definition-standard.md`
+4. `docs/design/standards/recursive-process-standard-p1-p6.md`
+5. `docs/design/standards/reference-implementation-skill-creator.md`
 
 ## 使用顺序
 

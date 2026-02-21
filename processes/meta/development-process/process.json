@@ -14,18 +14,27 @@
   "priority": "P0",
   "input_contract": {
     "format": "json",
-    "required": ["objective_ref", "input_payload"]
+    "required": [
+      "objective_ref",
+      "input_payload"
+    ]
   },
   "output_contract": {
     "format": "json",
-    "required": ["final_output", "evidence_refs", "verdict"]
+    "required": [
+      "final_output",
+      "evidence_refs",
+      "verdict"
+    ]
   },
   "phases": [
     {
       "phase_id": "p1",
       "name": "write-spec",
       "actor": "architect",
-      "skill_or_process": "spec-writer",
+      "target_type": "skill",
+      "target_id": "meta.arch.spec-writer",
+      "requires_spec": false,
       "sipoc": {
         "supplier": "initiator",
         "input": "input_payload",
@@ -39,7 +48,10 @@
       "phase_id": "p2",
       "name": "design-tests",
       "actor": "qa",
-      "skill_or_process": "test-designer",
+      "target_type": "skill",
+      "target_id": "meta.qa.test-designer",
+      "requires_spec": true,
+      "spec_ref": "docs/architecture/process_architecture.md#bpm-protocol-canonical-schema-machine-readable",
       "sipoc": {
         "supplier": "p1",
         "input": "spec_doc",
@@ -53,7 +65,10 @@
       "phase_id": "p3",
       "name": "implement",
       "actor": "kernel-dev",
-      "skill_or_process": "manual-task",
+      "target_type": "skill",
+      "target_id": "system.ops.manual-task",
+      "requires_spec": true,
+      "spec_ref": "docs/architecture/process_architecture.md#bpm-protocol-canonical-schema-machine-readable",
       "sipoc": {
         "supplier": "p2",
         "input": "test_plan",
@@ -67,7 +82,10 @@
       "phase_id": "p4",
       "name": "verify",
       "actor": "qa",
-      "skill_or_process": "llm-judge",
+      "target_type": "skill",
+      "target_id": "meta.qa.llm-judge",
+      "requires_spec": true,
+      "spec_ref": "docs/architecture/process_architecture.md#bpm-protocol-canonical-schema-machine-readable",
       "sipoc": {
         "supplier": "p3",
         "input": "candidate_output",
@@ -121,25 +139,15 @@
       "human"
     ]
   },
-  "control": {
-    "mode": "sequence",
-    "loop_on_failure": {
-      "from_phase": "p4",
-      "to_phase": "p3",
-      "max_iterations": 2
-    }
-  },
-  "failure_policy": {
-    "mode": "fail_closed",
-    "escalation_chain": [
-      "actor",
-      "owner",
-      "bpm",
-      "admin",
-      "human"
-    ]
-  },
   "evidence_policy": {
-    "required_fields": ["timestamp", "phase_id", "actor", "input_ref", "output_ref", "decision", "reason"]
+    "required_fields": [
+      "timestamp",
+      "phase_id",
+      "actor",
+      "input_ref",
+      "output_ref",
+      "decision",
+      "reason"
+    ]
   }
 }

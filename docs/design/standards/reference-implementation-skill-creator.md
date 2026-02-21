@@ -1,6 +1,6 @@
 # Reference Implementation: skill-creator
 
-> 版本: v0.2.0 | 参考对象: `/Users/albus/MyProjects/ANC_v2/skills/skill-creator/SKILL.md`
+> 版本: v0.2.0 | 参考对象: `skills/skill-creator/SKILL.md`
 
 ## 1. 目的
 
@@ -19,7 +19,7 @@
 
 1. 明确 `skill_name`、`objective_ref`、边界约束。
 2. 生成或更新 `SKILL.md`（含 Capability Contract YAML 块）。
-3. 生成测试文档 `/Users/albus/MyProjects/ANC_v2/tests/<skill-name>/TEST.md`。
+3. 生成测试文档 `tests/<skill-name>/TEST.md`。
 4. 生成 registry patch plan。
 5. 执行 `registry_contract_tool.py verify`，确认 registry + capability 一致。
 6. 触发 lifecycle-review 进入 review 状态。

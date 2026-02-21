@@ -46,7 +46,7 @@
 - Registry 条目存在且字段完整
 - SKILL.md frontmatter 与 registry 条目一致
 - SKILL.md `test_mount` 与 registry `tests` 字段一致
-- `python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py verify` 通过
+- `python3 shared/registry/registry_contract_tool.py verify` 通过
 
 ### 审查内容
 

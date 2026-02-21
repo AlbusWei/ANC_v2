@@ -1,7 +1,7 @@
 # Layers & Modules Review Checklist
 
 > Branch: `codex/review-layers-modules`
-> Worktree: `/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules`
+> Worktree: `review-layers-modules`
 
 ## 1. 目标
 
@@ -17,14 +17,14 @@
 
 ## 3. 允许修改范围
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/design/layers/`
-2. `/Users/albus/MyProjects/ANC_v2/docs/design/modules/`
+1. `docs/design/layers/`
+2. `docs/design/modules/`
 
 ## 4. 禁止修改范围
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/design/data-models/`
-2. `/Users/albus/MyProjects/ANC_v2/docs/design/interfaces/`
-3. `/Users/albus/MyProjects/ANC_v2/docs/design/business/`
+1. `docs/design/data-models/`
+2. `docs/design/interfaces/`
+3. `docs/design/business/`
 
 ## 5. 核对项
 

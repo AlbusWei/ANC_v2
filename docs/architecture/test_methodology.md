@@ -113,7 +113,7 @@
 
 测试模板基线：
 
-1. 统一模板路径：`/Users/albus/MyProjects/ANC_v2/tests/template/TEST.md`。
+1. 统一模板路径：`tests/template/TEST.md`。
 2. `TEST.md` 与 `SKILL.md` 分离存放，避免“能力定义模板”和“验收模板”耦合。
 
 ## 6. 执行策略

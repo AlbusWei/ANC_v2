@@ -43,10 +43,10 @@ fail_closed_rules:
   - frontmatter parse failure
   - test/registry references missing
 test_mount:
-  test_doc: /Users/albus/MyProjects/ANC_v2/tests/template/TEST.md
-  methodology_ref: /Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md
+  test_doc: tests/template/TEST.md
+  methodology_ref: docs/architecture/test_methodology.md
 references:
-  agentskills_spec: /Users/albus/MyProjects/ANC_v2/skills/template/SKILL.md
+  agentskills_spec: skills/template/SKILL.md
 ```
 
 ## Objective
@@ -98,7 +98,7 @@ references:
 
 ## Observability
 
-- Evidence path: `/Users/albus/MyProjects/ANC_v2/tests/<skill-name>/TEST.md`
+- Evidence path: `tests/<skill-name>/TEST.md`
 - Key metrics: template adoption rate, first-pass validation rate
 
 ## References

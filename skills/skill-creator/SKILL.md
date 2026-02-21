@@ -43,11 +43,11 @@ fail_closed_rules:
   - frontmatter cannot be parsed
   - test path not provided
 test_mount:
-  test_doc: /Users/albus/MyProjects/ANC_v2/tests/skill-creator/TEST.md
-  methodology_ref: /Users/albus/MyProjects/ANC_v2/docs/architecture/test_methodology.md
+  test_doc: tests/skill-creator/TEST.md
+  methodology_ref: docs/architecture/test_methodology.md
 references:
-  checklist: /Users/albus/MyProjects/ANC_v2/skills/skill-creator/references/checklist.md
-  review_rubric: /Users/albus/MyProjects/ANC_v2/skills/skill-creator/references/review_rubric.md
+  checklist: skills/skill-creator/references/checklist.md
+  review_rubric: skills/skill-creator/references/review_rubric.md
 ```
 
 ## 何时使用
@@ -72,10 +72,10 @@ references:
 
 - Format: file layout + markdown
 - Required fields:
-  - `/Users/albus/MyProjects/ANC_v2/skills/<skill-name>/SKILL.md`
+  - `skills/<skill-name>/SKILL.md`
   - `SKILL.md` 中的 `Capability Contract (Machine-Readable)` YAML 块
-  - optional `/Users/albus/MyProjects/ANC_v2/skills/<skill-name>/references/*.md`
-  - `/Users/albus/MyProjects/ANC_v2/tests/<skill-name>/TEST.md`
+  - optional `skills/<skill-name>/references/*.md`
+  - `tests/<skill-name>/TEST.md`
   - registry patch plan（skill_registry）
   - `registry_contract_tool.py verify` 通过证据
 
@@ -87,7 +87,7 @@ references:
 4. 将长文档细节拆分到 `references/`。
 5. 设计 `TEST.md`，覆盖 P0 目标和关键失败模式。
 6. 同步更新 `skill_registry.json`，并确保 `test_mount` 与 registry `tests` 一致。
-7. 执行 `python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py verify`。
+7. 执行 `python3 shared/registry/registry_contract_tool.py verify`。
 
 ## Fail-Closed Rules
 
@@ -99,9 +99,9 @@ references:
 
 ## References
 
-- 执行清单：`/Users/albus/MyProjects/ANC_v2/skills/skill-creator/references/checklist.md`
-- Frontmatter 规则：`/Users/albus/MyProjects/ANC_v2/skills/skill-creator/references/frontmatter_openclaw.md`
-- 评审量表：`/Users/albus/MyProjects/ANC_v2/skills/skill-creator/references/review_rubric.md`
+- 执行清单：`skills/skill-creator/references/checklist.md`
+- Frontmatter 规则：`skills/skill-creator/references/frontmatter_openclaw.md`
+- 评审量表：`skills/skill-creator/references/review_rubric.md`
 
 ## External References
 

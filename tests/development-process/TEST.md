@@ -22,7 +22,7 @@
 - Evaluation Method: LLM-Judge
 - Judge Payload:
   - objective: verify objective-spec-test-development chain integrity
-  - spec_ref: `/Users/albus/MyProjects/ANC_v2/processes/development-process/process.json`
+  - spec_ref: `processes/development-process/process.json`
   - expected_conditions:
     - all phases produce output refs
     - fail-closed rules are enforced

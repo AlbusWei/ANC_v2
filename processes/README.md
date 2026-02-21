@@ -2,10 +2,10 @@
 
 ## Layout
 
-1. `/Users/albus/MyProjects/ANC_v2/processes/template/`：流程模板资产。
-2. `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/`：真实示例流程（canonical 路径）。
-3. `/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change/`：配置变更治理流程（canonical 路径）。
-4. `/Users/albus/MyProjects/ANC_v2/processes/development-process/`：Phase 0.5 legacy 参考路径，不再作为 registry 真相源。
+1. `processes/template/`：流程模板资产。
+2. `processes/meta/development-process/`：真实示例流程（canonical 路径）。
+3. `processes/meta/governed-config-change/`：配置变更治理流程（canonical 路径）。
+4. `processes/development-process/`：Phase 0.5 legacy 参考路径，不再作为 registry 真相源。
 
 ## Rule
 

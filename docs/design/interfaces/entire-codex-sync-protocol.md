@@ -10,7 +10,7 @@
 ## 2. 协议入口
 
 脚本：
-`/Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/scripts/entire_codex_bridge.py`
+`skills/system/entire-codex-sync/scripts/entire_codex_bridge.py`
 
 命令：
 

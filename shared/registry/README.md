@@ -26,8 +26,8 @@
 ## 本地验证
 
 ```bash
-python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py validate
-python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py generate-docs --check
-python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py project-openclaw --all --check
-python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py verify
+python3 shared/registry/registry_contract_tool.py validate
+python3 shared/registry/registry_contract_tool.py generate-docs --check
+python3 shared/registry/registry_contract_tool.py project-openclaw --all --check
+python3 shared/registry/registry_contract_tool.py verify
 ```
