@@ -1,0 +1,41 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "16306c63aa26",
+  "session_id": "codex-98c9862d652c",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-21T15:00:22.099731Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/architecture/test_methodology.md",
+    "docs/design/modules/M1-openjudge-adapter-spec.md",
+    "docs/design/modules/M1-test-system.md",
+    "docs/design/modules/module-dependency-matrix.md",
+    "docs/design/processes/atomic/AP-005-test-design.md",
+    "docs/design/processes/atomic/AP-007-objective-evaluation.md",
+    "docs/design/processes/atomic/AP-008-subjective-evaluation.md",
+    "docs/design/processes/atomic/AP-009-regression-execution.md",
+    "docs/review-checklists/layers-modules-checklist.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "3ea0ceecb9a2",
+  "transcript_identifier_at_start": "gemini-88a2bd2908",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T15:00:22.090118Z",
+    "agent_lines": 0,
+    "human_added": 2795,
+    "human_modified": 98,
+    "human_removed": 0,
+    "total_committed": 2822,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
