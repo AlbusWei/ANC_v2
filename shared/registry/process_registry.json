@@ -244,6 +244,25 @@
         "source": "processes/meta/refactor",
         "allow_draft_projection": true
       }
+    },
+    {
+      "process_id": "construction-plane-governance",
+      "skill_name": "construction-plane-governance",
+      "skill_path": "processes/meta/construction-plane-governance/SKILL.md",
+      "manifest_path": "processes/meta/construction-plane-governance/process.json",
+      "objective_ref": "obj-m6-construction-plane-governance",
+      "owner": "architect",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 5,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "construction-plane-governance",
+        "source": "processes/meta/construction-plane-governance",
+        "allow_draft_projection": true
+      }
     }
   ]
 }

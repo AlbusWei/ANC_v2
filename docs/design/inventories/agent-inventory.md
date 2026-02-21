@@ -1,6 +1,6 @@
 # Agent 全量清单
 
-> 版本: v0.4.0 | SSOT: `shared/registry/agent_directory.json`
+> 版本: v0.5.0 | SSOT: `shared/registry/agent_directory.json`
 
 ## 已注册 Agent
 
@@ -35,6 +35,7 @@ business-analyst, product-manager, tech-lead, solution-architect, frontend-dev, 
 1. `system-analyst` 负责全系统反馈归集与架构级洞察，服务 architect/hr/PM。
 2. `app/evolution/analyst` 负责 App/业务层演化分析，不承担系统级架构治理洞察。
 3. 所有“需后验运营分析才能形成参数结论”的议题（如 M1 测试时长估计、M2 动态策略校准）由 `system-analyst` 牵头进入 `runtime-policy-calibration` 治理流程，再同步 architect/admin/bpm 决策。
+4. `architect` 是 M6 模块 owner，负责 `sys.arch.construction-audit` 与 `system.integration.openspec-sync` 语义，以及 `construction-plane-governance` 流程治理约束；`bpm` 负责流程实例编排与关闭门禁执行。
 
 ## 规则
 

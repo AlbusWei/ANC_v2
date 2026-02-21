@@ -8,9 +8,10 @@
 4. `processes/meta/hotfix/`：M3 紧急修复流程（canonical 路径）。
 5. `processes/meta/refactor/`：M3 重构流程（canonical 路径）。
 6. `processes/meta/governed-config-change/`：配置变更治理流程（canonical 路径）。
-7. `processes/control/trigger-schedule-runtime/`：定时/心跳触发运行时流程（canonical 路径）。
-8. `processes/control/trigger-event-runtime/`：事件触发运行时流程（canonical 路径）。
-9. `processes/development-process/`：Phase 0.5 legacy 参考路径，不再作为 registry 真相源。
+7. `processes/meta/construction-plane-governance/`：M6 施工联动治理流程（canonical 路径）。
+8. `processes/control/trigger-schedule-runtime/`：定时/心跳触发运行时流程（canonical 路径）。
+9. `processes/control/trigger-event-runtime/`：事件触发运行时流程（canonical 路径）。
+10. `processes/development-process/`：Phase 0.5 legacy 参考路径，不再作为 registry 真相源。
 
 ## Rule
 

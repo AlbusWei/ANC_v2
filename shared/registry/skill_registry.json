@@ -733,6 +733,68 @@
         "test_doc": "tests/skill-creator/TEST.md",
         "methodology_ref": "docs/architecture/test_methodology.md"
       }
+    },
+    {
+      "skill_id": "sys.arch.construction-audit",
+      "name": "construction-audit",
+      "path": "skills/system/construction-audit/SKILL.md",
+      "layer": "system",
+      "owner": "architect",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "construction-audit",
+        "description": "Audit M6 construction-plane linkage completeness across design docs, inventories, registries and construction board",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.arch.construction-audit",
+        "source": "skills/system/construction-audit",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/construction-audit/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "system.integration.openspec-sync",
+      "name": "openspec-sync",
+      "path": "skills/system/openspec-sync/SKILL.md",
+      "layer": "system",
+      "owner": "architect",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "openspec-sync",
+        "description": "Synchronize OpenSpec change context with ANC design decisions and emit a strict sync record",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "system.integration.openspec-sync",
+        "source": "skills/system/openspec-sync",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/openspec-sync/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
     }
   ]
 }
