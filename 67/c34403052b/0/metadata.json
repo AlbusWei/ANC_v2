@@ -1,0 +1,29 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "67c34403052b",
+  "session_id": "codex-10cee6dc9420",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-21T17:44:44.996978Z",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/review-checklists/agents-checklist.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "a0fdc7e2c039",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T17:44:44.971309Z",
+    "agent_lines": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 0,
+    "agent_percentage": 0
+  }
+}
