@@ -1,0 +1,42 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "3afa825bf1bf",
+  "strategy": "manual-commit",
+  "branch": "codex/review-skills",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/architecture/registry_contracts.md",
+    "docs/architecture/registry_governance_decisions.md",
+    "docs/design/interfaces/registry-access-protocol.md",
+    "docs/design/skills/skill-lifecycle-protocol.md",
+    "docs/design/standards/reference-implementation-skill-creator.md",
+    "docs/design/standards/skill-definition-standard.md",
+    "shared/registry/README.md",
+    "shared/registry/registry_contract_tool.py",
+    "skills/meta/llm-judge/SKILL.md",
+    "skills/meta/spec-writer/SKILL.md",
+    "skills/meta/test-designer/SKILL.md",
+    "skills/skill-creator/SKILL.md",
+    "skills/skill-creator/references/checklist.md",
+    "skills/skill-creator/references/review_rubric.md",
+    "skills/system/entire-codex-sync/SKILL.md",
+    "skills/template/SKILL.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/3a/fa825bf1bf/0/metadata.json",
+      "transcript": "/3a/fa825bf1bf/0/full.jsonl",
+      "context": "/3a/fa825bf1bf/0/context.md",
+      "content_hash": "/3a/fa825bf1bf/0/content_hash.txt",
+      "prompt": "/3a/fa825bf1bf/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}

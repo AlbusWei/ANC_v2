@@ -1,0 +1,48 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "3afa825bf1bf",
+  "session_id": "codex-302acd6d1112",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-21T10:48:46.296665Z",
+  "branch": "codex/review-skills",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/architecture/registry_contracts.md",
+    "docs/architecture/registry_governance_decisions.md",
+    "docs/design/interfaces/registry-access-protocol.md",
+    "docs/design/skills/skill-lifecycle-protocol.md",
+    "docs/design/standards/reference-implementation-skill-creator.md",
+    "docs/design/standards/skill-definition-standard.md",
+    "shared/registry/README.md",
+    "shared/registry/registry_contract_tool.py",
+    "skills/meta/llm-judge/SKILL.md",
+    "skills/meta/spec-writer/SKILL.md",
+    "skills/meta/test-designer/SKILL.md",
+    "skills/skill-creator/SKILL.md",
+    "skills/skill-creator/references/checklist.md",
+    "skills/skill-creator/references/review_rubric.md",
+    "skills/system/entire-codex-sync/SKILL.md",
+    "skills/template/SKILL.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "a1175fd554a8",
+  "transcript_identifier_at_start": "gemini-8fb33e1e2e",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T10:48:46.277002Z",
+    "agent_lines": 534,
+    "human_added": 57,
+    "human_modified": 3,
+    "human_removed": 0,
+    "total_committed": 594,
+    "agent_percentage": 89.8989898989899
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-skills/.entire/codex-bridge/transcript.json"
+}
