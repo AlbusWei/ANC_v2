@@ -1,68 +1,46 @@
 # Agents Review Checklist
 
 > Branch: `codex/review-agents`
-> Worktree: `review-agents`
+> Worktree: `/Users/albus/MyProjects/ANC_v2_worktrees/review-agents`
+> Baseline Commit: `d2d7699`
 
 ## 1. 目标
 
-核对 agent 角色设计完整性、权限边界、协作与交接链路，确保 App/Kernal/Control 角色可治理。
+核对 Agent 角色设计、交接协议、inventory 与治理边界的一致性，确保角色可执行、可追溯、可审计。
 
-## 2. Entire 执行要求（每次会话）
+## 2. SSOT 绑定
+
+1. `/Users/albus/MyProjects/ANC_v2/docs/architecture/system_overview.md`
+2. `/Users/albus/MyProjects/ANC_v2/docs/architecture/process_architecture.md`
+3. `/Users/albus/MyProjects/ANC_v2/docs/design/inventories/agent-inventory.md`
+4. `/Users/albus/MyProjects/ANC_v2/docs/design/interfaces/role-handoff-protocol.md`
+5. `/Users/albus/MyProjects/ANC_v2/docs/architecture/construction_plane.md`
+
+## 3. 当前进度（d2d7699）
+
+- [x] App 层角色文档已脱离 `_placeholder`，并纳入架构索引。
+- [x] Role handoff 协议字段已与流程治理语义对齐。
+- [x] agent inventory 与已落盘角色目录可对应。
+- [ ] 新增角色的 runtime registry 生命周期推进（draft -> review）尚未完成。
+- [ ] 角色协作的运行级证据（而非仅文档级）尚未完成。
+
+## 4. 核对项
+
+- [ ] 每个 Agent 文档包含：定位、输入输出、边界、Fail-Closed、升级链。
+- [ ] Kernel/App/Control 角色职责无重叠且无空白区。
+- [ ] `role-handoff-protocol.md` 与实际 Agent 文档字段一致。
+- [ ] `agent-inventory.md`、`shared/registry/agent_directory.json`、文档目录三者一致。
+- [ ] 架构文档中对 owner/admin/bpm 的治理描述与 Agent 定义一致。
+
+## 5. 完成定义（DoD）
+
+- [ ] 形成“阶段 -> Agent”覆盖矩阵并落盘。
+- [ ] 至少 1 条跨角色交接链路有可回放证据。
+- [ ] 变更仅包含 Agents 相关文档、inventory、必要 registry 同步。
+
+## 6. 提交前校验
 
 1. `entire status --detailed`
-2. `.../entire_codex_bridge.py start`
-3. 每回合改动后 `sync`
-4. commit 后检查 `Entire-Checkpoint`
-5. `.../entire_codex_bridge.py end`
-
-## 3. 允许修改范围
-
-1. `docs/design/agents/`
-2. `docs/design/inventories/agent-inventory.md`
-3. `docs/review-checklists/agents-checklist.md`
-
-## 4. 禁止修改范围
-
-1. `docs/design/skills/`
-2. `docs/design/processes/`
-3. `shared/registry/`
-
-## 5. 核对项
-
-1. 每个 agent 文档包含角色定位、绑定 skill、流程参与、边界、Fail-Closed。
-2. architect/hr/system-analyst/app-analyst 职责边界不重叠且无空白区。
-3. delivery 13 角色职责边界不重叠且无空白区。
-4. evolution 3 角色（monitor/analyst/planner）职责闭环。
-5. 协作模式文档与各 agent 文档一致。
-6. owner/权限表述与治理逻辑不冲突。
-7. `_placeholder` 迁移说明指向准确。
-8. inventory 与 agent 文档清单一致。
-
-## 6. 完成定义（DoD）
-
-1. 所有 agent 文档满足统一结构。
-2. 形成“角色覆盖矩阵”（阶段→负责角色）并可追溯。
-3. 提交仅包含 agent、agent inventory 与本 checklist 文件。
-
-## 7. 建议提交粒度
-
-1. `agents: app role boundary refinement`
-2. `agents: collaboration/inventory alignment`
-
-## 8. 后续顺序改动清单（Post-Commit Follow-Ups）
-
-1. Spec 标准化（Hybrid OpenSpec 字段映射）
-   - Owner: architect
-   - Trigger: 本轮角色边界落盘后立即启动
-2. Objective 分层 Schema 补齐（OKR 树字段）
-   - Owner: architect + qa
-   - Trigger: Spec 标准化草案评审通过后
-3. 流程角色同步（AP-001/AP-004/AP-015 与 handoff 契约）
-   - Owner: bpm + architect
-   - Trigger: Objective schema 字段冻结后
-4. 模板治理协议化（双钥审批 `template_change_dual_approval_record`）
-   - Owner: hr + architect
-   - Trigger: 流程角色同步完成后
-5. registry/interface 同步与审查用例
-   - Owner: hr + bpm + qa
-   - Trigger: 模板治理协议落盘后
+2. `python3 /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/scripts/entire_codex_bridge.py sync --prompt "..." --summary "..." --files ...`
+3. `python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py verify`
+4. `git log -1 --pretty=raw`（确认 `Entire-Checkpoint`）
