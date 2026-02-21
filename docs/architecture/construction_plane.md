@@ -27,6 +27,10 @@
 - [x] 新增 `governed-config-change` 可执行流程资产（`processes/meta/governed-config-change/`）并注册到 `process_registry`
 - [x] 落盘 Skill 双层契约设计（Registry Contract + Capability Contract）并新增 ADR-11/ADR-12
 - [x] 将 Capability Contract 固定为 `SKILL.md` 机器块（固定标题 + YAML），并纳入 `registry_contract_tool.py verify` 全量校验
+- [x] 完成 `review-processes-business` 架构收敛：新增 `development-loop-core-standard` 作为开发闭环规范真相源
+- [x] 完成双主线语义重构：示例流程与规范真相分层，`delivery-iterations` 改为复用标准义务而非绑定 internal 示例
+- [x] 完成统一追溯资产：新增 `p4-p6-obligation-traceability-matrix` 并挂载到 P4/业务流程总览入口
+- [x] 在流程架构文档固化 `phase -> subprocess` 语法约束与 skill 原子包装原则
 - [x] 将模块依赖矩阵升级为类型化依赖并明确 `M3/M4` 并行建设与汇合门（`M1` 统一门禁复用）
 - [x] 收敛 canonical process manifest 到标准字段（`process_level/control_flow/fail_policy/lineage_policy`）
 
@@ -34,14 +38,18 @@
 
 - [ ] 将新增 App Agent、流程与技能逐步纳入 runtime registry（按生命周期进入 review）
 - [ ] 执行一致性检查脚本（术语、状态、路径、schema 字段）
+- [ ] `development-process` canonical/legacy 同名异义风险收敛（legacy 执行语义冻结/退役）
+- [ ] 开发型流程 `process.json` 落地 `process_type + governance_bundle`，完成样例校验
+- [ ] canonical 路径可达性策略收敛（worktree 评审期 vs 主工作区合并后）
 - [ ] 将 trigger governance 最小 dry-run 从文档级证据升级到运行级证据
 
 ## 下一步（Next）
 
 1. 为 P6 原子流程补充 process.json 样板定义。
 2. 将 lifecycle-review、registry-sync、escalation 具象化为可执行流程资产。
-3. 触发一次双主线 dry-run（文档级）并沉淀证据目录。
-4. 执行一次 governed-config-change 文档级 dry-run，补齐标准证据包模板。
+3. 完成 `review-processes-business` 未闭环项：`governance_bundle` 落地、legacy 语义收敛、canonical 路径策略定稿。
+4. 触发一次双主线 dry-run（文档级）并沉淀证据目录。
+5. 执行一次 governed-config-change 文档级 dry-run，补齐标准证据包模板。
 
 ## 里程碑
 

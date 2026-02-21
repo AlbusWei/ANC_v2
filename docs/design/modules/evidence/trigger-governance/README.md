@@ -12,11 +12,13 @@
 
 1. 用例证据：`<CASE-ID>-dry-run.md`
 2. 同轮补充：`<CASE-ID>-dry-run-r<round>.md`
+3. 轮次评审记录：`review-round-<N>.md`
 
 示例：
 
 1. `TG-SCH-002-dry-run.md`
 2. `TG-EVT-003-dry-run.md`
+3. `review-round-1.md`
 
 ## 2. 最小模板
 
