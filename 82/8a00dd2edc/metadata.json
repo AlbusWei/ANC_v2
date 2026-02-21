@@ -3,9 +3,22 @@
   "checkpoint_id": "828a00dd2edc",
   "strategy": "manual-commit",
   "branch": "codex/review-processes-business",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
-    "docs/architecture/construction_plane.md"
+    "docs/architecture/construction_plane.md",
+    "docs/architecture/system_overview.md",
+    "docs/design/modules/M1-test-system.md",
+    "docs/design/modules/M3-self-development.md",
+    "docs/design/modules/M5-self-evolution.md",
+    "docs/design/modules/evidence/trigger-governance/README.md",
+    "docs/design/modules/evidence/trigger-governance/TG-EVT-003-dry-run.md",
+    "docs/design/modules/evidence/trigger-governance/TG-SCH-002-dry-run.md",
+    "docs/design/modules/evidence/trigger-governance/review-round-1.md",
+    "docs/design/modules/module-dependency-matrix.md",
+    "docs/design/modules/trigger-governance-diff-closure-plan.md",
+    "docs/design/modules/trigger-governance-review-checklist.md",
+    "processes/meta/development-process/process.json",
+    "processes/meta/governed-config-change/process.json"
   ],
   "sessions": [
     {
@@ -14,6 +27,13 @@
       "context": "/82/8a00dd2edc/0/context.md",
       "content_hash": "/82/8a00dd2edc/0/content_hash.txt",
       "prompt": "/82/8a00dd2edc/0/prompt.txt"
+    },
+    {
+      "metadata": "/82/8a00dd2edc/1/metadata.json",
+      "transcript": "/82/8a00dd2edc/1/full.jsonl",
+      "context": "/82/8a00dd2edc/1/context.md",
+      "content_hash": "/82/8a00dd2edc/1/content_hash.txt",
+      "prompt": "/82/8a00dd2edc/1/prompt.txt"
     }
   ],
   "token_usage": {
