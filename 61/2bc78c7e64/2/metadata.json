@@ -1,9 +1,11 @@
 {
   "cli_version": "0.4.5",
   "checkpoint_id": "612bc78c7e64",
+  "session_id": "codex-eb3a7bcc185c",
   "strategy": "manual-commit",
+  "created_at": "2026-02-21T09:49:29.971Z",
   "branch": "codex/review-contracts",
-  "checkpoints_count": 3,
+  "checkpoints_count": 1,
   "files_touched": [
     "config/README.md",
     "config/openclaw.phase05.fragment.json",
@@ -13,7 +15,6 @@
     "docs/architecture/registry_governance_decisions.md",
     "docs/design/data-models/registry-schemas.md",
     "docs/design/interfaces/registry-access-protocol.md",
-    "docs/review-checklists/contracts-checklist.md",
     "shared/registry/README.md",
     "shared/registry/agent_directory.json",
     "shared/registry/install_pre_commit_hook.sh",
@@ -22,34 +23,24 @@
     "shared/registry/run_contract_checks.sh",
     "shared/registry/skill_registry.json"
   ],
-  "sessions": [
-    {
-      "metadata": "/61/2bc78c7e64/0/metadata.json",
-      "transcript": "/61/2bc78c7e64/0/full.jsonl",
-      "context": "/61/2bc78c7e64/0/context.md",
-      "content_hash": "/61/2bc78c7e64/0/content_hash.txt",
-      "prompt": "/61/2bc78c7e64/0/prompt.txt"
-    },
-    {
-      "metadata": "/61/2bc78c7e64/1/metadata.json",
-      "transcript": "/61/2bc78c7e64/1/full.jsonl",
-      "context": "/61/2bc78c7e64/1/context.md",
-      "content_hash": "/61/2bc78c7e64/1/content_hash.txt",
-      "prompt": "/61/2bc78c7e64/1/prompt.txt"
-    },
-    {
-      "metadata": "/61/2bc78c7e64/2/metadata.json",
-      "transcript": "/61/2bc78c7e64/2/full.jsonl",
-      "context": "/61/2bc78c7e64/2/context.md",
-      "content_hash": "/61/2bc78c7e64/2/content_hash.txt",
-      "prompt": "/61/2bc78c7e64/2/prompt.txt"
-    }
-  ],
+  "agent": "Gemini CLI",
+  "turn_id": "0d8dbf2ea8b9",
+  "transcript_identifier_at_start": "gemini-bdb121f034",
   "token_usage": {
     "input_tokens": 0,
     "cache_creation_tokens": 0,
     "cache_read_tokens": 0,
     "output_tokens": 0,
     "api_call_count": 0
-  }
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T09:49:29.967666Z",
+    "agent_lines": 1577,
+    "human_added": 213,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 1790,
+    "agent_percentage": 88.10055865921788
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-contracts/.entire/codex-bridge/transcript.json"
 }
