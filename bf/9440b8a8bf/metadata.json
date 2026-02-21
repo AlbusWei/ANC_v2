@@ -3,7 +3,7 @@
   "checkpoint_id": "bf9440b8a8bf",
   "strategy": "manual-commit",
   "branch": "codex/review-agents",
-  "checkpoints_count": 2,
+  "checkpoints_count": 3,
   "files_touched": [
     "AGENTS.md"
   ],
@@ -28,6 +28,13 @@
       "context": "/bf/9440b8a8bf/2/context.md",
       "content_hash": "/bf/9440b8a8bf/2/content_hash.txt",
       "prompt": "/bf/9440b8a8bf/2/prompt.txt"
+    },
+    {
+      "metadata": "/bf/9440b8a8bf/3/metadata.json",
+      "transcript": "/bf/9440b8a8bf/3/full.jsonl",
+      "context": "/bf/9440b8a8bf/3/context.md",
+      "content_hash": "/bf/9440b8a8bf/3/content_hash.txt",
+      "prompt": "/bf/9440b8a8bf/3/prompt.txt"
     }
   ],
   "token_usage": {
