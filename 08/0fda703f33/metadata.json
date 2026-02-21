@@ -3,7 +3,7 @@
   "checkpoint_id": "080fda703f33",
   "strategy": "manual-commit",
   "branch": "codex/review-contracts",
-  "checkpoints_count": 4,
+  "checkpoints_count": 5,
   "files_touched": [
     "AGENTS.md",
     "agents/control/BPM/IDENTITY.md",
@@ -99,6 +99,13 @@
       "context": "/08/0fda703f33/2/context.md",
       "content_hash": "/08/0fda703f33/2/content_hash.txt",
       "prompt": "/08/0fda703f33/2/prompt.txt"
+    },
+    {
+      "metadata": "/08/0fda703f33/3/metadata.json",
+      "transcript": "/08/0fda703f33/3/full.jsonl",
+      "context": "/08/0fda703f33/3/context.md",
+      "content_hash": "/08/0fda703f33/3/content_hash.txt",
+      "prompt": "/08/0fda703f33/3/prompt.txt"
     }
   ],
   "token_usage": {
