@@ -13,7 +13,9 @@
 
 | Skill | 用途 | 状态 |
 |---|---|---|
-| skill-creator | 创建 Skill 资产 | 未注册 |
+| skill-creator | 创建 Skill 资产 | draft |
+| agent-creator | 创建 Agent 资产 | draft |
+| process-creator | 创建 Process 资产 | draft |
 
 > kernel-dev 是主要的实现执行者，未来将绑定更多实现类 Skill。
 

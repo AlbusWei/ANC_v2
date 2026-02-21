@@ -1,20 +1,21 @@
 # 元技能清单与设计
 
-> 版本: v0.2.0 | 分类: Meta Skills | 层级: L1
+> 版本: v0.3.0 | 分类: Meta Skills | 层级: L1 | 最后更新: 2026-02-21
 
 ## 已有元技能
 
 1. meta.qa.llm-judge
 2. meta.arch.spec-writer
 3. meta.qa.test-designer
-4. skill-creator（待注册）
+4. skill-creator
+5. meta.arch.objective-writer
+6. meta.arch.agent-creator
+7. meta.arch.process-creator
+8. meta.arch.template-validator
 
-## 规划元技能
+M3 自开发技能设计包：
 
-1. meta.arch.objective-writer
-2. meta.arch.agent-creator
-3. meta.arch.process-creator
-4. meta.arch.template-validator
+- `docs/design/skills/self-development-skills.md`
 
 ## 生命周期
 
