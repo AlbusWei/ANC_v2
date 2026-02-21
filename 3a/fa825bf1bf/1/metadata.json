@@ -1,9 +1,11 @@
 {
   "cli_version": "0.4.5",
   "checkpoint_id": "3afa825bf1bf",
+  "session_id": "codex-5c0cb4974f75",
   "strategy": "manual-commit",
+  "created_at": "2026-02-21T10:48:46.33296Z",
   "branch": "codex/review-skills",
-  "checkpoints_count": 2,
+  "checkpoints_count": 1,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/architecture/registry_contracts.md",
@@ -23,27 +25,24 @@
     "skills/system/entire-codex-sync/SKILL.md",
     "skills/template/SKILL.md"
   ],
-  "sessions": [
-    {
-      "metadata": "/3a/fa825bf1bf/0/metadata.json",
-      "transcript": "/3a/fa825bf1bf/0/full.jsonl",
-      "context": "/3a/fa825bf1bf/0/context.md",
-      "content_hash": "/3a/fa825bf1bf/0/content_hash.txt",
-      "prompt": "/3a/fa825bf1bf/0/prompt.txt"
-    },
-    {
-      "metadata": "/3a/fa825bf1bf/1/metadata.json",
-      "transcript": "/3a/fa825bf1bf/1/full.jsonl",
-      "context": "/3a/fa825bf1bf/1/context.md",
-      "content_hash": "/3a/fa825bf1bf/1/content_hash.txt",
-      "prompt": "/3a/fa825bf1bf/1/prompt.txt"
-    }
-  ],
+  "agent": "Gemini CLI",
+  "turn_id": "4383dc11f4d7",
+  "transcript_identifier_at_start": "gemini-1d45ecc3aa",
   "token_usage": {
     "input_tokens": 0,
     "cache_creation_tokens": 0,
     "cache_read_tokens": 0,
     "output_tokens": 0,
     "api_call_count": 0
-  }
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T10:48:46.329003Z",
+    "agent_lines": 495,
+    "human_added": 100,
+    "human_modified": 1,
+    "human_removed": 0,
+    "total_committed": 596,
+    "agent_percentage": 83.05369127516778
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-skills/.entire/codex-bridge/transcript.json"
 }
