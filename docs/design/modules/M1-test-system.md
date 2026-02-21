@@ -1,67 +1,136 @@
 # M1 — 测试系统模块详细设计
 
-> 版本: v0.3.0 | 建设优先级: P0
+> 版本: v0.5.0 | 建设优先级: P0 | 最后更新: 2026-02-21
 
 ## 模块定位
 
-提供可复用的端到端测试与门禁能力，统一承担 Objective/Subjective 双轨评估、回归执行和治理放行判定。
+`M1` 是 ANC 的统一测试与门禁模块，负责把 Objective/Spec/Test 转换为可执行评测，并输出可审计 gate 判定。  
+OpenJudge 在 `M1` 中定位为评测执行内核，不直接承担治理决策。
+
+相关文档：
+
+1. 适配接口：`/Users/albus/MyProjects/ANC_v2/docs/design/modules/M1-openjudge-adapter-spec.md`
+2. 技能设计：`/Users/albus/MyProjects/ANC_v2/docs/design/skills/quality-gate-skills.md`
+3. 准备流程：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/quality-gate-preparation-process.md`
+4. 评测流程：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/quality-gate-evaluation-process.md`
+5. HOLD 治理流程：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/hold-governance-process.md`
+
+## Phase 1 成功优先级
+
+1. 门禁真实生效：`gate_decision` 能阻断推进。
+2. 全系统复用：`M3/M4/M5` 接入统一门禁协议。
+3. verdict 稳定可解释：必须可解析为统一输出。
+4. 成本与时延优化：不作为 Phase 1 首要成败判据。
 
 ## 模块边界
 
-1. `M1` 负责“测试与门禁判定”，不负责生命周期状态迁移执行。
-2. `M1` 对外输出结构化 verdict 与 gate decision，供 `M2/M3/M4/M5` 直接复用。
-3. 各模块不得重复实现独立测试评估体系，应通过 `M1` 统一能力接入。
+1. OpenJudge 仅产出 `raw eval`，不直接给最终 gate。
+2. `M1 adapter` 负责 `raw eval -> unified verdict -> gate_decision`。
+3. `M2` 全权管理运行状态机（running/hold/retry/debug/fail/complete）。
+4. `M4` 独占生命周期状态推进（review/active/deprecated/retired）。
+5. 各模块不得重复实现独立评测引擎，应通过 `M1` profile 复用。
 
 ## 组件
 
-1. llm-judge
-2. test-designer
-3. regression-runner
-4. TEST 模板体系
-5. contract-gate（`registry_contract_tool.py verify` 门禁能力）
+1. test-designer（测试计划与用例设计）
+2. test-compiler（`TEST.md -> OpenJudge datapoints`）
+3. evaluation-runner（统一 CLI 入口 `quality_eval_runner`）
+4. llm-judge（语义评估能力）
+5. regression-runner（回归执行与聚合候选）
+6. verdict-normalizer（统一输出契约）
+7. hold-triage（长时任务治理）
+8. contract-gate（`registry_contract_tool.py verify` 门禁能力）
+
+## 流程连续性模型
+
+1. 开发前：`quality-gate-preparation`（AP-005/018/019）。
+2. 开发断点：`AP-006 implementation-execution`。
+3. 开发后：`quality-gate-evaluation`（AP-007/008/009/020）。
+4. 异常治理：出现 `hold` 时转入 `hold-governance`（AP-021~025）。
+
+## 输入契约（统一源）
+
+1. `TEST.md` 是唯一测试定义源：
+   - 模板基线：`/Users/albus/MyProjects/ANC_v2/tests/template/TEST.md`
+2. 交接输入采用 `preparation_bundle_ref`。
+3. 评测流程的运行输入为 `preparation_bundle_ref + actual_output_refs`。
+4. `tc_id -> profile_id` 必须显式映射并纳入证据包。
+
+## 输出契约（Unified Verdict）
+
+必填字段：
+
+```json
+{
+  "gate_decision": "pass|fail|hold|test_invalid",
+  "evidence_ref": "path/to/evidence_package",
+  "reasons": ["..."]
+}
+```
+
+可选字段白名单：
+
+```json
+{
+  "raw_eval_ref": "path/to/raw_eval",
+  "retry_hint": "retry|debug|manual-check",
+  "profile_id": "quality-gate.baseline@1.0.0",
+  "parser_notes": "..."
+}
+```
+
+## 门禁与聚合规则
+
+1. AP-007/AP-008/AP-009 产出分项评测结果。
+2. AP-020 负责总聚合并输出最终 `gate_decision`。
+3. P0 聚合：
+   - 任一 P0 `fail` -> 总体 `fail`
+   - 无 `fail` 且存在 `hold` -> 总体 `hold`
+   - 其余 -> 总体 `pass`
+
+## Fail-Closed 规则（无硬超时）
+
+默认失败触发：
+
+1. 证据缺失或不可追溯。
+2. 判定结果不可解析。
+3. 关键输入缺失（Objective/Spec/Output）。
+
+补充规则：
+
+1. 长时运行不是失败条件。
+2. `hold -> fail` 仅在 HOLD 治理确认异常或无进展证据时触发。
+3. `test_invalid` 仅用于编译期和运行前契约错误。
+
+## Profile 治理
+
+1. 采用“统一核心协议 + 模块级 profile”模式。
+2. 全模块共享 baseline profile，模块只覆盖差异。
+3. profile 仅允许调整：grader 组合、轮次、重试、证据附加项。
+4. 以下条款不可被 profile 覆盖：
+   - `gate_decision` 枚举
+   - Unified Verdict 必填字段
+   - Fail-Closed 主规则
+5. profile 采用语义化版本并登记 registry。
 
 ## 依赖关系（类型化）
 
-1. 依赖 `M2`（`R/E`）：通过 BPM 编排执行测试并回写证据链。
-2. 依赖 `M6`（`E`）：对齐施工面阶段目标、风险与验收纪律。
-
-## 对外能力（复用接口）
-
-1. `test_plan` 生成：把 Objective/Spec 转换为可执行测试集合。
-2. `evaluation_verdict` 输出：输出结构化通过/失败结论和置信度。
-3. `regression_gate` 判定：发布前回归门禁，失败即阻断。
-4. `contract_gate` 判定：契约与 Capability Contract 一致性校验门禁。
+1. 依赖 `M2`（`R/E`）：运行状态机、调度与证据回写。
+2. 依赖 `M4`（`R`）：生命周期状态推进与审查消费。
+3. 依赖 `M6`（`E`）：对齐施工面阶段目标和验收纪律。
 
 ## 关键复用关系
 
-1. `M3` 复用 `M1` 作为开发闭环的测试与放行门禁。
-2. `M4` 复用 `M1` 作为 lifecycle 审查的测试基线。
-3. `M5` 复用 `M1` 作为改进效果可验证判据。
+1. `M3` 复用 `M1` 作为开发闭环门禁。
+2. `M4` 复用 `M1` 作为 lifecycle-review 的测试输入。
+3. `M5` 复用 `M1` 验证自进化改进效果。
 
-## Fail-Closed 规则
+## 验收清单
 
-1. 测试证据缺失或不可达时，默认判定为 `gate_fail`。
-2. verdict 结构化字段缺失时，不允许推进生命周期状态。
-3. 回归结果不确定或冲突时，按失败处理并升级 `owner -> bpm -> admin`。
-
-## 风险与缓解
-
-1. 风险：不同模块私有测试口径导致判定不一致。
-缓解：统一通过 `M1` 输出标准 verdict 与 gate decision。
-2. 风险：契约校验与测试校验分离导致漏检。
-缓解：将 `contract_gate` 纳入 `M1` 一体化门禁流程。
-
-## 关键流程挂载
-
-- AP-005 test-design
-- AP-007 objective-evaluation
-- AP-008 subjective-evaluation
-- AP-009 regression-execution
-
-## 验收
-
-- [ ] 结构化 verdict 输出稳定
-- [ ] 回归失败可阻断发布
-- [ ] 测试结果可回写 lifecycle-review
-- [ ] `M3/M4/M5` 均复用 `M1` 门禁且无重复实现
-- [ ] 契约校验与测试门禁形成统一放行判定
+- [ ] `gate_decision` 对发布路径具有真实阻断效果
+- [ ] `M3/M4/M5` 均复用统一门禁且无重复评测引擎
+- [ ] Unified Verdict 满足必填字段与白名单约束
+- [ ] `TEST.md -> datapoint` 编译错误可返回 `test_invalid` 并阻断
+- [ ] 证据包可被 `M2/M4` 追溯消费
+- [ ] 评测链路连续：准备 -> 实现 -> 评测
+- [ ] HOLD triage 可执行（continue/retry/debug/fail）

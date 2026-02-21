@@ -4,9 +4,9 @@
 
 ## 定位
 
-定义 ANC 作为 Agentic 软件组织的全价值链顶层流程。
+定义 ANC 作为 Agentic 企业组织的全价值链顶层流程。
 
-## 流程集合
+## 流程集合示例
 
 1. 市场与客户获取
 2. 需求到方案转化
@@ -23,4 +23,4 @@
 
 - Enterprise process map
 - Governance checkpoints
-- Value/KPI definition
+- Value/OKR definition

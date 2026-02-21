@@ -35,3 +35,5 @@
 2. 任何资产变更必须回写 registry 与 inventory。
 3. `development-process` canonical 路径固定为 `processes/meta/development-process/`。
 4. 生命周期统一为 5 态：`draft -> review -> active -> deprecated -> retired`。
+5. 若 `layers/` 或 `modules/` 发生职责/边界/依赖变化，必须在同回合补齐受影响的 `agents/`、`skills/`、`processes/` 设计文档，禁止“先注册后补文档”。
+6. 新增 `agent/skill/process` 若缺对应设计文档，只能保持 `draft`，不得推进到 `review/active`。

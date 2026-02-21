@@ -1,6 +1,6 @@
 # 系统技能清单与设计
 
-> 版本: v0.2.0 | 分类: System Skills | 层级: L2
+> 版本: v0.4.0 | 分类: System Skills | 层级: L2
 
 ## 核心系统技能
 
@@ -14,6 +14,16 @@
 8. sys.arch.impact-analyzer
 9. sys.admin.release-manager
 10. system.integration.entire-codex-sync
+11. sys.qa.test-compiler
+12. sys.qa.evaluation-runner
+13. sys.qa.verdict-normalizer
+14. sys.qa.hold-triage
+
+## Quality Gate 技能包
+
+统一质量门禁技能设计见：
+
+- `/Users/albus/MyProjects/ANC_v2/docs/design/skills/quality-gate-skills.md`
 
 ## 目标
 

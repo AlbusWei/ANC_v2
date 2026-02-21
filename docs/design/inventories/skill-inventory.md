@@ -1,6 +1,6 @@
 # Skill 全量清单
 
-> 版本: v0.2.0 | SSOT: `shared/registry/skill_registry.json`
+> 版本: v0.4.0 | SSOT: `/Users/albus/MyProjects/ANC_v2/shared/registry/skill_registry.json`
 
 ## 已注册 Skill
 
@@ -23,7 +23,15 @@
 - sys.hr.permission-checker
 - sys.qa.registry-validator
 - sys.qa.regression-runner
+- sys.qa.test-compiler
+- sys.qa.evaluation-runner
+- sys.qa.verdict-normalizer
+- sys.qa.hold-triage
 - sys.admin.release-manager
+
+Quality Gate 技能包设计文档：
+
+- `/Users/albus/MyProjects/ANC_v2/docs/design/skills/quality-gate-skills.md`
 
 ## 生命周期规则
 

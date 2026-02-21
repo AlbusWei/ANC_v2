@@ -6,6 +6,11 @@
 
 所有 Skill 遵循统一生命周期: `Draft → Review → Active → Deprecated → Retired`。本协议定义每个阶段的准入条件、操作和产出。
 
+标准前置：
+
+1. 生命周期评审前必须满足 `/Users/albus/MyProjects/ANC_v2/docs/design/standards/skill-definition-standard.md` 的命名语义约束与定义卡要求。
+2. 若采用技能汇总文档，评审对象需逐一满足定义卡最小字段（输入/输出/Fail-Closed/test_mount）。
+
 设计意图：
 
 1. `draft` 允许快速迭代，但不允许越过能力契约门禁直接进入 `review`。

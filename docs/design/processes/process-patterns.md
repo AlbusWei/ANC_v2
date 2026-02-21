@@ -9,7 +9,12 @@
 边界说明：
 
 1. 本文档描述“可复用模式”，不承担流程合规判定真相源职责。
-2. 开发闭环义务、条件触发与语法硬约束以 `docs/design/processes/development-loop-core-standard.md` 为准。
+2. 开发闭环义务、条件触发与语法硬约束以 `/Users/albus/MyProjects/ANC_v2/docs/design/processes/development-loop-core-standard.md` 为准。
+
+使用前置：
+
+1. 先对齐 `/Users/albus/MyProjects/ANC_v2/docs/design/standards/process-definition-standard.md`。
+2. 本文模式复用不得绕过 process standard 中的连续性约束与 phase 闭合约束。
 
 ## 模式 1: 因果驱动链 (Causal Drive Chain)
 

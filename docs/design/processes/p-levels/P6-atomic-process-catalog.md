@@ -1,6 +1,6 @@
 # P6 Atomic Process Catalog
 
-> 版本: v0.2.0 | 层级: P6
+> 版本: v0.3.0 | 层级: P6
 
 ## 定位
 
@@ -25,9 +25,18 @@ P6 是最小执行单元。每个原子流程定义一个 Actor + 一个 Skill +
 15. AP-015 improvement-planning
 16. AP-016 delivery-acceptance
 17. AP-017 post-delivery-retro
+18. AP-018 test-datapoint-compilation
+19. AP-019 test-profile-binding
+20. AP-020 gate-decision-aggregation
+21. AP-021 hold-progress-evidence-collection
+22. AP-022 hold-triage-classification
+23. AP-023 hold-triage-action-execution
+24. AP-024 runtime-health-maintenance
+25. AP-025 hold-resolution-and-escalation
 
 ## 统一约束
 
 1. 不可嵌套子流程。
 2. 必须有输入校验和输出校验。
 3. 必须产出证据记录。
+4. 语义专用 AP 优先；manual fallback 仅允许 draft 例外。

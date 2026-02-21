@@ -1,6 +1,6 @@
 # Software Vendor E2E Flow
 
-> 版本: v0.2.0 | 层级: P4
+> 版本: v0.4.0 | 层级: P4
 
 ## 目标
 
@@ -19,7 +19,11 @@
 
 ## 复用规则
 
-`delivery-iterations` 必须组合 `docs/design/business/internal-productization-e2e-flow.md` 的核心开发闭环。
+1. `delivery-iterations` 必须组合 `/Users/albus/MyProjects/ANC_v2/docs/design/business/internal-productization-e2e-flow.md` 的核心开发闭环。
+2. 其中质量门禁部分必须按连续性复用：
+   - `/Users/albus/MyProjects/ANC_v2/docs/design/processes/quality-gate-preparation-process.md`
+   - `/Users/albus/MyProjects/ANC_v2/docs/design/processes/quality-gate-evaluation-process.md`
+3. HOLD 治理复用：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/hold-governance-process.md`
 
 ## 阶段到原子流程映射
 
@@ -29,7 +33,7 @@
 | discovery-analysis | AP-002, AP-003 |
 | solutioning-and-estimation | AP-004, AP-005 |
 | contract-baseline | AP-003 |
-| delivery-iterations | AP-004~AP-012 |
+| delivery-iterations | AP-004~AP-012, AP-018~AP-025 |
 | customer-acceptance | AP-016 |
 | deployment-and-handover | AP-012, AP-016 |
 | support-and-feedback | AP-013, AP-014, AP-015, AP-017 |
