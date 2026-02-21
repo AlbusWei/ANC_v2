@@ -1,0 +1,56 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "dcfe6a340b2c",
+  "strategy": "manual-commit",
+  "branch": "codex/review-processes-business",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "AGENTS.md",
+    "config/openclaw.phase05.fragment.json",
+    "config/openclaw.phase05.with-entry.fragment.json",
+    "docs/architecture/construction_plane.md",
+    "docs/architecture/registry_contracts.md",
+    "docs/design/business/README.md",
+    "docs/design/business/flow-reuse-map.md",
+    "docs/design/business/internal-productization-e2e-flow.md",
+    "docs/design/business/software-vendor-e2e-flow.md",
+    "docs/design/interfaces/registry-access-protocol.md",
+    "docs/design/processes/business-processes.md",
+    "docs/design/processes/p-levels/P4-e2e-delivery-flows.md",
+    "docs/design/processes/p4-p6-obligation-traceability-matrix.md",
+    "docs/design/processes/process-patterns.md",
+    "docs/design/processes/recursive-process-architecture.md",
+    "docs/design/skills/skill-lifecycle-protocol.md",
+    "docs/design/standards/reference-implementation-skill-creator.md",
+    "docs/design/standards/skill-definition-standard.md",
+    "docs/review-checklists/processes-business-checklist.md",
+    "docs/review-checklists/skills-checklist.md",
+    "shared/registry/README.md",
+    "shared/registry/agent_directory.json",
+    "shared/registry/process_registry.json",
+    "shared/registry/registry_contract_tool.py",
+    "shared/registry/skill_registry.json",
+    "skills/meta/llm-judge/SKILL.md",
+    "skills/meta/spec-writer/SKILL.md",
+    "skills/meta/test-designer/SKILL.md",
+    "skills/skill-creator/SKILL.md",
+    "skills/system/entire-codex-sync/SKILL.md",
+    "skills/template/SKILL.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/dc/fe6a340b2c/0/metadata.json",
+      "transcript": "/dc/fe6a340b2c/0/full.jsonl",
+      "context": "/dc/fe6a340b2c/0/context.md",
+      "content_hash": "/dc/fe6a340b2c/0/content_hash.txt",
+      "prompt": "/dc/fe6a340b2c/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
