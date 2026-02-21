@@ -51,8 +51,10 @@ Architect 负责定义与维护目标树，不负责直接执行实现。
 | Skill | 用途 | 状态 |
 |---|---|---|
 | spec-writer | 产出架构/方案规格（采用 Hybrid OpenSpec 原则） | draft |
-| objective-writer | 维护分层 Objective 与成功标准 | 规划 |
-| template-validator | 校验模板与协议的架构一致性 | 规划 |
+| objective-writer | 维护分层 Objective 与成功标准 | draft |
+| agent-creator | 生成 Agent 资产定义与 registry patch 计划 | draft |
+| process-creator | 生成 Process 资产与 phase 闭合契约 | draft |
+| template-validator | 校验模板与协议的架构一致性 | draft |
 | impact-analyzer | 评估架构变更影响面与回滚需求 | 规划 |
 
 ## 5. 参与 Process 清单

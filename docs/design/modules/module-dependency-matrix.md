@@ -46,7 +46,7 @@ SSOT 基线顺序（保持与系统总览一致）：
 |---|---|---|---|
 | M1 Test | `llm-judge`, `test-designer`, `TEST` 模板, `M1-openjudge-adapter-spec`, `quality-gate-preparation-process`, `quality-gate-evaluation-process`, `hold-governance-process`, `registry_contract_tool.py verify` 门禁链 | `sys.qa.test-compiler/sys.qa.evaluation-runner/sys.qa.verdict-normalizer/sys.qa.hold-triage` 技能资产化与注册 | M2/M3/M4/M5 |
 | M2 BPM | `development-process`, `governed-config-change`, `trigger-schedule-runtime`, `trigger-event-runtime`, `bpm-runtime-skills`, AP-026~AP-031, `trigger-runtime-supervisor`(P5 模式) | 运行级 dry-run 证据补齐 + 动态策略参数实证校准 | M3/M4/M5 |
-| M3 Self-Dev | `development-process` canonical 路径, 双主线内部开发闭环复用 | `full-development/hotfix/refactor` 可执行流程 | M4/M5/L5 |
+| M3 Self-Dev | `development-process` canonical 路径, `full-development/hotfix/refactor` 可执行流程, `self-development-skills` 设计包, `meta.arch.objective-writer/agent-creator/process-creator/template-validator`, `skill-creator` 注册化 | 运行级 dry-run 证据（内部主线 + 外部交付复用） | M4/M5/L5 |
 | M4 Lifecycle | 统一 5 态治理、registry contract、trigger policy 边界 | `lifecycle-review/registry-sync/escalation` 可执行流程, `trigger_registry` | M3/M5/L2 |
 | M5 Evolution | 演化闭环设计、外部反馈复用约束 | `evolution-loop/health-check/improvement-review` 可执行流程 | L3/L5 |
 | M6 Construction | `construction_plane.md`, 里程碑与风险登记 | 一致性脚本与周期性审查节奏 | 全模块 |

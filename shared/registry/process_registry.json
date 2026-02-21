@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "process_registry",
-  "updated_at": "2026-02-21T23:59:00Z",
+  "updated_at": "2026-02-21T23:59:59Z",
   "entry_contract": {
     "required": [
       "process_id",
@@ -185,6 +185,63 @@
         "bundle_source": "processes/control",
         "entry_key": "trigger-schedule-runtime",
         "source": "processes/control/trigger-schedule-runtime",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "full-development",
+      "skill_name": "full-development",
+      "skill_path": "processes/meta/full-development/SKILL.md",
+      "manifest_path": "processes/meta/full-development/process.json",
+      "objective_ref": "obj-m3-full-development-loop",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 8,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "full-development",
+        "source": "processes/meta/full-development",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "hotfix",
+      "skill_name": "hotfix",
+      "skill_path": "processes/meta/hotfix/SKILL.md",
+      "manifest_path": "processes/meta/hotfix/process.json",
+      "objective_ref": "obj-m3-hotfix-loop",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 7,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "hotfix",
+        "source": "processes/meta/hotfix",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "refactor",
+      "skill_name": "refactor",
+      "skill_path": "processes/meta/refactor/SKILL.md",
+      "manifest_path": "processes/meta/refactor/process.json",
+      "objective_ref": "obj-m3-refactor-loop",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 6,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "refactor",
+        "source": "processes/meta/refactor",
         "allow_draft_projection": true
       }
     }
