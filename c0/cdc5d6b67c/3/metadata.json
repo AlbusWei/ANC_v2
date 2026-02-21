@@ -1,0 +1,50 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "c0cdc5d6b67c",
+  "session_id": "codex-dece49c70b95",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-21T08:08:08.457546Z",
+  "branch": "codex/review-agents",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "agents/app/entry/personal-assistant/AGENTS.md",
+    "agents/app/entry/personal-assistant/IDENTITY.md",
+    "agents/app/entry/personal-assistant/MEMORY.md",
+    "agents/app/entry/personal-assistant/SOUL.md",
+    "agents/app/entry/personal-assistant/TOOLS.md",
+    "agents/app/entry/personal-assistant/USER.md",
+    "agents/app/entry/personal-assistant/memory/2026-02-20.md",
+    "agents/control/BPM/AGENTS.md",
+    "agents/kernel/admin/AGENTS.md",
+    "config/README.md",
+    "docs/architecture/construction_plane.md",
+    "docs/architecture/openclaw_interface.md",
+    "docs/design/agents/agent-collaboration-patterns.md",
+    "docs/design/agents/app/README.md",
+    "docs/design/agents/app/_placeholder.md",
+    "docs/design/agents/app/entry/personal-assistant.md",
+    "docs/design/agents/control/bpm.md",
+    "docs/design/agents/kernel/admin.md",
+    "docs/design/inventories/agent-inventory.md",
+    "shared/registry/agent_directory.json"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "0348a8294ded",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T08:08:08.453562Z",
+    "agent_lines": 19,
+    "human_added": 915,
+    "human_modified": 48,
+    "human_removed": 0,
+    "total_committed": 982,
+    "agent_percentage": 1.9348268839103868
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-agents/.entire/codex-bridge/transcript.json"
+}
