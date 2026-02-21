@@ -1,0 +1,16 @@
+# Session Context
+
+## User Prompts
+
+### Prompt 1
+
+围绕M1-M6流程架构讨论，整理触发治理测试提案（3分钟异常汇报、skill生命周期review->active事件归集），并同步kernel system-analyst与architect治理边界到layers/modules文档。
+
+### Prompt 2
+
+将触发治理讨论成果转成可执行评审模板，支持逐项打勾、证据矩阵与问题登记。
+
+### Prompt 3
+
+我们现在先entire提交一次并merge回rebuild分枝，再同步merge到各个review分枝。
+
