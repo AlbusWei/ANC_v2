@@ -113,11 +113,6 @@ OpenJudge 在 `M1` 中定位为评测执行内核，不直接承担治理决策�
    - Fail-Closed 主规则
 5. profile 采用语义化版本并登记 registry。
 
-后验参数治理：
-
-1. 测试执行时长估计、轮次/重试等依赖运行观测后验结论的问题，不在 `M1` 内直接拍板。
-2. 必须进入 `runtime-policy-calibration` 治理流程，由 `kernel/system-analyst` 分析并同步给 `architect/admin/bpm` 后再回写策略。
-
 ## 依赖关系（类型化）
 
 1. 依赖 `M2`（`R/E`）：运行状态机、调度与证据回写。
