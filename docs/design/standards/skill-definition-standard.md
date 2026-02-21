@@ -1,6 +1,6 @@
 # Skill Definition Standard
 
-> 版本: v0.4.0 | 适用范围: meta/system/business skills
+> 版本: v0.5.0 | 适用范围: meta/system/business skills
 
 ## 1. 目标
 
@@ -53,6 +53,16 @@ Capability Contract 最小必填字段：
 1. `SKILL.md`（能力定义与机器契约）
 2. `TEST.md`（建议位于 `tests/<skill-name>/TEST.md` 或 skill 内）
 3. 可选 `references/`（复杂 schema 与补充材料）
+
+## 6.1 技能粒度约束（新增）
+
+1. Skill 粒度以“能力闭环”优先，不以“最小函数粒度”优先。
+2. 若多个子能力共享同一输入上下文、同一升级链、同一证据域，优先合并为一个 Skill 的子能力，而非拆成多个 Skill。
+3. 仅当满足以下任一条件时才建议拆分 Skill：
+   - 生命周期与 owner 明显不同；
+   - Fail-Closed 规则冲突且无法在同一契约内表达；
+   - 拆分后可显著降低治理复杂度且不增加上下文装载成本。
+4. 禁止为“模块编号”或“流程 phase 对应”而机械拆分 Skill。
 
 ## 7. 生命周期门禁要求
 

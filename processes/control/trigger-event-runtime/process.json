@@ -1,0 +1,214 @@
+{
+  "process_id": "trigger-event-runtime",
+  "version": "0.1.0",
+  "process_level": "P4",
+  "parent_process_id": null,
+  "composed_processes": [],
+  "lineage_policy": {
+    "stack_depth_limit": 8,
+    "context_isolation": "strict",
+    "output_handoff_mode": "contract_only"
+  },
+  "objective_ref": "obj-m2-trigger-governance-runtime",
+  "owner": "bpm",
+  "priority": "P0",
+  "input_contract": {
+    "format": "json",
+    "required": [
+      "event_id",
+      "event_time",
+      "entity_type",
+      "entity_id",
+      "from_status",
+      "to_status",
+      "evidence_ref",
+      "match_policy_ref",
+      "dedupe_policy_ref",
+      "catchup_policy_ref"
+    ]
+  },
+  "output_contract": {
+    "format": "json",
+    "required": [
+      "trigger_receipt_ref",
+      "dedupe_decision",
+      "runtime_trace_ref"
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1",
+      "name": "normalize-event-ingress",
+      "actor": "bpm",
+      "target_type": "skill",
+      "target_id": "sys.bpm.trigger-ingress-normalizer",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-026-trigger-ingress-normalization.md#ap-026-trigger-ingress-normalization",
+      "sipoc": {
+        "supplier": "initiator",
+        "input": "event payload",
+        "process": "normalize event into canonical envelope",
+        "output": "canonical_trigger_ref",
+        "client": "p2"
+      },
+      "acceptance_criteria": "event fields satisfy minimal canonical contract"
+    },
+    {
+      "phase_id": "p2",
+      "name": "match-and-dedupe",
+      "actor": "bpm",
+      "target_type": "skill",
+      "target_id": "sys.bpm.trigger-matcher-dedupe",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-027-trigger-match-and-dedupe.md#ap-027-trigger-match-and-dedupe",
+      "sipoc": {
+        "supplier": "p1",
+        "input": "canonical_trigger_ref",
+        "process": "match target process and dedupe event",
+        "output": "dedupe_decision",
+        "client": "p3"
+      },
+      "acceptance_criteria": "dedupe decision is deterministic and traceable"
+    },
+    {
+      "phase_id": "p3",
+      "name": "dispatch-instance",
+      "actor": "bpm",
+      "target_type": "skill",
+      "target_id": "sys.bpm.process-instance-manager",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-028-trigger-dispatch-and-instance-start.md#ap-028-trigger-dispatch-and-instance-start",
+      "sipoc": {
+        "supplier": "p2",
+        "input": "dedupe_decision",
+        "process": "create runtime instance on matched events",
+        "output": "instance_id",
+        "client": "p4"
+      },
+      "acceptance_criteria": "event hit results in exactly one instance"
+    },
+    {
+      "phase_id": "p4",
+      "name": "record-trigger-evidence",
+      "actor": "bpm",
+      "target_type": "skill",
+      "target_id": "sys.bpm.evidence-recorder",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-029-trigger-evidence-recording.md#ap-029-trigger-evidence-recording",
+      "sipoc": {
+        "supplier": "p3",
+        "input": "instance_id",
+        "process": "persist trigger receipt and traceability links",
+        "output": "trigger_receipt_ref",
+        "client": "p5"
+      },
+      "acceptance_criteria": "trigger receipt includes dedupe and dispatch decisions"
+    },
+    {
+      "phase_id": "p5",
+      "name": "request-backfill-or-catchup",
+      "actor": "bpm",
+      "target_type": "skill",
+      "target_id": "sys.bpm.catchup-scheduler",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-030-trigger-catchup-scheduling.md#ap-030-trigger-catchup-scheduling",
+      "sipoc": {
+        "supplier": "p4",
+        "input": "trigger_receipt_ref",
+        "process": "issue backfill or dynamic catchup decision when evidence is incomplete",
+        "output": "catchup_decision",
+        "client": "p6"
+      },
+      "acceptance_criteria": "missing evidence produces explicit backfill or escalation hint"
+    },
+    {
+      "phase_id": "p6",
+      "name": "escalate-runtime-anomaly",
+      "actor": "bpm",
+      "target_type": "skill",
+      "target_id": "sys.bpm.escalation-handler",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-031-trigger-escalation-handling.md#ap-031-trigger-escalation-handling",
+      "sipoc": {
+        "supplier": "p5",
+        "input": "catchup_decision",
+        "process": "escalate unresolved event-runtime anomaly",
+        "output": "escalation_ref",
+        "client": "initiator"
+      },
+      "acceptance_criteria": "escalation chain is complete and auditable"
+    }
+  ],
+  "control_flow": [
+    {
+      "from": "p1",
+      "to": "p2",
+      "on": "success"
+    },
+    {
+      "from": "p2",
+      "to": "p3",
+      "on": "success",
+      "condition": "dedupe_decision == allow"
+    },
+    {
+      "from": "p2",
+      "to": "p4",
+      "on": "success",
+      "condition": "dedupe_decision == reject"
+    },
+    {
+      "from": "p3",
+      "to": "p4",
+      "on": "success"
+    },
+    {
+      "from": "p4",
+      "to": "p5",
+      "on": "success"
+    },
+    {
+      "from": "p5",
+      "to": "end",
+      "on": "success",
+      "condition": "catchup_decision == run || catchup_decision == skip"
+    },
+    {
+      "from": "p5",
+      "to": "p6",
+      "on": "success",
+      "condition": "catchup_decision == escalate"
+    },
+    {
+      "from": "p6",
+      "to": "end",
+      "on": "success"
+    }
+  ],
+  "fail_policy": {
+    "mode": "fail_closed",
+    "retry": {
+      "max_attempts": 1
+    },
+    "escalation_chain": [
+      "actor",
+      "owner",
+      "bpm",
+      "admin",
+      "human"
+    ]
+  },
+  "evidence_policy": {
+    "required_fields": [
+      "timestamp",
+      "phase_id",
+      "actor",
+      "event_id",
+      "trigger_id",
+      "instance_id",
+      "decision",
+      "reason",
+      "evidence_ref"
+    ]
+  }
+}

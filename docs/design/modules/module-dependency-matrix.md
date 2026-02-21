@@ -1,6 +1,6 @@
 # 模块依赖矩阵
 
-> 版本: v0.5.0 | 权威顺序来源: `/Users/albus/MyProjects/ANC_v2/docs/architecture/system_overview.md` §7
+> 版本: v0.6.0 | 权威顺序来源: `/Users/albus/MyProjects/ANC_v2/docs/architecture/system_overview.md` §7
 
 ## 1. 使用说明
 
@@ -45,7 +45,7 @@ SSOT 基线顺序（保持与系统总览一致）：
 | 模块 | 已落盘关键资产（节选） | 规划/待补资产（节选） | 主要输出给谁 |
 |---|---|---|---|
 | M1 Test | `llm-judge`, `test-designer`, `TEST` 模板, `M1-openjudge-adapter-spec`, `quality-gate-preparation-process`, `quality-gate-evaluation-process`, `hold-governance-process`, `registry_contract_tool.py verify` 门禁链 | `sys.qa.test-compiler/sys.qa.evaluation-runner/sys.qa.verdict-normalizer/sys.qa.hold-triage` 技能资产化与注册 | M2/M3/M4/M5 |
-| M2 BPM | `development-process`, `governed-config-change`, trigger 运行时边界文档 | trigger runtime 可执行资产与证据目录规范 | M3/M4/M5 |
+| M2 BPM | `development-process`, `governed-config-change`, `trigger-schedule-runtime`, `trigger-event-runtime`, `bpm-runtime-skills`, AP-026~AP-031, `trigger-runtime-supervisor`(P5 模式) | 运行级 dry-run 证据补齐 + 动态策略参数实证校准 | M3/M4/M5 |
 | M3 Self-Dev | `development-process` canonical 路径, 双主线内部开发闭环复用 | `full-development/hotfix/refactor` 可执行流程 | M4/M5/L5 |
 | M4 Lifecycle | 统一 5 态治理、registry contract、trigger policy 边界 | `lifecycle-review/registry-sync/escalation` 可执行流程, `trigger_registry` | M3/M5/L2 |
 | M5 Evolution | 演化闭环设计、外部反馈复用约束 | `evolution-loop/health-check/improvement-review` 可执行流程 | L3/L5 |

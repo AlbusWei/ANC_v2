@@ -5,10 +5,9 @@
 1. `processes/template/`：流程模板资产。
 2. `processes/meta/development-process/`：真实示例流程（canonical 路径）。
 3. `processes/meta/governed-config-change/`：配置变更治理流程（canonical 路径）。
-4. `processes/meta/quality-gate-preparation/`：质量门禁准备流程（canonical 路径）。
-5. `processes/meta/quality-gate-evaluation/`：质量门禁评测流程（canonical 路径）。
-6. `processes/meta/hold-governance/`：HOLD 治理流程（canonical 路径）。
-7. `processes/development-process/`：Phase 0.5 legacy 参考路径，不再作为 registry 真相源。
+4. `processes/control/trigger-schedule-runtime/`：定时/心跳触发运行时流程（canonical 路径）。
+5. `processes/control/trigger-event-runtime/`：事件触发运行时流程（canonical 路径）。
+6. `processes/development-process/`：Phase 0.5 legacy 参考路径，不再作为 registry 真相源。
 
 ## Rule
 
