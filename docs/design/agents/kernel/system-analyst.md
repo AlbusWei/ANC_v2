@@ -1,6 +1,6 @@
 # System Analyst Agent 详细设计
 
-> 版本: v0.2.0 | agent_id: system-analyst | 层级: kernel | 权限: system-analysis-governance
+> 版本: v0.3.0 | agent_id: system-analyst | 层级: kernel | 权限: system-analysis-governance
 
 ## 1. 角色定位与权限
 
@@ -43,6 +43,7 @@
 | evolution-feedback | 系统级分析者 | 汇总与分析全系统反馈 |
 | improvement-review | 洞察提供者 | 提供跨产品改进候选 |
 | escalation | 分析支持节点 | 为升级链路提供证据与诊断 |
+| construction-plane-governance | 巡检触发建议者 | 基于风险与变更密度建议巡检频率与范围 |
 
 ## 6. 协作关系
 
@@ -66,6 +67,7 @@
 1. 关键证据缺失时，不输出结论性根因判断。
 2. 数据时效过期或来源不可追溯时，标记为不可信并退回补数。
 3. 未建立目标映射（Objective 层级）的改进建议不得进入执行队列。
+4. M6 巡检建议缺少证据依据时，不得输出固定频率要求。
 
 ## 9. 记忆与上下文策略
 

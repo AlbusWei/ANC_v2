@@ -1,6 +1,6 @@
 # 模块依赖矩阵
 
-> 版本: v0.6.0 | 权威顺序来源: `/Users/albus/MyProjects/ANC_v2/docs/architecture/system_overview.md` §7
+> 版本: v0.7.0 | 权威顺序来源: `/Users/albus/MyProjects/ANC_v2/docs/architecture/system_overview.md` §7
 
 ## 1. 使用说明
 
@@ -49,7 +49,7 @@ SSOT 基线顺序（保持与系统总览一致）：
 | M3 Self-Dev | `development-process` canonical 路径, `full-development/hotfix/refactor` 可执行流程, `self-development-skills` 设计包, `meta.arch.objective-writer/agent-creator/process-creator/template-validator`, `skill-creator` 注册化 | 运行级 dry-run 证据（内部主线 + 外部交付复用） | M4/M5/L5 |
 | M4 Lifecycle | 统一 5 态治理、registry contract、trigger policy 边界 | `lifecycle-review/registry-sync/escalation` 可执行流程, `trigger_registry` | M3/M5/L2 |
 | M5 Evolution | 演化闭环设计、外部反馈复用约束 | `evolution-loop/health-check/improvement-review` 可执行流程 | L3/L5 |
-| M6 Construction | `construction_plane.md`, 里程碑与风险登记 | 一致性脚本与周期性审查节奏 | 全模块 |
+| M6 Construction | `construction_plane.md`, `M6-construction-plane.md`, `construction-plane-governance`, `sys.arch.construction-audit`, `system.integration.openspec-sync`, `openspec-collaboration-protocol`, `openspec-collaboration-schema` | OpenSpec 双向同步样板 + 运行级 dry-run 证据 + 周期审查节奏定稿 | 全模块 |
 
 ## 6. 阶段映射与进入条件
 

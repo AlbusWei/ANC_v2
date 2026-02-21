@@ -1,6 +1,6 @@
 # 系统技能清单与设计
 
-> 版本: v0.5.0 | 分类: System Skills | 层级: L2
+> 版本: v0.7.0 | 分类: System Skills | 层级: L2
 
 ## 核心系统技能
 
@@ -22,6 +22,8 @@
 16. sys.qa.evaluation-runner
 17. sys.qa.verdict-normalizer
 18. sys.qa.hold-triage
+19. sys.arch.construction-audit
+20. system.integration.openspec-sync
 
 ## BPM Runtime 技能包
 
@@ -34,6 +36,12 @@
 统一质量门禁技能设计见：
 
 - `/Users/albus/MyProjects/ANC_v2/docs/design/skills/quality-gate-skills.md`
+
+## Construction Plane 技能包
+
+统一施工面治理技能设计见：
+
+- `/Users/albus/MyProjects/ANC_v2/docs/design/skills/construction-plane-skills.md`
 
 ## 目标
 
