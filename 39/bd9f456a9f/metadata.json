@@ -125,6 +125,13 @@
       "context": "/39/bd9f456a9f/12/context.md",
       "content_hash": "/39/bd9f456a9f/12/content_hash.txt",
       "prompt": "/39/bd9f456a9f/12/prompt.txt"
+    },
+    {
+      "metadata": "/39/bd9f456a9f/13/metadata.json",
+      "transcript": "/39/bd9f456a9f/13/full.jsonl",
+      "context": "/39/bd9f456a9f/13/context.md",
+      "content_hash": "/39/bd9f456a9f/13/content_hash.txt",
+      "prompt": "/39/bd9f456a9f/13/prompt.txt"
     }
   ],
   "token_usage": {
