@@ -1,0 +1,20 @@
+# Session Context
+
+## User Prompts
+
+### Prompt 1
+
+在worktree各个分支，以当前规范和进度重建或更新checklist。
+
+### Prompt 2
+
+细化QA Agent设计，基于M1最新测试模块与流程契约完成职责边界与治理规则定义
+
+### Prompt 3
+
+推进QA Agent相关资产闭包设计，补齐技能、流程与六件套，并对齐OpenClaw模板
+
+### Prompt 4
+
+提交QA Agent闭包设计并推进到rebuild，再由rebuild合并回各工作分支
+
