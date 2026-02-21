@@ -1,6 +1,6 @@
 ---
 name: "process-instance-manager"
-description: "Maintain runtime health and recovery state for governed process instances"
+description: "Manage BPM process instance lifecycle with strict lineage isolation"
 license: "Apache-2.0"
 compatibility:
   openclaw: ">=2026.2"
@@ -15,36 +15,47 @@ allowed-tools:
 
 ## Objective
 
-在 HOLD 或异常场景下维护流程实例健康状态，并输出恢复证据。
+统一管理流程实例创建、状态推进、上下文隔离与回填，确保父子实例不共享可变上下文。
+
+同时内含三个子能力：manifest 解析、phase 调度、lineage 守卫。
 
 ## Capability Contract (Machine-Readable)
 
 ```yaml
 contract_version: 1.0.0
-objective_ref: obj-m1-unified-quality-gate
+objective_ref: obj-m2-bpm-runtime-core
 input_contract:
   format: json
   required:
-    - hold_case_ref
-    - action_execution_ref
-    - runtime_health_policy_ref
+    - process_id
+    - phase_id
+    - instance_context_ref
+    - lineage_ref
+    - stack_depth
   validation:
-    - hold_case_ref must be resolvable
-    - action_execution_ref must be traceable
-    - runtime_health_policy_ref must define recovery checks
+    - process_id must exist in process_registry
+    - phase_id must belong to target process
+    - process manifest must be parseable and phase-closed
+    - lineage_ref must be present for recursive invocation
+    - stack_depth must be less than lineage policy limit
 output_contract:
   format: json
   required:
-    - health_maintenance_ref
-    - runtime_recovery_state
+    - instance_id
+    - runtime_state
+    - state_transition_ref
+    - evidence_ref
   machine_judgement:
-    - health_maintenance_ref is present
-    - runtime_recovery_state is recovering or stabilized or failed
-    - output is valid json
+    - instance_id is generated and stable
+    - runtime_state is in running or hold or fail or complete
+    - state_transition_ref and evidence_ref are present
+    - schedule and lineage checks are recorded in evidence
 fail_closed_rules:
-  - health check failed and unrecoverable must fail
-  - recovery actions without evidence must fail
-  - policy parsing failure must fail
+  - missing process or phase contract
+  - process manifest parse failure or phase closure violation
+  - mutable context leak between parent and child
+  - stack_depth exceeds configured limit
+  - missing state transition evidence
 test_mount:
   test_doc: skills/system/process-instance-manager/TEST.md
   methodology_ref: docs/architecture/test_methodology.md
