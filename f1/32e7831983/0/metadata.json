@@ -1,0 +1,53 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "f132e7831983",
+  "session_id": "codex-4c991d346847",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-21T21:13:31.461101Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/data-models/openspec-collaboration-schema.json",
+    "docs/design/interfaces/openspec-collaboration-protocol.md",
+    "docs/design/modules/M6-construction-plane.md",
+    "docs/design/processes/atomic/AP-032-construction-round-intake-baseline.md",
+    "docs/design/processes/atomic/AP-033-construction-linkage-audit.md",
+    "docs/design/processes/atomic/AP-034-linked-artifacts-update.md",
+    "docs/design/processes/atomic/AP-035-openspec-round-sync.md",
+    "docs/design/processes/atomic/AP-036-construction-round-close-verification.md",
+    "docs/design/processes/construction-plane-governance-process.md",
+    "docs/design/processes/governance-processes.md",
+    "docs/design/processes/p-levels/P6-atomic-process-catalog.md",
+    "docs/design/skills/construction-plane-skills.md",
+    "processes/meta/construction-plane-governance/PROCESS.md",
+    "processes/meta/construction-plane-governance/SKILL.md",
+    "processes/meta/construction-plane-governance/process.json",
+    "shared/registry/process_registry.json",
+    "shared/registry/registry_contract_tool.py",
+    "skills/system/construction-audit/SKILL.md",
+    "skills/system/construction-audit/TEST.md",
+    "skills/system/openspec-sync/SKILL.md",
+    "skills/system/openspec-sync/TEST.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "871e0c499b25",
+  "transcript_identifier_at_start": "gemini-515d3a2763",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T21:13:31.3866Z",
+    "agent_lines": 83,
+    "human_added": 163,
+    "human_modified": 49,
+    "human_removed": 0,
+    "total_committed": 295,
+    "agent_percentage": 28.135593220338983
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
