@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "8d38a016925b",
+  "strategy": "manual-commit",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/modules/M2-bpm-engine.md",
+    "docs/design/modules/trigger-governance-test-proposal.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/8d/38a016925b/0/metadata.json",
+      "transcript": "/8d/38a016925b/0/full.jsonl",
+      "context": "/8d/38a016925b/0/context.md",
+      "content_hash": "/8d/38a016925b/0/content_hash.txt",
+      "prompt": "/8d/38a016925b/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
