@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "25d8a6fd840a",
+  "strategy": "manual-commit",
+  "branch": "codex/review-processes-business",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/business/README.md",
+    "docs/design/business/flow-reuse-map.md",
+    "docs/design/business/internal-productization-e2e-flow.md",
+    "docs/design/business/software-vendor-e2e-flow.md",
+    "docs/design/processes/business-processes.md",
+    "docs/design/processes/development-loop-core-standard.md",
+    "docs/design/processes/p-levels/P4-e2e-delivery-flows.md",
+    "docs/design/processes/process-patterns.md",
+    "docs/design/processes/recursive-process-architecture.md",
+    "docs/review-checklists/processes-business-checklist.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/25/d8a6fd840a/0/metadata.json",
+      "transcript": "/25/d8a6fd840a/0/full.jsonl",
+      "context": "/25/d8a6fd840a/0/context.md",
+      "content_hash": "/25/d8a6fd840a/0/content_hash.txt",
+      "prompt": "/25/d8a6fd840a/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}

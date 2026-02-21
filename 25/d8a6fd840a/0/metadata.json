@@ -1,0 +1,41 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "25d8a6fd840a",
+  "session_id": "codex-36d184c23b20",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-21T10:59:08.894467Z",
+  "branch": "codex/review-processes-business",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/business/README.md",
+    "docs/design/business/flow-reuse-map.md",
+    "docs/design/business/internal-productization-e2e-flow.md",
+    "docs/design/business/software-vendor-e2e-flow.md",
+    "docs/design/processes/business-processes.md",
+    "docs/design/processes/development-loop-core-standard.md",
+    "docs/design/processes/p-levels/P4-e2e-delivery-flows.md",
+    "docs/design/processes/process-patterns.md",
+    "docs/design/processes/recursive-process-architecture.md",
+    "docs/review-checklists/processes-business-checklist.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "0acd4da9ece1",
+  "transcript_identifier_at_start": "gemini-63a7232a00",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T10:59:08.874659Z",
+    "agent_lines": 29,
+    "human_added": 853,
+    "human_modified": 51,
+    "human_removed": 0,
+    "total_committed": 933,
+    "agent_percentage": 3.1082529474812435
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-processes-business/.entire/codex-bridge/transcript.json"
+}
