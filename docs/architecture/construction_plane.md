@@ -27,11 +27,14 @@
 - [x] 新增 `governed-config-change` 可执行流程资产（`processes/meta/governed-config-change/`）并注册到 `process_registry`
 - [x] 落盘 Skill 双层契约设计（Registry Contract + Capability Contract）并新增 ADR-11/ADR-12
 - [x] 将 Capability Contract 固定为 `SKILL.md` 机器块（固定标题 + YAML），并纳入 `registry_contract_tool.py verify` 全量校验
+- [x] 将模块依赖矩阵升级为类型化依赖并明确 `M3/M4` 并行建设与汇合门（`M1` 统一门禁复用）
+- [x] 收敛 canonical process manifest 到标准字段（`process_level/control_flow/fail_policy/lineage_policy`）
 
 ## 进行中（In Progress）
 
 - [ ] 将新增 App Agent、流程与技能逐步纳入 runtime registry（按生命周期进入 review）
 - [ ] 执行一致性检查脚本（术语、状态、路径、schema 字段）
+- [ ] 将 trigger governance 最小 dry-run 从文档级证据升级到运行级证据
 
 ## 下一步（Next）
 
