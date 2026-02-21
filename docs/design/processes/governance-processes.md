@@ -1,6 +1,6 @@
 # 治理流程清单与设计
 
-> 版本: v0.8.0 | 分类: Governance Processes
+> 版本: v1.0.0 | 分类: Governance Processes
 
 ## 核心治理流程
 
@@ -13,6 +13,7 @@
 7. trigger-event-runtime
 8. trigger-runtime-supervisor（P5 模式，规划）
 9. runtime-policy-calibration（P5 治理模式，规划）
+10. construction-plane-governance
 
 ## lifecycle-review
 
@@ -93,6 +94,30 @@
 5. request-backfill-or-catchup（AP-030）
 6. escalate-runtime-anomaly（AP-031）
 
+## construction-plane-governance
+
+设计文档：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/construction-plane-governance-process.md`
+协同协议：`/Users/albus/MyProjects/ANC_v2/docs/design/interfaces/openspec-collaboration-protocol.md`
+owner：`architect`（语义），`bpm`（编排执行）
+
+阶段：
+
+1. scope-intake-and-baseline（manual-task）
+2. run-construction-audit（sys.arch.construction-audit）
+3. execute-linked-updates（manual-task）
+4. sync-openspec-state（system.integration.openspec-sync）
+5. verify-and-close（manual-task）
+
+关键约束：
+
+1. 模块/layer 变更必须触发联动审计并输出 `linkage_report_ref`。
+2. design/inventory/registry/施工平面四类联动项必须同回合闭合。
+3. 架构相关变更必须完成 OpenSpec 双向映射并产出 `openspec_sync_ref`。
+4. `openspec_sync_ref` 必须满足 `openspec-collaboration-schema.json` 完整 schema。
+5. `registry_contract_tool.py verify` 失败时禁止关闭回合。
+6. 开放问题必须落盘 owner 与下一步动作。
+7. 巡检采用“变更触发 + system-analyst 可调频巡检”，不固定周频。
+
 ## trigger-runtime-supervisor（P5 模式，规划）
 
 定位：
@@ -124,3 +149,5 @@
 5. HOLD triage 无有效进展证据且无法补证时直接失败并升级。
 6. trigger 去重冲突不可判定时直接失败并升级。
 7. 后验分析样本不足时，禁止输出参数更新结论并保持现行策略。
+8. 施工联动项缺失或开放问题无 owner 时，禁止将回合标记 Done。
+9. OpenSpec 与 ANC 文档语义冲突未裁决时，禁止关闭施工回合。

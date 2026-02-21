@@ -7,6 +7,8 @@
 3. `skills/meta/{objective-writer,agent-creator,process-creator,template-validator}/`：M3 自开发技能资产。
 4. `skills/system/entire-codex-sync/`：Entire x Codex 同步桥接技能。
 5. `skills/system/{trigger-ingress-normalizer,trigger-matcher-dedupe,process-instance-manager,evidence-recorder,catchup-scheduler,escalation-handler}/`：M2 BPM runtime 技能资产。
+6. `skills/system/construction-audit/`：M6 施工联动审计技能资产。
+7. `skills/system/openspec-sync/`：M6 OpenSpec 协同同步包装技能资产。
 
 ## Rule
 
