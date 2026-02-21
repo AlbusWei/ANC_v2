@@ -1,0 +1,42 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "8d38a016925b",
+  "session_id": "codex-e7382bfeaf6a",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-21T17:42:38.564057Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/modules/M2-bpm-engine.md",
+    "docs/design/modules/module-dependency-matrix.md",
+    "docs/design/modules/trigger-governance-diff-closure-plan.md",
+    "docs/design/modules/trigger-governance-review-checklist.md",
+    "docs/design/modules/trigger-governance-test-proposal.md",
+    "docs/design/processes/meta-processes.md",
+    "docs/design/processes/p-levels/P4-e2e-delivery-flows.md",
+    "docs/design/standards/skill-definition-standard.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "294272d0843a",
+  "transcript_identifier_at_start": "gemini-2f59a1caec",
+  "checkpoint_transcript_start": 30,
+  "transcript_lines_at_start": 30,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T17:42:38.5534Z",
+    "agent_lines": 103,
+    "human_added": 2053,
+    "human_modified": 1,
+    "human_removed": 0,
+    "total_committed": 2157,
+    "agent_percentage": 4.775150672229949
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
