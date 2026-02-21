@@ -3,7 +3,7 @@
   "checkpoint_id": "16306c63aa26",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 2,
+  "checkpoints_count": 3,
   "files_touched": [
     "AGENTS.md",
     "docs/architecture/construction_plane.md",
@@ -72,6 +72,13 @@
       "context": "/16/306c63aa26/3/context.md",
       "content_hash": "/16/306c63aa26/3/content_hash.txt",
       "prompt": "/16/306c63aa26/3/prompt.txt"
+    },
+    {
+      "metadata": "/16/306c63aa26/4/metadata.json",
+      "transcript": "/16/306c63aa26/4/full.jsonl",
+      "context": "/16/306c63aa26/4/context.md",
+      "content_hash": "/16/306c63aa26/4/content_hash.txt",
+      "prompt": "/16/306c63aa26/4/prompt.txt"
     }
   ],
   "token_usage": {
