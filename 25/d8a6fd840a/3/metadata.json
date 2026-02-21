@@ -1,0 +1,31 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "25d8a6fd840a",
+  "session_id": "codex-ef01a276500b",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-21T10:59:09.019643Z",
+  "branch": "codex/review-processes-business",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/review-checklists/processes-business-checklist.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "7b651e3ab3db",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T10:59:09.015921Z",
+    "agent_lines": 0,
+    "human_added": 958,
+    "human_modified": 26,
+    "human_removed": 0,
+    "total_committed": 958,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-processes-business/.entire/codex-bridge/transcript.json"
+}
