@@ -1,10 +1,20 @@
 # Software Vendor E2E Flow
 
-> 版本: v0.2.0 | 层级: P4
+> 版本: v0.3.0 | 层级: P4
+
+## 定位
+
+业务交付主线参考实现；`delivery-iterations` 阶段映射开发闭环标准义务。
 
 ## 目标
 
 模拟软件开发商承接客户需求、开发、交付并持续服务的业务主线。
+
+## 类型与规范绑定
+
+1. 主流程可视为 `biz.*` 命名空间流程（预留）。
+2. `delivery-iterations` 阶段建议使用 `phase_process_type=dev.external-delivery-iteration`。
+3. 义务规则来源：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/development-loop-core-standard.md`。
 
 ## 阶段
 
@@ -19,7 +29,18 @@
 
 ## 复用规则
 
-`delivery-iterations` 必须组合 `/Users/albus/MyProjects/ANC_v2/docs/design/business/internal-productization-e2e-flow.md` 的核心开发闭环。
+1. `delivery-iterations` 必须覆盖开发闭环标准义务（核心强制 + 条件触发）。
+2. `internal-productization-e2e-flow` 仅为参考映射，不是规范依赖入口。
+3. 复用链路必须保留父子实例引用和证据追溯。
+
+## 阶段到义务映射（示例）
+
+| 阶段 | Obligation |
+|---|---|
+| lead-intake + discovery-analysis | O1 Objective |
+| solutioning-and-estimation | O2 Spec, O3 Test |
+| delivery-iterations | O4 Implement, O5 Verify, O6 Lifecycle, O7 Release |
+| support-and-feedback | O8 Evolution |
 
 ## 阶段到原子流程映射
 
@@ -37,5 +58,5 @@
 ## 验收
 
 - [ ] 业务端到端链路贯通
-- [ ] 交付阶段复用内部开发闭环
+- [ ] `delivery-iterations` 义务覆盖可追溯到标准文档
 - [ ] 客户验收有可追溯证据

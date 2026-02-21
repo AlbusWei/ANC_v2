@@ -1,6 +1,6 @@
 # Recursive Process Architecture
 
-> 版本: v0.2.0 | 上游: `/Users/albus/MyProjects/ANC_v2/docs/architecture/process_architecture.md`
+> 版本: v0.3.0 | 上游: `/Users/albus/MyProjects/ANC_v2/docs/architecture/process_architecture.md`
 
 ## 1. 总览
 
@@ -20,13 +20,15 @@ ANC v2 流程架构采用递归流程模型：流程可组合流程，直到原�
 | P3 | 产品生命周期 | 生命周期流程包 |
 | P4 | 端到端交付流程 | 可执行复合流程 |
 | P5 | 子流程模式 | 复用流程片段 |
-| P6 | 原子流程 | actor+skill 原子单元 |
+| P6 | 原子流程 | Actor+Skill 封装的最小流程单元 |
 
 ## 4. 递归执行语义
 
 1. BPM 为每个子流程创建独立实例目录。
 2. `parent_instance_id`、`lineage_ref`、`stack_depth` 用于回溯递归链。
 3. 父流程仅读取子流程输出契约并回填。
+4. `phase` 只能引用子流程（复合或原子），不允许直接调用 skill。
+5. skill 调用必须包装为 P6 原子流程后再被 phase 引用。
 
 ## 5. Fail-Closed 规则
 

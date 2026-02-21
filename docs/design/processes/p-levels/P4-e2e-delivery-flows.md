@@ -1,6 +1,6 @@
 # P4 End-to-End Delivery Flows
 
-> 版本: v0.2.0 | 层级: P4
+> 版本: v0.3.0 | 层级: P4
 
 ## 定位
 
@@ -11,12 +11,21 @@
 1. internal-productization-e2e-flow
 2. software-vendor-e2e-flow
 
+## 规范绑定
+
+1. 开发闭环义务与条件触发规则以 `/Users/albus/MyProjects/ANC_v2/docs/design/processes/development-loop-core-standard.md` 为真相源。
+2. 样板流程用于参考映射，不承担规范真相职责。
+3. 统一追溯表：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/p4-p6-obligation-traceability-matrix.md`。
+
 ## 复用规则
 
-1. `software-vendor-e2e-flow` 的 `delivery-iterations` 必须组合 `internal-productization` 的开发闭环。
-2. 流程节点可组合 P5/P6 子流程。
+1. `software-vendor-e2e-flow` 的 `delivery-iterations` 必须覆盖开发闭环标准义务（核心强制 + 条件触发）。
+2. `internal-productization` 可作为参考映射，但不是唯一复用目标。
+3. 流程节点可组合 P5/P6 子流程。
+4. `phase` 只能引用子流程；skill 必须先包装为原子流程。
 
 ## 验收
 
 - [ ] 两条主线均有端到端阶段定义
 - [ ] 可追溯到 P6 原子流程
+- [ ] 义务覆盖判定与条件触发规则可追溯到标准文档
