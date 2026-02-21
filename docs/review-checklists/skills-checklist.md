@@ -1,51 +1,46 @@
 # Skills Review Checklist
 
 > Branch: `codex/review-skills`
-> Worktree: `review-skills`
+> Worktree: `/Users/albus/MyProjects/ANC_v2_worktrees/review-skills`
+> Baseline Commit: `d2d7699`
 
 ## 1. 目标
 
-核对 meta/system/business 技能定义一致性、测试挂载点与生命周期门禁。
+核对技能分层（meta/system/business）、Capability Contract、测试挂载与生命周期治理一致性。
 
-## 2. Entire 执行要求（每次会话）
+## 2. SSOT 绑定
+
+1. `/Users/albus/MyProjects/ANC_v2/docs/design/skills/skill-lifecycle-protocol.md`
+2. `/Users/albus/MyProjects/ANC_v2/docs/design/skills/system-skills.md`
+3. `/Users/albus/MyProjects/ANC_v2/docs/design/skills/quality-gate-skills.md`
+4. `/Users/albus/MyProjects/ANC_v2/docs/design/inventories/skill-inventory.md`
+5. `/Users/albus/MyProjects/ANC_v2/shared/registry/skill_registry.json`
+
+## 3. 当前进度（d2d7699）
+
+- [x] 统一 5 态生命周期规则已落盘（draft/review/active/deprecated/retired）。
+- [x] Capability Contract 机器块已纳入校验基线（`registry_contract_tool.py verify`）。
+- [x] `quality-gate-skills.md` 已补齐 M1 质量门禁技能设计。
+- [ ] 新增系统技能资产（runtime/trigger/lifecycle）仍处在设计与草案阶段。
+- [ ] 部分技能的 TEST 证据与 registry `tests` 路径一致性仍需复核。
+
+## 4. 核对项
+
+- [ ] `skills/**/SKILL.md` 均含可解析的 Capability Contract 机器块。
+- [ ] `test_mount` 与 registry `tests` 引用一致且路径可达。
+- [ ] `skill-inventory.md`、`skill_registry.json`、设计文档三者一致。
+- [ ] 生命周期迁移门禁由流程治理驱动，无旁路手动提级。
+- [ ] Fail-Closed 规则在技能契约中可执行。
+
+## 5. 完成定义（DoD）
+
+- [ ] 形成“技能契约差异清单”并关闭。
+- [ ] `python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py verify` 通过。
+- [ ] 至少 1 条 `draft -> review` 的技能治理链路可回放。
+
+## 6. 提交前校验
 
 1. `entire status --detailed`
-2. `.../entire_codex_bridge.py start`
-3. 每回合改动后 `sync`
-4. commit 后检查 `Entire-Checkpoint`
-5. `.../entire_codex_bridge.py end`
-
-## 3. 允许修改范围
-
-1. `docs/design/skills/`
-2. `docs/design/inventories/skill-inventory.md`
-3. 可选：`skills/skill-creator/SKILL.md`（仅在确需对齐时）
-
-## 4. 禁止修改范围
-
-1. `docs/design/agents/`
-2. `docs/design/business/`
-3. `shared/registry/`
-
-## 5. 核对项
-
-1. 元技能/系统技能/业务技能分类边界清晰。
-2. 所有 `skills/**/SKILL.md` 均包含 `Capability Contract (Machine-Readable)` YAML 块并可解析。
-3. 技能定义中输入/输出契约可验证（含 machine_judgement 字段）。
-4. Fail-Closed 规则存在且可执行。
-5. 生命周期使用统一 5 态，且 `draft -> review` 必须通过 Capability Contract 校验。
-6. 测试文档挂载点与说明一致（`SKILL.md.test_mount` 与 registry `tests` 一致）。
-7. skill-inventory 条目与技能设计文档一致。
-8. `entire-codex-sync` 作为系统技能的定位一致。
-
-## 6. 完成定义（DoD）
-
-1. 形成“技能契约差异清单”并关闭。
-2. `python3 shared/registry/registry_contract_tool.py verify` 通过。
-3. 测试路径引用可达。
-4. 提交仅包含 skills 与 skill inventory 相关文件（如有跨域修改须在变更说明中注明原因）。
-
-## 7. 建议提交粒度
-
-1. `skills: contract and lifecycle alignment`
-2. `skills: inventory and test-mount consistency`
+2. `python3 /Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync/scripts/entire_codex_bridge.py sync --prompt "..." --summary "..." --files ...`
+3. `python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py verify`
+4. `git log -1 --pretty=raw`（确认 `Entire-Checkpoint`）
