@@ -1,6 +1,6 @@
 ---
 name: "escalation-handler"
-description: "Close hold cases or escalate through governed escalation chain"
+description: "Execute governed escalation chain for BPM runtime anomalies"
 license: "Apache-2.0"
 compatibility:
   openclaw: ">=2026.2"
@@ -15,38 +15,39 @@ allowed-tools:
 
 ## Objective
 
-按固定升级链完成 hold 案例收敛或升级，确保决策可追溯。
+在运行异常、补跑失败或风险无法判定时，按升级链执行升级并输出可审计记录。
 
 ## Capability Contract (Machine-Readable)
 
 ```yaml
 contract_version: 1.0.0
-objective_ref: obj-m1-unified-quality-gate
+objective_ref: obj-m2-bpm-runtime-escalation
 input_contract:
   format: json
   required:
-    - hold_case_ref
-    - triage_action
-    - health_maintenance_ref
+    - incident_ref
     - escalation_policy_ref
+    - current_owner
+    - evidence_ref
   validation:
-    - triage_action must be continue or retry or debug or fail
-    - escalation_policy_ref must define qa to bpm to admin chain
-    - health_maintenance_ref must be traceable
+    - escalation policy must define actor->owner->bpm->admin->human
+    - incident_ref must include severity and reason
+    - evidence_ref must be reachable
 output_contract:
   format: json
   required:
-    - hold_resolution_ref
     - escalation_ref
-    - final_resolution
+    - final_owner
+    - escalation_decision
+    - escalation_trace
   machine_judgement:
-    - final_resolution is closed or escalated or failed
-    - hold_resolution_ref is present
-    - escalation_ref is required when final_resolution is escalated
+    - escalation_decision is escalate or resolve
+    - escalation_trace has at least one hop
+    - final_owner is in escalation chain
 fail_closed_rules:
-  - missing closure decision must fail
-  - invalid escalation chain must fail
-  - missing evidence for escalation must fail
+  - escalation chain missing required hop
+  - escalation target bypasses governance chain
+  - incident evidence missing or unreachable
 test_mount:
   test_doc: skills/system/escalation-handler/TEST.md
   methodology_ref: docs/architecture/test_methodology.md

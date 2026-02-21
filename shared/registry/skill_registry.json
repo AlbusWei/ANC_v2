@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "skill_registry",
-  "updated_at": "2026-02-21T23:50:00Z",
+  "updated_at": "2026-02-21T23:59:00Z",
   "entry_contract": {
     "required": [
       "skill_id",
@@ -182,37 +182,6 @@
   },
   "entries": [
     {
-      "skill_id": "meta.qa.llm-judge",
-      "name": "llm-judge",
-      "path": "skills/meta/llm-judge/SKILL.md",
-      "layer": "meta",
-      "owner": "qa",
-      "version": "0.1.0",
-      "status": "draft",
-      "agentskills": {
-        "name": "llm-judge",
-        "description": "Evaluate outputs against objective/spec and return structured verdict",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-meta-skills",
-        "bundle_source": "skills/meta",
-        "entry_key": "meta.qa.llm-judge",
-        "source": "skills/meta/llm-judge",
-        "install_strategy": "lazy",
-        "allow_draft_projection": true
-      },
-      "tests": {
-        "test_doc": "skills/meta/llm-judge/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
       "skill_id": "meta.arch.spec-writer",
       "name": "spec-writer",
       "path": "skills/meta/spec-writer/SKILL.md",
@@ -244,6 +213,37 @@
       }
     },
     {
+      "skill_id": "meta.qa.llm-judge",
+      "name": "llm-judge",
+      "path": "skills/meta/llm-judge/SKILL.md",
+      "layer": "meta",
+      "owner": "qa",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "llm-judge",
+        "description": "Evaluate outputs against objective/spec and return structured verdict",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-skills",
+        "bundle_source": "skills/meta",
+        "entry_key": "meta.qa.llm-judge",
+        "source": "skills/meta/llm-judge",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/meta/llm-judge/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
       "skill_id": "meta.qa.test-designer",
       "name": "test-designer",
       "path": "skills/meta/test-designer/SKILL.md",
@@ -271,6 +271,254 @@
       },
       "tests": {
         "test_doc": "skills/meta/test-designer/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.bpm.catchup-scheduler",
+      "name": "catchup-scheduler",
+      "path": "skills/system/catchup-scheduler/SKILL.md",
+      "layer": "system",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "catchup-scheduler",
+        "description": "Perform catchup scheduling inside catchup window and route overflow to escalation",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.bpm.catchup-scheduler",
+        "source": "skills/system/catchup-scheduler",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/catchup-scheduler/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.bpm.escalation-handler",
+      "name": "escalation-handler",
+      "path": "skills/system/escalation-handler/SKILL.md",
+      "layer": "system",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "escalation-handler",
+        "description": "Execute governed escalation chain for BPM runtime anomalies",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.bpm.escalation-handler",
+        "source": "skills/system/escalation-handler",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/escalation-handler/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.bpm.evidence-recorder",
+      "name": "evidence-recorder",
+      "path": "skills/system/evidence-recorder/SKILL.md",
+      "layer": "system",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "evidence-recorder",
+        "description": "Record trigger runtime evidence index and enforce traceability constraints",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.bpm.evidence-recorder",
+        "source": "skills/system/evidence-recorder",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/evidence-recorder/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.bpm.process-instance-manager",
+      "name": "process-instance-manager",
+      "path": "skills/system/process-instance-manager/SKILL.md",
+      "layer": "system",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "process-instance-manager",
+        "description": "Manage BPM process instance lifecycle with strict lineage isolation",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.bpm.process-instance-manager",
+        "source": "skills/system/process-instance-manager",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/process-instance-manager/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.bpm.trigger-ingress-normalizer",
+      "name": "trigger-ingress-normalizer",
+      "path": "skills/system/trigger-ingress-normalizer/SKILL.md",
+      "layer": "system",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "trigger-ingress-normalizer",
+        "description": "Normalize schedule and event triggers into canonical trigger envelopes",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.bpm.trigger-ingress-normalizer",
+        "source": "skills/system/trigger-ingress-normalizer",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/trigger-ingress-normalizer/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.bpm.trigger-matcher-dedupe",
+      "name": "trigger-matcher-dedupe",
+      "path": "skills/system/trigger-matcher-dedupe/SKILL.md",
+      "layer": "system",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "trigger-matcher-dedupe",
+        "description": "Match canonical triggers and enforce idempotent dedupe ledger policies",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.bpm.trigger-matcher-dedupe",
+        "source": "skills/system/trigger-matcher-dedupe",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/trigger-matcher-dedupe/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "system.admin.system-config-updater",
+      "name": "system-config-updater",
+      "path": "skills/system/system-config-updater/SKILL.md",
+      "layer": "system",
+      "owner": "admin",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "system-config-updater",
+        "description": "Apply OpenClaw config patch with hash-safe guardrails",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "system.admin.system-config-updater",
+        "source": "skills/system/system-config-updater",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/system-config-updater/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "system.control.config-change-gatekeeper",
+      "name": "config-change-gatekeeper",
+      "path": "skills/system/config-change-gatekeeper/SKILL.md",
+      "layer": "system",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "config-change-gatekeeper",
+        "description": "Validate config change prerequisites and classify risk",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "system.control.config-change-gatekeeper",
+        "source": "skills/system/config-change-gatekeeper",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/config-change-gatekeeper/TEST.md",
         "methodology_ref": "docs/architecture/test_methodology.md"
       }
     },
@@ -330,285 +578,6 @@
       },
       "tests": {
         "test_doc": "skills/system/manual-task/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "system.control.config-change-gatekeeper",
-      "name": "config-change-gatekeeper",
-      "path": "skills/system/config-change-gatekeeper/SKILL.md",
-      "layer": "system",
-      "owner": "bpm",
-      "version": "0.1.0",
-      "status": "draft",
-      "agentskills": {
-        "name": "config-change-gatekeeper",
-        "description": "Validate config change prerequisites and classify risk",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-system-skills",
-        "bundle_source": "skills/system",
-        "entry_key": "system.control.config-change-gatekeeper",
-        "source": "skills/system/config-change-gatekeeper",
-        "install_strategy": "lazy",
-        "allow_draft_projection": true
-      },
-      "tests": {
-        "test_doc": "skills/system/config-change-gatekeeper/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "system.admin.system-config-updater",
-      "name": "system-config-updater",
-      "path": "skills/system/system-config-updater/SKILL.md",
-      "layer": "system",
-      "owner": "admin",
-      "version": "0.1.0",
-      "status": "draft",
-      "agentskills": {
-        "name": "system-config-updater",
-        "description": "Apply OpenClaw config patch with hash-safe guardrails",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-system-skills",
-        "bundle_source": "skills/system",
-        "entry_key": "system.admin.system-config-updater",
-        "source": "skills/system/system-config-updater",
-        "install_strategy": "lazy",
-        "allow_draft_projection": true
-      },
-      "tests": {
-        "test_doc": "skills/system/system-config-updater/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "sys.qa.test-compiler",
-      "name": "test-compiler",
-      "path": "skills/system/test-compiler/SKILL.md",
-      "layer": "system",
-      "owner": "qa",
-      "version": "0.1.0",
-      "status": "draft",
-      "agentskills": {
-        "name": "test-compiler",
-        "description": "Compile TEST.md into executable datapoints and profile bindings",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-system-skills",
-        "bundle_source": "skills/system",
-        "entry_key": "sys.qa.test-compiler",
-        "source": "skills/system/test-compiler",
-        "install_strategy": "lazy",
-        "allow_draft_projection": true
-      },
-      "tests": {
-        "test_doc": "skills/system/test-compiler/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "sys.qa.evaluation-runner",
-      "name": "evaluation-runner",
-      "path": "skills/system/evaluation-runner/SKILL.md",
-      "layer": "system",
-      "owner": "qa",
-      "version": "0.1.0",
-      "status": "draft",
-      "agentskills": {
-        "name": "evaluation-runner",
-        "description": "Run objective/subjective/regression evaluations through unified runner contract",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-system-skills",
-        "bundle_source": "skills/system",
-        "entry_key": "sys.qa.evaluation-runner",
-        "source": "skills/system/evaluation-runner",
-        "install_strategy": "lazy",
-        "allow_draft_projection": true
-      },
-      "tests": {
-        "test_doc": "skills/system/evaluation-runner/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "sys.qa.verdict-normalizer",
-      "name": "verdict-normalizer",
-      "path": "skills/system/verdict-normalizer/SKILL.md",
-      "layer": "system",
-      "owner": "qa",
-      "version": "0.1.0",
-      "status": "draft",
-      "agentskills": {
-        "name": "verdict-normalizer",
-        "description": "Normalize evaluation outputs into unified gate decision",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-system-skills",
-        "bundle_source": "skills/system",
-        "entry_key": "sys.qa.verdict-normalizer",
-        "source": "skills/system/verdict-normalizer",
-        "install_strategy": "lazy",
-        "allow_draft_projection": true
-      },
-      "tests": {
-        "test_doc": "skills/system/verdict-normalizer/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "sys.qa.regression-runner",
-      "name": "regression-runner",
-      "path": "skills/system/regression-runner/SKILL.md",
-      "layer": "system",
-      "owner": "qa",
-      "version": "0.1.0",
-      "status": "draft",
-      "agentskills": {
-        "name": "regression-runner",
-        "description": "Run cross-module regression and emit release gate candidate",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-system-skills",
-        "bundle_source": "skills/system",
-        "entry_key": "sys.qa.regression-runner",
-        "source": "skills/system/regression-runner",
-        "install_strategy": "lazy",
-        "allow_draft_projection": true
-      },
-      "tests": {
-        "test_doc": "skills/system/regression-runner/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "sys.qa.hold-triage",
-      "name": "hold-triage",
-      "path": "skills/system/hold-triage/SKILL.md",
-      "layer": "system",
-      "owner": "qa",
-      "version": "0.1.0",
-      "status": "draft",
-      "agentskills": {
-        "name": "hold-triage",
-        "description": "Collect progress signals and classify hold actions",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-system-skills",
-        "bundle_source": "skills/system",
-        "entry_key": "sys.qa.hold-triage",
-        "source": "skills/system/hold-triage",
-        "install_strategy": "lazy",
-        "allow_draft_projection": true
-      },
-      "tests": {
-        "test_doc": "skills/system/hold-triage/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "sys.bpm.process-instance-manager",
-      "name": "process-instance-manager",
-      "path": "skills/system/process-instance-manager/SKILL.md",
-      "layer": "system",
-      "owner": "bpm",
-      "version": "0.1.0",
-      "status": "draft",
-      "agentskills": {
-        "name": "process-instance-manager",
-        "description": "Maintain runtime health and recovery state for governed process instances",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-system-skills",
-        "bundle_source": "skills/system",
-        "entry_key": "sys.bpm.process-instance-manager",
-        "source": "skills/system/process-instance-manager",
-        "install_strategy": "lazy",
-        "allow_draft_projection": true
-      },
-      "tests": {
-        "test_doc": "skills/system/process-instance-manager/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "sys.bpm.escalation-handler",
-      "name": "escalation-handler",
-      "path": "skills/system/escalation-handler/SKILL.md",
-      "layer": "system",
-      "owner": "bpm",
-      "version": "0.1.0",
-      "status": "draft",
-      "agentskills": {
-        "name": "escalation-handler",
-        "description": "Close hold cases or escalate through governed escalation chain",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-system-skills",
-        "bundle_source": "skills/system",
-        "entry_key": "sys.bpm.escalation-handler",
-        "source": "skills/system/escalation-handler",
-        "install_strategy": "lazy",
-        "allow_draft_projection": true
-      },
-      "tests": {
-        "test_doc": "skills/system/escalation-handler/TEST.md",
         "methodology_ref": "docs/architecture/test_methodology.md"
       }
     }

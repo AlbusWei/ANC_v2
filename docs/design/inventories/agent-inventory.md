@@ -34,6 +34,7 @@ business-analyst, product-manager, tech-lead, solution-architect, frontend-dev, 
 
 1. `system-analyst` 负责全系统反馈归集与架构级洞察，服务 architect/hr/PM。
 2. `app/evolution/analyst` 负责 App/业务层演化分析，不承担系统级架构治理洞察。
+3. 所有“需后验运营分析才能形成参数结论”的议题（如 M1 测试时长估计、M2 动态策略校准）由 `system-analyst` 牵头进入 `runtime-policy-calibration` 治理流程，再同步 architect/admin/bpm 决策。
 
 ## 规则
 

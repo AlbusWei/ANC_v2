@@ -21,15 +21,35 @@
 `docs/design/modules/evidence/trigger-governance/TG-SCH-002-dry-run.md`  
 `docs/design/modules/evidence/trigger-governance/TG-EVT-003-dry-run.md`
 
+4. trigger runtime 可执行资产已落盘（流程 + 技能 + AP）  
+引用：
+`docs/design/processes/trigger-schedule-runtime-process.md`  
+`docs/design/processes/trigger-event-runtime-process.md`  
+`docs/design/skills/bpm-runtime-skills.md`  
+`processes/control/trigger-schedule-runtime/process.json`  
+`processes/control/trigger-event-runtime/process.json`
+
+5. `process-parser/scheduler/lineage-guard` 已决策并入 `sys.bpm.process-instance-manager` 子能力  
+引用：
+`docs/design/skills/bpm-runtime-skills.md`  
+`skills/system/process-instance-manager/SKILL.md`  
+`docs/design/standards/skill-definition-standard.md`
+
+6. trigger runtime 收口策略已决策：当前保持双 P4 流程；如需收口，引入 P5 `trigger-runtime-supervisor` 模式  
+引用：
+`docs/design/modules/M2-bpm-engine.md`  
+`docs/design/processes/trigger-runtime-supervisor-pattern.md`  
+`docs/design/processes/p-levels/P5-subprocess-patterns.md`
+
 ## 2. 未关闭差异（进入下一轮）
 
 1. 运行级证据仍缺失：TG-SCH-001/003/004、TG-EVT-001/002。  
 Owner: bpm + qa  
 退出条件：每条用例至少补一份运行级 evidence，回填 checklist。
 
-2. trigger runtime 资产尚未执行化（当前为文档级治理）。  
-Owner: bpm + architect  
-退出条件：形成可执行流程与最小日志落盘策略。
+2. 动态策略参数尚未完成运行级校准：`catchup_policy_ref` 与 `time_bucket_strategy` 仍缺实证回写。  
+Owner: bpm + qa  
+退出条件：至少完成一轮运行级回放并回写策略参数与命中统计。
 
 ## 3. 下一轮执行顺序（建议）
 
