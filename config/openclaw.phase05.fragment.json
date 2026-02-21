@@ -29,11 +29,14 @@
   },
   "skills": {
     "entries": {
+      "anc-v2-meta-processes": {
+        "source": "/Users/albus/MyProjects/ANC_v2/processes/meta"
+      },
       "anc-v2-meta-skills": {
         "source": "/Users/albus/MyProjects/ANC_v2/skills/meta"
       },
-      "anc-v2-meta-processes": {
-        "source": "/Users/albus/MyProjects/ANC_v2/processes/meta"
+      "system.integration.entire-codex-sync": {
+        "source": "/Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync"
       }
     }
   }

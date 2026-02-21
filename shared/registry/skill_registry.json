@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "registry": "skill_registry",
-  "updated_at": "2026-02-20T19:45:00Z",
+  "updated_at": "2026-02-21T18:00:00Z",
   "entry_contract": {
     "required": [
       "skill_id",
@@ -12,21 +12,173 @@
       "version",
       "status",
       "agentskills",
-      "openclaw"
+      "openclaw",
+      "tests"
     ],
-    "agentskills_required_frontmatter": [
-      "name",
-      "description",
-      "license",
-      "compatibility"
-    ],
-    "status_enum": [
-      "draft",
-      "review",
-      "active",
-      "deprecated",
-      "retired"
-    ]
+    "properties": {
+      "skill_id": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$",
+        "description": "stable skill identifier"
+      },
+      "name": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$",
+        "description": "skill display name"
+      },
+      "path": {
+        "type": "string",
+        "pattern": "^/Users/albus/MyProjects/ANC_v2/.+",
+        "description": "absolute SKILL.md path"
+      },
+      "layer": {
+        "type": "string",
+        "enum": [
+          "meta",
+          "system",
+          "business"
+        ],
+        "description": "skill layer"
+      },
+      "owner": {
+        "type": "string",
+        "description": "owner agent_id"
+      },
+      "version": {
+        "type": "string",
+        "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+        "description": "semantic version"
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "draft",
+          "review",
+          "active",
+          "deprecated",
+          "retired"
+        ],
+        "description": "lifecycle status"
+      },
+      "agentskills": {
+        "type": "object",
+        "required": [
+          "name",
+          "description",
+          "license",
+          "compatibility"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "frontmatter name"
+          },
+          "description": {
+            "type": "string",
+            "description": "frontmatter description"
+          },
+          "license": {
+            "type": "string",
+            "description": "frontmatter license"
+          },
+          "compatibility": {
+            "type": "object",
+            "required": [
+              "openclaw",
+              "agentskills"
+            ],
+            "properties": {
+              "openclaw": {
+                "type": "string",
+                "description": "openclaw compatibility range"
+              },
+              "agentskills": {
+                "type": "string",
+                "description": "agentskills compatibility range"
+              }
+            },
+            "additionalProperties": false,
+            "description": "compatibility matrix"
+          }
+        },
+        "additionalProperties": false,
+        "description": "agent skills frontmatter snapshot"
+      },
+      "openclaw": {
+        "type": "object",
+        "required": [
+          "projection_mode",
+          "entry_key",
+          "source",
+          "install_strategy"
+        ],
+        "properties": {
+          "projection_mode": {
+            "type": "string",
+            "enum": [
+              "bundle",
+              "pin",
+              "off"
+            ],
+            "description": "projection strategy"
+          },
+          "entry_key": {
+            "type": "string",
+            "description": "stable OpenClaw entry key"
+          },
+          "source": {
+            "type": "string",
+            "pattern": "^/Users/albus/MyProjects/ANC_v2/.+",
+            "description": "OpenClaw source path"
+          },
+          "install_strategy": {
+            "type": "string",
+            "enum": [
+              "lazy",
+              "eager"
+            ],
+            "description": "OpenClaw install strategy"
+          },
+          "bundle_key": {
+            "type": "string",
+            "description": "bundle key when projection_mode=bundle"
+          },
+          "bundle_source": {
+            "type": "string",
+            "pattern": "^/Users/albus/MyProjects/ANC_v2/.+",
+            "description": "bundle source when projection_mode=bundle"
+          },
+          "allow_draft_projection": {
+            "type": "boolean",
+            "description": "allow draft assets in runtime projection"
+          }
+        },
+        "additionalProperties": false,
+        "description": "OpenClaw projection metadata"
+      },
+      "tests": {
+        "type": "object",
+        "required": [
+          "test_doc",
+          "methodology_ref"
+        ],
+        "properties": {
+          "test_doc": {
+            "type": "string",
+            "pattern": "^/Users/albus/MyProjects/ANC_v2/.+",
+            "description": "skill test doc path"
+          },
+          "methodology_ref": {
+            "type": "string",
+            "pattern": "^/Users/albus/MyProjects/ANC_v2/.+",
+            "description": "test methodology reference"
+          }
+        },
+        "additionalProperties": false,
+        "description": "test references"
+      }
+    },
+    "additionalProperties": false
   },
   "entries": [
     {
@@ -38,6 +190,7 @@
       "version": "0.1.0",
       "status": "draft",
       "agentskills": {
+        "name": "llm-judge",
         "description": "Evaluate outputs against objective/spec and return structured verdict",
         "license": "Apache-2.0",
         "compatibility": {
@@ -46,9 +199,13 @@
         }
       },
       "openclaw": {
-        "entry_name": "llm-judge",
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-skills",
+        "bundle_source": "/Users/albus/MyProjects/ANC_v2/skills/meta",
+        "entry_key": "meta.qa.llm-judge",
         "source": "/Users/albus/MyProjects/ANC_v2/skills/meta/llm-judge",
-        "install_strategy": "lazy"
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
       },
       "tests": {
         "test_doc": "/Users/albus/MyProjects/ANC_v2/skills/meta/llm-judge/TEST.md",
@@ -64,6 +221,7 @@
       "version": "0.1.0",
       "status": "draft",
       "agentskills": {
+        "name": "spec-writer",
         "description": "Generate objective-aligned technical spec with enforceable constraints",
         "license": "Apache-2.0",
         "compatibility": {
@@ -72,9 +230,13 @@
         }
       },
       "openclaw": {
-        "entry_name": "spec-writer",
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-skills",
+        "bundle_source": "/Users/albus/MyProjects/ANC_v2/skills/meta",
+        "entry_key": "meta.arch.spec-writer",
         "source": "/Users/albus/MyProjects/ANC_v2/skills/meta/spec-writer",
-        "install_strategy": "lazy"
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
       },
       "tests": {
         "test_doc": "/Users/albus/MyProjects/ANC_v2/skills/meta/spec-writer/TEST.md",
@@ -90,6 +252,7 @@
       "version": "0.1.0",
       "status": "draft",
       "agentskills": {
+        "name": "test-designer",
         "description": "Design objective-aligned test cases before implementation",
         "license": "Apache-2.0",
         "compatibility": {
@@ -98,9 +261,13 @@
         }
       },
       "openclaw": {
-        "entry_name": "test-designer",
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-skills",
+        "bundle_source": "/Users/albus/MyProjects/ANC_v2/skills/meta",
+        "entry_key": "meta.qa.test-designer",
         "source": "/Users/albus/MyProjects/ANC_v2/skills/meta/test-designer",
-        "install_strategy": "lazy"
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
       },
       "tests": {
         "test_doc": "/Users/albus/MyProjects/ANC_v2/skills/meta/test-designer/TEST.md",
@@ -116,6 +283,7 @@
       "version": "0.1.0",
       "status": "review",
       "agentskills": {
+        "name": "entire-codex-sync",
         "description": "Bridge Codex development turns into Entire checkpoints and commit-linked session evidence",
         "license": "Apache-2.0",
         "compatibility": {
@@ -124,7 +292,8 @@
         }
       },
       "openclaw": {
-        "entry_name": "entire-codex-sync",
+        "projection_mode": "pin",
+        "entry_key": "system.integration.entire-codex-sync",
         "source": "/Users/albus/MyProjects/ANC_v2/skills/system/entire-codex-sync",
         "install_strategy": "lazy"
       },

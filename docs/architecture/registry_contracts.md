@@ -1,96 +1,151 @@
 # ANC v2 Registry 契约
 
-最后更新：2026-02-20  
-版本：2.1.0-alpha
+最后更新：2026-02-21  
+版本：2.2.0-alpha
 
-> 本文件定义三类注册表的字段、格式和与 OpenClaw/Agent Skills 的映射关系。
+> 本文件定义三类 registry 的治理约束，以及 registry 到 OpenClaw 的投影规则。
+
+## 0. 决策索引
+
+本文件的架构动机与可复用决策见：
+
+`/Users/albus/MyProjects/ANC_v2/docs/architecture/registry_governance_decisions.md`
+
+阅读顺序建议：
+
+1. 先看决策文档（为什么这样设计）。
+2. 再看本文件（如何落为可执行约束）。
 
 ## 1. 设计目标
 
-1. 可发现：按 ID/名称快速定位资产与路径。
-2. 可治理：支持版本、状态、owner、生命周期追踪。
-3. 可对接：可映射到 OpenClaw 配置和 Agent Skills frontmatter。
+1. 可发现：按稳定 ID 快速定位资产。
+2. 可治理：状态、owner、版本、测试引用可追溯。
+3. 可投影：可从 registry 自动生成运行时受管配置。
+4. Fail-Closed：字段不合法或证据不足时拒绝写入。
 
-## 2. 统一生命周期（强制）
+## 2. 机器真相源（SSOT）
 
-所有 registry 统一采用 5 态：
+1. 每个 registry 文件中的 `entry_contract` 是机器真相源。
+2. `entry_contract` 必须包含：
+   - `required`
+   - `properties`
+   - `additionalProperties: false`
+3. 人类可读 schema 文档由工具生成，不得手工漂移：
+   - `/Users/albus/MyProjects/ANC_v2/docs/design/data-models/registry-schemas.md`
+
+## 3. 统一生命周期（强制）
+
+所有 registry 统一 5 态：
 
 `draft -> review -> active -> deprecated -> retired`
 
-### 迁移规则（从旧 4 态到 5 态）
+迁移规则：
 
-1. 旧 `draft` 资产默认保留 `draft`。
-2. 进入正式审查时必须显式转换到 `review`。
-3. 仅 `review` 状态允许进入 `active`。
-4. active 资产不得直接 retired，必须先 deprecated。
+1. `draft` 进入正式审查时必须显式转换到 `review`。
+2. 仅 `review` 可进入 `active`。
+3. `active` 不可直接 `retired`，必须先 `deprecated`。
 
-## 3. skill_registry.json
+## 4. agent_directory.json
 
-`entries[]` 推荐字段：
+`entries[]` 关键字段：
 
-1. `skill_id`: 稳定唯一标识（建议 `layer.domain.name`）。
-2. `name`: 与 `SKILL.md` frontmatter 的 `name` 一致。
-3. `path`: `SKILL.md` 绝对路径。
-4. `layer`: `meta` / `system` / `business`。
-5. `owner`: 责任角色或 Agent ID。
-6. `version`: 语义化版本。
-7. `status`: `draft|review|active|deprecated|retired`。
-8. `agentskills`: frontmatter 摘要（`description`, `license`, `compatibility`）。
-9. `openclaw`: 加载映射（`entry_name`, `source`, `install_strategy`）。
-10. `tests`: 对应测试文件与方法论路径。
+1. `agent_id`
+2. `layer`
+3. `path`
+4. `default_model`
+5. `owner`
+6. `status`
+7. `permissions`（`string[]`）
+8. `bindings`（对象：`channels[]` + `channelsConfig`）
 
-## 4. process_registry.json
+## 5. skill_registry.json
 
-`entries[]` 推荐字段：
+`entries[]` 关键字段：
 
-1. `process_id`: 稳定唯一标识。
-2. `skill_name`: 对应 process `SKILL.md` 的 frontmatter `name`。
-3. `skill_path`: process Skill 文档路径。
-4. `manifest_path`: `process.json` 路径。
-5. `objective_ref`: 对齐目标 ID。
-6. `owner`: 流程 owner。
-7. `version`: 语义化版本。
-8. `status`: 生命周期状态（5 态）。
-9. `phase_count`: Phase 数量。
-10. `openclaw`: 是否纳入 `skills.entries` 及加载信息。
+1. `skill_id`
+2. `name`
+3. `path`
+4. `layer`
+5. `owner`
+6. `version`
+7. `status`
+8. `agentskills`（含 `name/description/license/compatibility`）
+9. `openclaw`
+10. `tests`
+
+`openclaw` 关键子字段：
+
+1. `projection_mode`: `bundle|pin|off`
+2. `entry_key`: 稳定投影键（pin 时必须等于 `skill_id`）
+3. `source`
+4. `install_strategy`
+5. `bundle_key`（bundle 模式）
+6. `bundle_source`（bundle 模式）
+7. `allow_draft_projection`（可选）
+
+## 6. process_registry.json
+
+`entries[]` 关键字段：
+
+1. `process_id`
+2. `skill_name`
+3. `skill_path`
+4. `manifest_path`
+5. `objective_ref`
+6. `owner`
+7. `version`
+8. `status`
+9. `phase_count`
+10. `openclaw`
+
+`openclaw.entry_key` 在 pin 模式必须等于 `process_id`。
 
 ### canonical 约束
 
-`development-process` 的唯一 canonical 路径为：
+`development-process` 的 canonical 路径：
 `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process`
 
-## 5. agent_directory.json
+## 7. Registry 到 OpenClaw 的投影规则
 
-`entries[]` 推荐字段：
+投影目标文件：
 
-1. `agent_id`: 唯一标识。
-2. `layer`: `kernel` / `control` / `app`。
-3. `path`: Agent 根目录路径。
-4. `default_model`: 默认模型。
-5. `owner`: 责任人或上级 Agent。
-6. `status`: 生命周期状态（5 态）。
-7. `bindings`: OpenClaw channel 绑定信息。
-8. `permissions`: 权限级别摘要。
-9. `skills`: 允许调用的 skill_id 列表。
+1. `/Users/albus/MyProjects/ANC_v2/config/openclaw.phase05.fragment.json`
+2. `/Users/albus/MyProjects/ANC_v2/config/openclaw.phase05.with-entry.fragment.json`
 
-## 6. 与 OpenClaw 的映射
+受管区仅包含：
 
-1. registry 中的 `openclaw.entry_name` 对应 `skills.entries[].name`。
-2. registry 中 `agent_id` 对应 OpenClaw `agents.list` 条目。
-3. registry 的 `bindings` 对应 `channels`/`channelsConfig`。
+1. `agents.list`
+2. `skills.entries`
 
-## 7. 与 Agent Skills 规范映射
+状态门禁：
 
-每个技能/流程 Skill 的 `SKILL.md` frontmatter 至少包含：
+1. `agent`：`draft/review/active` 允许投影。
+2. `skill/process`：默认仅 `review/active`。
+3. `skill/process` 为 `draft` 时，必须 `openclaw.allow_draft_projection=true`。
+4. `deprecated/retired` 默认不投影。
 
-1. `name`
-2. `description`
-3. `license`
-4. `compatibility`
+冲突规则：
 
-## 8. 验证建议
+1. 支持 `bundle + pin` 混合投影。
+2. 同时命中时，pin 优先。
 
-1. JSON 语法校验：`jq . <file>`。
-2. 路径存在性校验：遍历 `path`/`manifest_path`。
-3. 名称一致性校验：registry `name` 与 frontmatter `name` 对齐。
-4. 生命周期校验：仅允许合法状态迁移。
+## 8. 投影 profile
+
+profile 文件：
+
+`/Users/albus/MyProjects/ANC_v2/config/openclaw.projection.profiles.json`
+
+profile 定义：
+
+1. 输出文件路径。
+2. 参与投影的 agent 清单。
+3. agent 状态白名单。
+
+## 9. 验证命令
+
+```bash
+python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py validate
+python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py generate-docs --check
+python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py project-openclaw --all --check
+python3 /Users/albus/MyProjects/ANC_v2/shared/registry/registry_contract_tool.py verify
+```
