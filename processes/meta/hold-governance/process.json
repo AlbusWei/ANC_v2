@@ -1,0 +1,171 @@
+{
+  "process_id": "hold-governance",
+  "version": "0.1.0",
+  "process_level": "P4",
+  "parent_process_id": null,
+  "composed_processes": [],
+  "lineage_policy": {
+    "stack_depth_limit": 8,
+    "context_isolation": "strict",
+    "output_handoff_mode": "contract_only"
+  },
+  "objective_ref": "obj-m1-unified-quality-gate",
+  "owner": "bpm",
+  "priority": "P0",
+  "input_contract": {
+    "format": "json",
+    "required": [
+      "hold_case_ref",
+      "runtime_log_ref",
+      "execution_state_ref",
+      "triage_policy_ref",
+      "runtime_health_policy_ref"
+    ]
+  },
+  "output_contract": {
+    "format": "json",
+    "required": [
+      "triage_report_ref",
+      "health_maintenance_ref",
+      "hold_resolution_ref"
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1",
+      "name": "collect-progress-evidence",
+      "actor": "qa",
+      "target_type": "skill",
+      "target_id": "sys.qa.hold-triage",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-021-hold-progress-evidence-collection.md#AP-021-Hold-Progress-Evidence-Collection",
+      "sipoc": {
+        "supplier": "initiator",
+        "input": "hold_case_ref + runtime_log_ref + execution_state_ref",
+        "process": "collect minimum progress signals",
+        "output": "progress_signals_ref",
+        "client": "p2"
+      },
+      "acceptance_criteria": "three progress signal categories are collected or explicit failure recorded"
+    },
+    {
+      "phase_id": "p2",
+      "name": "triage-and-classify",
+      "actor": "qa",
+      "target_type": "skill",
+      "target_id": "sys.qa.hold-triage",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-022-hold-triage-classification.md#AP-022-Hold-Triage-Classification",
+      "sipoc": {
+        "supplier": "p1",
+        "input": "progress_signals_ref + triage_policy_ref",
+        "process": "classify hold action",
+        "output": "triage_action",
+        "client": "p3"
+      },
+      "acceptance_criteria": "triage action is explicit and policy compliant"
+    },
+    {
+      "phase_id": "p3",
+      "name": "execute-triage-action",
+      "actor": "qa",
+      "target_type": "skill",
+      "target_id": "sys.qa.hold-triage",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-023-hold-triage-action-execution.md#AP-023-Hold-Triage-Action-Execution",
+      "sipoc": {
+        "supplier": "p2",
+        "input": "triage_action + triage_report_ref",
+        "process": "execute selected triage action",
+        "output": "action_execution_ref",
+        "client": "p4"
+      },
+      "acceptance_criteria": "action execution matches triage decision"
+    },
+    {
+      "phase_id": "p4",
+      "name": "health-maintenance",
+      "actor": "bpm",
+      "target_type": "skill",
+      "target_id": "sys.bpm.process-instance-manager",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-024-runtime-health-maintenance.md#AP-024-Runtime-Health-Maintenance",
+      "sipoc": {
+        "supplier": "p3",
+        "input": "action_execution_ref + runtime_health_policy_ref",
+        "process": "maintain runtime health and recovery state",
+        "output": "health_maintenance_ref",
+        "client": "p5"
+      },
+      "acceptance_criteria": "health result is traceable and recoverability is explicit"
+    },
+    {
+      "phase_id": "p5",
+      "name": "close-or-escalate",
+      "actor": "bpm",
+      "target_type": "skill",
+      "target_id": "sys.bpm.escalation-handler",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-025-hold-resolution-and-escalation.md#AP-025-Hold-Resolution-and-Escalation",
+      "sipoc": {
+        "supplier": "p4",
+        "input": "triage_action + health_maintenance_ref",
+        "process": "close hold case or escalate",
+        "output": "hold_resolution_ref",
+        "client": "initiator"
+      },
+      "acceptance_criteria": "hold case closes or escalates along governed chain"
+    }
+  ],
+  "control_flow": [
+    {
+      "from": "p1",
+      "to": "p2",
+      "on": "success"
+    },
+    {
+      "from": "p2",
+      "to": "p3",
+      "on": "success"
+    },
+    {
+      "from": "p3",
+      "to": "p4",
+      "on": "success"
+    },
+    {
+      "from": "p4",
+      "to": "p5",
+      "on": "success"
+    },
+    {
+      "from": "p5",
+      "to": "end",
+      "on": "success"
+    }
+  ],
+  "fail_policy": {
+    "mode": "fail_closed",
+    "retry": {
+      "max_attempts": 1
+    },
+    "escalation_chain": [
+      "actor",
+      "owner",
+      "bpm",
+      "admin",
+      "human"
+    ]
+  },
+  "evidence_policy": {
+    "required_fields": [
+      "timestamp",
+      "phase_id",
+      "actor",
+      "input_ref",
+      "output_ref",
+      "decision",
+      "reason"
+    ]
+  }
+}
