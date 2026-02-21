@@ -1,6 +1,6 @@
 # Quality Gate Evaluation Process
 
-> 版本: v0.2.0 | 层级: P4 | 类型: 复合流程 | process_id: quality-gate-evaluation
+> 版本: v0.1.0 | 层级: P4 | 类型: 复合流程 | process_id: quality-gate-evaluation
 
 ## 目标
 
@@ -11,12 +11,11 @@
 1. 本流程只能在 `AP-006 implementation-execution` 之后启动。
 2. 本流程不承担测试设计与编译职责。
 3. 出现 `hold` 必须转入 `hold-governance`，不得在本流程内以硬超时直接失败。
-4. AP-008 主观评测默认启用，除非上级治理流程显式批准关闭。
 
 ## 阶段定义
 
 1. `run-objective-evaluation`（AP-007）
-2. `run-subjective-evaluation`（AP-008，默认启用）
+2. `run-subjective-evaluation`（AP-008，可按 profile 启用）
 3. `run-regression-evaluation`（AP-009）
 4. `aggregate-gate-decision`（AP-020）
 
@@ -45,7 +44,7 @@
 
 ## HOLD 路由规则
 
-1. 任一分项评测返回 `hold` 时，转入 `docs/design/processes/hold-governance-process.md`。
+1. 任一分项评测返回 `hold` 时，转入 `/Users/albus/MyProjects/ANC_v2/docs/design/processes/hold-governance-process.md`。
 2. HOLD 治理结束后仅允许回填 `continue|retry|debug|fail` 决策。
 
 ## Fail-Closed 规则
@@ -58,11 +57,11 @@
 
 ## 依赖流程
 
-1. `docs/design/processes/atomic/AP-007-objective-evaluation.md`
-2. `docs/design/processes/atomic/AP-008-subjective-evaluation.md`
-3. `docs/design/processes/atomic/AP-009-regression-execution.md`
-4. `docs/design/processes/atomic/AP-020-gate-decision-aggregation.md`
-5. `docs/design/processes/hold-governance-process.md`
+1. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/atomic/AP-007-objective-evaluation.md`
+2. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/atomic/AP-008-subjective-evaluation.md`
+3. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/atomic/AP-009-regression-execution.md`
+4. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/atomic/AP-020-gate-decision-aggregation.md`
+5. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/hold-governance-process.md`
 
 ## 证据
 

@@ -1,8 +1,8 @@
 # Skill 全量清单
 
-> 版本: v0.5.0 | SSOT: `shared/registry/skill_registry.json`
+> 版本: v0.6.0 | SSOT: `shared/registry/skill_registry.json`
 
-## 已注册 Skill（registry entries）
+## 已注册 Skill
 
 1. meta.qa.llm-judge
 2. meta.arch.spec-writer
@@ -11,13 +11,12 @@
 5. system.ops.manual-task
 6. system.control.config-change-gatekeeper
 7. system.admin.system-config-updater
-8. sys.qa.test-compiler
-9. sys.qa.evaluation-runner
-10. sys.qa.verdict-normalizer
-11. sys.qa.regression-runner
-12. sys.qa.hold-triage
-13. sys.bpm.process-instance-manager
-14. sys.bpm.escalation-handler
+8. sys.bpm.trigger-ingress-normalizer
+9. sys.bpm.trigger-matcher-dedupe
+10. sys.bpm.process-instance-manager
+11. sys.bpm.evidence-recorder
+12. sys.bpm.catchup-scheduler
+13. sys.bpm.escalation-handler
 
 ## 待注册但已落盘
 
@@ -32,19 +31,24 @@
 - sys.hr.lifecycle-transition
 - sys.hr.permission-checker
 - sys.qa.registry-validator
+- sys.qa.regression-runner
+- sys.qa.test-compiler
+- sys.qa.evaluation-runner
+- sys.qa.verdict-normalizer
+- sys.qa.hold-triage
 - sys.admin.release-manager
 
-## 质量门禁技能组（M1）
+## 技能粒度决策（M2）
 
-1. `sys.qa.test-compiler`
-2. `sys.qa.evaluation-runner`
-3. `sys.qa.verdict-normalizer`
-4. `sys.qa.regression-runner`
-5. `sys.qa.hold-triage`
+1. `sys.bpm.process-parser`、`sys.bpm.process-scheduler`、`sys.bpm.lineage-guard` 已决策并入 `sys.bpm.process-instance-manager` 子能力，不再独立注册。
 
-关联设计文档：
+Quality Gate 技能包设计文档：
 
 - `docs/design/skills/quality-gate-skills.md`
+
+BPM Runtime 技能包设计文档：
+
+- `docs/design/skills/bpm-runtime-skills.md`
 
 ## 生命周期规则
 
