@@ -3,7 +3,7 @@
   "checkpoint_id": "98cfae25583b",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 2,
+  "checkpoints_count": 3,
   "files_touched": [
     "docs/design/layers/L2-orchestration-governance.md",
     "docs/design/layers/L4-self-evolution.md",
@@ -29,6 +29,13 @@
       "context": "/98/cfae25583b/1/context.md",
       "content_hash": "/98/cfae25583b/1/content_hash.txt",
       "prompt": "/98/cfae25583b/1/prompt.txt"
+    },
+    {
+      "metadata": "/98/cfae25583b/2/metadata.json",
+      "transcript": "/98/cfae25583b/2/full.jsonl",
+      "context": "/98/cfae25583b/2/context.md",
+      "content_hash": "/98/cfae25583b/2/content_hash.txt",
+      "prompt": "/98/cfae25583b/2/prompt.txt"
     }
   ],
   "token_usage": {
