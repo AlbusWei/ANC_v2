@@ -1,6 +1,6 @@
 # 模块依赖矩阵
 
-> 版本: v0.1.0
+> 版本: v0.2.0
 
 ## 建设顺序
 
@@ -39,6 +39,12 @@ M6 → M2 → M1 → M4 → M3 → M5
 ```
 
 M4 和 M1 可部分并行建设，但 M3 需要两者都就绪。
+
+## 触发治理路径（本轮补充）
+
+1. 策略面：`M4` 维护 trigger 生命周期、override 与风险规则。
+2. 运行面：`M2` 消费策略并执行匹配、去重、补跑和升级。
+3. 设计期测试锚点：`/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/trigger-governance-test-proposal.md`
 
 ## 循环依赖检查
 

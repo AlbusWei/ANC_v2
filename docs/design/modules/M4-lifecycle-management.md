@@ -1,10 +1,10 @@
 # M4 — 生命周期管理模块详细设计
 
-> 版本: v0.2.0 | 建设优先级: P1
+> 版本: v0.3.0 | 建设优先级: P1
 
 ## 模块定位
 
-管理 Agent/Skill/Process 的 5 态生命周期与审批证据。
+管理 Agent/Skill/Process 的 5 态生命周期与审批证据，并治理触发策略生命周期。
 
 ## 状态机
 
@@ -16,15 +16,28 @@
 2. permission-checker
 3. registry-validator
 4. lifecycle-review
+5. trigger-policy-manager
+6. override-decision-recorder
+
+## 触发策略治理资产（规划）
+
+1. `trigger_registry`：维护 trigger 定义与生命周期（与 process_registry 解耦）。
+2. `trigger_override_log`：记录 owner/admin 的取消、延期、豁免决策。
+3. `trigger_policy_review`：对高风险触发策略做审批与复核。
 
 ## 约束
 
 1. review 前不得 active。
 2. active 不得直接 retired。
 3. 每次转换必须有 evidence_ref。
+4. owner 的取消/延期动作必须留痕且可审计。
+5. 高风险策略必须声明 checkpoint 与回滚要求。
+6. 策略治理与执行分离：M4 管策略，M2 管执行。
 
 ## 验收
 
 - [ ] 非法状态迁移被拒绝
 - [ ] 状态与 registry 同步
 - [ ] 审批链完整
+- [ ] trigger 策略可独立进入 review/active 并可回滚
+- [ ] override 决策均有 evidence_ref 与责任人
