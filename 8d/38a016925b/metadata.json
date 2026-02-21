@@ -108,6 +108,13 @@
       "context": "/8d/38a016925b/8/context.md",
       "content_hash": "/8d/38a016925b/8/content_hash.txt",
       "prompt": "/8d/38a016925b/8/prompt.txt"
+    },
+    {
+      "metadata": "/8d/38a016925b/9/metadata.json",
+      "transcript": "/8d/38a016925b/9/full.jsonl",
+      "context": "/8d/38a016925b/9/context.md",
+      "content_hash": "/8d/38a016925b/9/content_hash.txt",
+      "prompt": "/8d/38a016925b/9/prompt.txt"
     }
   ],
   "token_usage": {
