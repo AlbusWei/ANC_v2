@@ -1,0 +1,48 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "f132e7831983",
+  "session_id": "codex-c7220cff05bc",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-21T21:13:32.073664Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/data-models/openspec-collaboration-schema.json",
+    "docs/design/interfaces/openspec-collaboration-protocol.md",
+    "docs/design/modules/M6-construction-plane.md",
+    "docs/design/processes/construction-plane-governance-process.md",
+    "docs/design/processes/governance-processes.md",
+    "docs/design/processes/p-levels/P6-atomic-process-catalog.md",
+    "docs/design/skills/construction-plane-skills.md",
+    "processes/meta/construction-plane-governance/PROCESS.md",
+    "processes/meta/construction-plane-governance/SKILL.md",
+    "processes/meta/construction-plane-governance/process.json",
+    "shared/registry/process_registry.json",
+    "shared/registry/registry_contract_tool.py",
+    "skills/system/construction-audit/SKILL.md",
+    "skills/system/construction-audit/TEST.md",
+    "skills/system/openspec-sync/SKILL.md",
+    "skills/system/openspec-sync/TEST.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "de33f61397cc",
+  "transcript_identifier_at_start": "gemini-8466032e86",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T21:13:32.051121Z",
+    "agent_lines": 67,
+    "human_added": 231,
+    "human_modified": 23,
+    "human_removed": 0,
+    "total_committed": 321,
+    "agent_percentage": 20.87227414330218
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}

@@ -3,7 +3,7 @@
   "checkpoint_id": "f132e7831983",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 11,
+  "checkpoints_count": 12,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/design/data-models/openspec-collaboration-schema.json",
@@ -49,6 +49,13 @@
       "context": "/f1/32e7831983/2/context.md",
       "content_hash": "/f1/32e7831983/2/content_hash.txt",
       "prompt": "/f1/32e7831983/2/prompt.txt"
+    },
+    {
+      "metadata": "/f1/32e7831983/3/metadata.json",
+      "transcript": "/f1/32e7831983/3/full.jsonl",
+      "context": "/f1/32e7831983/3/context.md",
+      "content_hash": "/f1/32e7831983/3/content_hash.txt",
+      "prompt": "/f1/32e7831983/3/prompt.txt"
     }
   ],
   "token_usage": {
