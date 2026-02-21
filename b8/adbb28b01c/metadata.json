@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "b8adbb28b01c",
+  "strategy": "manual-commit",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/review-checklists/agents-checklist.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/b8/adbb28b01c/0/metadata.json",
+      "transcript": "/b8/adbb28b01c/0/full.jsonl",
+      "context": "/b8/adbb28b01c/0/context.md",
+      "content_hash": "/b8/adbb28b01c/0/content_hash.txt",
+      "prompt": "/b8/adbb28b01c/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
