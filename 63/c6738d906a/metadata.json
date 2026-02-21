@@ -3,7 +3,7 @@
   "checkpoint_id": "63c6738d906a",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     "config/openclaw.phase05.fragment.json",
     "config/openclaw.phase05.with-entry.fragment.json",
@@ -61,6 +61,13 @@
       "context": "/63/c6738d906a/1/context.md",
       "content_hash": "/63/c6738d906a/1/content_hash.txt",
       "prompt": "/63/c6738d906a/1/prompt.txt"
+    },
+    {
+      "metadata": "/63/c6738d906a/2/metadata.json",
+      "transcript": "/63/c6738d906a/2/full.jsonl",
+      "context": "/63/c6738d906a/2/context.md",
+      "content_hash": "/63/c6738d906a/2/content_hash.txt",
+      "prompt": "/63/c6738d906a/2/prompt.txt"
     }
   ],
   "token_usage": {
