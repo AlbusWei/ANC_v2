@@ -1,0 +1,45 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "080fda703f33",
+  "strategy": "manual-commit",
+  "branch": "codex/review-contracts",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "config/README.md",
+    "config/openclaw.phase05.fragment.json",
+    "config/openclaw.phase05.with-entry.fragment.json",
+    "docs/architecture/construction_plane.md",
+    "docs/architecture/registry_contracts.md",
+    "docs/architecture/system_overview.md",
+    "docs/design/data-models/registry-schemas.md",
+    "docs/design/interfaces/registry-access-protocol.md",
+    "docs/design/modules/evidence/trigger-governance/README.md",
+    "docs/design/modules/module-dependency-matrix.md",
+    "docs/design/modules/trigger-governance-diff-closure-plan.md",
+    "docs/design/modules/trigger-governance-review-checklist.md",
+    "docs/review-checklists/contracts-checklist.md",
+    "processes/meta/development-process/process.json",
+    "processes/meta/governed-config-change/process.json",
+    "shared/registry/README.md",
+    "shared/registry/agent_directory.json",
+    "shared/registry/process_registry.json",
+    "shared/registry/registry_contract_tool.py",
+    "shared/registry/skill_registry.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/08/0fda703f33/0/metadata.json",
+      "transcript": "/08/0fda703f33/0/full.jsonl",
+      "context": "/08/0fda703f33/0/context.md",
+      "content_hash": "/08/0fda703f33/0/content_hash.txt",
+      "prompt": "/08/0fda703f33/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
