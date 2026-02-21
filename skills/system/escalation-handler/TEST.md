@@ -2,22 +2,22 @@
 
 ## Objective Alignment
 
-验证 HOLD 关闭与升级路径符合固定升级链和证据要求。
+验证异常升级严格遵循治理链路，禁止越级与无证据升级。
 
 ## Test Cases
 
-### TC-001: 正常关闭
+### TC-001: 正常升级到 admin
 
 - Type: Objective
 - Priority: P0
-- Input: triage_action=continue 且健康状态稳定
-- Expected: `final_resolution=closed`
+- Input: `incident_ref` 标记为高风险，链路完整
+- Expected: 产出 `escalation_ref/escalation_trace/final_owner=admin`
 - Evaluation Method: Exact Match
 
-### TC-002: 失败升级
+### TC-002: 越级请求被拒绝
 
 - Type: Objective
 - Priority: P0
-- Input: triage_action=fail 且健康状态失败
-- Expected: `final_resolution=escalated` 且包含 `escalation_ref`
-- Evaluation Method: Rule Match
+- Input: 直接从 actor 跳过 bpm 请求 admin
+- Expected: Fail-Closed 并写入拒绝证据
+- Evaluation Method: Exact Match

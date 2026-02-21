@@ -1,6 +1,6 @@
 # P6 Atomic Process Catalog
 
-> 版本: v0.3.0 | 层级: P6
+> 版本: v0.4.0 | 层级: P6
 
 ## 定位
 
@@ -33,6 +33,12 @@ P6 是最小执行单元。每个原子流程定义一个 Actor + 一个 Skill +
 23. AP-023 hold-triage-action-execution
 24. AP-024 runtime-health-maintenance
 25. AP-025 hold-resolution-and-escalation
+26. AP-026 trigger-ingress-normalization
+27. AP-027 trigger-match-and-dedupe
+28. AP-028 trigger-dispatch-and-instance-start
+29. AP-029 trigger-evidence-recording
+30. AP-030 trigger-catchup-scheduling
+31. AP-031 trigger-escalation-handling
 
 ## 统一约束
 

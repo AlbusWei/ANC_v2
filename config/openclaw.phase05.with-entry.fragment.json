@@ -33,6 +33,9 @@
   },
   "skills": {
     "entries": {
+      "anc-v2-control-processes": {
+        "source": "processes/control"
+      },
       "anc-v2-meta-processes": {
         "source": "processes/meta"
       },

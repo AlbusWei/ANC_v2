@@ -23,7 +23,7 @@
 3. M2/M4 边界固定：M2 管触发运行时，M4 管触发策略生命周期。
 4. 升级链固定：`actor -> owner -> bpm -> admin -> human`。
 5. 去重策略固定：混合去重（`event_id` 优先，缺失回退业务语义键）。
-6. 漏跑策略固定：补跑优先（窗口内自动补跑，超窗升级 owner）。
+6. 漏跑策略固定：补跑优先（动态策略窗口内自动补跑，超窗升级 owner）。
 7. 安全边界固定：
    - App/owner 不得直达 admin。
    - BPM 不持有系统高权限写操作能力。
@@ -49,7 +49,7 @@
 | TG-SCH-001 | 3 分钟窗口内存在异常 | 创建实例并推送异常摘要到 admin；admin 转发 human | `trigger_log_ref`, `instance_ref`, `admin_forward_ref` |
 | TG-SCH-002 | 3 分钟窗口无异常 | 不推送消息，仅记录心跳执行账本 | `trigger_ledger_ref` |
 | TG-SCH-003 | owner 取消当次任务 | 不执行实例，输出 override 审计记录 | `override_decision_ref`, `override_reason_ref` |
-| TG-SCH-004 | 计划窗口内漏跑一次 | 在 `catchup_window` 内自动补跑并保留补跑标记 | `catchup_run_ref`, `catchup_reason_ref` |
+| TG-SCH-004 | 计划窗口内漏跑一次 | 在动态 `catchup_policy_ref` 计算窗口内自动补跑并保留补跑标记 | `catchup_run_ref`, `catchup_reason_ref` |
 
 ## 4. 测试场景 B：Skill 生命周期变更触发证据归集
 

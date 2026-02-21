@@ -38,9 +38,8 @@ ROLE_HANDOFF_PATH = ROOT / "docs" / "design" / "interfaces" / "role-handoff-prot
 PROCESS_MANIFESTS = [
     ROOT / "processes" / "meta" / "development-process" / "process.json",
     ROOT / "processes" / "meta" / "governed-config-change" / "process.json",
-    ROOT / "processes" / "meta" / "quality-gate-preparation" / "process.json",
-    ROOT / "processes" / "meta" / "quality-gate-evaluation" / "process.json",
-    ROOT / "processes" / "meta" / "hold-governance" / "process.json",
+    ROOT / "processes" / "control" / "trigger-schedule-runtime" / "process.json",
+    ROOT / "processes" / "control" / "trigger-event-runtime" / "process.json",
 ]
 
 AGENT_REGISTRY = REGISTRY_DIR / "agent_directory.json"

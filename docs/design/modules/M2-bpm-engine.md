@@ -1,41 +1,61 @@
 # M2 — BPM 引擎模块详细设计
 
-> 版本: v0.3.0 | 建设优先级: P0
+> 版本: v0.5.0 | 建设优先级: P0 | 最后更新: 2026-02-21
 
 ## 模块定位
 
-流程编排中枢，负责流程运行时、触发运行时和证据链治理。
+`M2` 是 ANC 的流程运行时与触发运行时中枢，负责流程实例调度、触发治理执行、证据链留痕与升级闭环。  
+`M2` 不负责策略生命周期治理，策略治理由 `M4` 管理。
 
-关键边界：
+相关文档：
 
-1. M2 只负责运行时编排，不负责触发策略生命周期管理。
-2. M2 不持有系统级高权限写操作能力。
-3. 涉及系统级写操作时，固定由 admin 执行，M2 负责门禁与编排留痕。
+1. `docs/design/skills/bpm-runtime-skills.md`
+2. `docs/design/processes/trigger-schedule-runtime-process.md`
+3. `docs/design/processes/trigger-event-runtime-process.md`
+4. `docs/design/modules/trigger-governance-test-proposal.md`
+5. `docs/design/modules/trigger-governance-review-checklist.md`
 
-## 组件
+## 模块边界
 
-1. process parser
-2. instance manager
-3. scheduler
-4. evidence recorder
-5. recursion lineage guard
-6. trigger ingress normalizer
-7. trigger matcher + dedupe ledger
-8. catchup scheduler
-9. escalation handler
+1. `M2` 只负责运行时编排，不负责触发策略生命周期管理。
+2. `M2` 不持有系统级高权限写操作能力。
+3. 涉及系统级写操作时，固定由 admin 执行，`M2` 负责门禁与编排留痕。
+4. App/owner 请求不得直达 admin，必须走 BPM 升级链。
+
+## 组件与落盘状态
+
+| 组件 | 目标技能/资产 | 状态 |
+|---|---|---|
+| process parser | `sys.bpm.process-instance-manager` 子能力 | 已并入 |
+| instance manager | `sys.bpm.process-instance-manager` | 已落盘（draft） |
+| scheduler | `sys.bpm.process-instance-manager` 子能力 | 已并入 |
+| evidence recorder | `sys.bpm.evidence-recorder` | 已落盘（draft） |
+| recursion lineage guard | `sys.bpm.process-instance-manager` 子能力 | 已并入 |
+| trigger ingress normalizer | `sys.bpm.trigger-ingress-normalizer` | 已落盘（draft） |
+| trigger matcher + dedupe ledger | `sys.bpm.trigger-matcher-dedupe` | 已落盘（draft） |
+| catchup scheduler | `sys.bpm.catchup-scheduler` | 已落盘（draft） |
+| escalation handler | `sys.bpm.escalation-handler` | 已落盘（draft） |
+
+## 本轮已补齐的流程资产
+
+1. `trigger-schedule-runtime`（P4）
+2. `trigger-event-runtime`（P4）
+3. AP-026~AP-031（触发归一、匹配去重、调度、证据、补跑、升级）
 
 ## 递归能力
 
-1. 支持 parent/child 实例隔离。
-2. 支持 `parent_instance_id`, `lineage_ref`, `stack_depth`。
-3. 超深度递归触发 Fail-Closed。
+1. 支持 `parent_instance_id`, `lineage_ref`, `stack_depth`。
+2. 支持 parent/child 实例隔离，输出按契约回填。
+3. 超深度递归或上下文泄漏触发 Fail-Closed。
 
 ## 触发运行时能力
 
 1. 支持 `schedule|heartbeat|event|threshold` 触发类型。
-2. 外部事件先标准化为内部 canonical event，再执行匹配。
-3. 去重采用混合策略：优先 `source+event_id`，缺失回退业务语义键。
-4. 漏跑采用补跑优先：`catchup_window` 内自动补跑，超窗升级 owner。
+2. 外部事件先标准化为 canonical trigger，再执行匹配。
+3. 去重采用分层策略：
+   - 主键：`source + event_id`
+   - 回退键：`source + canonical_event + entity_type + entity_id + from_status + to_status + emitted_by + time_bucket`
+4. 漏跑采用动态补跑窗口：由 `catchup_policy_ref` 计算窗口并执行补跑，超窗升级 owner。
 
 最小事件字段：
 
@@ -54,15 +74,23 @@
 1. 触发输入字段缺失或证据不可达时拒绝执行。
 2. 去重键冲突且无法判定时拒绝执行并升级。
 3. 风险无法判定时按高风险处理并升级 admin。
-4. App/owner 请求不得直达 admin，必须走 BPM 升级链。
+4. 升级链必须满足 `actor -> owner -> bpm -> admin -> human`。
 
-## 验收
+## 流程收口策略
+
+1. 可执行层保持双流程：`trigger-schedule-runtime` + `trigger-event-runtime`。
+2. 仅在触发家族明显扩展或公共治理逻辑显著增厚时，引入上级 `trigger-runtime-supervisor`（P5 路由模式）。
+
+后验参数治理：
+
+1. `catchup_policy_ref`、`time_bucket_strategy` 等动态参数不在 `M2` 文档内直接硬编码定值。
+2. 必须进入 `runtime-policy-calibration` 治理流程，由 `kernel/system-analyst` 做后验分析并同步给 `architect/admin/bpm` 决策。
+
+## 验收清单
 
 - [ ] P4 流程可组合 P5/P6 并执行
 - [ ] 父子实例不共享可变上下文
-- [ ] 证据链完整
-- [ ] 3 分钟定时触发在异常时推送、无异常仅记账（设计提案）
-- [ ] Skill `review -> active` 事件触发证据归集且去重生效（设计提案）
-
-测试提案文档：
-`docs/design/modules/trigger-governance-test-proposal.md`
+- [ ] 触发与实例可双向追溯
+- [ ] TG-SCH-001/002/003/004 具备运行级证据
+- [ ] TG-EVT-001/002/003 具备运行级证据
+- [ ] 动态 catchup 策略已在运行证据中验证

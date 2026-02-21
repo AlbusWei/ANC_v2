@@ -46,7 +46,7 @@
 - [x] TG-SCH-001 具备输入、预期行为、证据锚点。
 - [x] TG-SCH-002 具备输入、预期行为、证据锚点。
 - [x] TG-SCH-003 覆盖 owner override 留痕。
-- [x] TG-SCH-004 覆盖 `catchup_window` 补跑规则。
+- [x] TG-SCH-004 覆盖动态 `catchup_policy_ref` 补跑规则。
 
 ## 6. Scenario B Review (Event: Skill review->active)
 
