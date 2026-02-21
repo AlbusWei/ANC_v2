@@ -1,6 +1,6 @@
 # 元流程清单与设计
 
-> 版本: v0.4.0 | 分类: Meta Processes
+> 版本: v0.5.0 | 分类: Meta Processes | 最后更新: 2026-02-21
 
 ## 已有元流程
 
@@ -28,11 +28,29 @@
 - phases: run-objective-evaluation -> run-subjective-evaluation(optional) -> run-regression-evaluation -> aggregate-gate-decision
 - output: gate_decision + evidence package
 
-## 规划元流程
+### full-development（本轮新增）
 
-1. full-development
-2. hotfix
-3. refactor
+- process_id: full-development
+- canonical_path: `processes/meta/full-development/`
+- design_doc: `docs/design/processes/full-development-process.md`
+- level: P4
+- phases: objective-intake-and-scope -> spec-authoring -> quality-gate-preparation -> implementation-execution -> quality-gate-evaluation -> lifecycle-gate-sync -> release-packaging -> evolution-feedback-planning
+
+### hotfix（本轮新增）
+
+- process_id: hotfix
+- canonical_path: `processes/meta/hotfix/`
+- design_doc: `docs/design/processes/hotfix-process.md`
+- level: P4
+- phases: hotfix-intake -> scope-and-spec-fast-baseline -> fast-test-preparation -> hotfix-implementation -> hotfix-gate-evaluation -> lifecycle-gate-sync -> release-packaging
+
+### refactor（本轮新增）
+
+- process_id: refactor
+- canonical_path: `processes/meta/refactor/`
+- design_doc: `docs/design/processes/refactor-process.md`
+- level: P4
+- phases: refactor-objective-and-scope -> refactor-spec-authoring -> refactor-test-preparation -> refactor-implementation -> refactor-gate-evaluation -> lifecycle-gate-sync
 
 ## 递归组合规则
 

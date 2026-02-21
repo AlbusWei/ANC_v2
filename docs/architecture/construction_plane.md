@@ -32,6 +32,7 @@
 - [x] 新增 layer/module 联动文档门禁：新增或变更 skill/process/agent 必须同回合补齐设计文档 + inventory + registry + 施工平面
 - [x] 完成 M1 质量门禁二次重构：`quality-gate-preparation` + `quality-gate-evaluation` + `hold-governance` 连续性闭合
 - [x] 完成 M2 触发运行时骨架落盘：`trigger-schedule-runtime` + `trigger-event-runtime` + AP-026~AP-031 + 6 个 `sys.bpm.*` 核心技能
+- [x] 完成 M3 自开发骨架落盘：`full-development/hotfix/refactor` 流程资产 + `objective-writer/agent-creator/process-creator/template-validator/skill-creator` 技能注册
 
 ## 进行中（In Progress）
 
@@ -41,6 +42,7 @@
 - [ ] 完成 M1 OpenJudge 适配规范与 AP-005/018/019/020/021~025 一致性落盘
 - [ ] 完成 trigger runtime 动态策略实证校准并形成参数回写节奏
 - [ ] 建立 `runtime-policy-calibration` 治理节奏并纳入 M1/M2 首批后验议题
+- [ ] 触发 M3 `full-development/hotfix/refactor` 首轮运行级 dry-run 并沉淀证据
 
 ## 下一步（Next）
 
@@ -62,7 +64,7 @@
 | M1 | 统一测试门禁可用 | 门禁生效 + M3/M4/M5 复用接入 + 证据审计可追溯 | 进行中 |
 | M1.5 | 架构细化完成 | L0-L5 + P1-P6 + 双主线 + 原子流程文档齐套 | 已完成 |
 | M2 | 第一次 TDD 闭环 | 一个 Skill 从 Test 先行到复测通过 | 进行中（BPM runtime 骨架已落盘） |
-| M3 | 第一次流程编排 | BPM 成功调度 3+ Phase 流程 | 待开始 |
+| M3 | 第一次流程编排 | BPM 成功调度 3+ Phase 流程 | 进行中（M3 资产已落盘，待运行级 dry-run） |
 | M4 | 第一次自开发 | 系统用自身流程开发并上线新 Skill | 待开始 |
 
 ## 开放问题
