@@ -1,6 +1,6 @@
 # L1 — 能力层详细设计
 
-> 版本: v0.2.0
+> 版本: v0.3.0 | 最后更新: 2026-02-21
 
 ## 层级定位
 
@@ -20,9 +20,7 @@
 
 ## 本层 Skill 清单
 
-已有：llm-judge, spec-writer, test-designer, skill-creator
-
-待建：objective-writer, agent-creator, process-creator, template-validator
+已有：llm-judge, spec-writer, test-designer, skill-creator, objective-writer, agent-creator, process-creator, template-validator
 
 ## 约束
 

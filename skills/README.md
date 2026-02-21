@@ -4,8 +4,9 @@
 
 1. `skills/template/`：模板资产（脚手架）。
 2. `skills/skill-creator/`：真实示例（meta skill）。
-3. `skills/system/entire-codex-sync/`：Entire x Codex 同步桥接技能。
-4. `skills/system/{trigger-ingress-normalizer,trigger-matcher-dedupe,process-instance-manager,evidence-recorder,catchup-scheduler,escalation-handler}/`：M2 BPM runtime 技能资产。
+3. `skills/meta/{objective-writer,agent-creator,process-creator,template-validator}/`：M3 自开发技能资产。
+4. `skills/system/entire-codex-sync/`：Entire x Codex 同步桥接技能。
+5. `skills/system/{trigger-ingress-normalizer,trigger-matcher-dedupe,process-instance-manager,evidence-recorder,catchup-scheduler,escalation-handler}/`：M2 BPM runtime 技能资产。
 
 ## Rule
 

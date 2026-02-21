@@ -41,6 +41,9 @@
       "anc-v2-system-skills": {
         "source": "skills/system"
       },
+      "meta.arch.skill-creator": {
+        "source": "skills/skill-creator"
+      },
       "system.integration.entire-codex-sync": {
         "source": "skills/system/entire-codex-sync"
       }
