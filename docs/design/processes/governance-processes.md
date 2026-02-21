@@ -1,6 +1,6 @@
 # 治理流程清单与设计
 
-> 版本: v0.5.0 | 分类: Governance Processes
+> 版本: v0.6.0 | 分类: Governance Processes
 
 ## 核心治理流程
 
@@ -44,7 +44,8 @@
 
 ## hold-governance
 
-设计文档：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/hold-governance-process.md`
+设计文档：`docs/design/processes/hold-governance-process.md`  
+运行资产：`processes/meta/hold-governance/`
 
 阶段：
 

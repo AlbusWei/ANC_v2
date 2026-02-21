@@ -1,8 +1,8 @@
 # 元流程清单与设计
 
-> 版本: v0.4.0 | 分类: Meta Processes
+> 版本: v0.5.0 | 分类: Meta Processes
 
-## 已有元流程
+## 已有元流程（已注册）
 
 ### development-process
 
@@ -12,21 +12,29 @@
 - phases: write-spec -> design-tests -> implement -> verify
 - loop: p4 fail 回到 p3，max 2
 
-### quality-gate-preparation（新增设计）
+### quality-gate-preparation
 
 - process_id: quality-gate-preparation
-- design_doc: `/Users/albus/MyProjects/ANC_v2/docs/design/processes/quality-gate-preparation-process.md`
+- canonical_path: `processes/meta/quality-gate-preparation/`
 - level: P4
 - phases: design-tests -> compile-test-datapoints -> bind-test-profiles
 - output: preparation_bundle_ref
 
-### quality-gate-evaluation（新增设计）
+### quality-gate-evaluation
 
 - process_id: quality-gate-evaluation
-- design_doc: `/Users/albus/MyProjects/ANC_v2/docs/design/processes/quality-gate-evaluation-process.md`
+- canonical_path: `processes/meta/quality-gate-evaluation/`
 - level: P4
-- phases: run-objective-evaluation -> run-subjective-evaluation(optional) -> run-regression-evaluation -> aggregate-gate-decision
+- phases: run-objective-evaluation -> run-subjective-evaluation -> run-regression-evaluation -> aggregate-gate-decision -> govern-hold(on hold)
 - output: gate_decision + evidence package
+
+### hold-governance
+
+- process_id: hold-governance
+- canonical_path: `processes/meta/hold-governance/`
+- level: P4
+- phases: collect-progress-evidence -> triage-and-classify -> execute-triage-action -> health-maintenance -> close-or-escalate
+- output: triage_report_ref + hold_resolution_ref
 
 ## 规划元流程
 
