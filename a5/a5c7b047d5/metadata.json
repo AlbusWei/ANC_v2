@@ -3,7 +3,7 @@
   "checkpoint_id": "a5a5c7b047d5",
   "strategy": "manual-commit",
   "branch": "codex/review-agents",
-  "checkpoints_count": 3,
+  "checkpoints_count": 4,
   "files_touched": [
     "agents/kernel/qa/AGENTS.md",
     "agents/kernel/qa/IDENTITY.md",
@@ -70,6 +70,13 @@
       "context": "/a5/a5c7b047d5/2/context.md",
       "content_hash": "/a5/a5c7b047d5/2/content_hash.txt",
       "prompt": "/a5/a5c7b047d5/2/prompt.txt"
+    },
+    {
+      "metadata": "/a5/a5c7b047d5/3/metadata.json",
+      "transcript": "/a5/a5c7b047d5/3/full.jsonl",
+      "context": "/a5/a5c7b047d5/3/context.md",
+      "content_hash": "/a5/a5c7b047d5/3/content_hash.txt",
+      "prompt": "/a5/a5c7b047d5/3/prompt.txt"
     }
   ],
   "token_usage": {
