@@ -1,0 +1,39 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "612bc78c7e64",
+  "strategy": "manual-commit",
+  "branch": "codex/review-contracts",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "config/README.md",
+    "config/openclaw.phase05.fragment.json",
+    "config/openclaw.phase05.with-entry.fragment.json",
+    "config/openclaw.projection.profiles.json",
+    "docs/architecture/registry_contracts.md",
+    "docs/design/data-models/registry-schemas.md",
+    "docs/design/interfaces/registry-access-protocol.md",
+    "shared/registry/README.md",
+    "shared/registry/agent_directory.json",
+    "shared/registry/install_pre_commit_hook.sh",
+    "shared/registry/process_registry.json",
+    "shared/registry/registry_contract_tool.py",
+    "shared/registry/run_contract_checks.sh",
+    "shared/registry/skill_registry.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/61/2bc78c7e64/0/metadata.json",
+      "transcript": "/61/2bc78c7e64/0/full.jsonl",
+      "context": "/61/2bc78c7e64/0/context.md",
+      "content_hash": "/61/2bc78c7e64/0/content_hash.txt",
+      "prompt": "/61/2bc78c7e64/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
