@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "634d4910b8fb",
+  "session_id": "codex-d94593237a64",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T12:04:39.492384Z",
+  "branch": "rebuild",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "AGENTS.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "6c2932da5ae2",
+  "transcript_identifier_at_start": "gemini-7fa8646679",
+  "checkpoint_transcript_start": 98,
+  "transcript_lines_at_start": 98,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T12:04:39.456234Z",
+    "agent_lines": 17,
+    "human_added": 424,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 441,
+    "agent_percentage": 3.8548752834467117
+  },
+  "transcript_path": "MyProjects/ANC_v2/.entire/codex-bridge/transcript.json"
+}
