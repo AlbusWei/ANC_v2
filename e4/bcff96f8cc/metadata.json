@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "e4bcff96f8cc",
+  "strategy": "manual-commit",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "shared/registry/registry_contract_tool.py",
+    "tests/m2-bpm-runtime/live_regression_cases.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/e4/bcff96f8cc/0/metadata.json",
+      "transcript": "/e4/bcff96f8cc/0/full.jsonl",
+      "context": "/e4/bcff96f8cc/0/context.md",
+      "content_hash": "/e4/bcff96f8cc/0/content_hash.txt",
+      "prompt": "/e4/bcff96f8cc/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
