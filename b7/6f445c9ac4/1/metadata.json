@@ -1,0 +1,42 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "b76f445c9ac4",
+  "session_id": "codex-1e5b3b7b8a44",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T20:57:37.383381Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/modules/M1-test-system.md",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_runtime_summary.json",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_runtime_summary.md",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m2_w1_migration_report.json",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m2_w1_replay_report.json",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m2_w1_tc_ins_report.json",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m2_w3b_tc_qa_proc_report.json",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/runtime_summary.json",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/runtime_summary.md",
+    "tests/m1-runtime/TEST.md",
+    "tests/m1-runtime/run_semantic_service_validation.py"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "d4269eb1f2a7",
+  "transcript_identifier_at_start": "gemini-9cf0c19ecb",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T20:57:37.328302Z",
+    "agent_lines": 1136,
+    "human_added": 9313,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 10449,
+    "agent_percentage": 10.871853765910613
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
