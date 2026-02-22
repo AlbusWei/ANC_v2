@@ -1,0 +1,44 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "0e6bc3f6be13",
+  "session_id": "codex-3e728ad2a6f5",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T16:11:21.138179Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "docs/design/modules/evidence/bpm-runtime/checkpoint_commit_map.jsonl",
+    "docs/design/modules/evidence/bpm-runtime/w4_execution_summary.md",
+    "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-001/analysis_digest.json",
+    "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-001/handoff_evidence_index.json",
+    "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-001/handoff_input.json",
+    "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-001/process_output.json",
+    "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-001/signals/incident_summary.json",
+    "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-001/signals/runtime_signal.json",
+    "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-002/handoff_evidence_index.json",
+    "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-002/handoff_input.json",
+    "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-002/process_output.json",
+    "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-002/reject_output.json",
+    "docs/design/modules/evidence/bpm-runtime/w4_tc_anl_report.json"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "93d6c1b0aca1",
+  "transcript_identifier_at_start": "gemini-cf48634ae6",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T16:11:21.070005Z",
+    "agent_lines": 1,
+    "human_added": 188,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 189,
+    "agent_percentage": 0.5291005291005291
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
