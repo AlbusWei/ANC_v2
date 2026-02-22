@@ -37,3 +37,19 @@
 - Input: 架构边界变更但不提供 `openspec_ref`
 - Expected: 返回失败并标记同步阻断项
 - Evaluation Method: Exact Match
+
+### TC-005: 仓库外绝对输出路径不应导致崩溃
+
+- Type: Objective
+- Priority: P0
+- Input: `--output /tmp/...` 且其他输入合法
+- Expected: 返回 `0` 或 `3`（取决于判定），标准输出为输出路径，不得抛异常
+- Evaluation Method: Exact Match
+
+## Evaluation Configuration
+
+- Objective Eval Rounds: 1
+- Subjective Eval Rounds: 0
+- Judge Perspectives: [qa]
+- Timeout Seconds: 900
+- Retry Policy: max 1

@@ -207,7 +207,13 @@ def main() -> int:
         payload = load_json(in_path)
         result = run_audit(payload, root, report_rel)
         dump_json(out_path, result)
-        print(out_path.relative_to(root).as_posix())
+        out_abs = out_path
+        try:
+            display_path = out_abs.relative_to(root).as_posix()
+        except ValueError:
+            # Keep CLI output stable when caller provides an absolute output path outside repo.
+            display_path = out_abs.as_posix()
+        print(display_path)
         if result["decision"] != "pass":
             return 3
         return 0
