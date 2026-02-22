@@ -1,0 +1,35 @@
+{
+  "case_id": "TC-002",
+  "name": "test-compiler empty profile fail-closed",
+  "command": [
+    "python3",
+    "skills/system/qa/test-compiler/scripts/compile_test_doc.py",
+    "--test-doc",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md",
+    "--objective-ref",
+    "obj-m1-unified-quality-gate",
+    "--spec-ref",
+    "docs/design/modules/M1-openjudge-adapter-spec.md",
+    "--profile-set",
+    "",
+    "--output-dir",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/test-compiler-empty-profile"
+  ],
+  "return_code": 20,
+  "expected_return_code": 20,
+  "gate_decision": "test_invalid",
+  "expected_gate_decision": "test_invalid",
+  "payload": {
+    "test_datapoints_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/test-compiler-empty-profile/test_datapoints.json",
+    "tc_profile_map_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/test-compiler-empty-profile/tc_profile_map.json",
+    "compile_report_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/test-compiler-empty-profile/compile_report.json",
+    "gate_decision": "test_invalid",
+    "evidence_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/test-compiler-empty-profile",
+    "reasons": [
+      "invalid_test_contract",
+      "empty_profile_set"
+    ]
+  },
+  "passed": true,
+  "reasons": []
+}

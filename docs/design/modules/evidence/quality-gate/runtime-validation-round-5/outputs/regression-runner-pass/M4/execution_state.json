@@ -1,0 +1,14 @@
+{
+  "state": "completed",
+  "mode": "regression",
+  "module": "M4",
+  "started_at": "2026-02-22T09:00:52.270433+00:00",
+  "progress_signals": {
+    "log_delta": true,
+    "phase_progress": "bundle_loaded",
+    "output_heartbeat": true
+  },
+  "completed_at": "2026-02-22T09:00:52.272680+00:00",
+  "decision": "pass",
+  "case_count": 3
+}

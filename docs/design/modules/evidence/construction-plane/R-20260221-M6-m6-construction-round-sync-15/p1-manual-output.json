@@ -1,0 +1,9 @@
+{
+  "output_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/scope_baseline.md",
+  "evidence_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/manual-task-evidence-20260221220828.json",
+  "decision": "pass",
+  "reason": "scope baseline generated",
+  "generated_refs": {
+    "scope_baseline_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/scope_baseline.md"
+  }
+}

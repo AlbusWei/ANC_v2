@@ -9,7 +9,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
-version: "0.1.0"
+version: "0.3.0"
 ---
 
 # construction-plane-governance
@@ -27,12 +27,12 @@ version: "0.1.0"
 ## Input Contract
 
 - Format: json
-- Required fields: round_goal, change_scope_ref, changed_assets, linkage_targets, owner, openspec_ref
+- Required fields: round_id, round_goal, change_scope_ref, changed_assets, linkage_targets, owner, openspec_ref
 
 ## Output Contract
 
 - Format: json
-- Required fields: m6_update_bundle_ref, linkage_report_ref, registry_verify_report_ref, construction_plane_delta_ref, open_questions_ref, openspec_sync_ref
+- Required fields: m6_update_bundle_ref, linkage_report_ref, registry_verify_report_ref, construction_plane_delta_ref, open_questions_ref, openspec_sync_ref, round_evidence_log_ref, round_close_summary_ref
 
 ## Runtime Rules
 
@@ -41,3 +41,5 @@ version: "0.1.0"
 3. registry 校验失败时不得关闭回合。
 4. 开放问题必须带 owner 与下一步。
 5. 架构相关变更必须完成 OpenSpec 双向同步并附裁决快照。
+6. phase/AP 映射固定为 AP-032~AP-036，禁止使用未定义 phase 映射。
+7. 运行级执行推荐使用 `scripts/run_round.py` 与 `scripts/round_evidence_tool.py`。

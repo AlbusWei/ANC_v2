@@ -1,0 +1,10 @@
+{
+  "gate_decision": "test_invalid",
+  "case_results": [
+    {
+      "tc_id": "TC-X",
+      "priority": "P0",
+      "decision": "test_invalid"
+    }
+  ]
+}

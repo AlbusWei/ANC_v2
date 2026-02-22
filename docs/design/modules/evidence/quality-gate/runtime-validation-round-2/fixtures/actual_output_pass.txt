@@ -1,0 +1,4 @@
+module=M3
+gate_decision=pass
+reasons=compile_success
+evidence_ref=fixtures/evidence_bundle

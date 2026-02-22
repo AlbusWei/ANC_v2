@@ -1,0 +1,14 @@
+{
+  "verify_scope": "skill_registry",
+  "validation_report_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/registry-validator-missing-tool/registry_validation_report.json",
+  "gate_decision": "fail",
+  "evidence_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/registry-validator-missing-tool",
+  "reasons": [
+    "verify_failed"
+  ],
+  "return_code": 2,
+  "stdout": "",
+  "stderr": "/Library/Developer/CommandLineTools/usr/bin/python3: can't open file '/Users/albus/MyProjects/ANC_v2_worktrees/review-skills/shared/registry/not_exists_tool.py': [Errno 2] No such file or directory",
+  "parsed_stdout": null,
+  "validated_at": "2026-02-22T09:00:52.589155+00:00"
+}

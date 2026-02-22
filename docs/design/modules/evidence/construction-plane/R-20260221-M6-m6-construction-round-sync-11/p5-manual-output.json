@@ -1,0 +1,9 @@
+{
+  "output_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/round_close_summary.md",
+  "evidence_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/manual-task-evidence-20260221220833.json",
+  "decision": "pass",
+  "reason": "close verification summary generated",
+  "generated_refs": {
+    "round_close_summary_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/round_close_summary.md"
+  }
+}

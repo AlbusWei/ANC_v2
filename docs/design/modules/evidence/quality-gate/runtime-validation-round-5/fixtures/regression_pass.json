@@ -1,0 +1,9 @@
+{
+  "gate_decision": "pass",
+  "module_runs": [
+    {
+      "module": "M3",
+      "decision": "pass"
+    }
+  ]
+}

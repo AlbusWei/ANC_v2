@@ -1,0 +1,233 @@
+{
+  "mode": "subjective",
+  "module": "M3",
+  "preparation_bundle_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/preparation_bundle.index.json",
+  "actual_output_refs": [
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_baseline.txt",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_candidate.txt"
+  ],
+  "run": {
+    "evaluation_verdict": "hold",
+    "gate_decision": "hold",
+    "subjective_verdict": "review",
+    "win_rate": 0.5,
+    "seed": 42,
+    "rounds": 5,
+    "comparisons": [
+      {
+        "tc_id": "TC-001",
+        "round": 1,
+        "seed": 42,
+        "blind_assignment": {
+          "x": "candidate",
+          "y": "baseline"
+        },
+        "scores": {
+          "baseline": 1.0,
+          "candidate": 1.0
+        },
+        "winner": "tie"
+      },
+      {
+        "tc_id": "TC-001",
+        "round": 2,
+        "seed": 42,
+        "blind_assignment": {
+          "x": "candidate",
+          "y": "baseline"
+        },
+        "scores": {
+          "baseline": 1.0,
+          "candidate": 1.0
+        },
+        "winner": "tie"
+      },
+      {
+        "tc_id": "TC-001",
+        "round": 3,
+        "seed": 42,
+        "blind_assignment": {
+          "x": "baseline",
+          "y": "candidate"
+        },
+        "scores": {
+          "baseline": 1.0,
+          "candidate": 1.0
+        },
+        "winner": "tie"
+      },
+      {
+        "tc_id": "TC-001",
+        "round": 4,
+        "seed": 42,
+        "blind_assignment": {
+          "x": "candidate",
+          "y": "baseline"
+        },
+        "scores": {
+          "baseline": 1.0,
+          "candidate": 1.0
+        },
+        "winner": "tie"
+      },
+      {
+        "tc_id": "TC-001",
+        "round": 5,
+        "seed": 42,
+        "blind_assignment": {
+          "x": "candidate",
+          "y": "baseline"
+        },
+        "scores": {
+          "baseline": 1.0,
+          "candidate": 1.0
+        },
+        "winner": "tie"
+      },
+      {
+        "tc_id": "TC-002",
+        "round": 1,
+        "seed": 42,
+        "blind_assignment": {
+          "x": "candidate",
+          "y": "baseline"
+        },
+        "scores": {
+          "baseline": 1.0,
+          "candidate": 1.0
+        },
+        "winner": "tie"
+      },
+      {
+        "tc_id": "TC-002",
+        "round": 2,
+        "seed": 42,
+        "blind_assignment": {
+          "x": "candidate",
+          "y": "baseline"
+        },
+        "scores": {
+          "baseline": 1.0,
+          "candidate": 1.0
+        },
+        "winner": "tie"
+      },
+      {
+        "tc_id": "TC-002",
+        "round": 3,
+        "seed": 42,
+        "blind_assignment": {
+          "x": "candidate",
+          "y": "baseline"
+        },
+        "scores": {
+          "baseline": 1.0,
+          "candidate": 1.0
+        },
+        "winner": "tie"
+      },
+      {
+        "tc_id": "TC-002",
+        "round": 4,
+        "seed": 42,
+        "blind_assignment": {
+          "x": "baseline",
+          "y": "candidate"
+        },
+        "scores": {
+          "baseline": 1.0,
+          "candidate": 1.0
+        },
+        "winner": "tie"
+      },
+      {
+        "tc_id": "TC-002",
+        "round": 5,
+        "seed": 42,
+        "blind_assignment": {
+          "x": "candidate",
+          "y": "baseline"
+        },
+        "scores": {
+          "baseline": 1.0,
+          "candidate": 1.0
+        },
+        "winner": "tie"
+      },
+      {
+        "tc_id": "TC-003",
+        "round": 1,
+        "seed": 42,
+        "blind_assignment": {
+          "x": "candidate",
+          "y": "baseline"
+        },
+        "scores": {
+          "baseline": 1.0,
+          "candidate": 1.0
+        },
+        "winner": "tie"
+      },
+      {
+        "tc_id": "TC-003",
+        "round": 2,
+        "seed": 42,
+        "blind_assignment": {
+          "x": "candidate",
+          "y": "baseline"
+        },
+        "scores": {
+          "baseline": 1.0,
+          "candidate": 1.0
+        },
+        "winner": "tie"
+      },
+      {
+        "tc_id": "TC-003",
+        "round": 3,
+        "seed": 42,
+        "blind_assignment": {
+          "x": "candidate",
+          "y": "baseline"
+        },
+        "scores": {
+          "baseline": 1.0,
+          "candidate": 1.0
+        },
+        "winner": "tie"
+      },
+      {
+        "tc_id": "TC-003",
+        "round": 4,
+        "seed": 42,
+        "blind_assignment": {
+          "x": "candidate",
+          "y": "baseline"
+        },
+        "scores": {
+          "baseline": 1.0,
+          "candidate": 1.0
+        },
+        "winner": "tie"
+      },
+      {
+        "tc_id": "TC-003",
+        "round": 5,
+        "seed": 42,
+        "blind_assignment": {
+          "x": "candidate",
+          "y": "baseline"
+        },
+        "scores": {
+          "baseline": 1.0,
+          "candidate": 1.0
+        },
+        "winner": "tie"
+      }
+    ],
+    "reasons": [
+      "subjective_completed"
+    ]
+  },
+  "timestamp": "2026-02-21T22:11:59.890444+00:00"
+}

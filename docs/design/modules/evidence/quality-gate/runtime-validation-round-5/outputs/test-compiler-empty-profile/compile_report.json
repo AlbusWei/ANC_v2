@@ -1,0 +1,8 @@
+{
+  "status": "test_invalid",
+  "contract_errors": [
+    "empty_profile_set"
+  ],
+  "warnings": [],
+  "timestamp": "2026-02-22T09:00:46.644544+00:00"
+}

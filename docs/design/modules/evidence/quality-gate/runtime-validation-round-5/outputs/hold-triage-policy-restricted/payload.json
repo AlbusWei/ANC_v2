@@ -1,0 +1,43 @@
+{
+  "case_id": "TC-007",
+  "name": "hold-triage restricted policy fail-closed",
+  "command": [
+    "python3",
+    "skills/system/qa/hold-triage/scripts/hold_triage.py",
+    "--hold-case",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/fixtures/hold_case_no_progress.json",
+    "--runtime-log",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/fixtures/runtime_no_progress.log",
+    "--execution-state",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/fixtures/execution_state_no_progress.json",
+    "--triage-policy",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/fixtures/triage_policy_restricted.json",
+    "--previous-runtime-log",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/fixtures/runtime_no_progress_prev.log",
+    "--previous-execution-state",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/fixtures/execution_state_no_progress_prev.json",
+    "--output-dir",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/hold-triage-policy-restricted"
+  ],
+  "return_code": 40,
+  "expected_return_code": 40,
+  "gate_decision": "fail",
+  "expected_gate_decision": "fail",
+  "payload": {
+    "progress_signals_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/hold-triage-policy-restricted/progress_signals.json",
+    "triage_action": "fail",
+    "triage_report_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/hold-triage-policy-restricted/triage_report.json",
+    "action_execution_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/hold-triage-policy-restricted/action_execution.json",
+    "gate_decision": "fail",
+    "evidence_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/hold-triage-policy-restricted",
+    "reasons": [
+      "triage_action=fail",
+      "log_delta=False",
+      "phase_progress=False",
+      "output_heartbeat=False",
+      "missing_progress_signals"
+    ]
+  },
+  "passed": true,
+  "reasons": []
+}
