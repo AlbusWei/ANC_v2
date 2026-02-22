@@ -1,9 +1,11 @@
 {
   "cli_version": "0.4.5",
   "checkpoint_id": "3b981de70829",
+  "session_id": "codex-5da188d757de",
   "strategy": "manual-commit",
+  "created_at": "2026-02-22T14:20:21.977805Z",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 2,
+  "checkpoints_count": 1,
   "files_touched": [
     "docs/design/agents/control/bpm.md",
     "docs/design/agents/kernel/admin.md",
@@ -27,27 +29,24 @@
     "skills/system/system-config-updater/TEST.md",
     "skills/system/system-config-updater/scripts/system_config_updater_runner.py"
   ],
-  "sessions": [
-    {
-      "metadata": "/3b/981de70829/0/metadata.json",
-      "transcript": "/3b/981de70829/0/full.jsonl",
-      "context": "/3b/981de70829/0/context.md",
-      "content_hash": "/3b/981de70829/0/content_hash.txt",
-      "prompt": "/3b/981de70829/0/prompt.txt"
-    },
-    {
-      "metadata": "/3b/981de70829/1/metadata.json",
-      "transcript": "/3b/981de70829/1/full.jsonl",
-      "context": "/3b/981de70829/1/context.md",
-      "content_hash": "/3b/981de70829/1/content_hash.txt",
-      "prompt": "/3b/981de70829/1/prompt.txt"
-    }
-  ],
+  "agent": "Gemini CLI",
+  "turn_id": "30dff5c9926b",
+  "transcript_identifier_at_start": "gemini-ef62c58daa",
   "token_usage": {
     "input_tokens": 0,
     "cache_creation_tokens": 0,
     "cache_read_tokens": 0,
     "output_tokens": 0,
     "api_call_count": 0
-  }
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T14:20:21.969717Z",
+    "agent_lines": 0,
+    "human_added": 1190,
+    "human_modified": 9,
+    "human_removed": 0,
+    "total_committed": 1190,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
 }
