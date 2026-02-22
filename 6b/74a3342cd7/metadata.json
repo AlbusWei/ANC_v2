@@ -3,7 +3,7 @@
   "checkpoint_id": "6b74a3342cd7",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 5,
+  "checkpoints_count": 6,
   "files_touched": [
     "agents/control/BPM/HEARTBEAT.md",
     "agents/kernel/admin/HEARTBEAT.md",
@@ -61,6 +61,13 @@
       "context": "/6b/74a3342cd7/2/context.md",
       "content_hash": "/6b/74a3342cd7/2/content_hash.txt",
       "prompt": "/6b/74a3342cd7/2/prompt.txt"
+    },
+    {
+      "metadata": "/6b/74a3342cd7/3/metadata.json",
+      "transcript": "/6b/74a3342cd7/3/full.jsonl",
+      "context": "/6b/74a3342cd7/3/context.md",
+      "content_hash": "/6b/74a3342cd7/3/content_hash.txt",
+      "prompt": "/6b/74a3342cd7/3/prompt.txt"
     }
   ],
   "token_usage": {
