@@ -6,6 +6,14 @@
   "checkpoints_count": 1,
   "files_touched": [
     "agents/kernel/system-analyst/AGENTS.md",
+    "agents/kernel/system-analyst/IDENTITY.md",
+    "agents/kernel/system-analyst/MEMORY.md",
+    "agents/kernel/system-analyst/SOUL.md",
+    "agents/kernel/system-analyst/TOOLS.md",
+    "agents/kernel/system-analyst/USER.md",
+    "config/openclaw.phase05.fragment.json",
+    "config/openclaw.phase05.with-entry.fragment.json",
+    "config/openclaw.projection.profiles.json",
     "docs/architecture/construction_plane.md",
     "docs/design/agents/kernel/system-analyst.md",
     "docs/design/data-models/registry-schemas.md",
@@ -13,12 +21,21 @@
     "docs/design/inventories/process-inventory.md",
     "docs/design/inventories/skill-inventory.md",
     "docs/design/modules/M2-bpm-engine.md",
+    "docs/design/modules/M6-construction-plane.md",
     "docs/design/processes/governance-processes.md",
+    "docs/design/processes/runtime-policy-calibration-process.md",
     "docs/design/skills/system-skills.md",
+    "processes/meta/runtime-policy-calibration/PROCESS.md",
+    "processes/meta/runtime-policy-calibration/SKILL.md",
+    "processes/meta/runtime-policy-calibration/process.json",
+    "processes/meta/runtime-policy-calibration/scripts/runtime_policy_calibration_runner.py",
     "shared/registry/agent_directory.json",
     "shared/registry/process_registry.json",
     "shared/registry/registry_contract_tool.py",
     "shared/registry/skill_registry.json",
+    "skills/system/system-feedback-digest/SKILL.md",
+    "skills/system/system-feedback-digest/TEST.md",
+    "skills/system/system-feedback-digest/scripts/system_feedback_digest_runner.py",
     "tests/m2-bpm-runtime/TC-ANL.md",
     "tests/m2-bpm-runtime/TEST.md",
     "tests/m2-bpm-runtime/run_tc_anl.py"
@@ -58,6 +75,13 @@
       "context": "/42/d9ceac4c37/4/context.md",
       "content_hash": "/42/d9ceac4c37/4/content_hash.txt",
       "prompt": "/42/d9ceac4c37/4/prompt.txt"
+    },
+    {
+      "metadata": "/42/d9ceac4c37/5/metadata.json",
+      "transcript": "/42/d9ceac4c37/5/full.jsonl",
+      "context": "/42/d9ceac4c37/5/context.md",
+      "content_hash": "/42/d9ceac4c37/5/content_hash.txt",
+      "prompt": "/42/d9ceac4c37/5/prompt.txt"
     }
   ],
   "token_usage": {
