@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "63e759026872",
+  "strategy": "manual-commit",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/modules/evidence/construction-plane/README.md",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/cases/TC-012/payload.json",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/cases/TC-013/payload.json",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/evaluation-runner-llm-live/raw_eval.json",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/regression_report.json",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/regression_summary.md",
+    "skills/system/construction-audit/TEST.md",
+    "skills/system/construction-audit/scripts/construction_audit.py",
+    "tests/README.md",
+    "tests/m6-governance/TEST.md",
+    "tests/m6-governance/run_post_dev_regression.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/63/e759026872/0/metadata.json",
+      "transcript": "/63/e759026872/0/full.jsonl",
+      "context": "/63/e759026872/0/context.md",
+      "content_hash": "/63/e759026872/0/content_hash.txt",
+      "prompt": "/63/e759026872/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
