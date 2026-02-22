@@ -1,0 +1,41 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "1aa6607fabc9",
+  "session_id": "codex-719fa2242b4a",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T09:10:26.385159Z",
+  "branch": "codex/review-skills",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "skills/system/evaluation-runner/SKILL.md",
+    "skills/system/evaluation-runner/TEST.md",
+    "skills/system/hold-triage/SKILL.md",
+    "skills/system/hold-triage/TEST.md",
+    "skills/system/regression-runner/SKILL.md",
+    "skills/system/regression-runner/TEST.md",
+    "skills/system/test-compiler/SKILL.md",
+    "skills/system/test-compiler/TEST.md",
+    "skills/system/verdict-normalizer/SKILL.md",
+    "skills/system/verdict-normalizer/TEST.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "1266435eb603",
+  "transcript_identifier_at_start": "gemini-5efe6a423e",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T09:10:26.363965Z",
+    "agent_lines": 0,
+    "human_added": 9962,
+    "human_modified": 574,
+    "human_removed": 0,
+    "total_committed": 9962,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-skills/.entire/codex-bridge/transcript.json"
+}
