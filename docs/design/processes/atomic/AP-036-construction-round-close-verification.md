@@ -15,6 +15,7 @@
   - round_close_summary_ref
 - Fail-Closed:
   - `registry_contract_tool.py verify` 失败
+  - `registry_contract_tool.py verify-m6 --round-dir <round-dir>` 失败
   - 回合日志缺失 round_open 或 round_close 事件
   - 任一提交缺失 Entire-Checkpoint
 - Evidence:

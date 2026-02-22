@@ -1,6 +1,6 @@
 {
   "process_id": "construction-plane-governance",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [],
@@ -99,7 +99,7 @@
       "spec_ref": "docs/design/processes/atomic/AP-035-openspec-round-sync.md#ap-035-openspec-round-sync",
       "sipoc": {
         "supplier": "p3",
-        "input": "round_id + round_goal + openspec_ref + anc_design_refs + decision_snapshot_ref + round_evidence_log_ref",
+        "input": "round_id + round_goal + openspec_ref + anc_design_refs + decision_snapshot_ref + sync_actor + trigger_mode + risk_level + checkpoint_count + commit_count + round_evidence_log_ref + output_ref",
         "process": "execute openspec sync and generate machine-readable sync record",
         "output": "openspec_sync_ref",
         "client": "p5"

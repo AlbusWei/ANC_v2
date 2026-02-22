@@ -40,6 +40,10 @@
 - [x] 锁定证据写入策略：提交级证据进入 `round-evidence.jsonl`，施工平面主文档仅在回合关闭时汇总
 - [x] 锁定 `round_id` 规范：`R-YYYYMMDD-M6-<change_key>-NN`，`NN` 按同一 `change_key` 递增
 - [x] 完成 M6 AP 化补齐：新增 AP-032~AP-036 并将 `construction-plane-governance` 全 phase 映射到专用 AP
+- [x] 完成 M6 执行闭环脚本：`manual_task_runner` + `construction_audit` + `round_evidence_tool` + `run_round`
+- [x] 完成 M6 专项门禁：`registry_contract_tool.py verify-m6`
+- [x] 完成 M6 首轮运行级 dry-run（A 通过，B/C Fail-Closed），并落盘证据索引 `docs/design/modules/evidence/construction-plane/README.md`
+- [x] 将 `construction-plane-governance`、`sys.arch.construction-audit`、`system.integration.openspec-sync` 生命周期从 `draft` 提升到 `review`
 
 ## 进行中（In Progress）
 
@@ -50,8 +54,7 @@
 - [ ] 完成 trigger runtime 动态策略实证校准并形成参数回写节奏
 - [ ] 建立 `runtime-policy-calibration` 治理节奏并纳入 M1/M2 首批后验议题
 - [ ] 触发 M3 `full-development/hotfix/refactor` 首轮运行级 dry-run 并沉淀证据
-- [ ] 按“文档级先行”策略完成 M6 × OpenSpec 双向映射样板与冲突裁决模板
-- [ ] 触发 `construction-plane-governance` 首轮运行级 dry-run 并沉淀证据（后置）
+- [ ] 基于首轮证据推进 M6 第二轮运行级回归（含 git-range + trailer 实盘对账）
 
 ## 下一步（Next）
 
@@ -65,7 +68,7 @@
 8. 将 M1 测试时长估计与 M2 动态策略问题统一纳入 `runtime-policy-calibration` 治理回路。
 9. 收敛 M6 周期审查节奏与 owner 责任模型，并写入治理流程基线。
 10. 与 OpenSpec 协同线程联调一次“冲突裁决 -> 双向回写”演练。
-11. 为 `round-evidence.jsonl` 补充校验脚本（事件顺序、checkpoint/commit 对账、`round_id` 正则校验）。
+11. 收敛 `verify-m6` 与 CI/pre-close gate 集成方式，避免人工绕过。
 
 ## 里程碑
 

@@ -1,6 +1,6 @@
 # M6 — 施工面模块详细设计
 
-> 版本: v0.9.0 | 建设优先级: P0 | 最后更新: 2026-02-21
+> 版本: v1.0.0 | 建设优先级: P0 | 最后更新: 2026-02-21
 
 ## 模块定位
 
@@ -14,6 +14,7 @@
 3. `docs/design/skills/construction-plane-skills.md`
 4. `docs/design/processes/construction-plane-governance-process.md`
 5. `docs/design/interfaces/openspec-collaboration-protocol.md`
+6. `docs/design/modules/evidence/construction-plane/README.md`
 
 ## Phase 1 成功优先级
 
@@ -42,13 +43,13 @@
 | 组件 | 目标资产 | 状态 |
 |---|---|---|
 | construction board | `docs/architecture/construction_plane.md` | 已落盘（active） |
-| linkage auditor | `sys.arch.construction-audit` | 本轮新增（draft） |
-| openspec sync executor | `system.integration.openspec-sync` | 本轮新增（draft） |
-| governance flow | `construction-plane-governance` | 本轮新增（draft） |
+| linkage auditor | `sys.arch.construction-audit` | 运行级验证通过（review） |
+| openspec sync executor | `system.integration.openspec-sync` | 运行级验证通过（review） |
+| governance flow | `construction-plane-governance` | 运行级验证通过（review） |
 | OpenSpec sync protocol | `docs/design/interfaces/openspec-collaboration-protocol.md` | 本轮新增（draft） |
 | OpenSpec sync schema | `docs/design/data-models/openspec-collaboration-schema.json` | 本轮新增（draft） |
 | dependency baseline | `docs/design/modules/module-dependency-matrix.md` | 已落盘（active） |
-| module detailed spec | `docs/design/modules/M6-construction-plane.md` | 本轮重构（v0.9.0） |
+| module detailed spec | `docs/design/modules/M6-construction-plane.md` | 运行级收口（v1.0.0） |
 
 ## 流程连续性模型
 
@@ -126,7 +127,7 @@
 
 1. 受影响资产未形成联动清单，禁止回合关闭。
 2. design/inventory/registry 任一缺项，施工状态不得标记为 Done。
-3. `registry_contract_tool.py verify` 失败，默认阻断并升级 `actor -> owner -> bpm -> admin -> human`。
+3. `registry_contract_tool.py verify` 或 `registry_contract_tool.py verify-m6 --round-dir <round-dir>` 失败，默认阻断并升级 `actor -> owner -> bpm -> admin -> human`。
 4. 开放问题缺失 owner 或下一步，禁止从 In Progress 迁移到 Done。
 5. 架构相关变更缺失 `openspec_ref` 或双向映射，禁止回合关闭。
 6. OpenSpec 与 ANC 文档语义冲突且未形成 architect 裁决，禁止推进。
@@ -146,15 +147,15 @@
 
 ## 验收清单
 
-- [ ] `construction-plane-governance` 已注册并可被 BPM 调度
-- [ ] `sys.arch.construction-audit` 已注册且具备 Capability Contract + test_mount
-- [ ] `system.integration.openspec-sync` 已注册并可产出 schema 合法记录
-- [ ] 修改 module/layer 设计时，联动门禁可在同回合闭合
-- [ ] 施工回合可产出最小证据包并可追溯
-- [ ] 施工回合遵循 `1 round = 1 OpenSpec change = N Entire checkpoints`
-- [ ] `round_id` 与 `JSONL` 证据日志可被脚本稳定解析
-- [ ] 开放问题具备 owner、计划阶段与下一步动作
-- [ ] 架构相关回合具备 OpenSpec 双向映射且无语义漂移
+- [x] `construction-plane-governance` 已注册并可被 BPM 调度
+- [x] `sys.arch.construction-audit` 已注册且具备 Capability Contract + test_mount
+- [x] `system.integration.openspec-sync` 已注册并可产出 schema 合法记录
+- [x] 修改 module/layer 设计时，联动门禁可在同回合闭合
+- [x] 施工回合可产出最小证据包并可追溯
+- [x] 施工回合遵循 `1 round = 1 OpenSpec change = N Entire checkpoints`
+- [x] `round_id` 与 `JSONL` 证据日志可被脚本稳定解析
+- [x] 开放问题具备 owner、计划阶段与下一步动作
+- [x] 架构相关回合具备 OpenSpec 双向映射且无语义漂移
 
 ## 已定决策（2026-02-21）
 

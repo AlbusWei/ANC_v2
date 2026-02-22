@@ -30,7 +30,7 @@
 | hotfix | hotfix | 复合 | bpm | 7 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/hotfix/` |
 | refactor | refactor | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/refactor/` |
 | governed-config-change | governed-config-change | 复合 | bpm | 5 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change/` |
-| construction-plane-governance | construction-plane-governance | 复合 | architect | 5 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/construction-plane-governance/` |
+| construction-plane-governance | construction-plane-governance | 复合 | architect | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/construction-plane-governance/` |
 | trigger-schedule-runtime | trigger-schedule-runtime | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-schedule-runtime/` |
 | trigger-event-runtime | trigger-event-runtime | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-event-runtime/` |
 
@@ -77,6 +77,7 @@
 9. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/hotfix-process.md`
 10. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/refactor-process.md`
 11. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/construction-plane-governance-process.md`
+12. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/construction-plane-governance-runtime-contract-baseline.md`
 
 新增策略参考文档：
 

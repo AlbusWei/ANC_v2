@@ -10,7 +10,7 @@
 
 - Type: Objective
 - Priority: P0
-- Input: 提供完整 `round_id/change_scope_ref/changed_assets/linkage_targets/round_goal`
+- Input: 提供完整 `round_id/scope_baseline_ref/changed_assets/linkage_targets/openspec_ref`
 - Expected: 产出 `linkage_report_ref`，`missing_items=[]`，`blocking_risks=[]`
 - Evaluation Method: Exact Match
 
@@ -26,7 +26,7 @@
 
 - Type: Objective
 - Priority: P1
-- Input: `change_scope_ref` 指向不存在路径
+- Input: `scope_baseline_ref` 指向不存在路径
 - Expected: 返回失败并记录不可达证据引用
 - Evaluation Method: Exact Match
 

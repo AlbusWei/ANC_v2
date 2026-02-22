@@ -1,0 +1,10 @@
+{
+  "m6_update_bundle_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/m6_update_bundle.json",
+  "linkage_report_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/linkage_report.md",
+  "openspec_sync_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/openspec-sync-record.json",
+  "registry_verify_report_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/registry_verify.log",
+  "construction_plane_delta_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/construction_plane_delta.md",
+  "open_questions_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/open_questions.md",
+  "round_evidence_log_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/round-evidence.jsonl",
+  "round_close_summary_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/round_close_summary.md"
+}

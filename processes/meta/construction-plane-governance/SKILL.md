@@ -9,7 +9,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
-version: "0.2.0"
+version: "0.3.0"
 ---
 
 # construction-plane-governance
@@ -42,3 +42,4 @@ version: "0.2.0"
 4. 开放问题必须带 owner 与下一步。
 5. 架构相关变更必须完成 OpenSpec 双向同步并附裁决快照。
 6. phase/AP 映射固定为 AP-032~AP-036，禁止使用未定义 phase 映射。
+7. 运行级执行推荐使用 `scripts/run_round.py` 与 `scripts/round_evidence_tool.py`。

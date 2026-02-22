@@ -26,16 +26,14 @@ input_contract:
   format: json
   required:
     - round_id
-    - change_scope_ref
+    - scope_baseline_ref
     - changed_assets
     - linkage_targets
-    - round_goal
     - openspec_ref
   validation:
-    - change_scope_ref must point to a reachable planning or requirement document
+    - scope_baseline_ref must point to a reachable baseline document from AP-032
     - changed_assets must be a non-empty list of repo-relative paths
-    - linkage_targets must include docs, inventory and registry scopes
-    - round_goal must be explicit and testable
+    - linkage_targets must include design, inventory, registry and construction_plane scopes
     - openspec_ref must be provided for architecture-affecting changes
 output_contract:
   format: json
@@ -62,4 +60,5 @@ references:
   module_spec: docs/design/modules/M6-construction-plane.md
   process_spec: docs/design/processes/construction-plane-governance-process.md
   openspec_protocol: docs/design/interfaces/openspec-collaboration-protocol.md
+  runner_script: skills/system/construction-audit/scripts/construction_audit.py
 ```

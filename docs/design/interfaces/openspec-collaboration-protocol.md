@@ -89,7 +89,8 @@
 2. `construction-plane-governance` 流程在 `verify-and-close` 阶段执行 OpenSpec 同步校验。
 3. `construction_plane.md` 的开放问题与决策状态需与 OpenSpec 线程状态一致，并在回合关闭时写入摘要。
 4. `registry_contract_tool.py verify` 必须包含 OpenSpec 协同 Schema 一致性校验。
-5. 提交建议携带 `Entire-Checkpoint`、`Round-ID`、`OpenSpec-Change` 三类 trailer，用于回合审计与对账。
+5. `registry_contract_tool.py verify-m6 --round-dir <round-dir>` 必须在回合关闭前通过。
+6. 提交建议携带 `Entire-Checkpoint`、`Round-ID`、`OpenSpec-Change` 三类 trailer，用于回合审计与对账。
 
 ## 9. 扩展 Fail-Closed（回合对账）
 

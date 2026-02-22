@@ -252,8 +252,8 @@
       "manifest_path": "processes/meta/construction-plane-governance/process.json",
       "objective_ref": "obj-m6-construction-plane-governance",
       "owner": "architect",
-      "version": "0.2.0",
-      "status": "draft",
+      "version": "0.3.0",
+      "status": "review",
       "phase_count": 5,
       "openclaw": {
         "projection_mode": "bundle",

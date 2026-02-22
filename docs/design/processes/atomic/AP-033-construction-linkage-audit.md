@@ -17,6 +17,7 @@
   - recommended_actions
 - Fail-Closed:
   - linkage_targets 缺失 design/inventory/registry/construction_plane 任一域
+  - scope_baseline_ref 不可达或不包含回合边界信息
   - 证据引用不可达
   - 架构回合缺失 openspec_ref 或语义冲突无裁决
 - Evidence:

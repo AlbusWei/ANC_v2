@@ -1,6 +1,6 @@
 # construction-plane-governance 流程设计
 
-> 版本: v0.5.0 | 分类: Governance Process | 层级: P4 | owner: architect | 最后更新: 2026-02-21
+> 版本: v0.7.0 | 分类: Governance Process | 层级: P4 | owner: architect | 最后更新: 2026-02-21
 
 ## 目标
 
@@ -20,7 +20,8 @@
 ## 协同协议引用
 
 1. OpenSpec 协同协议：`docs/design/interfaces/openspec-collaboration-protocol.md`
-2. 执行策略：Phase 1 以文档级设计与阐释为主，运行级 dry-run 后置。
+2. 执行策略：Phase 1 已完成运行级 dry-run（A/B/C），后续进入回归轮次。
+3. 运行契约基线：`docs/design/processes/construction-plane-governance-runtime-contract-baseline.md`
 
 ## 输入契约
 
@@ -65,6 +66,7 @@
    - target: `system.integration.openspec-sync`
    - ap_ref: `docs/design/processes/atomic/AP-035-openspec-round-sync.md`
    - 目标：执行 OpenSpec 双向映射校验并产出结构化同步记录。
+   - 输入补充：`sync_actor`, `trigger_mode`, `risk_level`, `checkpoint_count`, `commit_count`, `output_ref`。
 5. `p5 verify-and-close`
    - actor: `bpm`
    - target: `system.ops.manual-task`
@@ -75,16 +77,22 @@
 
 `p1 -> p2 -> p3 -> p4 -> p5 -> end`
 
+## Runtime Tooling
+
+1. `processes/meta/construction-plane-governance/scripts/run_round.py`
+2. `processes/meta/construction-plane-governance/scripts/round_evidence_tool.py`
+
 ## Fail-Closed
 
 1. 联动目标缺失或不可追溯，直接阻断回合关闭。
 2. `registry_contract_tool.py verify` 失败，禁止标记 Done。
-3. 开放问题未记录 owner/下一步，禁止关闭回合。
-4. 架构相关变更缺失 `openspec_ref` 或 `openspec_sync_ref`，禁止关闭回合。
-5. 任一代码提交缺失 `Entire-Checkpoint`，禁止关闭回合。
-6. `checkpoint_count` 与 `commit_count` 不一致，禁止关闭回合。
-7. 同一 `round_id` 出现多个 `openspec_ref`，禁止关闭回合。
-8. 回合日志缺失 `round_close` 事件，禁止关闭回合。
+3. `registry_contract_tool.py verify-m6 --round-dir <round-dir>` 失败，禁止标记 Done。
+4. 开放问题未记录 owner/下一步，禁止关闭回合。
+5. 架构相关变更缺失 `openspec_ref` 或 `openspec_sync_ref`，禁止关闭回合。
+6. 任一代码提交缺失 `Entire-Checkpoint`，禁止关闭回合。
+7. `checkpoint_count` 与 `commit_count` 不一致，禁止关闭回合。
+8. 同一 `round_id` 出现多个 `openspec_ref`，禁止关闭回合。
+9. 回合日志缺失 `round_close` 事件，禁止关闭回合。
 
 ## 证据包最小集
 

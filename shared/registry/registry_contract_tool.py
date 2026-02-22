@@ -7,6 +7,7 @@ Commands:
   - project-openclaw: project registry data to managed OpenClaw config paths.
   - check-protocol-consistency: enforce BPM/context/process protocol canonical contract.
   - verify: run validate + capability check + protocol check + docs check + projection check.
+  - verify-m6: run M6 runtime evidence and gate checks for one round directory.
 """
 
 from __future__ import annotations
@@ -14,6 +15,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
@@ -69,6 +71,7 @@ JSON_BLOCK_RE = re.compile(
     r"```json\s*\n(?P<body>.*?)\n```",
     re.MULTILINE | re.DOTALL,
 )
+ROUND_ID_RE = re.compile(r"^R-\d{8}-M6-[a-z0-9-]+-\d{2}$")
 
 
 class ContractError(Exception):
@@ -950,6 +953,228 @@ def check_openspec_collaboration_consistency(
         raise ContractError("\n".join(errors))
 
 
+def _load_jsonl_events(path: Path) -> List[Dict[str, Any]]:
+    if not path.exists():
+        raise ContractError(f"{path}: missing round evidence log")
+
+    events: List[Dict[str, Any]] = []
+    for line_no, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        if not line.strip():
+            continue
+        try:
+            item = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise ContractError(f"{path}: invalid JSONL line {line_no}: {exc}") from exc
+        if not isinstance(item, dict):
+            raise ContractError(f"{path}: line {line_no} must be JSON object")
+        events.append(item)
+    return events
+
+
+def _resolve_artifact_path(round_dir: Path, ref: str) -> Path:
+    ref_path = Path(ref)
+    if ref_path.is_absolute():
+        return ref_path
+    root_candidate = ROOT / ref_path
+    if root_candidate.exists():
+        return root_candidate
+    return (round_dir / ref_path).resolve()
+
+
+def _validate_m6_phase_ap_coverage(manifest: Dict[str, Any], errors: List[str]) -> None:
+    phases = manifest.get("phases", [])
+    if not isinstance(phases, list):
+        errors.append(f"{M6_MANIFEST_PATH}: phases must be array")
+        return
+    expected = {"AP-032", "AP-033", "AP-034", "AP-035", "AP-036"}
+    found: set[str] = set()
+    for phase in phases:
+        if not isinstance(phase, dict):
+            continue
+        spec_ref = phase.get("spec_ref")
+        if isinstance(spec_ref, str):
+            for ap in expected:
+                if ap in spec_ref:
+                    found.add(ap)
+    missing = sorted(expected - found)
+    if missing:
+        errors.append(
+            f"{M6_MANIFEST_PATH}: phases must cover AP-032~AP-036; missing {missing!r}"
+        )
+
+
+def _collect_git_commits(git_range: str, errors: List[str]) -> List[Tuple[str, str]]:
+    proc = subprocess.run(
+        ["git", "log", "--format=%H%n%B%n__END_COMMIT__", git_range],
+        cwd=str(ROOT),
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if proc.returncode != 0:
+        errors.append(f"git log failed for range {git_range!r}: {proc.stderr.strip()}")
+        return []
+
+    commits: List[Tuple[str, str]] = []
+    for block in proc.stdout.split("__END_COMMIT__"):
+        block = block.strip()
+        if not block:
+            continue
+        lines = block.splitlines()
+        sha = lines[0].strip()
+        message = "\n".join(lines[1:]).strip()
+        commits.append((sha, message))
+    return commits
+
+
+def _validate_round_evidence(
+    events: List[Dict[str, Any]],
+    git_range: Optional[str],
+    errors: List[str],
+) -> None:
+    if not events:
+        errors.append("round evidence log is empty")
+        return
+
+    allowed = {"round_open", "checkpoint_synced", "round_close"}
+    event_names = [event.get("event") for event in events]
+    for idx, event_name in enumerate(event_names):
+        if event_name not in allowed:
+            errors.append(f"round evidence event[{idx}] invalid event: {event_name!r}")
+
+    if events[0].get("event") != "round_open":
+        errors.append("round_open must be the first event")
+    if events[-1].get("event") != "round_close":
+        errors.append("round_close must be the last event")
+
+    if event_names.count("round_open") != 1:
+        errors.append("round_open must appear exactly once")
+    if event_names.count("round_close") != 1:
+        errors.append("round_close must appear exactly once")
+
+    for idx, event in enumerate(events):
+        round_id = event.get("round_id")
+        openspec_ref = event.get("openspec_ref")
+        if not isinstance(round_id, str) or re.match(ROUND_ID_RE, round_id) is None:
+            errors.append(f"round evidence event[{idx}] invalid round_id: {round_id!r}")
+        if not isinstance(openspec_ref, str) or not openspec_ref.strip():
+            errors.append(f"round evidence event[{idx}] openspec_ref must be non-empty string")
+
+    round_ids = {event.get("round_id") for event in events}
+    openspec_refs = {event.get("openspec_ref") for event in events}
+    if len(round_ids) != 1:
+        errors.append(f"round evidence must contain single round_id, found {sorted(round_ids)!r}")
+    if len(openspec_refs) != 1:
+        errors.append(
+            f"round evidence must contain single openspec_ref, found {sorted(openspec_refs)!r}"
+        )
+
+    checkpoint_events = [e for e in events if e.get("event") == "checkpoint_synced"]
+    close_event = next((e for e in events if e.get("event") == "round_close"), None)
+    if close_event:
+        cp = close_event.get("checkpoint_count")
+        cm = close_event.get("commit_count")
+        if not isinstance(cp, int) or not isinstance(cm, int):
+            errors.append("round_close checkpoint_count and commit_count must be integers")
+        else:
+            if cp != cm:
+                errors.append("round_close checkpoint_count must equal commit_count")
+            if cp != len(checkpoint_events):
+                errors.append(
+                    f"round_close checkpoint_count {cp} does not match checkpoint events {len(checkpoint_events)}"
+                )
+
+    if git_range:
+        commits = _collect_git_commits(git_range, errors)
+        for sha, message in commits:
+            if re.search(r"^Entire-Checkpoint:\\s+\\S+", message, flags=re.MULTILINE) is None:
+                errors.append(f"git commit missing Entire-Checkpoint trailer: {sha}")
+        if close_event and isinstance(close_event.get("commit_count"), int):
+            expected_count = close_event["commit_count"]
+            if expected_count != len(commits):
+                errors.append(
+                    f"round_close commit_count {expected_count} does not match git range commits {len(commits)}"
+                )
+
+
+def _run_verify_m6_cmd(args: argparse.Namespace) -> int:
+    _, skills_payload, processes_payload = validate_all_registries()
+    check_protocol_consistency(skills_payload, processes_payload)
+    check_openspec_collaboration_consistency(skills_payload, processes_payload)
+
+    errors: List[str] = []
+    round_dir = Path(args.round_dir)
+    if not round_dir.is_absolute():
+        round_dir = (ROOT / round_dir).resolve()
+    if not round_dir.exists() or not round_dir.is_dir():
+        raise ContractError(f"round_dir not found: {round_dir}")
+
+    manifest_payload = load_json(M6_MANIFEST_PATH)
+    _validate_m6_phase_ap_coverage(manifest_payload, errors)
+
+    required_outputs = set(manifest_payload.get("output_contract", {}).get("required", []))
+    round_output_path = round_dir / "round-output.json"
+    if not round_output_path.exists():
+        errors.append(f"{round_output_path}: missing round output bundle")
+        round_output = {}
+    else:
+        round_output = load_json(round_output_path)
+        if not isinstance(round_output, dict):
+            errors.append(f"{round_output_path}: must be JSON object")
+            round_output = {}
+        else:
+            missing = sorted(required_outputs - set(round_output.keys()))
+            if missing:
+                errors.append(
+                    f"{round_output_path}: missing required output fields {missing!r}"
+                )
+
+    round_close_summary_ref = round_output.get("round_close_summary_ref")
+    if not isinstance(round_close_summary_ref, str) or not round_close_summary_ref.strip():
+        errors.append("pre-close gate: missing round_close_summary_ref")
+    else:
+        summary_path = _resolve_artifact_path(round_dir, round_close_summary_ref)
+        if not summary_path.exists():
+            errors.append(f"pre-close gate: round_close_summary_ref missing file {summary_path}")
+
+    round_evidence_ref = round_output.get("round_evidence_log_ref")
+    if isinstance(round_evidence_ref, str) and round_evidence_ref.strip():
+        evidence_path = _resolve_artifact_path(round_dir, round_evidence_ref)
+    else:
+        evidence_path = round_dir / "round-evidence.jsonl"
+    events = _load_jsonl_events(evidence_path)
+    _validate_round_evidence(events, git_range=args.git_range, errors=errors)
+
+    openspec_sync_ref = round_output.get("openspec_sync_ref")
+    if not isinstance(openspec_sync_ref, str) or not openspec_sync_ref.strip():
+        errors.append("round output missing openspec_sync_ref")
+    else:
+        openspec_path = _resolve_artifact_path(round_dir, openspec_sync_ref)
+        if not openspec_path.exists():
+            errors.append(f"openspec_sync_ref file missing: {openspec_path}")
+        else:
+            record = load_json(openspec_path)
+            schema_payload = load_json(OPENSPEC_SCHEMA_PATH)
+            schema_errors: List[str] = []
+            validate_by_schema(record, schema_payload, "openspec_sync_record", schema_errors)
+            if schema_errors:
+                errors.extend(schema_errors)
+
+    registry_verify_ref = round_output.get("registry_verify_report_ref")
+    if not isinstance(registry_verify_ref, str) or not registry_verify_ref.strip():
+        errors.append("round output missing registry_verify_report_ref")
+    else:
+        registry_verify_path = _resolve_artifact_path(round_dir, registry_verify_ref)
+        if not registry_verify_path.exists():
+            errors.append(f"registry_verify_report_ref file missing: {registry_verify_path}")
+
+    if errors:
+        raise ContractError("\n".join(errors))
+
+    print(f"verify-m6 passed for {round_dir}")
+    return 0
+
+
 def _schema_type(schema: Dict[str, Any]) -> str:
     t = schema.get("type", "any")
     if isinstance(t, list):
@@ -1389,6 +1614,18 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_verify = sub.add_parser("verify", help="Run full consistency checks")
     p_verify.set_defaults(func=_run_verify_cmd)
+
+    p_verify_m6 = sub.add_parser("verify-m6", help="Run M6 round evidence and gate checks")
+    p_verify_m6.add_argument(
+        "--round-dir",
+        required=True,
+        help="Round evidence directory (repo-relative or absolute)",
+    )
+    p_verify_m6.add_argument(
+        "--git-range",
+        help="Optional git range used for Entire-Checkpoint trailer validation",
+    )
+    p_verify_m6.set_defaults(func=_run_verify_m6_cmd)
 
     return parser
 
