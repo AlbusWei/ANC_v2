@@ -1,0 +1,46 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "6b74a3342cd7",
+  "strategy": "manual-commit",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "agents/control/BPM/HEARTBEAT.md",
+    "agents/kernel/admin/HEARTBEAT.md",
+    "docs/architecture/construction_plane.md",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/cases/TC-013/stderr.txt",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/evaluation-runner-llm-invalid-model/execution_state.json",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/evaluation-runner-llm-invalid-model/raw_eval.json",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/evaluation-runner-llm-live/execution_state.json",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/evaluation-runner-llm-live/raw_eval.json",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/preparation_bundle_m6_llm.index.json",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/regression_report.json",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/regression_summary.md",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/test-compiler-llm/compile_report.json",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/test-compiler-llm/tc_profile_map.json",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/test-compiler-llm/test_datapoints.json",
+    "openspec/changes/archive/2026-02-22-m6-construction-round-sync/.openspec.yaml",
+    "openspec/changes/archive/2026-02-22-m6-construction-round-sync/README.md",
+    "openspec/changes/archive/2026-02-22-m6-construction-round-sync/proposal.md",
+    "openspec/changes/archive/2026-02-22-m6-construction-round-sync/specs/construction-plane/spec.md",
+    "openspec/changes/archive/2026-02-22-m6-construction-round-sync/tasks.md",
+    "openspec/changes/m6-construction-round-sync/tasks.md",
+    "openspec/specs/construction-plane/spec.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/6b/74a3342cd7/0/metadata.json",
+      "transcript": "/6b/74a3342cd7/0/full.jsonl",
+      "context": "/6b/74a3342cd7/0/context.md",
+      "content_hash": "/6b/74a3342cd7/0/content_hash.txt",
+      "prompt": "/6b/74a3342cd7/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
