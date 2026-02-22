@@ -18,12 +18,15 @@
    - `quality_eval_runner run --mode subjective ... --subjective-rounds 3 --seed 13`
 3. Objective mode without explicit `--judge-model` (verify default model switch):
    - `quality_eval_runner run --mode objective ...` (default `gpt-5.3-codex`)
+4. Objective mode with env-file-only injection:
+   - clear shell `OPENAI_*`, set `ANC_QA_ENV_FILE=/tmp/anc_qa_llm.env`, run `quality_eval_runner`
 
 ## Key Results
 
 - Objective LLM-as-Judge: `pass` (exit code `0`)
 - Subjective LLM listwise A/B: `pass` (exit code `0`, `win_rate=1.0`, `subjective_verdict=accept`)
 - Objective using default model config: `pass` (exit code `0`)
+- Objective using shared env-file config (`ANC_QA_ENV_FILE`): `pass` (exit code `0`)
 
 ## Interpretation
 
