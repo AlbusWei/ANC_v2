@@ -55,6 +55,23 @@ ANC v2 是一个可反身自开发、可自进化的 Agentic 系统。
 4. 会话检查：`openclaw sessions --json`
 5. 代理执行：`openclaw agent --message \"...\"`
 
+### 5.1 OpenClaw 工作区/Skill 源切换（M2+ 强制）
+
+> 目标：在主仓与各个 worktree 之间切换时，确保 OpenClaw 的 `agents` 与可加载 skill/process 源目录同步切换。
+
+1. 进入任意运行时开发/测试前，必须先执行：
+   - `python3 /Users/albus/MyProjects/ANC_v2/tools/openclaw/switch_workspace.py --repo-root <目标仓库或worktree根目录>`
+2. 脚本职责（Fail-Closed）：
+   - 从 `config/openclaw.phase05.with-entry.fragment.json` 解析目标 `agents.list`。
+   - 同步 `agents.defaults.workspace`、`agents.defaults.repoRoot`、`agents.list`、`tools.agentToAgent.allow`。
+   - 将片段中的 `skills.entries.*.source` 投影为 `skills.load.extraDirs`（兼容 OpenClaw 2026.2 配置模型）。
+3. 切换后最小校验（必须通过）：
+   - `openclaw config get agents.defaults.repoRoot --json`
+   - `openclaw config get skills.load.extraDirs --json`
+   - `openclaw skills info config-change-gatekeeper --json`（或本回合目标技能）
+4. 禁止直接把 `skills.entries.<key>.source` 写入 OpenClaw 运行配置（会触发 `invalid config`）。
+5. 若脚本或校验任一步失败，禁止进入运行时测试或宣告 Done。
+
 ## 6. 当前阶段边界
 
 当前处于 Phase 0/0.5：优先构建治理骨架，不做大规模业务功能实现。
