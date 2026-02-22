@@ -3,7 +3,7 @@
   "checkpoint_id": "910143e61581",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/thread_handoff.md",
     "docs/design/processes/full-development-process.md",
@@ -114,6 +114,13 @@
       "context": "/91/0143e61581/13/context.md",
       "content_hash": "/91/0143e61581/13/content_hash.txt",
       "prompt": "/91/0143e61581/13/prompt.txt"
+    },
+    {
+      "metadata": "/91/0143e61581/14/metadata.json",
+      "transcript": "/91/0143e61581/14/full.jsonl",
+      "context": "/91/0143e61581/14/context.md",
+      "content_hash": "/91/0143e61581/14/content_hash.txt",
+      "prompt": "/91/0143e61581/14/prompt.txt"
     }
   ],
   "token_usage": {
