@@ -99,3 +99,10 @@
 1. `governed-config-change` 新增可执行 runner：`processes/meta/governed-config-change/scripts/governed_config_change_runner.py`。
 2. `governed-config-change` registry 版本由 `0.1.0` 升级到 `0.2.0`，生命周期保持 `draft`。
 3. 运行级测试入口：`tests/m2-bpm-runtime/run_tc_gcc.py`，覆盖 `TC-GCC-001~003`。
+
+## W3 联动备注（M2 BPM Runtime Hardening）
+
+1. `trigger-schedule-runtime` 新增可执行 runner：`processes/control/trigger-schedule-runtime/scripts/trigger_schedule_runtime_runner.py`。
+2. `trigger-event-runtime` 新增可执行 runner：`processes/control/trigger-event-runtime/scripts/trigger_event_runtime_runner.py`。
+3. 两项流程 registry 版本由 `0.1.0` 升级到 `0.2.0`，生命周期保持 `draft`。
+4. 运行级测试入口：`tests/m2-bpm-runtime/run_tc_tg.py`，覆盖 `TG-SCH-001~004`、`TG-EVT-001~003`。

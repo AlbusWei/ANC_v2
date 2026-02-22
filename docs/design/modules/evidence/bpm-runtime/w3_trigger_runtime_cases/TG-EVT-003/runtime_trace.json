@@ -1,0 +1,7 @@
+{
+  "timestamp": "2026-02-22T14:47:48Z",
+  "status": "failed",
+  "phase_trace": [],
+  "fail_closed_record_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-003/fail_closed_record.json",
+  "backfill_request_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-003/backfill_request.json"
+}

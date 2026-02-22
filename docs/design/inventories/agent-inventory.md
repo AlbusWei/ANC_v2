@@ -51,3 +51,8 @@ business-analyst, product-manager, tech-lead, solution-architect, frontend-dev, 
 
 1. 本回合无新增 Agent 注册项与生命周期迁移。
 2. `bpm/admin` 设计文档已将 `config-change-gatekeeper` 与 `system-config-updater` 状态更新为“draft（可执行）”。
+
+## W3 联动备注（M2 BPM Runtime Hardening）
+
+1. 本回合无新增 Agent 注册项与生命周期迁移。
+2. `bpm` 设计文档已补充 trigger runtime 执行职责（`trigger-schedule-runtime` / `trigger-event-runtime` runner）与 TG 回归入口。

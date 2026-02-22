@@ -1,0 +1,6 @@
+{
+  "status": "ok",
+  "trigger_id": "trg-4bdb3484123e0c957801",
+  "canonical_trigger_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p1_canonical.json",
+  "normalization_report_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p1_report.json"
+}

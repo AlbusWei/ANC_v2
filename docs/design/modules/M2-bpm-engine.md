@@ -1,6 +1,6 @@
 # M2 — BPM 引擎模块详细设计
 
-> 版本: v0.6.0 | 建设优先级: P0 | 最后更新: 2026-02-22
+> 版本: v0.7.0 | 建设优先级: P0 | 最后更新: 2026-02-22
 
 ## 模块定位
 
@@ -30,12 +30,12 @@
 | process parser | `sys.bpm.process-instance-manager` 子能力 | 已并入 |
 | instance manager | `sys.bpm.process-instance-manager` | 已落盘（review） |
 | scheduler | `sys.bpm.process-instance-manager` 子能力 | 已并入 |
-| evidence recorder | `sys.bpm.evidence-recorder` | 已落盘（draft） |
+| evidence recorder | `sys.bpm.evidence-recorder` | 已落盘（draft，可执行） |
 | recursion lineage guard | `sys.bpm.process-instance-manager` 子能力 | 已并入 |
-| trigger ingress normalizer | `sys.bpm.trigger-ingress-normalizer` | 已落盘（draft） |
-| trigger matcher + dedupe ledger | `sys.bpm.trigger-matcher-dedupe` | 已落盘（draft） |
-| catchup scheduler | `sys.bpm.catchup-scheduler` | 已落盘（draft） |
-| escalation handler | `sys.bpm.escalation-handler` | 已落盘（draft） |
+| trigger ingress normalizer | `sys.bpm.trigger-ingress-normalizer` | 已落盘（draft，可执行） |
+| trigger matcher + dedupe ledger | `sys.bpm.trigger-matcher-dedupe` | 已落盘（draft，可执行） |
+| catchup scheduler | `sys.bpm.catchup-scheduler` | 已落盘（draft，可执行） |
+| escalation handler | `sys.bpm.escalation-handler` | 已落盘（draft，可执行） |
 
 ## 本轮已补齐的流程资产
 
@@ -73,6 +73,16 @@
 8. `emitted_by`
 9. `instance_id`
 
+## W3 执行入口与证据
+
+1. Schedule runner：`processes/control/trigger-schedule-runtime/scripts/trigger_schedule_runtime_runner.py`
+2. Event runner：`processes/control/trigger-event-runtime/scripts/trigger_event_runtime_runner.py`
+3. 回归入口：`tests/m2-bpm-runtime/run_tc_tg.py`
+4. 证据汇总：
+   - `docs/design/modules/evidence/bpm-runtime/w3_tc_tg_report.json`
+   - `docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/`
+   - `docs/design/modules/evidence/bpm-runtime/w3_execution_summary.md`
+
 ## Fail-Closed 与安全约束
 
 1. 触发输入字段缺失或证据不可达时拒绝执行。
@@ -92,10 +102,10 @@
 
 ## 验收清单
 
-- [ ] P4 流程可组合 P5/P6 并执行
-- [ ] 父子实例不共享可变上下文
-- [ ] 触发与实例可双向追溯
-- [ ] TG-SCH-001/002/003/004 具备运行级证据
-- [ ] TG-EVT-001/002/003 具备运行级证据
-- [ ] 动态 catchup 策略已在运行证据中验证
-- [ ] TC-GCC-001/002/003 具备运行级证据（真实 patch + rollback + 拒绝分支）
+- [x] P4 流程可组合 P5/P6 并执行
+- [x] 父子实例不共享可变上下文
+- [x] 触发与实例可双向追溯
+- [x] TG-SCH-001/002/003/004 具备运行级证据
+- [x] TG-EVT-001/002/003 具备运行级证据
+- [x] 动态 catchup 策略已在运行证据中验证
+- [x] TC-GCC-001/002/003 具备运行级证据（真实 patch + rollback + 拒绝分支）
