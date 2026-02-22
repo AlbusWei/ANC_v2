@@ -1,0 +1,29 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "84e006037de2",
+  "strategy": "manual-commit",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/agents/control/bpm.md",
+    "docs/design/agents/kernel/admin.md",
+    "docs/design/inventories/agent-inventory.md",
+    "shared/registry/agent_directory.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/84/e006037de2/0/metadata.json",
+      "transcript": "/84/e006037de2/0/full.jsonl",
+      "context": "/84/e006037de2/0/context.md",
+      "content_hash": "/84/e006037de2/0/content_hash.txt",
+      "prompt": "/84/e006037de2/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
