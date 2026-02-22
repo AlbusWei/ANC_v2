@@ -1,0 +1,5 @@
+在worktree各个分支，以当前规范和进度重建或更新checklist。
+
+---
+
+将当前 rebuild 合并到 codex/review-integration
