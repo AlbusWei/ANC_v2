@@ -400,6 +400,13 @@
       "context": "/f1/a823b49680/10/context.md",
       "content_hash": "/f1/a823b49680/10/content_hash.txt",
       "prompt": "/f1/a823b49680/10/prompt.txt"
+    },
+    {
+      "metadata": "/f1/a823b49680/11/metadata.json",
+      "transcript": "/f1/a823b49680/11/full.jsonl",
+      "context": "/f1/a823b49680/11/context.md",
+      "content_hash": "/f1/a823b49680/11/content_hash.txt",
+      "prompt": "/f1/a823b49680/11/prompt.txt"
     }
   ],
   "token_usage": {
