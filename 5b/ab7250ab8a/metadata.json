@@ -3,7 +3,7 @@
   "checkpoint_id": "5bab7250ab8a",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 2,
+  "checkpoints_count": 3,
   "files_touched": [
     "agents/kernel/system-analyst/AGENTS.md",
     "docs/architecture/construction_plane.md",
@@ -43,6 +43,13 @@
       "context": "/5b/ab7250ab8a/3/context.md",
       "content_hash": "/5b/ab7250ab8a/3/content_hash.txt",
       "prompt": "/5b/ab7250ab8a/3/prompt.txt"
+    },
+    {
+      "metadata": "/5b/ab7250ab8a/4/metadata.json",
+      "transcript": "/5b/ab7250ab8a/4/full.jsonl",
+      "context": "/5b/ab7250ab8a/4/context.md",
+      "content_hash": "/5b/ab7250ab8a/4/content_hash.txt",
+      "prompt": "/5b/ab7250ab8a/4/prompt.txt"
     }
   ],
   "token_usage": {
