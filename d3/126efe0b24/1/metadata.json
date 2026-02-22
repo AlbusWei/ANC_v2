@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "d3126efe0b24",
+  "session_id": "codex-4dfaa0eda6d4",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T10:38:46.090125Z",
+  "branch": "codex/review-skills",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "tests/README.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "f3c05d35794c",
+  "transcript_identifier_at_start": "gemini-947151fc93",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T10:38:46.084807Z",
+    "agent_lines": 3,
+    "human_added": 859,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 862,
+    "agent_percentage": 0.34802784222737815
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-skills/.entire/codex-bridge/transcript.json"
+}
