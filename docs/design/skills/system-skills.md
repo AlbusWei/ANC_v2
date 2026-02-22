@@ -1,6 +1,6 @@
 # 系统技能清单与设计
 
-> 版本: v0.8.0 | 分类: System Skills | 层级: L2 | 最后更新: 2026-02-22
+> 版本: v0.8.0 | 分类: System Skills | 层级: L2
 
 ## 核心系统技能
 
@@ -24,6 +24,7 @@
 18. sys.qa.hold-triage
 19. sys.arch.construction-audit
 20. system.integration.openspec-sync
+21. system.ops.git-worktree-sync
 
 ## 技能包路径约定
 
@@ -50,6 +51,12 @@
 统一施工面治理技能设计见：
 
 - `docs/design/skills/construction-plane-skills.md`
+
+## Git Operations 技能包
+
+统一 Git worktree 协同技能设计见：
+
+- `/Users/albus/MyProjects/ANC_v2/docs/design/skills/git-operations-skills.md`
 
 ## 目标
 
