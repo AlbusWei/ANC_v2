@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "1e17d6186c93",
+  "strategy": "manual-commit",
+  "branch": "codex/review-processes-business",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/review-checklists/skills-checklist.md",
+    "shared/registry/README.md",
+    "shared/registry/process_registry.json",
+    "shared/registry/registry_contract_tool.py",
+    "shared/registry/skill_registry.json",
+    "skills/skill-creator/SKILL.md",
+    "skills/skill-creator/references/checklist.md",
+    "skills/skill-creator/references/review_rubric.md",
+    "skills/template/SKILL.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/1e/17d6186c93/0/metadata.json",
+      "transcript": "/1e/17d6186c93/0/full.jsonl",
+      "context": "/1e/17d6186c93/0/context.md",
+      "content_hash": "/1e/17d6186c93/0/content_hash.txt",
+      "prompt": "/1e/17d6186c93/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
