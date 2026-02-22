@@ -3,7 +3,7 @@
   "checkpoint_id": "16cc5308c21d",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     "openspec/changes/archive/2026-02-23-m2-bpm-runtime-hardening/.openspec.yaml",
     "openspec/changes/archive/2026-02-23-m2-bpm-runtime-hardening/design.md",
@@ -63,6 +63,13 @@
       "context": "/16/cc5308c21d/6/context.md",
       "content_hash": "/16/cc5308c21d/6/content_hash.txt",
       "prompt": "/16/cc5308c21d/6/prompt.txt"
+    },
+    {
+      "metadata": "/16/cc5308c21d/7/metadata.json",
+      "transcript": "/16/cc5308c21d/7/full.jsonl",
+      "context": "/16/cc5308c21d/7/context.md",
+      "content_hash": "/16/cc5308c21d/7/content_hash.txt",
+      "prompt": "/16/cc5308c21d/7/prompt.txt"
     }
   ],
   "token_usage": {

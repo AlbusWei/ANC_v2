@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "16cc5308c21d",
+  "session_id": "codex-7ca22134e20f",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T17:43:03.893743Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "openspec/specs/bpm-runtime-hardening-audit-foundation/spec.md",
+    "openspec/specs/construction-plane/spec.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "d0d169e5948b",
+  "transcript_identifier_at_start": "gemini-65d28b8d28",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T17:43:03.860402Z",
+    "agent_lines": 0,
+    "human_added": 45,
+    "human_modified": 157,
+    "human_removed": 0,
+    "total_committed": 45,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
