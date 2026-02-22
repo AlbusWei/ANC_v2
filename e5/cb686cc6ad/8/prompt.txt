@@ -1,0 +1,113 @@
+提交后执行worktree integrate+fanout
+
+---
+
+补齐integrate/fanout自动merge提交的Entire checkpoint
+
+---
+
+M2 BPM Runtime Hardening Thread0 基座初始化
+
+---
+
+M2 W1 实例核心与会话隔离
+
+---
+
+M2 W1 实例核心与会话隔离
+
+---
+
+M2 W1 实例核心与会话隔离
+
+---
+
+M2 W2 配置治理流程闭环
+
+---
+
+M2 W2 配置治理流程闭环
+
+---
+
+M2 W3-A Trigger Runtime 执行化
+
+---
+
+M2 W3-A Trigger Runtime 执行化
+
+---
+
+M2 W3-B QA 三流程注册与调度样例
+
+---
+
+M2 W3-B QA 三流程注册与调度样例
+
+---
+
+M2 W3-B QA 三流程注册与调度样例（补齐OpenClaw live test）
+
+---
+
+M2 W4 system-analyst P1 草案
+
+---
+
+M2 W4 system-analyst P1 草案
+
+---
+
+M2 W5 system-analyst 生产化资产与契约联动
+
+---
+
+M2 W5 system-analyst 生产化测试证据收口
+
+---
+
+M2 W5 门禁收口与Q-001关闭
+
+---
+
+M2 W5 门禁收口与Q-001关闭
+
+---
+
+M2 W5 门禁收口与Q-001关闭
+
+---
+
+M2 W5 门禁收口与Q-001关闭，补齐线上测试缺口
+
+---
+
+M2 W5 门禁收口与Q-001关闭
+
+---
+
+M2 W5 门禁收口与Q-001关闭
+
+---
+
+关闭并归档 m2-bpm-runtime-hardening 变更
+
+---
+
+M1 thread-0 initialize change and split plan
+
+---
+
+M1 thread-1 rewire M3 flows to quality-gate subprocesses
+
+---
+
+补齐 lifecycle-review 最小可执行流程资产（owner=hr），仅做 M1->M4 接点并联动文档/registry
+
+---
+
+Thread-3：产出跨流程运行闭环证据，覆盖 pass/fail-closed/hold，并完成 M5 最小接入验证
+
+---
+
+Thread-3：完成跨流程运行闭环证据并修正可提交日志引用
