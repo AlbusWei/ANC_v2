@@ -1,0 +1,21 @@
+{
+  "instance_id": "inst-anl-prod-002",
+  "parent_instance_id": null,
+  "lineage_ref": "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-002/lineage.json",
+  "stack_depth": 1,
+  "phase_id": "p3-posterior-analysis-and-hypothesis",
+  "objective_ref": "docs/design/processes/runtime-policy-calibration-process.md#目标",
+  "input_ref": "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-002/handoff_input.json",
+  "output_ref": "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-002/digest_output.json",
+  "output_contract": "system-analyst.digest.v1",
+  "from_role": "architect",
+  "to_role": "system-analyst",
+  "acceptance_criteria": [
+    "证据不足时拒绝"
+  ],
+  "deadline": "2026-02-23T12:00:00Z",
+  "risk_notes": [
+    "缺证据场景"
+  ],
+  "evidence_ref": "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-002/handoff_evidence_index.json"
+}
