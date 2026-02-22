@@ -1,0 +1,57 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "b6f1961c6ba3",
+  "strategy": "manual-commit",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/modules/evidence/bpm-runtime/checkpoint_commit_map.jsonl",
+    "docs/design/modules/evidence/bpm-runtime/w2_execution_summary.md",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/authorization.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/change_receipt_apply.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/change_receipt_rollback.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/gate_input.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/gate_report.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/gate_result.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/normalized_request.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/request.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/updater_apply_input.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/updater_apply_output.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/updater_rollback_input.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/updater_rollback_output.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/verification_report.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/input.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/process_output.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-002/change_receipt.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-002/input.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-002/updater_output.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-003/evidence/gate_input.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-003/evidence/gate_report.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-003/evidence/gate_result.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-003/evidence/normalized_request.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-003/evidence/request.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-003/input.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-003/process_output.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_report.json",
+    "tests/m2-bpm-runtime/TC-GCC.md",
+    "tests/m2-bpm-runtime/TEST.md",
+    "tests/m2-bpm-runtime/run_tc_gcc.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/b6/f1961c6ba3/0/metadata.json",
+      "transcript": "/b6/f1961c6ba3/0/full.jsonl",
+      "context": "/b6/f1961c6ba3/0/context.md",
+      "content_hash": "/b6/f1961c6ba3/0/content_hash.txt",
+      "prompt": "/b6/f1961c6ba3/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
