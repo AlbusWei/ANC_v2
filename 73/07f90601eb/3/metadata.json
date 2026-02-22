@@ -1,12 +1,12 @@
 {
   "cli_version": "0.4.5",
   "checkpoint_id": "7307f90601eb",
+  "session_id": "codex-7eb760411b0f",
   "strategy": "manual-commit",
+  "created_at": "2026-02-22T13:19:00.558122Z",
   "branch": "codex/review-agents",
-  "checkpoints_count": 1,
+  "checkpoints_count": 0,
   "files_touched": [
-    "AGENTS.md",
-    "agents/control/BPM/AGENTS.md agents/kernel/admin/AGENTS.md config/README.md docs/architecture/construction_plane.md docs/architecture/openclaw_interface.md docs/design/agents/agent-collaboration-patterns.md docs/design/agents/app/README.md docs/design/agents/app/_placeholder.md docs/design/agents/app/evolution/analyst.md docs/design/agents/control/bpm.md docs/design/agents/kernel/admin.md docs/design/agents/kernel/architect.md docs/design/agents/kernel/hr.md docs/design/inventories/agent-inventory.md docs/design/inventories/process-inventory.md docs/design/processes/governance-processes.md docs/design/processes/process-patterns.md processes/README.md shared/registry/agent_directory.json shared/registry/process_registry.json agents/app/ config/openclaw.phase05.with-entry.fragment.json docs/design/agents/app/entry/ docs/design/agents/kernel/system-analyst.md docs/review-checklists/ processes/meta/governed-config-change/ ",
     "agents/kernel/qa/AGENTS.md",
     "agents/kernel/qa/AGENTS.md agents/kernel/qa/IDENTITY.md agents/kernel/qa/MEMORY.md agents/kernel/qa/SOUL.md agents/kernel/qa/TOOLS.md agents/kernel/qa/USER.md docs/architecture/construction_plane.md docs/design/agents/kernel/qa.md docs/design/data-models/registry-schemas.md docs/design/inventories/process-inventory.md docs/design/inventories/skill-inventory.md docs/design/processes/governance-processes.md docs/design/processes/meta-processes.md docs/design/processes/quality-gate-evaluation-process.md docs/design/skills/quality-gate-skills.md processes/README.md shared/registry/process_registry.json shared/registry/registry_contract_tool.py shared/registry/skill_registry.json skills/README.md processes/meta/hold-governance/ processes/meta/quality-gate-evaluation/ processes/meta/quality-gate-preparation/ skills/system/escalation-handler/ skills/system/evaluation-runner/ skills/system/hold-triage/ skills/system/process-instance-manager/ skills/system/regression-runner/ skills/system/test-compiler/ skills/system/verdict-normalizer/ ",
     "agents/kernel/qa/IDENTITY.md",
@@ -30,41 +30,26 @@
     "skills/system/test-compiler",
     "skills/system/verdict-normalizer"
   ],
-  "sessions": [
-    {
-      "metadata": "/73/07f90601eb/0/metadata.json",
-      "transcript": "/73/07f90601eb/0/full.jsonl",
-      "context": "/73/07f90601eb/0/context.md",
-      "content_hash": "/73/07f90601eb/0/content_hash.txt",
-      "prompt": "/73/07f90601eb/0/prompt.txt"
-    },
-    {
-      "metadata": "/73/07f90601eb/1/metadata.json",
-      "transcript": "/73/07f90601eb/1/full.jsonl",
-      "context": "/73/07f90601eb/1/context.md",
-      "content_hash": "/73/07f90601eb/1/content_hash.txt",
-      "prompt": "/73/07f90601eb/1/prompt.txt"
-    },
-    {
-      "metadata": "/73/07f90601eb/2/metadata.json",
-      "transcript": "/73/07f90601eb/2/full.jsonl",
-      "context": "/73/07f90601eb/2/context.md",
-      "content_hash": "/73/07f90601eb/2/content_hash.txt",
-      "prompt": "/73/07f90601eb/2/prompt.txt"
-    },
-    {
-      "metadata": "/73/07f90601eb/3/metadata.json",
-      "transcript": "/73/07f90601eb/3/full.jsonl",
-      "context": "/73/07f90601eb/3/context.md",
-      "content_hash": "/73/07f90601eb/3/content_hash.txt",
-      "prompt": "/73/07f90601eb/3/prompt.txt"
-    }
-  ],
+  "agent": "Gemini CLI",
+  "turn_id": "a7c94c7ff89d",
+  "transcript_identifier_at_start": "gemini-dd9c9c5372",
+  "checkpoint_transcript_start": 12,
+  "transcript_lines_at_start": 12,
   "token_usage": {
     "input_tokens": 0,
     "cache_creation_tokens": 0,
     "cache_read_tokens": 0,
     "output_tokens": 0,
     "api_call_count": 0
-  }
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T13:19:00.531043Z",
+    "agent_lines": 0,
+    "human_added": 514,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 514,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-agents/.entire/codex-bridge/transcript.json"
 }
