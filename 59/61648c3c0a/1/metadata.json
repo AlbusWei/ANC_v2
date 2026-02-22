@@ -1,45 +1,46 @@
 {
   "cli_version": "0.4.5",
   "checkpoint_id": "5961648c3c0a",
+  "session_id": "codex-1e5b3b7b8a44",
   "strategy": "manual-commit",
+  "created_at": "2026-02-22T21:11:13.326988Z",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 1,
+  "checkpoints_count": 0,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/design/modules/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/open_questions.md",
     "docs/design/modules/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/round-evidence.jsonl",
-    "docs/design/modules/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/scope_baseline.md",
     "docs/design/modules/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/thread_handoff.md",
-    "openspec/changes/m3-self-development-e2e-online/.openspec.yaml",
     "openspec/changes/m3-self-development-e2e-online/design.md",
-    "openspec/changes/m3-self-development-e2e-online/m3-gap-baseline.md",
-    "openspec/changes/m3-self-development-e2e-online/proposal.md",
     "openspec/changes/m3-self-development-e2e-online/specs/construction-plane/spec.md",
     "openspec/changes/m3-self-development-e2e-online/specs/m3-self-development-e2e-online-foundation/spec.md",
     "openspec/changes/m3-self-development-e2e-online/tasks.md",
+    "docs/design/modules/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/scope_baseline.md",
+    "openspec/changes/m3-self-development-e2e-online/.openspec.yaml",
+    "openspec/changes/m3-self-development-e2e-online/m3-gap-baseline.md",
+    "openspec/changes/m3-self-development-e2e-online/proposal.md",
     "openspec/changes/m3-self-development-e2e-online/thread-plan.md"
   ],
-  "sessions": [
-    {
-      "metadata": "/59/61648c3c0a/0/metadata.json",
-      "transcript": "/59/61648c3c0a/0/full.jsonl",
-      "context": "/59/61648c3c0a/0/context.md",
-      "content_hash": "/59/61648c3c0a/0/content_hash.txt",
-      "prompt": "/59/61648c3c0a/0/prompt.txt"
-    },
-    {
-      "metadata": "/59/61648c3c0a/1/metadata.json",
-      "transcript": "/59/61648c3c0a/1/full.jsonl",
-      "context": "/59/61648c3c0a/1/context.md",
-      "content_hash": "/59/61648c3c0a/1/content_hash.txt",
-      "prompt": "/59/61648c3c0a/1/prompt.txt"
-    }
-  ],
+  "agent": "Gemini CLI",
+  "turn_id": "d4269eb1f2a7",
+  "transcript_identifier_at_start": "gemini-9cf0c19ecb",
+  "checkpoint_transcript_start": 70,
+  "transcript_lines_at_start": 70,
   "token_usage": {
     "input_tokens": 0,
     "cache_creation_tokens": 0,
     "cache_read_tokens": 0,
     "output_tokens": 0,
     "api_call_count": 0
-  }
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T21:11:13.269566Z",
+    "agent_lines": 412,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 412,
+    "agent_percentage": 100
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
 }
