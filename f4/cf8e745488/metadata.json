@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "f4cf8e745488",
+  "strategy": "manual-commit",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/modules/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/open_questions.md",
+    "docs/design/modules/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/round-evidence.jsonl",
+    "docs/design/modules/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/scope_baseline.md",
+    "docs/design/modules/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/thread_handoff.md",
+    "openspec/changes/m3-self-development-e2e-online/.openspec.yaml",
+    "openspec/changes/m3-self-development-e2e-online/design.md",
+    "openspec/changes/m3-self-development-e2e-online/proposal.md",
+    "openspec/changes/m3-self-development-e2e-online/specs/construction-plane/spec.md",
+    "openspec/changes/m3-self-development-e2e-online/specs/m3-self-development-e2e-online-foundation/spec.md",
+    "openspec/changes/m3-self-development-e2e-online/tasks.md",
+    "openspec/changes/m3-self-development-e2e-online/thread-plan.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/f4/cf8e745488/0/metadata.json",
+      "transcript": "/f4/cf8e745488/0/full.jsonl",
+      "context": "/f4/cf8e745488/0/context.md",
+      "content_hash": "/f4/cf8e745488/0/content_hash.txt",
+      "prompt": "/f4/cf8e745488/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
