@@ -4,6 +4,61 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 IMPL_SCRIPT="$SCRIPT_DIR/quality_eval_runner_impl.py"
 
+source_env_file() {
+  local env_file="$1"
+  if [[ -z "$env_file" || ! -f "$env_file" ]]; then
+    return
+  fi
+  set -a
+  # shellcheck disable=SC1090
+  source "$env_file"
+  set +a
+}
+
+load_shared_envs() {
+  local repo_root=""
+  local parent_dir=""
+  local parent_name=""
+  local canonical_name=""
+  local canonical_root=""
+  local -a candidates=()
+
+  if command -v git >/dev/null 2>&1; then
+    repo_root="$(git -C "$SCRIPT_DIR" rev-parse --show-toplevel 2>/dev/null || true)"
+  fi
+  if [[ -n "$repo_root" ]]; then
+    candidates+=("$repo_root/.env.local")
+    candidates+=("$repo_root/.env")
+
+    parent_dir="$(dirname "$repo_root")"
+    parent_name="$(basename "$parent_dir")"
+    if [[ "$parent_name" == *_worktrees ]]; then
+      canonical_name="${parent_name%_worktrees}"
+      canonical_root="$(dirname "$parent_dir")/$canonical_name"
+      candidates+=("$canonical_root/.env.local")
+      candidates+=("$canonical_root/.env")
+      candidates+=("$canonical_root/.secrets/llm.env")
+    fi
+  fi
+
+  candidates+=("$HOME/.config/anc_v2/llm.env")
+  candidates+=("$HOME/.anc_v2/llm.env")
+
+  if [[ -n "${ANC_QA_ENV_FILE:-}" ]]; then
+    source_env_file "$ANC_QA_ENV_FILE"
+    return
+  fi
+
+  for candidate in "${candidates[@]}"; do
+    if [[ -f "$candidate" ]]; then
+      source_env_file "$candidate"
+      break
+    fi
+  done
+}
+
+load_shared_envs
+
 if command -v uv >/dev/null 2>&1; then
   exec uv run --quiet --python 3.11 --with py-openjudge python "$IMPL_SCRIPT" "$@"
 fi
