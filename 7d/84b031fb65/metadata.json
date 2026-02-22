@@ -344,6 +344,13 @@
       "context": "/7d/84b031fb65/7/context.md",
       "content_hash": "/7d/84b031fb65/7/content_hash.txt",
       "prompt": "/7d/84b031fb65/7/prompt.txt"
+    },
+    {
+      "metadata": "/7d/84b031fb65/8/metadata.json",
+      "transcript": "/7d/84b031fb65/8/full.jsonl",
+      "context": "/7d/84b031fb65/8/context.md",
+      "content_hash": "/7d/84b031fb65/8/content_hash.txt",
+      "prompt": "/7d/84b031fb65/8/prompt.txt"
     }
   ],
   "token_usage": {
