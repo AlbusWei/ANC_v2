@@ -12,6 +12,7 @@ Thread 0 provides scaffolding only; runtime behavior re-implementation is out of
 - W2 governed config suite runner: `tests/m2-bpm-runtime/run_tc_gcc.py`
 - W3 trigger runtime suite runner: `tests/m2-bpm-runtime/run_tc_tg.py`
 - W3-B QA process orchestration suite runner: `tests/m2-bpm-runtime/run_tc_qa_proc.py`
+- W4 system-analyst P1 suite runner: `tests/m2-bpm-runtime/run_tc_anl.py`
 - Expected mode for Thread 6: live regression (non-simulated)
 
 ## Evidence Inputs
@@ -65,6 +66,13 @@ Each JSONL record in `checkpoint_commit_map.jsonl` must include:
 - Required pass set: `TC-QA-PROC-001~002`
 - Suggested command:
   - `python3 tests/m2-bpm-runtime/run_tc_qa_proc.py`
+
+## W4 System Analyst Core Cases
+
+- Case doc: `tests/m2-bpm-runtime/TC-ANL.md`
+- Required pass set: `TC-ANL-001~002`
+- Suggested command:
+  - `python3 tests/m2-bpm-runtime/run_tc_anl.py`
 
 ## Minimal Execution Contract
 

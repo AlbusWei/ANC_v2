@@ -58,6 +58,7 @@
 - [ ] `m2-bpm-runtime-hardening` W1（实例核心执行化）已落盘：runner/迁移/回放/`TC-INS-001~005` 证据已生成（见 `docs/design/modules/evidence/bpm-runtime/w1_*`），整体变更维持 In Progress
 - [ ] `m2-bpm-runtime-hardening` W3-A（Trigger Runtime 执行化）已落盘：5 个核心 skill runner + 2 个 process runner + `TG-SCH-001~004` / `TG-EVT-001~003` 运行级证据（见 `docs/design/modules/evidence/bpm-runtime/w3_*` 与 `w3_trigger_runtime_cases/`），整体变更维持 In Progress
 - [ ] `m2-bpm-runtime-hardening` W3-B（QA 三流程注册与样例调度）已落盘：`quality-gate-preparation/quality-gate-evaluation/hold-governance` 生命周期推进至 `review`，并完成 `TC-QA-PROC-001~002` 调度证据（见 `docs/design/modules/evidence/bpm-runtime/w3b_*` 与 `w3b_qa_process_cases/`），整体变更维持 In Progress
+- [ ] `m2-bpm-runtime-hardening` W4（`system-analyst` P1 最小可运行草案）已落盘：新增 `system-analyst` handoff/digest/reject 契约与最小权限边界，生命周期推进至 `review`，并完成 `TC-ANL-001~002` 证据（见 `docs/design/modules/evidence/bpm-runtime/w4_*` 与 `w4_system_analyst_cases/`），整体变更维持 In Progress
 - [ ] 将新增 App Agent、流程与技能逐步纳入 runtime registry（按生命周期进入 review）
 - [ ] 执行一致性检查脚本（术语、状态、路径、schema 字段）
 - [ ] 将 trigger governance 最小 dry-run 从文档级证据升级到运行级证据

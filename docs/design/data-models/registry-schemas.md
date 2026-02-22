@@ -6,7 +6,7 @@
 ## agent_directory.json
 
 - schema_version: `1.1.0`
-- updated_at: `2026-02-21T21:30:00Z`
+- updated_at: `2026-02-22T16:20:00Z`
 - strict mode: `true`
 
 | 字段 | 类型 | 必填 | 约束 | 说明 |

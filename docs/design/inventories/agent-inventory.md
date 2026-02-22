@@ -1,6 +1,6 @@
 # Agent 全量清单
 
-> 版本: v0.5.0 | SSOT: `shared/registry/agent_directory.json`
+> 版本: v0.6.0 | SSOT: `shared/registry/agent_directory.json`
 
 ## 已注册 Agent
 
@@ -10,15 +10,14 @@
 | architect | kernel | admin | architecture-governance | draft |
 | hr | kernel | admin | lifecycle-governance | draft |
 | kernel-dev | kernel | architect | implementation-kernel | draft |
+| system-analyst | kernel | admin | system-analysis-governance | review |
 | qa | kernel | admin | quality-governance | draft |
 | bpm | control | admin | orchestration-control | draft |
 | personal-assistant | app | admin | entry-assistance-read-heavy | draft |
 
 ## 设计中 Kernel Agents（未注册）
 
-| agent_id | 层级 | owner | 权限 | 状态 |
-|---|---|---|---|---|
-| system-analyst | kernel | admin | system-analysis-governance | planned |
+当前无（`system-analyst` 已在 W4 进入已注册清单）。
 
 ## 设计中 App Agents（未注册）
 
@@ -56,3 +55,9 @@ business-analyst, product-manager, tech-lead, solution-architect, frontend-dev, 
 
 1. 本回合无新增 Agent 注册项与生命周期迁移。
 2. `bpm` 设计文档已补充 trigger runtime 执行职责（`trigger-schedule-runtime` / `trigger-event-runtime` runner）与 TG 回归入口。
+
+## W4 联动备注（M2 BPM Runtime Hardening）
+
+1. 新增 `system-analyst` 最小可运行资产并完成注册，生命周期状态为 `review`。
+2. `system-analyst` 文档已补齐 handoff 输入契约、digest/reject 输出契约、Fail-Closed 条件与最小权限边界。
+3. 回归用例 `TC-ANL-001~002` 已纳入 `tests/m2-bpm-runtime/`，证据写入 `docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/`。
