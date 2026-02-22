@@ -7,6 +7,7 @@ Commands:
   - project-openclaw: project registry data to managed OpenClaw config paths.
   - check-protocol-consistency: enforce BPM/context/process protocol canonical contract.
   - verify: run validate + capability check + protocol check + docs check + projection check.
+  - verify-m2: run M2 runtime hardening gate checks for one round directory.
   - verify-m6: run M6 runtime evidence and gate checks for one round directory.
 """
 
@@ -39,6 +40,10 @@ PROCESS_SCHEMAS_PATH = ROOT / "docs" / "design" / "data-models" / "process-insta
 ROLE_HANDOFF_PATH = ROOT / "docs" / "design" / "interfaces" / "role-handoff-protocol.md"
 OPENSPEC_PROTOCOL_PATH = ROOT / "docs" / "design" / "interfaces" / "openspec-collaboration-protocol.md"
 OPENSPEC_SCHEMA_PATH = ROOT / "docs" / "design" / "data-models" / "openspec-collaboration-schema.json"
+CONSTRUCTION_PLANE_PATH = ROOT / "docs" / "architecture" / "construction_plane.md"
+M2_PROCESS_INVENTORY_PATH = ROOT / "docs" / "design" / "inventories" / "process-inventory.md"
+M2_SKILL_INVENTORY_PATH = ROOT / "docs" / "design" / "inventories" / "skill-inventory.md"
+M2_AGENT_INVENTORY_PATH = ROOT / "docs" / "design" / "inventories" / "agent-inventory.md"
 M6_MANIFEST_PATH = ROOT / "processes" / "meta" / "construction-plane-governance" / "process.json"
 PROCESS_MANIFESTS = [
     ROOT / "processes" / "meta" / "development-process" / "process.json",
@@ -1098,6 +1103,162 @@ def _validate_round_evidence(
                 )
 
 
+def _load_round_output(
+    round_dir: Path,
+    required_outputs: set[str],
+    errors: List[str],
+) -> Dict[str, Any]:
+    round_output_path = round_dir / "round-output.json"
+    if not round_output_path.exists():
+        errors.append(f"{round_output_path}: missing round output bundle")
+        return {}
+
+    round_output = load_json(round_output_path)
+    if not isinstance(round_output, dict):
+        errors.append(f"{round_output_path}: must be JSON object")
+        return {}
+
+    missing = sorted(required_outputs - set(round_output.keys()))
+    if missing:
+        errors.append(f"{round_output_path}: missing required output fields {missing!r}")
+    return round_output
+
+
+def _check_round_output_ref(
+    round_dir: Path,
+    round_output: Dict[str, Any],
+    ref_field: str,
+    errors: List[str],
+    *,
+    gate_prefix: Optional[str] = None,
+) -> None:
+    ref_value = round_output.get(ref_field)
+    label = f"{gate_prefix}: {ref_field}" if gate_prefix else ref_field
+    if not isinstance(ref_value, str) or not ref_value.strip():
+        errors.append(f"{label} missing")
+        return
+    ref_path = _resolve_artifact_path(round_dir, ref_value)
+    if not ref_path.exists():
+        errors.append(f"{label} missing file {ref_path}")
+
+
+def _validate_m2_status_targets(
+    agents_payload: Dict[str, Any],
+    skills_payload: Dict[str, Any],
+    processes_payload: Dict[str, Any],
+    errors: List[str],
+) -> None:
+    agent_by_id = {entry["agent_id"]: entry for entry in agents_payload.get("entries", [])}
+    skill_by_id = {entry["skill_id"]: entry for entry in skills_payload.get("entries", [])}
+    process_by_id = {entry["process_id"]: entry for entry in processes_payload.get("entries", [])}
+
+    targets = [
+        ("agent_directory", "system-analyst", "review", agent_by_id),
+        ("skill_registry", "sys.arch.system-feedback-digest", "review", skill_by_id),
+        ("process_registry", "runtime-policy-calibration", "review", process_by_id),
+    ]
+    for registry_name, asset_id, expected_status, table in targets:
+        entry = table.get(asset_id)
+        if entry is None:
+            errors.append(f"{registry_name}: missing required M2 asset {asset_id!r}")
+            continue
+        actual_status = entry.get("status")
+        if actual_status != expected_status:
+            errors.append(
+                f"{registry_name}: {asset_id} status must be {expected_status!r}, got {actual_status!r}"
+            )
+
+
+def _validate_m2_doc_linkage(errors: List[str]) -> None:
+    required_paths = [
+        CONSTRUCTION_PLANE_PATH,
+        M2_PROCESS_INVENTORY_PATH,
+        M2_SKILL_INVENTORY_PATH,
+        M2_AGENT_INVENTORY_PATH,
+    ]
+    for path in required_paths:
+        if not path.exists():
+            errors.append(f"{path}: missing required M2 linkage document")
+            return
+
+    construction_text = CONSTRUCTION_PLANE_PATH.read_text(encoding="utf-8")
+    if re.search(r"^\|\s*Q-001\s*\|.*\|\s*Closed", construction_text, flags=re.MULTILINE) is None:
+        errors.append(f"{CONSTRUCTION_PLANE_PATH}: Q-001 must be marked Closed")
+    if "Q-001 保持未关闭" in construction_text:
+        errors.append(f"{CONSTRUCTION_PLANE_PATH}: stale unresolved Q-001 marker detected")
+
+    process_text = M2_PROCESS_INVENTORY_PATH.read_text(encoding="utf-8")
+    if (
+        re.search(
+            r"^\|\s*runtime-policy-calibration\s*\|.*\|\s*review\s*\|",
+            process_text,
+            flags=re.MULTILINE,
+        )
+        is None
+    ):
+        errors.append(
+            f"{M2_PROCESS_INVENTORY_PATH}: runtime-policy-calibration inventory status must be review"
+        )
+
+    agent_text = M2_AGENT_INVENTORY_PATH.read_text(encoding="utf-8")
+    if (
+        re.search(
+            r"^\|\s*system-analyst\s*\|.*\|\s*review\s*\|",
+            agent_text,
+            flags=re.MULTILINE,
+        )
+        is None
+    ):
+        errors.append(f"{M2_AGENT_INVENTORY_PATH}: system-analyst inventory status must be review")
+
+    skill_text = M2_SKILL_INVENTORY_PATH.read_text(encoding="utf-8")
+    if "生命周期状态为 `review`" not in skill_text:
+        errors.append(
+            f"{M2_SKILL_INVENTORY_PATH}: must record W5 lifecycle state as review for M2 close-out"
+        )
+
+
+def _run_verify_m2_cmd(args: argparse.Namespace) -> int:
+    agents_payload, skills_payload, processes_payload = validate_all_registries()
+    check_protocol_consistency(skills_payload, processes_payload)
+    check_openspec_collaboration_consistency(skills_payload, processes_payload)
+
+    errors: List[str] = []
+    round_dir = Path(args.round_dir)
+    if not round_dir.is_absolute():
+        round_dir = (ROOT / round_dir).resolve()
+    if not round_dir.exists() or not round_dir.is_dir():
+        raise ContractError(f"round_dir not found: {round_dir}")
+
+    required_outputs = {"round_evidence_log_ref", "round_close_summary_ref", "registry_verify_report_ref"}
+    round_output = _load_round_output(round_dir, required_outputs, errors)
+    _check_round_output_ref(
+        round_dir,
+        round_output,
+        "round_close_summary_ref",
+        errors,
+        gate_prefix="pre-close gate",
+    )
+    _check_round_output_ref(round_dir, round_output, "registry_verify_report_ref", errors)
+
+    round_evidence_ref = round_output.get("round_evidence_log_ref")
+    if isinstance(round_evidence_ref, str) and round_evidence_ref.strip():
+        evidence_path = _resolve_artifact_path(round_dir, round_evidence_ref)
+    else:
+        evidence_path = round_dir / "round-evidence.jsonl"
+    events = _load_jsonl_events(evidence_path)
+    _validate_round_evidence(events, git_range=args.git_range, errors=errors)
+
+    _validate_m2_status_targets(agents_payload, skills_payload, processes_payload, errors)
+    _validate_m2_doc_linkage(errors)
+
+    if errors:
+        raise ContractError("\n".join(errors))
+
+    print(f"verify-m2 passed for {round_dir}")
+    return 0
+
+
 def _run_verify_m6_cmd(args: argparse.Namespace) -> int:
     _, skills_payload, processes_payload = validate_all_registries()
     check_protocol_consistency(skills_payload, processes_payload)
@@ -1114,29 +1275,15 @@ def _run_verify_m6_cmd(args: argparse.Namespace) -> int:
     _validate_m6_phase_ap_coverage(manifest_payload, errors)
 
     required_outputs = set(manifest_payload.get("output_contract", {}).get("required", []))
-    round_output_path = round_dir / "round-output.json"
-    if not round_output_path.exists():
-        errors.append(f"{round_output_path}: missing round output bundle")
-        round_output = {}
-    else:
-        round_output = load_json(round_output_path)
-        if not isinstance(round_output, dict):
-            errors.append(f"{round_output_path}: must be JSON object")
-            round_output = {}
-        else:
-            missing = sorted(required_outputs - set(round_output.keys()))
-            if missing:
-                errors.append(
-                    f"{round_output_path}: missing required output fields {missing!r}"
-                )
+    round_output = _load_round_output(round_dir, required_outputs, errors)
 
-    round_close_summary_ref = round_output.get("round_close_summary_ref")
-    if not isinstance(round_close_summary_ref, str) or not round_close_summary_ref.strip():
-        errors.append("pre-close gate: missing round_close_summary_ref")
-    else:
-        summary_path = _resolve_artifact_path(round_dir, round_close_summary_ref)
-        if not summary_path.exists():
-            errors.append(f"pre-close gate: round_close_summary_ref missing file {summary_path}")
+    _check_round_output_ref(
+        round_dir,
+        round_output,
+        "round_close_summary_ref",
+        errors,
+        gate_prefix="pre-close gate",
+    )
 
     round_evidence_ref = round_output.get("round_evidence_log_ref")
     if isinstance(round_evidence_ref, str) and round_evidence_ref.strip():
@@ -1615,6 +1762,18 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_verify = sub.add_parser("verify", help="Run full consistency checks")
     p_verify.set_defaults(func=_run_verify_cmd)
+
+    p_verify_m2 = sub.add_parser("verify-m2", help="Run M2 runtime hardening gate checks")
+    p_verify_m2.add_argument(
+        "--round-dir",
+        required=True,
+        help="Round evidence directory (repo-relative or absolute)",
+    )
+    p_verify_m2.add_argument(
+        "--git-range",
+        help="Optional git range used for Entire-Checkpoint trailer validation",
+    )
+    p_verify_m2.set_defaults(func=_run_verify_m2_cmd)
 
     p_verify_m6 = sub.add_parser("verify-m6", help="Run M6 round evidence and gate checks")
     p_verify_m6.add_argument(
