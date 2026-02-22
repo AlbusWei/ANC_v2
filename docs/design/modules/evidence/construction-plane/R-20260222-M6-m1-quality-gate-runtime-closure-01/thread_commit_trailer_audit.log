@@ -1,0 +1,49 @@
+commit d455662a97c0cd9c5f03a65164aa2c2e3b9a1bc3
+tree 8dcc9b6e08d3af03062f321408fa56f83b4e03be
+parent 9d4d3fbe7eea0e40404a0622b4443d32305fca32
+author Albus <838711130@qq.com> 1771788890 +0800
+committer Albus <838711130@qq.com> 1771788890 +0800
+
+    chore(governance): align agent/process lifecycle states with m1 closure evidence
+    
+    Entire-Checkpoint: 84e006037de2
+
+commit 9d4d3fbe7eea0e40404a0622b4443d32305fca32
+tree e51563d64b44d998ad1f5018b3e0e834a57f8686
+parent 8c74139334bcb9d77cf7cd0988265d290ee325e6
+author Albus <838711130@qq.com> 1771785842 +0800
+committer Albus <838711130@qq.com> 1771785842 +0800
+
+    test(m1): add cross-flow runtime closure evidence with minimal m5 integration
+    
+    Entire-Checkpoint: e5cb686cc6ad
+
+commit 8c74139334bcb9d77cf7cd0988265d290ee325e6
+tree 47d26e10051f97bafd303f07a629b7b36029e51c
+parent c12e8902933d34c32d01fb748dab7cccdfb57f0c
+author Albus <838711130@qq.com> 1771784949 +0800
+committer Albus <838711130@qq.com> 1771784949 +0800
+
+    feat(m4): add runnable lifecycle-review minimal process stub
+    
+    Entire-Checkpoint: cf02a241cda4
+
+commit c12e8902933d34c32d01fb748dab7cccdfb57f0c
+tree 6837187314e24b8bb7b8e872572dde91a598bd48
+parent e89e32866c7d9acc063c3a1459f589a0201ae67d
+author Albus <838711130@qq.com> 1771783872 +0800
+committer Albus <838711130@qq.com> 1771783872 +0800
+
+    refactor(m3): rewire core flows to reusable quality-gate subprocesses
+    
+    Entire-Checkpoint: 910143e61581
+
+commit 26eef5be77fe3ab7aae87555aa2ab620c68ce77a
+tree 97e51e677770c5a6e16f2ebfb527d5d2a16e1a5a
+parent 45af33d2c69b3bd521bfcaa619a598104a75ce2e
+author Albus <838711130@qq.com> 1771783385 +0800
+committer Albus <838711130@qq.com> 1771783385 +0800
+
+    chore(m1): initialize runtime-closure change and persist thread split baseline
+    
+    Entire-Checkpoint: 99887c05c813

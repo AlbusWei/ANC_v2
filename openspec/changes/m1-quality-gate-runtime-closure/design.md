@@ -44,6 +44,12 @@
 - Rationale: 保证每个线程都可独立审计，支持 checkpoint/commit 对账。
 - Alternative considered: 仅在最终线程执行一次 sync。Rejected，无法满足线程粒度追溯。
 
+### Decision 4: Thread-5 以 `needs_sync` 关闭回合并显式挂起 OpenSpec delta
+
+- Choice: 本轮按 M6 协议完成回合关闭，但将 OpenSpec 同步状态标记为 `needs_sync`，不宣告 change 完成。
+- Rationale: `openspec validate m1-quality-gate-runtime-closure --json` 报告“无 deltas”，说明协同工件未齐套；若强行标记 `in_sync` 会造成审计失真。
+- Alternative considered: 本轮阻断关闭。Rejected，本轮已具备完整线程证据与状态联动产物，允许“可审计关闭 + 下一轮补齐”更符合当前治理目标。
+
 ## Dependency Graph
 
 `Thread-0 -> Thread-1 -> Thread-2 -> Thread-3 -> Thread-4 -> Thread-5`
@@ -64,4 +70,4 @@
 
 1. Thread-1 的差距清单采用“按链路”还是“按资产”主视图输出，是否需要双视图并行。
 2. Thread-4 回归阶段若发现跨线程历史缺口，是否允许回写 Thread-2/3 文档后再进入 Thread-5 收口。
-
+3. OpenSpec delta（specs 场景）由谁在下一轮补齐以及准入标准如何定义（建议在下一轮明确 owner 与时间窗）。

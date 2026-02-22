@@ -12,6 +12,10 @@ M1 质量门禁运行收口需要一个线程化、可审计、可对账的执�
   - `openspec_ref`: `m1-quality-gate-runtime-closure`
 - 更新三件套：`proposal.md`、`design.md`、`tasks.md`，按 Thread-0~5 定义依赖关系与 DoD。
 - 初始化本轮 M6 证据目录，写入 `round_open` 事件和线程交接基线。
+- Thread-5 回合关闭补充：
+  - 新增 `round-output.json`、`openspec-sync-record.json`、`round_close_summary.md`、`registry_verify.log`。
+  - 将 `round-evidence.jsonl` 收敛为 `round_open -> checkpoint_synced* -> round_close` 审计序列。
+  - 记录 OpenSpec 当前状态为 `needs_sync`（原因：change 缺失 deltas，`openspec validate` 未通过），并作为下一轮 carryover。
 
 ## Capabilities
 
@@ -22,6 +26,7 @@ M1 质量门禁运行收口需要一个线程化、可审计、可对账的执�
 ### Modified Capabilities
 
 - `construction-plane`: 新增本轮 evidence 目录与 `round_open` 记录，确保后续线程有统一回合上下文。
+- `construction-plane`: 在 Thread-5 新增回合关闭输出包，完成 M6 可审计收口。
 
 ## Impact
 
@@ -35,4 +40,3 @@ M1 质量门禁运行收口需要一个线程化、可审计、可对账的执�
 - Explicitly not included in Thread-0:
   - 不实施 Thread-1~5 的功能改造。
   - 不重复执行已由 M2 完成的注册、review 推进与 `verify-m2` 基础能力建设。
-

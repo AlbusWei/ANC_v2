@@ -161,3 +161,33 @@
 3. 线程交接与证据：
    - `docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/thread_handoff.md`
    - `docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/runtime_summary.md`
+
+## Thread-5 更新（2026-02-22）
+
+### 已完成产出（M6 + OpenSpec 回合关闭）
+
+1. 回合输出包补齐：
+   - `round-output.json`
+   - `round-evidence.jsonl`
+   - `round_close_summary.md`
+   - `registry_verify.log`
+   - `openspec-sync-record.json`
+2. OpenSpec 协同记录：
+   - `sync_status` 标记为 `needs_sync`（`openspec validate` 报告无 deltas）。
+   - `round_id` 与 `openspec_ref` 保持单值一致。
+3. 施工平面更新：
+   - 增加本轮关闭项（通过 `verify` 与 `verify-m6`）。
+   - In Progress / Next 增加 OpenSpec delta 补齐事项，未夸大 Done。
+
+### 线程提交审计清单（Thread-0~4）
+
+1. `26eef5be77fe3ab7aae87555aa2ab620c68ce77a` | `Entire-Checkpoint: 99887c05c813`
+2. `c12e8902933d34c32d01fb748dab7cccdfb57f0c` | `Entire-Checkpoint: 910143e61581`
+3. `8c74139334bcb9d77cf7cd0988265d290ee325e6` | `Entire-Checkpoint: cf02a241cda4`
+4. `9d4d3fbe7eea0e40404a0622b4443d32305fca32` | `Entire-Checkpoint: e5cb686cc6ad`
+5. `d455662a97c0cd9c5f03a65164aa2c2e3b9a1bc3` | `Entire-Checkpoint: 84e006037de2`
+
+### 关闭结论
+
+1. 本轮回合可关闭（`closed_with_carryover`），可审计性满足门禁。
+2. 下一轮必须优先补齐 OpenSpec deltas/spec scenarios 后再评估 `in_sync` 与归档。
