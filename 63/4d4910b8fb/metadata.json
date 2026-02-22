@@ -3,7 +3,7 @@
   "checkpoint_id": "634d4910b8fb",
   "strategy": "manual-commit",
   "branch": "rebuild",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     ".codex/skills/openclaw-workspace-switch/SKILL.md",
     "AGENTS.md",
@@ -17,6 +17,13 @@
       "context": "/63/4d4910b8fb/0/context.md",
       "content_hash": "/63/4d4910b8fb/0/content_hash.txt",
       "prompt": "/63/4d4910b8fb/0/prompt.txt"
+    },
+    {
+      "metadata": "/63/4d4910b8fb/1/metadata.json",
+      "transcript": "/63/4d4910b8fb/1/full.jsonl",
+      "context": "/63/4d4910b8fb/1/context.md",
+      "content_hash": "/63/4d4910b8fb/1/content_hash.txt",
+      "prompt": "/63/4d4910b8fb/1/prompt.txt"
     }
   ],
   "token_usage": {
