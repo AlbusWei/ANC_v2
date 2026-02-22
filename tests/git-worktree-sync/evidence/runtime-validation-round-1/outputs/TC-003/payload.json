@@ -1,0 +1,23 @@
+{
+  "mode": "fanout",
+  "parent": "rebuild",
+  "dry_run": false,
+  "results": [
+    {
+      "branch": "sibling-conflict",
+      "worktree": "/Users/albus/MyProjects/ANC_v2_worktrees/review-skills/tests/git-worktree-sync/evidence/runtime-validation-round-1/tmp_env/TC-003/wt-sibling-conflict",
+      "status": "manual_conflict",
+      "details": [
+        "fetched upstream remote origin",
+        "fast-forwarded from origin/sibling-conflict",
+        "conflict while merging parent rebuild"
+      ]
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "ok": 0,
+    "skipped": 0,
+    "manual_required": 1
+  }
+}

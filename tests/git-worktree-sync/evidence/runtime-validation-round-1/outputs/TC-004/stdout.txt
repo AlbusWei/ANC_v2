@@ -1,0 +1,23 @@
+{
+  "mode": "fanout",
+  "parent": "rebuild",
+  "dry_run": false,
+  "results": [
+    {
+      "branch": "sibling-mirror",
+      "worktree": "/Users/albus/MyProjects/ANC_v2_worktrees/review-skills/tests/git-worktree-sync/evidence/runtime-validation-round-1/tmp_env/TC-004/wt-sibling-mirror",
+      "status": "ok",
+      "details": [
+        "fetched upstream remote mirror",
+        "fast-forwarded from mirror/sibling-mirror",
+        "merged parent rebuild"
+      ]
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "ok": 1,
+    "skipped": 0,
+    "manual_required": 0
+  }
+}

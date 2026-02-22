@@ -67,6 +67,7 @@ references:
 4. 冲突默认 Fail-Closed：自动 `merge --abort`，转人工决策。
 5. 对兄弟分支，WIP 过大必须 `skip`，而不是强行消冲突。
 6. 禁止 `git push --force`、`git reset --hard` 作为常规路径。
+7. sibling 同步前必须拉取其实际 upstream remote，避免非默认 remote 的陈旧引用。
 
 ## Execution Steps
 

@@ -1,0 +1,20 @@
+[dry-run] (/Users/albus/MyProjects/ANC_v2_worktrees/review-skills/tests/git-worktree-sync/evidence/runtime-validation-round-1/tmp_env/TC-001/wt-rebuild) git merge --ff-only origin/rebuild
+[dry-run] (/Users/albus/MyProjects/ANC_v2_worktrees/review-skills/tests/git-worktree-sync/evidence/runtime-validation-round-1/tmp_env/TC-001/wt-rebuild) git merge --no-ff --no-edit source-sync
+{
+  "mode": "integrate",
+  "source": "source-sync",
+  "parent": "rebuild",
+  "parent_worktree": "/Users/albus/MyProjects/ANC_v2_worktrees/review-skills/tests/git-worktree-sync/evidence/runtime-validation-round-1/tmp_env/TC-001/wt-rebuild",
+  "dry_run": true,
+  "steps": [
+    {
+      "name": "ff_parent_from_remote",
+      "status": "ok"
+    },
+    {
+      "name": "merge_source_into_parent",
+      "status": "ok"
+    }
+  ],
+  "result": "ok"
+}

@@ -1,0 +1,55 @@
+{
+  "gate_decision": "pass",
+  "evidence_ref": "tests/git-worktree-sync/evidence/runtime-validation-round-1/outputs",
+  "reasons": [],
+  "cases": [
+    {
+      "case_id": "TC-001",
+      "name": "integrate dry-run returns plan",
+      "passed": true,
+      "gate_decision": "pass",
+      "reasons": [],
+      "return_code": 0,
+      "expected_return_code": 0,
+      "payload_ref": "tests/git-worktree-sync/evidence/runtime-validation-round-1/outputs/TC-001/payload.json",
+      "stdout_ref": "tests/git-worktree-sync/evidence/runtime-validation-round-1/outputs/TC-001/stdout.txt",
+      "stderr_ref": "tests/git-worktree-sync/evidence/runtime-validation-round-1/outputs/TC-001/stderr.txt"
+    },
+    {
+      "case_id": "TC-002",
+      "name": "fanout skips dirty sibling above threshold",
+      "passed": true,
+      "gate_decision": "pass",
+      "reasons": [],
+      "return_code": 0,
+      "expected_return_code": 0,
+      "payload_ref": "tests/git-worktree-sync/evidence/runtime-validation-round-1/outputs/TC-002/payload.json",
+      "stdout_ref": "tests/git-worktree-sync/evidence/runtime-validation-round-1/outputs/TC-002/stdout.txt",
+      "stderr_ref": "tests/git-worktree-sync/evidence/runtime-validation-round-1/outputs/TC-002/stderr.txt"
+    },
+    {
+      "case_id": "TC-003",
+      "name": "fanout conflict triggers manual_conflict and merge abort",
+      "passed": true,
+      "gate_decision": "pass",
+      "reasons": [],
+      "return_code": 4,
+      "expected_return_code": 4,
+      "payload_ref": "tests/git-worktree-sync/evidence/runtime-validation-round-1/outputs/TC-003/payload.json",
+      "stdout_ref": "tests/git-worktree-sync/evidence/runtime-validation-round-1/outputs/TC-003/stdout.txt",
+      "stderr_ref": "tests/git-worktree-sync/evidence/runtime-validation-round-1/outputs/TC-003/stderr.txt"
+    },
+    {
+      "case_id": "TC-004",
+      "name": "fanout includes latest commit from non-default upstream remote",
+      "passed": true,
+      "gate_decision": "pass",
+      "reasons": [],
+      "return_code": 0,
+      "expected_return_code": 0,
+      "payload_ref": "tests/git-worktree-sync/evidence/runtime-validation-round-1/outputs/TC-004/payload.json",
+      "stdout_ref": "tests/git-worktree-sync/evidence/runtime-validation-round-1/outputs/TC-004/stdout.txt",
+      "stderr_ref": "tests/git-worktree-sync/evidence/runtime-validation-round-1/outputs/TC-004/stderr.txt"
+    }
+  ]
+}

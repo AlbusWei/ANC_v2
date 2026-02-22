@@ -1,0 +1,21 @@
+{
+  "mode": "fanout",
+  "parent": "rebuild",
+  "dry_run": false,
+  "results": [
+    {
+      "branch": "sibling-skip",
+      "worktree": "/Users/albus/MyProjects/ANC_v2_worktrees/review-skills/tests/git-worktree-sync/evidence/runtime-validation-round-1/tmp_env/TC-002/wt-sibling-skip",
+      "status": "skipped",
+      "details": [
+        "dirty worktree and stash disabled"
+      ]
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "ok": 0,
+    "skipped": 1,
+    "manual_required": 0
+  }
+}
