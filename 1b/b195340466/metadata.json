@@ -3,7 +3,7 @@
   "checkpoint_id": "1bb195340466",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     "docs/design/modules/evidence/bpm-runtime/git_range.txt"
   ],
@@ -35,6 +35,13 @@
       "context": "/1b/b195340466/3/context.md",
       "content_hash": "/1b/b195340466/3/content_hash.txt",
       "prompt": "/1b/b195340466/3/prompt.txt"
+    },
+    {
+      "metadata": "/1b/b195340466/4/metadata.json",
+      "transcript": "/1b/b195340466/4/full.jsonl",
+      "context": "/1b/b195340466/4/context.md",
+      "content_hash": "/1b/b195340466/4/content_hash.txt",
+      "prompt": "/1b/b195340466/4/prompt.txt"
     }
   ],
   "token_usage": {
