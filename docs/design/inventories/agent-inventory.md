@@ -46,3 +46,8 @@ business-analyst, product-manager, tech-lead, solution-architect, frontend-dev, 
 
 1. 本回合无新增 Agent 注册项。
 2. `bpm` 设计文档已补充 `session_binding.json` 与显式 `--session-id` 调度职责。
+
+## W2 联动备注（M2 BPM Runtime Hardening）
+
+1. 本回合无新增 Agent 注册项与生命周期迁移。
+2. `bpm/admin` 设计文档已将 `config-change-gatekeeper` 与 `system-config-updater` 状态更新为“draft（可执行）”。

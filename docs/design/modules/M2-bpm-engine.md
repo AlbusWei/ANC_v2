@@ -14,6 +14,7 @@
 3. `docs/design/processes/trigger-event-runtime-process.md`
 4. `docs/design/modules/trigger-governance-test-proposal.md`
 5. `docs/design/modules/trigger-governance-review-checklist.md`
+6. `docs/design/processes/governance-processes.md`
 
 ## 模块边界
 
@@ -41,6 +42,7 @@
 1. `trigger-schedule-runtime`（P4）
 2. `trigger-event-runtime`（P4）
 3. AP-026~AP-031（触发归一、匹配去重、调度、证据、补跑、升级）
+4. `governed-config-change`（P4，W2 可执行闭环：gate -> apply -> verify -> rollback）
 
 ## 递归能力
 
@@ -96,3 +98,4 @@
 - [ ] TG-SCH-001/002/003/004 具备运行级证据
 - [ ] TG-EVT-001/002/003 具备运行级证据
 - [ ] 动态 catchup 策略已在运行证据中验证
+- [ ] TC-GCC-001/002/003 具备运行级证据（真实 patch + rollback + 拒绝分支）

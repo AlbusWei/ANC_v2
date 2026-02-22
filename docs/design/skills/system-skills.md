@@ -25,6 +25,8 @@
 19. sys.arch.construction-audit
 20. system.integration.openspec-sync
 21. system.ops.git-worktree-sync
+22. system.control.config-change-gatekeeper
+23. system.admin.system-config-updater
 
 ## 技能包路径约定
 
@@ -36,6 +38,14 @@
 统一 BPM runtime 技能设计见：
 
 - `docs/design/skills/bpm-runtime-skills.md`
+
+## Config Governance 技能包
+
+配置治理执行链（W2）：
+
+1. `system.control.config-change-gatekeeper`
+2. `system.admin.system-config-updater`
+3. `processes/meta/governed-config-change/scripts/governed_config_change_runner.py`（流程执行入口）
 
 ## Quality Gate 技能包
 

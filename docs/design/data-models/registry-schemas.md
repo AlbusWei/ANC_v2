@@ -85,7 +85,7 @@
   "path": "skills/meta/spec-writer/SKILL.md",
   "layer": "meta",
   "owner": "architect",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "status": "draft",
   "agentskills": {
     "name": "spec-writer",
@@ -147,7 +147,7 @@
   "manifest_path": "processes/meta/development-process/process.json",
   "objective_ref": "obj-phase1-min-loop",
   "owner": "bpm",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "status": "draft",
   "phase_count": 4,
   "openclaw": {

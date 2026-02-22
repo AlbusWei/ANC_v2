@@ -74,3 +74,9 @@ Git Operations 技能包设计文档：
 W1 变更记录（M2 BPM Runtime Hardening）：
 
 1. `sys.bpm.process-instance-manager` 生命周期由 `draft` 推进到 `review`（不推进到 `active`）。
+
+W2 变更记录（M2 BPM Runtime Hardening）：
+
+1. `system.control.config-change-gatekeeper` 新增可执行 runner：`skills/system/config-change-gatekeeper/scripts/config_change_gatekeeper_runner.py`。
+2. `system.admin.system-config-updater` 新增可执行 runner：`skills/system/system-config-updater/scripts/system_config_updater_runner.py`。
+3. 两项技能 registry 版本由 `0.1.0` 升级到 `0.2.0`，生命周期保持 `draft`。

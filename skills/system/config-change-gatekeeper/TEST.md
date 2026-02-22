@@ -21,3 +21,7 @@
 - Input: `evidence_refs` 为空
 - Expected: `approval=deny` 且给出拒绝原因
 - Evaluation Method: Exact Match
+
+## Runtime Suite Mapping
+
+- M2 W2 运行级拒绝分支：`tests/m2-bpm-runtime/TC-GCC.md#tc-gcc-003-missing-evidence-must-be-rejected`

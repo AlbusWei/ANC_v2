@@ -15,7 +15,7 @@
 |---|---|---|
 | process-instance-manager | 流程实例 CRUD + 会话隔离治理 | review |
 | escalation-handler | 异常升级处理 | 规划 |
-| config-change-gatekeeper | 配置变更门禁校验 | 规划 |
+| config-change-gatekeeper | 配置变更门禁校验 | draft（可执行，runner 已落盘） |
 
 ## 3. 参与 Process 清单
 

@@ -9,7 +9,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
-version: "0.1.0"
+version: "0.2.0"
 ---
 
 # governed-config-change
@@ -40,3 +40,9 @@ version: "0.1.0"
 2. BPM 必须在执行前完成门禁校验（objective/spec/test + rollback_plan）。
 3. 执行前后必须记录配置 hash 与验证结果。
 4. 证据缺失、hash 漂移或验证失败时 Fail-Closed。
+
+## Runtime Tooling
+
+1. 可执行入口：`processes/meta/governed-config-change/scripts/governed_config_change_runner.py`
+2. 运行时证据链最小要求：`request -> gate -> auth -> apply receipt -> verify -> rollback receipt`
+3. W2 标准用例：`tests/m2-bpm-runtime/TC-GCC.md`（`TC-GCC-001~003`）

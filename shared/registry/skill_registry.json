@@ -187,7 +187,7 @@
       "path": "skills/meta/spec-writer/SKILL.md",
       "layer": "meta",
       "owner": "architect",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "draft",
       "agentskills": {
         "name": "spec-writer",
@@ -218,7 +218,7 @@
       "path": "skills/meta/llm-judge/SKILL.md",
       "layer": "meta",
       "owner": "qa",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "draft",
       "agentskills": {
         "name": "llm-judge",
