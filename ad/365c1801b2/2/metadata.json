@@ -1,0 +1,37 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "ad365c1801b2",
+  "session_id": "codex-5da188d757de",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T14:51:00.199606Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "docs/design/agents/control/bpm.md",
+    "docs/design/skills/bpm-runtime-skills.md",
+    "shared/registry/process_registry.json",
+    "shared/registry/skill_registry.json"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "c42dae303101",
+  "transcript_identifier_at_start": "gemini-ef62c58daa",
+  "checkpoint_transcript_start": 16,
+  "transcript_lines_at_start": 16,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T14:51:00.1882Z",
+    "agent_lines": 31,
+    "human_added": 2546,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 2577,
+    "agent_percentage": 1.2029491656965465
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
