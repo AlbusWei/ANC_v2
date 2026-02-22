@@ -1,0 +1,53 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "ad365c1801b2",
+  "session_id": "codex-47a903ff8fd4",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T14:50:59.739141Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/agents/control/bpm.md",
+    "docs/design/processes/trigger-event-runtime-process.md",
+    "docs/design/processes/trigger-schedule-runtime-process.md",
+    "docs/design/skills/bpm-runtime-skills.md",
+    "processes/control/trigger-event-runtime/SKILL.md",
+    "processes/control/trigger-event-runtime/process.json",
+    "processes/control/trigger-event-runtime/scripts/trigger_event_runtime_runner.py",
+    "processes/control/trigger-schedule-runtime/SKILL.md",
+    "processes/control/trigger-schedule-runtime/process.json",
+    "processes/control/trigger-schedule-runtime/scripts/trigger_schedule_runtime_runner.py",
+    "shared/registry/process_registry.json",
+    "shared/registry/skill_registry.json",
+    "skills/system/catchup-scheduler/SKILL.md",
+    "skills/system/catchup-scheduler/scripts/catchup_scheduler_runner.py",
+    "skills/system/escalation-handler/SKILL.md",
+    "skills/system/escalation-handler/scripts/escalation_handler_runner.py",
+    "skills/system/evidence-recorder/SKILL.md",
+    "skills/system/evidence-recorder/scripts/evidence_recorder_runner.py",
+    "skills/system/trigger-ingress-normalizer/SKILL.md",
+    "skills/system/trigger-ingress-normalizer/scripts/trigger_ingress_normalizer_runner.py",
+    "skills/system/trigger-matcher-dedupe/SKILL.md",
+    "skills/system/trigger-matcher-dedupe/scripts/trigger_matcher_dedupe_runner.py"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "e9b4ed524fb3",
+  "transcript_identifier_at_start": "gemini-d53c2789c2",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T14:50:59.691426Z",
+    "agent_lines": 0,
+    "human_added": 2551,
+    "human_modified": 26,
+    "human_removed": 0,
+    "total_committed": 2551,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
