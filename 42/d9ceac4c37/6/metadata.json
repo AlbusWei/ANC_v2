@@ -1,9 +1,11 @@
 {
   "cli_version": "0.4.5",
   "checkpoint_id": "42d9ceac4c37",
+  "session_id": "codex-988e4400f030",
   "strategy": "manual-commit",
+  "created_at": "2026-02-22T16:37:11.887925Z",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 2,
+  "checkpoints_count": 1,
   "files_touched": [
     "agents/kernel/system-analyst/AGENTS.md",
     "agents/kernel/system-analyst/IDENTITY.md",
@@ -40,62 +42,24 @@
     "tests/m2-bpm-runtime/TEST.md",
     "tests/m2-bpm-runtime/run_tc_anl.py"
   ],
-  "sessions": [
-    {
-      "metadata": "/42/d9ceac4c37/0/metadata.json",
-      "transcript": "/42/d9ceac4c37/0/full.jsonl",
-      "context": "/42/d9ceac4c37/0/context.md",
-      "content_hash": "/42/d9ceac4c37/0/content_hash.txt",
-      "prompt": "/42/d9ceac4c37/0/prompt.txt"
-    },
-    {
-      "metadata": "/42/d9ceac4c37/1/metadata.json",
-      "transcript": "/42/d9ceac4c37/1/full.jsonl",
-      "context": "/42/d9ceac4c37/1/context.md",
-      "content_hash": "/42/d9ceac4c37/1/content_hash.txt",
-      "prompt": "/42/d9ceac4c37/1/prompt.txt"
-    },
-    {
-      "metadata": "/42/d9ceac4c37/2/metadata.json",
-      "transcript": "/42/d9ceac4c37/2/full.jsonl",
-      "context": "/42/d9ceac4c37/2/context.md",
-      "content_hash": "/42/d9ceac4c37/2/content_hash.txt",
-      "prompt": "/42/d9ceac4c37/2/prompt.txt"
-    },
-    {
-      "metadata": "/42/d9ceac4c37/3/metadata.json",
-      "transcript": "/42/d9ceac4c37/3/full.jsonl",
-      "context": "/42/d9ceac4c37/3/context.md",
-      "content_hash": "/42/d9ceac4c37/3/content_hash.txt",
-      "prompt": "/42/d9ceac4c37/3/prompt.txt"
-    },
-    {
-      "metadata": "/42/d9ceac4c37/4/metadata.json",
-      "transcript": "/42/d9ceac4c37/4/full.jsonl",
-      "context": "/42/d9ceac4c37/4/context.md",
-      "content_hash": "/42/d9ceac4c37/4/content_hash.txt",
-      "prompt": "/42/d9ceac4c37/4/prompt.txt"
-    },
-    {
-      "metadata": "/42/d9ceac4c37/5/metadata.json",
-      "transcript": "/42/d9ceac4c37/5/full.jsonl",
-      "context": "/42/d9ceac4c37/5/context.md",
-      "content_hash": "/42/d9ceac4c37/5/content_hash.txt",
-      "prompt": "/42/d9ceac4c37/5/prompt.txt"
-    },
-    {
-      "metadata": "/42/d9ceac4c37/6/metadata.json",
-      "transcript": "/42/d9ceac4c37/6/full.jsonl",
-      "context": "/42/d9ceac4c37/6/context.md",
-      "content_hash": "/42/d9ceac4c37/6/content_hash.txt",
-      "prompt": "/42/d9ceac4c37/6/prompt.txt"
-    }
-  ],
+  "agent": "Gemini CLI",
+  "turn_id": "d8410b02c8cc",
+  "transcript_identifier_at_start": "gemini-f0a73632c5",
   "token_usage": {
     "input_tokens": 0,
     "cache_creation_tokens": 0,
     "cache_read_tokens": 0,
     "output_tokens": 0,
     "api_call_count": 0
-  }
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T16:37:11.859371Z",
+    "agent_lines": 0,
+    "human_added": 1361,
+    "human_modified": 333,
+    "human_removed": 0,
+    "total_committed": 1361,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
 }
