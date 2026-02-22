@@ -8,7 +8,14 @@
     "docs/architecture/construction_plane.md",
     "docs/design/data-models/registry-schemas.md",
     "docs/design/inventories/process-inventory.md",
+    "docs/design/modules/M4-lifecycle-management.md",
+    "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/thread_handoff.md",
     "docs/design/processes/governance-processes.md",
+    "docs/design/processes/lifecycle-review-process.md",
+    "processes/meta/lifecycle-review/PROCESS.md",
+    "processes/meta/lifecycle-review/SKILL.md",
+    "processes/meta/lifecycle-review/process.json",
+    "processes/meta/lifecycle-review/scripts/lifecycle_review_runner.py",
     "shared/registry/process_registry.json"
   ],
   "sessions": [
@@ -18,6 +25,13 @@
       "context": "/cf/02a241cda4/0/context.md",
       "content_hash": "/cf/02a241cda4/0/content_hash.txt",
       "prompt": "/cf/02a241cda4/0/prompt.txt"
+    },
+    {
+      "metadata": "/cf/02a241cda4/1/metadata.json",
+      "transcript": "/cf/02a241cda4/1/full.jsonl",
+      "context": "/cf/02a241cda4/1/context.md",
+      "content_hash": "/cf/02a241cda4/1/content_hash.txt",
+      "prompt": "/cf/02a241cda4/1/prompt.txt"
     }
   ],
   "token_usage": {
