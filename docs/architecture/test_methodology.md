@@ -79,6 +79,14 @@
 2. 轮次按任务复杂度由测试计划定义，`9` 轮仅作为推荐基线。
 3. 必须记录随机种子，保证可复现。
 4. 统计胜率后再做裁决。
+5. 主观评测优先使用 OpenJudge listwise grader（或 rubric 生成的 listwise grader）进行盲测比较。
+
+测试计划强制要素（由 QA 动态设计，不允许硬编码固定模板）：
+
+1. `grader_selection`（按任务语义选择内置或自定义 grader）。
+2. `grader_weights` 与 `min_score_per_grader`（明确每维门槛）。
+3. `rounds/seed/retry_policy`（按复杂度动态配置，并保证可复现）。
+4. 若内置 grader 不满足场景，使用 rubric 生成或自定义 grader 并落盘评审依据。
 
 裁决建议：
 
@@ -162,6 +170,7 @@
 1. 判定结果不可解析。
 2. 关键输入缺失（Objective/Spec/Output）。
 3. 证据缺失或不可追溯。
+4. judge 模型/凭据/请求配置不可用（含 unsupported model）导致无法执行有效判定。
 
 补充：
 

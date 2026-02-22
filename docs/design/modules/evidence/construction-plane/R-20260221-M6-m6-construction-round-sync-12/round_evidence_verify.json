@@ -1,0 +1,14 @@
+{
+  "valid": false,
+  "errors": [
+    "round_close checkpoint_count must equal commit_count"
+  ],
+  "warnings": [],
+  "summary": {
+    "round_id": "R-20260221-M6-m6-construction-round-sync-12",
+    "openspec_ref": "m6-construction-round-sync",
+    "event_count": 4,
+    "checkpoint_events": 2,
+    "git_commit_count": null
+  }
+}

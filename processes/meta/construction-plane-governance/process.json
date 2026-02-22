@@ -1,6 +1,6 @@
 {
   "process_id": "construction-plane-governance",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [],
@@ -15,6 +15,7 @@
   "input_contract": {
     "format": "json",
     "required": [
+      "round_id",
       "round_goal",
       "change_scope_ref",
       "changed_assets",
@@ -31,7 +32,9 @@
       "openspec_sync_ref",
       "registry_verify_report_ref",
       "construction_plane_delta_ref",
-      "open_questions_ref"
+      "open_questions_ref",
+      "round_evidence_log_ref",
+      "round_close_summary_ref"
     ]
   },
   "phases": [
@@ -42,10 +45,10 @@
       "target_type": "skill",
       "target_id": "system.ops.manual-task",
       "requires_spec": true,
-      "spec_ref": "docs/design/processes/construction-plane-governance-process.md#连续性与-phase-闭合",
+      "spec_ref": "docs/design/processes/atomic/AP-032-construction-round-intake-baseline.md#ap-032-construction-round-intake-baseline",
       "sipoc": {
         "supplier": "initiator",
-        "input": "round_goal + change_scope_ref + changed_assets + openspec_ref",
+        "input": "round_id + round_goal + change_scope_ref + changed_assets + linkage_targets + openspec_ref",
         "process": "baseline the scope and boundary for this governance round",
         "output": "scope_baseline_ref",
         "client": "p2"
@@ -59,10 +62,10 @@
       "target_type": "skill",
       "target_id": "sys.arch.construction-audit",
       "requires_spec": true,
-      "spec_ref": "docs/design/skills/construction-plane-skills.md#1-sysarchconstruction-audit",
+      "spec_ref": "docs/design/processes/atomic/AP-033-construction-linkage-audit.md#ap-033-construction-linkage-audit",
       "sipoc": {
         "supplier": "p1",
-        "input": "scope_baseline_ref + linkage_targets",
+        "input": "round_id + scope_baseline_ref + linkage_targets + changed_assets + openspec_ref",
         "process": "audit linkage completeness and identify blocking gaps",
         "output": "linkage_report_ref",
         "client": "p3"
@@ -76,12 +79,12 @@
       "target_type": "skill",
       "target_id": "system.ops.manual-task",
       "requires_spec": true,
-      "spec_ref": "docs/architecture/construction_plane.md#更新纪律",
+      "spec_ref": "docs/design/processes/atomic/AP-034-linked-artifacts-update.md#ap-034-linked-artifacts-update",
       "sipoc": {
         "supplier": "p2",
-        "input": "linkage_report_ref + changed_assets",
+        "input": "round_id + linkage_report_ref + changed_assets",
         "process": "apply linked updates across design docs, inventories and registries",
-        "output": "m6_update_bundle_ref",
+        "output": "m6_update_bundle_ref + construction_plane_delta_ref + open_questions_ref",
         "client": "p4"
       },
       "acceptance_criteria": "all required linked artifacts are updated in the same round"
@@ -93,10 +96,10 @@
       "target_type": "skill",
       "target_id": "system.integration.openspec-sync",
       "requires_spec": true,
-      "spec_ref": "docs/design/interfaces/openspec-collaboration-protocol.md#41-完整-schema强制",
+      "spec_ref": "docs/design/processes/atomic/AP-035-openspec-round-sync.md#ap-035-openspec-round-sync",
       "sipoc": {
         "supplier": "p3",
-        "input": "m6_update_bundle_ref + openspec_ref + decision_snapshot_ref",
+        "input": "round_id + round_goal + openspec_ref + anc_design_refs + decision_snapshot_ref + sync_actor + trigger_mode + risk_level + checkpoint_count + commit_count + round_evidence_log_ref + output_ref",
         "process": "execute openspec sync and generate machine-readable sync record",
         "output": "openspec_sync_ref",
         "client": "p5"
@@ -110,12 +113,12 @@
       "target_type": "skill",
       "target_id": "system.ops.manual-task",
       "requires_spec": true,
-      "spec_ref": "docs/design/processes/construction-plane-governance-process.md#fail-closed",
+      "spec_ref": "docs/design/processes/atomic/AP-036-construction-round-close-verification.md#ap-036-construction-round-close-verification",
       "sipoc": {
         "supplier": "p4",
-        "input": "m6_update_bundle_ref + openspec_sync_ref",
-        "process": "run registry verification, update construction plane and close round with open questions",
-        "output": "registry_verify_report_ref + construction_plane_delta_ref + open_questions_ref",
+        "input": "round_id + m6_update_bundle_ref + openspec_sync_ref + round_evidence_log_ref + open_questions_ref",
+        "process": "run registry verification and close round with checkpoint and open-question reconciliation",
+        "output": "registry_verify_report_ref + round_close_summary_ref + construction_plane_delta_ref + open_questions_ref",
         "client": "initiator"
       },
       "acceptance_criteria": "registry verification passed and open questions are owned"

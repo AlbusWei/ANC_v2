@@ -1,0 +1,7 @@
+{
+  "status": "pass",
+  "evidence_index_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-pass/index.json",
+  "unified_verdict_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-pass/unified_verdict.json",
+  "archive_report_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-pass/reports/archive_report.json",
+  "traceability_manifest_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-pass/index.json"
+}

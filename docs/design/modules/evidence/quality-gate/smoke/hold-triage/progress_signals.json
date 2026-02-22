@@ -1,0 +1,5 @@
+{
+  "log_delta": true,
+  "phase_progress": true,
+  "output_heartbeat": true
+}
