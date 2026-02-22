@@ -1,0 +1,61 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "2801fee20011",
+  "strategy": "manual-commit",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/modules/evidence/bpm-runtime/checkpoint_commit_map.jsonl",
+    "docs/design/modules/evidence/bpm-runtime/w5_execution_summary.md",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-001/analysis_digest.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-001/digest_input.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-001/digest_output.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-001/handoff_evidence_index.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-001/handoff_input.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-001/signals/incident_summary.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-001/signals/runtime_signal.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-002/digest_input.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-002/digest_output.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-002/handoff_evidence_index.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-002/handoff_input.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-002/reject_output.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/current_policy.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/handoff_evidence_index.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/handoff_input.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/issue.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/process_input.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/process_output.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/risk_constraints.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/calibration_report.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/p1_scope_lock.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/p2_evidence_index.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/p3_analysis_digest.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/p3_digest_input.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/p3_digest_output.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/p3_handoff.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/p4_governance_sync_minutes.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/p5_decision_record.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/p5_policy_change_proposal.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/p6_rollout_observation.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/runtime_trace.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/signals/runtime_error.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/signals/runtime_latency.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_tc_anl_report.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/28/01fee20011/0/metadata.json",
+      "transcript": "/28/01fee20011/0/full.jsonl",
+      "context": "/28/01fee20011/0/context.md",
+      "content_hash": "/28/01fee20011/0/content_hash.txt",
+      "prompt": "/28/01fee20011/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
