@@ -3,7 +3,7 @@
   "checkpoint_id": "d3126efe0b24",
   "strategy": "manual-commit",
   "branch": "codex/review-skills",
-  "checkpoints_count": 2,
+  "checkpoints_count": 5,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/design/skills/git-operations-skills.md",
@@ -30,6 +30,13 @@
       "context": "/d3/126efe0b24/1/context.md",
       "content_hash": "/d3/126efe0b24/1/content_hash.txt",
       "prompt": "/d3/126efe0b24/1/prompt.txt"
+    },
+    {
+      "metadata": "/d3/126efe0b24/2/metadata.json",
+      "transcript": "/d3/126efe0b24/2/full.jsonl",
+      "context": "/d3/126efe0b24/2/context.md",
+      "content_hash": "/d3/126efe0b24/2/content_hash.txt",
+      "prompt": "/d3/126efe0b24/2/prompt.txt"
     }
   ],
   "token_usage": {
