@@ -25,6 +25,13 @@
 19. sys.arch.construction-audit
 20. system.integration.openspec-sync
 21. system.ops.git-worktree-sync
+22. sys.qa.test-compiler
+23. sys.qa.evaluation-runner
+24. sys.qa.verdict-normalizer
+25. sys.qa.hold-triage
+26. sys.qa.regression-runner
+27. sys.qa.registry-validator
+28. sys.qa.evidence-archiver
 
 ## 规划 Skill（节选）
 
