@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "b8280550f34f",
+  "strategy": "manual-commit",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/modules/evidence/bpm-runtime/checkpoint_commit_map.jsonl",
+    "docs/design/modules/evidence/bpm-runtime/w1_execution_summary.md",
+    "docs/design/modules/evidence/bpm-runtime/w1_migration_report.json",
+    "docs/design/modules/evidence/bpm-runtime/w1_replay_report.json",
+    "docs/design/modules/evidence/bpm-runtime/w1_schema_validation_report.json",
+    "docs/design/modules/evidence/bpm-runtime/w1_tc_ins_report.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/b8/280550f34f/0/metadata.json",
+      "transcript": "/b8/280550f34f/0/full.jsonl",
+      "context": "/b8/280550f34f/0/context.md",
+      "content_hash": "/b8/280550f34f/0/content_hash.txt",
+      "prompt": "/b8/280550f34f/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
