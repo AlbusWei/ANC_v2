@@ -1,0 +1,16 @@
+{
+  "case_id": "TC-005",
+  "name": "verify-m6 scenario A",
+  "command": [
+    "python3",
+    "shared/registry/registry_contract_tool.py",
+    "verify-m6",
+    "--round-dir",
+    "tmp/m6-round-regression-v2/A"
+  ],
+  "return_code": 0,
+  "expected_return_code": 0,
+  "passed": true,
+  "reasons": [],
+  "stdout_json": null
+}

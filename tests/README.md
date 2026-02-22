@@ -7,6 +7,8 @@
 3. `tests/development-process/TEST.md`：`development-process` 测试用例。
 4. `tests/qa-skills/TEST.md`：`sys.qa.*` 技能补测用例（Round 5）。
 5. `tests/qa-skills/run_round5_validation.py`：QA 技能可执行补测脚本。
+6. `tests/m6-governance/TEST.md`：M6 开发成果补测计划（Round 6）。
+7. `tests/m6-governance/run_post_dev_regression.py`：M6 可执行补测脚本。
 
 ## Rule
 

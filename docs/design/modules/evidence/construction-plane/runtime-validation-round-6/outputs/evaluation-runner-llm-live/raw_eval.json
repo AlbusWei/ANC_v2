@@ -1,0 +1,58 @@
+{
+  "mode": "objective",
+  "module": "M6",
+  "preparation_bundle_ref": "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/preparation_bundle_m6_llm.index.json",
+  "actual_output_refs": [
+    "tmp/m6-round-regression-v2/A/round-result.json"
+  ],
+  "run": {
+    "evaluation_verdict": "pass",
+    "gate_decision": "pass",
+    "case_results": [
+      {
+        "tc_id": "TC-001",
+        "priority": "P0",
+        "evaluation_method": "LLM-Judge",
+        "actual_output_ref": "tmp/m6-round-regression-v2/A/round-result.json",
+        "decision": "pass",
+        "score": 5.0,
+        "result": {
+          "query": "verify the M6 round result represents a successfully closed governance round",
+          "reference_response": "round result is passed, p1 to p5 are completed, and output_ref is present",
+          "graders": {
+            "relevance": {
+              "score": 5.0,
+              "normalized_score": 1.0,
+              "threshold": 3.0,
+              "passed": true,
+              "weight": 1.0,
+              "result": {
+                "name": "relevance",
+                "reason": "The response is directly on-topic and provides exactly the fields needed to verify a successfully closed governance round: overall status is \"passed,\" phases p1\u2013p5 are all \"completed,\" and an \"output_ref\" is present. This fully matches the query intent and aligns with the reference criteria.",
+                "metadata": {
+                  "metadata": {},
+                  "threshold": 3
+                },
+                "score": 5.0
+              }
+            }
+          },
+          "selected_graders": [
+            "relevance"
+          ],
+          "must_pass_graders": [
+            "relevance"
+          ],
+          "must_pass_violations": [],
+          "overall_normalized_score": 1.0,
+          "threshold": 3.0
+        }
+      }
+    ],
+    "reasons": [
+      "all_cases_passed"
+    ],
+    "mode": "objective"
+  },
+  "timestamp": "2026-02-22T10:50:50.431344+00:00"
+}

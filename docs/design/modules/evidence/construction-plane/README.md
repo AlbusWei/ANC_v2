@@ -25,3 +25,10 @@
 3. `python3 shared/registry/registry_contract_tool.py verify-m6 --round-dir docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12`
 4. `python3 shared/registry/registry_contract_tool.py verify-m6 --round-dir docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-13`
 
+## 开发后补测（Round 6）
+
+- 测试计划：`tests/m6-governance/TEST.md`
+- 执行脚本：`tests/m6-governance/run_post_dev_regression.py`
+- 补测结果：`docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/regression_report.json`
+- 补测摘要：`docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/regression_summary.md`
+- Gate 决策：`pass`（13/13 通过，生成时间 `2026-02-22T10:50:51Z`）

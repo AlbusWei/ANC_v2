@@ -1,0 +1,14 @@
+{
+  "state": "completed",
+  "mode": "objective",
+  "module": "M6",
+  "started_at": "2026-02-22T10:50:50.863221+00:00",
+  "progress_signals": {
+    "log_delta": true,
+    "phase_progress": "bundle_loaded",
+    "output_heartbeat": true
+  },
+  "completed_at": "2026-02-22T10:50:51.656162+00:00",
+  "decision": "test_invalid",
+  "case_count": 1
+}
