@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-02-22T14:47:48Z",
+  "decision": "run",
+  "reason": "within_dynamic_window",
+  "lag_minutes": 10,
+  "window_minutes": 30,
+  "risk_level": "low"
+}

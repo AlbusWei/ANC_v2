@@ -9,6 +9,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
+version: "0.2.0"
 ---
 
 # system-config-updater
@@ -51,3 +52,10 @@ test_mount:
   test_doc: skills/system/system-config-updater/TEST.md
   methodology_ref: docs/architecture/test_methodology.md
 ```
+
+## Runtime Tooling
+
+1. 可执行入口：`skills/system/system-config-updater/scripts/system_config_updater_runner.py`
+2. 推荐命令：
+   - `python3 skills/system/system-config-updater/scripts/system_config_updater_runner.py --input <input.json> --output <output.json>`
+3. W2 联动用例：`tests/m2-bpm-runtime/TC-GCC.md`（重点覆盖 baseHash 过期拒绝）

@@ -51,10 +51,13 @@
 - [x] 完成 M6 专项门禁：`registry_contract_tool.py verify-m6`
 - [x] 完成 M6 首轮运行级 dry-run（A 通过，B/C Fail-Closed），并落盘证据索引 `docs/design/modules/evidence/construction-plane/README.md`
 - [x] 将 `construction-plane-governance`、`sys.arch.construction-audit`、`system.integration.openspec-sync` 生命周期从 `draft` 提升到 `review`
+- [x] 完成 `m2-bpm-runtime-hardening` W2 配置治理闭环：`governed-config-change`/`config-change-gatekeeper`/`system-config-updater` 可执行，`TC-GCC-001~003` 运行级通过并落盘证据（`docs/design/modules/evidence/bpm-runtime/w2_*`）
 
 ## 进行中（In Progress）
 
-- [ ] `m2-bpm-runtime-hardening` 基座线程已启动：OpenSpec apply-ready 已就绪，测试/证据脚手架初始化完成，状态维持 In Progress（`Q-001` 保持未关闭）
+- [ ] `m2-bpm-runtime-hardening` 基座线程已启动：OpenSpec apply-ready 已就绪，测试/证据脚手架初始化完成，状态维持 In Progress（`Q-001` 保持未关闭；本轮证据见 `docs/design/modules/evidence/bpm-runtime/precheck_apply_ready_evidence.md`）
+- [ ] `m2-bpm-runtime-hardening` W1（实例核心执行化）已落盘：runner/迁移/回放/`TC-INS-001~005` 证据已生成（见 `docs/design/modules/evidence/bpm-runtime/w1_*`），整体变更维持 In Progress
+- [ ] `m2-bpm-runtime-hardening` W3-A（Trigger Runtime 执行化）已落盘：5 个核心 skill runner + 2 个 process runner + `TG-SCH-001~004` / `TG-EVT-001~003` 运行级证据（见 `docs/design/modules/evidence/bpm-runtime/w3_*` 与 `w3_trigger_runtime_cases/`），整体变更维持 In Progress
 - [ ] 将新增 App Agent、流程与技能逐步纳入 runtime registry（按生命周期进入 review）
 - [ ] 执行一致性检查脚本（术语、状态、路径、schema 字段）
 - [ ] 将 trigger governance 最小 dry-run 从文档级证据升级到运行级证据

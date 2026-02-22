@@ -1,0 +1,6 @@
+{
+  "missed_run_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-002/p5_missed_run.json",
+  "catchup_policy_ref": "tmp/m2-bpm-runtime/tc-tg-sandbox/policies/catchup_policy.json",
+  "trigger_policy_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-002/p5_trigger_policy.json",
+  "runtime_state_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-002/p5_runtime_state.json"
+}

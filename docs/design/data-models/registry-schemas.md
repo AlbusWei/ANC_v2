@@ -45,7 +45,7 @@
 ## skill_registry.json
 
 - schema_version: `1.1.0`
-- updated_at: `2026-02-22T00:00:00Z`
+- updated_at: `2026-02-22T13:30:00Z`
 - strict mode: `true`
 
 | 字段 | 类型 | 必填 | 约束 | 说明 |
@@ -85,7 +85,7 @@
   "path": "skills/meta/spec-writer/SKILL.md",
   "layer": "meta",
   "owner": "architect",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "status": "draft",
   "agentskills": {
     "name": "spec-writer",
@@ -147,7 +147,7 @@
   "manifest_path": "processes/meta/development-process/process.json",
   "objective_ref": "obj-phase1-min-loop",
   "owner": "bpm",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "status": "draft",
   "phase_count": 4,
   "openclaw": {

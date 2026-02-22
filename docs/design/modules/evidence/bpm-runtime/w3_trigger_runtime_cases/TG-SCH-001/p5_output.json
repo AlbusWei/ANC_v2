@@ -1,0 +1,6 @@
+{
+  "catchup_decision": "skip",
+  "catchup_run_ref": "",
+  "catchup_reason_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-001/p5_reason.json",
+  "escalation_hint": ""
+}

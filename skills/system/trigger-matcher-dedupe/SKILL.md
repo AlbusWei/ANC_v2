@@ -53,3 +53,9 @@ test_mount:
   test_doc: skills/system/trigger-matcher-dedupe/TEST.md
   methodology_ref: docs/architecture/test_methodology.md
 ```
+
+## Runtime Entrypoint
+
+1. 可执行入口：`skills/system/trigger-matcher-dedupe/scripts/trigger_matcher_dedupe_runner.py`
+2. 最小命令：
+   - `python3 skills/system/trigger-matcher-dedupe/scripts/trigger_matcher_dedupe_runner.py --input <input.json> --output <output.json> --dedupe-key <dedupe_key.json> --evidence <matcher_evidence.json> --ledger <dedupe_ledger.json>`

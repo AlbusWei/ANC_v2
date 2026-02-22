@@ -1,6 +1,6 @@
 # 流程实例 Schema
 
-> 版本: v0.3.0 | SSOT 上游: `docs/architecture/process_architecture.md`
+> 版本: v0.4.0 | SSOT 上游: `docs/architecture/process_architecture.md`
 
 ## 流程定义 Schema (process.json)
 
@@ -65,6 +65,12 @@
 {
   "instance_id": "string (run-{process}-{date}-{seq}, required)",
   "parent_instance_id": "string (optional)",
+  "session_binding": {
+    "agent_id": "string (required)",
+    "session_key": "string (required)",
+    "session_id": "string (required)",
+    "parent_session_id": "string|null (required)"
+  },
   "lineage_ref": "string (required)",
   "stack_depth": "integer (required)",
   "process_id": "string (required)",
@@ -79,8 +85,9 @@
   "phase_results": [
     {
       "phase_id": "string",
-      "status": "string (completed|failed|skipped)",
+      "status": "string (running|completed|failed|skipped)",
       "actor": "string",
+      "session_id": "string (required)",
       "input_ref": "string",
       "output_ref": "string",
       "started_at": "string (ISO8601)",
@@ -89,6 +96,24 @@
   ]
 }
 ```
+
+## 会话绑定 Schema (session_binding.json)
+
+```json
+{
+  "agent_id": "string (required)",
+  "session_key": "string (required)",
+  "session_id": "string (required)",
+  "parent_session_id": "string|null (required)"
+}
+```
+
+字段语义：
+
+1. `agent_id`: 当前 phase 的执行 actor。
+2. `session_key`: BPM 侧逻辑会话键，用于归并同一实例同一阶段的重试。
+3. `session_id`: OpenClaw 显式会话 ID，调用时必须传 `--session-id`。
+4. `parent_session_id`: 父实例会话 ID；根实例固定为 `null`。
 
 ## 实例状态机
 
@@ -102,7 +127,9 @@ Completed|Failed|Cancelled -> Archived
 
 ## 递归执行约束
 
-1. 子流程必须创建独立实例。
-2. 子流程不得直接写父流程运行状态。
-3. 父流程只消费子流程契约输出。
-4. `stack_depth` 超过阈值必须 Fail-Closed。
+1. 根实例必须满足 `stack_depth = 0` 且 `parent_instance_id = null`。
+2. 子实例必须满足 `stack_depth = parent.stack_depth + 1`。
+3. 子实例 `session_binding.session_id` 禁止与父实例会话复用。
+4. 子流程必须创建独立实例，不得直接写父流程运行状态。
+5. 父流程只消费子流程契约输出。
+6. `stack_depth` 超过阈值必须 Fail-Closed。

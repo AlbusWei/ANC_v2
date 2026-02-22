@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-02-22T14:47:48Z",
+  "status": "scheduled",
+  "expected_run_at": "2026-02-22T14:37:48Z",
+  "observed_at": "2026-02-22T14:47:48Z",
+  "lag_minutes": 10,
+  "window_minutes": 30
+}

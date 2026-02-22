@@ -1,0 +1,7 @@
+{
+  "approval": "allow",
+  "risk_level": "low",
+  "reason": "gate passed",
+  "gate_report_ref": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/gate_report.json",
+  "timestamp": "2026-02-22T14:14:56Z"
+}
