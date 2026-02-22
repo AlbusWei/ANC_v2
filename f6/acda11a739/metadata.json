@@ -3,7 +3,7 @@
   "checkpoint_id": "f6acda11a739",
   "strategy": "manual-commit",
   "branch": "rebuild",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     "AGENTS.md"
   ],
@@ -14,6 +14,13 @@
       "context": "/f6/acda11a739/0/context.md",
       "content_hash": "/f6/acda11a739/0/content_hash.txt",
       "prompt": "/f6/acda11a739/0/prompt.txt"
+    },
+    {
+      "metadata": "/f6/acda11a739/1/metadata.json",
+      "transcript": "/f6/acda11a739/1/full.jsonl",
+      "context": "/f6/acda11a739/1/context.md",
+      "content_hash": "/f6/acda11a739/1/content_hash.txt",
+      "prompt": "/f6/acda11a739/1/prompt.txt"
     }
   ],
   "token_usage": {
