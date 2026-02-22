@@ -1,0 +1,3724 @@
+{
+  "messages": [
+    {
+      "id": "user-76bff5d2cb",
+      "type": "user",
+      "content": "\u5728worktree\u5404\u4e2a\u5206\u652f\uff0c\u4ee5\u5f53\u524d\u89c4\u8303\u548c\u8fdb\u5ea6\u91cd\u5efa\u6216\u66f4\u65b0checklist\u3002"
+    },
+    {
+      "id": "gemini-06b23903a7",
+      "type": "gemini",
+      "content": "\u66f4\u65b0codex/review-agents\u8bc4\u5ba1\u6e05\u5355\u57fa\u7ebf\uff0c\u6309\u5f53\u524dd2d7699\u89c4\u8303\u68b3\u7406\u5df2\u5b8c\u6210/\u5f85\u5b8c\u6210\u9879\uff0c\u5e76\u8865\u9f50\u96c6\u6210\u6e05\u5355\u3002",
+      "toolCalls": [
+        {
+          "id": "tool-1-5d871fde",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/review-checklists/agents-checklist.md"
+          },
+          "status": "success"
+        }
+      ]
+    },
+    {
+      "id": "user-e125e572e5",
+      "type": "user",
+      "content": "\u7ec6\u5316QA Agent\u8bbe\u8ba1\uff0c\u57fa\u4e8eM1\u6700\u65b0\u6d4b\u8bd5\u6a21\u5757\u4e0e\u6d41\u7a0b\u5951\u7ea6\u5b8c\u6210\u804c\u8d23\u8fb9\u754c\u4e0e\u6cbb\u7406\u89c4\u5219\u5b9a\u4e49"
+    },
+    {
+      "id": "gemini-b9ba7d9ab5",
+      "type": "gemini",
+      "content": "\u5c06QA Agent\u6587\u6863\u5347\u7ea7\u5230v0.2.0\uff1b\u7eb3\u5165sys.qa.*\u80fd\u529b\u5168\u96c6\u8bbe\u8ba1\uff1b\u660e\u786eadmin-only override\u3001AP-008\u9ed8\u8ba4\u542f\u7528\u3001QA\u8fb9\u754c\u6b62\u4e8eAP-023\u3001P0\u96f6\u6f0f\u5224\u4f18\u5148\uff0c\u4ee5\u53ca\u5355\u4f53QA\u7684\u8bc1\u636e\u4e0e\u5347\u7ea7\u7ea6\u675f\u3002",
+      "toolCalls": [
+        {
+          "id": "tool-1-896e83c6",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/agents/kernel/qa.md"
+          },
+          "status": "success"
+        }
+      ]
+    },
+    {
+      "id": "user-5488c7270b",
+      "type": "user",
+      "content": "\u63a8\u8fdbQA Agent\u76f8\u5173\u8d44\u4ea7\u95ed\u5305\u8bbe\u8ba1\uff0c\u8865\u9f50\u6280\u80fd\u3001\u6d41\u7a0b\u4e0e\u516d\u4ef6\u5957\uff0c\u5e76\u5bf9\u9f50OpenClaw\u6a21\u677f"
+    },
+    {
+      "id": "gemini-817edcd837",
+      "type": "gemini",
+      "content": "\u65b0\u589e\u5e76\u6ce8\u518csys.qa\u4e0esys.bpm\u8d28\u91cf\u95e8\u7981\u6280\u80fd\uff1b\u65b0\u589e\u5e76\u6ce8\u518cquality-gate-preparation/quality-gate-evaluation/hold-governance\u6d41\u7a0b\u8d44\u4ea7\uff1b\u91cd\u5199QA\u516d\u4ef6\u5957\u6587\u6863\u5e76\u66f4\u65b0inventory/\u65bd\u5de5\u5e73\u9762/\u6821\u9a8c\u811a\u672c\uff1b\u901a\u8fc7registry_contract_tool verify\u3002",
+      "toolCalls": [
+        {
+          "id": "tool-1-86148bdb",
+          "name": "write_file",
+          "args": {
+            "file_path": "AGENTS.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-2-16acecfb",
+          "name": "write_file",
+          "args": {
+            "file_path": "agents/kernel/qa/AGENTS.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-3-49090480",
+          "name": "write_file",
+          "args": {
+            "file_path": "agents/kernel/qa/IDENTITY.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-4-7d820c67",
+          "name": "write_file",
+          "args": {
+            "file_path": "agents/kernel/qa/MEMORY.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-5-fb7e8595",
+          "name": "write_file",
+          "args": {
+            "file_path": "agents/kernel/qa/SOUL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-6-44c80bb9",
+          "name": "write_file",
+          "args": {
+            "file_path": "agents/kernel/qa/TOOLS.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-7-b4323c7b",
+          "name": "write_file",
+          "args": {
+            "file_path": "agents/kernel/qa/USER.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-8-ee7c154d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/architecture/construction_plane.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-9-475919aa",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/agents/kernel/qa.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-10-0d30b6f6",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/data-models/registry-schemas.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-11-a8fe1206",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/inventories/process-inventory.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-12-e2b1cf33",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/inventories/skill-inventory.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-13-cd39dad6",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/processes/governance-processes.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-14-7cd2b15d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/processes/meta-processes.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-15-403a5975",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/processes/quality-gate-evaluation-process.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-16-c58552bf",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/skills/quality-gate-skills.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-17-3f5e465d",
+          "name": "write_file",
+          "args": {
+            "file_path": "processes/README.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-18-4237fe4c",
+          "name": "write_file",
+          "args": {
+            "file_path": "shared/registry/process_registry.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-19-a82309ae",
+          "name": "write_file",
+          "args": {
+            "file_path": "shared/registry/registry_contract_tool.py"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-20-27c0e0bb",
+          "name": "write_file",
+          "args": {
+            "file_path": "shared/registry/skill_registry.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-21-5dc969b6",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/README.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-22-e42f7907",
+          "name": "write_file",
+          "args": {
+            "file_path": ".entire/codex-bridge"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-23-96cc5392",
+          "name": "write_file",
+          "args": {
+            "file_path": "processes/meta/hold-governance"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-24-353da38f",
+          "name": "write_file",
+          "args": {
+            "file_path": "processes/meta/quality-gate-evaluation"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-25-7645c731",
+          "name": "write_file",
+          "args": {
+            "file_path": "processes/meta/quality-gate-preparation"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-26-46ce0dbc",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/escalation-handler"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-27-9ee13540",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/evaluation-runner"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-28-7fbc8d79",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/hold-triage"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-29-d89e07e9",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/process-instance-manager"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-30-b05f4648",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/regression-runner"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-31-cbbbb6e4",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/test-compiler"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-32-9cc0b830",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/verdict-normalizer"
+          },
+          "status": "success"
+        }
+      ]
+    },
+    {
+      "id": "user-2de2a1f6db",
+      "type": "user",
+      "content": "\u63d0\u4ea4QA Agent\u95ed\u5305\u8bbe\u8ba1\u5e76\u63a8\u8fdb\u5230rebuild\uff0c\u518d\u7531rebuild\u5408\u5e76\u56de\u5404\u5de5\u4f5c\u5206\u652f"
+    },
+    {
+      "id": "gemini-dd9c9c5372",
+      "type": "gemini",
+      "content": "\u5b8c\u6210QA\u516d\u4ef6\u5957\u3001sys.qa\u4e0esys.bpm\u6280\u80fd\u3001quality-gate\u4e09\u6d41\u7a0b\u3001registry/inventory/construction-plane\u8054\u52a8\u66f4\u65b0\u5e76\u901a\u8fc7verify\uff1b\u51c6\u5907\u63d0\u4ea4\u4e0e\u8de8\u5206\u652f\u5408\u5e76\u3002",
+      "toolCalls": [
+        {
+          "id": "tool-1-b1737589",
+          "name": "write_file",
+          "args": {
+            "file_path": "agents/kernel/qa/AGENTS.md agents/kernel/qa/IDENTITY.md agents/kernel/qa/MEMORY.md agents/kernel/qa/SOUL.md agents/kernel/qa/TOOLS.md agents/kernel/qa/USER.md docs/architecture/construction_plane.md docs/design/agents/kernel/qa.md docs/design/data-models/registry-schemas.md docs/design/inventories/process-inventory.md docs/design/inventories/skill-inventory.md docs/design/processes/governance-processes.md docs/design/processes/meta-processes.md docs/design/processes/quality-gate-evaluation-process.md docs/design/skills/quality-gate-skills.md processes/README.md shared/registry/process_registry.json shared/registry/registry_contract_tool.py shared/registry/skill_registry.json skills/README.md processes/meta/hold-governance/ processes/meta/quality-gate-evaluation/ processes/meta/quality-gate-preparation/ skills/system/escalation-handler/ skills/system/evaluation-runner/ skills/system/hold-triage/ skills/system/process-instance-manager/ skills/system/regression-runner/ skills/system/test-compiler/ skills/system/verdict-normalizer/ "
+          },
+          "status": "success"
+        }
+      ]
+    },
+    {
+      "id": "user-02895d7e12",
+      "type": "user",
+      "content": "\u63d0\u4ea4AGENTS.md\u7684\u65b0\u534f\u4f5c\u8def\u5f84\u89c4\u8303\uff0c\u5e76\u540c\u6b65\u5230rebuild\u53ca\u5404\u5206\u652f"
+    },
+    {
+      "id": "gemini-e66ebe222a",
+      "type": "gemini",
+      "content": "\u66f4\u65b0AGENTS.md\u534f\u4f5c\u7ea6\u675f\uff1a\u9ed8\u8ba4\u76f8\u5bf9\u8def\u5f84\u8868\u8fbe\uff0c\u5e76\u5b9a\u4e49canonical\u6839\u76ee\u5f55\u6620\u5c04\u89c4\u5219\u3002",
+      "toolCalls": [
+        {
+          "id": "tool-1-ba8682c2",
+          "name": "write_file",
+          "args": {
+            "file_path": "AGENTS.md"
+          },
+          "status": "success"
+        }
+      ]
+    },
+    {
+      "id": "user-d7154e7425",
+      "type": "user",
+      "content": "\u5c06\u5f53\u524d rebuild \u5408\u5e76\u5230 codex/review-agents"
+    },
+    {
+      "id": "gemini-2b2382bd3e",
+      "type": "gemini",
+      "content": "\u5728 codex/review-agents \u5206\u652f\u5408\u5e76 origin/rebuild\uff0c\u4fdd\u7559\u672c\u5206\u652f\u6539\u52a8\u5e76\u5f15\u5165 rebuild \u6700\u65b0\u57fa\u7ebf\u3002",
+      "toolCalls": [
+        {
+          "id": "tool-1-2f4c5d38",
+          "name": "write_file",
+          "args": {
+            "file_path": ".codex/skills/openspec-apply-change/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-2-67695c57",
+          "name": "write_file",
+          "args": {
+            "file_path": ".codex/skills/openspec-archive-change/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-3-d0c0641f",
+          "name": "write_file",
+          "args": {
+            "file_path": ".codex/skills/openspec-bulk-archive-change/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-4-1a03e429",
+          "name": "write_file",
+          "args": {
+            "file_path": ".codex/skills/openspec-continue-change/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-5-f3062a17",
+          "name": "write_file",
+          "args": {
+            "file_path": ".codex/skills/openspec-explore/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-6-d3ebbd45",
+          "name": "write_file",
+          "args": {
+            "file_path": ".codex/skills/openspec-ff-change/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-7-a210e096",
+          "name": "write_file",
+          "args": {
+            "file_path": ".codex/skills/openspec-new-change/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-8-a894e9d8",
+          "name": "write_file",
+          "args": {
+            "file_path": ".codex/skills/openspec-onboard/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-9-dbc0238c",
+          "name": "write_file",
+          "args": {
+            "file_path": ".codex/skills/openspec-sync-specs/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-10-faf77dcd",
+          "name": "write_file",
+          "args": {
+            "file_path": ".codex/skills/openspec-verify-change/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-11-2fb9b1e1",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/architecture/construction_plane.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-12-2e1202ee",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/architecture/test_methodology.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-13-f89598db",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/data-models/openspec-collaboration-schema.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-14-7813d3bc",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/interfaces/openspec-collaboration-protocol.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-15-df381c45",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/inventories/process-inventory.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-16-dce195bb",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/inventories/skill-inventory.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-17-c9a296b2",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/M1-test-system.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-18-edc38622",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/M6-construction-plane.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-19-ad11cc9c",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/construction_plane_delta.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-20-fc50251e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/decision_snapshot.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-21-5b2832f1",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/linkage_report.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-22-90f54628",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/m6_update_bundle.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-23-3054d9d1",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/manual-task-evidence-20260221220828.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-24-e600100f",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/manual-task-evidence-20260221220829.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-25-9b8de60e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/manual-task-evidence-20260221220833.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-26-464041d3",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/open_questions.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-27-e3d6adb9",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/openspec-sync-record.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-28-640716e3",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/p1-manual-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-29-85d51cc0",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/p1-manual-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-30-f8bc2f89",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/p2-audit-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-31-3051c028",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/p2-audit-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-32-0ac7c6a2",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/p3-manual-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-33-6db26654",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/p3-manual-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-34-04a4000b",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/p5-manual-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-35-c36bb75a",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/p5-manual-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-36-ce37c87c",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/round-evidence.jsonl"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-37-84a04f4f",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/round-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-38-9dd5ee7e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/round-result.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-39-a06e20c5",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/round_close_summary.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-40-25b5e6fb",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/round_evidence_verify.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-41-1afbb674",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/scope_baseline.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-42-16747941",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12/construction_plane_delta.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-43-15524f59",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12/decision_snapshot.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-44-c6000995",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12/linkage_report.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-45-585efea0",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12/m6_update_bundle.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-46-486364f1",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12/manual-task-evidence-20260221220828.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-47-7c488755",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12/manual-task-evidence-20260221220829.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-48-ebf29fba",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12/open_questions.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-49-de6e41d8",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12/openspec-sync-record.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-50-5de95bcd",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12/p1-manual-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-51-90e9262c",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12/p1-manual-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-52-c154b747",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12/p2-audit-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-53-c23d452b",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12/p2-audit-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-54-8eee1791",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12/p3-manual-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-55-5959b139",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12/p3-manual-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-56-895b4a2c",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12/round-evidence.jsonl"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-57-a1ab1646",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12/round-result.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-58-16786840",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12/round_evidence_verify.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-59-8313e4d1",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-12/scope_baseline.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-60-51999be4",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-13/construction_plane_delta.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-61-3b9c9b60",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-13/decision_snapshot.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-62-a542ee24",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-13/linkage_report.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-63-f9d4cfcc",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-13/m6_update_bundle.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-64-e70f8c01",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-13/manual-task-evidence-20260221220828.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-65-acfa373a",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-13/manual-task-evidence-20260221220829.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-66-dda13bd3",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-13/open_questions.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-67-e06b5528",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-13/openspec-sync-record.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-68-2cad1780",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-13/p1-manual-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-69-46a9fec9",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-13/p1-manual-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-70-ad73dac3",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-13/p2-audit-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-71-e2d2146e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-13/p2-audit-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-72-a070363d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-13/p3-manual-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-73-ee709c8b",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-13/p3-manual-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-74-084b0ff5",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-13/round-evidence.jsonl"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-75-9866f36d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-13/round-result.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-76-4ccfe745",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-13/scope_baseline.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-77-6b5554e1",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/construction_plane_delta.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-78-18067a1e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/decision_snapshot.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-79-f2a21e35",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/linkage_report.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-80-09bcc524",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/m6_update_bundle.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-81-8f872d74",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/manual-task-evidence-20260221220828.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-82-c25123f8",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/manual-task-evidence-20260221220829.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-83-d9d6b51f",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/manual-task-evidence-20260221220833.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-84-ae1d54ff",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/open_questions.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-85-4a2fdf6f",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/openspec-sync-record.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-86-fdccaec1",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/p1-manual-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-87-c2ea4585",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/p1-manual-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-88-88644e19",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/p2-audit-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-89-5d6ee758",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/p2-audit-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-90-e8d6a69d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/p3-manual-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-91-394b4311",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/p3-manual-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-92-0d476541",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/p5-manual-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-93-1dab6915",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/p5-manual-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-94-94340cbb",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/round-evidence.jsonl"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-95-a936ecca",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/round-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-96-b8d32a3b",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/round-result.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-97-1dcbb29a",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/round_close_summary.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-98-211693a1",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/round_evidence_verify.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-99-c27ad81b",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-14/scope_baseline.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-100-00bfb783",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/construction_plane_delta.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-101-c8cd065c",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/decision_snapshot.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-102-671e069e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/linkage_report.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-103-4b16d8b6",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/m6_update_bundle.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-104-5e8905f1",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/manual-task-evidence-20260221220828.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-105-21b433c2",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/manual-task-evidence-20260221220829.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-106-a2edaa54",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/manual-task-evidence-20260221220833.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-107-661fb058",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/open_questions.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-108-3b01c3d3",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/openspec-sync-record.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-109-d9a062eb",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/p1-manual-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-110-2e9f0c65",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/p1-manual-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-111-5b093680",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/p2-audit-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-112-5e370c03",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/p2-audit-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-113-e814a80e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/p3-manual-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-114-afc8cfba",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/p3-manual-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-115-a4ec8372",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/p5-manual-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-116-dd61684f",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/p5-manual-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-117-0badc1cf",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/round-evidence.jsonl"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-118-b92faeea",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/round-output.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-119-9e8fb851",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/round-result.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-120-ba81ed4d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/round_close_summary.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-121-fa37fc25",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/round_evidence_verify.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-122-f1b4a64b",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/scope_baseline.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-123-8b0a8860",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/README.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-124-8bfa7efe",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/scenario-A-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-125-f0d4ca9a",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/scenario-B-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-126-486dfb36",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/construction-plane/scenario-C-input.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-127-93c10073",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/README.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-128-cd3f38dd",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/active-pilot-round-1.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-129-cf44828b",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/review-round-1.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-130-516cb955",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-131-c30ad4cf",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_llm_judge.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-132-826576f8",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-133-34c9e119",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_baseline.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-134-2d44e899",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_candidate.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-135-ca3d8a4d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_pass.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-136-233791f4",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/aggregation_rules.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-137-cf72c54b",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-138-0ae74a80",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/execution_state_prev.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-139-38ca2bbb",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/hold_case.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-140-8308362f",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/triage_policy.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-141-43174b71",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/evaluation-runner-llm-missing-key/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-142-2ec62656",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/evaluation-runner-llm-missing-key/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-143-f4914ffb",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/evaluation-runner-objective/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-144-ab60ef2d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/evaluation-runner-objective/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-145-485a39da",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/evaluation-runner-regression/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-146-46e3a614",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/evaluation-runner-regression/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-147-772f56da",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/evaluation-runner-subjective/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-148-e5aea774",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/evaluation-runner-subjective/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-149-9ed23fa2",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/evaluation_runner_llm_missing_key.stdout.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-150-359344b9",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/evaluation_runner_objective.stdout.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-151-93e506d7",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/evaluation_runner_regression.stdout.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-152-d25cce16",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/evaluation_runner_subjective.stdout.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-153-39e57c6c",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/evidence-archiver/index.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-154-3c56e8bc",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/evidence-archiver/reports/archive_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-155-cf805845",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/evidence-archiver/unified_verdict.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-156-68f77dec",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/evidence_archiver.stdout.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-157-0cc15914",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/hold-triage/action_execution.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-158-bbcb91ad",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/hold-triage/progress_signals.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-159-188efabb",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/hold-triage/triage_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-160-49d16075",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/hold_triage.stdout.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-161-56a3b10c",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/preparation_bundle.index.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-162-ea94ad6c",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/preparation_bundle_llm.index.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-163-fbabbe43",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/registry-validator/registry_validation_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-164-74b1463e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/registry_validator.stdout.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-165-dd306598",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/regression-runner/M3/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-166-7cb5e227",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/regression-runner/M3/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-167-c3b5d0d6",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/regression-runner/M4/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-168-df909e76",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/regression-runner/M4/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-169-6cabe6a7",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/regression-runner/regression_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-170-fe0ca62d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/regression-runner/regression_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-171-9cbdb81f",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/regression_runner.stdout.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-172-105fd0a6",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/runtime_summary.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-173-363cdab6",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/test-compiler-llm/compile_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-174-59139d7e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/test-compiler-llm/tc_profile_map.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-175-216ee009",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/test-compiler-llm/test_datapoints.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-176-9d220502",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/test-compiler/compile_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-177-ce9e6552",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/test-compiler/tc_profile_map.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-178-2e80c6de",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/test-compiler/test_datapoints.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-179-3525aa22",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/test_compiler.stdout.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-180-b7fe8835",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/test_compiler_llm.stdout.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-181-a2b32f7c",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/verdict-normalizer/aggregation_trace.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-182-65a11ea3",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/verdict-normalizer/final_gate_verdict.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-183-1e6a24c6",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/verdict_normalizer.stdout.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-184-5b04a489",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-185-ec653ecd",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/fixtures/TEST_llm_dynamic.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-186-63b76059",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/fixtures/actual_output_dynamic.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-187-9ea21a5e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/evaluation-runner-llm/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-188-786f8fcf",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/evaluation-runner-llm/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-189-29d4e375",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/evaluation-runner-subjective-llm/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-190-5973a125",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/evaluation-runner-subjective-llm/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-191-7d9f909b",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/evaluation-runner-subjective-rule/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-192-e1a8a6dc",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/evaluation-runner-subjective-rule/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-193-fc305409",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/evaluation_runner_llm.stdout.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-194-ecbf1211",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/evaluation_runner_subjective_llm.stdout.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-195-df10a542",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/evaluation_runner_subjective_rule.stdout.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-196-25dd8bf6",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/preparation_bundle.index.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-197-2aeade8f",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/runtime_summary.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-198-0ccf6ea9",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/test-compiler/compile_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-199-318e34df",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/test-compiler/tc_profile_map.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-200-a97aad64",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/test-compiler/test_datapoints.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-201-f8152552",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/test_compiler.stdout.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-202-a2dfac8d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-203-1ceed75c",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/fixtures/actual_output_baseline.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-204-7ceb471f",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/fixtures/actual_output_candidate.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-205-6966bb9d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-default/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-206-47141da0",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-default/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-207-3b2636c1",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-objective/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-208-89d76bbd",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-objective/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-209-147fbbf7",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-subjective/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-210-9d34c84d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-subjective/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-211-d979e023",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation_runner_llm_default.stdout.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-212-0a836710",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation_runner_llm_objective.stdout.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-213-68a67405",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation_runner_llm_subjective.stdout.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-214-40417c0e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/runtime_summary.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-215-ccf21890",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-216-0951aa68",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/fixtures/execution_state_no_progress.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-217-75ed431f",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/fixtures/execution_state_no_progress_prev.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-218-bf7ea113",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/fixtures/hold_case_no_progress.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-219-b3a8cfef",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/fixtures/objective_test_invalid.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-220-c81f095f",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/fixtures/regression_pass.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-221-02d7fbbc",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/fixtures/triage_policy_restricted.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-222-3be8bf03",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-missing-output/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-223-115451fd",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-missing-output/payload.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-224-1f34d103",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-missing-output/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-225-a6ffcd15",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-missing-output/stderr.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-226-4f0a0da2",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-missing-output/stdout.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-227-954c9699",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-objective/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-228-167c4e37",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-objective/payload.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-229-12889144",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-objective/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-230-87581539",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-objective/stderr.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-231-3267f568",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-objective/stdout.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-232-2fdcf97b",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-regression/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-233-f4c31702",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-regression/payload.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-234-15346b0e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-regression/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-235-0833aafa",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-regression/stderr.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-236-a3ac6a93",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-regression/stdout.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-237-115ce69a",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-missing-trace/payload.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-238-5a7dd191",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-missing-trace/reports/archive_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-239-bc3ab34a",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-missing-trace/stderr.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-240-a9d22de6",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-missing-trace/stdout.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-241-b6cd89be",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-pass/index.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-242-47ffb6ac",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-pass/payload.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-243-62a22b2d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-pass/reports/archive_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-244-7dddc857",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-pass/stderr.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-245-af6c1bda",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-pass/stdout.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-246-4b5dc667",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-pass/unified_verdict.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-247-bfc31d6a",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/hold-triage-policy-restricted/action_execution.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-248-8a76df93",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/hold-triage-policy-restricted/payload.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-249-76baab9d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/hold-triage-policy-restricted/progress_signals.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-250-f177a37e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/hold-triage-policy-restricted/stderr.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-251-73b044ae",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/hold-triage-policy-restricted/stdout.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-252-e5aca04d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/hold-triage-policy-restricted/triage_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-253-ca05ac1b",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/preparation_bundle.index.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-254-de6d0f81",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/registry-validator-missing-tool/payload.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-255-1cbffacb",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/registry-validator-missing-tool/registry_validation_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-256-f7662f7c",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/registry-validator-missing-tool/stderr.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-257-cb20b7d1",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/registry-validator-missing-tool/stdout.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-258-1d6098c7",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/registry-validator-pass/payload.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-259-dcbf5981",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/registry-validator-pass/registry_validation_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-260-494df807",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/registry-validator-pass/stderr.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-261-97c65bd5",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/registry-validator-pass/stdout.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-262-af4f6ff8",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/regression-runner-ambiguous/payload.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-263-7a9d853e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/regression-runner-ambiguous/regression_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-264-b64117ff",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/regression-runner-ambiguous/stderr.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-265-eaa4d34b",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/regression-runner-ambiguous/stdout.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-266-5989353d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/regression-runner-pass/M3/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-267-7e2d6571",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/regression-runner-pass/M3/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-268-5c7c15fe",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/regression-runner-pass/M4/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-269-8945ea7d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/regression-runner-pass/M4/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-270-e5e3785a",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/regression-runner-pass/payload.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-271-e808f8de",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/regression-runner-pass/regression_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-272-f869fda3",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/regression-runner-pass/regression_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-273-751fe45e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/regression-runner-pass/stderr.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-274-e826c806",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/regression-runner-pass/stdout.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-275-f300d58c",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/runtime_summary.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-276-89c86c28",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/test-compiler-empty-profile/compile_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-277-b72e6d76",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/test-compiler-empty-profile/payload.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-278-7eb65b61",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/test-compiler-empty-profile/stderr.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-279-e8815783",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/test-compiler-empty-profile/stdout.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-280-ef9e2cb6",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/test-compiler-pass/compile_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-281-367bb33b",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/test-compiler-pass/payload.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-282-a3851e6b",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/test-compiler-pass/stderr.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-283-ef3a2b38",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/test-compiler-pass/stdout.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-284-b77f623d",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/test-compiler-pass/tc_profile_map.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-285-ee6fb90b",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/test-compiler-pass/test_datapoints.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-286-bd7b6066",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/verdict-normalizer-pass/aggregation_trace.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-287-b06bede8",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/verdict-normalizer-pass/final_gate_verdict.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-288-fa320909",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/verdict-normalizer-pass/payload.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-289-a4ba9c6e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/verdict-normalizer-pass/stderr.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-290-489122c2",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/verdict-normalizer-pass/stdout.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-291-f0f3eaa8",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/verdict-normalizer-test-invalid/aggregation_trace.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-292-becf74a9",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/verdict-normalizer-test-invalid/final_gate_verdict.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-293-1f7029df",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/verdict-normalizer-test-invalid/payload.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-294-f9c339c5",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/verdict-normalizer-test-invalid/stderr.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-295-8b8576a4",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/verdict-normalizer-test-invalid/stdout.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-296-cff943ef",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/actual_output.pass.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-297-fd376ca2",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/aggregation_rules.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-298-18d0ae67",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/evaluation-runner/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-299-1bb3184b",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/evaluation-runner/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-300-504d0968",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/evaluation_runner_result.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-301-fd6e4353",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/evidence-archiver/index.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-302-4e7a4a1e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/evidence-archiver/reports/archive_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-303-070dcc91",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/evidence-archiver/unified_verdict.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-304-07867efd",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/evidence_archiver_result.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-305-7bef456f",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-306-a0fb5a05",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/hold-triage/action_execution.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-307-dd1c5527",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/hold-triage/progress_signals.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-308-04f3626c",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/hold-triage/triage_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-309-6f43718e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/hold_case.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-310-4735d979",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/hold_triage_result.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-311-60bf2a45",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/objective_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-312-fa34f7ce",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/preparation_bundle.index.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-313-d9a9baae",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/registry-validator/registry_validation_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-314-88cc6289",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/registry_validator_result.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-315-508294a9",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/regression-runner/regression_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-316-16b71384",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/regression-runner/regression_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-317-1e5e6ec0",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/regression-runner/runner/execution_state.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-318-83ab2755",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/regression-runner/runner/raw_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-319-74846795",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/regression_eval.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-320-e581fc03",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/regression_runner_result.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-321-96609878",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/template_smoke.txt"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-322-27b8a907",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/test-compiler/compile_report.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-323-a129848c",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/test-compiler/tc_profile_map.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-324-cf4ed9be",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/test-compiler/test_datapoints.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-325-6e1e8f92",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/test_compiler_result.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-326-47f00057",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/triage_policy.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-327-dd558caf",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/verdict-normalizer/aggregation_trace.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-328-231335b0",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/verdict-normalizer/final_gate_verdict.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-329-583b904b",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/evidence/quality-gate/smoke/verdict_normalizer_result.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-330-42b1122f",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/modules/module-dependency-matrix.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-331-011ddcc4",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/processes/atomic/AP-032-construction-round-intake-baseline.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-332-fdec36c6",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/processes/atomic/AP-033-construction-linkage-audit.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-333-09bc8b23",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/processes/atomic/AP-034-linked-artifacts-update.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-334-aca70486",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/processes/atomic/AP-035-openspec-round-sync.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-335-2726f0c3",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/processes/atomic/AP-036-construction-round-close-verification.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-336-5ed68a01",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/processes/construction-plane-governance-process.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-337-0192de5e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/processes/construction-plane-governance-runtime-contract-baseline.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-338-9ab5df96",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/processes/governance-processes.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-339-bd86d18e",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/processes/meta-processes.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-340-36cef0c4",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/processes/p-levels/P6-atomic-process-catalog.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-341-9110b3f7",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/processes/samples/construction-plane-governance/m6-runtime-contract-examples.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-342-1bb3e8d1",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/skills/construction-plane-skills.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-343-737e0e13",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/skills/quality-gate-skills.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-344-615c5ac4",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/design/skills/system-skills.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-345-8cd717ad",
+          "name": "write_file",
+          "args": {
+            "file_path": "docs/review-checklists/skills-checklist.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-346-bb71c19f",
+          "name": "write_file",
+          "args": {
+            "file_path": "openspec/changes/m6-construction-round-sync/.openspec.yaml"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-347-8c81f1c2",
+          "name": "write_file",
+          "args": {
+            "file_path": "openspec/changes/m6-construction-round-sync/README.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-348-d53fbd0a",
+          "name": "write_file",
+          "args": {
+            "file_path": "openspec/changes/m6-construction-round-sync/proposal.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-349-393ef8fc",
+          "name": "write_file",
+          "args": {
+            "file_path": "openspec/changes/m6-construction-round-sync/specs/construction-plane/spec.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-350-edd86843",
+          "name": "write_file",
+          "args": {
+            "file_path": "openspec/changes/m6-construction-round-sync/tasks.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-351-2eebcce2",
+          "name": "write_file",
+          "args": {
+            "file_path": "processes/meta/construction-plane-governance/PROCESS.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-352-2cfd1d29",
+          "name": "write_file",
+          "args": {
+            "file_path": "processes/meta/construction-plane-governance/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-353-5e063ce1",
+          "name": "write_file",
+          "args": {
+            "file_path": "processes/meta/construction-plane-governance/process.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-354-7fbe48f8",
+          "name": "write_file",
+          "args": {
+            "file_path": "processes/meta/construction-plane-governance/scripts/round_evidence_tool.py"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-355-60f1555e",
+          "name": "write_file",
+          "args": {
+            "file_path": "processes/meta/construction-plane-governance/scripts/run_round.py"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-356-486e1942",
+          "name": "write_file",
+          "args": {
+            "file_path": "shared/registry/README.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-357-92f3fb1e",
+          "name": "write_file",
+          "args": {
+            "file_path": "shared/registry/process_registry.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-358-29dd5379",
+          "name": "write_file",
+          "args": {
+            "file_path": "shared/registry/registry_contract_tool.py"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-359-d29140b9",
+          "name": "write_file",
+          "args": {
+            "file_path": "shared/registry/skill_registry.json"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-360-ae7f6201",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/README.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-361-25a94a19",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/skill-creator/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-362-e248984f",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/skill-creator/references/checklist.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-363-e5cfac48",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/skill-creator/references/review_rubric.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-364-08b8ab5b",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/skill-creator/scripts/scaffold_skill.py"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-365-cb648b1e",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/construction-audit/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-366-c397658f",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/construction-audit/TEST.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-367-358ca068",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/construction-audit/scripts/construction_audit.py"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-368-a8b24ade",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/evaluation-runner/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-369-efe4e0c5",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/evaluation-runner/TEST.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-370-b4ed8884",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/hold-triage/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-371-70140c09",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/hold-triage/TEST.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-372-eef90548",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/manual-task/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-373-30cf6ad6",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/manual-task/TEST.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-374-a3934549",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/manual-task/scripts/manual_task_runner.py"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-375-3d4c60ff",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/openspec-sync/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-376-17c0bbd8",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/openspec-sync/TEST.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-377-57a688c9",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/openspec-sync/scripts/openspec_sync.sh"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-378-7b03a3c0",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/evaluation-runner/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-379-199fbf10",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/evaluation-runner/TEST.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-380-33cd7f9f",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/evaluation-runner/references/runner-contract.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-381-09cf543d",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/evaluation-runner/scripts/quality_eval_runner"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-382-3a2ddf2f",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/evaluation-runner/scripts/quality_eval_runner_impl.py"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-383-5f405705",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/evidence-archiver/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-384-bb17247c",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/evidence-archiver/TEST.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-385-e951c44a",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/evidence-archiver/references/evidence-index.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-386-cdf84468",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/evidence-archiver/scripts/archive_evidence.py"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-387-69829fe4",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/hold-triage/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-388-2d68fa25",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/hold-triage/TEST.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-389-2ce4cb43",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/hold-triage/references/triage-signals.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-390-5c97d73a",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/hold-triage/scripts/hold_triage.py"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-391-8852d5e3",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/registry-validator/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-392-635d2575",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/registry-validator/TEST.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-393-d7f1bdc9",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/registry-validator/references/registry-contract.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-394-6cdcd67e",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/registry-validator/scripts/validate_registry.py"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-395-9c9e9625",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/regression-runner/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-396-3dec9faf",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/regression-runner/TEST.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-397-52d8513d",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/regression-runner/references/regression-scope.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-398-e8b69e7f",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/regression-runner/scripts/run_regression.py"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-399-1450bb8f",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/test-compiler/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-400-53074d4d",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/test-compiler/TEST.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-401-22aedf5c",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/test-compiler/references/output-schema.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-402-6dedc518",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/test-compiler/scripts/compile_test_doc.py"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-403-24d3518f",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/verdict-normalizer/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-404-be984128",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/verdict-normalizer/TEST.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-405-4e83e0bf",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/verdict-normalizer/references/aggregation-rules.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-406-b60af704",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/qa/verdict-normalizer/scripts/normalize_verdict.py"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-407-735190db",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/regression-runner/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-408-06275945",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/regression-runner/TEST.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-409-f15345c6",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/test-compiler/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-410-9ec25448",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/test-compiler/TEST.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-411-0d079fa4",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/verdict-normalizer/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-412-d348d36d",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/system/verdict-normalizer/TEST.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-413-e60699ab",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/template/SKILL.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-414-49343f98",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/template/references/template-checklist.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-415-31aad3ff",
+          "name": "write_file",
+          "args": {
+            "file_path": "skills/template/scripts/smoke_template_skill.py"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-416-c88bf651",
+          "name": "write_file",
+          "args": {
+            "file_path": "tests/README.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-417-30a2f79c",
+          "name": "write_file",
+          "args": {
+            "file_path": "tests/qa-skills/TEST.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-418-7d56c510",
+          "name": "write_file",
+          "args": {
+            "file_path": "tests/qa-skills/run_round5_validation.py"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-419-a632e5eb",
+          "name": "write_file",
+          "args": {
+            "file_path": "tests/skill-creator/TEST.md"
+          },
+          "status": "success"
+        },
+        {
+          "id": "tool-420-6146dc6b",
+          "name": "write_file",
+          "args": {
+            "file_path": "tests/template/TEST.md"
+          },
+          "status": "success"
+        }
+      ]
+    }
+  ]
+}
