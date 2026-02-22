@@ -37,7 +37,7 @@
 | quality-gate-preparation | quality-gate-preparation | 复合 | bpm | 3 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/quality-gate-preparation/` |
 | quality-gate-evaluation | quality-gate-evaluation | 复合 | bpm | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/quality-gate-evaluation/` |
 | hold-governance | hold-governance | 复合 | bpm | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/hold-governance/` |
-| runtime-policy-calibration | runtime-policy-calibration | 复合 | bpm | 6 | active | `/Users/albus/MyProjects/ANC_v2/processes/meta/runtime-policy-calibration/` |
+| runtime-policy-calibration | runtime-policy-calibration | 复合 | bpm | 6 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/runtime-policy-calibration/` |
 | construction-plane-governance | construction-plane-governance | 复合 | architect | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/construction-plane-governance/` |
 | trigger-schedule-runtime | trigger-schedule-runtime | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-schedule-runtime/` |
 | trigger-event-runtime | trigger-event-runtime | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-event-runtime/` |
@@ -124,6 +124,6 @@
 
 ## W5 联动备注（M2 BPM Runtime Hardening）
 
-1. 新增 `runtime-policy-calibration` 可执行流程资产并注册，生命周期状态为 `active`。
+1. 新增 `runtime-policy-calibration` 可执行流程资产并注册，生命周期状态为 `review`（本轮不推进 `active`）。
 2. 新增流程 runner：`processes/meta/runtime-policy-calibration/scripts/runtime_policy_calibration_runner.py`。
 3. 运行级测试入口：`tests/m2-bpm-runtime/run_tc_anl.py`，新增 `TC-ANL-003` 端到端流程验证。

@@ -51,15 +51,11 @@
 - [x] 完成 M6 首轮运行级 dry-run（A 通过，B/C Fail-Closed），并落盘证据索引 `docs/design/modules/evidence/construction-plane/README.md`
 - [x] 将 `construction-plane-governance`、`sys.arch.construction-audit`、`system.integration.openspec-sync` 生命周期从 `draft` 提升到 `review`
 - [x] 完成 `m2-bpm-runtime-hardening` W2 配置治理闭环：`governed-config-change`/`config-change-gatekeeper`/`system-config-updater` 可执行，`TC-GCC-001~003` 运行级通过并落盘证据（`docs/design/modules/evidence/bpm-runtime/w2_*`）
-- [x] 完成 `m2-bpm-runtime-hardening` W5（`system-analyst` 生产化）：新增 `sys.arch.system-feedback-digest` 与 `runtime-policy-calibration` 可执行资产，`system-analyst` 生命周期推进至 `active`，并通过 `TC-ANL-001~003` 端到端验证（`docs/design/modules/evidence/bpm-runtime/w5_*`）
+- [x] 完成 `m2-bpm-runtime-hardening` W5（门禁收口与状态提升）：新增 `verify-m2` 专项校验，`verify/verify-m2/verify-m6` 与 post-dev regression 同回合通过，关闭 `Q-001`，并将 `system-analyst`、`sys.arch.system-feedback-digest`、`runtime-policy-calibration` 生命周期统一收敛到 `review`（不推进 `active`）
 
 ## 进行中（In Progress）
 
-- [ ] `m2-bpm-runtime-hardening` 基座线程已启动：OpenSpec apply-ready 已就绪，测试/证据脚手架初始化完成，状态维持 In Progress（`Q-001` 保持未关闭；本轮证据见 `docs/design/modules/evidence/bpm-runtime/precheck_apply_ready_evidence.md`）
-- [ ] `m2-bpm-runtime-hardening` W1（实例核心执行化）已落盘：runner/迁移/回放/`TC-INS-001~005` 证据已生成（见 `docs/design/modules/evidence/bpm-runtime/w1_*`），整体变更维持 In Progress
-- [ ] `m2-bpm-runtime-hardening` W3-A（Trigger Runtime 执行化）已落盘：5 个核心 skill runner + 2 个 process runner + `TG-SCH-001~004` / `TG-EVT-001~003` 运行级证据（见 `docs/design/modules/evidence/bpm-runtime/w3_*` 与 `w3_trigger_runtime_cases/`），整体变更维持 In Progress
-- [ ] `m2-bpm-runtime-hardening` W3-B（QA 三流程注册与样例调度）已落盘：`quality-gate-preparation/quality-gate-evaluation/hold-governance` 生命周期推进至 `review`，并完成 `TC-QA-PROC-001~002` 调度证据（见 `docs/design/modules/evidence/bpm-runtime/w3b_*` 与 `w3b_qa_process_cases/`），整体变更维持 In Progress
-- [ ] `m2-bpm-runtime-hardening` W5（`system-analyst` 生产化）已落盘：新增 `sys.arch.system-feedback-digest` + `runtime-policy-calibration` 可执行链路，生命周期推进至 `active`，并完成 `TC-ANL-001~003` 证据（见 `docs/design/modules/evidence/bpm-runtime/w5_*` 与 `w5_system_analyst_prod_cases/`），整体变更维持 In Progress
+- [ ] 基于 `m2-bpm-runtime-hardening` 本轮收口结果，补齐从 `review` 推进到 `active` 的观测窗口、回滚演练与准入阈值
 - [ ] 将新增 App Agent、流程与技能逐步纳入 runtime registry（按生命周期进入 review）
 - [ ] 执行一致性检查脚本（术语、状态、路径、schema 字段）
 - [ ] 将 trigger governance 最小 dry-run 从文档级证据升级到运行级证据
@@ -80,7 +76,7 @@
 8. 将 M1 测试时长估计与 M2 动态策略问题统一纳入 `runtime-policy-calibration` 治理回路。
 9. 收敛 M6 周期审查节奏与 owner 责任模型，并写入治理流程基线。
 10. 与 OpenSpec 协同线程联调一次“冲突裁决 -> 双向回写”演练。
-11. 收敛 `verify-m6` 与 CI/pre-close gate 集成方式，避免人工绕过。
+11. 收敛 `verify-m2`/`verify-m6` 与 CI/pre-close gate 集成方式，避免人工绕过。
 
 ## 里程碑
 
@@ -98,7 +94,7 @@
 
 | 编号 | 问题 | 计划处理阶段 | Owner |
 |---|---|---|---|
-| Q-001 | OpenClaw session 是否足够支撑严格实例隔离？ | Phase 1 | Albus |
+| Q-001 | OpenClaw session 是否足够支撑严格实例隔离？ | Phase 1 | Closed（W5 门禁收口完成：`verify/verify-m2/verify-m6` + post-dev regression） |
 | Q-002 | LLM Judge 多轮评估并发策略如何控成本？ | Phase 1 | Albus |
 | Q-003 | 元层自修改审批阈值如何量化？ | Phase 4 | TBD |
 | Q-004 | development-process 双路径归一化策略 | Phase 1 | Closed（已归一为 meta canonical） |

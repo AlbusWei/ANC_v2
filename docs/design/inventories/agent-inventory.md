@@ -10,7 +10,7 @@
 | architect | kernel | admin | architecture-governance | draft |
 | hr | kernel | admin | lifecycle-governance | draft |
 | kernel-dev | kernel | architect | implementation-kernel | draft |
-| system-analyst | kernel | admin | system-analysis-governance | active |
+| system-analyst | kernel | admin | system-analysis-governance | review |
 | qa | kernel | admin | quality-governance | draft |
 | bpm | control | admin | orchestration-control | draft |
 | personal-assistant | app | admin | entry-assistance-read-heavy | draft |
@@ -64,6 +64,6 @@ business-analyst, product-manager, tech-lead, solution-architect, frontend-dev, 
 
 ## W5 联动备注（M2 BPM Runtime Hardening）
 
-1. `system-analyst` 运行资产补齐（IDENTITY/SOUL/TOOLS/USER/MEMORY），生命周期推进到 `active`。
+1. `system-analyst` 运行资产补齐（IDENTITY/SOUL/TOOLS/USER/MEMORY），生命周期维持在 `review`（本轮不推进 `active`）。
 2. 新增生产技能 `sys.arch.system-feedback-digest`，并作为 `system-analyst` 默认执行能力。
 3. 新增 `runtime-policy-calibration` 可执行流程，`TC-ANL-001~003` 完成生产路径端到端验证。

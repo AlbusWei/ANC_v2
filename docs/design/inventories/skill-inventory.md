@@ -95,4 +95,5 @@ W5 变更记录（M2 BPM Runtime Hardening）：
 
 1. 新增 `sys.arch.system-feedback-digest` 可执行 runner：`skills/system/system-feedback-digest/scripts/system_feedback_digest_runner.py`。
 2. `system-analyst` 生产链路改为调用 `sys.arch.system-feedback-digest` 输出 `digest/reject`。
-3. 运行级验证入口：`tests/m2-bpm-runtime/run_tc_anl.py`（覆盖 `TC-ANL-001~003`）。
+3. `sys.arch.system-feedback-digest` 生命周期状态为 `review`（本轮不推进 `active`）。
+4. 运行级验证入口：`tests/m2-bpm-runtime/run_tc_anl.py`（覆盖 `TC-ANL-001~003`）。

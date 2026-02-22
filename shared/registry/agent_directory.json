@@ -199,7 +199,7 @@
       "path": "agents/kernel/system-analyst",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "admin",
-      "status": "active",
+      "status": "review",
       "permissions": [
         "system-analysis-governance"
       ],

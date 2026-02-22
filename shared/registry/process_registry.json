@@ -215,7 +215,7 @@
       "objective_ref": "obj-runtime-policy-calibration",
       "owner": "bpm",
       "version": "0.1.0",
-      "status": "active",
+      "status": "review",
       "phase_count": 6,
       "openclaw": {
         "projection_mode": "bundle",

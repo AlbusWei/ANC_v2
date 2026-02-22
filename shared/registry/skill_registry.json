@@ -467,7 +467,7 @@
       "layer": "system",
       "owner": "system-analyst",
       "version": "0.1.0",
-      "status": "active",
+      "status": "review",
       "agentskills": {
         "name": "system-feedback-digest",
         "description": "Validate system-analysis handoff and produce auditable structured digest or fail-closed rejection",
