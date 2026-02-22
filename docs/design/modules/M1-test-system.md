@@ -15,6 +15,7 @@ OpenJudge 在 `M1` 中定位为评测执行内核，不直接承担治理决策�
 4. 评测流程：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/quality-gate-evaluation-process.md`
 5. HOLD 治理流程：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/hold-governance-process.md`
 6. Thread-3 运行级闭环证据：`docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/runtime_summary.json`
+7. 真实服务语义评审证据：`docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/runtime_summary.json`
 
 ## Phase 1 成功优先级
 
@@ -145,6 +146,17 @@ OpenJudge 在 `M1` 中定位为评测执行内核，不直接承担治理决策�
    - `TC-M1-CHAIN-003`：`evaluation hold -> hold-governance` 路由并产出 `hold_resolution_ref`。
    - `TC-M1-CHAIN-004`：`M5` 最小接入 `M1` 门禁入口可执行。
 3. round 证据目录：`docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/`。
+
+## 真实服务语义补测（2026-02-22）
+
+1. 新增主流程用例入口：`tests/m1-runtime/run_semantic_service_validation.py`。
+2. 用例目标（第一优先级）：
+   - `TC-M1-SERVICE-001`：`hr` 提交真实产品需求 -> `qa` 产出测试设计 -> `LLM-Judge` 评估 mock 交付 -> `qa` 输出缺陷与 debug 建议。
+3. 运行约束：
+   - 评测方法必须为 `LLM-Judge`，禁止退化为字段匹配式 Rule Match。
+   - 对 mock 交付必须产生阻断判定（`fail` 或 `hold`），禁止“形式通过”。
+   - 缺陷与 debug 建议必须非空并可追溯证据路径。
+4. round 证据目录：`docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/`。
 
 ## 验收清单
 

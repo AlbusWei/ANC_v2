@@ -1,0 +1,14 @@
+{
+  "state": "completed",
+  "mode": "objective",
+  "module": "M3",
+  "started_at": "2026-02-22T19:01:46.477444+00:00",
+  "progress_signals": {
+    "log_delta": true,
+    "phase_progress": "bundle_loaded",
+    "output_heartbeat": true
+  },
+  "completed_at": "2026-02-22T19:01:46.558988+00:00",
+  "decision": "pass",
+  "case_count": 3
+}

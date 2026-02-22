@@ -1,0 +1,8 @@
+{
+  "final_gate_verdict_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_chain_cases/TC-M1-CHAIN-002/missing_final_gate_verdict.json",
+  "target_asset_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_chain_cases/TC-M1-CHAIN-002/target_asset_snapshot.json",
+  "requested_transition": {
+    "from_status": "review",
+    "to_status": "active"
+  }
+}

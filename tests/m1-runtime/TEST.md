@@ -8,11 +8,14 @@
 2. fail-closed / test-invalid 阻断链路
 3. hold 路由链路
 4. `M5` 最小接入 `M1` 门禁入口
+5. 真实用户服务语义评审链路（`LLM-as-Judge` + `QA agent` 缺陷发现与 debug 建议）
 
 ## Entrypoint
 
 - Regression runner: `tests/m1-runtime/run_post_dev_regression.py`
 - Evidence root: `docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/`
+- Semantic service runner: `tests/m1-runtime/run_semantic_service_validation.py`
+- Semantic evidence root: `docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/`
 
 ## Test Cases
 
@@ -54,6 +57,18 @@
   - `M5` 调用 `M1` 门禁入口可执行
   - `gate_decision=pass`
 
+### TC-M1-SERVICE-001 真实服务语义评审（第一优先级主流程）
+
+- Input:
+  - 真实用户产品需求（owner=`hr`）
+  - QA agent 基于需求产出测试设计
+  - mock 开发交付（刻意缺失权限/审计/限流/测试证据）
+- Expect:
+  - BPM 流程实例创建、校验、回放证据可追溯
+  - `quality_eval_runner` 使用 `LLM-Judge`（非 Rule Match）进行语义评测
+  - 对 mock 交付输出阻断判定（`fail` 或 `hold`）
+  - QA agent 输出缺陷清单与 debug 建议（非空）
+
 ## Fail-Closed Policy
 
 1. 任一 runner 缺失或不可执行：立即失败。
@@ -64,4 +79,5 @@
 
 ```bash
 python3 tests/m1-runtime/run_post_dev_regression.py
+python3 tests/m1-runtime/run_semantic_service_validation.py
 ```

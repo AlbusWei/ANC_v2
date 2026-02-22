@@ -1,0 +1,33 @@
+{
+  "status": "pass",
+  "gate_decision": "pass",
+  "reasons": [
+    "compile_success"
+  ],
+  "compile_meta": {
+    "compiled_at": "2026-02-22T19:01:42.523014+00:00",
+    "test_doc_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md",
+    "objective_ref": "obj-m3-full-development-loop",
+    "spec_ref": "docs/design/processes/full-development-process.md",
+    "profile_set": [
+      "quality-gate.baseline@1.0.0"
+    ],
+    "evaluation_configuration": {
+      "objective_eval_rounds": 1,
+      "subjective_eval_rounds": 5,
+      "subjective_seed": 42,
+      "judge_perspectives": [
+        "qa"
+      ],
+      "timeout_seconds": 600,
+      "retry_policy": "max 1",
+      "grader_selection": [],
+      "grader_weights": {},
+      "min_score_per_grader": {},
+      "must_pass_graders": []
+    },
+    "case_count": 3,
+    "p0_case_count": 3,
+    "warnings": []
+  }
+}
