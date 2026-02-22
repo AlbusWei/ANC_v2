@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-22T15:35:23.370516+00:00",
+  "timestamp": "2026-02-22T15:51:15.472568+00:00",
   "profile_set": "quality-gate.baseline@1.0.0",
   "preparation_bundle_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-001/preparation/preparation_bundle.index.json",
   "module_runs": [

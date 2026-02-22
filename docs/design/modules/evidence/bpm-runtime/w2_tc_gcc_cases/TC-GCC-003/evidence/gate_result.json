@@ -3,5 +3,5 @@
   "risk_level": "low",
   "reason": "evidence_refs must be non-empty",
   "gate_report_ref": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-003/evidence/gate_report.json",
-  "timestamp": "2026-02-22T14:15:31Z"
+  "timestamp": "2026-02-22T15:53:50Z"
 }

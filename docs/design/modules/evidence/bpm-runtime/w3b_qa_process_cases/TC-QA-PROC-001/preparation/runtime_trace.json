@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-22T15:35:19Z",
+  "timestamp": "2026-02-22T15:51:09Z",
   "process_id": "quality-gate-preparation",
   "status": "ok",
   "phase_trace": [
@@ -7,20 +7,20 @@
       "phase": "p1-design-tests",
       "status": "pass",
       "test_plan_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-001/preparation/p1_test_plan.json",
-      "ts": "2026-02-22T15:35:19Z"
+      "ts": "2026-02-22T15:51:09Z"
     },
     {
       "phase": "p2-compile-test-datapoints",
       "status": "pass",
       "return_code": 0,
       "compile_report_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-001/preparation/p2_test_compiler/compile_report.json",
-      "ts": "2026-02-22T15:35:19Z"
+      "ts": "2026-02-22T15:51:09Z"
     },
     {
       "phase": "p3-bind-test-profiles",
       "status": "pass",
       "preparation_bundle_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-001/preparation/preparation_bundle.index.json",
-      "ts": "2026-02-22T15:35:19Z"
+      "ts": "2026-02-22T15:51:09Z"
     }
   ],
   "input_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-001/prep_input.json"
