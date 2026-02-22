@@ -25,8 +25,8 @@ DoD:
 
 ## 2. Thread-1 差距基线锁定
 
-- [ ] 2.1 基于 Thread-0 计划输出 M1 运行收口差距清单。（遗留到下一轮）
-- [ ] 2.2 明确主链路、异常链路、Fail-Closed、回退路径的缺口与优先级。（遗留到下一轮）
+- [x] 2.1 基于 Thread-0 计划输出 M1 运行收口差距清单。（见 `thread-1-gap-baseline.md`）
+- [x] 2.2 明确主链路、异常链路、Fail-Closed、回退路径的缺口与优先级。（见 `thread-1-gap-baseline.md`）
 - [x] 2.3 产出 Thread-2 可执行输入清单。
 
 依赖关系：Thread-0 完成并提交。

@@ -55,6 +55,7 @@
 - [x] 新增 `lifecycle-review` 最小可执行流程资产（owner=`hr`，status=`draft`），并完成 design/inventory/registry/施工平面联动更新（Thread-2）
 - [x] 完成 Thread-4 状态联动收口：`qa/bpm/admin/architect/hr` 生命周期统一推进到 `review`；`lifecycle-review` 由 `draft` 推进到 `review`；`system-analyst` 保持“分析输入，不做 lifecycle owner”边界
 - [x] 完成 `R-20260222-M6-m1-quality-gate-runtime-closure-01` 回合关闭包：`round-output.json`、`round-evidence.jsonl`、`round_close_summary.md`、`openspec-sync-record.json`、`registry_verify.log`，并通过 `verify` 与 `verify-m6`
+- [x] 完成 `m1-quality-gate-runtime-closure` OpenSpec 归档：补齐 `specs/**` deltas 与 Scenario，`openspec validate` 通过并归档至 `openspec/changes/archive/2026-02-22-m1-quality-gate-runtime-closure/`
 
 ## 进行中（In Progress）
 
@@ -66,22 +67,20 @@
 - [ ] 建立 `runtime-policy-calibration` 治理节奏并纳入 M1/M2 首批后验议题
 - [ ] 触发 M3 `full-development/hotfix/refactor` 首轮运行级 dry-run 并沉淀证据
 - [ ] 基于首轮证据推进 M6 第二轮运行级回归（含 git-range + trailer 实盘对账）
-- [ ] 补齐 `m1-quality-gate-runtime-closure` 的 OpenSpec deltas/spec scenarios（当前 round close 为 `needs_sync`，未归档）
 
 ## 下一步（Next）
 
-1. 补齐 `openspec/changes/m1-quality-gate-runtime-closure/specs/**` deltas 与 `Scenario`，将 `needs_sync` 收敛为 `in_sync`。
-2. 为 P6 原子流程补充 process.json 样板定义。
-3. 将 registry-sync、escalation 具象化为可执行流程资产（`lifecycle-review` 已在 Thread-4 完成首轮运行证据并推进到 `review`）。
-4. 完成 `review-processes-business` 未闭环项：`governance_bundle` 落地、legacy 语义收敛、canonical 路径策略定稿。
-5. 触发一次双主线 dry-run（运行级）并沉淀证据目录。
-6. 执行一次 governed-config-change 运行级 dry-run，补齐标准证据包模板。
-7. 在后续线程补齐 `lifecycle-review` 与 M3 接线并扩展多场景运行证据，并继续推进 `registry-sync/escalation` 可执行化。
-8. 进行 trigger runtime 动态策略回放并回写 `catchup_policy_ref` 校准证据。
-9. 将 M1 测试时长估计与 M2 动态策略问题统一纳入 `runtime-policy-calibration` 治理回路。
-10. 收敛 M6 周期审查节奏与 owner 责任模型，并写入治理流程基线。
-11. 与 OpenSpec 协同线程联调一次“冲突裁决 -> 双向回写”演练。
-12. 收敛 `verify-m2`/`verify-m6` 与 CI/pre-close gate 集成方式，避免人工绕过。
+1. 为 P6 原子流程补充 process.json 样板定义。
+2. 将 registry-sync、escalation 具象化为可执行流程资产（`lifecycle-review` 已在 Thread-4 完成首轮运行证据并推进到 `review`）。
+3. 完成 `review-processes-business` 未闭环项：`governance_bundle` 落地、legacy 语义收敛、canonical 路径策略定稿。
+4. 触发一次双主线 dry-run（运行级）并沉淀证据目录。
+5. 执行一次 governed-config-change 运行级 dry-run，补齐标准证据包模板。
+6. 在后续线程补齐 `lifecycle-review` 与 M3 接线并扩展多场景运行证据，并继续推进 `registry-sync/escalation` 可执行化。
+7. 进行 trigger runtime 动态策略回放并回写 `catchup_policy_ref` 校准证据。
+8. 将 M1 测试时长估计与 M2 动态策略问题统一纳入 `runtime-policy-calibration` 治理回路。
+9. 收敛 M6 周期审查节奏与 owner 责任模型，并写入治理流程基线。
+10. 与 OpenSpec 协同线程联调一次“冲突裁决 -> 双向回写”演练。
+11. 收敛 `verify-m2`/`verify-m6` 与 CI/pre-close gate 集成方式，避免人工绕过。
 
 ## 里程碑
 

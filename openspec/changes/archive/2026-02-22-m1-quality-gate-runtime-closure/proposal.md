@@ -16,6 +16,9 @@ M1 质量门禁运行收口需要一个线程化、可审计、可对账的执�
   - 新增 `round-output.json`、`openspec-sync-record.json`、`round_close_summary.md`、`registry_verify.log`。
   - 将 `round-evidence.jsonl` 收敛为 `round_open -> checkpoint_synced* -> round_close` 审计序列。
   - 记录 OpenSpec 当前状态为 `needs_sync`（原因：change 缺失 deltas，`openspec validate` 未通过），并作为下一轮 carryover。
+- 本轮归档前补齐：
+  - `thread-1-gap-baseline.md`（闭合 tasks 2.1/2.2）
+  - `specs/construction-plane/spec.md`（补齐 OpenSpec delta + Scenario，解除 `needs_sync`）
 
 ## Capabilities
 

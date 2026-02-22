@@ -50,6 +50,12 @@
 - Rationale: `openspec validate m1-quality-gate-runtime-closure --json` 报告“无 deltas”，说明协同工件未齐套；若强行标记 `in_sync` 会造成审计失真。
 - Alternative considered: 本轮阻断关闭。Rejected，本轮已具备完整线程证据与状态联动产物，允许“可审计关闭 + 下一轮补齐”更符合当前治理目标。
 
+### Decision 5: 通过补齐 delta spec 与 gap baseline 关闭 carryover
+
+- Choice: 在归档前补齐 `thread-1-gap-baseline.md` 与 `specs/construction-plane/spec.md`，并以 `openspec validate` 通过作为归档准入条件。
+- Rationale: 同时消除任务遗留（2.1/2.2）与 OpenSpec delta 缺失，恢复 `change` 的完整可归档状态。
+- Alternative considered: 维持 `needs_sync` 并继续挂起。Rejected，已具备补齐输入，继续挂起会降低治理效率且增加审计噪音。
+
 ## Dependency Graph
 
 `Thread-0 -> Thread-1 -> Thread-2 -> Thread-3 -> Thread-4 -> Thread-5`
