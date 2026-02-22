@@ -13,6 +13,14 @@
 3. 出现 `hold` 必须转入 `hold-governance`，不得在本流程内以硬超时直接失败。
 4. AP-008 主观评测默认启用，除非上级治理流程显式批准关闭。
 
+## 生命周期与调度状态
+
+1. Registry 生命周期：`review`（W3-B）。
+2. Runtime 入口：`processes/meta/quality-gate-evaluation/scripts/quality_gate_evaluation_runner.py`。
+3. 调度样例用例：
+   - `TC-QA-PROC-001`（主链路 `pass`）。
+   - `TC-QA-PROC-002`（`hold` 路由到 `hold-governance`）。
+
 ## 阶段定义
 
 1. `run-objective-evaluation`（AP-007）
@@ -70,3 +78,9 @@
 2. `subjective_eval_ref`
 3. `regression_eval_ref`
 4. `final_gate_verdict_ref`
+
+## W3-B 运行级证据
+
+1. 套件报告：`docs/design/modules/evidence/bpm-runtime/w3b_tc_qa_proc_report.json`
+2. 主链路证据：`docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-001/`
+3. HOLD 路由证据：`docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/`

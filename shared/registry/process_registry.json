@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "process_registry",
-  "updated_at": "2026-02-21T23:59:59Z",
+  "updated_at": "2026-02-22T15:35:24Z",
   "entry_contract": {
     "required": [
       "process_id",
@@ -147,6 +147,63 @@
         "bundle_source": "processes/meta",
         "entry_key": "governed-config-change",
         "source": "processes/meta/governed-config-change",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "quality-gate-preparation",
+      "skill_name": "quality-gate-preparation",
+      "skill_path": "processes/meta/quality-gate-preparation/SKILL.md",
+      "manifest_path": "processes/meta/quality-gate-preparation/process.json",
+      "objective_ref": "obj-m1-unified-quality-gate",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "review",
+      "phase_count": 3,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "quality-gate-preparation",
+        "source": "processes/meta/quality-gate-preparation",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "quality-gate-evaluation",
+      "skill_name": "quality-gate-evaluation",
+      "skill_path": "processes/meta/quality-gate-evaluation/SKILL.md",
+      "manifest_path": "processes/meta/quality-gate-evaluation/process.json",
+      "objective_ref": "obj-m1-unified-quality-gate",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "review",
+      "phase_count": 5,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "quality-gate-evaluation",
+        "source": "processes/meta/quality-gate-evaluation",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "hold-governance",
+      "skill_name": "hold-governance",
+      "skill_path": "processes/meta/hold-governance/SKILL.md",
+      "manifest_path": "processes/meta/hold-governance/process.json",
+      "objective_ref": "obj-m1-unified-quality-gate",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "review",
+      "phase_count": 5,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "hold-governance",
+        "source": "processes/meta/hold-governance",
         "allow_draft_projection": true
       }
     },
