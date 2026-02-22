@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "8b95373a59a0",
+  "strategy": "manual-commit",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/data-models/process-instance-schemas.md",
+    "docs/design/modules/evidence/bpm-runtime/checkpoint_commit_map.jsonl",
+    "skills/system/process-instance-manager/SKILL.md",
+    "skills/system/process-instance-manager/TEST.md",
+    "skills/system/process-instance-manager/scripts/process_instance_runner.py",
+    "tests/m2-bpm-runtime/TC-INS.md",
+    "tests/m2-bpm-runtime/TEST.md",
+    "tests/m2-bpm-runtime/run_tc_ins.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/8b/95373a59a0/0/metadata.json",
+      "transcript": "/8b/95373a59a0/0/full.jsonl",
+      "context": "/8b/95373a59a0/0/context.md",
+      "content_hash": "/8b/95373a59a0/0/content_hash.txt",
+      "prompt": "/8b/95373a59a0/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
