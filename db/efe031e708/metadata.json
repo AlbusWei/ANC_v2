@@ -5,7 +5,9 @@
   "branch": "codex/review-layers-modules",
   "checkpoints_count": 1,
   "files_touched": [
-    "docs/design/modules/evidence/bpm-runtime/latest_live_regression_result.json"
+    "docs/design/modules/evidence/bpm-runtime/git_range.txt",
+    "docs/design/modules/evidence/bpm-runtime/latest_live_regression_result.json",
+    "shared/registry/registry_contract_tool.py"
   ],
   "sessions": [
     {
@@ -14,6 +16,13 @@
       "context": "/db/efe031e708/0/context.md",
       "content_hash": "/db/efe031e708/0/content_hash.txt",
       "prompt": "/db/efe031e708/0/prompt.txt"
+    },
+    {
+      "metadata": "/db/efe031e708/1/metadata.json",
+      "transcript": "/db/efe031e708/1/full.jsonl",
+      "context": "/db/efe031e708/1/context.md",
+      "content_hash": "/db/efe031e708/1/content_hash.txt",
+      "prompt": "/db/efe031e708/1/prompt.txt"
     }
   ],
   "token_usage": {
