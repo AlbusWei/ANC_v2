@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-02-22T14:15:16Z",
+  "target_path": "messages.groupChat.historyLimit",
+  "value_before": 124,
+  "value_after_apply": 125,
+  "value_after_rollback": 124,
+  "hash_before": "89bb0855d6dca1723052e97bf4217d026fd89bd4a821775cf54a3d50ab0c7028",
+  "hash_after_apply": "7458cf30a9419a6c441e1abfa310c72b0511dcd178b645ad68df795b1cdb4453",
+  "hash_after_rollback": "50b448656665aabed21c636720fc4257c2d83278106c476d8497b14d1e91bd09",
+  "apply_value_match": true,
+  "rollback_value_restored": true,
+  "hash_changed_on_apply": true,
+  "hash_changed_on_rollback": true,
+  "rollback_runner_status": "success",
+  "rollback_runner_rc": 0
+}

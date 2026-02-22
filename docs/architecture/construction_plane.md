@@ -50,6 +50,7 @@
 - [x] 完成 M6 专项门禁：`registry_contract_tool.py verify-m6`
 - [x] 完成 M6 首轮运行级 dry-run（A 通过，B/C Fail-Closed），并落盘证据索引 `docs/design/modules/evidence/construction-plane/README.md`
 - [x] 将 `construction-plane-governance`、`sys.arch.construction-audit`、`system.integration.openspec-sync` 生命周期从 `draft` 提升到 `review`
+- [x] 完成 `m2-bpm-runtime-hardening` W2 配置治理闭环：`governed-config-change`/`config-change-gatekeeper`/`system-config-updater` 可执行，`TC-GCC-001~003` 运行级通过并落盘证据（`docs/design/modules/evidence/bpm-runtime/w2_*`）
 
 ## 进行中（In Progress）
 

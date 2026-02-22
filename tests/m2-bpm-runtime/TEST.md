@@ -9,6 +9,7 @@ Thread 0 provides scaffolding only; runtime behavior re-implementation is out of
 
 - Regression runner: `tests/m2-bpm-runtime/run_post_dev_regression.py`
 - W1 instance suite runner: `tests/m2-bpm-runtime/run_tc_ins.py`
+- W2 governed config suite runner: `tests/m2-bpm-runtime/run_tc_gcc.py`
 - Expected mode for Thread 6: live regression (non-simulated)
 
 ## Evidence Inputs
@@ -41,6 +42,13 @@ Each JSONL record in `checkpoint_commit_map.jsonl` must include:
 - Required pass set: `TC-INS-001~005`
 - Suggested command:
   - `python3 tests/m2-bpm-runtime/run_tc_ins.py --run-live-migration`
+
+## W2 Governed Config Core Cases
+
+- Case doc: `tests/m2-bpm-runtime/TC-GCC.md`
+- Required pass set: `TC-GCC-001~003`
+- Suggested command:
+  - `python3 tests/m2-bpm-runtime/run_tc_gcc.py`
 
 ## Minimal Execution Contract
 
