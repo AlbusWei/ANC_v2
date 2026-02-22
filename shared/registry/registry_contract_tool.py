@@ -1093,7 +1093,7 @@ def _validate_round_evidence(
     if git_range:
         commits = _collect_git_commits(git_range, errors)
         for sha, message in commits:
-            if re.search(r"^Entire-Checkpoint:\\s+\\S+", message, flags=re.MULTILINE) is None:
+            if re.search(r"^Entire-Checkpoint:\s+\S+", message, flags=re.MULTILINE) is None:
                 errors.append(f"git commit missing Entire-Checkpoint trailer: {sha}")
         if close_event and isinstance(close_event.get("commit_count"), int):
             expected_count = close_event["commit_count"]

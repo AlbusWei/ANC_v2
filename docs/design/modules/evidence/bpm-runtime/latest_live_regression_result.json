@@ -1,5 +1,5 @@
 {
-  "status": "failed",
+  "status": "passed",
   "mode": "live",
   "checked_files": [
     "docs/design/modules/evidence/bpm-runtime/m6_live_regression_plan.md",
@@ -7,8 +7,6 @@
     "docs/design/modules/evidence/bpm-runtime/git_range.txt",
     "tests/m2-bpm-runtime/live_regression_cases.md"
   ],
-  "errors": [
-    "missing_required_file:/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/tests/m2-bpm-runtime/live_regression_cases.md"
-  ],
-  "ts": "2026-02-22T15:54:18+00:00"
+  "errors": [],
+  "ts": "2026-02-22T16:51:06+00:00"
 }

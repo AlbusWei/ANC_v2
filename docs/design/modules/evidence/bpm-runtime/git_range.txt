@@ -1,4 +1,4 @@
-base_commit=e9a42df1787b33b632bcce80e12705f3a7f22c4e
+base_commit=aaec71046e673ced76206f776ee217c2bb1ef8ab
 head_commit=HEAD
-range=e9a42df1787b33b632bcce80e12705f3a7f22c4e^..HEAD
+range=aaec71046e673ced76206f776ee217c2bb1ef8ab^..HEAD
 round_dir=docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11
