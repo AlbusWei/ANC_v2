@@ -1,6 +1,6 @@
 # 系统技能清单与设计
 
-> 版本: v0.7.0 | 分类: System Skills | 层级: L2
+> 版本: v0.8.0 | 分类: System Skills | 层级: L2 | 最后更新: 2026-02-22
 
 ## 核心系统技能
 
@@ -25,23 +25,31 @@
 19. sys.arch.construction-audit
 20. system.integration.openspec-sync
 
+## 技能包路径约定
+
+1. QA 门禁技能统一放置在 `skills/system/qa/*`。
+2. 其他系统技能保持 `skills/system/<skill-name>/`。
+
 ## BPM Runtime 技能包
 
 统一 BPM runtime 技能设计见：
 
-- `/Users/albus/MyProjects/ANC_v2/docs/design/skills/bpm-runtime-skills.md`
+- `docs/design/skills/bpm-runtime-skills.md`
 
 ## Quality Gate 技能包
 
 统一质量门禁技能设计见：
 
-- `/Users/albus/MyProjects/ANC_v2/docs/design/skills/quality-gate-skills.md`
+- `docs/design/skills/quality-gate-skills.md`
+- `docs/design/modules/evidence/quality-gate/runtime-validation-round-2.md`
+- `docs/design/modules/evidence/quality-gate/runtime-validation-round-3.md`
+- `docs/design/modules/evidence/quality-gate/runtime-validation-round-4.md`
 
 ## Construction Plane 技能包
 
 统一施工面治理技能设计见：
 
-- `/Users/albus/MyProjects/ANC_v2/docs/design/skills/construction-plane-skills.md`
+- `docs/design/skills/construction-plane-skills.md`
 
 ## 目标
 

@@ -1,0 +1,19 @@
+{
+  "triage_action": "fail",
+  "gate_decision": "fail",
+  "reasons": [
+    "triage_action=fail",
+    "log_delta=False",
+    "phase_progress=False",
+    "output_heartbeat=False",
+    "missing_progress_signals"
+  ],
+  "progress_signals_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/hold-triage-policy-restricted/progress_signals.json",
+  "policy_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/fixtures/triage_policy_restricted.json",
+  "runtime_refs": {
+    "current_runtime_log_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/fixtures/runtime_no_progress.log",
+    "current_execution_state_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/fixtures/execution_state_no_progress.json",
+    "previous_runtime_log_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/fixtures/runtime_no_progress_prev.log",
+    "previous_execution_state_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/fixtures/execution_state_no_progress_prev.json"
+  }
+}

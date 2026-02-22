@@ -1,0 +1,25 @@
+{
+  "timestamp": "2026-02-22T09:00:51.291275+00:00",
+  "log_signal": {
+    "log_delta": false,
+    "current_log_bytes": 12,
+    "previous_log_bytes": 12
+  },
+  "phase_signal": {
+    "phase_progress": false,
+    "current_phase": "eval_running",
+    "previous_phase": "eval_running",
+    "current_phase_index": 2,
+    "previous_phase_index": 2
+  },
+  "heartbeat_signal": {
+    "output_heartbeat": false,
+    "heartbeat_source": "timestamp",
+    "heartbeat_at": "2025-01-01T00:00:00+00:00",
+    "heartbeat_age_seconds": 36061251.290849,
+    "heartbeat_max_age_seconds": 1
+  },
+  "log_delta": false,
+  "phase_progress": false,
+  "output_heartbeat": false
+}

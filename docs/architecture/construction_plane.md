@@ -1,6 +1,6 @@
 # ANC v2 施工平面（Construction Plane）
 
-最后更新：2026-02-21
+最后更新：2026-02-22
 
 > 本文档是 ANC v2 的活施工板，记录当前进展、下一步计划、边界和风险。
 
@@ -36,13 +36,17 @@
 - [x] 完成 M6 施工治理资产落盘：`construction-plane-governance` 流程 + `sys.arch.construction-audit` 技能 + M6 详细设计重构
 - [x] 建立 M6 × OpenSpec Hybrid 协同协议并明确 Architect 语义 owner 机制
 - [x] 完成 OpenSpec 协同完整 schema 与包装技能落盘：`openspec-collaboration-schema` + `system.integration.openspec-sync`
+- [x] 完成 M1 第一批技能开发：`sys.qa.*` 七个技能统一迁移到 `skills/system/qa/*`，补齐 Capability Contract、最小可执行脚本、P0 测试与 registry 联动
+- [x] 完成模板基座标准化：升级 `skills/template` 与 `skills/skill-creator`，形成本地化标准脚手架与 review/smoke 评审基线
+- [x] 完成 M1 QA 技能运行级复核：OpenJudge 真执行链路与 LLM-as-Judge Fail-Closed 在 `runtime-validation-round-2` 落盘（objective/regression pass，subjective hold，llm-missing-key test_invalid）
+- [x] 完成 M1 QA 动态评测补强：`evaluation-runner` 增加 listwise 主观盲测与 judge 错误分类（unsupported model -> `test_invalid`），并在 `runtime-validation-round-3` 落盘 strict config 证据
+- [x] 完成 LLM-as-Judge 跑通验证：模型切换 `gpt-5.3-codex` 后，objective + subjective(listwise) 均在 `runtime-validation-round-4` 真实通过
 
 ## 进行中（In Progress）
 
 - [ ] 将新增 App Agent、流程与技能逐步纳入 runtime registry（按生命周期进入 review）
 - [ ] 执行一致性检查脚本（术语、状态、路径、schema 字段）
 - [ ] 将 trigger governance 最小 dry-run 从文档级证据升级到运行级证据
-- [ ] 完成 M1 OpenJudge 适配规范与 AP-005/018/019/020/021~025 一致性落盘
 - [ ] 完成 trigger runtime 动态策略实证校准并形成参数回写节奏
 - [ ] 建立 `runtime-policy-calibration` 治理节奏并纳入 M1/M2 首批后验议题
 - [ ] 触发 M3 `full-development/hotfix/refactor` 首轮运行级 dry-run 并沉淀证据
@@ -56,7 +60,7 @@
 3. 完成 `review-processes-business` 未闭环项：`governance_bundle` 落地、legacy 语义收敛、canonical 路径策略定稿。
 4. 触发一次双主线 dry-run（运行级）并沉淀证据目录。
 5. 执行一次 governed-config-change 运行级 dry-run，补齐标准证据包模板。
-6. 将 quality gate 相关技能资产从设计落盘推进到 `registry draft`（含 `SKILL.md/TEST.md`）。
+6. 将 `lifecycle-review/registry-sync/escalation` 具象化为可执行流程资产，替代当前文档化审批证据。
 7. 进行 trigger runtime 动态策略回放并回写 `catchup_policy_ref` 校准证据。
 8. 将 M1 测试时长估计与 M2 动态策略问题统一纳入 `runtime-policy-calibration` 治理回路。
 9. 收敛 M6 周期审查节奏与 owner 责任模型，并写入治理流程基线。
@@ -68,7 +72,7 @@
 |---|---|---|---|
 | M0 | 骨架就绪 | SSOT + 模板 + registry 基线 | 已完成 |
 | M0.5 | 施工基线 | 角色目录 + P0 meta-skill + development-process + dry-run | 已完成 |
-| M1 | 统一测试门禁可用 | 门禁生效 + M3/M4/M5 复用接入 + 证据审计可追溯 | 进行中 |
+| M1 | 统一测试门禁可用 | 门禁生效 + M3/M4/M5 复用接入 + 证据审计可追溯 | 进行中（`sys.qa.*` 七技能 active pilot 已落盘） |
 | M1.5 | 架构细化完成 | L0-L5 + P1-P6 + 双主线 + 原子流程文档齐套 | 已完成 |
 | M2 | 第一次 TDD 闭环 | 一个 Skill 从 Test 先行到复测通过 | 进行中（BPM runtime 骨架已落盘） |
 | M3 | 第一次流程编排 | BPM 成功调度 3+ Phase 流程 | 进行中（M3 资产已落盘，待运行级 dry-run） |

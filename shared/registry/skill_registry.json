@@ -795,6 +795,216 @@
         "test_doc": "skills/system/openspec-sync/TEST.md",
         "methodology_ref": "docs/architecture/test_methodology.md"
       }
+    },
+    {
+      "skill_id": "sys.qa.test-compiler",
+      "name": "test-compiler",
+      "path": "skills/system/qa/test-compiler/SKILL.md",
+      "layer": "system",
+      "owner": "qa",
+      "version": "0.2.0",
+      "status": "active",
+      "agentskills": {
+        "name": "test-compiler",
+        "description": "Compile TEST.md into executable datapoints and deterministic tc_id/profile bindings for M1 quality gate preparation",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.qa.test-compiler",
+        "source": "skills/system/qa/test-compiler",
+        "install_strategy": "lazy"
+      },
+      "tests": {
+        "test_doc": "skills/system/qa/test-compiler/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.qa.evaluation-runner",
+      "name": "evaluation-runner",
+      "path": "skills/system/qa/evaluation-runner/SKILL.md",
+      "layer": "system",
+      "owner": "qa",
+      "version": "0.2.0",
+      "status": "active",
+      "agentskills": {
+        "name": "evaluation-runner",
+        "description": "Run objective, subjective, and regression evaluation through quality_eval_runner and emit unified verdict artifacts",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.qa.evaluation-runner",
+        "source": "skills/system/qa/evaluation-runner",
+        "install_strategy": "lazy"
+      },
+      "tests": {
+        "test_doc": "skills/system/qa/evaluation-runner/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.qa.verdict-normalizer",
+      "name": "verdict-normalizer",
+      "path": "skills/system/qa/verdict-normalizer/SKILL.md",
+      "layer": "system",
+      "owner": "qa",
+      "version": "0.2.0",
+      "status": "active",
+      "agentskills": {
+        "name": "verdict-normalizer",
+        "description": "Normalize objective, subjective, and regression evaluation outputs into one gate_decision",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.qa.verdict-normalizer",
+        "source": "skills/system/qa/verdict-normalizer",
+        "install_strategy": "lazy"
+      },
+      "tests": {
+        "test_doc": "skills/system/qa/verdict-normalizer/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.qa.hold-triage",
+      "name": "hold-triage",
+      "path": "skills/system/qa/hold-triage/SKILL.md",
+      "layer": "system",
+      "owner": "qa",
+      "version": "0.2.0",
+      "status": "active",
+      "agentskills": {
+        "name": "hold-triage",
+        "description": "Collect hold progress signals and output governed triage actions continue, retry, debug, or fail",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.qa.hold-triage",
+        "source": "skills/system/qa/hold-triage",
+        "install_strategy": "lazy"
+      },
+      "tests": {
+        "test_doc": "skills/system/qa/hold-triage/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.qa.regression-runner",
+      "name": "regression-runner",
+      "path": "skills/system/qa/regression-runner/SKILL.md",
+      "layer": "system",
+      "owner": "qa",
+      "version": "0.2.0",
+      "status": "active",
+      "agentskills": {
+        "name": "regression-runner",
+        "description": "Run cross-module regression by orchestrating evaluation-runner regression mode and emitting release gate candidates",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.qa.regression-runner",
+        "source": "skills/system/qa/regression-runner",
+        "install_strategy": "lazy"
+      },
+      "tests": {
+        "test_doc": "skills/system/qa/regression-runner/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.qa.registry-validator",
+      "name": "registry-validator",
+      "path": "skills/system/qa/registry-validator/SKILL.md",
+      "layer": "system",
+      "owner": "qa",
+      "version": "0.1.0",
+      "status": "active",
+      "agentskills": {
+        "name": "registry-validator",
+        "description": "Validate ANC registry contracts and emit structured pass or fail evidence for lifecycle gates",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.qa.registry-validator",
+        "source": "skills/system/qa/registry-validator",
+        "install_strategy": "lazy"
+      },
+      "tests": {
+        "test_doc": "skills/system/qa/registry-validator/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.qa.evidence-archiver",
+      "name": "evidence-archiver",
+      "path": "skills/system/qa/evidence-archiver/SKILL.md",
+      "layer": "system",
+      "owner": "qa",
+      "version": "0.1.0",
+      "status": "active",
+      "agentskills": {
+        "name": "evidence-archiver",
+        "description": "Archive quality gate evidence into indexed packages with traceability links for M1 M2 and M4 consumers",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.qa.evidence-archiver",
+        "source": "skills/system/qa/evidence-archiver",
+        "install_strategy": "lazy"
+      },
+      "tests": {
+        "test_doc": "skills/system/qa/evidence-archiver/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
     }
   ]
 }

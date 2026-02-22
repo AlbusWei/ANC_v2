@@ -1,0 +1,25 @@
+{
+  "mode": "subjective",
+  "module": "M3",
+  "preparation_bundle_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/preparation_bundle.index.json",
+  "actual_output_refs": [
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/fixtures/actual_output_dynamic.txt",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/fixtures/actual_output_dynamic.txt"
+  ],
+  "run": {
+    "evaluation_verdict": "test_invalid",
+    "gate_decision": "test_invalid",
+    "subjective_verdict": "review",
+    "win_rate": 0.0,
+    "seed": 11,
+    "rounds": 2,
+    "baseline_wins": 0,
+    "candidate_wins": 0,
+    "ties": 0,
+    "comparisons": [],
+    "reasons": [
+      "TC-001:test_invalid:judge_model_unsupported:GPT-5.2:Error code: 400 - {'detail': \"The 'GPT-5.2' model is not supported when using Codex with a ChatGPT account.\"}"
+    ]
+  },
+  "timestamp": "2026-02-22T08:30:24.125137+00:00"
+}

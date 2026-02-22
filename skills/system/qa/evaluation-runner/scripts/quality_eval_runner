@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+IMPL_SCRIPT="$SCRIPT_DIR/quality_eval_runner_impl.py"
+
+if command -v uv >/dev/null 2>&1; then
+  exec uv run --quiet --python 3.11 --with py-openjudge python "$IMPL_SCRIPT" "$@"
+fi
+
+if command -v python3 >/dev/null 2>&1; then
+  exec python3 "$IMPL_SCRIPT" "$@"
+fi
+
+echo '{"evaluation_verdict":"fail","gate_decision":"fail","reasons":["missing_uv_and_python3"]}'
+exit 50
