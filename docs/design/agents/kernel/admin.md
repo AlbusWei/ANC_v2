@@ -13,7 +13,7 @@
 
 | Skill | 用途 | 状态 |
 |---|---|---|
-| system-config-updater | 修改 OpenClaw 全局配置 | 规划 |
+| system-config-updater | 修改 OpenClaw 全局配置 | draft（可执行，runner 已落盘） |
 | system-config-auditor | 配置差异与回滚校验 | 规划 |
 | release-manager | 发布管理 | 规划 |
 

@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-02-22T14:47:48Z",
+  "trigger_id": "trg-4bdb3484123e0c957801",
+  "decision": "allow",
+  "reason": "first_delivery",
+  "primary_key": "lifecycle|evt-001",
+  "fallback_key": "lifecycle|internal.lifecycle.transitioned|skill|sys.bpm.process-instance-manager|review|active|hr|20260222T1447",
+  "selected_mode": "primary",
+  "match_result": "hit"
+}

@@ -1,0 +1,4 @@
+{
+  "trigger_type": "schedule",
+  "delivery_policy": "exception-only"
+}

@@ -70,3 +70,22 @@ Git Operations 技能包设计文档：
 ## 生命周期规则
 
 统一 5 态并由 lifecycle-review 驱动迁移。
+
+W1 变更记录（M2 BPM Runtime Hardening）：
+
+1. `sys.bpm.process-instance-manager` 生命周期由 `draft` 推进到 `review`（不推进到 `active`）。
+
+W2 变更记录（M2 BPM Runtime Hardening）：
+
+1. `system.control.config-change-gatekeeper` 新增可执行 runner：`skills/system/config-change-gatekeeper/scripts/config_change_gatekeeper_runner.py`。
+2. `system.admin.system-config-updater` 新增可执行 runner：`skills/system/system-config-updater/scripts/system_config_updater_runner.py`。
+3. 两项技能 registry 版本由 `0.1.0` 升级到 `0.2.0`，生命周期保持 `draft`。
+
+W3 变更记录（M2 BPM Runtime Hardening）：
+
+1. `sys.bpm.trigger-ingress-normalizer` 新增 runner：`skills/system/trigger-ingress-normalizer/scripts/trigger_ingress_normalizer_runner.py`。
+2. `sys.bpm.trigger-matcher-dedupe` 新增 runner：`skills/system/trigger-matcher-dedupe/scripts/trigger_matcher_dedupe_runner.py`。
+3. `sys.bpm.evidence-recorder` 新增 runner：`skills/system/evidence-recorder/scripts/evidence_recorder_runner.py`。
+4. `sys.bpm.catchup-scheduler` 新增 runner：`skills/system/catchup-scheduler/scripts/catchup_scheduler_runner.py`。
+5. `sys.bpm.escalation-handler` 新增 runner：`skills/system/escalation-handler/scripts/escalation_handler_runner.py`。
+6. 上述 5 项技能 registry 版本由 `0.1.0` 升级到 `0.2.0`，生命周期保持 `draft`。

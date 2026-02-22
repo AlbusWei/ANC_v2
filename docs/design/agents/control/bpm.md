@@ -1,6 +1,6 @@
 # BPM Agent 详细设计
 
-> 版本: v0.2.0 | agent_id: bpm | 层级: control | 权限: orchestration-control
+> 版本: v0.3.0 | agent_id: bpm | 层级: control | 权限: orchestration-control
 
 ## 1. 角色定位与权限
 
@@ -13,9 +13,13 @@
 
 | Skill | 用途 | 状态 |
 |---|---|---|
-| process-instance-manager | 流程实例 CRUD | 规划 |
-| escalation-handler | 异常升级处理 | 规划 |
-| config-change-gatekeeper | 配置变更门禁校验 | 规划 |
+| process-instance-manager | 流程实例 CRUD + 会话隔离治理 | review |
+| trigger-ingress-normalizer | 触发入口归一（schedule/event） | draft（可执行，runner 已落盘） |
+| trigger-matcher-dedupe | 规则命中与幂等去重 | draft（可执行，runner 已落盘） |
+| evidence-recorder | trigger/instance 双向追溯证据归档 | draft（可执行，runner 已落盘） |
+| catchup-scheduler | 动态补跑窗口决策 | draft（可执行，runner 已落盘） |
+| escalation-handler | 异常升级处理 | draft（可执行，runner 已落盘） |
+| config-change-gatekeeper | 配置变更门禁校验 | draft（可执行，runner 已落盘） |
 
 ## 3. 参与 Process 清单
 
@@ -24,9 +28,11 @@ BPM 不作为 Actor 参与业务阶段，而是作为编排者调度所有流程
 | 职责 | 说明 |
 |---|---|
 | 流程实例创建 | 解析 `process.json`，创建实例目录 |
+| 会话隔离绑定 | 为实例写入 `session_binding.json` 并强制 `--session-id` 调度 |
 | 阶段调度 | 按定义顺序分发任务给 Actor |
 | 状态监控 | 跟踪实例和阶段状态 |
 | 证据记录 | 确保每阶段产出完整证据 |
+| Trigger Runtime 执行 | 执行 `trigger-schedule-runtime` / `trigger-event-runtime` runner 并落盘 TG 证据 |
 | 配置变更门禁 | 对系统配置改动执行审批、分级和执行路径选择 |
 | 失败处理 | 重试、回退或升级 |
 | 归档 | 完成/失败实例归档 |
@@ -74,3 +80,9 @@ BPM 不作为 Actor 参与业务阶段，而是作为编排者调度所有流程
 - **运行时存储**: `agents/control/BPM/memory/process_instances/`
 - **上下文来源**: `process.json` 定义、实例状态、阶段证据、配置变更回执
 - **跨会话**: 通过流程实例目录和证据文件传递
+
+## 9. W3 运行级入口
+
+1. `processes/control/trigger-schedule-runtime/scripts/trigger_schedule_runtime_runner.py`
+2. `processes/control/trigger-event-runtime/scripts/trigger_event_runtime_runner.py`
+3. `tests/m2-bpm-runtime/run_tc_tg.py`（TG-SCH/TG-EVT 全套回归入口）

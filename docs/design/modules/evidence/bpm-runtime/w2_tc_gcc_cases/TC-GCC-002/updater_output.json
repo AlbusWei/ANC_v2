@@ -1,0 +1,8 @@
+{
+  "hash_before": "50b448656665aabed21c636720fc4257c2d83278106c476d8497b14d1e91bd09",
+  "hash_after": "50b448656665aabed21c636720fc4257c2d83278106c476d8497b14d1e91bd09",
+  "execution_status": "failed",
+  "reason": "base_hash mismatch",
+  "failure_code": "base_hash_mismatch",
+  "receipt_ref": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-002/change_receipt.json"
+}

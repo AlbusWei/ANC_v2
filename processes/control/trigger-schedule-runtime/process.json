@@ -1,6 +1,6 @@
 {
   "process_id": "trigger-schedule-runtime",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [],

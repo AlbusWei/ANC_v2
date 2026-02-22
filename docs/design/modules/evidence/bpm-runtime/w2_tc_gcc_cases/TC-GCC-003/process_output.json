@@ -1,0 +1,13 @@
+{
+  "final_output": "governed-config-change denied at gate",
+  "evidence_refs": [
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-003/evidence/request.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-003/evidence/normalized_request.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-003/evidence/gate_input.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-003/evidence/gate_result.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-003/evidence/gate_report.json"
+  ],
+  "verdict": "deny",
+  "change_receipt": {},
+  "reason": "evidence_refs must be non-empty"
+}
