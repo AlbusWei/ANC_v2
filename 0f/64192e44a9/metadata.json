@@ -5,8 +5,11 @@
   "branch": "codex/review-layers-modules",
   "checkpoints_count": 1,
   "files_touched": [
+    "docs/design/inventories/agent-inventory.md",
+    "docs/design/inventories/process-inventory.md",
     "docs/design/inventories/skill-inventory.md",
     "docs/design/processes/full-development-process.md",
+    "docs/design/processes/governance-processes.md",
     "docs/design/processes/hotfix-process.md",
     "docs/design/processes/refactor-process.md",
     "docs/design/skills/system-skills.md"
@@ -25,6 +28,13 @@
       "context": "/0f/64192e44a9/1/context.md",
       "content_hash": "/0f/64192e44a9/1/content_hash.txt",
       "prompt": "/0f/64192e44a9/1/prompt.txt"
+    },
+    {
+      "metadata": "/0f/64192e44a9/2/metadata.json",
+      "transcript": "/0f/64192e44a9/2/full.jsonl",
+      "context": "/0f/64192e44a9/2/context.md",
+      "content_hash": "/0f/64192e44a9/2/content_hash.txt",
+      "prompt": "/0f/64192e44a9/2/prompt.txt"
     }
   ],
   "token_usage": {
