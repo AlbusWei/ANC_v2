@@ -67,10 +67,10 @@ Each JSONL record in `checkpoint_commit_map.jsonl` must include:
 - Suggested command:
   - `python3 tests/m2-bpm-runtime/run_tc_qa_proc.py`
 
-## W4 System Analyst Core Cases
+## W5 System Analyst Production Cases
 
 - Case doc: `tests/m2-bpm-runtime/TC-ANL.md`
-- Required pass set: `TC-ANL-001~002`
+- Required pass set: `TC-ANL-001~003`
 - Suggested command:
   - `python3 tests/m2-bpm-runtime/run_tc_anl.py`
 

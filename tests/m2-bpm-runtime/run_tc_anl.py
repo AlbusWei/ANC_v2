@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-"""Run TC-ANL-001~002 for system-analyst P1 minimal runtime."""
+"""Run TC-ANL-001~003 for system-analyst production runtime."""
 
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import shutil
 import subprocess
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List
 
 
 def now_iso() -> str:
@@ -27,6 +27,10 @@ def repo_root() -> Path:
     if proc.returncode != 0:
         raise RuntimeError("not inside git repository")
     return Path(proc.stdout.strip()).resolve()
+
+
+def run_cmd(cmd: List[str], cwd: Path) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(cmd, cwd=str(cwd), capture_output=True, text=True, check=False)
 
 
 def dump_json(path: Path, payload: Dict[str, Any]) -> None:
@@ -49,203 +53,26 @@ def append_case(cases: List[Dict[str, Any]], case_id: str, ok: bool, details: Di
     cases.append({"id": case_id, "status": "pass" if ok else "fail", "details": details})
 
 
-def _required_handoff_fields() -> List[str]:
-    return [
-        "instance_id",
-        "parent_instance_id",
-        "lineage_ref",
-        "stack_depth",
-        "phase_id",
-        "objective_ref",
-        "input_ref",
-        "output_ref",
-        "output_contract",
-        "from_role",
-        "to_role",
-        "acceptance_criteria",
-        "deadline",
-        "risk_notes",
-        "evidence_ref",
-    ]
-
-
-def _read_evidence_refs(index_path: Path) -> Tuple[List[str], List[str]]:
-    if not index_path.exists():
-        return [], [index_path.as_posix()]
-    payload = load_json(index_path)
-    refs_raw = payload.get("refs", [])
-    if not isinstance(refs_raw, list):
-        return [], [index_path.as_posix()]
-
-    refs: List[str] = []
-    for item in refs_raw:
-        value = str(item or "").strip()
-        if value:
-            refs.append(value)
-
-    missing: List[str] = []
-    root = repo_root()
-    for ref in refs:
-        if not (root / ref).exists():
-            missing.append(ref)
-    return refs, missing
-
-
-def _objective_ref_is_reachable(root: Path, objective_ref: str) -> bool:
-    value = str(objective_ref or "").strip()
-    if not value:
-        return False
-    path_only = value.split("#", 1)[0]
-    if not path_only:
-        return False
-    return (root / path_only).exists()
-
-
-def _reject_payload(
-    *,
-    handoff: Dict[str, Any],
-    reason_code: str,
-    missing_fields: List[str],
-    missing_evidence_refs: List[str],
-    reject_ref: str,
-) -> Dict[str, Any]:
-    return {
-        "status": "rejected",
-        "reason_code": reason_code,
-        "instance_id": str(handoff.get("instance_id") or "unknown-instance"),
-        "missing_fields": missing_fields,
-        "missing_evidence_refs": missing_evidence_refs,
-        "required_actions": ["补齐handoff字段", "补齐并校验证据索引"],
-        "auditable_ref": reject_ref,
-        "generated_at": now_iso(),
-    }
-
-
-def run_system_analyst_p1(
-    *,
-    root: Path,
-    handoff_path: Path,
-    output_path: Path,
-    case_dir: Path,
-) -> Dict[str, Any]:
-    handoff = load_json(handoff_path)
-    missing_fields = [field for field in _required_handoff_fields() if not str(handoff.get(field, "")).strip()]
-
-    if missing_fields:
-        reject_path = case_dir / "reject_output.json"
-        reject_payload = _reject_payload(
-            handoff=handoff,
-            reason_code="handoff_contract_violation",
-            missing_fields=missing_fields,
-            missing_evidence_refs=[],
-            reject_ref=rel(reject_path, root),
-        )
-        dump_json(reject_path, reject_payload)
-        dump_json(output_path, {"status": "rejected", "reject_ref": rel(reject_path, root)})
-        return {"status": "rejected", "reject_path": reject_path, "digest_path": None}
-
-    if str(handoff.get("to_role")) != "system-analyst":
-        reject_path = case_dir / "reject_output.json"
-        reject_payload = _reject_payload(
-            handoff=handoff,
-            reason_code="handoff_contract_violation",
-            missing_fields=["to_role(system-analyst)"],
-            missing_evidence_refs=[],
-            reject_ref=rel(reject_path, root),
-        )
-        dump_json(reject_path, reject_payload)
-        dump_json(output_path, {"status": "rejected", "reject_ref": rel(reject_path, root)})
-        return {"status": "rejected", "reject_path": reject_path, "digest_path": None}
-
-    if not _objective_ref_is_reachable(root, str(handoff.get("objective_ref") or "")):
-        reject_path = case_dir / "reject_output.json"
-        reject_payload = _reject_payload(
-            handoff=handoff,
-            reason_code="handoff_contract_violation",
-            missing_fields=["objective_ref(reachable-path)"],
-            missing_evidence_refs=[],
-            reject_ref=rel(reject_path, root),
-        )
-        dump_json(reject_path, reject_payload)
-        dump_json(output_path, {"status": "rejected", "reject_ref": rel(reject_path, root)})
-        return {"status": "rejected", "reject_path": reject_path, "digest_path": None}
-
-    evidence_ref = str(handoff.get("evidence_ref") or "").strip()
-    evidence_index_path = (root / evidence_ref).resolve() if evidence_ref else root / "__missing__"
-    evidence_refs, missing_evidence_refs = _read_evidence_refs(evidence_index_path)
-
-    if (not evidence_refs) or missing_evidence_refs:
-        reject_path = case_dir / "reject_output.json"
-        reject_payload = _reject_payload(
-            handoff=handoff,
-            reason_code="evidence_insufficient",
-            missing_fields=[],
-            missing_evidence_refs=missing_evidence_refs if missing_evidence_refs else [evidence_ref],
-            reject_ref=rel(reject_path, root),
-        )
-        dump_json(reject_path, reject_payload)
-        dump_json(output_path, {"status": "rejected", "reject_ref": rel(reject_path, root)})
-        return {"status": "rejected", "reject_path": reject_path, "digest_path": None}
-
-    seed = f"{handoff.get('instance_id')}|{now_iso()}"
-    short_hash = hashlib.sha256(seed.encode("utf-8")).hexdigest()[:8]
-    digest_id = f"anl-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}-{short_hash}"
-
-    digest_path = case_dir / "analysis_digest.json"
-    digest_payload = {
-        "digest_id": digest_id,
-        "instance_id": handoff["instance_id"],
-        "objective_ref": handoff["objective_ref"],
-        "source_handoff_ref": rel(handoff_path, root),
-        "summary": "已完成最小证据归纳，输出供 architect/bpm 消费的系统分析摘要。",
-        "findings": [
-            {
-                "signal": "runtime_stability",
-                "impact": "中等风险，需要在下一轮治理中跟踪",
-                "confidence": "medium",
-                "evidence_refs": evidence_refs[:2],
-            }
-        ],
-        "risk_level": "medium",
-        "recommendations": [
-            {
-                "action": "将高风险信号纳入 runtime-policy-calibration 下一轮审查",
-                "target_role": "architect",
-                "requires_decision": True,
-            },
-            {
-                "action": "由 bpm 安排后续回归窗口并补齐证据采样",
-                "target_role": "bpm",
-                "requires_decision": True,
-            },
-        ],
-        "generated_at": now_iso(),
-    }
-    dump_json(digest_path, digest_payload)
-
-    output_payload = {
-        "status": "completed",
-        "instance_id": handoff["instance_id"],
-        "architecture_feedback_digest_ref": rel(digest_path, root),
-        "lineage_ref": handoff["lineage_ref"],
-        "stack_depth": handoff["stack_depth"],
-        "evidence_ref": handoff["evidence_ref"],
-        "generated_at": now_iso(),
-    }
-    dump_json(output_path, output_payload)
-    return {"status": "completed", "reject_path": None, "digest_path": digest_path}
-
-
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run TC-ANL-001~002")
+    parser = argparse.ArgumentParser(description="Run TC-ANL-001~003")
+    parser.add_argument(
+        "--digest-runner",
+        default="skills/system/system-feedback-digest/scripts/system_feedback_digest_runner.py",
+        help="Repo-relative digest runner path",
+    )
+    parser.add_argument(
+        "--process-runner",
+        default="processes/meta/runtime-policy-calibration/scripts/runtime_policy_calibration_runner.py",
+        help="Repo-relative runtime-policy-calibration runner path",
+    )
     parser.add_argument(
         "--report",
-        default="docs/design/modules/evidence/bpm-runtime/w4_tc_anl_report.json",
+        default="docs/design/modules/evidence/bpm-runtime/w5_tc_anl_report.json",
         help="Repo-relative report output path",
     )
     parser.add_argument(
         "--evidence-root",
-        default="docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases",
+        default="docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases",
         help="Repo-relative evidence root",
     )
     parser.add_argument(
@@ -260,11 +87,23 @@ def main() -> int:
     args = parse_args()
     root = repo_root()
 
+    digest_runner = (root / args.digest_runner).resolve()
+    process_runner = (root / args.process_runner).resolve()
+    if not digest_runner.exists():
+        raise RuntimeError(f"digest runner not found: {digest_runner}")
+    if not process_runner.exists():
+        raise RuntimeError(f"process runner not found: {process_runner}")
+
     agent_doc = (root / args.agent_doc).resolve()
     if not agent_doc.exists():
         raise RuntimeError(f"agent doc not found: {agent_doc}")
     agent_doc_text = agent_doc.read_text(encoding="utf-8")
-    required_markers = ["最小输入契约（handoff_in）", "最小输出契约（digest_out / reject_out）", "最小权限边界"]
+    required_markers = [
+        "最小输入契约（handoff_in）",
+        "最小输出契约（digest_out / reject_out）",
+        "最小权限边界",
+        "sys.arch.system-feedback-digest",
+    ]
     missing_markers = [marker for marker in required_markers if marker not in agent_doc_text]
 
     evidence_root = (root / args.evidence_root).resolve()
@@ -280,59 +119,61 @@ def main() -> int:
 
     tc1_signal_1 = tc1_dir / "signals/runtime_signal.json"
     tc1_signal_2 = tc1_dir / "signals/incident_summary.json"
-    dump_json(tc1_signal_1, {"signal": "latency_spike", "severity": "medium", "observed_at": now_iso()})
-    dump_json(tc1_signal_2, {"signal": "error_burst", "severity": "medium", "observed_at": now_iso()})
+    dump_json(tc1_signal_1, {"signal": "latency_spike", "severity": "high", "impact": "请求响应抖动", "observed_at": now_iso()})
+    dump_json(tc1_signal_2, {"signal": "error_burst", "severity": "medium", "impact": "错误率升高", "observed_at": now_iso()})
 
-    tc1_evidence_index = tc1_dir / "handoff_evidence_index.json"
-    dump_json(
-        tc1_evidence_index,
-        {
-            "refs": [
-                rel(tc1_signal_1, root),
-                rel(tc1_signal_2, root),
-            ]
-        },
-    )
+    tc1_index = tc1_dir / "handoff_evidence_index.json"
+    dump_json(tc1_index, {"refs": [rel(tc1_signal_1, root), rel(tc1_signal_2, root)]})
 
     tc1_handoff = tc1_dir / "handoff_input.json"
     dump_json(
         tc1_handoff,
         {
-            "instance_id": "inst-anl-001",
+            "instance_id": "inst-anl-prod-001",
             "parent_instance_id": None,
-            "lineage_ref": "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-001/lineage.json",
+            "lineage_ref": rel(tc1_dir / "lineage.json", root),
             "stack_depth": 1,
-            "phase_id": "p1-system-analysis",
-            "objective_ref": "docs/design/modules/M2-bpm-engine.md#system-analyst-runtime-calibration",
+            "phase_id": "p3-posterior-analysis-and-hypothesis",
+            "objective_ref": "docs/design/processes/runtime-policy-calibration-process.md#目标",
             "input_ref": rel(tc1_handoff, root),
-            "output_ref": rel(tc1_dir / "process_output.json", root),
+            "output_ref": rel(tc1_dir / "digest_output.json", root),
             "output_contract": "system-analyst.digest.v1",
             "from_role": "bpm",
             "to_role": "system-analyst",
-            "acceptance_criteria": ["产出结构化digest", "证据可追溯"],
-            "deadline": "2026-02-23T00:00:00Z",
-            "risk_notes": ["需要验证证据覆盖度"],
-            "evidence_ref": rel(tc1_evidence_index, root),
+            "acceptance_criteria": ["产出结构化digest", "建议可治理消费"],
+            "deadline": "2026-02-23T12:00:00Z",
+            "risk_notes": ["高风险信号需要审批链"],
+            "evidence_ref": rel(tc1_index, root),
         },
     )
 
-    tc1_output = tc1_dir / "process_output.json"
-    tc1_runtime = run_system_analyst_p1(
-        root=root,
-        handoff_path=tc1_handoff,
-        output_path=tc1_output,
-        case_dir=tc1_dir,
-    )
+    tc1_input = tc1_dir / "digest_input.json"
+    tc1_output = tc1_dir / "digest_output.json"
+    tc1_digest = tc1_dir / "analysis_digest.json"
+    tc1_reject = tc1_dir / "reject_output.json"
+    dump_json(tc1_input, {"handoff_ref": rel(tc1_handoff, root), "analysis_scope": "runtime-policy-calibration"})
+
+    tc1_cmd = [
+        sys.executable,
+        str(digest_runner),
+        "--input",
+        str(tc1_input),
+        "--output",
+        str(tc1_output),
+        "--digest",
+        str(tc1_digest),
+        "--reject",
+        str(tc1_reject),
+    ]
+    tc1_proc = run_cmd(tc1_cmd, root)
     tc1_payload = load_json(tc1_output) if tc1_output.exists() else {}
-    tc1_digest_path = tc1_runtime["digest_path"]
-    tc1_digest_payload = load_json(tc1_digest_path) if isinstance(tc1_digest_path, Path) and tc1_digest_path.exists() else {}
+    tc1_digest_payload = load_json(tc1_digest) if tc1_digest.exists() else {}
 
     tc1_ok = (
         not missing_markers
-        and tc1_runtime["status"] == "completed"
+        and tc1_proc.returncode == 0
         and tc1_payload.get("status") == "completed"
-        and isinstance(tc1_payload.get("architecture_feedback_digest_ref"), str)
-        and tc1_digest_payload.get("summary")
+        and tc1_digest.exists()
         and isinstance(tc1_digest_payload.get("findings"), list)
         and isinstance(tc1_digest_payload.get("recommendations"), list)
     )
@@ -342,8 +183,9 @@ def main() -> int:
         tc1_ok,
         {
             "doc_markers_missing": missing_markers,
-            "runtime_status": tc1_runtime["status"],
-            "output_ref": rel(tc1_output, root),
+            "return_code": tc1_proc.returncode,
+            "stdout": tc1_proc.stdout.strip(),
+            "stderr": tc1_proc.stderr.strip(),
             "digest_ref": tc1_payload.get("architecture_feedback_digest_ref"),
         },
     )
@@ -352,58 +194,175 @@ def main() -> int:
     tc2_dir = evidence_root / "TC-ANL-002"
     tc2_dir.mkdir(parents=True, exist_ok=True)
 
-    tc2_evidence_index = tc2_dir / "handoff_evidence_index.json"
-    dump_json(tc2_evidence_index, {"refs": [rel(tc2_dir / "signals/missing_signal.json", root)]})
+    tc2_index = tc2_dir / "handoff_evidence_index.json"
+    dump_json(tc2_index, {"refs": [rel(tc2_dir / "signals/missing_signal.json", root)]})
 
     tc2_handoff = tc2_dir / "handoff_input.json"
     dump_json(
         tc2_handoff,
         {
-            "instance_id": "inst-anl-002",
+            "instance_id": "inst-anl-prod-002",
             "parent_instance_id": None,
-            "lineage_ref": "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-002/lineage.json",
+            "lineage_ref": rel(tc2_dir / "lineage.json", root),
             "stack_depth": 1,
-            "phase_id": "p1-system-analysis",
-            "objective_ref": "docs/design/modules/M2-bpm-engine.md#system-analyst-runtime-calibration",
+            "phase_id": "p3-posterior-analysis-and-hypothesis",
+            "objective_ref": "docs/design/processes/runtime-policy-calibration-process.md#目标",
             "input_ref": rel(tc2_handoff, root),
-            "output_ref": rel(tc2_dir / "process_output.json", root),
+            "output_ref": rel(tc2_dir / "digest_output.json", root),
             "output_contract": "system-analyst.digest.v1",
             "from_role": "architect",
             "to_role": "system-analyst",
-            "acceptance_criteria": ["证据不足时拒绝输出"],
-            "deadline": "2026-02-23T00:00:00Z",
-            "risk_notes": ["证据索引可能空洞"],
-            "evidence_ref": rel(tc2_evidence_index, root),
+            "acceptance_criteria": ["证据不足时拒绝"],
+            "deadline": "2026-02-23T12:00:00Z",
+            "risk_notes": ["缺证据场景"],
+            "evidence_ref": rel(tc2_index, root),
         },
     )
 
-    tc2_output = tc2_dir / "process_output.json"
-    tc2_runtime = run_system_analyst_p1(
-        root=root,
-        handoff_path=tc2_handoff,
-        output_path=tc2_output,
-        case_dir=tc2_dir,
-    )
+    tc2_input = tc2_dir / "digest_input.json"
+    tc2_output = tc2_dir / "digest_output.json"
+    tc2_digest = tc2_dir / "analysis_digest.json"
+    tc2_reject = tc2_dir / "reject_output.json"
+    dump_json(tc2_input, {"handoff_ref": rel(tc2_handoff, root), "analysis_scope": "runtime-policy-calibration"})
+
+    tc2_cmd = [
+        sys.executable,
+        str(digest_runner),
+        "--input",
+        str(tc2_input),
+        "--output",
+        str(tc2_output),
+        "--digest",
+        str(tc2_digest),
+        "--reject",
+        str(tc2_reject),
+    ]
+    tc2_proc = run_cmd(tc2_cmd, root)
     tc2_payload = load_json(tc2_output) if tc2_output.exists() else {}
-    tc2_reject_path = tc2_runtime["reject_path"]
-    tc2_reject_payload = load_json(tc2_reject_path) if isinstance(tc2_reject_path, Path) and tc2_reject_path.exists() else {}
+    tc2_reject_payload = load_json(tc2_reject) if tc2_reject.exists() else {}
 
     tc2_ok = (
-        tc2_runtime["status"] == "rejected"
+        tc2_proc.returncode == 2
         and tc2_payload.get("status") == "rejected"
         and tc2_reject_payload.get("reason_code") == "evidence_insufficient"
-        and isinstance(tc2_reject_payload.get("missing_evidence_refs"), list)
-        and not (tc2_dir / "analysis_digest.json").exists()
+        and not tc2_digest.exists()
     )
     append_case(
         cases,
         "TC-ANL-002",
         tc2_ok,
         {
-            "runtime_status": tc2_runtime["status"],
-            "output_ref": rel(tc2_output, root),
-            "reject_ref": rel(tc2_reject_path, root) if isinstance(tc2_reject_path, Path) else None,
+            "return_code": tc2_proc.returncode,
+            "stdout": tc2_proc.stdout.strip(),
+            "stderr": tc2_proc.stderr.strip(),
+            "reject_ref": tc2_payload.get("reject_ref"),
             "reason_code": tc2_reject_payload.get("reason_code"),
+        },
+    )
+
+    # TC-ANL-003
+    tc3_dir = evidence_root / "TC-ANL-003"
+    tc3_dir.mkdir(parents=True, exist_ok=True)
+
+    tc3_issue = tc3_dir / "issue.json"
+    tc3_policy = tc3_dir / "current_policy.json"
+    tc3_constraints = tc3_dir / "risk_constraints.json"
+    tc3_signal_1 = tc3_dir / "signals/runtime_latency.json"
+    tc3_signal_2 = tc3_dir / "signals/runtime_error.json"
+    tc3_index = tc3_dir / "handoff_evidence_index.json"
+    tc3_handoff = tc3_dir / "handoff_input.json"
+
+    dump_json(
+        tc3_issue,
+        {
+            "issue_id": "rpc-issue-001",
+            "scope": "m2-catchup-window-calibration",
+            "objective_ref": "docs/design/processes/runtime-policy-calibration-process.md#目标",
+        },
+    )
+    dump_json(tc3_policy, {"policy_id": "catchup-policy-v3", "window_minutes": {"high": 5, "medium": 15, "low": 30}})
+    dump_json(tc3_constraints, {"high_risk_requires_admin_approval": True, "min_sample_count": 2})
+    dump_json(tc3_signal_1, {"signal": "catchup_delay", "severity": "high", "impact": "高风险漏跑窗口超时"})
+    dump_json(tc3_signal_2, {"signal": "retry_pressure", "severity": "medium", "impact": "重试负载升高"})
+    dump_json(tc3_index, {"refs": [rel(tc3_signal_1, root), rel(tc3_signal_2, root)]})
+    dump_json(
+        tc3_handoff,
+        {
+            "instance_id": "inst-anl-prod-003",
+            "parent_instance_id": None,
+            "lineage_ref": rel(tc3_dir / "lineage.json", root),
+            "stack_depth": 2,
+            "phase_id": "p3-posterior-analysis-and-hypothesis",
+            "objective_ref": "docs/design/processes/runtime-policy-calibration-process.md#目标",
+            "input_ref": rel(tc3_handoff, root),
+            "output_ref": rel(tc3_dir / "process_output.json", root),
+            "output_contract": "system-analyst.digest.v1",
+            "from_role": "bpm",
+            "to_role": "system-analyst",
+            "acceptance_criteria": ["产出策略校准提案"],
+            "deadline": "2026-02-23T12:00:00Z",
+            "risk_notes": ["高风险变更需admin审批"],
+            "evidence_ref": rel(tc3_index, root),
+        },
+    )
+
+    tc3_input = tc3_dir / "process_input.json"
+    tc3_output = tc3_dir / "process_output.json"
+    dump_json(
+        tc3_input,
+        {
+            "issue_ref": rel(tc3_issue, root),
+            "runtime_evidence_refs": [rel(tc3_signal_1, root), rel(tc3_signal_2, root)],
+            "current_policy_ref": rel(tc3_policy, root),
+            "risk_constraints_ref": rel(tc3_constraints, root),
+            "handoff_ref": rel(tc3_handoff, root),
+            "admin_approved": True,
+        },
+    )
+
+    tc3_cmd = [
+        sys.executable,
+        str(process_runner),
+        "--input",
+        str(tc3_input),
+        "--output",
+        str(tc3_output),
+        "--evidence-dir",
+        rel(tc3_dir / "runtime_policy_calibration", root),
+        "--run-id",
+        "TC-ANL-003",
+        "--digest-runner",
+        str(digest_runner),
+    ]
+    tc3_proc = run_cmd(tc3_cmd, root)
+    tc3_payload = load_json(tc3_output) if tc3_output.exists() else {}
+
+    tc3_required_refs = [
+        "calibration_report_ref",
+        "policy_change_proposal_ref",
+        "governance_sync_minutes_ref",
+        "decision_record_ref",
+        "rollout_observation_ref",
+        "runtime_trace_ref",
+    ]
+    tc3_refs_reachable = True
+    for key in tc3_required_refs:
+        ref = tc3_payload.get(key)
+        if not isinstance(ref, str) or not (root / ref).exists():
+            tc3_refs_reachable = False
+            break
+
+    tc3_ok = tc3_proc.returncode == 0 and tc3_payload.get("status") == "ok" and tc3_refs_reachable
+    append_case(
+        cases,
+        "TC-ANL-003",
+        tc3_ok,
+        {
+            "return_code": tc3_proc.returncode,
+            "stdout": tc3_proc.stdout.strip(),
+            "stderr": tc3_proc.stderr.strip(),
+            "runtime_trace_ref": tc3_payload.get("runtime_trace_ref"),
+            "decision_record_ref": tc3_payload.get("decision_record_ref"),
         },
     )
 
@@ -413,12 +372,14 @@ def main() -> int:
     report_path = (root / args.report).resolve()
     report = {
         "ts": now_iso(),
-        "suite": "TC-ANL-001~002",
+        "suite": "TC-ANL-001~003",
         "total": len(cases),
         "passed": passed,
         "failed": failed,
         "evidence_root": args.evidence_root,
         "agent_doc": args.agent_doc,
+        "digest_runner": args.digest_runner,
+        "process_runner": args.process_runner,
         "cases": cases,
     }
     dump_json(report_path, report)

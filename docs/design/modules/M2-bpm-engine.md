@@ -99,6 +99,8 @@
 
 1. `catchup_policy_ref`、`time_bucket_strategy` 等动态参数不在 `M2` 文档内直接硬编码定值。
 2. 必须进入 `runtime-policy-calibration` 治理流程，由 `kernel/system-analyst` 做后验分析并同步给 `architect/admin/bpm` 决策。
+3. `runtime-policy-calibration` 运行入口：`processes/meta/runtime-policy-calibration/scripts/runtime_policy_calibration_runner.py`。
+4. 生产回归入口：`tests/m2-bpm-runtime/run_tc_anl.py`（覆盖 `TC-ANL-001~003`）。
 
 ## 验收清单
 

@@ -1,6 +1,6 @@
 # Agent 全量清单
 
-> 版本: v0.6.0 | SSOT: `shared/registry/agent_directory.json`
+> 版本: v0.7.0 | SSOT: `shared/registry/agent_directory.json`
 
 ## 已注册 Agent
 
@@ -10,7 +10,7 @@
 | architect | kernel | admin | architecture-governance | draft |
 | hr | kernel | admin | lifecycle-governance | draft |
 | kernel-dev | kernel | architect | implementation-kernel | draft |
-| system-analyst | kernel | admin | system-analysis-governance | review |
+| system-analyst | kernel | admin | system-analysis-governance | active |
 | qa | kernel | admin | quality-governance | draft |
 | bpm | control | admin | orchestration-control | draft |
 | personal-assistant | app | admin | entry-assistance-read-heavy | draft |
@@ -61,3 +61,9 @@ business-analyst, product-manager, tech-lead, solution-architect, frontend-dev, 
 1. 新增 `system-analyst` 最小可运行资产并完成注册，生命周期状态为 `review`。
 2. `system-analyst` 文档已补齐 handoff 输入契约、digest/reject 输出契约、Fail-Closed 条件与最小权限边界。
 3. 回归用例 `TC-ANL-001~002` 已纳入 `tests/m2-bpm-runtime/`，证据写入 `docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/`。
+
+## W5 联动备注（M2 BPM Runtime Hardening）
+
+1. `system-analyst` 运行资产补齐（IDENTITY/SOUL/TOOLS/USER/MEMORY），生命周期推进到 `active`。
+2. 新增生产技能 `sys.arch.system-feedback-digest`，并作为 `system-analyst` 默认执行能力。
+3. 新增 `runtime-policy-calibration` 可执行流程，`TC-ANL-001~003` 完成生产路径端到端验证。

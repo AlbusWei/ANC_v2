@@ -1,0 +1,195 @@
+{
+  "process_id": "runtime-policy-calibration",
+  "version": "0.1.0",
+  "process_level": "P5",
+  "parent_process_id": null,
+  "composed_processes": [],
+  "lineage_policy": {
+    "stack_depth_limit": 8,
+    "context_isolation": "strict",
+    "output_handoff_mode": "contract_only"
+  },
+  "objective_ref": "obj-runtime-policy-calibration",
+  "owner": "bpm",
+  "priority": "P0",
+  "input_contract": {
+    "format": "json",
+    "required": [
+      "issue_ref",
+      "runtime_evidence_refs",
+      "current_policy_ref",
+      "risk_constraints_ref",
+      "handoff_ref"
+    ]
+  },
+  "output_contract": {
+    "format": "json",
+    "required": [
+      "calibration_report_ref",
+      "policy_change_proposal_ref",
+      "governance_sync_minutes_ref",
+      "decision_record_ref",
+      "rollout_observation_ref"
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1",
+      "name": "issue-intake-and-scope-lock",
+      "actor": "system-analyst",
+      "target_type": "skill",
+      "target_id": "sys.arch.system-feedback-digest",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/runtime-policy-calibration-process.md#阶段定义",
+      "sipoc": {
+        "supplier": "initiator",
+        "input": "issue_ref + handoff_ref",
+        "process": "validate issue scope and contract completeness",
+        "output": "scope_lock_ref",
+        "client": "p2"
+      },
+      "acceptance_criteria": "scope, objective and handoff contract are all locked"
+    },
+    {
+      "phase_id": "p2",
+      "name": "evidence-collection-and-baseline",
+      "actor": "system-analyst",
+      "target_type": "skill",
+      "target_id": "sys.arch.system-feedback-digest",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/runtime-policy-calibration-process.md#输入契约",
+      "sipoc": {
+        "supplier": "p1",
+        "input": "runtime_evidence_refs + risk_constraints_ref",
+        "process": "build evidence index and baseline metrics",
+        "output": "evidence_index_ref + baseline_ref",
+        "client": "p3"
+      },
+      "acceptance_criteria": "evidence index is reachable and sample coverage is explicit"
+    },
+    {
+      "phase_id": "p3",
+      "name": "posterior-analysis-and-hypothesis",
+      "actor": "system-analyst",
+      "target_type": "skill",
+      "target_id": "sys.arch.system-feedback-digest",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/runtime-policy-calibration-process.md#输出契约",
+      "sipoc": {
+        "supplier": "p2",
+        "input": "handoff_ref + evidence_index_ref",
+        "process": "generate posterior digest and strategy hypothesis",
+        "output": "architecture_feedback_digest_ref",
+        "client": "p4"
+      },
+      "acceptance_criteria": "digest includes risk level, findings and decision-ready recommendations"
+    },
+    {
+      "phase_id": "p4",
+      "name": "governance-sync",
+      "actor": "architect",
+      "target_type": "skill",
+      "target_id": "system.ops.manual-task",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/runtime-policy-calibration-process.md#角色分工",
+      "sipoc": {
+        "supplier": "p3",
+        "input": "architecture_feedback_digest_ref",
+        "process": "sync with architect/admin/bpm and record minutes",
+        "output": "governance_sync_minutes_ref",
+        "client": "p5"
+      },
+      "acceptance_criteria": "governance sync participants and conclusions are auditable"
+    },
+    {
+      "phase_id": "p5",
+      "name": "decision-and-rollout-plan",
+      "actor": "admin",
+      "target_type": "skill",
+      "target_id": "system.ops.manual-task",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/runtime-policy-calibration-process.md#Fail-Closed",
+      "sipoc": {
+        "supplier": "p4",
+        "input": "governance_sync_minutes_ref + risk_constraints_ref",
+        "process": "approve or reject policy proposal and define rollout plan",
+        "output": "policy_change_proposal_ref + decision_record_ref",
+        "client": "p6"
+      },
+      "acceptance_criteria": "high-risk change has explicit admin decision"
+    },
+    {
+      "phase_id": "p6",
+      "name": "post-rollout-observation",
+      "actor": "bpm",
+      "target_type": "skill",
+      "target_id": "sys.arch.system-feedback-digest",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/runtime-policy-calibration-process.md#证据要求",
+      "sipoc": {
+        "supplier": "p5",
+        "input": "decision_record_ref + current_policy_ref",
+        "process": "record rollout observation and close the calibration round",
+        "output": "rollout_observation_ref + calibration_report_ref",
+        "client": "initiator"
+      },
+      "acceptance_criteria": "observation result is linked to decision and proposal refs"
+    }
+  ],
+  "control_flow": [
+    {
+      "from": "p1",
+      "to": "p2",
+      "on": "success"
+    },
+    {
+      "from": "p2",
+      "to": "p3",
+      "on": "success"
+    },
+    {
+      "from": "p3",
+      "to": "p4",
+      "on": "success"
+    },
+    {
+      "from": "p4",
+      "to": "p5",
+      "on": "success"
+    },
+    {
+      "from": "p5",
+      "to": "p6",
+      "on": "success"
+    },
+    {
+      "from": "p6",
+      "to": "end",
+      "on": "success"
+    }
+  ],
+  "fail_policy": {
+    "mode": "fail_closed",
+    "retry": {
+      "max_attempts": 1
+    },
+    "escalation_chain": [
+      "actor",
+      "owner",
+      "bpm",
+      "admin",
+      "human"
+    ]
+  },
+  "evidence_policy": {
+    "required_fields": [
+      "timestamp",
+      "phase_id",
+      "actor",
+      "input_ref",
+      "output_ref",
+      "decision",
+      "reason"
+    ]
+  }
+}

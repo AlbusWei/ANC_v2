@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "process_registry",
-  "updated_at": "2026-02-22T15:35:24Z",
+  "updated_at": "2026-02-22T17:10:00Z",
   "entry_contract": {
     "required": [
       "process_id",
@@ -204,6 +204,25 @@
         "bundle_source": "processes/meta",
         "entry_key": "hold-governance",
         "source": "processes/meta/hold-governance",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "runtime-policy-calibration",
+      "skill_name": "runtime-policy-calibration",
+      "skill_path": "processes/meta/runtime-policy-calibration/SKILL.md",
+      "manifest_path": "processes/meta/runtime-policy-calibration/process.json",
+      "objective_ref": "obj-runtime-policy-calibration",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "active",
+      "phase_count": 6,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "runtime-policy-calibration",
+        "source": "processes/meta/runtime-policy-calibration",
         "allow_draft_projection": true
       }
     },

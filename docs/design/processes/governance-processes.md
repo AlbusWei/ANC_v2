@@ -12,7 +12,7 @@
 6. trigger-schedule-runtime
 7. trigger-event-runtime
 8. trigger-runtime-supervisor（P5 模式，规划）
-9. runtime-policy-calibration（P5 治理模式，规划）
+9. runtime-policy-calibration（P5 治理模式，可执行）
 10. construction-plane-governance
 
 ## lifecycle-review
@@ -134,13 +134,19 @@ owner：`architect`（语义），`bpm`（编排执行）
 2. 仅在触发家族明显增多或跨触发治理逻辑增厚时启用。
 3. 模式定义见：`docs/design/processes/trigger-runtime-supervisor-pattern.md`。
 
-## runtime-policy-calibration（P5 治理模式，规划）
+## runtime-policy-calibration（P5 治理模式，可执行）
 
 定位：
 
 1. 统一承接“需要运营后验分析才可形成实证结论”的参数与策略议题。
 2. 由 `kernel/system-analyst` 主责分析，并同步给 `architect/admin/bpm` 做治理决策。
 3. 模式定义见：`docs/design/processes/runtime-policy-calibration-process.md`。
+
+运行入口与测试：
+
+1. 执行入口：`processes/meta/runtime-policy-calibration/scripts/runtime_policy_calibration_runner.py`
+2. 核心技能：`skills/system/system-feedback-digest/scripts/system_feedback_digest_runner.py`
+3. 运行级用例：`tests/m2-bpm-runtime/TC-ANL.md`（`TC-ANL-001~003`）
 
 适用议题：
 

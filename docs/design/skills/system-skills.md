@@ -1,6 +1,6 @@
 # 系统技能清单与设计
 
-> 版本: v0.8.0 | 分类: System Skills | 层级: L2 | 最后更新: 2026-02-22
+> 版本: v0.9.0 | 分类: System Skills | 层级: L2 | 最后更新: 2026-02-22
 
 ## 核心系统技能
 
@@ -27,6 +27,7 @@
 21. system.ops.git-worktree-sync
 22. system.control.config-change-gatekeeper
 23. system.admin.system-config-updater
+24. sys.arch.system-feedback-digest
 
 ## 技能包路径约定
 
@@ -61,6 +62,13 @@
 统一施工面治理技能设计见：
 
 - `docs/design/skills/construction-plane-skills.md`
+
+## Runtime Policy Calibration 技能包
+
+后验策略校准分析技能（W5）：
+
+1. `sys.arch.system-feedback-digest`
+2. `processes/meta/runtime-policy-calibration/scripts/runtime_policy_calibration_runner.py`（流程执行入口）
 
 ## Git Operations 技能包
 

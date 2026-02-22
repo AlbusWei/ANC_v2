@@ -46,6 +46,7 @@ PROCESS_MANIFESTS = [
     ROOT / "processes" / "meta" / "hotfix" / "process.json",
     ROOT / "processes" / "meta" / "refactor" / "process.json",
     ROOT / "processes" / "meta" / "governed-config-change" / "process.json",
+    ROOT / "processes" / "meta" / "runtime-policy-calibration" / "process.json",
     ROOT / "processes" / "meta" / "construction-plane-governance" / "process.json",
     ROOT / "processes" / "control" / "trigger-schedule-runtime" / "process.json",
     ROOT / "processes" / "control" / "trigger-event-runtime" / "process.json",

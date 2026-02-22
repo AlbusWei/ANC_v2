@@ -6,7 +6,7 @@
 ## agent_directory.json
 
 - schema_version: `1.1.0`
-- updated_at: `2026-02-22T16:20:00Z`
+- updated_at: `2026-02-22T17:10:00Z`
 - strict mode: `true`
 
 | 字段 | 类型 | 必填 | 约束 | 说明 |
@@ -45,7 +45,7 @@
 ## skill_registry.json
 
 - schema_version: `1.1.0`
-- updated_at: `2026-02-22T13:30:00Z`
+- updated_at: `2026-02-22T17:10:00Z`
 - strict mode: `true`
 
 | 字段 | 类型 | 必填 | 约束 | 说明 |
@@ -115,7 +115,7 @@
 ## process_registry.json
 
 - schema_version: `1.1.0`
-- updated_at: `2026-02-22T15:35:24Z`
+- updated_at: `2026-02-22T17:10:00Z`
 - strict mode: `true`
 
 | 字段 | 类型 | 必填 | 约束 | 说明 |

@@ -32,6 +32,7 @@
 26. sys.qa.regression-runner
 27. sys.qa.registry-validator
 28. sys.qa.evidence-archiver
+29. sys.arch.system-feedback-digest
 
 ## 规划 Skill（节选）
 
@@ -89,3 +90,9 @@ W3 变更记录（M2 BPM Runtime Hardening）：
 4. `sys.bpm.catchup-scheduler` 新增 runner：`skills/system/catchup-scheduler/scripts/catchup_scheduler_runner.py`。
 5. `sys.bpm.escalation-handler` 新增 runner：`skills/system/escalation-handler/scripts/escalation_handler_runner.py`。
 6. 上述 5 项技能 registry 版本由 `0.1.0` 升级到 `0.2.0`，生命周期保持 `draft`。
+
+W5 变更记录（M2 BPM Runtime Hardening）：
+
+1. 新增 `sys.arch.system-feedback-digest` 可执行 runner：`skills/system/system-feedback-digest/scripts/system_feedback_digest_runner.py`。
+2. `system-analyst` 生产链路改为调用 `sys.arch.system-feedback-digest` 输出 `digest/reject`。
+3. 运行级验证入口：`tests/m2-bpm-runtime/run_tc_anl.py`（覆盖 `TC-ANL-001~003`）。

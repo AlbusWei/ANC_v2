@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "agent_directory",
-  "updated_at": "2026-02-22T16:20:00Z",
+  "updated_at": "2026-02-22T17:10:00Z",
   "entry_contract": {
     "required": [
       "agent_id",
@@ -199,7 +199,7 @@
       "path": "agents/kernel/system-analyst",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "admin",
-      "status": "review",
+      "status": "active",
       "permissions": [
         "system-analysis-governance"
       ],

@@ -14,6 +14,7 @@
 | quality-gate-preparation | `/Users/albus/MyProjects/ANC_v2/processes/meta/quality-gate-preparation/` | canonical |
 | quality-gate-evaluation | `/Users/albus/MyProjects/ANC_v2/processes/meta/quality-gate-evaluation/` | canonical |
 | hold-governance | `/Users/albus/MyProjects/ANC_v2/processes/meta/hold-governance/` | canonical |
+| runtime-policy-calibration | `/Users/albus/MyProjects/ANC_v2/processes/meta/runtime-policy-calibration/` | canonical |
 | construction-plane-governance | `/Users/albus/MyProjects/ANC_v2/processes/meta/construction-plane-governance/` | canonical |
 | trigger-schedule-runtime | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-schedule-runtime/` | canonical |
 | trigger-event-runtime | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-event-runtime/` | canonical |
@@ -36,6 +37,7 @@
 | quality-gate-preparation | quality-gate-preparation | 复合 | bpm | 3 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/quality-gate-preparation/` |
 | quality-gate-evaluation | quality-gate-evaluation | 复合 | bpm | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/quality-gate-evaluation/` |
 | hold-governance | hold-governance | 复合 | bpm | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/hold-governance/` |
+| runtime-policy-calibration | runtime-policy-calibration | 复合 | bpm | 6 | active | `/Users/albus/MyProjects/ANC_v2/processes/meta/runtime-policy-calibration/` |
 | construction-plane-governance | construction-plane-governance | 复合 | architect | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/construction-plane-governance/` |
 | trigger-schedule-runtime | trigger-schedule-runtime | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-schedule-runtime/` |
 | trigger-event-runtime | trigger-event-runtime | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-event-runtime/` |
@@ -54,7 +56,6 @@
 | registry-sync | 原子 | Phase 1 | 注册表同步 |
 | escalation | 复合 | Phase 1 | 异常升级 |
 | trigger-runtime-supervisor | 模式（P5） | Phase 1 | 触发运行时上级路由（可选） |
-| runtime-policy-calibration | 模式（P5） | Phase 1 | 后验运营分析与策略校准归口 |
 
 ## 规划中 Process — 演化流程
 
@@ -120,3 +121,9 @@
    - `processes/meta/hold-governance/scripts/hold_governance_runner.py`
 3. 运行级测试入口：`tests/m2-bpm-runtime/run_tc_qa_proc.py`，覆盖 `TC-QA-PROC-001~002`。
 4. 证据落盘：`docs/design/modules/evidence/bpm-runtime/w3b_tc_qa_proc_report.json` 与 `docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/`。
+
+## W5 联动备注（M2 BPM Runtime Hardening）
+
+1. 新增 `runtime-policy-calibration` 可执行流程资产并注册，生命周期状态为 `active`。
+2. 新增流程 runner：`processes/meta/runtime-policy-calibration/scripts/runtime_policy_calibration_runner.py`。
+3. 运行级测试入口：`tests/m2-bpm-runtime/run_tc_anl.py`，新增 `TC-ANL-003` 端到端流程验证。
