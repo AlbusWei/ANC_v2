@@ -3,7 +3,7 @@
   "checkpoint_id": "29c3b34eacfc",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 3,
+  "checkpoints_count": 4,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/design/modules/evidence/bpm-runtime/precheck_apply_ready_evidence.md",
@@ -46,6 +46,13 @@
       "context": "/29/c3b34eacfc/4/context.md",
       "content_hash": "/29/c3b34eacfc/4/content_hash.txt",
       "prompt": "/29/c3b34eacfc/4/prompt.txt"
+    },
+    {
+      "metadata": "/29/c3b34eacfc/5/metadata.json",
+      "transcript": "/29/c3b34eacfc/5/full.jsonl",
+      "context": "/29/c3b34eacfc/5/context.md",
+      "content_hash": "/29/c3b34eacfc/5/content_hash.txt",
+      "prompt": "/29/c3b34eacfc/5/prompt.txt"
     }
   ],
   "token_usage": {
