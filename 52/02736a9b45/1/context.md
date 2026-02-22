@@ -1,0 +1,176 @@
+# Session Context
+
+## User Prompts
+
+### Prompt 1
+
+围绕M1-M6流程架构讨论，整理触发治理测试提案（3分钟异常汇报、skill生命周期review->active事件归集），并同步kernel system-analyst与architect治理边界到layers/modules文档。
+
+### Prompt 2
+
+将触发治理讨论成果转成可执行评审模板，支持逐项打勾、证据矩阵与问题登记。
+
+### Prompt 3
+
+我们现在先entire提交一次并merge回rebuild分枝，再同步merge到各个review分枝。
+
+### Prompt 4
+
+补强 layers/modules：重构 module dependency matrix、完善 M1/M3/M5，并收敛 process 标准字段
+
+### Prompt 5
+
+清理补丁并完成本轮收敛
+
+### Prompt 6
+
+完成 trigger governance 评审闭环与最小 dry-run 证据，并同步 SSOT 注记
+
+### Prompt 7
+
+回填 checklist DoD 最后一项
+
+### Prompt 8
+
+提交并合并本轮层-模块与触发治理收敛改动到 rebuild
+
+### Prompt 9
+
+基于OpenJudge完善M1模块设计并落盘D1-D12决策
+
+### Prompt 10
+
+审计M1缺失的skills/processes设计文档并补齐
+
+### Prompt 11
+
+补齐 layer/module 变更后 skill/process/agent 设计文档不同步的治理规则
+
+### Prompt 12
+
+M1新增对象二次重构：流程连续性拆分、语义命名硬切换、AP闭合与文档联动
+
+### Prompt 13
+
+二次审阅与清理：删除墓碑文件、清除旧命名引用、补充M1实施待办清单
+
+### Prompt 14
+
+检查新增process/skill标准是否同步到设计入口文档并确保后续会被加载
+
+### Prompt 15
+
+在worktree各个分支，以当前规范和进度重建或更新checklist。
+
+### Prompt 16
+
+梳理并补齐M2 BPM引擎缺失流程与技能，参考M1完善方式及新增工程原则
+
+### Prompt 17
+
+确认按新AGENTS规则继续，并对M2方案问题给出决策后完成落盘
+
+### Prompt 18
+
+确认P级分类语义与动态时窗策略，补全M2收口与policy参考文档
+
+### Prompt 19
+
+将后验运营分析类问题统一归口治理流程
+
+### Prompt 20
+
+统一M2设计文档术语并补充glossary定义
+
+### Prompt 21
+
+准备提交代码，一样是先拉rebuild merge，排解冲突后提交，并merge to rebuild，rebuild merge去其他分支, PUSH到远程（包括rebuild）。
+
+### Prompt 22
+
+完善M3反身自开发模块，补齐缺失流程与技能并满足新增连续性/phase闭合原则
+
+### Prompt 23
+
+检查并恢复因git回滚丢失的M3模块完善改动
+
+### Prompt 24
+
+恢复并提交M3模块完善改动
+
+### Prompt 25
+
+完善M6施工面模块，参考M1补齐设计与资产并同步联动门禁
+
+### Prompt 26
+
+按决策收敛M6 owner与OpenSpec协同，增强防语义漂移机制
+
+### Prompt 27
+
+按用户决策一次性完成OpenSpec完整schema，并引入项目包装OpenSpec技能
+
+### Prompt 28
+
+先在review-layers-modules做一次entire提交，然后merge回rebuild并同步到各review分支并push
+
+### Prompt 29
+
+同步rebuild到codex/review-agents并解决冲突
+
+### Prompt 30
+
+同步rebuild到codex/review-agents并处理冲突
+
+### Prompt 31
+
+同步rebuild到codex/review-integration并处理冲突
+
+### Prompt 32
+
+补齐codex/review-integration分支merge回合的checkpoint记录
+
+### Prompt 33
+
+同步rebuild到codex/review-processes-business并处理冲突
+
+### Prompt 34
+
+同步rebuild到codex/review-skills并处理冲突
+
+### Prompt 35
+
+补齐codex/review-skills分支merge回合的checkpoint记录
+
+### Prompt 36
+
+补齐codex/review-integration最近提交缺失的Entire-Checkpoint
+
+### Prompt 37
+
+补齐codex/review-skills最近提交缺失的Entire-Checkpoint
+
+### Prompt 38
+
+完善M6施工平面：锁定OpenSpec-施工回合-Entire协同模型
+
+### Prompt 39
+
+排解M6流程与技能定义冲突，完成AP化与映射对齐
+
+### Prompt 40
+
+M6定义层冲突排解与AP化
+
+### Prompt 41
+
+Implement M6 runtime execution closure with AP alignment, openspec sync schema compliance, round evidence tooling, verify-m6 gate, and A/B/C dry-run evidence.
+
+### Prompt 42
+
+Finalize M6 implementation with status promotion to review, evidence index, protocol updates, and negative gate fixtures.
+
+### Prompt 43
+
+Commit and merge M6 runtime implementation to rebuild with evidence and review-state promotion.
+
