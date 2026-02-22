@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "99887c05c813",
+  "strategy": "manual-commit",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/open_questions.md",
+    "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/round-evidence.jsonl",
+    "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/scope_baseline.md",
+    "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/thread_handoff.md",
+    "openspec/changes/m1-quality-gate-runtime-closure/.openspec.yaml",
+    "openspec/changes/m1-quality-gate-runtime-closure/design.md",
+    "openspec/changes/m1-quality-gate-runtime-closure/proposal.md",
+    "openspec/changes/m1-quality-gate-runtime-closure/tasks.md",
+    "openspec/changes/m1-quality-gate-runtime-closure/thread-plan.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/99/887c05c813/0/metadata.json",
+      "transcript": "/99/887c05c813/0/full.jsonl",
+      "context": "/99/887c05c813/0/context.md",
+      "content_hash": "/99/887c05c813/0/content_hash.txt",
+      "prompt": "/99/887c05c813/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
