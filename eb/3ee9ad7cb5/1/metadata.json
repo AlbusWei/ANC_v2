@@ -1,9 +1,11 @@
 {
   "cli_version": "0.4.5",
   "checkpoint_id": "eb3ee9ad7cb5",
+  "session_id": "codex-8fbc8c6ea878",
   "strategy": "manual-commit",
+  "created_at": "2026-02-22T13:34:52.713858Z",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 2,
+  "checkpoints_count": 1,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/architecture/process_architecture.md",
@@ -20,27 +22,24 @@
     "docs/design/skills/bpm-runtime-skills.md",
     "shared/registry/skill_registry.json"
   ],
-  "sessions": [
-    {
-      "metadata": "/eb/3ee9ad7cb5/0/metadata.json",
-      "transcript": "/eb/3ee9ad7cb5/0/full.jsonl",
-      "context": "/eb/3ee9ad7cb5/0/context.md",
-      "content_hash": "/eb/3ee9ad7cb5/0/content_hash.txt",
-      "prompt": "/eb/3ee9ad7cb5/0/prompt.txt"
-    },
-    {
-      "metadata": "/eb/3ee9ad7cb5/1/metadata.json",
-      "transcript": "/eb/3ee9ad7cb5/1/full.jsonl",
-      "context": "/eb/3ee9ad7cb5/1/context.md",
-      "content_hash": "/eb/3ee9ad7cb5/1/content_hash.txt",
-      "prompt": "/eb/3ee9ad7cb5/1/prompt.txt"
-    }
-  ],
+  "agent": "Gemini CLI",
+  "turn_id": "9a9dbdc595fb",
+  "transcript_identifier_at_start": "gemini-34d83d92b9",
   "token_usage": {
     "input_tokens": 0,
     "cache_creation_tokens": 0,
     "cache_read_tokens": 0,
     "output_tokens": 0,
     "api_call_count": 0
-  }
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T13:34:52.707422Z",
+    "agent_lines": 0,
+    "human_added": 85,
+    "human_modified": 21,
+    "human_removed": 0,
+    "total_committed": 85,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
 }
