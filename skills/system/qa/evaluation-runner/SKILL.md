@@ -116,6 +116,22 @@ skills/system/qa/evaluation-runner/scripts/quality_eval_runner run \
   --output-dir docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/evaluation-runner-llm
 ```
 
+跨分支/worktree 共享凭据（无需每次手工 export）：
+
+1. 可创建共享 env 文件（建议二选一）：
+   - `~/.config/anc_v2/llm.env`
+   - `<canonical-repo>/.secrets/llm.env`
+2. `quality_eval_runner` 入口会自动加载首个可用 env 文件（也可显式指定 `ANC_QA_ENV_FILE=/path/to/llm.env`）。
+3. env 文件示例：
+
+```bash
+OPENAI_API_KEY=sk-...
+OPENAI_BASE_URL=https://right.codes/codex/v1
+ANC_QA_JUDGE_MODEL=gpt-5.3-codex
+```
+
+可直接参考模板：`skills/system/qa/evaluation-runner/references/llm.env.example`
+
 ## Fail-Closed Rules
 
 - mode 非法或关键输入缺失时返回 `test_invalid` 或 `fail`。
