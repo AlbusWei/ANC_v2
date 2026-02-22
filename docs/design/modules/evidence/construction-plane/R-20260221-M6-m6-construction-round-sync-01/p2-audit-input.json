@@ -1,0 +1,16 @@
+{
+  "round_id": "R-20260221-M6-m6-construction-round-sync-01",
+  "scope_baseline_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-01/scope_baseline.md",
+  "linkage_targets": [
+    "design",
+    "inventory",
+    "registry",
+    "construction_plane"
+  ],
+  "changed_assets": [
+    "docs/design/modules/M6-construction-plane.md",
+    "docs/design/processes/construction-plane-governance-process.md",
+    "shared/registry/process_registry.json"
+  ],
+  "openspec_ref": "m6-construction-round-sync"
+}

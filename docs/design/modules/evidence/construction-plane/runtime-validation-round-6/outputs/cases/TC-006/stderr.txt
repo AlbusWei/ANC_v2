@@ -1,0 +1,5 @@
+/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/tmp/m6-round-regression-v2/B/round-output.json: missing round output bundle
+pre-close gate: missing round_close_summary_ref
+round_close checkpoint_count must equal commit_count
+round output missing openspec_sync_ref
+round output missing registry_verify_report_ref
