@@ -3,11 +3,14 @@
   "checkpoint_id": "84e006037de2",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 2,
+  "checkpoints_count": 3,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/design/agents/control/bpm.md",
     "docs/design/agents/kernel/admin.md",
+    "docs/design/agents/kernel/architect.md",
+    "docs/design/agents/kernel/hr.md",
+    "docs/design/agents/kernel/qa.md",
     "docs/design/data-models/registry-schemas.md",
     "docs/design/inventories/agent-inventory.md",
     "docs/design/inventories/process-inventory.md",
@@ -38,6 +41,13 @@
       "context": "/84/e006037de2/2/context.md",
       "content_hash": "/84/e006037de2/2/content_hash.txt",
       "prompt": "/84/e006037de2/2/prompt.txt"
+    },
+    {
+      "metadata": "/84/e006037de2/3/metadata.json",
+      "transcript": "/84/e006037de2/3/full.jsonl",
+      "context": "/84/e006037de2/3/context.md",
+      "content_hash": "/84/e006037de2/3/content_hash.txt",
+      "prompt": "/84/e006037de2/3/prompt.txt"
     }
   ],
   "token_usage": {
