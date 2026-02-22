@@ -6,6 +6,7 @@
   "additionalProperties": false,
   "required": [
     "record_id",
+    "round_id",
     "round_goal",
     "module_scope",
     "owner",
@@ -19,6 +20,8 @@
     "inspection_profile",
     "risk_level",
     "conflict_state",
+    "checkpoint_count",
+    "commit_count",
     "evidence_bundle",
     "sync_actions"
   ],
@@ -26,6 +29,10 @@
     "record_id": {
       "type": "string",
       "pattern": "^osc-[a-z0-9-]+$"
+    },
+    "round_id": {
+      "type": "string",
+      "pattern": "^R-\\d{8}-M6-[a-z0-9-]+-\\d{2}$"
     },
     "round_goal": {
       "type": "string",
@@ -144,6 +151,14 @@
         }
       }
     },
+    "checkpoint_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "commit_count": {
+      "type": "integer",
+      "minimum": 0
+    },
     "evidence_bundle": {
       "type": "object",
       "additionalProperties": false,
@@ -151,7 +166,8 @@
         "openspec_linkage_ref",
         "anc_delta_index_ref",
         "sync_check_report_ref",
-        "status_report_ref"
+        "status_report_ref",
+        "round_evidence_log_ref"
       ],
       "properties": {
         "openspec_linkage_ref": {
@@ -168,6 +184,10 @@
         "status_report_ref": {
           "type": "string",
           "minLength": 1
+        },
+        "round_evidence_log_ref": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+\\.jsonl$"
         }
       }
     },

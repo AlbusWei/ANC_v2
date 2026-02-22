@@ -740,8 +740,8 @@
       "path": "skills/system/construction-audit/SKILL.md",
       "layer": "system",
       "owner": "architect",
-      "version": "0.1.0",
-      "status": "draft",
+      "version": "0.2.0",
+      "status": "review",
       "agentskills": {
         "name": "construction-audit",
         "description": "Audit M6 construction-plane linkage completeness across design docs, inventories, registries and construction board",
@@ -771,8 +771,8 @@
       "path": "skills/system/openspec-sync/SKILL.md",
       "layer": "system",
       "owner": "architect",
-      "version": "0.1.0",
-      "status": "draft",
+      "version": "0.2.0",
+      "status": "review",
       "agentskills": {
         "name": "openspec-sync",
         "description": "Synchronize OpenSpec change context with ANC design decisions and emit a strict sync record",

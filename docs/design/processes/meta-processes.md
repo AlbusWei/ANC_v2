@@ -57,6 +57,7 @@
 - process_id: construction-plane-governance
 - canonical_path: `processes/meta/construction-plane-governance/`
 - design_doc: `docs/design/processes/construction-plane-governance-process.md`
+- runtime_contract_baseline: `docs/design/processes/construction-plane-governance-runtime-contract-baseline.md`
 - protocol_ref: `docs/design/interfaces/openspec-collaboration-protocol.md`
 - owner: architect
 - level: P4

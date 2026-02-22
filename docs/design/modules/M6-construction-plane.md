@@ -1,11 +1,11 @@
 # M6 — 施工面模块详细设计
 
-> 版本: v0.7.0 | 建设优先级: P0 | 最后更新: 2026-02-21
+> 版本: v1.0.0 | 建设优先级: P0 | 最后更新: 2026-02-21
 
 ## 模块定位
 
 `M6` 是 ANC 的施工治理中枢，负责把“建设计划、联动门禁、证据归档、开放问题”统一到一个可审计平面。  
-`M6` 的模块 owner 固定为 `architect`，`bpm` 负责流程编排执行，`system-analyst` 负责巡检诊断输入。
+`M6` 的模块 owner 固定为 `architect`，`bpm` 负责流程编排执行；`system-analyst` 提供巡检诊断输入（当前为规划态协作角色）。
 
 相关文档：
 
@@ -14,6 +14,7 @@
 3. `docs/design/skills/construction-plane-skills.md`
 4. `docs/design/processes/construction-plane-governance-process.md`
 5. `docs/design/interfaces/openspec-collaboration-protocol.md`
+6. `docs/design/modules/evidence/construction-plane/README.md`
 
 ## Phase 1 成功优先级
 
@@ -28,6 +29,7 @@
 2. `M6` 可以触发治理流程与联动审计，但不替代模块内专业评测能力（`M1`）。
 3. `M6` 的状态更新必须基于已落盘证据，禁止口头结论直写 Done。
 4. `M6` 不引入业务旁路，所有资产变更仍按各模块 canonical 路径落盘。
+5. 生命周期状态机唯一 owner 为 `M4/lifecycle-review`，`M6` 仅作为施工协作与证据同步平面。
 
 ## Ownership 与协作模型
 
@@ -41,21 +43,21 @@
 | 组件 | 目标资产 | 状态 |
 |---|---|---|
 | construction board | `docs/architecture/construction_plane.md` | 已落盘（active） |
-| linkage auditor | `sys.arch.construction-audit` | 本轮新增（draft） |
-| openspec sync executor | `system.integration.openspec-sync` | 本轮新增（draft） |
-| governance flow | `construction-plane-governance` | 本轮新增（draft） |
+| linkage auditor | `sys.arch.construction-audit` | 运行级验证通过（review） |
+| openspec sync executor | `system.integration.openspec-sync` | 运行级验证通过（review） |
+| governance flow | `construction-plane-governance` | 运行级验证通过（review） |
 | OpenSpec sync protocol | `docs/design/interfaces/openspec-collaboration-protocol.md` | 本轮新增（draft） |
 | OpenSpec sync schema | `docs/design/data-models/openspec-collaboration-schema.json` | 本轮新增（draft） |
 | dependency baseline | `docs/design/modules/module-dependency-matrix.md` | 已落盘（active） |
-| module detailed spec | `docs/design/modules/M6-construction-plane.md` | 本轮重构（v0.7.0） |
+| module detailed spec | `docs/design/modules/M6-construction-plane.md` | 运行级收口（v1.0.0） |
 
 ## 流程连续性模型
 
-1. 范围基线段：`scope-intake-and-baseline`（AP-001/002/003 语义映射）。
-2. 联动审计段：`run-construction-audit`（审计缺口与阻断项）。
-3. 联动补齐段：`execute-linked-updates`（文档、inventory、registry 同步）。
-4. OpenSpec 同步段：`sync-openspec-state`（生成结构化 `openspec_sync_ref`）。
-5. 收口校验段：`verify-and-close`（`registry_contract_tool.py verify` + 开放问题落盘）。
+1. 范围基线段：`scope-intake-and-baseline`（AP-032）。
+2. 联动审计段：`run-construction-audit`（AP-033）。
+3. 联动补齐段：`execute-linked-updates`（AP-034）。
+4. OpenSpec 同步段：`sync-openspec-state`（AP-035）。
+5. 收口校验段：`verify-and-close`（AP-036）。
 6. 连续性约束：单复合流程只覆盖施工治理连续段，不跨非连续生命周期断点。
 7. phase 闭合约束：每个 phase 必须映射到已定义 skill 或已定义子流程。
 
@@ -69,14 +71,30 @@
 4. 禁止项：禁止仅更新 OpenSpec 而不更新 ANC 设计文档；禁止仅更新 ANC 而不回填 OpenSpec 映射。
 5. 完整 Schema：同步记录必须满足 `openspec-collaboration-schema.json`，禁止只保留最小字段。
 
+## 回合追溯主键与协同约束
+
+1. 绑定规则：`1 round = 1 OpenSpec change = N Entire checkpoints = N git commits`。
+2. 同一 `round_id` 下，`openspec_ref` 必须保持单值一致，禁止跨 change 混写。
+3. 每次代码提交必须对应一次 Entire 同步记录；checkpoint 与 commit 一一映射。
+4. 提交流水以 `JSONL` 证据日志追加；`construction_plane.md` 仅在回合关闭时写入摘要。
+5. 任一 checkpoint 只能归属一个 `round_id`，禁止跨回合复用。
+
+## 回合标识规范（round_id）
+
+1. 格式：`R-YYYYMMDD-M6-<change_key>-NN`。
+2. 正则：`^R-\d{8}-M6-[a-z0-9-]+-\d{2}$`。
+3. `change_key` 从 `openspec_ref` 派生稳定短键，仅允许小写字母、数字与 `-`。
+4. `NN` 递增范围按“同一 `change_key`”计数，不做当天全局序号。
+
 ## 输入契约（施工回合输入包）
 
-1. `round_goal`
-2. `change_scope_ref`
-3. `changed_assets`
-4. `linkage_targets`
-5. `owner`
-6. `openspec_ref`（架构相关变更必填）
+1. `round_id`
+2. `round_goal`
+3. `change_scope_ref`
+4. `changed_assets`
+5. `linkage_targets`
+6. `owner`
+7. `openspec_ref`（架构相关变更必填）
 
 ## 输出契约（施工回合输出包）
 
@@ -86,6 +104,16 @@
 4. `registry_verify_report_ref`
 5. `construction_plane_delta_ref`
 6. `open_questions_ref`
+7. `round_evidence_log_ref`（JSONL）
+8. `round_close_summary_ref`
+
+## 回合证据日志（JSONL）
+
+1. 事件类型固定为：`round_open`、`checkpoint_synced`、`round_close`。
+2. `round_open` 最小字段：`event`、`round_id`、`openspec_ref`、`round_goal`、`owner`、`ts`。
+3. `checkpoint_synced` 最小字段：`event`、`round_id`、`openspec_ref`、`entire_checkpoint_id`、`commit_sha`、`changed_files`、`sync_status`、`ts`。
+4. `round_close` 最小字段：`event`、`round_id`、`openspec_ref`、`decision_snapshot_ref`、`final_sync_status`、`checkpoint_count`、`commit_count`、`verdict`、`ts`。
+5. 建议 commit trailers：`Entire-Checkpoint`、`Round-ID`、`OpenSpec-Change`。
 
 ## 依赖关系（类型化）
 
@@ -99,10 +127,14 @@
 
 1. 受影响资产未形成联动清单，禁止回合关闭。
 2. design/inventory/registry 任一缺项，施工状态不得标记为 Done。
-3. `registry_contract_tool.py verify` 失败，默认阻断并升级 `actor -> owner -> bpm -> admin -> human`。
+3. `registry_contract_tool.py verify` 或 `registry_contract_tool.py verify-m6 --round-dir <round-dir>` 失败，默认阻断并升级 `actor -> owner -> bpm -> admin -> human`。
 4. 开放问题缺失 owner 或下一步，禁止从 In Progress 迁移到 Done。
 5. 架构相关变更缺失 `openspec_ref` 或双向映射，禁止回合关闭。
 6. OpenSpec 与 ANC 文档语义冲突且未形成 architect 裁决，禁止推进。
+7. 任一代码提交缺失 `Entire-Checkpoint`，禁止回合关闭。
+8. `checkpoint_count` 与 `commit_count` 不一致，禁止回合关闭。
+9. 同一 `round_id` 出现多个 `openspec_ref`，禁止回合关闭。
+10. `round_close` 缺失或未处于日志末尾，禁止回合关闭。
 
 ## 风险与缓解
 
@@ -115,19 +147,25 @@
 
 ## 验收清单
 
-- [ ] `construction-plane-governance` 已注册并可被 BPM 调度
-- [ ] `sys.arch.construction-audit` 已注册且具备 Capability Contract + test_mount
-- [ ] `system.integration.openspec-sync` 已注册并可产出 schema 合法记录
-- [ ] 修改 module/layer 设计时，联动门禁可在同回合闭合
-- [ ] 施工回合可产出最小证据包并可追溯
-- [ ] 开放问题具备 owner、计划阶段与下一步动作
-- [ ] 架构相关回合具备 OpenSpec 双向映射且无语义漂移
+- [x] `construction-plane-governance` 已注册并可被 BPM 调度
+- [x] `sys.arch.construction-audit` 已注册且具备 Capability Contract + test_mount
+- [x] `system.integration.openspec-sync` 已注册并可产出 schema 合法记录
+- [x] 修改 module/layer 设计时，联动门禁可在同回合闭合
+- [x] 施工回合可产出最小证据包并可追溯
+- [x] 施工回合遵循 `1 round = 1 OpenSpec change = N Entire checkpoints`
+- [x] `round_id` 与 `JSONL` 证据日志可被脚本稳定解析
+- [x] 开放问题具备 owner、计划阶段与下一步动作
+- [x] 架构相关回合具备 OpenSpec 双向映射且无语义漂移
 
 ## 已定决策（2026-02-21）
 
 1. `D-M6-001`：Phase 1 先完成文档级设计与阐释，运行级验证后置。
 2. `D-M6-002`：M6 语义 owner 固定为 `architect`，优先防止语义漂移。
 3. `D-M6-003`：巡检采用“变更触发 + system-analyst 可调频巡检”，前期优先降低遗漏风险。
+4. `D-M6-004`：生命周期状态推进唯一由 `M4` 承担；`M6` 不承担状态机推进职责。
+5. `D-M6-005`：施工协同主键固定为 `1 round = 1 OpenSpec change = N Entire checkpoints = N commits`。
+6. `D-M6-006`：提交粒度证据采用 JSONL 追加，施工平面主文档仅在回合关闭时汇总。
+7. `D-M6-007`：`round_id` 采用 `R-YYYYMMDD-M6-<change_key>-NN`，且 `NN` 按同一 `change_key` 递增。
 
 ## 新增开放问题（需后续决策）
 

@@ -6,7 +6,7 @@
 
 ## Entry Conditions
 
-1. 已定义本回合 `round_goal`。
+1. 已定义本回合 `round_id` 与 `round_goal`。
 2. 已提交 `changed_assets` 与影响范围。
 3. 已声明需同步的 `linkage_targets`（docs/inventory/registry/construction_plane）。
 4. 架构相关变更提供 `openspec_ref`。
@@ -24,7 +24,9 @@
 1. 受影响清单不完整。
 2. 审计阻断项未清零。
 3. registry 合约校验失败。
-4. OpenSpec 双向映射缺失或语义冲突未裁决。
+4. `registry_contract_tool.py verify-m6 --round-dir <round-dir>` 失败。
+5. OpenSpec 双向映射缺失或语义冲突未裁决。
+6. 回合日志缺失 round_close 事件或 checkpoint/commit 对账失败。
 
 ## Primary Evidence Bundle
 
@@ -33,4 +35,11 @@
 - `update_delta.md`
 - `registry_verify.log`
 - `construction_plane_delta.md`
-- `openspec_sync_report.md`
+- `openspec-sync-record.json`
+- `round-evidence.jsonl`
+- `round_close_summary.md`
+
+## Runtime Tooling
+
+- `scripts/run_round.py`
+- `scripts/round_evidence_tool.py`

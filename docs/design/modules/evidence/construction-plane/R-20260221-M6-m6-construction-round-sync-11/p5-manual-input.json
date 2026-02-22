@@ -1,0 +1,12 @@
+{
+  "objective_ref": "obj-m6-construction-plane-governance",
+  "task_ref": "docs/design/processes/atomic/AP-036-construction-round-close-verification.md",
+  "acceptance_criteria": "registry verification passed and open questions are owned",
+  "expected_outputs": {
+    "round_close_summary_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/round_close_summary.md"
+  },
+  "payload": {
+    "round_close_summary_ref": "# Round Close Summary\nround_id: R-20260221-M6-m6-construction-round-sync-11\nopenspec_ref: m6-construction-round-sync\ncheckpoint_count: 2\ncommit_count: 2\nopenspec_sync_ref: docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/openspec-sync-record.json\nregistry_verify_report_ref: docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/registry_verify.log\nround_evidence_log_ref: docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/round-evidence.jsonl\nround_evidence_verify_ref: docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/round_evidence_verify.json\n"
+  },
+  "reason": "close verification summary generated"
+}
