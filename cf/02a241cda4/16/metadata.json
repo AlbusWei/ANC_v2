@@ -1,0 +1,45 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "cf02a241cda4",
+  "session_id": "codex-ecf42587bb77",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T18:29:18.17705Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/thread_handoff.md",
+    "processes/meta/lifecycle-review/PROCESS.md",
+    "processes/meta/lifecycle-review/SKILL.md",
+    "shared/registry/process_registry.json",
+    "docs/design/data-models/registry-schemas.md",
+    "docs/design/inventories/process-inventory.md",
+    "docs/design/modules/M4-lifecycle-management.md",
+    "docs/design/processes/governance-processes.md",
+    "docs/design/processes/lifecycle-review-process.md",
+    "processes/meta/lifecycle-review/process.json",
+    "processes/meta/lifecycle-review/scripts/lifecycle_review_runner.py"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "4edc1ce0d695",
+  "transcript_identifier_at_start": "gemini-eb06e07c9d",
+  "checkpoint_transcript_start": 52,
+  "transcript_lines_at_start": 52,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T18:29:18.142648Z",
+    "agent_lines": 875,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 875,
+    "agent_percentage": 100
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
