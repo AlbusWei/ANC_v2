@@ -234,6 +234,13 @@
       "context": "/e5/cb686cc6ad/10/context.md",
       "content_hash": "/e5/cb686cc6ad/10/content_hash.txt",
       "prompt": "/e5/cb686cc6ad/10/prompt.txt"
+    },
+    {
+      "metadata": "/e5/cb686cc6ad/11/metadata.json",
+      "transcript": "/e5/cb686cc6ad/11/full.jsonl",
+      "context": "/e5/cb686cc6ad/11/context.md",
+      "content_hash": "/e5/cb686cc6ad/11/content_hash.txt",
+      "prompt": "/e5/cb686cc6ad/11/prompt.txt"
     }
   ],
   "token_usage": {
