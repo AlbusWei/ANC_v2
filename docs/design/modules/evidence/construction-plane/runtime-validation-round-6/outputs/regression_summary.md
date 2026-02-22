@@ -1,6 +1,6 @@
 # M6 Runtime Validation Round 6 - Regression Summary
 
-- generated_at: 2026-02-22T10:50:51.736132+00:00
+- generated_at: 2026-02-22T12:49:39.254237+00:00
 - gate_decision: pass
 - case_count: 13
 - passed_count: 13
