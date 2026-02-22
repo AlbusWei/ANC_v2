@@ -32,3 +32,7 @@ quality_eval_runner run \
    - 临时错误（timeout/429/503）-> `hold`
    - 模型不支持/鉴权/无效请求 -> `test_invalid`
    - 其他运行时异常 -> `fail`
+9. 入口脚本支持跨 worktree 共享 env 自动加载：
+   - 优先 `ANC_QA_ENV_FILE`
+   - 否则按顺序尝试 `repo/.env.local`、`repo/.env`、`canonical/.env.local`、`canonical/.env`、`canonical/.secrets/llm.env`、`~/.config/anc_v2/llm.env`、`~/.anc_v2/llm.env`
+10. env 模板参考：`skills/system/qa/evaluation-runner/references/llm.env.example`
