@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-02-22T15:35:19Z",
+  "objective_ref": "obj-m1-unified-quality-gate",
+  "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
+  "test_doc_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md",
+  "risk_focus": [
+    "P0",
+    "P1"
+  ],
+  "case_count": 3,
+  "gate_decision": "pass",
+  "coverage": {
+    "p0_covered": true,
+    "p0_rule": "risk_focus must include P0"
+  }
+}

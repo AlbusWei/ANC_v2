@@ -1,0 +1,29 @@
+{
+  "timestamp": "2026-02-22T15:35:24Z",
+  "process_id": "hold-governance",
+  "status": "ok",
+  "phase_trace": [
+    {
+      "phase": "p1_p3-hold-triage",
+      "status": "pass",
+      "return_code": 0,
+      "triage_action": "continue",
+      "triage_report_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance/p1_p3_hold_triage/triage_report.json",
+      "ts": "2026-02-22T15:35:24Z"
+    },
+    {
+      "phase": "p4-health-maintenance",
+      "status": "pass",
+      "health_maintenance_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance/p4_health_maintenance.json",
+      "ts": "2026-02-22T15:35:24Z"
+    },
+    {
+      "phase": "p5-close-or-escalate",
+      "status": "pass",
+      "hold_resolution_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance/p5_hold_resolution.json",
+      "resolution_decision": "close",
+      "ts": "2026-02-22T15:35:24Z"
+    }
+  ],
+  "input_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance_input.json"
+}

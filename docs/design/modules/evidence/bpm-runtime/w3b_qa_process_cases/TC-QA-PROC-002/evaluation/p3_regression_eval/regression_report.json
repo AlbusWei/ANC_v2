@@ -1,0 +1,16 @@
+{
+  "modules": [
+    "M3"
+  ],
+  "profile_set": "quality-gate.baseline@1.0.0",
+  "summary": {
+    "pass": 1,
+    "hold": 0,
+    "fail": 0
+  },
+  "release_gate_candidate": "pass",
+  "module_eval_refs": [
+    "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p3_regression_eval/M3/raw_eval.json"
+  ],
+  "generated_at": "2026-02-22T15:35:24.503814+00:00"
+}
