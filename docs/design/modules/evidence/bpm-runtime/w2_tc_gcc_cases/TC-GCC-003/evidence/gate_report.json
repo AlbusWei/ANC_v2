@@ -1,0 +1,39 @@
+{
+  "timestamp": "2026-02-22T14:15:31Z",
+  "approval": "deny",
+  "risk_level": "low",
+  "reason": "evidence_refs must be non-empty",
+  "objective_ref": "obj-governed-openclaw-config-change",
+  "target_path": "messages.groupChat.historyLimit",
+  "delta": 1,
+  "checks": [
+    {
+      "name": "required:objective_ref",
+      "ok": true
+    },
+    {
+      "name": "required:change_request",
+      "ok": true
+    },
+    {
+      "name": "required:rollback_plan",
+      "ok": true
+    },
+    {
+      "name": "required:evidence_refs",
+      "ok": true
+    },
+    {
+      "name": "evidence_refs_non_empty",
+      "ok": false
+    },
+    {
+      "name": "target_scope_path",
+      "ok": true
+    }
+  ],
+  "errors": [
+    "evidence_refs must be non-empty"
+  ],
+  "evidence_refs": []
+}

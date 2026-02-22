@@ -1,0 +1,117 @@
+{
+  "timestamp": "2026-02-22T14:47:48Z",
+  "status": "ok",
+  "trigger_id": "trg-4bdb3484123e0c957801",
+  "instance_id": "run-development-process-20260222144748-ff20",
+  "session_id": "sess-dbf4911862ee447a",
+  "parent_session_id": null,
+  "match_result": "hit",
+  "dedupe_decision": "allow",
+  "catchup_decision": "skip",
+  "phase_trace": [
+    {
+      "phase": "p1-normalize",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "skills/system/trigger-ingress-normalizer/scripts/trigger_ingress_normalizer_runner.py",
+        "--input",
+        "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p1_input.json",
+        "--output",
+        "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p1_output.json",
+        "--canonical",
+        "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p1_canonical.json",
+        "--report",
+        "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p1_report.json"
+      ],
+      "return_code": 0,
+      "stdout": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p1_output.json",
+      "stderr": "",
+      "ts": "2026-02-22T14:47:48Z"
+    },
+    {
+      "phase": "p2-match-dedupe",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "skills/system/trigger-matcher-dedupe/scripts/trigger_matcher_dedupe_runner.py",
+        "--input",
+        "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p2_input.json",
+        "--output",
+        "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p2_output.json",
+        "--dedupe-key",
+        "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p2_dedupe_key.json",
+        "--evidence",
+        "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p2_matcher_evidence.json",
+        "--ledger",
+        "tmp/m2-bpm-runtime/tc-tg-sandbox/ledgers/event_ledger.json"
+      ],
+      "return_code": 0,
+      "stdout": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p2_output.json",
+      "stderr": "",
+      "ts": "2026-02-22T14:47:48Z"
+    },
+    {
+      "phase": "p3-dispatch-instance",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "skills/system/process-instance-manager/scripts/process_instance_runner.py",
+        "start",
+        "--process-id",
+        "development-process",
+        "--phase-id",
+        "p1",
+        "--instance-root",
+        "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/tmp/m2-bpm-runtime/tc-tg-sandbox/instances",
+        "--initiated-by",
+        "bpm",
+        "--input-ref",
+        "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p1_canonical.json",
+        "--output",
+        "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p3_dispatch_output.json"
+      ],
+      "return_code": 0,
+      "stdout": "{\"status\": \"ok\", \"instance_id\": \"run-development-process-20260222144748-ff20\", \"context_ref\": \"tmp/m2-bpm-runtime/tc-tg-sandbox/instances/run-development-process-20260222144748-ff20/context.json\", \"session_binding_ref\": \"tmp/m2-bpm-runtime/tc-tg-sandbox/instances/run-development-process-20260222144748-ff20/session_binding.json\", \"state_transition_ref\": \"tmp/m2-bpm-runtime/tc-tg-sandbox/instances/run-development-process-20260222144748-ff20/evidence/state_transition_start.json\", \"runtime_state\": \"running\", \"dispatch\": {\"executed\": false, \"command\": [\"openclaw\", \"agent\", \"--agent\", \"architect\", \"--session-id\", \"sess-dbf4911862ee447a\", \"--message\", \"execute assigned phase by process-instance-manager contract\", \"--json\"], \"return_code\": null, \"stdout\": \"\", \"stderr\": \"\"}, \"evidence_ref\": \"tmp/m2-bpm-runtime/tc-tg-sandbox/instances/run-development-process-20260222144748-ff20/evidence\"}",
+      "stderr": "",
+      "ts": "2026-02-22T14:47:48Z"
+    },
+    {
+      "phase": "p4-record-evidence",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "skills/system/evidence-recorder/scripts/evidence_recorder_runner.py",
+        "--input",
+        "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p4_input.json",
+        "--output",
+        "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p4_output.json",
+        "--receipt",
+        "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p4_trigger_receipt.json",
+        "--index",
+        "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/evidence_index.jsonl",
+        "--trace",
+        "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p4_traceability.json"
+      ],
+      "return_code": 0,
+      "stdout": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p4_output.json",
+      "stderr": "",
+      "ts": "2026-02-22T14:47:48Z"
+    },
+    {
+      "phase": "p5-backfill-catchup",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "skills/system/catchup-scheduler/scripts/catchup_scheduler_runner.py",
+        "--input",
+        "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p5_input.json",
+        "--output",
+        "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p5_output.json",
+        "--run",
+        "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p5_catchup_run.json",
+        "--reason",
+        "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p5_reason.json"
+      ],
+      "return_code": 0,
+      "stdout": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p5_output.json",
+      "stderr": "",
+      "ts": "2026-02-22T14:47:48Z"
+    }
+  ]
+}

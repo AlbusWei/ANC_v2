@@ -1,0 +1,41 @@
+{
+  "timestamp": "2026-02-22T14:15:14Z",
+  "execution_status": "success",
+  "hash_before": "7458cf30a9419a6c441e1abfa310c72b0511dcd178b645ad68df795b1cdb4453",
+  "hash_after": "50b448656665aabed21c636720fc4257c2d83278106c476d8497b14d1e91bd09",
+  "target_path": "messages.groupChat.historyLimit",
+  "patch_summary": {
+    "top_level_keys": [
+      "messages"
+    ],
+    "messages.groupChat.historyLimit": 124,
+    "target_before": 125,
+    "target_after": 124
+  },
+  "rollback_status": "not_started",
+  "patch_response": {
+    "ok": true,
+    "restart": {
+      "ok": true,
+      "pid": 49346,
+      "signal": "SIGUSR1",
+      "delayMs": 2000,
+      "reason": "config.patch",
+      "mode": "emit"
+    },
+    "sentinel": {
+      "path": "/Users/albus/.openclaw/restart-sentinel.json",
+      "payload": {
+        "kind": "config-apply",
+        "status": "ok",
+        "ts": 1771769712301,
+        "message": null,
+        "doctorHint": "Run: openclaw doctor --non-interactive",
+        "stats": {
+          "mode": "config.patch",
+          "root": "/Users/albus/.openclaw/openclaw.json"
+        }
+      }
+    }
+  }
+}

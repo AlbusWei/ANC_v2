@@ -1,0 +1,59 @@
+{
+  "ts": "2026-02-22T13:43:20Z",
+  "suite": "TC-INS-001~005",
+  "total": 5,
+  "passed": 5,
+  "failed": 0,
+  "cases": [
+    {
+      "id": "TC-INS-001",
+      "status": "pass",
+      "details": {
+        "return_code": 0,
+        "stderr": "",
+        "missing_fields": [],
+        "phase_session_ok": true,
+        "binding_match": true
+      }
+    },
+    {
+      "id": "TC-INS-002",
+      "status": "pass",
+      "details": {
+        "return_code": 0,
+        "stderr": "",
+        "depth_ok": true,
+        "parent_link_ok": true,
+        "no_reuse": true
+      }
+    },
+    {
+      "id": "TC-INS-003",
+      "status": "pass",
+      "details": {
+        "return_code": 2,
+        "stderr": "ERROR: session_reuses_parent"
+      }
+    },
+    {
+      "id": "TC-INS-004",
+      "status": "pass",
+      "details": {
+        "has_session_flag": true,
+        "session_id_matches": true
+      }
+    },
+    {
+      "id": "TC-INS-005",
+      "status": "pass",
+      "details": {
+        "migration_report": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/evidence/bpm-runtime/w1_migration_report.json",
+        "replay_report": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/evidence/bpm-runtime/w1_replay_report.json",
+        "migration_total": 1,
+        "migration_failed": 0,
+        "replay_total": 1,
+        "replay_failed": 0
+      }
+    }
+  ]
+}

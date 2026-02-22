@@ -1,0 +1,14 @@
+{
+  "trigger_type": "schedule",
+  "trigger_source": "scheduler-main",
+  "payload_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-004/payload.json",
+  "received_at": "2026-02-22T14:47:48Z",
+  "match_policy_ref": "tmp/m2-bpm-runtime/tc-tg-sandbox/policies/schedule_match_policy.json",
+  "dedupe_policy_ref": "tmp/m2-bpm-runtime/tc-tg-sandbox/policies/dedupe_policy.json",
+  "catchup_policy_ref": "tmp/m2-bpm-runtime/tc-tg-sandbox/policies/catchup_policy.json",
+  "dedupe_ledger_ref": "tmp/m2-bpm-runtime/tc-tg-sandbox/ledgers/schedule_ledger.json",
+  "missed": true,
+  "expected_run_at": "2026-02-22T14:37:48Z",
+  "runtime_state_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-004/runtime_state.json",
+  "risk_level": "low"
+}

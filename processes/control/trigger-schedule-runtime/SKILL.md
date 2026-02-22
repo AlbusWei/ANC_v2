@@ -9,7 +9,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
-version: "0.1.0"
+version: "0.2.0"
 ---
 
 # trigger-schedule-runtime
@@ -40,3 +40,9 @@ version: "0.1.0"
 2. 去重冲突不可判定时默认失败并升级。
 3. 动态补跑窗口不可计算或超窗时必须输出升级记录。
 4. `catchup_policy_ref` 推荐编写规则见 `docs/design/processes/trigger-runtime-policy-guidelines.md`。
+
+## Runtime Entrypoint
+
+1. 可执行入口：`processes/control/trigger-schedule-runtime/scripts/trigger_schedule_runtime_runner.py`
+2. 最小命令：
+   - `python3 processes/control/trigger-schedule-runtime/scripts/trigger_schedule_runtime_runner.py --input <input.json> --output <output.json> --evidence-dir <evidence_dir>`

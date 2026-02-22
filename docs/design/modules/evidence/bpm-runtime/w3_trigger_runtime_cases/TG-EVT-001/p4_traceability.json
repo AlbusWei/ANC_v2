@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-02-22T14:47:48Z",
+  "trigger_to_instance": {
+    "trigger_id": "trg-4bdb3484123e0c957801",
+    "instance_id": "run-development-process-20260222144748-ff20"
+  },
+  "instance_to_trigger": {
+    "instance_id": "run-development-process-20260222144748-ff20",
+    "trigger_id": "trg-4bdb3484123e0c957801"
+  },
+  "session_binding": {
+    "session_id": "sess-dbf4911862ee447a",
+    "parent_session_id": null
+  }
+}

@@ -1,6 +1,6 @@
 # BPM Runtime Skills 设计包
 
-> 版本: v0.2.0 | 分类: System Skills | 模块: M2 BPM Engine | 最后更新: 2026-02-21
+> 版本: v0.3.0 | 分类: System Skills | 模块: M2 BPM Engine | 最后更新: 2026-02-22
 
 ## 目标
 
@@ -29,6 +29,7 @@
 - 输出契约：`canonical_trigger_ref`, `trigger_id`, `normalization_report_ref`
 - Fail-Closed：类型不支持、字段缺失、payload 不可达。
 - test_mount：`skills/system/trigger-ingress-normalizer/TEST.md`
+- runner：`skills/system/trigger-ingress-normalizer/scripts/trigger_ingress_normalizer_runner.py`
 
 ### 2. sys.bpm.trigger-matcher-dedupe
 
@@ -40,17 +41,18 @@
   - 回退键：`source + canonical_event + entity_type + entity_id + from_status + to_status + emitted_by + time_bucket`
   - 若主键和回退键都无法构造或冲突不可判定，Fail-Closed。
 - test_mount：`skills/system/trigger-matcher-dedupe/TEST.md`
+- runner：`skills/system/trigger-matcher-dedupe/scripts/trigger_matcher_dedupe_runner.py`
 
 ### 3. sys.bpm.process-instance-manager
 
 - 定位：实例创建、状态推进、父子上下文隔离，并内含 parser/scheduler/lineage 子能力。
-- 输入契约：`process_id`, `phase_id`, `instance_context_ref`, `lineage_ref`, `stack_depth`
+- 输入契约：`process_id`, `phase_id`, `instance_context_ref`, `lineage_ref`, `stack_depth`, `process_version`, `process_level`, `session_binding`
 - 输出契约：`instance_id`, `runtime_state`, `state_transition_ref`, `evidence_ref`
 - 子能力：
   - `manifest-parse`：校验 process manifest 与 phase 闭合
   - `phase-schedule`：基于 control_flow 生成调度决策
   - `lineage-guard`：执行递归深度与上下文隔离约束
-- Fail-Closed：phase 不存在、上下文泄漏、递归深度超限、manifest 不闭合。
+- Fail-Closed：phase 不存在、上下文泄漏、递归深度超限、manifest 不闭合、会话绑定缺失或父子会话复用。
 - test_mount：`skills/system/process-instance-manager/TEST.md`
 
 ### 4. sys.bpm.evidence-recorder
@@ -60,6 +62,7 @@
 - 输出契约：`trigger_receipt_ref`, `evidence_index_ref`, `traceability_link_ref`
 - Fail-Closed：关键 ID 缺失、证据元字段缺失、追溯链生成失败。
 - test_mount：`skills/system/evidence-recorder/TEST.md`
+- runner：`skills/system/evidence-recorder/scripts/evidence_recorder_runner.py`
 
 ### 5. sys.bpm.catchup-scheduler
 
@@ -69,6 +72,7 @@
 - 动态窗口：由 `catchup_policy_ref` 按 `trigger_type/risk_level/runtime_history` 计算，不使用固定时长。
 - Fail-Closed：漏跑证据缺失、决策不明确、动态窗口不可计算。
 - test_mount：`skills/system/catchup-scheduler/TEST.md`
+- runner：`skills/system/catchup-scheduler/scripts/catchup_scheduler_runner.py`
 
 ### 6. sys.bpm.escalation-handler
 
@@ -77,6 +81,7 @@
 - 输出契约：`escalation_ref`, `final_owner`, `escalation_decision`, `escalation_trace`
 - Fail-Closed：升级链缺段、越级、无证据升级。
 - test_mount：`skills/system/escalation-handler/TEST.md`
+- runner：`skills/system/escalation-handler/scripts/escalation_handler_runner.py`
 
 ## 流程收口策略（设计建议）
 
@@ -85,9 +90,15 @@
 
 ## 生命周期与落盘状态
 
-1. 本轮状态：6 个核心技能已创建资产并注册到 `skill_registry`（状态 `draft`）。
+1. 本轮状态：`sys.bpm.process-instance-manager` 已推进到 `review`；其余 5 个核心技能保持 `draft`。
 2. 已决策并入：`process-parser/process-scheduler/lineage-guard` 不再单独注册。
 3. 激活前置：
    - `registry_contract_tool.py verify` 通过
    - 与 `trigger-schedule-runtime` / `trigger-event-runtime` 的 I/O 契约一致
    - 完成至少一轮运行级 dry-run 证据
+
+W3 变更记录（M2 BPM Runtime Hardening）：
+
+1. 新增 5 个触发链路核心 runner（normalizer/matcher/evidence/catchup/escalation）。
+2. 新增流程 runner：`trigger_schedule_runtime_runner.py`、`trigger_event_runtime_runner.py`。
+3. 运行级回归入口升级为 `tests/m2-bpm-runtime/run_tc_tg.py`，覆盖 `TG-SCH-001~004`、`TG-EVT-001~003`。

@@ -52,3 +52,9 @@ test_mount:
   test_doc: skills/system/escalation-handler/TEST.md
   methodology_ref: docs/architecture/test_methodology.md
 ```
+
+## Runtime Entrypoint
+
+1. 可执行入口：`skills/system/escalation-handler/scripts/escalation_handler_runner.py`
+2. 最小命令：
+   - `python3 skills/system/escalation-handler/scripts/escalation_handler_runner.py --input <input.json> --output <output.json> --record <escalation_record.json>`

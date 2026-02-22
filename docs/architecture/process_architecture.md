@@ -75,7 +75,7 @@ P1-P6 是流程设计抽象层，支持 top-down 建模：
 ### BPM Protocol Canonical Schema (Machine-Readable)
 
 ```yaml
-contract_version: 0.3.0
+contract_version: 0.4.0
 task_dispatch:
   required:
     - instance_id
@@ -88,6 +88,9 @@ task_dispatch:
     - output_contract
     - lineage_ref
     - stack_depth
+    - process_version
+    - process_level
+    - session_binding
     - evidence_dir
   optional:
     - parent_instance_id
@@ -111,6 +114,7 @@ task_completion:
     - actor
     - lineage_ref
     - stack_depth
+    - session_id
     - output_ref
     - self_check
     - evidence_ref
@@ -129,6 +133,7 @@ lineage:
     - parent_instance_id
     - lineage_ref
     - stack_depth
+    - session_binding
   root_stack_depth: 0
 ```
 
@@ -138,6 +143,7 @@ lineage:
 2. `target_id` 必须命中对应 registry 稳定 ID。
 3. `output_contract` 使用 `contract_ref`（稳定 ID 或 `repo_relative_path#anchor`）。
 4. 当 `phase.requires_spec=true` 时，`spec_ref` 必填。
+5. `session_binding.session_id` 必须随调度显式映射到 OpenClaw `--session-id`。
 
 ### 完成应答（Completion）
 

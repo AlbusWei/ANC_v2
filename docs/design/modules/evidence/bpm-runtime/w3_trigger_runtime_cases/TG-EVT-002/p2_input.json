@@ -1,0 +1,5 @@
+{
+  "canonical_trigger_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-002/p1_canonical.json",
+  "match_policy_ref": "tmp/m2-bpm-runtime/tc-tg-sandbox/policies/event_match_policy.json",
+  "dedupe_policy_ref": "tmp/m2-bpm-runtime/tc-tg-sandbox/policies/dedupe_policy.json"
+}
