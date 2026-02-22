@@ -1,0 +1,47 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "f1a823b49680",
+  "session_id": "codex-5eb91f721991",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T17:21:30.491976Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/agents/kernel/system-analyst.md",
+    "docs/design/modules/M2-bpm-engine.md",
+    "docs/design/modules/M6-construction-plane.md",
+    "docs/design/modules/evidence/bpm-runtime/checkpoint_commit_map.jsonl",
+    "docs/design/modules/evidence/bpm-runtime/latest_live_regression_result.json",
+    "docs/design/modules/evidence/bpm-runtime/w5_execution_summary.md",
+    "docs/design/processes/runtime-policy-calibration-process.md",
+    "openspec/changes/m2-bpm-runtime-hardening/design.md",
+    "openspec/changes/m2-bpm-runtime-hardening/proposal.md",
+    "openspec/changes/m2-bpm-runtime-hardening/specs/construction-plane/spec.md",
+    "openspec/changes/m2-bpm-runtime-hardening/tasks.md",
+    "tests/m2-bpm-runtime/TC-ONLINE.md",
+    "tests/m2-bpm-runtime/TEST.md",
+    "tests/m2-bpm-runtime/live_regression_cases.md",
+    "tests/m2-bpm-runtime/run_post_dev_regression.py",
+    "tests/m2-bpm-runtime/run_tc_online.py"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "d99a6f9aa3ef",
+  "transcript_identifier_at_start": "gemini-78b25fd79b",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T17:21:30.45972Z",
+    "agent_lines": 0,
+    "human_added": 5881,
+    "human_modified": 50,
+    "human_removed": 0,
+    "total_committed": 5881,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}

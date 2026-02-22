@@ -3,7 +3,7 @@
   "checkpoint_id": "f1a823b49680",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     "docs/design/agents/kernel/system-analyst.md",
     "docs/design/modules/M2-bpm-engine.md",
@@ -351,6 +351,13 @@
       "context": "/f1/a823b49680/3/context.md",
       "content_hash": "/f1/a823b49680/3/content_hash.txt",
       "prompt": "/f1/a823b49680/3/prompt.txt"
+    },
+    {
+      "metadata": "/f1/a823b49680/4/metadata.json",
+      "transcript": "/f1/a823b49680/4/full.jsonl",
+      "context": "/f1/a823b49680/4/context.md",
+      "content_hash": "/f1/a823b49680/4/content_hash.txt",
+      "prompt": "/f1/a823b49680/4/prompt.txt"
     }
   ],
   "token_usage": {
