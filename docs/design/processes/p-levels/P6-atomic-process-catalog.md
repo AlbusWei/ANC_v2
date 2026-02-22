@@ -1,6 +1,6 @@
 # P6 Atomic Process Catalog
 
-> 版本: v0.4.0 | 层级: P6
+> 版本: v0.5.0 | 层级: P6
 
 ## 定位
 
@@ -39,6 +39,11 @@ P6 是最小执行单元。每个原子流程定义一个 Actor + 一个 Skill +
 29. AP-029 trigger-evidence-recording
 30. AP-030 trigger-catchup-scheduling
 31. AP-031 trigger-escalation-handling
+32. AP-032 construction-round-intake-baseline
+33. AP-033 construction-linkage-audit
+34. AP-034 linked-artifacts-update
+35. AP-035 openspec-round-sync
+36. AP-036 construction-round-close-verification
 
 ## 统一约束
 

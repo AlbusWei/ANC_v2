@@ -1,0 +1,116 @@
+{
+  "process_input_example": {
+    "round_id": "R-20260221-M6-openspec-sync-01",
+    "round_goal": "execute first M6 runtime dry-run",
+    "change_scope_ref": "docs/design/modules/M6-construction-plane.md",
+    "changed_assets": [
+      "docs/design/modules/M6-construction-plane.md",
+      "docs/design/processes/construction-plane-governance-process.md",
+      "shared/registry/process_registry.json"
+    ],
+    "linkage_targets": [
+      "design",
+      "inventory",
+      "registry",
+      "construction_plane"
+    ],
+    "owner": "architect",
+    "openspec_ref": "change/m6-construction-round-sync"
+  },
+  "ap_032": {
+    "input": {
+      "round_id": "R-20260221-M6-openspec-sync-01",
+      "round_goal": "execute first M6 runtime dry-run",
+      "change_scope_ref": "docs/design/modules/M6-construction-plane.md",
+      "changed_assets": [
+        "docs/design/modules/M6-construction-plane.md"
+      ],
+      "linkage_targets": [
+        "design",
+        "inventory",
+        "registry",
+        "construction_plane"
+      ],
+      "owner": "architect",
+      "openspec_ref": "change/m6-construction-round-sync"
+    },
+    "output": {
+      "scope_baseline_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-openspec-sync-01/scope_baseline.md"
+    }
+  },
+  "ap_033": {
+    "input": {
+      "round_id": "R-20260221-M6-openspec-sync-01",
+      "scope_baseline_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-openspec-sync-01/scope_baseline.md",
+      "linkage_targets": [
+        "design",
+        "inventory",
+        "registry",
+        "construction_plane"
+      ],
+      "changed_assets": [
+        "docs/design/modules/M6-construction-plane.md"
+      ],
+      "openspec_ref": "change/m6-construction-round-sync"
+    },
+    "output": {
+      "linkage_report_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-openspec-sync-01/linkage_report.md",
+      "missing_items": [],
+      "blocking_risks": [],
+      "recommended_actions": [
+        "proceed to AP-034 linked artifacts update"
+      ]
+    }
+  },
+  "ap_034": {
+    "input": {
+      "round_id": "R-20260221-M6-openspec-sync-01",
+      "linkage_report_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-openspec-sync-01/linkage_report.md",
+      "changed_assets": [
+        "docs/design/modules/M6-construction-plane.md"
+      ]
+    },
+    "output": {
+      "m6_update_bundle_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-openspec-sync-01/m6_update_bundle.json",
+      "construction_plane_delta_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-openspec-sync-01/construction_plane_delta.md",
+      "open_questions_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-openspec-sync-01/open_questions.md"
+    }
+  },
+  "ap_035": {
+    "input": {
+      "round_id": "R-20260221-M6-openspec-sync-01",
+      "round_goal": "execute first M6 runtime dry-run",
+      "openspec_ref": "change/m6-construction-round-sync",
+      "anc_design_refs": [
+        "docs/design/modules/M6-construction-plane.md"
+      ],
+      "decision_snapshot_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-openspec-sync-01/decision_snapshot.md",
+      "sync_actor": "architect",
+      "trigger_mode": "change_triggered",
+      "risk_level": "medium",
+      "checkpoint_count": 2,
+      "commit_count": 2,
+      "round_evidence_log_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-openspec-sync-01/round-evidence.jsonl",
+      "output_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-openspec-sync-01/openspec-sync-record.json"
+    },
+    "output": {
+      "openspec_sync_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-openspec-sync-01/openspec-sync-record.json",
+      "sync_status": "in_sync",
+      "validate_report_ref": "tmp/validate.json",
+      "status_report_ref": "tmp/status.json"
+    }
+  },
+  "ap_036": {
+    "input": {
+      "round_id": "R-20260221-M6-openspec-sync-01",
+      "m6_update_bundle_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-openspec-sync-01/m6_update_bundle.json",
+      "openspec_sync_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-openspec-sync-01/openspec-sync-record.json",
+      "round_evidence_log_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-openspec-sync-01/round-evidence.jsonl",
+      "open_questions_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-openspec-sync-01/open_questions.md"
+    },
+    "output": {
+      "registry_verify_report_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-openspec-sync-01/registry_verify.log",
+      "round_close_summary_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-openspec-sync-01/round_close_summary.md"
+    }
+  }
+}

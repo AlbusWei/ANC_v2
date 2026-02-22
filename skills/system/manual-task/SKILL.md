@@ -28,10 +28,12 @@ input_contract:
     - objective_ref
     - task_ref
     - acceptance_criteria
+    - expected_outputs
   validation:
     - objective_ref must be provided
     - task_ref must point to a reachable document
     - acceptance_criteria must be explicit
+    - expected_outputs must declare at least one artifact path
 output_contract:
   format: json
   required:
@@ -50,4 +52,6 @@ fail_closed_rules:
 test_mount:
   test_doc: skills/system/manual-task/TEST.md
   methodology_ref: docs/architecture/test_methodology.md
+references:
+  runner_script: skills/system/manual-task/scripts/manual_task_runner.py
 ```
