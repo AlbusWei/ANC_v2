@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "1e17d6186c93",
+  "session_id": "codex-3ca67a18f4b1",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T09:23:45.203619Z",
+  "branch": "codex/review-processes-business",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "skills/skill-creator/references/checklist.md",
+    "skills/skill-creator/references/review_rubric.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "827f82deec03",
+  "transcript_identifier_at_start": "gemini-d8c5433c6e",
+  "checkpoint_transcript_start": 2,
+  "transcript_lines_at_start": 2,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T09:23:45.172729Z",
+    "agent_lines": 17,
+    "human_added": 16618,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 16635,
+    "agent_percentage": 0.1021941689209498
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-processes-business/.entire/codex-bridge/transcript.json"
+}
