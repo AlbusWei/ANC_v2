@@ -3,7 +3,7 @@
   "checkpoint_id": "63e759026872",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 3,
+  "checkpoints_count": 4,
   "files_touched": [
     "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-01/construction_plane_delta.md",
     "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-01/decision_snapshot.md",
@@ -145,6 +145,13 @@
       "context": "/63/e759026872/3/context.md",
       "content_hash": "/63/e759026872/3/content_hash.txt",
       "prompt": "/63/e759026872/3/prompt.txt"
+    },
+    {
+      "metadata": "/63/e759026872/4/metadata.json",
+      "transcript": "/63/e759026872/4/full.jsonl",
+      "context": "/63/e759026872/4/context.md",
+      "content_hash": "/63/e759026872/4/content_hash.txt",
+      "prompt": "/63/e759026872/4/prompt.txt"
     }
   ],
   "token_usage": {

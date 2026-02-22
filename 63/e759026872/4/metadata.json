@@ -1,0 +1,42 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "63e759026872",
+  "session_id": "codex-8a32aacd7933",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T11:23:09.015334Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/modules/evidence/construction-plane/README.md",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/cases/TC-012/payload.json",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/cases/TC-013/payload.json",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/evaluation-runner-llm-live/raw_eval.json",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/regression_report.json",
+    "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/regression_summary.md",
+    "skills/system/construction-audit/TEST.md",
+    "skills/system/construction-audit/scripts/construction_audit.py",
+    "tests/README.md",
+    "tests/m6-governance/TEST.md",
+    "tests/m6-governance/run_post_dev_regression.py"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "8087c9ebcf9a",
+  "transcript_identifier_at_start": "gemini-74040e1d01",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T11:23:08.984515Z",
+    "agent_lines": 1280,
+    "human_added": 1414,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 2694,
+    "agent_percentage": 47.512991833704525
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
