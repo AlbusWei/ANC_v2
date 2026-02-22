@@ -36,6 +36,11 @@
 - [x] 完成 M6 施工治理资产落盘：`construction-plane-governance` 流程 + `sys.arch.construction-audit` 技能 + M6 详细设计重构
 - [x] 建立 M6 × OpenSpec Hybrid 协同协议并明确 Architect 语义 owner 机制
 - [x] 完成 OpenSpec 协同完整 schema 与包装技能落盘：`openspec-collaboration-schema` + `system.integration.openspec-sync`
+- [x] 完成 M1 第一批技能开发：`sys.qa.*` 七个技能统一迁移到 `skills/system/qa/*`，补齐 Capability Contract、最小可执行脚本、P0 测试与 registry 联动
+- [x] 完成模板基座标准化：升级 `skills/template` 与 `skills/skill-creator`，形成本地化标准脚手架与 review/smoke 评审基线
+- [x] 完成 M1 QA 技能运行级复核：OpenJudge 真执行链路与 LLM-as-Judge Fail-Closed 在 `runtime-validation-round-2` 落盘（objective/regression pass，subjective hold，llm-missing-key test_invalid）
+- [x] 完成 M1 QA 动态评测补强：`evaluation-runner` 增加 listwise 主观盲测与 judge 错误分类（unsupported model -> `test_invalid`），并在 `runtime-validation-round-3` 落盘 strict config 证据
+- [x] 完成 LLM-as-Judge 跑通验证：模型切换 `gpt-5.3-codex` 后，objective + subjective(listwise) 均在 `runtime-validation-round-4` 真实通过
 - [x] 新增多 worktree 分支协同技能：`system.ops.git-worktree-sync`（`source -> parent -> siblings`，冲突/大规模 WIP 均 Fail-Closed）
 - [x] 锁定回合追溯主键：`1 round = 1 OpenSpec change = N Entire checkpoints = N commits`
 - [x] 锁定证据写入策略：提交级证据进入 `round-evidence.jsonl`，施工平面主文档仅在回合关闭时汇总
