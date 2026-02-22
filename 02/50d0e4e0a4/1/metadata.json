@@ -1,0 +1,42 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "0250d0e4e0a4",
+  "session_id": "codex-e00ff6cf356d",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T09:40:06.416259Z",
+  "branch": "rebuild",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/skills/system-skills.md",
+    "skills/README.md",
+    "skills/system/git-worktree-sync/TEST.md",
+    "docs/design/inventories/skill-inventory.md",
+    "docs/design/skills/git-operations-skills.md",
+    "shared/registry/skill_registry.json",
+    "skills/system/git-worktree-sync/SKILL.md",
+    "skills/system/git-worktree-sync/references/git-merge-policy.md",
+    "skills/system/git-worktree-sync/scripts/worktree_sync.py",
+    "docs/architecture/construction_plane.md",
+    "docs/design/data-models/registry-schemas.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "ed6f952d5edd",
+  "transcript_identifier_at_start": "gemini-fa3f24e0f8",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T09:40:06.410398Z",
+    "agent_lines": 750,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 750,
+    "agent_percentage": 100
+  },
+  "transcript_path": "MyProjects/ANC_v2/.entire/codex-bridge/transcript.json"
+}

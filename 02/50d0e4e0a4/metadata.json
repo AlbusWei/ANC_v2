@@ -3,7 +3,7 @@
   "checkpoint_id": "0250d0e4e0a4",
   "strategy": "manual-commit",
   "branch": "rebuild",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/design/data-models/registry-schemas.md",
@@ -24,6 +24,13 @@
       "context": "/02/50d0e4e0a4/0/context.md",
       "content_hash": "/02/50d0e4e0a4/0/content_hash.txt",
       "prompt": "/02/50d0e4e0a4/0/prompt.txt"
+    },
+    {
+      "metadata": "/02/50d0e4e0a4/1/metadata.json",
+      "transcript": "/02/50d0e4e0a4/1/full.jsonl",
+      "context": "/02/50d0e4e0a4/1/context.md",
+      "content_hash": "/02/50d0e4e0a4/1/content_hash.txt",
+      "prompt": "/02/50d0e4e0a4/1/prompt.txt"
     }
   ],
   "token_usage": {
