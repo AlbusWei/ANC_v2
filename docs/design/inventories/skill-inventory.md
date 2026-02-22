@@ -70,3 +70,7 @@ Git Operations 技能包设计文档：
 ## 生命周期规则
 
 统一 5 态并由 lifecycle-review 驱动迁移。
+
+W1 变更记录（M2 BPM Runtime Hardening）：
+
+1. `sys.bpm.process-instance-manager` 生命周期由 `draft` 推进到 `review`（不推进到 `active`）。

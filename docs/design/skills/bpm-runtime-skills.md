@@ -1,6 +1,6 @@
 # BPM Runtime Skills 设计包
 
-> 版本: v0.2.0 | 分类: System Skills | 模块: M2 BPM Engine | 最后更新: 2026-02-21
+> 版本: v0.3.0 | 分类: System Skills | 模块: M2 BPM Engine | 最后更新: 2026-02-22
 
 ## 目标
 
@@ -44,13 +44,13 @@
 ### 3. sys.bpm.process-instance-manager
 
 - 定位：实例创建、状态推进、父子上下文隔离，并内含 parser/scheduler/lineage 子能力。
-- 输入契约：`process_id`, `phase_id`, `instance_context_ref`, `lineage_ref`, `stack_depth`
+- 输入契约：`process_id`, `phase_id`, `instance_context_ref`, `lineage_ref`, `stack_depth`, `process_version`, `process_level`, `session_binding`
 - 输出契约：`instance_id`, `runtime_state`, `state_transition_ref`, `evidence_ref`
 - 子能力：
   - `manifest-parse`：校验 process manifest 与 phase 闭合
   - `phase-schedule`：基于 control_flow 生成调度决策
   - `lineage-guard`：执行递归深度与上下文隔离约束
-- Fail-Closed：phase 不存在、上下文泄漏、递归深度超限、manifest 不闭合。
+- Fail-Closed：phase 不存在、上下文泄漏、递归深度超限、manifest 不闭合、会话绑定缺失或父子会话复用。
 - test_mount：`skills/system/process-instance-manager/TEST.md`
 
 ### 4. sys.bpm.evidence-recorder
@@ -85,7 +85,7 @@
 
 ## 生命周期与落盘状态
 
-1. 本轮状态：6 个核心技能已创建资产并注册到 `skill_registry`（状态 `draft`）。
+1. 本轮状态：`sys.bpm.process-instance-manager` 已推进到 `review`；其余 5 个核心技能保持 `draft`。
 2. 已决策并入：`process-parser/process-scheduler/lineage-guard` 不再单独注册。
 3. 激活前置：
    - `registry_contract_tool.py verify` 通过

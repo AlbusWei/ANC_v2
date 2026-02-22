@@ -13,7 +13,7 @@
 
 | Skill | 用途 | 状态 |
 |---|---|---|
-| process-instance-manager | 流程实例 CRUD | 规划 |
+| process-instance-manager | 流程实例 CRUD + 会话隔离治理 | review |
 | escalation-handler | 异常升级处理 | 规划 |
 | config-change-gatekeeper | 配置变更门禁校验 | 规划 |
 
@@ -24,6 +24,7 @@ BPM 不作为 Actor 参与业务阶段，而是作为编排者调度所有流程
 | 职责 | 说明 |
 |---|---|
 | 流程实例创建 | 解析 `process.json`，创建实例目录 |
+| 会话隔离绑定 | 为实例写入 `session_binding.json` 并强制 `--session-id` 调度 |
 | 阶段调度 | 按定义顺序分发任务给 Actor |
 | 状态监控 | 跟踪实例和阶段状态 |
 | 证据记录 | 确保每阶段产出完整证据 |

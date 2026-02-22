@@ -88,3 +88,8 @@
 1. inventory 路径必须与 registry 一致。
 2. legacy 路径不得作为新流程注册来源。
 3. 所有状态变更遵循 5 态生命周期。
+
+## W1 联动备注（M2 BPM Runtime Hardening）
+
+1. 本回合未新增或迁移 Process 生命周期状态。
+2. AP-028 输入/输出契约已补齐会话绑定相关字段。

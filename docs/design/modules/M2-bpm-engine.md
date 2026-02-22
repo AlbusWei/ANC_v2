@@ -1,6 +1,6 @@
 # M2 — BPM 引擎模块详细设计
 
-> 版本: v0.5.0 | 建设优先级: P0 | 最后更新: 2026-02-21
+> 版本: v0.6.0 | 建设优先级: P0 | 最后更新: 2026-02-22
 
 ## 模块定位
 
@@ -27,7 +27,7 @@
 | 组件 | 目标技能/资产 | 状态 |
 |---|---|---|
 | process parser | `sys.bpm.process-instance-manager` 子能力 | 已并入 |
-| instance manager | `sys.bpm.process-instance-manager` | 已落盘（draft） |
+| instance manager | `sys.bpm.process-instance-manager` | 已落盘（review） |
 | scheduler | `sys.bpm.process-instance-manager` 子能力 | 已并入 |
 | evidence recorder | `sys.bpm.evidence-recorder` | 已落盘（draft） |
 | recursion lineage guard | `sys.bpm.process-instance-manager` 子能力 | 已并入 |
@@ -46,7 +46,9 @@
 
 1. 支持 `parent_instance_id`, `lineage_ref`, `stack_depth`。
 2. 支持 parent/child 实例隔离，输出按契约回填。
-3. 超深度递归或上下文泄漏触发 Fail-Closed。
+3. 强制会话绑定：`session_binding.json` 固化 `agent_id/session_key/session_id/parent_session_id`。
+4. BPM 调度调用必须显式传 `--session-id`。
+5. 超深度递归或上下文泄漏触发 Fail-Closed。
 
 ## 触发运行时能力
 

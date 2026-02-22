@@ -41,3 +41,8 @@ business-analyst, product-manager, tech-lead, solution-architect, frontend-dev, 
 
 1. 注册前必须有完整 Agent 设计文档。
 2. 生命周期采用 5 态。
+
+## W1 联动备注（M2 BPM Runtime Hardening）
+
+1. 本回合无新增 Agent 注册项。
+2. `bpm` 设计文档已补充 `session_binding.json` 与显式 `--session-id` 调度职责。
