@@ -1,0 +1,7 @@
+{
+  "approval": "deny",
+  "risk_level": "low",
+  "reason": "evidence_refs must be non-empty",
+  "gate_report_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-003/evidence/gate_report.json",
+  "timestamp": "2026-02-22T17:18:05Z"
+}

@@ -11,13 +11,13 @@
 ## 三流程状态变化明细
 
 1. Agent 生命周期流
-   - `system-analyst`: `planned -> review -> active`
+   - `system-analyst`: `planned -> review`（W5 收口约束：本轮不推进 `active`）
    - 证据：`docs/design/agents/kernel/system-analyst.md`、`docs/design/inventories/agent-inventory.md`、`shared/registry/agent_directory.json`
 2. Skill 生命周期流
-   - `sys.arch.system-feedback-digest`: `draft -> active`
+   - `sys.arch.system-feedback-digest`: `draft -> review`（W5 收口约束：本轮不推进 `active`）
    - 证据：`skills/system/system-feedback-digest/SKILL.md`、`docs/design/skills/system-skills.md`、`docs/design/inventories/skill-inventory.md`、`shared/registry/skill_registry.json`
 3. Process 生命周期流
-   - `runtime-policy-calibration`: `planned -> active`
+   - `runtime-policy-calibration`: `planned -> review`（W5 收口约束：本轮不推进 `active`）
    - 证据：`processes/meta/runtime-policy-calibration/process.json`、`docs/design/processes/runtime-policy-calibration-process.md`、`docs/design/inventories/process-inventory.md`、`shared/registry/process_registry.json`
 
 ## 资产与契约变更摘要

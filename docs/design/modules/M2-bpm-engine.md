@@ -111,3 +111,4 @@
 - [x] TG-EVT-001/002/003 具备运行级证据
 - [x] 动态 catchup 策略已在运行证据中验证
 - [x] TC-GCC-001/002/003 具备运行级证据（真实 patch + rollback + 拒绝分支）
+- [x] TC-ONLINE-001/002/003/004 具备线上可达性证据（OpenClaw 网关、核心 agent、核心 skill/process）

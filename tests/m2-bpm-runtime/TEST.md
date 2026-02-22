@@ -3,11 +3,12 @@
 ## Scope
 
 This test mount is the execution entry for `m2-bpm-runtime-hardening` rounds.
-Thread 0 provides scaffolding only; runtime behavior re-implementation is out of scope.
+W5 收口要求执行真实 live regression，并以 Fail-Closed 规则判定是否可关闭变更。
 
 ## Entrypoint
 
 - Regression runner: `tests/m2-bpm-runtime/run_post_dev_regression.py`
+- Online runtime suite runner: `tests/m2-bpm-runtime/run_tc_online.py`
 - W1 instance suite runner: `tests/m2-bpm-runtime/run_tc_ins.py`
 - W2 governed config suite runner: `tests/m2-bpm-runtime/run_tc_gcc.py`
 - W3 trigger runtime suite runner: `tests/m2-bpm-runtime/run_tc_tg.py`
@@ -74,9 +75,16 @@ Each JSONL record in `checkpoint_commit_map.jsonl` must include:
 - Suggested command:
   - `python3 tests/m2-bpm-runtime/run_tc_anl.py`
 
+## Online Runtime Core Cases
+
+- Case doc: `tests/m2-bpm-runtime/TC-ONLINE.md`
+- Required pass set: `TC-ONLINE-001~004`
+- Suggested command:
+  - `python3 tests/m2-bpm-runtime/run_tc_online.py`
+
 ## Minimal Execution Contract
 
 1. Ensure evidence directory exists: `docs/design/modules/evidence/bpm-runtime/`.
 2. Collect git range and write `git_range.txt` before live run.
-3. Execute regression runner and persist output evidence.
+3. Execute online suite + W1/W2/W3/W3-B/W5 suites via post-dev regression and persist output evidence.
 4. Reconcile checkpoint/commit mapping before declaring done.

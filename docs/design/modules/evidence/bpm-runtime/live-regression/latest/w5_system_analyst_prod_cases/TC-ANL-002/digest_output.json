@@ -1,0 +1,6 @@
+{
+  "status": "rejected",
+  "instance_id": "inst-anl-prod-002",
+  "reject_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases/TC-ANL-002/reject_output.json",
+  "generated_at": "2026-02-22T17:18:13Z"
+}

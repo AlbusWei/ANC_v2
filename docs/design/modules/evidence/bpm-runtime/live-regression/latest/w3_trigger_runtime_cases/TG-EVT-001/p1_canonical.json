@@ -1,0 +1,18 @@
+{
+  "trigger_type": "event",
+  "trigger_source": "lifecycle",
+  "received_at": "2026-02-22T17:18:08Z",
+  "time_bucket": "20260222T1718",
+  "event_id": "evt-001",
+  "event_time": "2026-02-22T17:18:08Z",
+  "entity_type": "skill",
+  "entity_id": "sys.bpm.process-instance-manager",
+  "from_status": "review",
+  "to_status": "active",
+  "emitted_by": "hr",
+  "canonical_event": "internal.lifecycle.transitioned",
+  "evidence_ref": "tmp/m2-bpm-runtime/live-regression/tc-tg-sandbox/fixtures/transition_evidence.json",
+  "payload_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-EVT-001/event_payload.json",
+  "normalized_at": "2026-02-22T17:18:08Z",
+  "trigger_id": "trg-4bdb3484123e0c957801"
+}

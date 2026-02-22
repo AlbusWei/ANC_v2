@@ -5,8 +5,496 @@
     "docs/design/modules/evidence/bpm-runtime/m6_live_regression_plan.md",
     "docs/design/modules/evidence/bpm-runtime/checkpoint_commit_map.jsonl",
     "docs/design/modules/evidence/bpm-runtime/git_range.txt",
-    "tests/m2-bpm-runtime/live_regression_cases.md"
+    "tests/m2-bpm-runtime/live_regression_cases.md",
+    "tests/m2-bpm-runtime/TC-ONLINE.md",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w0_tc_online_report.json",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w1_tc_ins_report.json",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_report.json",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_tc_tg_report.json",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3b_tc_qa_proc_report.json",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_tc_anl_report.json"
   ],
   "errors": [],
-  "ts": "2026-02-22T16:51:06+00:00"
+  "suites": [
+    {
+      "suite_id": "TC-ONLINE",
+      "command": "python3 tests/m2-bpm-runtime/run_tc_online.py --report docs/design/modules/evidence/bpm-runtime/live-regression/latest/w0_tc_online_report.json",
+      "return_code": 0,
+      "status": "passed",
+      "report_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w0_tc_online_report.json",
+      "summary": {
+        "ts": "2026-02-22T17:17:24Z",
+        "suite": "TC-ONLINE-001~004",
+        "total": 4,
+        "passed": 4,
+        "failed": 0,
+        "profile": "default",
+        "cases": [
+          {
+            "id": "TC-ONLINE-001",
+            "status": "pass",
+            "details": {
+              "return_code": 0,
+              "stdout_tail": "        \"age\": 911024\n      },\n      {\n        \"key\": \"agent:admin:cron:e9761fda-49eb-4a38-9da6-4033d27612f6:run:44d9083d-6c4b-4c12-b1ff-3689f2dfc220\",\n        \"updatedAt\": 1771779668317,\n        \"age\": 919807\n      }\n    ]\n  }\n}",
+              "stderr_tail": "Config warnings:\\n- plugins.entries.matrix: plugin matrix: duplicate plugin id detected; later plugin may be overridden (/opt/homebrew/lib/node_modules/openclaw/extensions/matrix/index.ts)\nConfig warnings:\\n- plugins.entries.matrix: plugin matrix: duplicate plugin id detected; later plugin may be overridden (/opt/homebrew/lib/node_modules/openclaw/extensions/matrix/index.ts)\nConfig warnings:\\n- plugins.entries.matrix: plugin matrix: duplicate plugin id detected; later plugin may be overridden (/opt/homebrew/lib/node_modules/openclaw/extensions/matrix/index.ts)"
+            }
+          },
+          {
+            "id": "TC-ONLINE-002",
+            "status": "pass",
+            "details": {
+              "return_code": 0,
+              "repo_root_expected": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules",
+              "repo_root_actual": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules",
+              "stderr_tail": "Config warnings:\\n- plugins.entries.matrix: plugin matrix: duplicate plugin id detected; later plugin may be overridden (/opt/homebrew/lib/node_modules/openclaw/extensions/matrix/index.ts)\nConfig warnings:\\n- plugins.entries.matrix: plugin matrix: duplicate plugin id detected; later plugin may be overridden (/opt/homebrew/lib/node_modules/openclaw/extensions/matrix/index.ts)"
+            }
+          },
+          {
+            "id": "TC-ONLINE-003",
+            "status": "pass",
+            "details": {
+              "return_code": 0,
+              "required_agents": [
+                "admin",
+                "bpm",
+                "system-analyst"
+              ],
+              "loaded_agents": [
+                "admin",
+                "architect",
+                "bpm",
+                "hr",
+                "kernel-dev",
+                "personal-assistant",
+                "qa",
+                "system-analyst"
+              ],
+              "stderr_tail": "Config warnings:\\n- plugins.entries.matrix: plugin matrix: duplicate plugin id detected; later plugin may be overridden (/opt/homebrew/lib/node_modules/openclaw/extensions/matrix/index.ts)\nConfig warnings:\\n- plugins.entries.matrix: plugin matrix: duplicate plugin id detected; later plugin may be overridden (/opt/homebrew/lib/node_modules/openclaw/extensions/matrix/index.ts)"
+            }
+          },
+          {
+            "id": "TC-ONLINE-004",
+            "status": "pass",
+            "details": {
+              "missing_skills": [],
+              "skill_details": {
+                "config-change-gatekeeper": {
+                  "return_code": 0,
+                  "eligible": true,
+                  "file_path": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/skills/system/config-change-gatekeeper/SKILL.md"
+                },
+                "system-config-updater": {
+                  "return_code": 0,
+                  "eligible": true,
+                  "file_path": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/skills/system/system-config-updater/SKILL.md"
+                },
+                "trigger-ingress-normalizer": {
+                  "return_code": 0,
+                  "eligible": true,
+                  "file_path": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/skills/system/trigger-ingress-normalizer/SKILL.md"
+                },
+                "trigger-matcher-dedupe": {
+                  "return_code": 0,
+                  "eligible": true,
+                  "file_path": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/skills/system/trigger-matcher-dedupe/SKILL.md"
+                },
+                "process-instance-manager": {
+                  "return_code": 0,
+                  "eligible": true,
+                  "file_path": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/skills/system/process-instance-manager/SKILL.md"
+                },
+                "system-feedback-digest": {
+                  "return_code": 0,
+                  "eligible": true,
+                  "file_path": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/skills/system/system-feedback-digest/SKILL.md"
+                },
+                "trigger-schedule-runtime": {
+                  "return_code": 0,
+                  "eligible": true,
+                  "file_path": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/processes/control/trigger-schedule-runtime/SKILL.md"
+                },
+                "trigger-event-runtime": {
+                  "return_code": 0,
+                  "eligible": true,
+                  "file_path": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/processes/control/trigger-event-runtime/SKILL.md"
+                },
+                "runtime-policy-calibration": {
+                  "return_code": 0,
+                  "eligible": true,
+                  "file_path": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/processes/meta/runtime-policy-calibration/SKILL.md"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "stderr_tail": ""
+    },
+    {
+      "suite_id": "TC-INS",
+      "command": "python3 tests/m2-bpm-runtime/run_tc_ins.py --run-live-migration --report docs/design/modules/evidence/bpm-runtime/live-regression/latest/w1_tc_ins_report.json --migration-report docs/design/modules/evidence/bpm-runtime/live-regression/latest/w1_migration_report.json --replay-report docs/design/modules/evidence/bpm-runtime/live-regression/latest/w1_replay_report.json --sandbox-root tmp/m2-bpm-runtime/live-regression/tc-ins-sandbox",
+      "return_code": 0,
+      "status": "passed",
+      "report_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w1_tc_ins_report.json",
+      "summary": {
+        "ts": "2026-02-22T17:17:24Z",
+        "suite": "TC-INS-001~005",
+        "total": 5,
+        "passed": 5,
+        "failed": 0,
+        "cases": [
+          {
+            "id": "TC-INS-001",
+            "status": "pass",
+            "details": {
+              "return_code": 0,
+              "stderr": "",
+              "missing_fields": [],
+              "phase_session_ok": true,
+              "binding_match": true
+            }
+          },
+          {
+            "id": "TC-INS-002",
+            "status": "pass",
+            "details": {
+              "return_code": 0,
+              "stderr": "",
+              "depth_ok": true,
+              "parent_link_ok": true,
+              "no_reuse": true
+            }
+          },
+          {
+            "id": "TC-INS-003",
+            "status": "pass",
+            "details": {
+              "return_code": 2,
+              "stderr": "ERROR: session_reuses_parent"
+            }
+          },
+          {
+            "id": "TC-INS-004",
+            "status": "pass",
+            "details": {
+              "has_session_flag": true,
+              "session_id_matches": true
+            }
+          },
+          {
+            "id": "TC-INS-005",
+            "status": "pass",
+            "details": {
+              "migration_report": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/evidence/bpm-runtime/live-regression/latest/w1_migration_report.json",
+              "replay_report": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/evidence/bpm-runtime/live-regression/latest/w1_replay_report.json",
+              "migration_return_code": 0,
+              "migration_stderr": "",
+              "replay_return_code": 0,
+              "replay_stderr": "",
+              "migration_total": 1,
+              "migration_failed": 0,
+              "replay_total": 1,
+              "replay_failed": 0
+            }
+          }
+        ]
+      },
+      "stderr_tail": ""
+    },
+    {
+      "suite_id": "TC-GCC",
+      "command": "python3 tests/m2-bpm-runtime/run_tc_gcc.py --report docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_report.json --evidence-root docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases",
+      "return_code": 0,
+      "status": "passed",
+      "report_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_report.json",
+      "summary": {
+        "ts": "2026-02-22T17:18:07Z",
+        "suite": "TC-GCC-001~003",
+        "total": 3,
+        "passed": 3,
+        "failed": 0,
+        "target_path": "messages.groupChat.historyLimit",
+        "evidence_root": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases",
+        "cases": [
+          {
+            "id": "TC-GCC-001",
+            "status": "pass",
+            "details": {
+              "return_code": 0,
+              "stdout": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-001/process_output.json",
+              "stderr": "",
+              "verdict": "pass",
+              "hash_before": "1db7fbeaca444d279926312f04182a543b509216955e21e922e697f238b59aec",
+              "hash_after_apply": "1854f29dc71149cae9c1484bd01f6c1dea196fae4aa08d35584f15e50262d643",
+              "hash_after_rollback": "0b09640074c9bcbddd79a63cd1735ee1edb0503c696e8cc2d5afa36693d71b99",
+              "value_before": 124,
+              "value_after_apply": 125,
+              "value_after_rollback": 124,
+              "verify_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-001/evidence/verification_report.json"
+            }
+          },
+          {
+            "id": "TC-GCC-002",
+            "status": "pass",
+            "details": {
+              "return_code": 2,
+              "stdout": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-002/updater_output.json",
+              "stderr": "",
+              "hash_before": "0b09640074c9bcbddd79a63cd1735ee1edb0503c696e8cc2d5afa36693d71b99",
+              "hash_after": "0b09640074c9bcbddd79a63cd1735ee1edb0503c696e8cc2d5afa36693d71b99",
+              "execution_status": "failed",
+              "failure_code": "base_hash_mismatch",
+              "receipt_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-002/change_receipt.json"
+            }
+          },
+          {
+            "id": "TC-GCC-003",
+            "status": "pass",
+            "details": {
+              "return_code": 2,
+              "stdout": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-003/process_output.json",
+              "stderr": "",
+              "gate_result_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-003/evidence/gate_result.json",
+              "hash_before": "0b09640074c9bcbddd79a63cd1735ee1edb0503c696e8cc2d5afa36693d71b99",
+              "hash_after": "0b09640074c9bcbddd79a63cd1735ee1edb0503c696e8cc2d5afa36693d71b99",
+              "verdict": "deny",
+              "gate_approval": "deny",
+              "gate_reason": "evidence_refs must be non-empty"
+            }
+          }
+        ]
+      },
+      "stderr_tail": ""
+    },
+    {
+      "suite_id": "TC-TG",
+      "command": "python3 tests/m2-bpm-runtime/run_tc_tg.py --report docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_tc_tg_report.json --evidence-root docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases --sandbox-root tmp/m2-bpm-runtime/live-regression/tc-tg-sandbox --instance-root tmp/m2-bpm-runtime/live-regression/tc-tg-sandbox/instances",
+      "return_code": 0,
+      "status": "passed",
+      "report_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_tc_tg_report.json",
+      "summary": {
+        "ts": "2026-02-22T17:18:08Z",
+        "suite": "TG-SCH-001~004 + TG-EVT-001~003",
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "cases": [
+          {
+            "id": "TG-SCH-001",
+            "status": "pass",
+            "details": {
+              "return_code": 0,
+              "stdout": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-001/process_output.json",
+              "stderr": "",
+              "output_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-001/process_output.json",
+              "status": "ok",
+              "trigger_receipt_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-001/p4_trigger_receipt.json",
+              "admin_forward_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-001/admin_forward.json",
+              "instance_id": "run-development-process-20260222171807-63ee"
+            }
+          },
+          {
+            "id": "TG-SCH-002",
+            "status": "pass",
+            "details": {
+              "return_code": 0,
+              "stdout": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-002/process_output.json",
+              "stderr": "",
+              "output_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-002/process_output.json",
+              "status": "ok",
+              "trigger_ledger_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-002/trigger_ledger.json",
+              "instance_id": "run-development-process-20260222171807-e75d"
+            }
+          },
+          {
+            "id": "TG-SCH-003",
+            "status": "pass",
+            "details": {
+              "return_code": 0,
+              "stdout": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-003/process_output.json",
+              "stderr": "",
+              "output_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-003/process_output.json",
+              "status": "ok",
+              "override_decision_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-003/override_decision.json",
+              "override_reason_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-003/override_reason.json",
+              "instance_id": "virtual-trg-4cc8a31ec7fb9a73c378"
+            }
+          },
+          {
+            "id": "TG-SCH-004",
+            "status": "pass",
+            "details": {
+              "return_code": 0,
+              "stdout": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-004/process_output.json",
+              "stderr": "",
+              "output_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-004/process_output.json",
+              "status": "ok",
+              "catchup_decision": "run",
+              "catchup_run_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-004/p5_catchup_run.json"
+            }
+          },
+          {
+            "id": "TG-EVT-001",
+            "status": "pass",
+            "details": {
+              "return_code": 0,
+              "stdout": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-EVT-001/process_output.json",
+              "stderr": "",
+              "output_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-EVT-001/process_output.json",
+              "status": "ok",
+              "event_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-EVT-001/event_payload.json",
+              "trigger_receipt_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-EVT-001/p4_trigger_receipt.json",
+              "instance_id": "run-development-process-20260222171808-4b53"
+            }
+          },
+          {
+            "id": "TG-EVT-002",
+            "status": "pass",
+            "details": {
+              "return_code": 0,
+              "stdout": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-EVT-002/process_output.json",
+              "stderr": "",
+              "output_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-EVT-002/process_output.json",
+              "status": "ok",
+              "dedupe_decision": "reject",
+              "dedupe_key_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-EVT-002/p2_dedupe_key.json",
+              "dedupe_reject_log_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-EVT-002/dedupe_reject_log.json"
+            }
+          },
+          {
+            "id": "TG-EVT-003",
+            "status": "pass",
+            "details": {
+              "return_code": 2,
+              "stdout": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-EVT-003/process_output.json",
+              "stderr": "",
+              "output_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-EVT-003/process_output.json",
+              "status": "failed",
+              "fail_closed_record_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-EVT-003/fail_closed_record.json",
+              "backfill_request_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-EVT-003/backfill_request.json"
+            }
+          }
+        ],
+        "session_isolation": {
+          "status": "pass",
+          "checked_cases": [
+            "TG-SCH-001",
+            "TG-SCH-002",
+            "TG-SCH-004",
+            "TG-EVT-001"
+          ],
+          "errors": []
+        },
+        "evidence_root": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases"
+      },
+      "stderr_tail": ""
+    },
+    {
+      "suite_id": "TC-QA-PROC",
+      "command": "python3 tests/m2-bpm-runtime/run_tc_qa_proc.py --report docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3b_tc_qa_proc_report.json --evidence-root docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3b_qa_process_cases",
+      "return_code": 0,
+      "status": "passed",
+      "report_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3b_tc_qa_proc_report.json",
+      "summary": {
+        "ts": "2026-02-22T17:18:13Z",
+        "suite": "TC-QA-PROC-001~002",
+        "total": 2,
+        "passed": 2,
+        "failed": 0,
+        "evidence_root": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3b_qa_process_cases",
+        "cases": [
+          {
+            "id": "TC-QA-PROC-001",
+            "status": "pass",
+            "details": {
+              "prep_return_code": 0,
+              "prep_stdout": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3b_qa_process_cases/TC-QA-PROC-001/prep_output.json",
+              "prep_stderr": "",
+              "preparation_bundle_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3b_qa_process_cases/TC-QA-PROC-001/preparation/preparation_bundle.index.json",
+              "preparation_verdict": "pass",
+              "eval_return_code": 0,
+              "eval_stdout": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3b_qa_process_cases/TC-QA-PROC-001/evaluation_output.json",
+              "eval_stderr": "",
+              "gate_decision": "pass",
+              "hold_routed": false,
+              "final_gate_verdict_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3b_qa_process_cases/TC-QA-PROC-001/evaluation/p4_aggregate_verdict/final_gate_verdict.json"
+            }
+          },
+          {
+            "id": "TC-QA-PROC-002",
+            "status": "pass",
+            "details": {
+              "prep_return_code": 0,
+              "prep_stdout": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3b_qa_process_cases/TC-QA-PROC-002/prep_output.json",
+              "prep_stderr": "",
+              "eval_return_code": 0,
+              "eval_stdout": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3b_qa_process_cases/TC-QA-PROC-002/evaluation_output.json",
+              "eval_stderr": "",
+              "preparation_bundle_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3b_qa_process_cases/TC-QA-PROC-002/preparation/preparation_bundle.index.json",
+              "gate_decision": "hold",
+              "hold_routed": true,
+              "hold_governance_output_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance_output.json",
+              "hold_resolution_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance/p5_hold_resolution.json"
+            }
+          }
+        ]
+      },
+      "stderr_tail": ""
+    },
+    {
+      "suite_id": "TC-ANL",
+      "command": "python3 tests/m2-bpm-runtime/run_tc_anl.py --report docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_tc_anl_report.json --evidence-root docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases",
+      "return_code": 0,
+      "status": "passed",
+      "report_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_tc_anl_report.json",
+      "summary": {
+        "ts": "2026-02-22T17:18:13Z",
+        "suite": "TC-ANL-001~003",
+        "total": 3,
+        "passed": 3,
+        "failed": 0,
+        "evidence_root": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases",
+        "agent_doc": "docs/design/agents/kernel/system-analyst.md",
+        "digest_runner": "skills/system/system-feedback-digest/scripts/system_feedback_digest_runner.py",
+        "process_runner": "processes/meta/runtime-policy-calibration/scripts/runtime_policy_calibration_runner.py",
+        "cases": [
+          {
+            "id": "TC-ANL-001",
+            "status": "pass",
+            "details": {
+              "doc_markers_missing": [],
+              "return_code": 0,
+              "stdout": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases/TC-ANL-001/digest_output.json",
+              "stderr": "",
+              "digest_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases/TC-ANL-001/analysis_digest.json"
+            }
+          },
+          {
+            "id": "TC-ANL-002",
+            "status": "pass",
+            "details": {
+              "return_code": 2,
+              "stdout": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases/TC-ANL-002/digest_output.json",
+              "stderr": "",
+              "reject_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases/TC-ANL-002/reject_output.json",
+              "reason_code": "evidence_insufficient"
+            }
+          },
+          {
+            "id": "TC-ANL-003",
+            "status": "pass",
+            "details": {
+              "return_code": 0,
+              "stdout": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases/TC-ANL-003/process_output.json",
+              "stderr": "",
+              "runtime_trace_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/runtime_trace.json",
+              "decision_record_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/p5_decision_record.json"
+            }
+          }
+        ]
+      },
+      "stderr_tail": ""
+    }
+  ],
+  "ts": "2026-02-22T17:18:13+00:00"
 }

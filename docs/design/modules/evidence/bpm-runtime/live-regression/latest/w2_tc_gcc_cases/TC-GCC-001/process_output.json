@@ -1,0 +1,28 @@
+{
+  "final_output": "governed-config-change completed",
+  "evidence_refs": [
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-001/evidence/request.json",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-001/evidence/normalized_request.json",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-001/evidence/gate_input.json",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-001/evidence/gate_result.json",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-001/evidence/gate_report.json",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-001/evidence/authorization.json",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-001/evidence/updater_apply_input.json",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-001/evidence/updater_apply_output.json",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-001/evidence/change_receipt_apply.json",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-001/evidence/updater_rollback_input.json",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-001/evidence/updater_rollback_output.json",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-001/evidence/change_receipt_rollback.json",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-001/evidence/verification_report.json"
+  ],
+  "verdict": "pass",
+  "change_receipt": {
+    "apply_receipt_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-001/evidence/change_receipt_apply.json",
+    "rollback_receipt_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-001/evidence/change_receipt_rollback.json",
+    "hash_before": "1db7fbeaca444d279926312f04182a543b509216955e21e922e697f238b59aec",
+    "hash_after_apply": "1854f29dc71149cae9c1484bd01f6c1dea196fae4aa08d35584f15e50262d643",
+    "hash_after_rollback": "0b09640074c9bcbddd79a63cd1735ee1edb0503c696e8cc2d5afa36693d71b99"
+  },
+  "run_id": "gcc-20260222T171727Z",
+  "evidence_dir": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w2_tc_gcc_cases/TC-GCC-001/evidence"
+}

@@ -1,6 +1,6 @@
 # System Analyst Agent 详细设计
 
-> 版本: v1.0.0 | agent_id: system-analyst | 层级: kernel | 权限: system-analysis-governance | 生命周期: active（生产）
+> 版本: v1.0.0 | agent_id: system-analyst | 层级: kernel | 权限: system-analysis-governance | 生命周期: review（运行级验证完成，待 active 准入）
 
 ## 1. 角色定位与治理目标
 
@@ -16,7 +16,7 @@
 
 | skill_id | 用途 | 生命周期 |
 |---|---|---|
-| `sys.arch.system-feedback-digest` | 校验 handoff 与证据，生成 digest/reject 输出 | active |
+| `sys.arch.system-feedback-digest` | 校验 handoff 与证据，生成 digest/reject 输出 | review |
 
 ## 3. 参与流程（participating_processes）
 

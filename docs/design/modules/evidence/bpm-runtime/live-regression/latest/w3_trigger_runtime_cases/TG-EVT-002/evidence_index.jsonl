@@ -1,0 +1,1 @@
+{"timestamp": "2026-02-22T17:18:08Z", "trigger_id": "trg-4bdb3484123e0c957801", "instance_id": "virtual-trg-4bdb3484123e0c957801", "decision": "reject", "receipt_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-EVT-002/p4_trigger_receipt.json", "session_id": ""}

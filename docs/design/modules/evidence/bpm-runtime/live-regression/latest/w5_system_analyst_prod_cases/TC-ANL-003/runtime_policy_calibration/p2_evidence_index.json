@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-02-22T17:18:13Z",
+  "refs": [
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases/TC-ANL-003/signals/runtime_latency.json",
+    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases/TC-ANL-003/signals/runtime_error.json"
+  ],
+  "sample_count": 2,
+  "baseline": {
+    "window": "rolling",
+    "source_count": 2
+  }
+}

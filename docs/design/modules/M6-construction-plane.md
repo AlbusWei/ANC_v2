@@ -5,7 +5,7 @@
 ## 模块定位
 
 `M6` 是 ANC 的施工治理中枢，负责把“建设计划、联动门禁、证据归档、开放问题”统一到一个可审计平面。  
-`M6` 的模块 owner 固定为 `architect`，`bpm` 负责流程编排执行；`system-analyst` 提供巡检诊断输入（当前为 active 协作角色）。
+`M6` 的模块 owner 固定为 `architect`，`bpm` 负责流程编排执行；`system-analyst` 提供巡检诊断输入（当前为 review 协作角色）。
 
 相关文档：
 

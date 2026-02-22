@@ -1,0 +1,26 @@
+{
+  "status": "ok",
+  "instance_id": "run-development-process-20260222171808-3d0c",
+  "context_ref": "tmp/m2-bpm-runtime/live-regression/tc-tg-sandbox/instances/run-development-process-20260222171808-3d0c/context.json",
+  "session_binding_ref": "tmp/m2-bpm-runtime/live-regression/tc-tg-sandbox/instances/run-development-process-20260222171808-3d0c/session_binding.json",
+  "state_transition_ref": "tmp/m2-bpm-runtime/live-regression/tc-tg-sandbox/instances/run-development-process-20260222171808-3d0c/evidence/state_transition_start.json",
+  "runtime_state": "running",
+  "dispatch": {
+    "executed": false,
+    "command": [
+      "openclaw",
+      "agent",
+      "--agent",
+      "architect",
+      "--session-id",
+      "sess-2f02043ba99645ef",
+      "--message",
+      "execute assigned phase by process-instance-manager contract",
+      "--json"
+    ],
+    "return_code": null,
+    "stdout": "",
+    "stderr": ""
+  },
+  "evidence_ref": "tmp/m2-bpm-runtime/live-regression/tc-tg-sandbox/instances/run-development-process-20260222171808-3d0c/evidence"
+}

@@ -1,6 +1,6 @@
 ## Context
 
-`m2-bpm-runtime-hardening` targets governance hardening before runtime behavior rework. The immediate requirement is to make each thread round auditable via Entire checkpoint linkage, OpenSpec state evidence, and construction-plane status visibility. This round operates in Phase 0/0.5 constraints: no large runtime re-implementation, only governance/test/evidence scaffolding.
+`m2-bpm-runtime-hardening` targets governance hardening with runtime gate closure. The requirement is to keep each round auditable via Entire checkpoint linkage, OpenSpec state evidence, and construction-plane status visibility, then close the change only after live regression and gate reconciliation pass.
 
 Key constraints:
 - Fail-Closed on missing evidence, protocol mismatches, or missing `Entire-Checkpoint` trailers.
@@ -12,11 +12,10 @@ Key constraints:
 **Goals:**
 - Define a minimal baseline that is immediately apply-ready and auditable.
 - Standardize evidence surfaces (`checkpoint_commit_map.jsonl`, `git_range.txt`, live-regression plan, test harness files).
-- Ensure construction-plane reflects real execution state (`In Progress`) without prematurely closing `Q-001`.
+- Ensure construction-plane progresses from `In Progress` to close-out only after `verify/verify-m2/verify-m6` + live regression all pass.
 
 **Non-Goals:**
 - Rewriting BPM runtime core modules in this thread.
-- Closing quality gate `Q-001` in Thread 0.
 - Introducing new production dependencies for runtime logic.
 
 ## Decisions
@@ -37,9 +36,9 @@ Key constraints:
 - Alternative considered: inline plan inside Thread 6 notes only. Rejected because upstream threads would not share a stable contract.
 
 ### Decision 4: Construction-plane gate integrity
-- Choice: mark change `In Progress` while explicitly preserving unresolved `Q-001`.
-- Rationale: reflects work start truthfully without overstating quality closure.
-- Alternative considered: defer status update until Thread 6. Rejected because it hides active execution from governance tracking.
+- Choice: mark change `In Progress` during build rounds and close `Q-001` only after Thread 6 gate closure checks pass.
+- Rationale: reflects real execution progress while preserving fail-closed close-out discipline.
+- Alternative considered: keep `Q-001` permanently open in this change. Rejected because gate evidence now covers closure criteria.
 
 ## Risks / Trade-offs
 

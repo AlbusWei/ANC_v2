@@ -1,6 +1,6 @@
 # Runtime Policy Calibration Process
 
-> 版本: v1.0.0 | 层级: P5 | 类型: 治理复合流程 | process_id: runtime-policy-calibration | 生命周期: active
+> 版本: v1.0.0 | 层级: P5 | 类型: 治理复合流程 | process_id: runtime-policy-calibration | 生命周期: review
 
 ## 目标
 
