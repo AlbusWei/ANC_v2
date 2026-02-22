@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "dbefe031e708",
+  "strategy": "manual-commit",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/modules/evidence/bpm-runtime/latest_live_regression_result.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/db/efe031e708/0/metadata.json",
+      "transcript": "/db/efe031e708/0/full.jsonl",
+      "context": "/db/efe031e708/0/context.md",
+      "content_hash": "/db/efe031e708/0/content_hash.txt",
+      "prompt": "/db/efe031e708/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
