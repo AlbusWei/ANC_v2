@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "634d4910b8fb",
+  "session_id": "codex-05ca0b86f87b",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T12:04:38.765486Z",
+  "branch": "rebuild",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".codex/skills/openclaw-workspace-switch/SKILL.md",
+    "AGENTS.md",
+    "config/README.md",
+    "tools/openclaw/switch_workspace.py"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "ff22a130620c",
+  "transcript_identifier_at_start": "gemini-05415d6f2c",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T12:04:38.690446Z",
+    "agent_lines": 333,
+    "human_added": 102,
+    "human_modified": 3,
+    "human_removed": 0,
+    "total_committed": 438,
+    "agent_percentage": 76.02739726027397
+  },
+  "transcript_path": "MyProjects/ANC_v2/.entire/codex-bridge/transcript.json"
+}
