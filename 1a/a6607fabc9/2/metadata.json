@@ -1,9 +1,11 @@
 {
   "cli_version": "0.4.5",
   "checkpoint_id": "1aa6607fabc9",
+  "session_id": "codex-8a2378f0c09f",
   "strategy": "manual-commit",
+  "created_at": "2026-02-22T09:10:26.575525Z",
   "branch": "codex/review-skills",
-  "checkpoints_count": 3,
+  "checkpoints_count": 1,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/architecture/test_methodology.md",
@@ -269,34 +271,24 @@
     "tests/skill-creator/TEST.md",
     "tests/template/TEST.md"
   ],
-  "sessions": [
-    {
-      "metadata": "/1a/a6607fabc9/0/metadata.json",
-      "transcript": "/1a/a6607fabc9/0/full.jsonl",
-      "context": "/1a/a6607fabc9/0/context.md",
-      "content_hash": "/1a/a6607fabc9/0/content_hash.txt",
-      "prompt": "/1a/a6607fabc9/0/prompt.txt"
-    },
-    {
-      "metadata": "/1a/a6607fabc9/1/metadata.json",
-      "transcript": "/1a/a6607fabc9/1/full.jsonl",
-      "context": "/1a/a6607fabc9/1/context.md",
-      "content_hash": "/1a/a6607fabc9/1/content_hash.txt",
-      "prompt": "/1a/a6607fabc9/1/prompt.txt"
-    },
-    {
-      "metadata": "/1a/a6607fabc9/2/metadata.json",
-      "transcript": "/1a/a6607fabc9/2/full.jsonl",
-      "context": "/1a/a6607fabc9/2/context.md",
-      "content_hash": "/1a/a6607fabc9/2/content_hash.txt",
-      "prompt": "/1a/a6607fabc9/2/prompt.txt"
-    }
-  ],
+  "agent": "Gemini CLI",
+  "turn_id": "abdf16e58b05",
+  "transcript_identifier_at_start": "gemini-613df3faba",
   "token_usage": {
     "input_tokens": 0,
     "cache_creation_tokens": 0,
     "cache_read_tokens": 0,
     "output_tokens": 0,
     "api_call_count": 0
-  }
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T09:10:26.553775Z",
+    "agent_lines": 10536,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 10536,
+    "agent_percentage": 100
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-skills/.entire/codex-bridge/transcript.json"
 }
