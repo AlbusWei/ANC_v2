@@ -1,0 +1,10 @@
+{
+  "gate_decision": "pass",
+  "evidence_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-pass",
+  "reasons": [
+    "round5_pass"
+  ],
+  "profile_id": "quality-gate.baseline@1.0.0",
+  "run_id": "round5-001",
+  "raw_eval_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-objective/raw_eval.json"
+}

@@ -1,0 +1,27 @@
+{
+  "objective_ref": "obj-m6-construction-plane-governance",
+  "task_ref": "docs/design/processes/atomic/AP-034-linked-artifacts-update.md",
+  "acceptance_criteria": "all required linked artifacts are updated in the same round",
+  "expected_outputs": {
+    "m6_update_bundle_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/m6_update_bundle.json",
+    "construction_plane_delta_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/construction_plane_delta.md",
+    "open_questions_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/open_questions.md",
+    "decision_snapshot_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/decision_snapshot.md"
+  },
+  "payload": {
+    "m6_update_bundle_ref": {
+      "round_id": "R-20260221-M6-m6-construction-round-sync-11",
+      "changed_assets": [
+        "docs/design/modules/M6-construction-plane.md",
+        "docs/design/processes/construction-plane-governance-process.md",
+        "shared/registry/process_registry.json"
+      ],
+      "linkage_report_ref": "docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-11/linkage_report.md",
+      "generated_at": "2026-02-21T22:08:29Z"
+    },
+    "construction_plane_delta_ref": "# Construction Plane Delta\nround_id: R-20260221-M6-m6-construction-round-sync-11\nchanged_assets: [\"docs/design/modules/M6-construction-plane.md\", \"docs/design/processes/construction-plane-governance-process.md\", \"shared/registry/process_registry.json\"]\n",
+    "open_questions_ref": "# Open Questions\n- (none)\n",
+    "decision_snapshot_ref": "# Decision Snapshot\ndecision: aligned\nconflict_state: resolved\nowner: architect\n"
+  },
+  "reason": "linked artifacts generated"
+}

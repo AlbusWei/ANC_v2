@@ -21,3 +21,11 @@
 - Input: 缺失 `task_ref`
 - Expected: 返回失败并说明缺失字段
 - Evaluation Method: Exact Match
+
+### TC-003: 缺失 expected_outputs 触发拒绝
+
+- Type: Objective
+- Priority: P0
+- Input: 缺失 `expected_outputs`
+- Expected: Fail-Closed，并拒绝产出无证据回合结果
+- Evaluation Method: Exact Match

@@ -2,50 +2,45 @@
 
 ## Objective Alignment
 
-验证 `skill-creator` 是否能在 Phase 0.5 生成可注册、可测试的 Skill 资产。
+验证 `skill-creator` 可生成符合 ANC 标准且可推进生命周期的技能资产。
 
 ## Test Cases
 
-### TC-001: 创建新技能资产
+### TC-001: Happy Path - 生成完整技能骨架
 
 - Type: Objective
 - Priority: P0
-- Input:
-  - skill_name: `example-skill`
-  - objective_ref: `obj-example-skill`
-  - scope: 创建文档型技能
-  - constraints: 仅允许 Read/Write/Bash
+- Input: 合法 `skill_name/objective_ref/scope/constraints`
 - Expected:
-  - 生成 `skills/example-skill/SKILL.md`
-  - 生成 `tests/example-skill/TEST.md`
-  - 生成 `skill_registry` 条目草案
-- Evaluation Method: LLM-Judge
-- Judge Payload:
-  - objective: skill-creator must output traceable skill assets
-  - spec_ref: `skills/skill-creator/SKILL.md`
-  - expected_conditions:
-    - required files exist
-    - frontmatter contains name/description/license/compatibility
-    - test path is provided
-  - actual_output_ref: `artifacts/skill-creator/tc-001-output.md`
+  - 生成 `SKILL.md` 与 `TEST.md`
+  - frontmatter 含 `name/description/license/compatibility`
+  - Capability Contract 字段完整
+- Evaluation Method: Exact Match
 
-### TC-002: 输入缺失时 Fail-Closed
+### TC-002: Fail-Closed - 关键输入缺失
 
 - Type: Objective
 - Priority: P0
-- Input:
-  - skill_name: `broken-skill`
-  - objective_ref: ``
-  - scope: 未提供
+- Input: 缺失 `objective_ref` 或非法 `skill_name`
 - Expected:
   - 返回缺失字段错误
-  - 不创建不完整的 Skill 目录
+  - 不推进生命周期
 - Evaluation Method: Exact Match
+
+### TC-003: Traceability - registry 与证据闭环
+
+- Type: Objective
+- Priority: P0
+- Input: 一次完整 skill 创建回合
+- Expected:
+  - `test_mount` 与 registry tests 对齐
+  - review/smoke evidence 可追溯
+- Evaluation Method: Rule Match
 
 ## Evaluation Configuration
 
 - Objective Eval Rounds: 1
-- Subjective Eval Rounds: 9
-- Judge Perspectives: default
+- Subjective Eval Rounds: 0
+- Judge Perspectives: [architect, qa]
 - Timeout Seconds: 600
 - Retry Policy: max 1

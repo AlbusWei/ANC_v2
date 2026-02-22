@@ -1,0 +1,5 @@
+{
+  "allowed_actions": ["continue", "retry", "debug", "fail"],
+  "heartbeat_max_age_seconds": 7200,
+  "on_no_progress": "fail"
+}

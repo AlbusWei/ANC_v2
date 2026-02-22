@@ -1,0 +1,11 @@
+{
+  "modules": [
+    "M3",
+    "M4",
+    "M5"
+  ],
+  "profile_set": "quality-gate.baseline@1.0.0",
+  "runner_return_code": 0,
+  "runner_log_ref": "docs/design/modules/evidence/quality-gate/smoke/regression-runner/runner/runner.log",
+  "release_gate_candidate": "pass"
+}

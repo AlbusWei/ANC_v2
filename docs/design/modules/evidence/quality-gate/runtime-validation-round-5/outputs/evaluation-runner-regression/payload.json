@@ -1,0 +1,41 @@
+{
+  "case_id": "TC-005A",
+  "name": "evaluation-runner regression pass for normalizer input",
+  "command": [
+    "skills/system/qa/evaluation-runner/scripts/quality_eval_runner",
+    "run",
+    "--preparation-bundle",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/preparation_bundle.index.json",
+    "--mode",
+    "regression",
+    "--actual-output",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_pass.txt",
+    "--module",
+    "M3",
+    "--output-dir",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-regression"
+  ],
+  "return_code": 0,
+  "expected_return_code": 0,
+  "gate_decision": "pass",
+  "expected_gate_decision": "pass",
+  "payload": {
+    "raw_eval_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-regression/raw_eval.json",
+    "runner_log_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-regression/runner.log",
+    "execution_state_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-regression/execution_state.json",
+    "evaluation_verdict": "pass",
+    "gate_decision": "pass",
+    "evidence_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-regression",
+    "reasons": [
+      "all_cases_passed"
+    ],
+    "profile_id": "quality-gate.baseline@1.0.0",
+    "retry_hint": "",
+    "raw_eval_summary": {
+      "mode": "regression",
+      "case_count": 3
+    }
+  },
+  "passed": true,
+  "reasons": []
+}

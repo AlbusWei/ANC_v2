@@ -1,0 +1,31 @@
+{
+  "case_id": "TC-005",
+  "name": "verdict-normalizer pass aggregation",
+  "command": [
+    "python3",
+    "skills/system/qa/verdict-normalizer/scripts/normalize_verdict.py",
+    "--objective-eval",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-objective/raw_eval.json",
+    "--regression-eval",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evaluation-runner-regression/raw_eval.json",
+    "--aggregation-rules",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/aggregation_rules.json",
+    "--output-dir",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/verdict-normalizer-pass"
+  ],
+  "return_code": 0,
+  "expected_return_code": 0,
+  "gate_decision": "pass",
+  "expected_gate_decision": "pass",
+  "payload": {
+    "gate_decision": "pass",
+    "reasons": [
+      "all_evals_pass"
+    ],
+    "evidence_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/verdict-normalizer-pass",
+    "final_gate_verdict_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/verdict-normalizer-pass/final_gate_verdict.json",
+    "aggregation_trace_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/verdict-normalizer-pass/aggregation_trace.json"
+  },
+  "passed": true,
+  "reasons": []
+}

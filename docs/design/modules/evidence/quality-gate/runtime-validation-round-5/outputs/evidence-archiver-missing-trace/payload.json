@@ -1,0 +1,34 @@
+{
+  "case_id": "TC-013",
+  "name": "evidence-archiver missing traceability inputs",
+  "command": [
+    "python3",
+    "skills/system/qa/evidence-archiver/scripts/archive_evidence.py",
+    "--run-id",
+    "round5-002",
+    "--profile-id",
+    "quality-gate.baseline@1.0.0",
+    "--gate-decision",
+    "pass",
+    "--actor",
+    "qa",
+    "--output-dir",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-missing-trace"
+  ],
+  "return_code": 40,
+  "expected_return_code": 40,
+  "gate_decision": "fail",
+  "expected_gate_decision": "fail",
+  "payload": {
+    "evidence_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-missing-trace",
+    "evidence_index_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-missing-trace/index.json",
+    "archive_report_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/evidence-archiver-missing-trace/reports/archive_report.json",
+    "gate_decision": "fail",
+    "reasons": [
+      "exception",
+      "missing_traceability_inputs"
+    ]
+  },
+  "passed": true,
+  "reasons": []
+}

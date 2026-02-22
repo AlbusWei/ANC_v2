@@ -1,0 +1,18 @@
+{
+  "triage_action": "debug",
+  "gate_decision": "pass",
+  "reasons": [
+    "triage_action=debug",
+    "log_delta=True",
+    "phase_progress=True",
+    "output_heartbeat=False"
+  ],
+  "progress_signals_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/hold-triage/progress_signals.json",
+  "policy_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/triage_policy.json",
+  "runtime_refs": {
+    "current_runtime_log_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/runtime.log",
+    "current_execution_state_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/execution_state.json",
+    "previous_runtime_log_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/runtime_prev.log",
+    "previous_execution_state_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/execution_state_prev.json"
+  }
+}

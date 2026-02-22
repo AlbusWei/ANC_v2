@@ -10,7 +10,7 @@
 
 - Type: Objective
 - Priority: P0
-- Input: 完整 `openspec_ref + anc_design_refs + decision_snapshot_ref`
+- Input: 完整 `round_id + openspec_ref + anc_design_refs + decision_snapshot_ref + checkpoint_count + commit_count`
 - Expected: 产出 `openspec_sync_ref` 且 `sync_status` 可解析
 - Evaluation Method: Exact Match
 
@@ -28,4 +28,12 @@
 - Priority: P0
 - Input: `openspec validate --strict` 返回失败
 - Expected: Fail-Closed，输出 `validate_report_ref` 并阻断
+- Evaluation Method: Exact Match
+
+### TC-004: checkpoint 与 commit 计数不一致触发阻断
+
+- Type: Objective
+- Priority: P0
+- Input: `checkpoint_count != commit_count`
+- Expected: Fail-Closed，返回 `blocked`
 - Evaluation Method: Exact Match
