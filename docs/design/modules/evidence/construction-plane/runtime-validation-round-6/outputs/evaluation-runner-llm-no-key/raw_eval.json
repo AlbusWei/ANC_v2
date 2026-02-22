@@ -1,0 +1,26 @@
+{
+  "mode": "objective",
+  "module": "M6",
+  "preparation_bundle_ref": "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/preparation_bundle_m6_llm.index.json",
+  "actual_output_refs": [
+    "tmp/m6-round-regression-v2/A/round-result.json"
+  ],
+  "run": {
+    "evaluation_verdict": "test_invalid",
+    "gate_decision": "test_invalid",
+    "case_results": [
+      {
+        "tc_id": "TC-001",
+        "priority": "P0",
+        "evaluation_method": "LLM-Judge",
+        "decision": "test_invalid",
+        "error": "missing_judge_api_key_env:OPENAI_API_KEY"
+      }
+    ],
+    "reasons": [
+      "TC-001:test_invalid:missing_judge_api_key_env:OPENAI_API_KEY"
+    ],
+    "mode": "objective"
+  },
+  "timestamp": "2026-02-22T09:44:16.365469+00:00"
+}
