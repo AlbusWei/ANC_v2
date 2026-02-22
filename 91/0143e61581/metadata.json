@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "910143e61581",
+  "strategy": "manual-commit",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/thread_handoff.md",
+    "docs/design/processes/full-development-process.md",
+    "docs/design/processes/hotfix-process.md",
+    "docs/design/processes/refactor-process.md",
+    "processes/meta/full-development/PROCESS.md",
+    "processes/meta/full-development/process.json",
+    "processes/meta/hotfix/PROCESS.md",
+    "processes/meta/hotfix/process.json",
+    "processes/meta/refactor/PROCESS.md",
+    "processes/meta/refactor/process.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/91/0143e61581/0/metadata.json",
+      "transcript": "/91/0143e61581/0/full.jsonl",
+      "context": "/91/0143e61581/0/context.md",
+      "content_hash": "/91/0143e61581/0/content_hash.txt",
+      "prompt": "/91/0143e61581/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
