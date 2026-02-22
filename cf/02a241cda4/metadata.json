@@ -3,7 +3,7 @@
   "checkpoint_id": "cf02a241cda4",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/design/data-models/registry-schemas.md",
@@ -109,6 +109,13 @@
       "context": "/cf/02a241cda4/12/context.md",
       "content_hash": "/cf/02a241cda4/12/content_hash.txt",
       "prompt": "/cf/02a241cda4/12/prompt.txt"
+    },
+    {
+      "metadata": "/cf/02a241cda4/13/metadata.json",
+      "transcript": "/cf/02a241cda4/13/full.jsonl",
+      "context": "/cf/02a241cda4/13/context.md",
+      "content_hash": "/cf/02a241cda4/13/content_hash.txt",
+      "prompt": "/cf/02a241cda4/13/prompt.txt"
     }
   ],
   "token_usage": {
