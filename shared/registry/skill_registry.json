@@ -280,7 +280,7 @@
       "path": "skills/system/catchup-scheduler/SKILL.md",
       "layer": "system",
       "owner": "bpm",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "draft",
       "agentskills": {
         "name": "catchup-scheduler",
@@ -311,7 +311,7 @@
       "path": "skills/system/escalation-handler/SKILL.md",
       "layer": "system",
       "owner": "bpm",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "draft",
       "agentskills": {
         "name": "escalation-handler",
@@ -342,7 +342,7 @@
       "path": "skills/system/evidence-recorder/SKILL.md",
       "layer": "system",
       "owner": "bpm",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "draft",
       "agentskills": {
         "name": "evidence-recorder",
@@ -404,7 +404,7 @@
       "path": "skills/system/trigger-ingress-normalizer/SKILL.md",
       "layer": "system",
       "owner": "bpm",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "draft",
       "agentskills": {
         "name": "trigger-ingress-normalizer",
@@ -435,7 +435,7 @@
       "path": "skills/system/trigger-matcher-dedupe/SKILL.md",
       "layer": "system",
       "owner": "bpm",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "draft",
       "agentskills": {
         "name": "trigger-matcher-dedupe",
