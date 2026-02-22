@@ -1,6 +1,6 @@
 # BPM Agent 详细设计
 
-> 版本: v0.3.0 | agent_id: bpm | 层级: control | 权限: orchestration-control
+> 版本: v0.4.0 | agent_id: bpm | 层级: control | 权限: orchestration-control | 生命周期: review（W1/W2/W3/W3-B 运行证据已落盘，未推进 active）
 
 ## 1. 角色定位与权限
 

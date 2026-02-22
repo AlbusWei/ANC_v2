@@ -1,6 +1,6 @@
 # Process 全量清单
 
-> 版本: v1.1.0 | SSOT 上游: `shared/registry/process_registry.json`
+> 版本: v1.2.0 | SSOT 上游: `shared/registry/process_registry.json`
 
 ## Canonical Process Paths
 
@@ -40,7 +40,7 @@
 | hold-governance | hold-governance | 复合 | bpm | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/hold-governance/` |
 | runtime-policy-calibration | runtime-policy-calibration | 复合 | bpm | 6 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/runtime-policy-calibration/` |
 | construction-plane-governance | construction-plane-governance | 复合 | architect | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/construction-plane-governance/` |
-| lifecycle-review | lifecycle-review | 复合 | hr | 5 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/lifecycle-review/` |
+| lifecycle-review | lifecycle-review | 复合 | hr | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/lifecycle-review/` |
 | trigger-schedule-runtime | trigger-schedule-runtime | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-schedule-runtime/` |
 | trigger-event-runtime | trigger-event-runtime | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-event-runtime/` |
 
@@ -133,5 +133,10 @@
 ## Thread-2 联动备注（M1 Quality Gate Runtime Closure）
 
 1. 新增 `lifecycle-review` 最小可执行流程资产：`processes/meta/lifecycle-review/`（`SKILL.md`、`PROCESS.md`、`process.json`、`scripts/lifecycle_review_runner.py`）。
-2. `lifecycle-review` 注册到 `process_registry`，owner 固定 `hr`，生命周期状态为 `draft`。
+2. `lifecycle-review` 注册到 `process_registry`，owner 固定 `hr`，初始生命周期状态为 `draft`。
 3. 新增设计文档：`docs/design/processes/lifecycle-review-process.md`。
+
+## Thread-4 联动备注（M1 Quality Gate Runtime Closure）
+
+1. `lifecycle-review` 生命周期由 `draft` 推进到 `review`（证据：`docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle_output.json` 状态 `succeeded`）。
+2. 本轮仅推进到 `review`，不推进 `active`；`review->active` 仍需观测窗口与回滚演练证据。

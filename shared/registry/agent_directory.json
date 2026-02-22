@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "agent_directory",
-  "updated_at": "2026-02-22T17:10:00Z",
+  "updated_at": "2026-02-22T23:29:33Z",
   "entry_contract": {
     "required": [
       "agent_id",
@@ -94,7 +94,7 @@
       "path": "agents/kernel/admin",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "human",
-      "status": "draft",
+      "status": "review",
       "permissions": [
         "system-root"
       ],
@@ -109,7 +109,7 @@
       "path": "agents/kernel/architect",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "admin",
-      "status": "draft",
+      "status": "review",
       "permissions": [
         "architecture-governance"
       ],
@@ -124,7 +124,7 @@
       "path": "agents/kernel/hr",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "admin",
-      "status": "draft",
+      "status": "review",
       "permissions": [
         "lifecycle-governance"
       ],
@@ -154,7 +154,7 @@
       "path": "agents/control/BPM",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "admin",
-      "status": "draft",
+      "status": "review",
       "permissions": [
         "orchestration-control"
       ],
@@ -184,7 +184,7 @@
       "path": "agents/kernel/qa",
       "default_model": "rightcode/gpt-5.3-codex",
       "owner": "admin",
-      "status": "draft",
+      "status": "review",
       "permissions": [
         "quality-governance"
       ],

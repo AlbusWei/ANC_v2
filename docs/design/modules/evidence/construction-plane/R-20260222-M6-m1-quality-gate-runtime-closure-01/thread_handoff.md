@@ -117,3 +117,47 @@
 
 1. 本线程仅提供 `lifecycle-review` 最小可执行资产，不处理 M3 接线。
 2. 本线程不落运行证据，Thread-3 负责实跑与证据沉淀，并基于证据评估是否推进生命周期状态。
+
+## Thread-4 更新（2026-02-22）
+
+### 已完成产出（状态联动与文档一致性收口）
+
+1. Agent 生命周期联动：
+   - `admin` / `architect` / `hr` / `qa` / `bpm` 由 `draft` 推进到 `review`。
+   - `system-analyst` 维持 `review`，边界保持“分析输入，不做 lifecycle owner”。
+2. Process 生命周期联动：
+   - `lifecycle-review` 由 `draft` 推进到 `review`（不推进 `active`）。
+3. 文档冲突修复：
+   - `docs/design/agents/kernel/qa.md` 的 `sys.qa.*` 状态与 `shared/registry/skill_registry.json` 对齐。
+   - `docs/design/inventories/agent-inventory.md` 与 `shared/registry/agent_directory.json` 对齐。
+   - `docs/architecture/construction_plane.md` 更新 M1 子阶段收口进展，明确“仅推进到 review”。
+
+### 本轮证据引用（Thread-3/4）
+
+1. Thread-3 证据汇总：`docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/runtime_summary.md`
+2. lifecycle-review 运行成功：`docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle_output.json`
+3. lifecycle transition 记录：`docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle/p4_lifecycle_transition.json`
+4. registry sync 通过：`docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle/p5_registry_sync.json`
+5. QA 运行闭环：`docs/design/modules/evidence/bpm-runtime/w3b_tc_qa_proc_report.json`
+6. BPM 运行闭环：`docs/design/modules/evidence/bpm-runtime/w1_tc_ins_report.json`、`docs/design/modules/evidence/bpm-runtime/w3_tc_tg_report.json`
+7. Admin 配置治理闭环：`docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_report.json`
+8. Architect 运行审查闭环：`docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/round-result.json`
+
+### Thread-5 回合关闭输入清单
+
+1. 状态联动变更集：
+   - `shared/registry/agent_directory.json`
+   - `shared/registry/process_registry.json`
+   - `docs/design/inventories/agent-inventory.md`
+   - `docs/design/inventories/process-inventory.md`
+2. 设计文档一致性变更集：
+   - `docs/design/agents/kernel/qa.md`
+   - `docs/design/agents/kernel/admin.md`
+   - `docs/design/agents/kernel/architect.md`
+   - `docs/design/agents/kernel/hr.md`
+   - `docs/design/agents/control/bpm.md`
+   - `docs/design/processes/lifecycle-review-process.md`
+   - `docs/architecture/construction_plane.md`
+3. 线程交接与证据：
+   - `docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/thread_handoff.md`
+   - `docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/runtime_summary.md`

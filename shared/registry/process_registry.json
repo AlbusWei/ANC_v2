@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "process_registry",
-  "updated_at": "2026-02-22T21:30:00Z",
+  "updated_at": "2026-02-22T23:29:33Z",
   "entry_contract": {
     "required": [
       "process_id",
@@ -348,7 +348,7 @@
       "objective_ref": "obj-m4-lifecycle-review-runtime",
       "owner": "hr",
       "version": "0.1.0",
-      "status": "draft",
+      "status": "review",
       "phase_count": 5,
       "openclaw": {
         "projection_mode": "bundle",

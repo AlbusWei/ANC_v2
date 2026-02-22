@@ -6,7 +6,7 @@
 ## agent_directory.json
 
 - schema_version: `1.1.0`
-- updated_at: `2026-02-22T17:10:00Z`
+- updated_at: `2026-02-22T23:29:33Z`
 - strict mode: `true`
 
 | 字段 | 类型 | 必填 | 约束 | 说明 |
@@ -31,7 +31,7 @@
   "path": "agents/kernel/admin",
   "default_model": "rightcode/gpt-5.3-codex",
   "owner": "human",
-  "status": "draft",
+  "status": "review",
   "permissions": [
     "system-root"
   ],
@@ -115,7 +115,7 @@
 ## process_registry.json
 
 - schema_version: `1.1.0`
-- updated_at: `2026-02-22T21:30:00Z`
+- updated_at: `2026-02-22T23:29:33Z`
 - strict mode: `true`
 
 | 字段 | 类型 | 必填 | 约束 | 说明 |
