@@ -53,7 +53,7 @@
 
 ## 进行中（In Progress）
 
-- [ ] `m2-bpm-runtime-hardening` 基座线程已启动：OpenSpec apply-ready 已就绪，测试/证据脚手架初始化完成，状态维持 In Progress（`Q-001` 保持未关闭）
+- [ ] `m2-bpm-runtime-hardening` 基座线程已启动：OpenSpec apply-ready 已就绪，测试/证据脚手架初始化完成，状态维持 In Progress（`Q-001` 保持未关闭；本轮证据见 `docs/design/modules/evidence/bpm-runtime/precheck_apply_ready_evidence.md`）
 - [ ] 将新增 App Agent、流程与技能逐步纳入 runtime registry（按生命周期进入 review）
 - [ ] 执行一致性检查脚本（术语、状态、路径、schema 字段）
 - [ ] 将 trigger governance 最小 dry-run 从文档级证据升级到运行级证据

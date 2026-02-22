@@ -10,12 +10,29 @@ Thread 0 provides scaffolding only; runtime behavior re-implementation is out of
 - Regression runner: `tests/m2-bpm-runtime/run_post_dev_regression.py`
 - Expected mode for Thread 6: live regression (non-simulated)
 
+## Evidence Inputs
+
+- Preconditions evidence: `docs/design/modules/evidence/bpm-runtime/precheck_apply_ready_evidence.md`
+- Round map: `docs/design/modules/evidence/bpm-runtime/checkpoint_commit_map.jsonl`
+- Commit range: `docs/design/modules/evidence/bpm-runtime/git_range.txt`
+- Live plan: `docs/design/modules/evidence/bpm-runtime/m6_live_regression_plan.md`
+
 ## Fail-Closed Policy
 
 - Missing Entire/OpenClaw precheck evidence: FAIL.
 - Missing checkpoint/commit mapping for any required round: FAIL.
 - Any commit without `Entire-Checkpoint:` trailer in Thread 1~5 history: FAIL.
 - Live regression not executed in Thread 6: FAIL.
+
+## Mapping Contract
+
+Each JSONL record in `checkpoint_commit_map.jsonl` must include:
+
+- `round_id`
+- `entire_checkpoint_id`
+- `commit_sha`
+- `changed_files`
+- `ts`
 
 ## Minimal Execution Contract
 
