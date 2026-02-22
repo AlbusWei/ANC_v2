@@ -1,0 +1,48 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "0f64192e44a9",
+  "session_id": "codex-d6d7f4041559",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T22:05:09.152341Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/agents/app/delivery/release-manager-agent.md",
+    "docs/design/inventories/agent-inventory.md",
+    "docs/design/inventories/process-inventory.md",
+    "docs/design/inventories/skill-inventory.md",
+    "docs/design/modules/M3-self-development.md",
+    "docs/design/processes/escalation-process.md",
+    "docs/design/processes/full-development-process.md",
+    "docs/design/processes/governance-processes.md",
+    "docs/design/processes/hotfix-process.md",
+    "docs/design/processes/refactor-process.md",
+    "docs/design/processes/registry-sync-process.md",
+    "docs/design/skills/self-development-skills.md",
+    "docs/design/skills/system-skills.md",
+    "openspec/changes/m3-self-development-e2e-online/design.md",
+    "openspec/changes/m3-self-development-e2e-online/m3-gap-baseline.md",
+    "openspec/changes/m3-self-development-e2e-online/tasks.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "5e2ffb95d40c",
+  "transcript_identifier_at_start": "gemini-735e313e0c",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T22:05:09.094877Z",
+    "agent_lines": 0,
+    "human_added": 521,
+    "human_modified": 136,
+    "human_removed": 0,
+    "total_committed": 521,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}

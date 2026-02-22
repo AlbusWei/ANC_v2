@@ -3,16 +3,25 @@
   "checkpoint_id": "0f64192e44a9",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/agents/app/delivery/release-manager-agent.md",
     "docs/design/inventories/agent-inventory.md",
     "docs/design/inventories/process-inventory.md",
     "docs/design/inventories/skill-inventory.md",
+    "docs/design/modules/M3-self-development.md",
+    "docs/design/processes/escalation-process.md",
     "docs/design/processes/full-development-process.md",
     "docs/design/processes/governance-processes.md",
     "docs/design/processes/hotfix-process.md",
     "docs/design/processes/refactor-process.md",
-    "docs/design/skills/system-skills.md"
+    "docs/design/processes/registry-sync-process.md",
+    "docs/design/skills/self-development-skills.md",
+    "docs/design/skills/system-skills.md",
+    "openspec/changes/m3-self-development-e2e-online/design.md",
+    "openspec/changes/m3-self-development-e2e-online/m3-gap-baseline.md",
+    "openspec/changes/m3-self-development-e2e-online/tasks.md"
   ],
   "sessions": [
     {
@@ -49,6 +58,13 @@
       "context": "/0f/64192e44a9/4/context.md",
       "content_hash": "/0f/64192e44a9/4/content_hash.txt",
       "prompt": "/0f/64192e44a9/4/prompt.txt"
+    },
+    {
+      "metadata": "/0f/64192e44a9/5/metadata.json",
+      "transcript": "/0f/64192e44a9/5/full.jsonl",
+      "context": "/0f/64192e44a9/5/context.md",
+      "content_hash": "/0f/64192e44a9/5/content_hash.txt",
+      "prompt": "/0f/64192e44a9/5/prompt.txt"
     }
   ],
   "token_usage": {
