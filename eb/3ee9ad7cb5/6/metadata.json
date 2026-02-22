@@ -1,0 +1,47 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "eb3ee9ad7cb5",
+  "session_id": "codex-dc4835ff5dbe",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T13:34:53.690636Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/agents/control/bpm.md",
+    "docs/design/data-models/context-schemas.md",
+    "docs/design/data-models/process-instance-schemas.md",
+    "docs/design/data-models/registry-schemas.md",
+    "docs/design/interfaces/bpm-actor-protocol.md",
+    "docs/design/inventories/agent-inventory.md",
+    "docs/design/inventories/process-inventory.md",
+    "docs/architecture/process_architecture.md",
+    "docs/design/inventories/skill-inventory.md",
+    "docs/design/modules/M2-bpm-engine.md",
+    "docs/design/processes/atomic/AP-028-trigger-dispatch-and-instance-start.md",
+    "docs/design/skills/bpm-runtime-skills.md",
+    "shared/registry/skill_registry.json"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "b4a2050a12ec",
+  "transcript_identifier_at_start": "gemini-7b82ddf01d",
+  "checkpoint_transcript_start": 6,
+  "transcript_lines_at_start": 6,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T13:34:53.684177Z",
+    "agent_lines": 106,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 106,
+    "agent_percentage": 100
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
