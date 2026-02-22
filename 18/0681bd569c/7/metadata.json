@@ -1,0 +1,40 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "180681bd569c",
+  "session_id": "codex-988e4400f030",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T16:50:41.116078Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/inventories/agent-inventory.md",
+    "docs/design/inventories/process-inventory.md",
+    "docs/design/inventories/skill-inventory.md",
+    "shared/registry/agent_directory.json",
+    "shared/registry/process_registry.json",
+    "shared/registry/skill_registry.json"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "b557d36ff0b6",
+  "transcript_identifier_at_start": "gemini-f0a73632c5",
+  "checkpoint_transcript_start": 36,
+  "transcript_lines_at_start": 36,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T16:50:41.083141Z",
+    "agent_lines": 13,
+    "human_added": 4,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 17,
+    "agent_percentage": 76.47058823529412
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
