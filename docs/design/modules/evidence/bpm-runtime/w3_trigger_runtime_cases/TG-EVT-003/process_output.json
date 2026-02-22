@@ -1,0 +1,10 @@
+{
+  "status": "failed",
+  "failure_code": "trigger_event_runtime_failed",
+  "reason": "missing_transition_evidence_ref",
+  "trigger_receipt_ref": "",
+  "dedupe_decision": "fail",
+  "runtime_trace_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-003/runtime_trace.json",
+  "fail_closed_record_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-003/fail_closed_record.json",
+  "backfill_request_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-003/backfill_request.json"
+}

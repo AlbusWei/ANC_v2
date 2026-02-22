@@ -55,6 +55,17 @@
 4. `backfill_request_ref`（可选）
 5. `escalation_ref`（可选）
 
+## 运行入口（W3-A）
+
+1. 可执行 runner：`processes/control/trigger-event-runtime/scripts/trigger_event_runtime_runner.py`
+2. 核心阶段 runner 绑定：
+   - `sys.bpm.trigger-ingress-normalizer` -> `skills/system/trigger-ingress-normalizer/scripts/trigger_ingress_normalizer_runner.py`
+   - `sys.bpm.trigger-matcher-dedupe` -> `skills/system/trigger-matcher-dedupe/scripts/trigger_matcher_dedupe_runner.py`
+   - `sys.bpm.evidence-recorder` -> `skills/system/evidence-recorder/scripts/evidence_recorder_runner.py`
+   - `sys.bpm.catchup-scheduler` -> `skills/system/catchup-scheduler/scripts/catchup_scheduler_runner.py`
+   - `sys.bpm.escalation-handler` -> `skills/system/escalation-handler/scripts/escalation_handler_runner.py`
+3. 回归入口：`tests/m2-bpm-runtime/run_tc_tg.py`（覆盖 `TG-EVT-001~003`）。
+
 ## 去重策略
 
 1. 主键：`source + event_id`
@@ -67,6 +78,13 @@
 2. 去重冲突不可判定 -> `fail`。
 3. 事件命中但证据链不可追溯 -> `fail`。
 4. 升级链断裂或越级 -> `fail`。
+5. 任意跨实例 `session_id` 复用 -> `fail` 并留证据（继承 W1 会话隔离门禁）。
+
+## 运行证据落盘（W3-A）
+
+1. 用例证据目录：`docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-*`
+2. 汇总报告：`docs/design/modules/evidence/bpm-runtime/w3_tc_tg_report.json`
+3. 执行总结：`docs/design/modules/evidence/bpm-runtime/w3_execution_summary.md`
 
 ## 依赖流程
 

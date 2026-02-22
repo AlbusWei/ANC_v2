@@ -1,0 +1,57 @@
+{
+  "ts": "2026-02-22T14:15:34Z",
+  "suite": "TC-GCC-001~003",
+  "total": 3,
+  "passed": 3,
+  "failed": 0,
+  "target_path": "messages.groupChat.historyLimit",
+  "evidence_root": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases",
+  "cases": [
+    {
+      "id": "TC-GCC-001",
+      "status": "pass",
+      "details": {
+        "return_code": 0,
+        "stdout": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/process_output.json",
+        "stderr": "",
+        "verdict": "pass",
+        "hash_before": "89bb0855d6dca1723052e97bf4217d026fd89bd4a821775cf54a3d50ab0c7028",
+        "hash_after_apply": "7458cf30a9419a6c441e1abfa310c72b0511dcd178b645ad68df795b1cdb4453",
+        "hash_after_rollback": "50b448656665aabed21c636720fc4257c2d83278106c476d8497b14d1e91bd09",
+        "value_before": 124,
+        "value_after_apply": 125,
+        "value_after_rollback": 124,
+        "verify_ref": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/verification_report.json"
+      }
+    },
+    {
+      "id": "TC-GCC-002",
+      "status": "pass",
+      "details": {
+        "return_code": 2,
+        "stdout": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-002/updater_output.json",
+        "stderr": "",
+        "hash_before": "50b448656665aabed21c636720fc4257c2d83278106c476d8497b14d1e91bd09",
+        "hash_after": "50b448656665aabed21c636720fc4257c2d83278106c476d8497b14d1e91bd09",
+        "execution_status": "failed",
+        "failure_code": "base_hash_mismatch",
+        "receipt_ref": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-002/change_receipt.json"
+      }
+    },
+    {
+      "id": "TC-GCC-003",
+      "status": "pass",
+      "details": {
+        "return_code": 2,
+        "stdout": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-003/process_output.json",
+        "stderr": "",
+        "gate_result_ref": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-003/evidence/gate_result.json",
+        "hash_before": "50b448656665aabed21c636720fc4257c2d83278106c476d8497b14d1e91bd09",
+        "hash_after": "50b448656665aabed21c636720fc4257c2d83278106c476d8497b14d1e91bd09",
+        "verdict": "deny",
+        "gate_approval": "deny",
+        "gate_reason": "evidence_refs must be non-empty"
+      }
+    }
+  ]
+}

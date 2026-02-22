@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-02-22T14:14:56Z",
+  "decision": "allow",
+  "reason": "authorized",
+  "authorization": {
+    "approved": true,
+    "approved_by_role": "admin",
+    "approval_id": "TC-GCC-001",
+    "allowed_paths": [
+      "messages.groupChat.historyLimit"
+    ]
+  },
+  "target_path": "messages.groupChat.historyLimit"
+}

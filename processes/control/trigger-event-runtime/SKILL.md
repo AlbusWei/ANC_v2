@@ -9,7 +9,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
-version: "0.1.0"
+version: "0.2.0"
 ---
 
 # trigger-event-runtime
@@ -40,3 +40,9 @@ version: "0.1.0"
 2. 缺失证据引用默认 Fail-Closed，并发起补数请求。
 3. 重复事件必须被显式拒绝并记录去重证据。
 4. `catchup_policy_ref` 推荐编写规则见 `docs/design/processes/trigger-runtime-policy-guidelines.md`。
+
+## Runtime Entrypoint
+
+1. 可执行入口：`processes/control/trigger-event-runtime/scripts/trigger_event_runtime_runner.py`
+2. 最小命令：
+   - `python3 processes/control/trigger-event-runtime/scripts/trigger_event_runtime_runner.py --input <input.json> --output <output.json> --evidence-dir <evidence_dir>`

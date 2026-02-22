@@ -1,0 +1,28 @@
+{
+  "final_output": "governed-config-change completed",
+  "evidence_refs": [
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/request.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/normalized_request.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/gate_input.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/gate_result.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/gate_report.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/authorization.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/updater_apply_input.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/updater_apply_output.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/change_receipt_apply.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/updater_rollback_input.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/updater_rollback_output.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/change_receipt_rollback.json",
+    "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/verification_report.json"
+  ],
+  "verdict": "pass",
+  "change_receipt": {
+    "apply_receipt_ref": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/change_receipt_apply.json",
+    "rollback_receipt_ref": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/change_receipt_rollback.json",
+    "hash_before": "89bb0855d6dca1723052e97bf4217d026fd89bd4a821775cf54a3d50ab0c7028",
+    "hash_after_apply": "7458cf30a9419a6c441e1abfa310c72b0511dcd178b645ad68df795b1cdb4453",
+    "hash_after_rollback": "50b448656665aabed21c636720fc4257c2d83278106c476d8497b14d1e91bd09"
+  },
+  "run_id": "gcc-20260222T141454Z",
+  "evidence_dir": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence"
+}

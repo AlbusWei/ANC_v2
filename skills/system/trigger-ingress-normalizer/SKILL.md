@@ -51,3 +51,9 @@ test_mount:
   test_doc: skills/system/trigger-ingress-normalizer/TEST.md
   methodology_ref: docs/architecture/test_methodology.md
 ```
+
+## Runtime Entrypoint
+
+1. 可执行入口：`skills/system/trigger-ingress-normalizer/scripts/trigger_ingress_normalizer_runner.py`
+2. 最小命令：
+   - `python3 skills/system/trigger-ingress-normalizer/scripts/trigger_ingress_normalizer_runner.py --input <input.json> --output <output.json> --canonical <canonical.json> --report <report.json>`

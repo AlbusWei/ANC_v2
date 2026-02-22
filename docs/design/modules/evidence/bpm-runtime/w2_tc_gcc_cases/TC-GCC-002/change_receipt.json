@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-02-22T14:15:25Z",
+  "execution_status": "failed",
+  "failure_code": "base_hash_mismatch",
+  "reason": "base_hash mismatch",
+  "hash_before": "50b448656665aabed21c636720fc4257c2d83278106c476d8497b14d1e91bd09",
+  "hash_after": "50b448656665aabed21c636720fc4257c2d83278106c476d8497b14d1e91bd09",
+  "target_path": "messages.groupChat.historyLimit",
+  "patch_summary": {
+    "top_level_keys": [
+      "messages"
+    ],
+    "messages.groupChat.historyLimit": 125,
+    "target_before": 124
+  },
+  "rollback_status": "not_started"
+}

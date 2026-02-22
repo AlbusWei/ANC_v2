@@ -1,0 +1,5 @@
+{
+  "trigger_receipt_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-004/p4_trigger_receipt.json",
+  "evidence_index_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-004/evidence_index.jsonl",
+  "traceability_link_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-004/p4_traceability.json"
+}

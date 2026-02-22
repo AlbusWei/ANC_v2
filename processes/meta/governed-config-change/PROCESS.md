@@ -31,3 +31,12 @@
 - `authorization.json`
 - `change_receipt.json`
 - `verification_report.json`
+
+## Runtime Tooling
+
+1. 流程执行：
+   - `python3 processes/meta/governed-config-change/scripts/governed_config_change_runner.py --input <input.json> --output <output.json>`
+2. P2 门禁：
+   - `python3 skills/system/config-change-gatekeeper/scripts/config_change_gatekeeper_runner.py --input <input.json> --output <output.json>`
+3. P4 执行：
+   - `python3 skills/system/system-config-updater/scripts/system_config_updater_runner.py --input <input.json> --output <output.json>`

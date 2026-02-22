@@ -30,14 +30,18 @@ input_contract:
     - process_id
     - phase_id
     - instance_context_ref
+    - session_binding
     - lineage_ref
     - stack_depth
+    - process_version
+    - process_level
   validation:
     - process_id must exist in process_registry
     - phase_id must belong to target process
     - process manifest must be parseable and phase-closed
     - lineage_ref must be present for recursive invocation
     - stack_depth must be less than lineage policy limit
+    - session_binding.session_id must not reuse parent_session_id
 output_contract:
   format: json
   required:
@@ -55,8 +59,14 @@ fail_closed_rules:
   - process manifest parse failure or phase closure violation
   - mutable context leak between parent and child
   - stack_depth exceeds configured limit
+  - missing session_binding or explicit session_id
+  - child session reuses parent session
   - missing state transition evidence
 test_mount:
   test_doc: skills/system/process-instance-manager/TEST.md
   methodology_ref: docs/architecture/test_methodology.md
 ```
+
+## Executable Runner
+
+`skills/system/process-instance-manager/scripts/process_instance_runner.py`

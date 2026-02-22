@@ -1,0 +1,40 @@
+{
+  "timestamp": "2026-02-22T14:14:56Z",
+  "approval": "allow",
+  "risk_level": "low",
+  "reason": "gate passed",
+  "objective_ref": "obj-governed-openclaw-config-change",
+  "target_path": "messages.groupChat.historyLimit",
+  "delta": 1,
+  "checks": [
+    {
+      "name": "required:objective_ref",
+      "ok": true
+    },
+    {
+      "name": "required:change_request",
+      "ok": true
+    },
+    {
+      "name": "required:rollback_plan",
+      "ok": true
+    },
+    {
+      "name": "required:evidence_refs",
+      "ok": true
+    },
+    {
+      "name": "evidence_refs_non_empty",
+      "ok": true
+    },
+    {
+      "name": "target_scope_path",
+      "ok": true
+    }
+  ],
+  "errors": [],
+  "evidence_refs": [
+    "docs/architecture/openclaw_interface.md",
+    "tests/m2-bpm-runtime/TC-GCC.md"
+  ]
+}

@@ -21,3 +21,7 @@
 - Input: 过期 `base_hash`
 - Expected: 执行失败并输出回滚状态
 - Evaluation Method: Exact Match
+
+## Runtime Suite Mapping
+
+- M2 W2 运行级拒绝分支：`tests/m2-bpm-runtime/TC-GCC.md#tc-gcc-002-expired-basehash-must-be-rejected`

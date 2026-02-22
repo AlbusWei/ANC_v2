@@ -1,0 +1,18 @@
+{
+  "objective_ref": "obj-governed-openclaw-config-change",
+  "change_request": {
+    "target_scope": {
+      "path": "messages.groupChat.historyLimit"
+    },
+    "delta": 1
+  },
+  "rollback_plan": {
+    "mode": "restore_previous_value",
+    "executable": true,
+    "owner": "admin"
+  },
+  "evidence_refs": [
+    "docs/architecture/openclaw_interface.md",
+    "tests/m2-bpm-runtime/TC-GCC.md"
+  ]
+}
