@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "42d9ceac4c37",
+  "session_id": "codex-a439806b2f84",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T16:37:12.214928Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "shared/registry/registry_contract_tool.py"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "63890b8fdf66",
+  "transcript_identifier_at_start": "gemini-5b2ec593c6",
+  "checkpoint_transcript_start": 30,
+  "transcript_lines_at_start": 30,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T16:37:12.186085Z",
+    "agent_lines": 1,
+    "human_added": 1693,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 1694,
+    "agent_percentage": 0.05903187721369539
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
