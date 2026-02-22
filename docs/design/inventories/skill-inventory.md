@@ -24,13 +24,7 @@
 18. sys.bpm.escalation-handler
 19. sys.arch.construction-audit
 20. system.integration.openspec-sync
-21. sys.qa.test-compiler
-22. sys.qa.evaluation-runner
-23. sys.qa.verdict-normalizer
-24. sys.qa.hold-triage
-25. sys.qa.regression-runner
-26. sys.qa.registry-validator
-27. sys.qa.evidence-archiver
+21. system.ops.git-worktree-sync
 
 ## 规划 Skill（节选）
 
@@ -61,6 +55,10 @@ Self-Development 技能包设计文档：
 Construction Plane 技能包设计文档：
 
 - `docs/design/skills/construction-plane-skills.md`
+
+Git Operations 技能包设计文档：
+
+- `docs/design/skills/git-operations-skills.md`
 
 ## 生命周期规则
 

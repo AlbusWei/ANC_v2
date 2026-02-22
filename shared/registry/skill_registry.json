@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "skill_registry",
-  "updated_at": "2026-02-21T23:59:59Z",
+  "updated_at": "2026-02-22T00:00:00Z",
   "entry_contract": {
     "required": [
       "skill_id",
@@ -578,6 +578,37 @@
       },
       "tests": {
         "test_doc": "skills/system/manual-task/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "system.ops.git-worktree-sync",
+      "name": "git-worktree-sync",
+      "path": "skills/system/git-worktree-sync/SKILL.md",
+      "layer": "system",
+      "owner": "admin",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "git-worktree-sync",
+        "description": "Coordinate source-parent integration and parent-sibling fanout across Git worktrees with fail-closed conflict handling",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "system.ops.git-worktree-sync",
+        "source": "skills/system/git-worktree-sync",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/git-worktree-sync/TEST.md",
         "methodology_ref": "docs/architecture/test_methodology.md"
       }
     },
