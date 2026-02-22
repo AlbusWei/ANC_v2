@@ -3,7 +3,7 @@
   "checkpoint_id": "1aa6607fabc9",
   "strategy": "manual-commit",
   "branch": "codex/review-skills",
-  "checkpoints_count": 5,
+  "checkpoints_count": 7,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/architecture/test_methodology.md",
@@ -304,6 +304,13 @@
       "context": "/1a/a6607fabc9/4/context.md",
       "content_hash": "/1a/a6607fabc9/4/content_hash.txt",
       "prompt": "/1a/a6607fabc9/4/prompt.txt"
+    },
+    {
+      "metadata": "/1a/a6607fabc9/5/metadata.json",
+      "transcript": "/1a/a6607fabc9/5/full.jsonl",
+      "context": "/1a/a6607fabc9/5/context.md",
+      "content_hash": "/1a/a6607fabc9/5/content_hash.txt",
+      "prompt": "/1a/a6607fabc9/5/prompt.txt"
     }
   ],
   "token_usage": {
