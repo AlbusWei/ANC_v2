@@ -3,16 +3,22 @@
 ## 输入检查
 
 - skill 名称、目标与边界明确。
-- 触发场景至少一个正常场景与一个失败场景。
+- 至少定义 1 个 happy path + 1 个 fail-closed path + 1 个 traceability path。
 - 约束包含权限、成本或安全边界。
 
 ## 输出检查
 
-- `SKILL.md` frontmatter 可解析。
-- `SKILL.md` 包含 `Capability Contract (Machine-Readable)` YAML 块且可解析。
-- `tests/<skill-name>/TEST.md` 已创建。
+- `SKILL.md` frontmatter 可解析（`name/description/license/compatibility`）。
+- `SKILL.md` 包含 `Capability Contract (Machine-Readable)` YAML 且可解析。
+- `TEST.md` 已创建并含 P0 用例。
 - registry 条目字段完整且路径可达。
 - `test_mount` 与 registry `tests` 字段一致。
+- review/smoke evidence 已落盘。
+
+## 生命周期检查
+
+- `draft -> review`：契约完整 + verify 通过。
+- `review -> active`：smoke 通过 + evidence 可追溯。
 
 ## 失败模式
 
@@ -20,9 +26,4 @@
 - `capability_contract_invalid`
 - `missing_test_asset`
 - `registry_not_synced`
-
-## 通过标准
-
-- 资产结构完整。
-- 契约字段完整。
-- 路径全部可追溯。
+- `missing_lifecycle_evidence`

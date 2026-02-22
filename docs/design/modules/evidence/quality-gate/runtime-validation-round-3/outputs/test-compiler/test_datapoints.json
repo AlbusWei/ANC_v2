@@ -1,0 +1,63 @@
+{
+  "datapoints": [
+    {
+      "tc_id": "TC-001",
+      "title": "Dynamic Grader Plan",
+      "index": 1,
+      "type": "Objective",
+      "priority": "P0",
+      "evaluation_method": "LLM-Judge",
+      "input_payload": "objective/spec/actual_output_ref",
+      "expected": "output aligns objective and keeps traceability",
+      "expected_conditions": [
+        "gate_decision",
+        "evidence_ref",
+        "reasons"
+      ],
+      "judge_payload": {
+        "objective": "verify objective-spec-output alignment and traceability",
+        "expected_conditions": "[gate_decision, evidence_ref, reasons]",
+        "context": "spec requires gate_decision, evidence_ref, reasons",
+        "grader_selection": "[relevance, correctness, instruction_following]",
+        "grader_weights": "{\"relevance\":0.4,\"correctness\":0.4,\"instruction_following\":0.2}",
+        "min_score_per_grader": "{\"relevance\":3,\"correctness\":3,\"instruction_following\":3}",
+        "must_pass_graders": "[relevance, correctness]"
+      },
+      "grader_plan": null,
+      "grader_selection": "[relevance, correctness, instruction_following]",
+      "grader_weights": "{\"relevance\":0.4,\"correctness\":0.4,\"instruction_following\":0.2}",
+      "min_score_per_grader": "{\"relevance\":3,\"correctness\":3,\"instruction_following\":3}",
+      "must_pass_graders": "[relevance, correctness]",
+      "objective_ref": "obj-m1-unified-quality-gate",
+      "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
+      "profile_id": "quality-gate.baseline@1.0.0",
+      "test_doc_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/fixtures/TEST_llm_dynamic.md"
+    }
+  ],
+  "metadata": {
+    "compiled_at": "2026-02-22T08:26:17.846333+00:00",
+    "test_doc_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/fixtures/TEST_llm_dynamic.md",
+    "objective_ref": "obj-m1-unified-quality-gate",
+    "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
+    "profile_set": [
+      "quality-gate.baseline@1.0.0"
+    ],
+    "evaluation_configuration": {
+      "objective_eval_rounds": 1,
+      "subjective_eval_rounds": 0,
+      "subjective_seed": 42,
+      "judge_perspectives": [
+        "qa"
+      ],
+      "timeout_seconds": 600,
+      "retry_policy": "max 1",
+      "grader_selection": [],
+      "grader_weights": {},
+      "min_score_per_grader": {},
+      "must_pass_graders": []
+    },
+    "case_count": 1,
+    "p0_case_count": 1,
+    "warnings": []
+  }
+}

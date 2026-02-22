@@ -39,7 +39,17 @@ OpenJudge 在 `M1` 中定位为评测执行内核，不直接承担治理决策�
 5. regression-runner（回归执行与聚合候选）
 6. verdict-normalizer（统一输出契约）
 7. hold-triage（长时任务治理）
-8. contract-gate（`registry_contract_tool.py verify` 门禁能力）
+8. registry-validator（`registry_contract_tool.py verify` 封装门禁能力）
+9. evidence-archiver（证据包索引归档与追溯输出）
+
+实现约束补充（2026-02-21 runtime validation）：
+
+1. `evaluation-runner` 必须通过 OpenJudge 真实执行 grader，禁止 marker-only 假评测。
+2. `LLM-as-Judge` 需显式模型配置与凭据；凭据缺失必须 `test_invalid`（Fail-Closed）。
+3. 评测证据需保留 raw grader 输出与可追溯索引。
+4. grader 选择与权重应由测试计划动态驱动（`grader_selection/grader_weights/min_score_per_grader`），必要时使用 OpenJudge rubric 生成机制创建定制 grader。
+5. 主观评测应采用 A/B 盲测 listwise 比较并记录 `seed/rounds/blind_assignment`，禁止把主观评测退化为固定模板单轮检查。
+6. judge 模型/凭据/请求配置不可用时应 `test_invalid`（例如 provider 返回 unsupported model）。
 
 ## 流程连续性模型
 

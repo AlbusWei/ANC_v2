@@ -25,17 +25,19 @@
 19. sys.arch.construction-audit
 20. system.integration.openspec-sync
 21. system.ops.git-worktree-sync
+22. sys.qa.test-compiler
+23. sys.qa.evaluation-runner
+24. sys.qa.verdict-normalizer
+25. sys.qa.hold-triage
+26. sys.qa.regression-runner
+27. sys.qa.registry-validator
+28. sys.qa.evidence-archiver
 
 ## 规划 Skill（节选）
 
 - sys.hr.lifecycle-transition
 - sys.hr.permission-checker
-- sys.qa.registry-validator
-- sys.qa.regression-runner
-- sys.qa.test-compiler
-- sys.qa.evaluation-runner
-- sys.qa.verdict-normalizer
-- sys.qa.hold-triage
+- sys.arch.impact-analyzer
 - sys.admin.release-manager
 
 ## 技能粒度决策（M2）
@@ -45,6 +47,9 @@
 Quality Gate 技能包设计文档：
 
 - `docs/design/skills/quality-gate-skills.md`
+- 运行级验证证据：`docs/design/modules/evidence/quality-gate/runtime-validation-round-2.md`
+- 严格模型配置验证证据：`docs/design/modules/evidence/quality-gate/runtime-validation-round-3.md`
+- LLM-as-Judge 跑通验证证据：`docs/design/modules/evidence/quality-gate/runtime-validation-round-4.md`
 
 BPM Runtime 技能包设计文档：
 

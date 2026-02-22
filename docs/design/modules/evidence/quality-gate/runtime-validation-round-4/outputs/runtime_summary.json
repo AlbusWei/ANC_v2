@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-02-22T08:48:16Z",
+  "preparation_bundle_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/preparation_bundle.index.json",
+  "evaluation_runner_llm_objective": {
+    "raw_eval_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-objective/raw_eval.json",
+    "runner_log_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-objective/runner.log",
+    "execution_state_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-objective/execution_state.json",
+    "evaluation_verdict": "pass",
+    "gate_decision": "pass",
+    "evidence_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-objective",
+    "reasons": [
+      "all_cases_passed"
+    ],
+    "profile_id": "quality-gate.baseline@1.0.0",
+    "retry_hint": "",
+    "raw_eval_summary": {
+      "mode": "objective",
+      "case_count": 1
+    }
+  },
+  "evaluation_runner_llm_subjective": {
+    "raw_eval_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-subjective/raw_eval.json",
+    "runner_log_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-subjective/runner.log",
+    "execution_state_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-subjective/execution_state.json",
+    "evaluation_verdict": "pass",
+    "gate_decision": "pass",
+    "evidence_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-subjective",
+    "reasons": [
+      "subjective_completed"
+    ],
+    "profile_id": "quality-gate.baseline@1.0.0",
+    "retry_hint": "",
+    "raw_eval_summary": {
+      "mode": "subjective",
+      "case_count": 1
+    },
+    "subjective_verdict": "accept",
+    "win_rate": 1.0,
+    "seed": 13,
+    "rounds": 3
+  },
+  "evaluation_runner_llm_default_model": {
+    "raw_eval_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-default/raw_eval.json",
+    "runner_log_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-default/runner.log",
+    "execution_state_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-default/execution_state.json",
+    "evaluation_verdict": "pass",
+    "gate_decision": "pass",
+    "evidence_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-default",
+    "reasons": [
+      "all_cases_passed"
+    ],
+    "profile_id": "quality-gate.baseline@1.0.0",
+    "retry_hint": "",
+    "raw_eval_summary": {
+      "mode": "objective",
+      "case_count": 1
+    }
+  }
+}

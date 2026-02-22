@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-02-21T22:11:58.941131+00:00",
+  "decision_map": {
+    "objective": "pass",
+    "regression": "pass"
+  },
+  "rules_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/aggregation_rules.json",
+  "rules": {
+    "precedence": [
+      "fail",
+      "hold",
+      "test_invalid",
+      "pass"
+    ],
+    "notes": "P0 fail precedence is enforced by verdict-normalizer logic"
+  },
+  "p0_fail_detected": false,
+  "p0_fail_cases": {
+    "objective": [],
+    "regression": []
+  },
+  "final_gate_decision": "pass"
+}

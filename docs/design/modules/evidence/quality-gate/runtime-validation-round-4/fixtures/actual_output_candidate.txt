@@ -1,0 +1,4 @@
+gate_decision=pass
+evidence_ref=docs/design/modules/evidence/quality-gate/runtime-validation-round-4
+reasons=["objective aligned", "traceability preserved"]
+This output explicitly aligns objective, spec constraints, and traceability fields.

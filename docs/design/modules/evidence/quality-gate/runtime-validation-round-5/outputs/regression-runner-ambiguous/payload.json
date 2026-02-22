@@ -1,0 +1,36 @@
+{
+  "case_id": "TC-009",
+  "name": "regression-runner ambiguous output mapping",
+  "command": [
+    "python3",
+    "skills/system/qa/regression-runner/scripts/run_regression.py",
+    "--regression-scope",
+    "M3,M4,M5",
+    "--profile-set",
+    "quality-gate.baseline@1.0.0",
+    "--preparation-bundle",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/preparation_bundle.index.json",
+    "--actual-output",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_baseline.txt",
+    "--actual-output",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_candidate.txt",
+    "--output-dir",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/regression-runner-ambiguous"
+  ],
+  "return_code": 40,
+  "expected_return_code": 40,
+  "gate_decision": "fail",
+  "expected_gate_decision": "fail",
+  "payload": {
+    "regression_eval_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/regression-runner-ambiguous/regression_eval.json",
+    "regression_report_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/regression-runner-ambiguous/regression_report.json",
+    "release_gate_candidate": "fail",
+    "gate_decision": "fail",
+    "evidence_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/regression-runner-ambiguous",
+    "reasons": [
+      "ambiguous_actual_output_mapping"
+    ]
+  },
+  "passed": true,
+  "reasons": []
+}
