@@ -85,7 +85,7 @@
   "phase_results": [
     {
       "phase_id": "string",
-      "status": "string (completed|failed|skipped)",
+      "status": "string (running|completed|failed|skipped)",
       "actor": "string",
       "session_id": "string (required)",
       "input_ref": "string",
