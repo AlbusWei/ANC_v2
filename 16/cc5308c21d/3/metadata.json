@@ -1,0 +1,41 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "16cc5308c21d",
+  "session_id": "codex-5da188d757de",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T17:43:02.482303Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "openspec/changes/archive/2026-02-23-m2-bpm-runtime-hardening/specs/construction-plane/spec.md",
+    "openspec/changes/archive/2026-02-23-m2-bpm-runtime-hardening/tasks.md",
+    "openspec/specs/bpm-runtime-hardening-audit-foundation/spec.md",
+    "openspec/specs/construction-plane/spec.md",
+    "openspec/changes/archive/2026-02-23-m2-bpm-runtime-hardening/.openspec.yaml",
+    "openspec/changes/archive/2026-02-23-m2-bpm-runtime-hardening/design.md",
+    "openspec/changes/archive/2026-02-23-m2-bpm-runtime-hardening/proposal.md",
+    "openspec/changes/archive/2026-02-23-m2-bpm-runtime-hardening/specs/bpm-runtime-hardening-audit-foundation/spec.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "c42dae303101",
+  "transcript_identifier_at_start": "gemini-ef62c58daa",
+  "checkpoint_transcript_start": 46,
+  "transcript_lines_at_start": 46,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T17:43:02.448386Z",
+    "agent_lines": 202,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 202,
+    "agent_percentage": 100
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
