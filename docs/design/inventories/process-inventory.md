@@ -1,6 +1,6 @@
 # Process 全量清单
 
-> 版本: v1.0.0 | SSOT 上游: `shared/registry/process_registry.json`
+> 版本: v1.1.0 | SSOT 上游: `shared/registry/process_registry.json`
 
 ## Canonical Process Paths
 
@@ -16,6 +16,7 @@
 | hold-governance | `/Users/albus/MyProjects/ANC_v2/processes/meta/hold-governance/` | canonical |
 | runtime-policy-calibration | `/Users/albus/MyProjects/ANC_v2/processes/meta/runtime-policy-calibration/` | canonical |
 | construction-plane-governance | `/Users/albus/MyProjects/ANC_v2/processes/meta/construction-plane-governance/` | canonical |
+| lifecycle-review | `/Users/albus/MyProjects/ANC_v2/processes/meta/lifecycle-review/` | canonical |
 | trigger-schedule-runtime | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-schedule-runtime/` | canonical |
 | trigger-event-runtime | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-event-runtime/` | canonical |
 
@@ -39,6 +40,7 @@
 | hold-governance | hold-governance | 复合 | bpm | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/hold-governance/` |
 | runtime-policy-calibration | runtime-policy-calibration | 复合 | bpm | 6 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/runtime-policy-calibration/` |
 | construction-plane-governance | construction-plane-governance | 复合 | architect | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/construction-plane-governance/` |
+| lifecycle-review | lifecycle-review | 复合 | hr | 5 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/lifecycle-review/` |
 | trigger-schedule-runtime | trigger-schedule-runtime | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-schedule-runtime/` |
 | trigger-event-runtime | trigger-event-runtime | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-event-runtime/` |
 
@@ -52,7 +54,6 @@
 
 | process_id | 类型 | 规划阶段 | 用途 |
 |---|---|---|---|
-| lifecycle-review | 复合 | Phase 1 | 生命周期审批 |
 | registry-sync | 原子 | Phase 1 | 注册表同步 |
 | escalation | 复合 | Phase 1 | 异常升级 |
 | trigger-runtime-supervisor | 模式（P5） | Phase 1 | 触发运行时上级路由（可选） |
@@ -83,6 +84,7 @@
 10. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/refactor-process.md`
 11. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/construction-plane-governance-process.md`
 12. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/construction-plane-governance-runtime-contract-baseline.md`
+13. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/lifecycle-review-process.md`
 
 新增策略参考文档：
 
@@ -127,3 +129,9 @@
 1. 新增 `runtime-policy-calibration` 可执行流程资产并注册，生命周期状态为 `review`（本轮不推进 `active`）。
 2. 新增流程 runner：`processes/meta/runtime-policy-calibration/scripts/runtime_policy_calibration_runner.py`。
 3. 运行级测试入口：`tests/m2-bpm-runtime/run_tc_anl.py`，新增 `TC-ANL-003` 端到端流程验证。
+
+## Thread-2 联动备注（M1 Quality Gate Runtime Closure）
+
+1. 新增 `lifecycle-review` 最小可执行流程资产：`processes/meta/lifecycle-review/`（`SKILL.md`、`PROCESS.md`、`process.json`、`scripts/lifecycle_review_runner.py`）。
+2. `lifecycle-review` 注册到 `process_registry`，owner 固定 `hr`，生命周期状态为 `draft`。
+3. 新增设计文档：`docs/design/processes/lifecycle-review-process.md`。

@@ -1,6 +1,6 @@
 # 治理流程清单与设计
 
-> 版本: v1.0.0 | 分类: Governance Processes
+> 版本: v1.1.0 | 分类: Governance Processes
 
 ## 核心治理流程
 
@@ -15,7 +15,12 @@
 9. runtime-policy-calibration（P5 治理模式，可执行）
 10. construction-plane-governance
 
-## lifecycle-review
+## lifecycle-review（可执行资产，draft）
+
+设计文档：`docs/design/processes/lifecycle-review-process.md`
+流程资产：`processes/meta/lifecycle-review/process.json`
+运行入口：`processes/meta/lifecycle-review/scripts/lifecycle_review_runner.py`
+owner：`hr`（`system-analyst` 仅提供分析输入，不作为 owner）
 
 阶段：
 
@@ -25,7 +30,25 @@
 4. execute-transition
 5. sync-registry
 
+输入契约：
+
+1. `final_gate_verdict_ref`
+2. `target_asset_ref`
+3. `requested_transition`
+
+输出契约：
+
+1. `lifecycle_transition_ref`
+2. `registry_sync_ref`
+3. `lifecycle_review_report_ref`
+
 状态规则：`draft -> review -> active -> deprecated -> retired`
+
+Fail-Closed：
+
+1. 非法状态迁移直接拒绝。
+2. 证据缺失或不可解析直接拒绝。
+3. registry 校验失败直接阻断。
 
 ## escalation
 

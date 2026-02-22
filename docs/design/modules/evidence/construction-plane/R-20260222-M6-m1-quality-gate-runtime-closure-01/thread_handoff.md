@@ -86,3 +86,34 @@
 
 1. `openspec/changes/m1-quality-gate-runtime-closure/thread-1-gap-baseline.md` 尚未创建（本线程按约束仅做接线重构 + 文档同步）。
 2. Thread-1 风险与优先级清单证据文件尚未在本目录新增，需要后续线程补齐并回填交接引用。
+
+## Thread-2 更新（2026-02-22）
+
+### 已完成产出（lifecycle-review 最小可执行资产）
+
+1. 新增流程资产目录：`processes/meta/lifecycle-review/`
+   - `SKILL.md`
+   - `PROCESS.md`
+   - `process.json`
+   - `scripts/lifecycle_review_runner.py`
+2. 新增流程设计文档：`docs/design/processes/lifecycle-review-process.md`
+3. 注册表与清单联动：
+   - `shared/registry/process_registry.json` 新增 `lifecycle-review`（`status=draft`，`owner=hr`）
+   - `docs/design/inventories/process-inventory.md` 新增 canonical path 与已注册条目
+   - `docs/design/processes/governance-processes.md` 更新为可执行资产口径
+   - `docs/design/modules/M4-lifecycle-management.md` 增加 M1->M4 接点说明
+   - `docs/architecture/construction_plane.md` 同步 Next/Done 条目
+
+### Thread-3 可调用入口（最小示例）
+
+1. 执行命令：
+   - `python3 processes/meta/lifecycle-review/scripts/lifecycle_review_runner.py --input docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/thread3_lifecycle_review_input.json --output docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/thread3_lifecycle_review_output.json`
+2. 输入文件最小字段（`thread3_lifecycle_review_input.json`）：
+   - `final_gate_verdict_ref`
+   - `target_asset_ref`
+   - `requested_transition`
+
+### 交接边界（Thread-2 -> Thread-3）
+
+1. 本线程仅提供 `lifecycle-review` 最小可执行资产，不处理 M3 接线。
+2. 本线程不落运行证据，Thread-3 负责实跑与证据沉淀，并基于证据评估是否推进生命周期状态。

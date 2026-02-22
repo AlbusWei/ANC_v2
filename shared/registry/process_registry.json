@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "process_registry",
-  "updated_at": "2026-02-22T17:10:00Z",
+  "updated_at": "2026-02-22T21:30:00Z",
   "entry_contract": {
     "required": [
       "process_id",
@@ -337,6 +337,25 @@
         "bundle_source": "processes/meta",
         "entry_key": "construction-plane-governance",
         "source": "processes/meta/construction-plane-governance",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "lifecycle-review",
+      "skill_name": "lifecycle-review",
+      "skill_path": "processes/meta/lifecycle-review/SKILL.md",
+      "manifest_path": "processes/meta/lifecycle-review/process.json",
+      "objective_ref": "obj-m4-lifecycle-review-runtime",
+      "owner": "hr",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 5,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "lifecycle-review",
+        "source": "processes/meta/lifecycle-review",
         "allow_draft_projection": true
       }
     }
