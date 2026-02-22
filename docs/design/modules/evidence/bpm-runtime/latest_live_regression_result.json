@@ -1,0 +1,13 @@
+{
+  "status": "failed",
+  "mode": "live",
+  "checked_files": [
+    "docs/design/modules/evidence/bpm-runtime/m6_live_regression_plan.md",
+    "docs/design/modules/evidence/bpm-runtime/checkpoint_commit_map.jsonl",
+    "docs/design/modules/evidence/bpm-runtime/git_range.txt"
+  ],
+  "errors": [
+    "missing_case_manifest:/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/tests/m2-bpm-runtime/live_regression_cases.md"
+  ],
+  "ts": "2026-02-22T13:10:28+00:00"
+}
