@@ -47,3 +47,42 @@
 2. 每次移交前必须完成当线程 Entire sync + 独立提交 + trailer 校验。
 3. 若发现缺失交接物，按 Fail-Closed 停止推进并补齐。
 
+## Thread-1 更新（2026-02-22）
+
+### 已完成产出（接线重构 + 文档同步）
+
+1. M3 三条主流程由 QA skill 直连改为复用质量门禁子流程：
+   - `processes/meta/full-development/process.json`
+   - `processes/meta/hotfix/process.json`
+   - `processes/meta/refactor/process.json`
+2. 三条主流程的 `p3/p5` 统一改为：
+   - `p3 -> subprocess: quality-gate-preparation`
+   - `p5 -> subprocess: quality-gate-evaluation`
+3. 三条主流程 `composed_processes` 已补齐为：
+   - `quality-gate-preparation`
+   - `quality-gate-evaluation`
+4. 人工指引文档与 manifest 已对齐：
+   - `processes/meta/full-development/PROCESS.md`
+   - `processes/meta/hotfix/PROCESS.md`
+   - `processes/meta/refactor/PROCESS.md`
+5. 设计文档 phase->流程映射已改为子流程平台化口径：
+   - `docs/design/processes/full-development-process.md`
+   - `docs/design/processes/hotfix-process.md`
+   - `docs/design/processes/refactor-process.md`
+
+### Thread-2 必读输入
+
+1. `openspec/changes/m1-quality-gate-runtime-closure/thread-plan.md`
+2. `openspec/changes/m1-quality-gate-runtime-closure/tasks.md`
+3. `docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/thread_handoff.md`
+4. `processes/meta/full-development/process.json`
+5. `processes/meta/hotfix/process.json`
+6. `processes/meta/refactor/process.json`
+7. `docs/design/processes/full-development-process.md`
+8. `docs/design/processes/hotfix-process.md`
+9. `docs/design/processes/refactor-process.md`
+
+### 未完成依赖（交由 Thread-2/后续线程闭合）
+
+1. `openspec/changes/m1-quality-gate-runtime-closure/thread-1-gap-baseline.md` 尚未创建（本线程按约束仅做接线重构 + 文档同步）。
+2. Thread-1 风险与优先级清单证据文件尚未在本目录新增，需要后续线程补齐并回填交接引用。

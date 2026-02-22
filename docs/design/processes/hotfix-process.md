@@ -16,21 +16,21 @@
 
 1. `hotfix-intake`（AP-001/002）
 2. `scope-and-spec-fast-baseline`（AP-003/004）
-3. `fast-test-preparation`（AP-005/018/019）
+3. `fast-test-preparation`（子流程 `quality-gate-preparation`，内部覆盖 AP-005/018/019）
 4. `hotfix-implementation`（AP-006）
-5. `hotfix-gate-evaluation`（AP-007/009/020）
+5. `hotfix-gate-evaluation`（子流程 `quality-gate-evaluation`，内部覆盖 AP-007/009/020）
 6. `lifecycle-gate-sync`（AP-010/011）
 7. `release-packaging`（AP-012）
 
-## 阶段到原子流程映射
+## 阶段到流程映射
 
-| 阶段 | 原子流程 | 输出 |
+| 阶段 | 流程映射 | 输出 |
 |---|---|---|
 | hotfix-intake | AP-001, AP-002 | hotfix_objective_ref |
 | scope-and-spec-fast-baseline | AP-003, AP-004 | hotfix_spec_ref |
-| fast-test-preparation | AP-005, AP-018, AP-019 | hotfix_preparation_bundle_ref |
+| fast-test-preparation | 子流程 quality-gate-preparation（内部：AP-005, AP-018, AP-019） | hotfix_preparation_bundle_ref |
 | hotfix-implementation | AP-006 | hotfix_implementation_ref |
-| hotfix-gate-evaluation | AP-007, AP-009, AP-020 | hotfix_gate_decision |
+| hotfix-gate-evaluation | 子流程 quality-gate-evaluation（内部：AP-007, AP-009, AP-020） | hotfix_gate_decision |
 | lifecycle-gate-sync | AP-010, AP-011 | lifecycle_transition_ref + registry_sync_ref |
 | release-packaging | AP-012 | hotfix_release_package_ref |
 

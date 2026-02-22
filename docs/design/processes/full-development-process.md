@@ -16,22 +16,22 @@
 
 1. `objective-intake-and-scope`（AP-001/002/003）
 2. `spec-authoring`（AP-004）
-3. `quality-gate-preparation`（AP-005/018/019）
+3. `quality-gate-preparation`（子流程 `quality-gate-preparation`，内部覆盖 AP-005/018/019）
 4. `implementation-execution`（AP-006）
-5. `quality-gate-evaluation`（AP-007/008/009/020）
+5. `quality-gate-evaluation`（子流程 `quality-gate-evaluation`，内部覆盖 AP-007/008/009/020）
 6. `lifecycle-gate-sync`（AP-010/011）
 7. `release-packaging`（AP-012）
 8. `evolution-feedback-planning`（AP-013/014/015/017）
 
-## 阶段到原子流程映射
+## 阶段到流程映射
 
-| 阶段 | 原子流程 | 输出 |
+| 阶段 | 流程映射 | 输出 |
 |---|---|---|
 | objective-intake-and-scope | AP-001, AP-002, AP-003 | objective_ref + scope_baseline_ref |
 | spec-authoring | AP-004 | spec_ref |
-| quality-gate-preparation | AP-005, AP-018, AP-019 | preparation_bundle_ref |
+| quality-gate-preparation | 子流程 quality-gate-preparation（内部：AP-005, AP-018, AP-019） | preparation_bundle_ref |
 | implementation-execution | AP-006 | implementation_ref |
-| quality-gate-evaluation | AP-007, AP-008, AP-009, AP-020 | gate_decision + final_gate_verdict_ref |
+| quality-gate-evaluation | 子流程 quality-gate-evaluation（内部：AP-007, AP-008, AP-009, AP-020） | gate_decision + final_gate_verdict_ref |
 | lifecycle-gate-sync | AP-010, AP-011 | lifecycle_transition_ref + registry_sync_ref |
 | release-packaging | AP-012 | release_package_ref |
 | evolution-feedback-planning | AP-013, AP-014, AP-015, AP-017 | improvement_plan_ref + retro_report_ref |
