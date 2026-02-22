@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "8637d5fa4cc1",
+  "strategy": "manual-commit",
+  "branch": "codex/review-skills",
+  "checkpoints_count": 3,
+  "files_touched": [
+    ".gitignore",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-4.md",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-envfile/execution_state.json",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation-runner-llm-envfile/raw_eval.json",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/evaluation_runner_llm_envfile.stdout.json",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/runtime_summary.json",
+    "skills/system/qa/evaluation-runner/SKILL.md",
+    "skills/system/qa/evaluation-runner/references/llm.env.example",
+    "skills/system/qa/evaluation-runner/references/runner-contract.md",
+    "skills/system/qa/evaluation-runner/scripts/quality_eval_runner"
+  ],
+  "sessions": [
+    {
+      "metadata": "/86/37d5fa4cc1/0/metadata.json",
+      "transcript": "/86/37d5fa4cc1/0/full.jsonl",
+      "context": "/86/37d5fa4cc1/0/context.md",
+      "content_hash": "/86/37d5fa4cc1/0/content_hash.txt",
+      "prompt": "/86/37d5fa4cc1/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}

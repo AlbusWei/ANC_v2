@@ -1,0 +1,52 @@
+# Session Context
+
+## User Prompts
+
+### Prompt 1
+
+在worktree各个分支，以当前规范和进度重建或更新checklist。
+
+### Prompt 2
+
+实现第一批技能开发计划：M1七个sys.qa技能+template/skill-creator基座标准化，完成qa目录迁移、脚本化、文档联动、registry与施工平面闭合，并产出review/active smoke证据。
+
+### Prompt 3
+
+按设计文档重构M1 QA技能，接入OpenJudge真执行与LLM-as-Judge fail-closed
+
+### Prompt 4
+
+补齐QA技能测试定义与运行级证据文档联动，修复verdict-normalizer回归结果解析
+
+### Prompt 5
+
+修复 QA 技能实现空转问题：按 M1 与 test_methodology 强化 evaluation-runner 与 test-compiler，使用 OpenJudge 动态 grader 与严格 fail-closed
+
+### Prompt 6
+
+LLM-as-Judge 必须跑通，模型切换到 gpt-5.3-codex（同 OPENAI_BASE_URL 配置）
+
+### Prompt 7
+
+以 QA agent 身份为新开发的 sys.qa 技能补写测试用例并执行补测，发现问题则修复
+
+### Prompt 8
+
+提交当前技能治理与 QA 技能重构改动，并准备与 rebuild 合并
+
+### Prompt 9
+
+重新 fetch/merge rebuild，并排解冲突
+
+### Prompt 10
+
+为多分支/worktree共享 LLM-as-Judge 环境变量，避免每个分支手工 export
+
+### Prompt 11
+
+配置跨 worktree 共享 LLM env，并为 git-worktree-sync 准备可同步提交
+
+### Prompt 12
+
+配置跨worktree共享LLM-as-Judge环境，并准备将变更同步到rebuild与所有分支
+
