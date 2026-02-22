@@ -1,0 +1,14 @@
+{
+  "hash_before": "89bb0855d6dca1723052e97bf4217d026fd89bd4a821775cf54a3d50ab0c7028",
+  "hash_after": "7458cf30a9419a6c441e1abfa310c72b0511dcd178b645ad68df795b1cdb4453",
+  "execution_status": "success",
+  "receipt_ref": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/change_receipt_apply.json",
+  "patch_summary": {
+    "top_level_keys": [
+      "messages"
+    ],
+    "messages.groupChat.historyLimit": 125,
+    "target_before": 124,
+    "target_after": 125
+  }
+}

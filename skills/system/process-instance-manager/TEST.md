@@ -6,23 +6,47 @@
 
 ## Test Cases
 
-### TC-001: 创建实例并写入状态证据
+### TC-INS-001: 创建根实例并写入状态证据
 
 - Type: Objective
 - Priority: P0
-- Input: 合法 `process_id + phase_id + lineage_ref`
-- Expected: 产出 `instance_id/runtime_state/state_transition_ref/evidence_ref`
+- Input: 合法 `process_id + phase_id + stack_depth=0`
+- Expected: 产出 `instance_id/runtime_state/state_transition_ref/evidence_ref`，且写入 `session_binding.json`
 - Evaluation Method: Exact Match
 
-### TC-002: 递归深度超限拒绝执行
+### TC-INS-002: 子实例深度与会话隔离
 
 - Type: Objective
 - Priority: P0
-- Input: `stack_depth` 超过流程 `lineage_policy.stack_depth_limit`
-- Expected: Fail-Closed 并给出升级记录
+- Input: 合法 `parent_instance_id` 子调用
+- Expected: `stack_depth = parent + 1`，且子实例 `session_id != parent_session_id`
 - Evaluation Method: Exact Match
 
-### TC-003: 流程闭合校验失败直接拒绝
+### TC-INS-003: 禁止复用父会话
+
+- Type: Objective
+- Priority: P0
+- Input: 子实例显式传入与父实例相同 `session_id`
+- Expected: Fail-Closed
+- Evaluation Method: Exact Match
+
+### TC-INS-004: OpenClaw 显式会话调度
+
+- Type: Objective
+- Priority: P0
+- Input: 任意合法实例启动
+- Expected: 调度命令显式包含 `--session-id`
+- Evaluation Method: Exact Match
+
+### TC-INS-005: 历史迁移与回放验证
+
+- Type: Objective
+- Priority: P0
+- Input: `agents/control/BPM/memory/process_instances/` 全量实例
+- Expected: 迁移报告失败数为 0，回放报告失败数为 0
+- Evaluation Method: Exact Match
+
+### Legacy TC-003: 流程闭合校验失败直接拒绝
 
 - Type: Objective
 - Priority: P0

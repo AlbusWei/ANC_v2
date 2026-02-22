@@ -1,6 +1,6 @@
 # 上下文传递 Schema
 
-> 版本: v0.3.0 | SSOT 上游: `docs/architecture/context_protocol.md`
+> 版本: v0.4.0 | SSOT 上游: `docs/architecture/context_protocol.md`
 
 ## 概述
 
@@ -18,7 +18,13 @@
     "instance_id": "string (required)",
     "parent_instance_id": "string (required when recursive)",
     "lineage_ref": "string (required)",
-    "stack_depth": "integer (required)"
+    "stack_depth": "integer (required)",
+    "session_binding": {
+      "agent_id": "string (required)",
+      "session_key": "string (required)",
+      "session_id": "string (required)",
+      "parent_session_id": "string|null (required)"
+    }
   },
   "upstream_decision_refs": ["string"],
   "acceptance_criteria": ["string"],
@@ -41,6 +47,14 @@
   "output_contract": "string (contract_ref, required)",
   "lineage_ref": "string (required)",
   "stack_depth": "integer (required)",
+  "process_version": "string (required)",
+  "process_level": "string (P1|P2|P3|P4|P5|P6, required)",
+  "session_binding": {
+    "agent_id": "string (required)",
+    "session_key": "string (required)",
+    "session_id": "string (required)",
+    "parent_session_id": "string|null (required)"
+  },
   "evidence_dir": "string (required)",
   "parent_instance_id": "string (optional)",
   "spec_ref": "string (required when phase.requires_spec=true)",
@@ -60,6 +74,7 @@
   "actor": "string (required)",
   "lineage_ref": "string (required)",
   "stack_depth": "integer (required)",
+  "session_id": "string (required)",
   "status": "string (completed|failed, required)",
   "output_ref": "string (required)",
   "evidence_ref": "string (required)",
@@ -78,3 +93,4 @@
 1. 先摘要再引用原文。
 2. 摘要必须保留 `process_lineage`。
 3. 缺 lineage 信息时禁止跨层流转。
+4. 缺 `session_binding.session_id` 或 actor 回执 `session_id` 时必须 Fail-Closed。

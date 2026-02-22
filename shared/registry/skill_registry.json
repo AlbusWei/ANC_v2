@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "skill_registry",
-  "updated_at": "2026-02-22T00:00:00Z",
+  "updated_at": "2026-02-22T13:30:00Z",
   "entry_contract": {
     "required": [
       "skill_id",
@@ -187,7 +187,7 @@
       "path": "skills/meta/spec-writer/SKILL.md",
       "layer": "meta",
       "owner": "architect",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "draft",
       "agentskills": {
         "name": "spec-writer",
@@ -218,7 +218,7 @@
       "path": "skills/meta/llm-judge/SKILL.md",
       "layer": "meta",
       "owner": "qa",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "draft",
       "agentskills": {
         "name": "llm-judge",
@@ -280,7 +280,7 @@
       "path": "skills/system/catchup-scheduler/SKILL.md",
       "layer": "system",
       "owner": "bpm",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "draft",
       "agentskills": {
         "name": "catchup-scheduler",
@@ -311,7 +311,7 @@
       "path": "skills/system/escalation-handler/SKILL.md",
       "layer": "system",
       "owner": "bpm",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "draft",
       "agentskills": {
         "name": "escalation-handler",
@@ -342,7 +342,7 @@
       "path": "skills/system/evidence-recorder/SKILL.md",
       "layer": "system",
       "owner": "bpm",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "draft",
       "agentskills": {
         "name": "evidence-recorder",
@@ -374,7 +374,7 @@
       "layer": "system",
       "owner": "bpm",
       "version": "0.1.0",
-      "status": "draft",
+      "status": "review",
       "agentskills": {
         "name": "process-instance-manager",
         "description": "Manage BPM process instance lifecycle with strict lineage isolation",
@@ -404,7 +404,7 @@
       "path": "skills/system/trigger-ingress-normalizer/SKILL.md",
       "layer": "system",
       "owner": "bpm",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "draft",
       "agentskills": {
         "name": "trigger-ingress-normalizer",
@@ -435,7 +435,7 @@
       "path": "skills/system/trigger-matcher-dedupe/SKILL.md",
       "layer": "system",
       "owner": "bpm",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "draft",
       "agentskills": {
         "name": "trigger-matcher-dedupe",

@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-02-22T14:15:31Z",
+  "objective_ref": "obj-governed-openclaw-config-change",
+  "requester": "personal-assistant",
+  "target_path": "messages.groupChat.historyLimit",
+  "value_before": 124,
+  "target_after": 125,
+  "delta": 1,
+  "base_hash": "50b448656665aabed21c636720fc4257c2d83278106c476d8497b14d1e91bd09",
+  "patch_raw": "{\"messages\": {\"groupChat\": {\"historyLimit\": 125}}}",
+  "rollback_patch_raw": "{\"messages\": {\"groupChat\": {\"historyLimit\": 124}}}"
+}

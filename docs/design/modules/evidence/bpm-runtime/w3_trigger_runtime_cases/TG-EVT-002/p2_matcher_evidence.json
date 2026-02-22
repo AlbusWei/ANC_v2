@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-02-22T14:47:48Z",
+  "status": "ok",
+  "checks": {
+    "match_policy_target_defined": true,
+    "canonical_minimum_fields": true,
+    "dedupe_keys_available": true,
+    "dedupe_ambiguity": false
+  },
+  "match_result": "hit",
+  "dedupe_decision": "reject",
+  "reason": "duplicate_event",
+  "ledger_ref": "tmp/m2-bpm-runtime/tc-tg-sandbox/ledgers/event_ledger.json"
+}

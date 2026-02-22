@@ -47,6 +47,13 @@
 2. 执行前必须完成 objective/spec/test 与 rollback 证据校验。
 3. 执行后必须记录 hash_before/hash_after 与回滚状态。
 
+运行入口与测试：
+
+1. 执行入口：`processes/meta/governed-config-change/scripts/governed_config_change_runner.py`
+2. P2 门禁 runner：`skills/system/config-change-gatekeeper/scripts/config_change_gatekeeper_runner.py`
+3. P4 执行 runner：`skills/system/system-config-updater/scripts/system_config_updater_runner.py`
+4. 运行级用例：`tests/m2-bpm-runtime/TC-GCC.md`（`TC-GCC-001~003`）
+
 ## hold-governance
 
 设计文档：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/hold-governance-process.md`

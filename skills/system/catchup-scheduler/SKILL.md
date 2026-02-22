@@ -55,3 +55,9 @@ test_mount:
   test_doc: skills/system/catchup-scheduler/TEST.md
   methodology_ref: docs/architecture/test_methodology.md
 ```
+
+## Runtime Entrypoint
+
+1. 可执行入口：`skills/system/catchup-scheduler/scripts/catchup_scheduler_runner.py`
+2. 最小命令：
+   - `python3 skills/system/catchup-scheduler/scripts/catchup_scheduler_runner.py --input <input.json> --output <output.json> --run <catchup_run.json> --reason <catchup_reason.json>`

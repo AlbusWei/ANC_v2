@@ -51,3 +51,9 @@ test_mount:
   test_doc: skills/system/evidence-recorder/TEST.md
   methodology_ref: docs/architecture/test_methodology.md
 ```
+
+## Runtime Entrypoint
+
+1. 可执行入口：`skills/system/evidence-recorder/scripts/evidence_recorder_runner.py`
+2. 最小命令：
+   - `python3 skills/system/evidence-recorder/scripts/evidence_recorder_runner.py --input <input.json> --output <output.json> --receipt <trigger_receipt.json> --index <evidence_index.jsonl> --trace <traceability.json>`

@@ -1,6 +1,6 @@
 # BPM ↔ Actor 通信协议
 
-> 版本: v0.3.0 | SSOT 上游: `docs/architecture/process_architecture.md`
+> 版本: v0.4.0 | SSOT 上游: `docs/architecture/process_architecture.md`
 
 ## 概述
 
@@ -23,6 +23,14 @@
   "output_contract": "string (contract_ref, required)",
   "lineage_ref": "string (required)",
   "stack_depth": "integer (required)",
+  "process_version": "string (required)",
+  "process_level": "string (P1|P2|P3|P4|P5|P6, required)",
+  "session_binding": {
+    "agent_id": "string (required)",
+    "session_key": "string (required)",
+    "session_id": "string (required)",
+    "parent_session_id": "string|null (required)"
+  },
   "evidence_dir": "string (required)",
   "parent_instance_id": "string (optional)",
   "spec_ref": "string (required when phase.requires_spec=true)",
@@ -38,6 +46,8 @@
 1. `target_type=skill` 时，`target_id` 必须命中 `shared/registry/skill_registry.json#entries[].skill_id`。
 2. `target_type=subprocess` 时，`target_id` 必须命中 `shared/registry/process_registry.json#entries[].process_id`。
 3. 禁止使用旧字段：`skill`、`skill_or_process`、`skill_or_subprocess`。
+4. BPM 调 OpenClaw 时必须显式传 `--session-id <session_binding.session_id>`，禁止隐式主会话执行。
+5. 子实例 `session_binding.session_id` 必须与 `parent_session_id` 不同。
 
 ## 任务完成 (Actor → BPM)
 
@@ -49,6 +59,7 @@
   "actor": "string (required)",
   "lineage_ref": "string (required)",
   "stack_depth": "integer (required)",
+  "session_id": "string (required)",
   "status": "string (completed|failed, required)",
   "output_ref": "string (required)",
   "evidence_ref": "string (required)",

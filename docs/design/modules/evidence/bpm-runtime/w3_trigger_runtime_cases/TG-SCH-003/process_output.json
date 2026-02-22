@@ -1,0 +1,19 @@
+{
+  "status": "ok",
+  "trigger_receipt_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-003/p4_trigger_receipt.json",
+  "runtime_trace_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-003/runtime_trace.json",
+  "catchup_decision": "skip",
+  "instance_id": "virtual-trg-4cc8a31ec7fb9a73c378",
+  "dedupe_decision": "allow",
+  "match_result": "hit",
+  "trigger_id": "trg-4cc8a31ec7fb9a73c378",
+  "catchup_run_ref": "",
+  "catchup_reason_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-003/p5_reason.json",
+  "escalation_ref": "",
+  "admin_forward_ref": "",
+  "trigger_ledger_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-003/trigger_ledger.json",
+  "override_decision_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-003/override_decision.json",
+  "override_reason_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-003/override_reason.json",
+  "fail_closed_record_ref": "",
+  "backfill_request_ref": ""
+}
