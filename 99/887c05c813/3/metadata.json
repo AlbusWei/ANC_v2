@@ -1,0 +1,42 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "99887c05c813",
+  "session_id": "codex-4f74cfa866ba",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T18:03:08.384482Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/open_questions.md",
+    "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/scope_baseline.md",
+    "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/thread_handoff.md",
+    "openspec/changes/m1-quality-gate-runtime-closure/design.md",
+    "openspec/changes/m1-quality-gate-runtime-closure/tasks.md",
+    "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/round-evidence.jsonl",
+    "openspec/changes/m1-quality-gate-runtime-closure/.openspec.yaml",
+    "openspec/changes/m1-quality-gate-runtime-closure/proposal.md",
+    "openspec/changes/m1-quality-gate-runtime-closure/thread-plan.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "5a97ffa650d1",
+  "transcript_identifier_at_start": "gemini-8be55d72b8",
+  "checkpoint_transcript_start": 48,
+  "transcript_lines_at_start": 48,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T18:03:08.350514Z",
+    "agent_lines": 405,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 405,
+    "agent_percentage": 100
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
