@@ -9,6 +9,7 @@
 5. `skills/system/{trigger-ingress-normalizer,trigger-matcher-dedupe,process-instance-manager,evidence-recorder,catchup-scheduler,escalation-handler}/`：M2 BPM runtime 技能资产。
 6. `skills/system/construction-audit/`：M6 施工联动审计技能资产。
 7. `skills/system/openspec-sync/`：M6 OpenSpec 协同同步包装技能资产。
+8. `skills/system/git-worktree-sync/`：多 worktree 分支集成与扇出同步技能资产。
 
 ## Rule
 

@@ -1,6 +1,6 @@
 # Skill 全量清单
 
-> 版本: v0.9.0 | SSOT: `shared/registry/skill_registry.json`
+> 版本: v1.0.0 | SSOT: `shared/registry/skill_registry.json`
 
 ## 已注册 Skill
 
@@ -24,6 +24,7 @@
 18. sys.bpm.escalation-handler
 19. sys.arch.construction-audit
 20. system.integration.openspec-sync
+21. system.ops.git-worktree-sync
 
 ## 规划 Skill（节选）
 
@@ -56,6 +57,10 @@ Self-Development 技能包设计文档：
 Construction Plane 技能包设计文档：
 
 - `docs/design/skills/construction-plane-skills.md`
+
+Git Operations 技能包设计文档：
+
+- `docs/design/skills/git-operations-skills.md`
 
 ## 生命周期规则
 

@@ -36,6 +36,7 @@
 - [x] 完成 M6 施工治理资产落盘：`construction-plane-governance` 流程 + `sys.arch.construction-audit` 技能 + M6 详细设计重构
 - [x] 建立 M6 × OpenSpec Hybrid 协同协议并明确 Architect 语义 owner 机制
 - [x] 完成 OpenSpec 协同完整 schema 与包装技能落盘：`openspec-collaboration-schema` + `system.integration.openspec-sync`
+- [x] 新增多 worktree 分支协同技能：`system.ops.git-worktree-sync`（`source -> parent -> siblings`，冲突/大规模 WIP 均 Fail-Closed）
 - [x] 锁定回合追溯主键：`1 round = 1 OpenSpec change = N Entire checkpoints = N commits`
 - [x] 锁定证据写入策略：提交级证据进入 `round-evidence.jsonl`，施工平面主文档仅在回合关闭时汇总
 - [x] 锁定 `round_id` 规范：`R-YYYYMMDD-M6-<change_key>-NN`，`NN` 按同一 `change_key` 递增
