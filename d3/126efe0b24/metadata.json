@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "d3126efe0b24",
+  "strategy": "manual-commit",
+  "branch": "codex/review-skills",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/skills/git-operations-skills.md",
+    "skills/system/git-worktree-sync/SKILL.md",
+    "skills/system/git-worktree-sync/TEST.md",
+    "skills/system/git-worktree-sync/scripts/worktree_sync.py",
+    "tests/README.md",
+    "tests/git-worktree-sync/TEST.md",
+    "tests/git-worktree-sync/evidence/runtime-validation-round-1/report.md",
+    "tests/git-worktree-sync/evidence/runtime-validation-round-1/run_summary.json",
+    "tests/git-worktree-sync/run_runtime_validation.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/d3/126efe0b24/0/metadata.json",
+      "transcript": "/d3/126efe0b24/0/full.jsonl",
+      "context": "/d3/126efe0b24/0/context.md",
+      "content_hash": "/d3/126efe0b24/0/content_hash.txt",
+      "prompt": "/d3/126efe0b24/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
