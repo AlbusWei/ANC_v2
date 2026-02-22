@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-02-22T18:43:41Z",
+  "mode": "subjective",
+  "gate_decision": "pass",
+  "subjective_verdict": "accept",
+  "reasons": [
+    "simulated_subjective_result"
+  ],
+  "simulated": true,
+  "case_results": [
+    {
+      "tc_id": "TC-SUBJECTIVE-001",
+      "priority": "P1",
+      "decision": "pass"
+    }
+  ]
+}

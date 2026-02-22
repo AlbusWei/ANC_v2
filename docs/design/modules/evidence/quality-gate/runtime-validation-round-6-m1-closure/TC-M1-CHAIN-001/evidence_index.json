@@ -1,0 +1,40 @@
+{
+  "tc_id": "TC-M1-CHAIN-001",
+  "status": "pass",
+  "gate_decision": "pass",
+  "decision_class": "pass",
+  "inputs": [
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/prep_input.json",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/target_asset_snapshot.json",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/eval_input.json",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle_input.json"
+  ],
+  "outputs": [
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/prep_output.json",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/eval_output.json",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle_output.json"
+  ],
+  "logs": [
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/prep.stdout.txt",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/prep.stderr.txt",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/eval.stdout.txt",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/eval.stderr.txt",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle.stdout.txt",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle.stderr.txt",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/commands.txt",
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/command_trace.json"
+  ],
+  "critical_refs": {
+    "prep_output_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/prep_output.json",
+    "eval_output_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/eval_output.json",
+    "final_gate_verdict_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/evaluation/p4_aggregate_verdict/final_gate_verdict.json",
+    "lifecycle_output_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle_output.json",
+    "lifecycle_transition_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle/p4_lifecycle_transition.json",
+    "registry_sync_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle/p5_registry_sync.json",
+    "lifecycle_review_report_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle/lifecycle_review_report.json"
+  },
+  "notes": [
+    "M3->M1->M4 pass 主链路已闭环。"
+  ],
+  "generated_at": "2026-02-22T18:43:39Z"
+}

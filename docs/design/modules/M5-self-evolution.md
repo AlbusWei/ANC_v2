@@ -1,6 +1,6 @@
 # M5 — 自演化模块详细设计
 
-> 版本: v0.3.0 | 建设优先级: P2
+> 版本: v0.3.1 | 建设优先级: P2
 
 ## 模块定位
 
@@ -32,6 +32,15 @@
 
 1. 内部主线将运行反馈接入 M5。
 2. 外部主线的 support-and-feedback 复用 M5 改进机制。
+
+## M5 -> M1 最小接入说明（Thread-3）
+
+1. 最小接入目标：验证 `M5` 可调用 `M1` 门禁入口（`quality-gate-preparation` + `quality-gate-evaluation`）。
+2. 运行级用例：`TC-M1-CHAIN-004`。
+3. 用例证据：
+   - `docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-004/evidence_index.json`
+   - `docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-004/eval_output.json`
+4. 结论口径：`M5` 当前已具备接入统一门禁入口的最小执行能力；后续线程再扩展提案编排与状态联动。
 
 ## Fail-Closed 规则
 

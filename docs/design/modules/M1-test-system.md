@@ -1,6 +1,6 @@
 # M1 — 测试系统模块详细设计
 
-> 版本: v0.5.0 | 建设优先级: P0 | 最后更新: 2026-02-21
+> 版本: v0.5.1 | 建设优先级: P0 | 最后更新: 2026-02-22
 
 ## 模块定位
 
@@ -14,6 +14,7 @@ OpenJudge 在 `M1` 中定位为评测执行内核，不直接承担治理决策�
 3. 准备流程：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/quality-gate-preparation-process.md`
 4. 评测流程：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/quality-gate-evaluation-process.md`
 5. HOLD 治理流程：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/hold-governance-process.md`
+6. Thread-3 运行级闭环证据：`docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/runtime_summary.json`
 
 ## Phase 1 成功优先级
 
@@ -134,6 +135,16 @@ OpenJudge 在 `M1` 中定位为评测执行内核，不直接承担治理决策�
 1. `M3` 复用 `M1` 作为开发闭环门禁。
 2. `M4` 复用 `M1` 作为 lifecycle-review 的测试输入。
 3. `M5` 复用 `M1` 验证自进化改进效果。
+
+## Thread-3 运行闭环补充（2026-02-22）
+
+1. 新增测试入口：`tests/m1-runtime/run_post_dev_regression.py`。
+2. 用例覆盖：
+   - `TC-M1-CHAIN-001`：`M3 -> M1 -> M4` pass 主链路。
+   - `TC-M1-CHAIN-002`：关键输入缺失触发 `test_invalid/fail-closed`，并阻断 lifecycle transition。
+   - `TC-M1-CHAIN-003`：`evaluation hold -> hold-governance` 路由并产出 `hold_resolution_ref`。
+   - `TC-M1-CHAIN-004`：`M5` 最小接入 `M1` 门禁入口可执行。
+3. round 证据目录：`docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/`。
 
 ## 验收清单
 
