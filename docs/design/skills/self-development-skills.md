@@ -1,6 +1,6 @@
 # Self-Development Skills 设计包
 
-> 版本: v0.2.0 | 分类: Meta Skills | 模块: M3 Self-Development | 最后更新: 2026-02-22
+> 版本: v0.3.0 | 分类: Meta Skills | 模块: M3 Self-Development | 最后更新: 2026-02-23
 
 ## 目标
 
@@ -56,9 +56,9 @@
 - Fail-Closed：schema 缺失、必填字段不匹配、阻断问题未解。
 - test_mount：`skills/meta/template-validator/TEST.md`
 
-## 系统治理依赖技能（Session2 设计闭合）
+## 系统治理依赖技能（Session3 运行落地）
 
-> 本节只闭合接口契约，不在本回合创建运行目录。
+> 本节契约与运行资产已对齐，生命周期继续保持 `draft`，不越级到 `active`。
 
 ### 6. sys.arch.impact-analyzer（依赖）
 
@@ -77,7 +77,7 @@
   - `rollback_requirements`
   - `gating_recommendation`
 - Fail-Closed：影响范围不可达或风险冲突未裁决时拒绝放行。
-- test_mount（计划字段）：`tests/m3-self-development/TC-IMPACT-ANALYZER.md`
+- test_mount（运行入口）：`skills/system/impact-analyzer/TEST.md` + `tests/m3-runtime/run_skill_contract_validation.py`
 - 生命周期预期：`draft`
 
 ### 7. sys.admin.release-manager（依赖）
@@ -97,7 +97,7 @@
   - `release_decision`
   - `rollback_bundle_ref`
 - Fail-Closed：门禁证据缺失或回滚包不可用时拒绝发布。
-- test_mount（计划字段）：`tests/m3-self-development/TC-RELEASE-MANAGER.md`
+- test_mount（运行入口）：`skills/system/release-manager/TEST.md` + `tests/m3-runtime/run_skill_contract_validation.py`
 - 生命周期预期：`draft`
 
 ## 生命周期与落盘状态
@@ -107,5 +107,5 @@
    - 对应 `SKILL.md/TEST.md` 资产通过 capability contract 校验
    - `registry_contract_tool.py verify` 通过
    - 与 `full-development/hotfix/refactor` I/O 契约一致
-3. Session2 设计闭合新增约束：
-   - `sys.arch.impact-analyzer`、`sys.admin.release-manager` 仅做契约落盘，不在本回合落运行资产。
+3. Session3 实现闭合：
+   - `sys.arch.impact-analyzer`、`sys.admin.release-manager` 已落地运行目录与最小可执行 runner，并纳入 `tests/m3-runtime` 统一验证入口。

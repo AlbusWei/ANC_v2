@@ -1,6 +1,6 @@
 # Release Manager Agent 详细设计
 
-> 版本: v1.0.0 | agent_id: release-manager-agent | 层级: app/delivery | 权限: release-governance | 生命周期: draft（Session2 设计闭合，待 Session3 运行资产落地）
+> 版本: v1.1.0 | agent_id: release-manager-agent | 层级: app/delivery | 权限: release-governance | 生命周期: draft（Session3 运行资产已落地）
 
 ## 1. 角色定位
 
@@ -85,15 +85,14 @@
 3. registry 校验返回失败时直接拒绝发布并升级 `owner -> bpm -> admin`。
 4. 输出契约字段不完整时禁止向下游交付。
 
-## 8. test_mount（计划字段）
+## 8. test_mount（统一入口）
 
-1. `tests/m3-self-development/TC-RELEASE-MANAGER-AGENT.md`
-2. `tests/m3-self-development/run_tc_online.py --case TC-RELEASE-MANAGER-AGENT-001`
+1. `tests/m3-runtime/TEST.md`
+2. `tests/m3-runtime/run_skill_contract_validation.py`（覆盖 release-manager happy/fail-closed 基线）
 
-## 9. DoD（设计闭合口径）
+## 9. DoD（运行资产闭合口径）
 
 1. 文档内已固定 `release_request_in` 与 `release_delivery_out/release_reject_out` 双结构。
 2. `bound_skills` 与 `participating_processes` 可映射到 M3 主流程阶段。
-3. Fail-Closed 路径可直接转写为运行级测试用例。
-4. 生命周期状态保持 `draft`，不宣称运行可用。
-
+3. 运行目录 `agents/app/delivery/release-manager-agent/` 已落地并完成 registry 联动。
+4. 生命周期状态保持 `draft`，不越级 `review/active`。

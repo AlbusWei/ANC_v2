@@ -32,7 +32,8 @@
         "system-analyst",
         "bpm",
         "qa",
-        "personal-assistant"
+        "personal-assistant",
+        "release-manager-agent"
       ],
       "allow_agent_status": [
         "draft",

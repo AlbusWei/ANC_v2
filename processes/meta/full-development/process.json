@@ -38,8 +38,8 @@
       "phase_id": "p1",
       "name": "objective-intake-and-scope",
       "actor": "architect",
-      "target_type": "skill",
-      "target_id": "meta.arch.objective-writer",
+      "target_type": "subprocess",
+      "target_id": "ap-001-002-003-bundle",
       "requires_spec": false,
       "sipoc": {
         "supplier": "initiator",
@@ -54,8 +54,8 @@
       "phase_id": "p2",
       "name": "spec-authoring",
       "actor": "architect",
-      "target_type": "skill",
-      "target_id": "meta.arch.spec-writer",
+      "target_type": "subprocess",
+      "target_id": "ap-004-bundle",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-004-spec-authoring.md#ap-004-spec-authoring",
       "sipoc": {
@@ -88,8 +88,8 @@
       "phase_id": "p4",
       "name": "implementation-execution",
       "actor": "kernel-dev",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "ap-006-bundle",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-006-implementation-execution.md#ap-006-implementation-execution",
       "sipoc": {
@@ -122,8 +122,8 @@
       "phase_id": "p6",
       "name": "lifecycle-gate-sync",
       "actor": "admin",
-      "target_type": "skill",
-      "target_id": "meta.arch.template-validator",
+      "target_type": "subprocess",
+      "target_id": "lifecycle-review",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-010-lifecycle-transition.md#ap-010-lifecycle-transition",
       "sipoc": {
@@ -139,8 +139,8 @@
       "phase_id": "p7",
       "name": "release-packaging",
       "actor": "admin",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "ap-012-bundle",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-012-release-packaging.md#ap-012-release-packaging",
       "sipoc": {
@@ -156,8 +156,8 @@
       "phase_id": "p8",
       "name": "evolution-feedback-planning",
       "actor": "architect",
-      "target_type": "skill",
-      "target_id": "meta.arch.process-creator",
+      "target_type": "subprocess",
+      "target_id": "ap-013-014-015-017-bundle",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-015-improvement-planning.md#ap-015-improvement-planning",
       "sipoc": {
@@ -245,5 +245,12 @@
       "reason",
       "evidence_ref"
     ]
+  },
+  "process_type": "dev.internal-productization",
+  "governance_bundle": {
+    "syntax_ref": "docs/design/processes/development-loop-core-standard.md",
+    "obligation_ref": "docs/design/processes/development-loop-core-standard.md",
+    "risk_policy_ref": "docs/design/processes/governance-processes.md",
+    "checklist_ref": "docs/design/modules/M3-self-development.md"
   }
 }
