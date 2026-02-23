@@ -1,9 +1,11 @@
 {
   "cli_version": "0.4.5",
   "checkpoint_id": "af2428b2ac6f",
+  "session_id": "codex-5eee0b734643",
   "strategy": "manual-commit",
+  "created_at": "2026-02-23T09:26:11.531144Z",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 2,
+  "checkpoints_count": 1,
   "files_touched": [
     "agents/app/delivery/release-manager-agent/AGENTS.md",
     "agents/app/delivery/release-manager-agent/IDENTITY.md",
@@ -98,34 +100,24 @@
     "tests/m3-runtime/TEST.md",
     "tests/m3-runtime/run_skill_contract_validation.py"
   ],
-  "sessions": [
-    {
-      "metadata": "/af/2428b2ac6f/0/metadata.json",
-      "transcript": "/af/2428b2ac6f/0/full.jsonl",
-      "context": "/af/2428b2ac6f/0/context.md",
-      "content_hash": "/af/2428b2ac6f/0/content_hash.txt",
-      "prompt": "/af/2428b2ac6f/0/prompt.txt"
-    },
-    {
-      "metadata": "/af/2428b2ac6f/1/metadata.json",
-      "transcript": "/af/2428b2ac6f/1/full.jsonl",
-      "context": "/af/2428b2ac6f/1/context.md",
-      "content_hash": "/af/2428b2ac6f/1/content_hash.txt",
-      "prompt": "/af/2428b2ac6f/1/prompt.txt"
-    },
-    {
-      "metadata": "/af/2428b2ac6f/2/metadata.json",
-      "transcript": "/af/2428b2ac6f/2/full.jsonl",
-      "context": "/af/2428b2ac6f/2/context.md",
-      "content_hash": "/af/2428b2ac6f/2/content_hash.txt",
-      "prompt": "/af/2428b2ac6f/2/prompt.txt"
-    }
-  ],
+  "agent": "Gemini CLI",
+  "turn_id": "da1c0d18a447",
+  "transcript_identifier_at_start": "gemini-b76e177629",
   "token_usage": {
     "input_tokens": 0,
     "cache_creation_tokens": 0,
     "cache_read_tokens": 0,
     "output_tokens": 0,
     "api_call_count": 0
-  }
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-23T09:26:11.471152Z",
+    "agent_lines": 0,
+    "human_added": 3322,
+    "human_modified": 578,
+    "human_removed": 0,
+    "total_committed": 3322,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
 }
