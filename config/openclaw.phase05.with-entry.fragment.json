@@ -32,6 +32,10 @@
       {
         "id": "personal-assistant",
         "workspace": "agents/app/entry/personal-assistant"
+      },
+      {
+        "id": "release-manager-agent",
+        "workspace": "agents/app/delivery/release-manager-agent"
       }
     ]
   },

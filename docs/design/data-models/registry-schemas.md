@@ -6,7 +6,7 @@
 ## agent_directory.json
 
 - schema_version: `1.1.0`
-- updated_at: `2026-02-22T23:29:33Z`
+- updated_at: `2026-02-23T09:15:52Z`
 - strict mode: `true`
 
 | 字段 | 类型 | 必填 | 约束 | 说明 |
@@ -45,7 +45,7 @@
 ## skill_registry.json
 
 - schema_version: `1.1.0`
-- updated_at: `2026-02-22T17:10:00Z`
+- updated_at: `2026-02-23T09:15:52Z`
 - strict mode: `true`
 
 | 字段 | 类型 | 必填 | 约束 | 说明 |
@@ -80,16 +80,16 @@
 
 ```json
 {
-  "skill_id": "meta.arch.spec-writer",
-  "name": "spec-writer",
-  "path": "skills/meta/spec-writer/SKILL.md",
+  "skill_id": "meta.arch.agent-creator",
+  "name": "agent-creator",
+  "path": "skills/meta/agent-creator/SKILL.md",
   "layer": "meta",
   "owner": "architect",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "status": "draft",
   "agentskills": {
-    "name": "spec-writer",
-    "description": "Generate objective-aligned technical spec with enforceable constraints",
+    "name": "agent-creator",
+    "description": "Create or update agent design assets with lifecycle and registry-ready contracts",
     "license": "Apache-2.0",
     "compatibility": {
       "openclaw": ">=2026.2",
@@ -100,13 +100,13 @@
     "projection_mode": "bundle",
     "bundle_key": "anc-v2-meta-skills",
     "bundle_source": "skills/meta",
-    "entry_key": "meta.arch.spec-writer",
-    "source": "skills/meta/spec-writer",
+    "entry_key": "meta.arch.agent-creator",
+    "source": "skills/meta/agent-creator",
     "install_strategy": "lazy",
     "allow_draft_projection": true
   },
   "tests": {
-    "test_doc": "skills/meta/spec-writer/TEST.md",
+    "test_doc": "skills/meta/agent-creator/TEST.md",
     "methodology_ref": "docs/architecture/test_methodology.md"
   }
 }
@@ -115,7 +115,7 @@
 ## process_registry.json
 
 - schema_version: `1.1.0`
-- updated_at: `2026-02-22T23:29:33Z`
+- updated_at: `2026-02-23T09:15:52Z`
 - strict mode: `true`
 
 | 字段 | 类型 | 必填 | 约束 | 说明 |
@@ -141,21 +141,21 @@
 
 ```json
 {
-  "process_id": "development-process",
-  "skill_name": "development-process",
-  "skill_path": "processes/meta/development-process/SKILL.md",
-  "manifest_path": "processes/meta/development-process/process.json",
-  "objective_ref": "obj-phase1-min-loop",
+  "process_id": "ap-001-002-003-bundle",
+  "skill_name": "ap-001-002-003-bundle",
+  "skill_path": "processes/meta/ap-001-002-003-bundle/SKILL.md",
+  "manifest_path": "processes/meta/ap-001-002-003-bundle/process.json",
+  "objective_ref": "obj-m3-ap-001-002-003-bundle",
   "owner": "bpm",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "status": "draft",
-  "phase_count": 4,
+  "phase_count": 1,
   "openclaw": {
     "projection_mode": "bundle",
     "bundle_key": "anc-v2-meta-processes",
     "bundle_source": "processes/meta",
-    "entry_key": "development-process",
-    "source": "processes/meta/development-process",
+    "entry_key": "ap-001-002-003-bundle",
+    "source": "processes/meta/ap-001-002-003-bundle",
     "allow_draft_projection": true
   }
 }

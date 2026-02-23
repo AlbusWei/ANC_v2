@@ -1,6 +1,6 @@
 # Agent 全量清单
 
-> 版本: v0.9.0 | SSOT: `shared/registry/agent_directory.json`
+> 版本: v1.0.0 | SSOT: `shared/registry/agent_directory.json`
 
 ## 已注册 Agent
 
@@ -14,6 +14,7 @@
 | qa | kernel | admin | quality-governance | review |
 | bpm | control | admin | orchestration-control | review |
 | personal-assistant | app | admin | entry-assistance-read-heavy | draft |
+| release-manager-agent | app | admin | release-governance | draft |
 
 ## 设计中 Kernel Agents（未注册）
 
@@ -29,11 +30,11 @@ monitor, analyst, planner
 
 business-analyst, product-manager, tech-lead, solution-architect, frontend-dev, backend-dev, data-engineer, integration-engineer, qa-engineer, devops-engineer, delivery-manager, customer-success-manager
 
-Session2 设计闭合（待 Session3 运行资产实现）：
+Session3 运行资产联动：
 
-| agent_id | 设计状态 | 生命周期目标 | 说明 |
+| agent_id | 运行状态 | 生命周期目标 | 说明 |
 |---|---|---|---|
-| release-manager-agent | 已完成可运行资产口径设计 | draft | 已补齐 bound_skills、流程参与、handoff 输入/输出、Fail-Closed、test_mount |
+| release-manager-agent | 已完成运行目录落地并注册 | draft | 已落地 `AGENTS/IDENTITY/SOUL/USER/TOOLS/MEMORY` 与日记目录 |
 
 ## 职责边界注记
 
