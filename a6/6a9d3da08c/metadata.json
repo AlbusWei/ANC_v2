@@ -250,6 +250,13 @@
       "context": "/a6/6a9d3da08c/7/context.md",
       "content_hash": "/a6/6a9d3da08c/7/content_hash.txt",
       "prompt": "/a6/6a9d3da08c/7/prompt.txt"
+    },
+    {
+      "metadata": "/a6/6a9d3da08c/8/metadata.json",
+      "transcript": "/a6/6a9d3da08c/8/full.jsonl",
+      "context": "/a6/6a9d3da08c/8/context.md",
+      "content_hash": "/a6/6a9d3da08c/8/content_hash.txt",
+      "prompt": "/a6/6a9d3da08c/8/prompt.txt"
     }
   ],
   "token_usage": {
