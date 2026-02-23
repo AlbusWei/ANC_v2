@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "8d4402d699eb",
+  "strategy": "manual-commit",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/modules/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/open_questions.md",
+    "openspec/changes/m3-self-development-e2e-online/m3-gap-baseline.md",
+    "openspec/changes/m3-self-development-e2e-online/tasks.md",
+    "openspec/changes/m3-self-development-e2e-online/thread-plan.md",
+    "tests/m3-self-development/TEST.md",
+    "tests/m3-self-development/live_cases.md",
+    "tests/m3-self-development/run_tc_online.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/8d/4402d699eb/0/metadata.json",
+      "transcript": "/8d/4402d699eb/0/full.jsonl",
+      "context": "/8d/4402d699eb/0/context.md",
+      "content_hash": "/8d/4402d699eb/0/content_hash.txt",
+      "prompt": "/8d/4402d699eb/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
