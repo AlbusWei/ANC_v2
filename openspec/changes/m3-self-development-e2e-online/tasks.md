@@ -17,17 +17,18 @@
 
 ## 3. Session3（缺失资产最小可执行落地）
 
-- [ ] 3.1 落地 `skills/system/impact-analyzer/` 与 `skills/system/release-manager/`（含 `SKILL.md/TEST.md` 与最小 runner）。
-- [ ] 3.2 落地 `processes/meta/registry-sync/` 与 `processes/meta/escalation/`（含 `process.json`、执行入口、最小测试挂载）。
-- [ ] 3.3 落地 `agents/app/delivery/release-manager-agent/` 运行资产目录。
-- [ ] 3.4 更新 `shared/registry/{skill_registry.json,process_registry.json,agent_directory.json}`。
-- [ ] 3.5 再次联动更新 `docs/design/*inventory*` 与 `docs/architecture/construction_plane.md`。
+- [x] 3.1 落地 `skills/system/impact-analyzer/` 与 `skills/system/release-manager/`（含 `SKILL.md/TEST.md` 与最小 runner）。
+- [x] 3.2 落地 `processes/meta/registry-sync/` 与 `processes/meta/escalation/`（含 `process.json`、执行入口、最小测试挂载）。
+- [x] 3.3 落地 `agents/app/delivery/release-manager-agent/` 运行资产目录。
+- [x] 3.4 更新 `shared/registry/{skill_registry.json,process_registry.json,agent_directory.json}`。
+- [x] 3.5 完成 AP 包装流程全量落地并改造 `full-development/hotfix/refactor` 三主流程 manifest（phase 不再直连 skill，补齐 `process_type/governance_bundle`）。
+- [x] 3.6 再次联动更新 `docs/design/*inventory*`、`docs/architecture/construction_plane.md` 与 OpenSpec 状态文档。
 
 ## 4. Session4（M3 专项运行级测试基座）
 
-- [ ] 4.1 新建 `tests/m3-self-development/TEST.md`。
-- [ ] 4.2 新建 `tests/m3-self-development/run_tc_online.py`。
-- [ ] 4.3 覆盖主链路/异常链路/Fail-Closed/回退路径并落证据索引。
+- [x] 4.1 新建 `tests/m3-runtime/TEST.md`。
+- [x] 4.2 新建 `tests/m3-runtime/run_skill_contract_validation.py`。
+- [x] 4.3 覆盖 `impact-analyzer/release-manager` 的 happy path + fail-closed path，并产出 evidence 报告索引。
 
 ## 5. Session5（内部主线 E2E）
 

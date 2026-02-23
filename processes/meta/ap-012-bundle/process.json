@@ -1,0 +1,83 @@
+{
+  "process_id": "ap-012-bundle",
+  "version": "0.1.0",
+  "process_level": "P6",
+  "parent_process_id": null,
+  "composed_processes": [],
+  "lineage_policy": {
+    "stack_depth_limit": 8,
+    "context_isolation": "strict",
+    "output_handoff_mode": "contract_only"
+  },
+  "objective_ref": "obj-m3-ap-012-bundle",
+  "owner": "bpm",
+  "priority": "P0",
+  "input_contract": {
+    "format": "json",
+    "required": [
+      "candidate_artifacts_ref",
+      "final_gate_verdict_ref",
+      "lifecycle_transition_ref",
+      "registry_sync_ref"
+    ]
+  },
+  "output_contract": {
+    "format": "json",
+    "required": [
+      "release_package_ref",
+      "changelog_ref",
+      "release_decision",
+      "rollback_bundle_ref"
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1",
+      "name": "ap-012-wrapper",
+      "actor": "admin",
+      "target_type": "skill",
+      "target_id": "sys.admin.release-manager",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-012-release-packaging.md#ap-012-release-packaging",
+      "sipoc": {
+        "supplier": "initiator",
+        "input": "release prerequisites",
+        "process": "run AP-012 release packaging wrapper",
+        "output": "release package bundle",
+        "client": "initiator"
+      },
+      "acceptance_criteria": "release decision and rollback contract are explicit"
+    }
+  ],
+  "control_flow": [
+    {
+      "from": "p1",
+      "to": "end",
+      "on": "success"
+    }
+  ],
+  "fail_policy": {
+    "mode": "fail_closed",
+    "retry": {
+      "max_attempts": 1
+    },
+    "escalation_chain": [
+      "actor",
+      "owner",
+      "bpm",
+      "admin",
+      "human"
+    ]
+  },
+  "evidence_policy": {
+    "required_fields": [
+      "timestamp",
+      "phase_id",
+      "actor",
+      "input_ref",
+      "output_ref",
+      "decision",
+      "reason"
+    ]
+  }
+}

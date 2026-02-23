@@ -1,0 +1,9 @@
+{
+  "generated_at": "2026-02-23T09:24:30Z",
+  "artifact_count": 2,
+  "artifacts": [
+    "dist/release-v1.tar.gz",
+    "docs/changelog.md"
+  ],
+  "source_candidate_ref": "docs/design/modules/evidence/self-development/runtime-validation-round-session3/TC-RELEASE-HP/candidate_artifacts.json"
+}

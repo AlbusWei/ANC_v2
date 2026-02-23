@@ -64,10 +64,10 @@
 3. `escalation_policy_ref` 不可解析或与当前流程冲突时 `blocked`。
 4. 在 `critical` 场景下无法触达 `admin/human` 时直接 `fail` 并冻结流程。
 
-## test_mount（计划字段）
+## test_mount（统一入口）
 
-1. `tests/m3-self-development/TC-ESCALATION-P5.md`
-2. `tests/m3-self-development/run_tc_online.py --case TC-ESCALATION-P5-001`
+1. `tests/m3-runtime/run_skill_contract_validation.py`（统一技能契约入口）
+2. `python3 shared/registry/registry_contract_tool.py verify`
 
 ## 复用方（首批）
 
@@ -79,7 +79,6 @@
 
 ## 生命周期与推进规则
 
-1. 本文档阶段：设计闭合（`draft`）。
-2. Session3 才允许新增 `processes/meta/escalation/` 运行资产与 registry 实条目。
-3. 未完成运行级回归前，禁止推进到 `review/active`。
-
+1. 本文档阶段：运行资产已落地，生命周期保持 `draft`。
+2. Session3 已新增 `processes/meta/escalation/` 运行资产与 registry 实条目。
+3. 未完成更大规模运行级回归前，禁止推进到 `review/active`。

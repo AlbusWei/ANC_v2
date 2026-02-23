@@ -1,0 +1,7 @@
+{
+  "risk_level": "medium",
+  "rollback_requirements": [
+    "保留回滚补丁",
+    "提供回滚验证记录"
+  ]
+}

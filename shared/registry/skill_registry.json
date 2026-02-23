@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "skill_registry",
-  "updated_at": "2026-02-22T17:10:00Z",
+  "updated_at": "2026-02-23T09:15:52Z",
   "entry_contract": {
     "required": [
       "skill_id",
@@ -182,6 +182,128 @@
   },
   "entries": [
     {
+      "skill_id": "meta.arch.agent-creator",
+      "name": "agent-creator",
+      "path": "skills/meta/agent-creator/SKILL.md",
+      "layer": "meta",
+      "owner": "architect",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "agent-creator",
+        "description": "Create or update agent design assets with lifecycle and registry-ready contracts",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-skills",
+        "bundle_source": "skills/meta",
+        "entry_key": "meta.arch.agent-creator",
+        "source": "skills/meta/agent-creator",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/meta/agent-creator/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "meta.arch.objective-writer",
+      "name": "objective-writer",
+      "path": "skills/meta/objective-writer/SKILL.md",
+      "layer": "meta",
+      "owner": "architect",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "objective-writer",
+        "description": "Draft objective contracts with measurable success criteria and fail-closed boundaries",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-skills",
+        "bundle_source": "skills/meta",
+        "entry_key": "meta.arch.objective-writer",
+        "source": "skills/meta/objective-writer",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/meta/objective-writer/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "meta.arch.process-creator",
+      "name": "process-creator",
+      "path": "skills/meta/process-creator/SKILL.md",
+      "layer": "meta",
+      "owner": "architect",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "process-creator",
+        "description": "Create process assets with continuity and phase-closure constraints",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-skills",
+        "bundle_source": "skills/meta",
+        "entry_key": "meta.arch.process-creator",
+        "source": "skills/meta/process-creator",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/meta/process-creator/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "meta.arch.skill-creator",
+      "name": "skill-creator",
+      "path": "skills/skill-creator/SKILL.md",
+      "layer": "meta",
+      "owner": "architect",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "skill-creator",
+        "description": "创建或更新技能资产，确保与 Objective->Spec->Test->Development 链路及 OpenClaw/Agent Skills 规范对齐。",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "pin",
+        "entry_key": "meta.arch.skill-creator",
+        "source": "skills/skill-creator",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "tests/skill-creator/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
       "skill_id": "meta.arch.spec-writer",
       "name": "spec-writer",
       "path": "skills/meta/spec-writer/SKILL.md",
@@ -209,6 +331,37 @@
       },
       "tests": {
         "test_doc": "skills/meta/spec-writer/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "meta.arch.template-validator",
+      "name": "template-validator",
+      "path": "skills/meta/template-validator/SKILL.md",
+      "layer": "meta",
+      "owner": "architect",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "template-validator",
+        "description": "Validate templates and contract bundles before lifecycle and registry handoff",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-skills",
+        "bundle_source": "skills/meta",
+        "entry_key": "meta.arch.template-validator",
+        "source": "skills/meta/template-validator",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/meta/template-validator/TEST.md",
         "methodology_ref": "docs/architecture/test_methodology.md"
       }
     },
@@ -271,6 +424,130 @@
       },
       "tests": {
         "test_doc": "skills/meta/test-designer/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.admin.release-manager",
+      "name": "release-manager",
+      "path": "skills/system/release-manager/SKILL.md",
+      "layer": "system",
+      "owner": "admin",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "release-manager",
+        "description": "Assemble release package, changelog and rollback bundle with strict lifecycle and registry gates",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.admin.release-manager",
+        "source": "skills/system/release-manager",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/release-manager/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.arch.construction-audit",
+      "name": "construction-audit",
+      "path": "skills/system/construction-audit/SKILL.md",
+      "layer": "system",
+      "owner": "architect",
+      "version": "0.2.0",
+      "status": "review",
+      "agentskills": {
+        "name": "construction-audit",
+        "description": "Audit M6 construction-plane linkage completeness across design docs, inventories, registries and construction board",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.arch.construction-audit",
+        "source": "skills/system/construction-audit",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/construction-audit/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.arch.impact-analyzer",
+      "name": "impact-analyzer",
+      "path": "skills/system/impact-analyzer/SKILL.md",
+      "layer": "system",
+      "owner": "architect",
+      "version": "0.1.0",
+      "status": "draft",
+      "agentskills": {
+        "name": "impact-analyzer",
+        "description": "Analyze change impact scope, rollback requirements and gating recommendation with fail-closed controls",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.arch.impact-analyzer",
+        "source": "skills/system/impact-analyzer",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/impact-analyzer/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.arch.system-feedback-digest",
+      "name": "system-feedback-digest",
+      "path": "skills/system/system-feedback-digest/SKILL.md",
+      "layer": "system",
+      "owner": "system-analyst",
+      "version": "0.1.0",
+      "status": "review",
+      "agentskills": {
+        "name": "system-feedback-digest",
+        "description": "Validate system-analysis handoff and produce auditable structured digest or fail-closed rejection",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.arch.system-feedback-digest",
+        "source": "skills/system/system-feedback-digest",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/system-feedback-digest/TEST.md",
         "methodology_ref": "docs/architecture/test_methodology.md"
       }
     },
@@ -461,16 +738,16 @@
       }
     },
     {
-      "skill_id": "sys.arch.system-feedback-digest",
-      "name": "system-feedback-digest",
-      "path": "skills/system/system-feedback-digest/SKILL.md",
+      "skill_id": "sys.qa.evaluation-runner",
+      "name": "evaluation-runner",
+      "path": "skills/system/qa/evaluation-runner/SKILL.md",
       "layer": "system",
-      "owner": "system-analyst",
-      "version": "0.1.0",
-      "status": "review",
+      "owner": "qa",
+      "version": "0.2.0",
+      "status": "active",
       "agentskills": {
-        "name": "system-feedback-digest",
-        "description": "Validate system-analysis handoff and produce auditable structured digest or fail-closed rejection",
+        "name": "evaluation-runner",
+        "description": "Run objective, subjective, and regression evaluation through quality_eval_runner and emit unified verdict artifacts",
         "license": "Apache-2.0",
         "compatibility": {
           "openclaw": ">=2026.2",
@@ -481,13 +758,192 @@
         "projection_mode": "bundle",
         "bundle_key": "anc-v2-system-skills",
         "bundle_source": "skills/system",
-        "entry_key": "sys.arch.system-feedback-digest",
-        "source": "skills/system/system-feedback-digest",
-        "install_strategy": "lazy",
-        "allow_draft_projection": true
+        "entry_key": "sys.qa.evaluation-runner",
+        "source": "skills/system/qa/evaluation-runner",
+        "install_strategy": "lazy"
       },
       "tests": {
-        "test_doc": "skills/system/system-feedback-digest/TEST.md",
+        "test_doc": "skills/system/qa/evaluation-runner/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.qa.evidence-archiver",
+      "name": "evidence-archiver",
+      "path": "skills/system/qa/evidence-archiver/SKILL.md",
+      "layer": "system",
+      "owner": "qa",
+      "version": "0.1.0",
+      "status": "active",
+      "agentskills": {
+        "name": "evidence-archiver",
+        "description": "Archive quality gate evidence into indexed packages with traceability links for M1 M2 and M4 consumers",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.qa.evidence-archiver",
+        "source": "skills/system/qa/evidence-archiver",
+        "install_strategy": "lazy"
+      },
+      "tests": {
+        "test_doc": "skills/system/qa/evidence-archiver/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.qa.hold-triage",
+      "name": "hold-triage",
+      "path": "skills/system/qa/hold-triage/SKILL.md",
+      "layer": "system",
+      "owner": "qa",
+      "version": "0.2.0",
+      "status": "active",
+      "agentskills": {
+        "name": "hold-triage",
+        "description": "Collect hold progress signals and output governed triage actions continue, retry, debug, or fail",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.qa.hold-triage",
+        "source": "skills/system/qa/hold-triage",
+        "install_strategy": "lazy"
+      },
+      "tests": {
+        "test_doc": "skills/system/qa/hold-triage/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.qa.registry-validator",
+      "name": "registry-validator",
+      "path": "skills/system/qa/registry-validator/SKILL.md",
+      "layer": "system",
+      "owner": "qa",
+      "version": "0.1.0",
+      "status": "active",
+      "agentskills": {
+        "name": "registry-validator",
+        "description": "Validate ANC registry contracts and emit structured pass or fail evidence for lifecycle gates",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.qa.registry-validator",
+        "source": "skills/system/qa/registry-validator",
+        "install_strategy": "lazy"
+      },
+      "tests": {
+        "test_doc": "skills/system/qa/registry-validator/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.qa.regression-runner",
+      "name": "regression-runner",
+      "path": "skills/system/qa/regression-runner/SKILL.md",
+      "layer": "system",
+      "owner": "qa",
+      "version": "0.2.0",
+      "status": "active",
+      "agentskills": {
+        "name": "regression-runner",
+        "description": "Run cross-module regression by orchestrating evaluation-runner regression mode and emitting release gate candidates",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.qa.regression-runner",
+        "source": "skills/system/qa/regression-runner",
+        "install_strategy": "lazy"
+      },
+      "tests": {
+        "test_doc": "skills/system/qa/regression-runner/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.qa.test-compiler",
+      "name": "test-compiler",
+      "path": "skills/system/qa/test-compiler/SKILL.md",
+      "layer": "system",
+      "owner": "qa",
+      "version": "0.2.0",
+      "status": "active",
+      "agentskills": {
+        "name": "test-compiler",
+        "description": "Compile TEST.md into executable datapoints and deterministic tc_id/profile bindings for M1 quality gate preparation",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.qa.test-compiler",
+        "source": "skills/system/qa/test-compiler",
+        "install_strategy": "lazy"
+      },
+      "tests": {
+        "test_doc": "skills/system/qa/test-compiler/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.qa.verdict-normalizer",
+      "name": "verdict-normalizer",
+      "path": "skills/system/qa/verdict-normalizer/SKILL.md",
+      "layer": "system",
+      "owner": "qa",
+      "version": "0.2.0",
+      "status": "active",
+      "agentskills": {
+        "name": "verdict-normalizer",
+        "description": "Normalize objective, subjective, and regression evaluation outputs into one gate_decision",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.qa.verdict-normalizer",
+        "source": "skills/system/qa/verdict-normalizer",
+        "install_strategy": "lazy"
+      },
+      "tests": {
+        "test_doc": "skills/system/qa/verdict-normalizer/TEST.md",
         "methodology_ref": "docs/architecture/test_methodology.md"
       }
     },
@@ -582,16 +1038,16 @@
       }
     },
     {
-      "skill_id": "system.ops.manual-task",
-      "name": "manual-task",
-      "path": "skills/system/manual-task/SKILL.md",
+      "skill_id": "system.integration.openspec-sync",
+      "name": "openspec-sync",
+      "path": "skills/system/openspec-sync/SKILL.md",
       "layer": "system",
-      "owner": "bpm",
-      "version": "0.1.0",
-      "status": "draft",
+      "owner": "architect",
+      "version": "0.2.0",
+      "status": "review",
       "agentskills": {
-        "name": "manual-task",
-        "description": "Execute controlled human-in-the-loop task with evidence output",
+        "name": "openspec-sync",
+        "description": "Synchronize OpenSpec change context with ANC design decisions and emit a strict sync record",
         "license": "Apache-2.0",
         "compatibility": {
           "openclaw": ">=2026.2",
@@ -602,13 +1058,13 @@
         "projection_mode": "bundle",
         "bundle_key": "anc-v2-system-skills",
         "bundle_source": "skills/system",
-        "entry_key": "system.ops.manual-task",
-        "source": "skills/system/manual-task",
+        "entry_key": "system.integration.openspec-sync",
+        "source": "skills/system/openspec-sync",
         "install_strategy": "lazy",
         "allow_draft_projection": true
       },
       "tests": {
-        "test_doc": "skills/system/manual-task/TEST.md",
+        "test_doc": "skills/system/openspec-sync/TEST.md",
         "methodology_ref": "docs/architecture/test_methodology.md"
       }
     },
@@ -644,16 +1100,16 @@
       }
     },
     {
-      "skill_id": "meta.arch.objective-writer",
-      "name": "objective-writer",
-      "path": "skills/meta/objective-writer/SKILL.md",
-      "layer": "meta",
-      "owner": "architect",
+      "skill_id": "system.ops.manual-task",
+      "name": "manual-task",
+      "path": "skills/system/manual-task/SKILL.md",
+      "layer": "system",
+      "owner": "bpm",
       "version": "0.1.0",
       "status": "draft",
       "agentskills": {
-        "name": "objective-writer",
-        "description": "Draft objective contracts with measurable success criteria and fail-closed boundaries",
+        "name": "manual-task",
+        "description": "Execute controlled human-in-the-loop task with evidence output",
         "license": "Apache-2.0",
         "compatibility": {
           "openclaw": ">=2026.2",
@@ -662,409 +1118,15 @@
       },
       "openclaw": {
         "projection_mode": "bundle",
-        "bundle_key": "anc-v2-meta-skills",
-        "bundle_source": "skills/meta",
-        "entry_key": "meta.arch.objective-writer",
-        "source": "skills/meta/objective-writer",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "system.ops.manual-task",
+        "source": "skills/system/manual-task",
         "install_strategy": "lazy",
         "allow_draft_projection": true
       },
       "tests": {
-        "test_doc": "skills/meta/objective-writer/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "meta.arch.agent-creator",
-      "name": "agent-creator",
-      "path": "skills/meta/agent-creator/SKILL.md",
-      "layer": "meta",
-      "owner": "architect",
-      "version": "0.1.0",
-      "status": "draft",
-      "agentskills": {
-        "name": "agent-creator",
-        "description": "Create or update agent design assets with lifecycle and registry-ready contracts",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-meta-skills",
-        "bundle_source": "skills/meta",
-        "entry_key": "meta.arch.agent-creator",
-        "source": "skills/meta/agent-creator",
-        "install_strategy": "lazy",
-        "allow_draft_projection": true
-      },
-      "tests": {
-        "test_doc": "skills/meta/agent-creator/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "meta.arch.process-creator",
-      "name": "process-creator",
-      "path": "skills/meta/process-creator/SKILL.md",
-      "layer": "meta",
-      "owner": "architect",
-      "version": "0.1.0",
-      "status": "draft",
-      "agentskills": {
-        "name": "process-creator",
-        "description": "Create process assets with continuity and phase-closure constraints",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-meta-skills",
-        "bundle_source": "skills/meta",
-        "entry_key": "meta.arch.process-creator",
-        "source": "skills/meta/process-creator",
-        "install_strategy": "lazy",
-        "allow_draft_projection": true
-      },
-      "tests": {
-        "test_doc": "skills/meta/process-creator/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "meta.arch.template-validator",
-      "name": "template-validator",
-      "path": "skills/meta/template-validator/SKILL.md",
-      "layer": "meta",
-      "owner": "architect",
-      "version": "0.1.0",
-      "status": "draft",
-      "agentskills": {
-        "name": "template-validator",
-        "description": "Validate templates and contract bundles before lifecycle and registry handoff",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-meta-skills",
-        "bundle_source": "skills/meta",
-        "entry_key": "meta.arch.template-validator",
-        "source": "skills/meta/template-validator",
-        "install_strategy": "lazy",
-        "allow_draft_projection": true
-      },
-      "tests": {
-        "test_doc": "skills/meta/template-validator/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "meta.arch.skill-creator",
-      "name": "skill-creator",
-      "path": "skills/skill-creator/SKILL.md",
-      "layer": "meta",
-      "owner": "architect",
-      "version": "0.1.0",
-      "status": "draft",
-      "agentskills": {
-        "name": "skill-creator",
-        "description": "创建或更新技能资产，确保与 Objective->Spec->Test->Development 链路及 OpenClaw/Agent Skills 规范对齐。",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "pin",
-        "entry_key": "meta.arch.skill-creator",
-        "source": "skills/skill-creator",
-        "install_strategy": "lazy",
-        "allow_draft_projection": true
-      },
-      "tests": {
-        "test_doc": "tests/skill-creator/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "sys.arch.construction-audit",
-      "name": "construction-audit",
-      "path": "skills/system/construction-audit/SKILL.md",
-      "layer": "system",
-      "owner": "architect",
-      "version": "0.2.0",
-      "status": "review",
-      "agentskills": {
-        "name": "construction-audit",
-        "description": "Audit M6 construction-plane linkage completeness across design docs, inventories, registries and construction board",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-system-skills",
-        "bundle_source": "skills/system",
-        "entry_key": "sys.arch.construction-audit",
-        "source": "skills/system/construction-audit",
-        "install_strategy": "lazy",
-        "allow_draft_projection": true
-      },
-      "tests": {
-        "test_doc": "skills/system/construction-audit/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "system.integration.openspec-sync",
-      "name": "openspec-sync",
-      "path": "skills/system/openspec-sync/SKILL.md",
-      "layer": "system",
-      "owner": "architect",
-      "version": "0.2.0",
-      "status": "review",
-      "agentskills": {
-        "name": "openspec-sync",
-        "description": "Synchronize OpenSpec change context with ANC design decisions and emit a strict sync record",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-system-skills",
-        "bundle_source": "skills/system",
-        "entry_key": "system.integration.openspec-sync",
-        "source": "skills/system/openspec-sync",
-        "install_strategy": "lazy",
-        "allow_draft_projection": true
-      },
-      "tests": {
-        "test_doc": "skills/system/openspec-sync/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "sys.qa.test-compiler",
-      "name": "test-compiler",
-      "path": "skills/system/qa/test-compiler/SKILL.md",
-      "layer": "system",
-      "owner": "qa",
-      "version": "0.2.0",
-      "status": "active",
-      "agentskills": {
-        "name": "test-compiler",
-        "description": "Compile TEST.md into executable datapoints and deterministic tc_id/profile bindings for M1 quality gate preparation",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-system-skills",
-        "bundle_source": "skills/system",
-        "entry_key": "sys.qa.test-compiler",
-        "source": "skills/system/qa/test-compiler",
-        "install_strategy": "lazy"
-      },
-      "tests": {
-        "test_doc": "skills/system/qa/test-compiler/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "sys.qa.evaluation-runner",
-      "name": "evaluation-runner",
-      "path": "skills/system/qa/evaluation-runner/SKILL.md",
-      "layer": "system",
-      "owner": "qa",
-      "version": "0.2.0",
-      "status": "active",
-      "agentskills": {
-        "name": "evaluation-runner",
-        "description": "Run objective, subjective, and regression evaluation through quality_eval_runner and emit unified verdict artifacts",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-system-skills",
-        "bundle_source": "skills/system",
-        "entry_key": "sys.qa.evaluation-runner",
-        "source": "skills/system/qa/evaluation-runner",
-        "install_strategy": "lazy"
-      },
-      "tests": {
-        "test_doc": "skills/system/qa/evaluation-runner/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "sys.qa.verdict-normalizer",
-      "name": "verdict-normalizer",
-      "path": "skills/system/qa/verdict-normalizer/SKILL.md",
-      "layer": "system",
-      "owner": "qa",
-      "version": "0.2.0",
-      "status": "active",
-      "agentskills": {
-        "name": "verdict-normalizer",
-        "description": "Normalize objective, subjective, and regression evaluation outputs into one gate_decision",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-system-skills",
-        "bundle_source": "skills/system",
-        "entry_key": "sys.qa.verdict-normalizer",
-        "source": "skills/system/qa/verdict-normalizer",
-        "install_strategy": "lazy"
-      },
-      "tests": {
-        "test_doc": "skills/system/qa/verdict-normalizer/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "sys.qa.hold-triage",
-      "name": "hold-triage",
-      "path": "skills/system/qa/hold-triage/SKILL.md",
-      "layer": "system",
-      "owner": "qa",
-      "version": "0.2.0",
-      "status": "active",
-      "agentskills": {
-        "name": "hold-triage",
-        "description": "Collect hold progress signals and output governed triage actions continue, retry, debug, or fail",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-system-skills",
-        "bundle_source": "skills/system",
-        "entry_key": "sys.qa.hold-triage",
-        "source": "skills/system/qa/hold-triage",
-        "install_strategy": "lazy"
-      },
-      "tests": {
-        "test_doc": "skills/system/qa/hold-triage/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "sys.qa.regression-runner",
-      "name": "regression-runner",
-      "path": "skills/system/qa/regression-runner/SKILL.md",
-      "layer": "system",
-      "owner": "qa",
-      "version": "0.2.0",
-      "status": "active",
-      "agentskills": {
-        "name": "regression-runner",
-        "description": "Run cross-module regression by orchestrating evaluation-runner regression mode and emitting release gate candidates",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-system-skills",
-        "bundle_source": "skills/system",
-        "entry_key": "sys.qa.regression-runner",
-        "source": "skills/system/qa/regression-runner",
-        "install_strategy": "lazy"
-      },
-      "tests": {
-        "test_doc": "skills/system/qa/regression-runner/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "sys.qa.registry-validator",
-      "name": "registry-validator",
-      "path": "skills/system/qa/registry-validator/SKILL.md",
-      "layer": "system",
-      "owner": "qa",
-      "version": "0.1.0",
-      "status": "active",
-      "agentskills": {
-        "name": "registry-validator",
-        "description": "Validate ANC registry contracts and emit structured pass or fail evidence for lifecycle gates",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-system-skills",
-        "bundle_source": "skills/system",
-        "entry_key": "sys.qa.registry-validator",
-        "source": "skills/system/qa/registry-validator",
-        "install_strategy": "lazy"
-      },
-      "tests": {
-        "test_doc": "skills/system/qa/registry-validator/TEST.md",
-        "methodology_ref": "docs/architecture/test_methodology.md"
-      }
-    },
-    {
-      "skill_id": "sys.qa.evidence-archiver",
-      "name": "evidence-archiver",
-      "path": "skills/system/qa/evidence-archiver/SKILL.md",
-      "layer": "system",
-      "owner": "qa",
-      "version": "0.1.0",
-      "status": "active",
-      "agentskills": {
-        "name": "evidence-archiver",
-        "description": "Archive quality gate evidence into indexed packages with traceability links for M1 M2 and M4 consumers",
-        "license": "Apache-2.0",
-        "compatibility": {
-          "openclaw": ">=2026.2",
-          "agentskills": ">=0.2"
-        }
-      },
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-system-skills",
-        "bundle_source": "skills/system",
-        "entry_key": "sys.qa.evidence-archiver",
-        "source": "skills/system/qa/evidence-archiver",
-        "install_strategy": "lazy"
-      },
-      "tests": {
-        "test_doc": "skills/system/qa/evidence-archiver/TEST.md",
+        "test_doc": "skills/system/manual-task/TEST.md",
         "methodology_ref": "docs/architecture/test_methodology.md"
       }
     }

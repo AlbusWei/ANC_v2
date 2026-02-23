@@ -1,0 +1,5 @@
+{
+  "change_proposal_ref": "docs/design/modules/evidence/self-development/runtime-validation-round-session3/fixtures/change_proposal.json",
+  "affected_scope_ref": "docs/design/modules/evidence/self-development/does-not-exist.json",
+  "risk_constraints_ref": "docs/design/modules/evidence/self-development/runtime-validation-round-session3/fixtures/risk_constraints_conflict.json"
+}
