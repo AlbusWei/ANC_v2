@@ -1,6 +1,6 @@
 # Process 全量清单
 
-> 版本: v1.4.0 | SSOT 上游: `shared/registry/process_registry.json`
+> 版本: v1.6.0 | SSOT 上游: `shared/registry/process_registry.json`
 
 ## Canonical Process Paths
 
@@ -10,6 +10,13 @@
 | full-development | `/Users/albus/MyProjects/ANC_v2/processes/meta/full-development/` | canonical |
 | hotfix | `/Users/albus/MyProjects/ANC_v2/processes/meta/hotfix/` | canonical |
 | refactor | `/Users/albus/MyProjects/ANC_v2/processes/meta/refactor/` | canonical |
+| objective-scope-baseline | `/Users/albus/MyProjects/ANC_v2/processes/meta/objective-scope-baseline/` | canonical |
+| hotfix-intake-normalization | `/Users/albus/MyProjects/ANC_v2/processes/meta/hotfix-intake-normalization/` | canonical |
+| hotfix-scope-spec-baseline | `/Users/albus/MyProjects/ANC_v2/processes/meta/hotfix-scope-spec-baseline/` | canonical |
+| spec-authoring-contract | `/Users/albus/MyProjects/ANC_v2/processes/meta/spec-authoring-contract/` | canonical |
+| implementation-execution-core | `/Users/albus/MyProjects/ANC_v2/processes/meta/implementation-execution-core/` | canonical |
+| release-packaging-governed | `/Users/albus/MyProjects/ANC_v2/processes/meta/release-packaging-governed/` | canonical |
+| evolution-feedback-planning | `/Users/albus/MyProjects/ANC_v2/processes/meta/evolution-feedback-planning/` | canonical |
 | governed-config-change | `/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change/` | canonical |
 | quality-gate-preparation | `/Users/albus/MyProjects/ANC_v2/processes/meta/quality-gate-preparation/` | canonical |
 | quality-gate-evaluation | `/Users/albus/MyProjects/ANC_v2/processes/meta/quality-gate-evaluation/` | canonical |
@@ -30,10 +37,17 @@
 
 | process_id | 名称 | 类型 | owner | 阶段数 | 状态 | 路径 |
 |---|---|---|---|---|---|---|
-| development-process | development-process | 复合 | bpm | 4 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/` |
-| full-development | full-development | 复合 | bpm | 8 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/full-development/` |
-| hotfix | hotfix | 复合 | bpm | 7 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/hotfix/` |
-| refactor | refactor | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/refactor/` |
+| development-process | development-process | 复合 | bpm | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/` |
+| full-development | full-development | 复合 | bpm | 8 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/full-development/` |
+| hotfix | hotfix | 复合 | bpm | 7 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/hotfix/` |
+| refactor | refactor | 复合 | bpm | 6 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/refactor/` |
+| objective-scope-baseline | objective-scope-baseline | 复合 | bpm | 3 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/objective-scope-baseline/` |
+| hotfix-intake-normalization | hotfix-intake-normalization | 复合 | bpm | 2 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/hotfix-intake-normalization/` |
+| hotfix-scope-spec-baseline | hotfix-scope-spec-baseline | 复合 | bpm | 2 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/hotfix-scope-spec-baseline/` |
+| spec-authoring-contract | spec-authoring-contract | 复合 | bpm | 1 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/spec-authoring-contract/` |
+| implementation-execution-core | implementation-execution-core | 复合 | bpm | 1 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/implementation-execution-core/` |
+| release-packaging-governed | release-packaging-governed | 复合 | bpm | 1 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/release-packaging-governed/` |
+| evolution-feedback-planning | evolution-feedback-planning | 复合 | bpm | 4 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/evolution-feedback-planning/` |
 | governed-config-change | governed-config-change | 复合 | bpm | 5 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change/` |
 | quality-gate-preparation | quality-gate-preparation | 复合 | bpm | 3 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/quality-gate-preparation/` |
 | quality-gate-evaluation | quality-gate-evaluation | 复合 | bpm | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/quality-gate-evaluation/` |
@@ -58,19 +72,25 @@
 | escalation | P5 子流程模式 | Session3 已实现（运行资产 + registry） | 异常升级复用流程（生命周期 `draft`） |
 | trigger-runtime-supervisor | 模式（P5） | Phase 1 | 触发运行时上级路由（可选） |
 
-## Session3 新增已注册流程（实现）
+## Session3/Phase2 新增已注册流程（实现）
 
 | process_id | 类型 | 状态 | 路径 |
 |---|---|---|---|
 | registry-sync | P6 原子治理流程 | draft | `processes/meta/registry-sync/` |
 | escalation | P5 可复用治理子流程 | draft | `processes/meta/escalation/` |
-| ap-001-002-003-bundle | P6 AP 包装流程 | draft | `processes/meta/ap-001-002-003-bundle/` |
-| ap-001-002-bundle | P6 AP 包装流程 | draft | `processes/meta/ap-001-002-bundle/` |
-| ap-003-004-bundle | P6 AP 包装流程 | draft | `processes/meta/ap-003-004-bundle/` |
-| ap-004-bundle | P6 AP 包装流程 | draft | `processes/meta/ap-004-bundle/` |
-| ap-006-bundle | P6 AP 包装流程 | draft | `processes/meta/ap-006-bundle/` |
-| ap-012-bundle | P6 AP 包装流程 | draft | `processes/meta/ap-012-bundle/` |
-| ap-013-014-015-017-bundle | P6 AP 包装流程 | draft | `processes/meta/ap-013-014-015-017-bundle/` |
+| objective-scope-baseline | P5 可复用子流程 | review | `processes/meta/objective-scope-baseline/` |
+| hotfix-intake-normalization | P5 可复用子流程 | review | `processes/meta/hotfix-intake-normalization/` |
+| hotfix-scope-spec-baseline | P5 可复用子流程 | review | `processes/meta/hotfix-scope-spec-baseline/` |
+| spec-authoring-contract | P5 可复用子流程 | review | `processes/meta/spec-authoring-contract/` |
+| implementation-execution-core | P5 可复用子流程 | review | `processes/meta/implementation-execution-core/` |
+| release-packaging-governed | P5 可复用子流程 | review | `processes/meta/release-packaging-governed/` |
+| evolution-feedback-planning | P5 可复用子流程 | review | `processes/meta/evolution-feedback-planning/` |
+
+## 历史迁移说明（Phase4）
+
+1. 以下 7 个历史包装流程已在迁移回合退役，仅保留追溯说明，不作为运行态能力单元（具体映射见 `openspec/changes/m3-meta-asset-quality-hardening/meta-gap-baseline.md` 的历史矩阵）。
+2. 目标态能力单元统一以现行 P5 子流程表达（`objective-scope-baseline`、`hotfix-intake-normalization`、`hotfix-scope-spec-baseline`、`spec-authoring-contract`、`implementation-execution-core`、`release-packaging-governed`、`evolution-feedback-planning`）。
+3. 本轮生命周期收敛上限为 `review`，不推进 `active`。
 
 ## 规划中 Process — 演化流程
 
@@ -159,3 +179,9 @@ Session3 已落地治理流程设计文档与运行资产：
 
 1. `lifecycle-review` 生命周期由 `draft` 推进到 `review`（证据：`docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle_output.json` 状态 `succeeded`）。
 2. 本轮仅推进到 `review`，不推进 `active`；`review->active` 仍需观测窗口与回滚演练证据。
+
+## W8 联动备注（M3 协作骨架扩展：full-development）
+
+1. `full-development` 新增可执行 runner：`processes/meta/full-development/scripts/full_development_runner.py`。
+2. `full-development` 协作策略升级为“真实 OpenClaw 分发 + phase 会话 reset 隔离”。
+3. `full-development` registry 版本由 `0.2.0` 升级到 `0.3.0`，生命周期保持 `review`。

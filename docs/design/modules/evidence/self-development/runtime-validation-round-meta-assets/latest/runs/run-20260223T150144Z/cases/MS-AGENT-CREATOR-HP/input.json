@@ -1,0 +1,21 @@
+{
+  "asset_id": "meta.arch.agent-creator",
+  "scenario": "HP",
+  "runner_input": {
+    "agent_id": "demo-agent",
+    "role_scope": {
+      "responsibilities": [
+        "产出 Agent 资产计划"
+      ],
+      "boundaries": [
+        "不修改实现文件"
+      ]
+    },
+    "interfaces": [
+      {
+        "protocol_ref": "docs/design/interfaces/meta-self-modification-protocol.md"
+      }
+    ],
+    "owner": "architect"
+  }
+}

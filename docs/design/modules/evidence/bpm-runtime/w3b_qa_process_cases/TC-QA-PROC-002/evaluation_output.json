@@ -11,6 +11,11 @@
   "hold_routed": true,
   "hold_governance_output_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance_output.json",
   "hold_resolution_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance/p5_hold_resolution.json",
+  "collaboration_mode": "local-only",
+  "phase_dispatch_enabled": false,
+  "dispatch_openclaw": false,
+  "dispatch_reset_openclaw_session": true,
+  "dispatch_strict_session_match": true,
   "reasons": [
     "gate_aggregated",
     "gate_decision=hold"

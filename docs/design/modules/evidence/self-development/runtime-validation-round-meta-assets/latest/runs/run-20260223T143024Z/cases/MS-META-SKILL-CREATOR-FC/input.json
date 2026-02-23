@@ -1,0 +1,7 @@
+{
+  "skill_name": "qa-meta-demo-skill",
+  "layer": "meta",
+  "namespace": "phase5",
+  "description": "触发缺字段",
+  "output_root": "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260223T143024Z/cases/MS-META-SKILL-CREATOR-FC/generated-skills"
+}

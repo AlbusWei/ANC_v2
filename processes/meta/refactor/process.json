@@ -1,10 +1,13 @@
 {
   "process_id": "refactor",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [
+    "objective-scope-baseline",
+    "spec-authoring-contract",
     "quality-gate-preparation",
+    "implementation-execution-core",
     "quality-gate-evaluation"
   ],
   "lineage_policy": {
@@ -18,8 +21,7 @@
   "input_contract": {
     "format": "json",
     "required": [
-      "objective_ref",
-      "scope_baseline_ref",
+      "objective_context_ref",
       "tech_debt_ref",
       "target_asset_ref"
     ]
@@ -27,7 +29,6 @@
   "output_contract": {
     "format": "json",
     "required": [
-      "refactor_delivery_bundle_ref",
       "final_gate_verdict_ref",
       "lifecycle_transition_ref",
       "registry_sync_ref"
@@ -39,13 +40,13 @@
       "name": "refactor-objective-and-scope",
       "actor": "architect",
       "target_type": "subprocess",
-      "target_id": "ap-001-002-003-bundle",
+      "target_id": "objective-scope-baseline",
       "requires_spec": false,
       "sipoc": {
         "supplier": "initiator",
-        "input": "objective and tech debt context",
+        "input": "objective_context_ref and tech_debt_ref",
         "process": "define refactor objective and scope baseline",
-        "output": "refactor_objective_ref",
+        "output": "objective_ref and scope_baseline_ref",
         "client": "p2"
       },
       "acceptance_criteria": "objective and non-goals are explicit"
@@ -55,14 +56,14 @@
       "name": "refactor-spec-authoring",
       "actor": "architect",
       "target_type": "subprocess",
-      "target_id": "ap-004-bundle",
+      "target_id": "spec-authoring-contract",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-004-spec-authoring.md#ap-004-spec-authoring",
       "sipoc": {
         "supplier": "p1",
-        "input": "refactor objective",
+        "input": "objective_ref and scope_baseline_ref",
         "process": "author architecture-constrained refactor spec",
-        "output": "refactor_spec_ref",
+        "output": "spec_ref",
         "client": "p3"
       },
       "acceptance_criteria": "spec documents invariant boundaries and rollback plan"
@@ -77,29 +78,29 @@
       "spec_ref": "docs/design/processes/quality-gate-preparation-process.md#quality-gate-preparation-process",
       "sipoc": {
         "supplier": "p2",
-        "input": "refactor_spec_ref",
+        "input": "spec_ref",
         "process": "prepare regression-focused tests",
-        "output": "refactor_preparation_bundle_ref",
+        "output": "test_plan_ref and preparation_bundle_ref",
         "client": "p4"
       },
-      "acceptance_criteria": "p0 regression scope and traceability are complete"
+      "acceptance_criteria": "test_plan_ref is explicitly linked to refactor spec"
     },
     {
       "phase_id": "p4",
       "name": "refactor-implementation",
       "actor": "kernel-dev",
       "target_type": "subprocess",
-      "target_id": "ap-006-bundle",
+      "target_id": "implementation-execution-core",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-006-implementation-execution.md#ap-006-implementation-execution",
       "sipoc": {
         "supplier": "p3",
-        "input": "refactor_preparation_bundle_ref",
+        "input": "spec_ref and test_plan_ref",
         "process": "apply structural changes",
-        "output": "refactor_implementation_ref",
+        "output": "implementation_ref and candidate_artifacts_ref",
         "client": "p5"
       },
-      "acceptance_criteria": "implementation is linked to refactor spec and constraints"
+      "acceptance_criteria": "implementation is linked to spec and constraints"
     },
     {
       "phase_id": "p5",
@@ -111,7 +112,7 @@
       "spec_ref": "docs/design/processes/quality-gate-evaluation-process.md#quality-gate-evaluation-process",
       "sipoc": {
         "supplier": "p4",
-        "input": "refactor implementation",
+        "input": "candidate_artifacts_ref",
         "process": "execute objective and regression gate checks",
         "output": "final_gate_verdict_ref",
         "client": "p6"
@@ -130,7 +131,7 @@
         "supplier": "p5",
         "input": "final_gate_verdict_ref",
         "process": "validate lifecycle and registry sync package",
-        "output": "refactor_delivery_bundle_ref",
+        "output": "lifecycle_transition_ref and registry_sync_ref",
         "client": "initiator"
       },
       "acceptance_criteria": "registry sync payload and lifecycle evidence are complete"

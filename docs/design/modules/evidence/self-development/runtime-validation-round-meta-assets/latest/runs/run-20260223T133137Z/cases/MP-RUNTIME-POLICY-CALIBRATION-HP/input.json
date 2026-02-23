@@ -1,0 +1,15 @@
+{
+  "asset_id": "runtime-policy-calibration",
+  "scenario": "HP",
+  "qa_online_contract": {
+    "required_fields": [
+      "gate_decision",
+      "asset_id",
+      "scenario",
+      "reason_code",
+      "expected_exit_code",
+      "traceability_refs",
+      "recovery_or_rollback"
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "status": "failed",
+  "process_id": "lifecycle-review",
+  "failure_code": "lifecycle_review_failed",
+  "reason": "registry_verify_failed:rc=1",
+  "runtime_trace_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-001/lifecycle/runtime_trace.json",
+  "fail_closed_record_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-001/lifecycle/fail_closed_record.json",
+  "lifecycle_transition_ref": "",
+  "registry_sync_ref": "",
+  "lifecycle_review_report_ref": ""
+}

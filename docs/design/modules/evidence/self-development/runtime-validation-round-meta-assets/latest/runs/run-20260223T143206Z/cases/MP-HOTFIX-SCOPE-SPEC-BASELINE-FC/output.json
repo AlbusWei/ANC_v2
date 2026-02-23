@@ -1,0 +1,17 @@
+{
+  "status": "pass",
+  "qa_payload": {
+    "gate_decision": "fail_closed",
+    "asset_id": "hotfix-scope-spec-baseline",
+    "scenario": "FC",
+    "reason_code": "fail_closed_semantics_satisfied",
+    "expected_exit_code": 2,
+    "traceability_refs": [
+      "processes/meta/hotfix-scope-spec-baseline/SKILL.md",
+      "processes/meta/hotfix-scope-spec-baseline/process.json",
+      "shared/registry/process_registry.json"
+    ],
+    "recovery_or_rollback": "block_hotfix_scope_spec_baseline_and_require_fail_closed_remediation_before_retry"
+  },
+  "generated_at": "2026-02-23T14:40:23Z"
+}

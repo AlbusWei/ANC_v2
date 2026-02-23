@@ -1,0 +1,17 @@
+{
+  "status": "pass",
+  "qa_payload": {
+    "gate_decision": "fail_closed",
+    "asset_id": "construction-plane-governance",
+    "scenario": "FC",
+    "reason_code": "fail_closed_semantics_satisfied",
+    "expected_exit_code": 2,
+    "traceability_refs": [
+      "processes/meta/construction-plane-governance/SKILL.md",
+      "processes/meta/construction-plane-governance/process.json",
+      "shared/registry/process_registry.json"
+    ],
+    "recovery_or_rollback": "block_round_close_and_require_fail_closed_remediation_before_retry"
+  },
+  "generated_at": "2026-02-23T14:30:24Z"
+}

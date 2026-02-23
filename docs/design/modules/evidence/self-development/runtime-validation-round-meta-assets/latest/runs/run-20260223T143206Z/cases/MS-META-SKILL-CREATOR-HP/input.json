@@ -1,0 +1,8 @@
+{
+  "skill_name": "qa-meta-demo-skill",
+  "layer": "meta",
+  "namespace": "phase5",
+  "objective_ref": "obj-m3-meta-asset-quality-hardening",
+  "description": "Phase5 online QA demo skill",
+  "output_root": "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260223T143206Z/cases/MS-META-SKILL-CREATOR-HP/generated-skills"
+}

@@ -1,11 +1,16 @@
 {
   "process_id": "full-development",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [
+    "objective-scope-baseline",
+    "spec-authoring-contract",
     "quality-gate-preparation",
-    "quality-gate-evaluation"
+    "implementation-execution-core",
+    "quality-gate-evaluation",
+    "release-packaging-governed",
+    "evolution-feedback-planning"
   ],
   "lineage_policy": {
     "stack_depth_limit": 8,
@@ -18,7 +23,7 @@
   "input_contract": {
     "format": "json",
     "required": [
-      "objective_ref",
+      "objective_context_ref",
       "input_payload",
       "target_asset_type",
       "lifecycle_target"
@@ -27,10 +32,12 @@
   "output_contract": {
     "format": "json",
     "required": [
-      "m3_delivery_bundle_ref",
       "final_gate_verdict_ref",
       "lifecycle_transition_ref",
-      "registry_sync_ref"
+      "registry_sync_ref",
+      "release_package_ref",
+      "improvement_plan_ref",
+      "retro_report_ref"
     ]
   },
   "phases": [
@@ -39,33 +46,41 @@
       "name": "objective-intake-and-scope",
       "actor": "architect",
       "target_type": "subprocess",
-      "target_id": "ap-001-002-003-bundle",
+      "target_id": "objective-scope-baseline",
       "requires_spec": false,
       "sipoc": {
         "supplier": "initiator",
-        "input": "objective and problem context",
-        "process": "structure objective and initial scope baseline",
-        "output": "objective_ref",
+        "input": "objective_context_ref",
+        "process": "normalize objective and scope baseline",
+        "output": "objective_ref and scope_baseline_ref",
         "client": "p2"
       },
-      "acceptance_criteria": "objective has measurable success criteria and explicit constraints"
+      "acceptance_criteria": "objective and scope baseline are traceable and closed",
+      "phase_purpose": "澄清目标并形成范围基线，为后续规格编写提供稳定输入。",
+      "input_context_ref": "objective_context_ref,input_payload",
+      "done_definition": "必须产出 objective_ref 与 scope_baseline_ref。",
+      "handoff_note": "将 objective_ref 与 scope_baseline_ref 交接给 p2。"
     },
     {
       "phase_id": "p2",
       "name": "spec-authoring",
       "actor": "architect",
       "target_type": "subprocess",
-      "target_id": "ap-004-bundle",
+      "target_id": "spec-authoring-contract",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-004-spec-authoring.md#ap-004-spec-authoring",
       "sipoc": {
         "supplier": "p1",
-        "input": "objective_ref",
+        "input": "objective_ref and scope_baseline_ref",
         "process": "produce executable spec contract",
         "output": "spec_ref",
         "client": "p3"
       },
-      "acceptance_criteria": "spec contains io contract, acceptance criteria and rollback direction"
+      "acceptance_criteria": "spec contains io contract, acceptance criteria and rollback direction",
+      "phase_purpose": "将目标与范围基线收敛为可执行规格。",
+      "input_context_ref": "objective_ref,scope_baseline_ref",
+      "done_definition": "必须产出 spec_ref，并可追溯到 p1 输入。",
+      "handoff_note": "将 spec_ref 交接给 p3。"
     },
     {
       "phase_id": "p3",
@@ -78,28 +93,36 @@
       "sipoc": {
         "supplier": "p2",
         "input": "spec_ref",
-        "process": "design tests and prepare gate input bundle",
-        "output": "preparation_bundle_ref",
+        "process": "design tests and compile preparation bundle",
+        "output": "test_plan_ref and preparation_bundle_ref",
         "client": "p4"
       },
-      "acceptance_criteria": "p0 tests and traceability bundle are complete"
+      "acceptance_criteria": "test_plan_ref is explicit and traceable to spec_ref",
+      "phase_purpose": "围绕规格构建测试准备包，明确后续验证基线。",
+      "input_context_ref": "spec_ref",
+      "done_definition": "必须产出 test_plan_ref 与 preparation_bundle_ref。",
+      "handoff_note": "将 test_plan_ref 与 preparation_bundle_ref 交接给 p4。"
     },
     {
       "phase_id": "p4",
       "name": "implementation-execution",
       "actor": "kernel-dev",
       "target_type": "subprocess",
-      "target_id": "ap-006-bundle",
+      "target_id": "implementation-execution-core",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-006-implementation-execution.md#ap-006-implementation-execution",
       "sipoc": {
         "supplier": "p3",
-        "input": "preparation_bundle_ref",
-        "process": "produce implementation output",
-        "output": "implementation_ref",
+        "input": "spec_ref and test_plan_ref",
+        "process": "produce implementation and candidate artifacts",
+        "output": "implementation_ref and candidate_artifacts_ref",
         "client": "p5"
       },
-      "acceptance_criteria": "implementation is traceable to spec and test plan"
+      "acceptance_criteria": "candidate_artifacts_ref is explicitly mapped from implementation_ref",
+      "phase_purpose": "在规格与测试基线约束下完成实现与候选产物。",
+      "input_context_ref": "spec_ref,test_plan_ref",
+      "done_definition": "必须产出 implementation_ref 与 candidate_artifacts_ref。",
+      "handoff_note": "将 candidate_artifacts_ref 交接给 p5。"
     },
     {
       "phase_id": "p5",
@@ -111,12 +134,16 @@
       "spec_ref": "docs/design/processes/quality-gate-evaluation-process.md#quality-gate-evaluation-process",
       "sipoc": {
         "supplier": "p4",
-        "input": "implementation_ref",
-        "process": "evaluate output against objective and test constraints",
+        "input": "candidate_artifacts_ref",
+        "process": "evaluate candidate artifacts against objective and tests",
         "output": "final_gate_verdict_ref",
         "client": "p6"
       },
-      "acceptance_criteria": "gate decision is parseable and evidence is auditable"
+      "acceptance_criteria": "gate decision is parseable and evidence is auditable",
+      "phase_purpose": "执行质量门禁评测并形成统一门禁结论。",
+      "input_context_ref": "candidate_artifacts_ref,preparation_bundle_ref",
+      "done_definition": "必须产出 final_gate_verdict_ref，且门禁结论可解释。",
+      "handoff_note": "若门禁通过，则将 final_gate_verdict_ref 交接给 p6。"
     },
     {
       "phase_id": "p6",
@@ -129,45 +156,57 @@
       "sipoc": {
         "supplier": "p5",
         "input": "final_gate_verdict_ref",
-        "process": "validate lifecycle handoff package and registry sync payload",
-        "output": "lifecycle_transition_ref",
+        "process": "validate lifecycle handoff and registry sync package",
+        "output": "lifecycle_transition_ref and registry_sync_ref",
         "client": "p7"
       },
-      "acceptance_criteria": "handoff package contains lifecycle and registry required fields"
+      "acceptance_criteria": "lifecycle and registry payload are both complete",
+      "phase_purpose": "完成生命周期治理与 registry 同步前置校验。",
+      "input_context_ref": "final_gate_verdict_ref,lifecycle_target",
+      "done_definition": "必须产出 lifecycle_transition_ref 与 registry_sync_ref。",
+      "handoff_note": "将 lifecycle_transition_ref 与 registry_sync_ref 交接给 p7。"
     },
     {
       "phase_id": "p7",
       "name": "release-packaging",
       "actor": "admin",
       "target_type": "subprocess",
-      "target_id": "ap-012-bundle",
+      "target_id": "release-packaging-governed",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-012-release-packaging.md#ap-012-release-packaging",
       "sipoc": {
         "supplier": "p6",
-        "input": "lifecycle_transition_ref",
-        "process": "assemble release package when required",
-        "output": "release_package_ref",
+        "input": "candidate_artifacts_ref, final_gate_verdict_ref, lifecycle_transition_ref, registry_sync_ref",
+        "process": "package release bundle with governed decision",
+        "output": "release_package_ref, changelog_ref, release_decision, rollback_bundle_ref",
         "client": "p8"
       },
-      "acceptance_criteria": "release package includes test and lifecycle evidence"
+      "acceptance_criteria": "release decision and rollback bundle are explicit",
+      "phase_purpose": "完成发布打包与回滚包准备。",
+      "input_context_ref": "candidate_artifacts_ref,final_gate_verdict_ref,lifecycle_transition_ref,registry_sync_ref",
+      "done_definition": "必须产出 release_package_ref 与 rollback_bundle_ref。",
+      "handoff_note": "将发布产物与反馈证据交接给 p8。"
     },
     {
       "phase_id": "p8",
       "name": "evolution-feedback-planning",
       "actor": "architect",
       "target_type": "subprocess",
-      "target_id": "ap-013-014-015-017-bundle",
+      "target_id": "evolution-feedback-planning",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-015-improvement-planning.md#ap-015-improvement-planning",
       "sipoc": {
         "supplier": "p7",
-        "input": "release and runtime feedback",
-        "process": "plan next process-level improvements",
-        "output": "m3_delivery_bundle_ref",
+        "input": "feedback_evidence_ref (aggregated from release, gate and runtime evidence)",
+        "process": "produce improvement planning and retrospective outputs",
+        "output": "improvement_plan_ref and retro_report_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "improvement planning output is traceable and prioritized"
+      "acceptance_criteria": "feedback evidence aggregation source is explicit and reproducible",
+      "phase_purpose": "基于发布与运行反馈形成下一轮演化计划。",
+      "input_context_ref": "release_package_ref,final_gate_verdict_ref,lifecycle_transition_ref,runtime_feedback_ref",
+      "done_definition": "必须产出 improvement_plan_ref 与 retro_report_ref。",
+      "handoff_note": "将演化计划回填给发起方作为下一轮输入。"
     }
   ],
   "control_flow": [
@@ -252,5 +291,13 @@
     "obligation_ref": "docs/design/processes/development-loop-core-standard.md",
     "risk_policy_ref": "docs/design/processes/governance-processes.md",
     "checklist_ref": "docs/design/modules/M3-self-development.md"
+  },
+  "collaboration_policy": {
+    "mode": "phase-isolated-session",
+    "dispatch_runtime": "openclaw-required",
+    "session_reset": "per-phase-reset",
+    "pilot_scope": "full-development-first",
+    "natural_context_first": true,
+    "ap_migration_strategy": "sequential"
   }
 }

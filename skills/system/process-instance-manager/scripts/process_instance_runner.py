@@ -99,7 +99,11 @@ def normalize_phase_status(raw: Any) -> str:
         "running": "running",
         "completed": "completed",
         "failed": "failed",
+        "hold": "hold",
+        "escalated": "escalate",
+        "escalate": "escalate",
         "skipped": "skipped",
+        "skip": "skipped",
         "complete": "completed",
         "success": "completed",
         "pass": "completed",
@@ -170,6 +174,7 @@ def validate_manifest(manifest: Dict[str, Any]) -> None:
     if not isinstance(control_flow, list) or not control_flow:
         raise RunnerError("process manifest control_flow must be non-empty array")
 
+    allowed_edge_on = {"success", "failure", "hold", "escalate", "skip"}
     linked_ids: set[str] = set()
     for idx, edge in enumerate(control_flow):
         if not isinstance(edge, dict):
@@ -181,8 +186,9 @@ def validate_manifest(manifest: Dict[str, Any]) -> None:
         edge_from = edge.get("from")
         edge_to = edge.get("to")
         edge_on = edge.get("on")
-        if edge_on not in {"success", "failure"}:
-            raise RunnerError(f"control_flow[{idx}].on must be success|failure")
+        if edge_on not in allowed_edge_on:
+            allowed_text = "|".join(sorted(allowed_edge_on))
+            raise RunnerError(f"control_flow[{idx}].on must be {allowed_text}")
 
         if edge_from not in phase_ids:
             raise RunnerError(f"control_flow[{idx}].from invalid phase_id: {edge_from!r}")
@@ -212,7 +218,13 @@ def read_instance_record(instance_root: Path, instance_id: str) -> Tuple[Dict[st
     return context, binding
 
 
-def build_dispatch_command(openclaw_bin: str, actor: str, session_id: str, message: str) -> List[str]:
+def build_dispatch_command(
+    openclaw_bin: str,
+    actor: str,
+    session_id: str,
+    message: str,
+    timeout_seconds: int,
+) -> List[str]:
     if not session_id:
         raise RunnerError("session_id is required for dispatch command")
     return [
@@ -222,6 +234,8 @@ def build_dispatch_command(openclaw_bin: str, actor: str, session_id: str, messa
         actor,
         "--session-id",
         session_id,
+        "--timeout",
+        str(timeout_seconds),
         "--message",
         message,
         "--json",
@@ -235,6 +249,75 @@ def run_dispatch(command: List[str]) -> Dict[str, Any]:
         "stdout": proc.stdout,
         "stderr": proc.stderr,
     }
+
+
+def parse_first_json_object(text: str) -> Dict[str, Any]:
+    decoder = json.JSONDecoder()
+    idx = 0
+    while idx < len(text):
+        ch = text[idx]
+        if ch != "{":
+            idx += 1
+            continue
+        try:
+            obj, _ = decoder.raw_decode(text, idx)
+            if isinstance(obj, dict):
+                return obj
+        except json.JSONDecodeError:
+            pass
+        idx += 1
+    raise RunnerError("unable to parse json object from command stdout")
+
+
+def reset_openclaw_session(openclaw_bin: str, actor: str) -> Dict[str, Any]:
+    session_key = f"agent:{actor}:main"
+    params = json.dumps({"key": session_key}, ensure_ascii=True)
+    cmd = [
+        openclaw_bin,
+        "gateway",
+        "call",
+        "sessions.reset",
+        "--params",
+        params,
+        "--json",
+    ]
+    proc = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    if proc.returncode != 0:
+        raise RunnerError(
+            "openclaw_session_reset_failed:"
+            f"actor={actor}:rc={proc.returncode}:stderr={proc.stderr.strip()}"
+        )
+    payload = parse_first_json_object(proc.stdout)
+    if not bool(payload.get("ok")):
+        raise RunnerError(f"openclaw_session_reset_rejected:actor={actor}")
+    entry = payload.get("entry")
+    if not isinstance(entry, dict):
+        raise RunnerError(f"openclaw_session_reset_missing_entry:actor={actor}")
+    session_id = str(entry.get("sessionId") or "").strip()
+    if not session_id:
+        raise RunnerError(f"openclaw_session_reset_missing_session_id:actor={actor}")
+    return {
+        "key": session_key,
+        "session_id": session_id,
+        "updated_at": entry.get("updatedAt"),
+    }
+
+
+def extract_actual_session_id(stdout: str) -> str:
+    try:
+        payload = parse_first_json_object(stdout)
+    except RunnerError:
+        return ""
+    result = payload.get("result")
+    if not isinstance(result, dict):
+        return ""
+    meta = result.get("meta")
+    if not isinstance(meta, dict):
+        return ""
+    agent_meta = meta.get("agentMeta")
+    if not isinstance(agent_meta, dict):
+        return ""
+    return str(agent_meta.get("sessionId") or "").strip()
 
 
 def parse_legacy_context_md(path: Path) -> Dict[str, str]:
@@ -359,7 +442,19 @@ def replay_errors(context: Dict[str, Any], manifest: Dict[str, Any]) -> List[str
         from_phase = current.get("phase_id")
         to_phase = nxt.get("phase_id")
         current_status = normalize_phase_status(current.get("status"))
-        edge_on = "failure" if current_status == "failed" else "success"
+        transition_on = str(current.get("transition_on") or "").strip().lower()
+        if transition_on:
+            edge_on = transition_on
+        elif current_status == "failed":
+            edge_on = "failure"
+        elif current_status == "hold":
+            edge_on = "hold"
+        elif current_status == "escalate":
+            edge_on = "escalate"
+        elif current_status == "skipped":
+            edge_on = "skip"
+        else:
+            edge_on = "success"
         if (from_phase, to_phase, edge_on) not in allowed_edges:
             errors.append(f"illegal_transition:{from_phase}->{to_phase}:{edge_on}")
 
@@ -415,6 +510,10 @@ def start_command(args: argparse.Namespace) -> int:
     actor = str(phase.get("actor"))
     session_key = args.session_key or f"{args.process_id}:{args.phase_id}:{uuid.uuid4().hex[:8]}"
     session_id = args.session_id or generate_session_id()
+    session_reset: Optional[Dict[str, Any]] = None
+    if args.execute_openclaw and args.reset_openclaw_session:
+        session_reset = reset_openclaw_session(args.openclaw_bin, actor)
+        session_id = session_reset["session_id"]
     if parent_session_id and session_id == parent_session_id:
         raise RunnerError("session_reuses_parent")
 
@@ -487,25 +586,40 @@ def start_command(args: argparse.Namespace) -> int:
         },
     )
 
-    command = build_dispatch_command(args.openclaw_bin, actor, session_id, args.dispatch_message)
+    command = build_dispatch_command(
+        args.openclaw_bin,
+        actor,
+        session_id,
+        args.dispatch_message,
+        args.openclaw_timeout_seconds,
+    )
     dispatch_result: Dict[str, Any] = {
         "executed": False,
         "command": command,
         "return_code": None,
         "stdout": "",
         "stderr": "",
+        "actual_session_id": "",
+        "session_reset": session_reset,
     }
 
     if args.execute_openclaw:
         proc_result = run_dispatch(command)
+        actual_session_id = extract_actual_session_id(proc_result["stdout"])
         dispatch_result.update(
             {
                 "executed": True,
                 "return_code": proc_result["return_code"],
                 "stdout": proc_result["stdout"],
                 "stderr": proc_result["stderr"],
+                "actual_session_id": actual_session_id,
             }
         )
+        if args.strict_session_match and actual_session_id and actual_session_id != session_id:
+            raise RunnerError(
+                "openclaw_session_mismatch:"
+                f"expected={session_id}:actual={actual_session_id}:actor={actor}"
+            )
 
     result = {
         "status": "ok",
@@ -855,7 +969,23 @@ def build_parser() -> argparse.ArgumentParser:
     p_start.add_argument("--input-ref", default="")
     p_start.add_argument("--dispatch-message", default="execute assigned phase by process-instance-manager contract")
     p_start.add_argument("--openclaw-bin", default="openclaw")
+    p_start.add_argument(
+        "--openclaw-timeout-seconds",
+        type=int,
+        default=120,
+        help="Timeout seconds passed to `openclaw agent --timeout`",
+    )
     p_start.add_argument("--execute-openclaw", action="store_true")
+    p_start.add_argument(
+        "--reset-openclaw-session",
+        action="store_true",
+        help="Reset agent session via `openclaw gateway call sessions.reset` before dispatch",
+    )
+    p_start.add_argument(
+        "--strict-session-match",
+        action="store_true",
+        help="Fail when dispatch returned agent session id mismatches context session id",
+    )
     p_start.add_argument("--output")
 
     p_migrate = sub.add_parser("migrate", help="migrate legacy state.json to new schema")

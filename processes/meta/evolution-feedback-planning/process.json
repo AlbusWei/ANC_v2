@@ -1,0 +1,145 @@
+{
+  "process_id": "evolution-feedback-planning",
+  "version": "0.1.0",
+  "process_level": "P5",
+  "parent_process_id": null,
+  "composed_processes": [],
+  "lineage_policy": {
+    "stack_depth_limit": 8,
+    "context_isolation": "strict",
+    "output_handoff_mode": "contract_only"
+  },
+  "objective_ref": "obj-m3-evolution-feedback-planning",
+  "owner": "bpm",
+  "priority": "P1",
+  "input_contract": {
+    "format": "json",
+    "required": [
+      "feedback_evidence_ref"
+    ]
+  },
+  "output_contract": {
+    "format": "json",
+    "required": [
+      "improvement_plan_ref",
+      "retro_report_ref"
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1",
+      "name": "feedback-intake",
+      "actor": "system-analyst",
+      "target_type": "skill",
+      "target_id": "sys.arch.system-feedback-digest",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-013-incident-triage.md#ap-013-incident-triage",
+      "sipoc": {
+        "supplier": "initiator",
+        "input": "feedback_evidence_ref",
+        "process": "normalize runtime feedback and summarize key signals",
+        "output": "feedback_digest_ref",
+        "client": "p2"
+      },
+      "acceptance_criteria": "feedback digest is complete and traceable"
+    },
+    {
+      "phase_id": "p2",
+      "name": "classify-and-prioritize",
+      "actor": "architect",
+      "target_type": "skill",
+      "target_id": "system.ops.manual-task",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-014-objective-rubric-iteration.md#ap-014-objective-rubric-iteration",
+      "sipoc": {
+        "supplier": "p1",
+        "input": "feedback_digest_ref",
+        "process": "classify issues and define priority buckets",
+        "output": "priority_matrix_ref",
+        "client": "p3"
+      },
+      "acceptance_criteria": "priority matrix includes rationale and impact"
+    },
+    {
+      "phase_id": "p3",
+      "name": "draft-improvement-plan",
+      "actor": "architect",
+      "target_type": "skill",
+      "target_id": "system.ops.manual-task",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-015-improvement-planning.md#ap-015-improvement-planning",
+      "sipoc": {
+        "supplier": "p2",
+        "input": "priority_matrix_ref",
+        "process": "draft next-cycle improvement plan",
+        "output": "improvement_plan_ref",
+        "client": "p4"
+      },
+      "acceptance_criteria": "plan has owner, order and rollback direction"
+    },
+    {
+      "phase_id": "p4",
+      "name": "retro-and-loop-close",
+      "actor": "architect",
+      "target_type": "skill",
+      "target_id": "system.ops.manual-task",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-017-process-retrospective.md#ap-017-process-retrospective",
+      "sipoc": {
+        "supplier": "p3",
+        "input": "improvement_plan_ref",
+        "process": "produce retrospective report and close loop",
+        "output": "retro_report_ref",
+        "client": "initiator"
+      },
+      "acceptance_criteria": "retro report and improvement plan are both published"
+    }
+  ],
+  "control_flow": [
+    {
+      "from": "p1",
+      "to": "p2",
+      "on": "success"
+    },
+    {
+      "from": "p2",
+      "to": "p3",
+      "on": "success"
+    },
+    {
+      "from": "p3",
+      "to": "p4",
+      "on": "success"
+    },
+    {
+      "from": "p4",
+      "to": "end",
+      "on": "success"
+    }
+  ],
+  "fail_policy": {
+    "mode": "fail_closed",
+    "retry": {
+      "max_attempts": 1
+    },
+    "escalation_chain": [
+      "actor",
+      "owner",
+      "bpm",
+      "admin",
+      "human"
+    ]
+  },
+  "evidence_policy": {
+    "required_fields": [
+      "timestamp",
+      "phase_id",
+      "actor",
+      "input_ref",
+      "output_ref",
+      "decision",
+      "reason",
+      "evidence_ref"
+    ]
+  }
+}

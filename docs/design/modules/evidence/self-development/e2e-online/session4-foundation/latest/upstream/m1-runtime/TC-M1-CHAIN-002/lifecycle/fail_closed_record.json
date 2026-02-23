@@ -1,0 +1,6 @@
+{
+  "timestamp": "2026-02-23T13:01:11Z",
+  "status": "failed",
+  "reason": "final_gate_verdict_ref_unreachable:docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/missing_final_gate_verdict.json",
+  "fail_closed": true
+}

@@ -1,0 +1,17 @@
+{
+  "strategy": "layered",
+  "stages": [
+    {
+      "stage": 1,
+      "suite": "online-critical",
+      "description": "先执行每资产关键在线 + Fail-Closed"
+    },
+    {
+      "stage": 2,
+      "suite": "final-regression-full",
+      "description": "再执行全量 112 case"
+    }
+  ],
+  "pass_condition": "all_stages_pass",
+  "generated_at": "2026-02-23T15:01:44Z"
+}

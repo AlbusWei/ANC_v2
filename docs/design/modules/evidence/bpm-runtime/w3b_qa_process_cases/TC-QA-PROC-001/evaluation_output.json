@@ -11,6 +11,11 @@
   "hold_routed": false,
   "hold_governance_output_ref": "",
   "hold_resolution_ref": "",
+  "collaboration_mode": "local-only",
+  "phase_dispatch_enabled": false,
+  "dispatch_openclaw": false,
+  "dispatch_reset_openclaw_session": true,
+  "dispatch_strict_session_match": true,
   "reasons": [
     "gate_aggregated",
     "gate_decision=pass"

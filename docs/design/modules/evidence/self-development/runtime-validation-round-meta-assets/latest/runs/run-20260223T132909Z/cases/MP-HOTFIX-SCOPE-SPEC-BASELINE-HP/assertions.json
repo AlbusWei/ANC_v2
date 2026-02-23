@@ -1,0 +1,18 @@
+{
+  "assertions": [
+    {
+      "name": "contract_refs_exists",
+      "passed": true,
+      "details": "all refs exist"
+    },
+    {
+      "name": "online_asset_eligible",
+      "passed": false,
+      "details": {
+        "runtime_key": "hotfix-scope-spec-baseline",
+        "return_code": 0,
+        "eligible": true
+      }
+    }
+  ]
+}

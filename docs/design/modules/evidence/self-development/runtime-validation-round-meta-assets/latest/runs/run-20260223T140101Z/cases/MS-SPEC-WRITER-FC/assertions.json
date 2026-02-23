@@ -1,0 +1,18 @@
+{
+  "assertions": [
+    {
+      "name": "contract_refs_exists",
+      "passed": true,
+      "details": "all refs exist"
+    },
+    {
+      "name": "online_asset_eligible",
+      "passed": true,
+      "details": {
+        "runtime_key": "spec-writer",
+        "return_code": 0,
+        "eligible": true
+      }
+    }
+  ]
+}

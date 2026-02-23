@@ -1,0 +1,17 @@
+{
+  "status": "fail_closed",
+  "validation_report_ref": "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260223T143044Z/cases/MS-TEMPLATE-VALIDATOR-FC/runner_report.json",
+  "gate_decision": "fail",
+  "blocking_issues": [
+    {
+      "reason_code": "missing_required_fields",
+      "message": "关键输入字段缺失。",
+      "details": {
+        "missing_fields": [
+          "schema_ref"
+        ]
+      }
+    }
+  ],
+  "exit_code": 2
+}

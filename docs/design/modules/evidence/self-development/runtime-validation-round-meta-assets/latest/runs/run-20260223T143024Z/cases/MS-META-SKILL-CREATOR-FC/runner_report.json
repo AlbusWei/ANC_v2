@@ -1,0 +1,10 @@
+{
+  "runner": "meta_skill_creator_runner",
+  "decision": "fail_closed",
+  "reason_code": "missing_required_fields",
+  "details": {
+    "missing_fields": [
+      "objective_ref"
+    ]
+  }
+}

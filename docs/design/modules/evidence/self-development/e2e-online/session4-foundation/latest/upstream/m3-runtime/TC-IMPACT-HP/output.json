@@ -1,0 +1,9 @@
+{
+  "impact_report_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m3-runtime/TC-IMPACT-HP/impact_report.json",
+  "risk_level": "medium",
+  "rollback_requirements": [
+    "保留回滚补丁",
+    "提供回滚验证记录"
+  ],
+  "gating_recommendation": "allow"
+}

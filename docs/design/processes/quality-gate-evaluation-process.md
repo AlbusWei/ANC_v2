@@ -21,6 +21,21 @@
    - `TC-QA-PROC-001`（主链路 `pass`）。
    - `TC-QA-PROC-002`（`hold` 路由到 `hold-governance`）。
 
+## 协作骨架 v1（QA 试点）
+
+1. 试点模式：phase 级 isolated session（每个 phase 新建独立会话）。
+2. 启用方式：
+   - `--enable-phase-dispatch`：启用 phase 分发。
+   - `--dispatch-openclaw`：启用真实 OpenClaw 分发（否则仅落盘分发证据）。
+   - `--dispatch-reset-openclaw-session`：真实分发时默认开启，确保同 actor 每 phase 新会话。
+   - `--dispatch-strict-session-match`：真实分发时默认开启，保证会话绑定可核对。
+3. phase 分发最小语义：
+   - `purpose`：本阶段目标；
+   - `input_ref`：输入上下文引用；
+   - `done_definition`：完成标准；
+   - `handoff_note`：交接说明。
+4. 试点目标：先验证多会话协作主链路可运行，再补强契约细节。
+
 ## 阶段定义
 
 1. `run-objective-evaluation`（AP-007）

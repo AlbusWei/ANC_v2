@@ -1,6 +1,6 @@
 ---
-name: "skill-creator"
-description: "Create or refactor ANC skills using the local standard template, including capability contract, test mount, registry patch plan, and lifecycle evidence pack"
+name: "meta-skill-creator"
+description: "创建或重构 Skill 资产，输出可直接进入 review 门禁的文档、测试与 registry 变更计划"
 license: "Apache-2.0"
 compatibility:
   openclaw: ">=2026.2"
@@ -12,47 +12,59 @@ allowed-tools:
 version: "0.2.0"
 ---
 
-# skill-creator
+# meta-skill-creator
 
 ## Objective
 
-用于新建或重构技能目录，确保技能可加载、可测试、可治理，并可推进 `draft -> review -> active`。
+在仓库内提供唯一的 Skill 资产生成入口，完成从输入契约到 `SKILL.md/TEST.md/registry` 计划的闭环，且对不完整输入执行 Fail-Closed。
+
+## 命名与别名策略
+
+1. 运行入口固定为 `meta-skill-creator`。
+2. `skill-creator` 仅作为历史别名说明，仓库内禁止作为调用入口。
+3. 稳定 `skill_id` 维持为 `meta.arch.skill-creator`，避免破坏既有 registry 追溯链。
+
+## 触发矩阵
+
+| 触发条件 | 输入前置 | 输出目标 | 阻断条件 |
+|---|---|---|---|
+| 新建 Skill 资产 | `skill_name/layer/namespace/objective_ref` 完整 | 可审查的技能骨架与测试文档 | 关键字段缺失 |
+| 重构既有 Skill | 已提供目标路径与重构边界 | 更新后的契约与测试计划 | 前后契约不一致 |
+| 生命周期推进前审查 | 资产草案可读取 | registry patch 计划 + 证据路径 | test_mount 缺失 |
 
 ## Capability Contract (Machine-Readable)
 
 ```yaml
 contract_version: 1.0.0
-objective_ref: obj-phase0.5-skill-creator
+objective_ref: obj-m3-meta-asset-quality-hardening
 input_contract:
-  format: markdown_or_json
+  format: json
   required:
     - skill_name
+    - layer
+    - namespace
     - objective_ref
-    - scope
-    - constraints
   validation:
-    - skill_name must use kebab-case
-    - objective_ref must be non-empty
-    - constraints must include fail-closed behavior
+    - skill_name must be kebab-case
+    - layer must be one of meta/system/business
+    - namespace must be kebab-case compatible segment
+    - objective_ref must be non-empty and traceable
 output_contract:
-  format: file_layout_and_markdown
+  format: json
   required:
     - skill_md_path
     - test_doc_path
     - registry_patch_plan
     - review_evidence_ref
-    - smoke_evidence_ref
   machine_judgement:
     - generated frontmatter is parseable
     - capability contract fields are complete
-    - test path is traceable and exists
-    - registry patch plan includes required fields
+    - test_mount path is reachable
+    - registry patch includes required fields
 fail_closed_rules:
-  - required input fields missing
-  - frontmatter cannot be parsed
-  - capability contract invalid
-  - test path not provided
-  - registry patch incomplete
+  - missing mandatory input fields
+  - invalid naming conventions
+  - generated asset cannot satisfy review gate baseline
 test_mount:
   test_doc: tests/skill-creator/TEST.md
   methodology_ref: docs/architecture/test_methodology.md
@@ -60,61 +72,64 @@ references:
   checklist: skills/skill-creator/references/checklist.md
   review_rubric: skills/skill-creator/references/review_rubric.md
   frontmatter_notes: skills/skill-creator/references/frontmatter_openclaw.md
-  scaffold_script: skills/skill-creator/scripts/scaffold_skill.py
+  alias_policy: skills/skill-creator/references/alias-policy.md
+  scaffold_output_spec: skills/skill-creator/references/scaffold-output-spec.md
 ```
 
-## Input Contract
+## 输入字段约束
 
-- Format: markdown or json
-- Required fields:
-  - `skill_name`
-  - `objective_ref`
-  - `scope`
-  - `constraints`
-- Validation:
-  - `skill_name` 必须使用 kebab-case
-  - `constraints` 必须包含 Fail-Closed 与边界说明
+| 字段 | 类型 | 约束 | Fail-Closed 条件 |
+|---|---|---|---|
+| `skill_name` | string | kebab-case、语义稳定 | 为空或命名违规 |
+| `layer` | string | `meta/system/business` | 枚举外取值 |
+| `namespace` | string | kebab-case 分段 | 非法字符 |
+| `objective_ref` | string | 非空且可追溯 | 空值 |
 
-## Output Contract
+## 输出字段约束
 
-- Format: file layout + markdown
-- Required fields:
-  - `skills/<layer>/<namespace>/<skill-name>/SKILL.md`
-  - `skills/<layer>/<namespace>/<skill-name>/TEST.md` 或 `tests/<skill-name>/TEST.md`
-  - registry patch plan（`shared/registry/skill_registry.json`）
-  - review/smoke evidence path
+| 字段 | 类型 | 约束 | 验证方式 |
+|---|---|---|---|
+| `skill_md_path` | string | 指向生成的 `SKILL.md` | 文件存在性检查 |
+| `test_doc_path` | string | 指向生成的 `TEST.md` | 文件存在性检查 |
+| `registry_patch_plan` | object | 含 `skill_id/name/version/status/tests` | 结构化校验 |
+| `review_evidence_ref` | string | 指向 review 证据路径 | 路径规则校验 |
 
-## Execution Steps
+## Fail-Closed 决策表
 
-1. 对齐 `objective_ref` 与能力边界。
-2. 按 `skills/template/SKILL.md` 生成或重构技能骨架。
-3. 写入 `Capability Contract` 与执行步骤。
-4. 补齐 `TEST.md`（至少 3 个 P0 场景：happy/fail-closed/traceability）。
-5. 生成 registry patch plan 并对齐 `test_mount`。
-6. 产出 review 证据与 smoke 证据。
-7. 执行 `registry_contract_tool.py verify`。
+| 场景 | 检测信号 | 决策 | 返回码 |
+|---|---|---|---|
+| 必要输入缺失 | `missing_fields != []` | 阻断并返回缺失字段 | `2` |
+| 命名冲突 | 与保留名或非法名冲突 | 阻断并输出冲突详情 | `2` |
+| 生成物不达标 | review 基线检查失败 | 阻断并返回失败项 | `2` |
+| 运行时异常 | 未捕获异常 | 中止并输出异常摘要 | `1` |
 
-最小脚手架命令：
+## 运行命令
+
+```bash
+python3 skills/skill-creator/scripts/meta_skill_creator_runner.py \
+  --input <input.json> \
+  --output <output.json> \
+  --report <report.json>
+```
+
+返回码约定：`0=success`，`2=fail-closed`，`1=unexpected error`。
+
+## 补充命令（脚手架）
 
 ```bash
 python3 skills/skill-creator/scripts/scaffold_skill.py \
-  --skill-name demo-skill \
-  --layer system \
-  --namespace qa \
-  --objective-ref obj-demo \
+  --skill-name <skill-name> \
+  --layer <meta|system|business> \
+  --namespace <namespace> \
+  --objective-ref <objective-ref> \
+  --description "<技能描述>" \
   --output-root skills
 ```
 
-## Fail-Closed Rules
-
-- 关键输入缺失时直接失败并返回缺失项。
-- frontmatter 不可解析时禁止继续。
-- Capability Contract 不可解析或缺字段时禁止进入 review。
-- 未提供测试路径时不允许推进生命周期。
-- registry 校验失败时禁止交付。
-
 ## References
 
-- 执行清单：`skills/skill-creator/references/checklist.md`
-- Frontmatter 规则：`skills/skill-creator/references/frontmatter_openclaw.md`
-- 评审量表：`skills/skill-creator/references/review_rubric.md`
+1. `skills/skill-creator/references/checklist.md`
+2. `skills/skill-creator/references/frontmatter_openclaw.md`
+3. `skills/skill-creator/references/review_rubric.md`
+4. `skills/skill-creator/references/alias-policy.md`
+5. `skills/skill-creator/references/scaffold-output-spec.md`

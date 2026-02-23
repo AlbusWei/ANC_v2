@@ -1,0 +1,18 @@
+{
+  "status": "ok",
+  "process_id": "hold-governance",
+  "triage_action": "debug",
+  "triage_report_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/evaluation/p5_hold_governance/p1_p3_hold_triage/triage_report.json",
+  "progress_signals_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/evaluation/p5_hold_governance/p1_p3_hold_triage/progress_signals.json",
+  "action_execution_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/evaluation/p5_hold_governance/p1_p3_hold_triage/action_execution.json",
+  "health_maintenance_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/evaluation/p5_hold_governance/p4_health_maintenance.json",
+  "hold_resolution_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/evaluation/p5_hold_governance/p5_hold_resolution.json",
+  "escalation_ref": "",
+  "gate_decision": "pass",
+  "evidence_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/evaluation/p5_hold_governance",
+  "runtime_trace_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/evaluation/p5_hold_governance/runtime_trace.json",
+  "reasons": [
+    "triage_action=debug",
+    "resolution=close"
+  ]
+}

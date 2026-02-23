@@ -1,0 +1,7 @@
+{
+  "bundle_id": "rb-001",
+  "steps": [
+    "restore previous release",
+    "verify health"
+  ]
+}

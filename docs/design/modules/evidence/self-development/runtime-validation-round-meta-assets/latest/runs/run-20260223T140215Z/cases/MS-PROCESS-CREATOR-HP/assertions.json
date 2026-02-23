@@ -1,0 +1,14 @@
+{
+  "assertions": [
+    {
+      "name": "expected_exit_code_match",
+      "passed": true,
+      "details": 0
+    },
+    {
+      "name": "runner_output_contract",
+      "passed": true,
+      "details": "success"
+    }
+  ]
+}

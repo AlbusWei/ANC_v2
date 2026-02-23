@@ -92,6 +92,127 @@ def parse_bool(value: Any) -> bool:
     return text in {"1", "true", "yes", "y", "on"}
 
 
+def dispatch_phase(
+    *,
+    enabled: bool,
+    execute_openclaw: bool,
+    reset_openclaw_session: bool,
+    strict_session_match: bool,
+    root: Path,
+    evidence_dir: Path,
+    phase_id: str,
+    actor: str,
+    input_ref: str,
+    purpose: str,
+    done_definition: str,
+    handoff_note: str,
+    instance_root: str,
+    openclaw_bin: str,
+    openclaw_timeout_seconds: int,
+) -> Dict[str, Any]:
+    if not enabled:
+        return {
+            "enabled": False,
+            "executed": False,
+            "instance_id": "",
+            "session_id": "",
+            "parent_session_id": None,
+            "dispatch_output_ref": "",
+            "dispatch_context_ref": "",
+        }
+
+    dispatch_context_path = evidence_dir / f"{phase_id}_dispatch_context.md"
+    dispatch_context_path.write_text(
+        (
+            f"# {phase_id} 协作上下文\n"
+            f"- actor: {actor}\n"
+            f"- purpose: {purpose}\n"
+            f"- input_ref: {input_ref}\n"
+            f"- done_definition: {done_definition}\n"
+            f"- handoff_note: {handoff_note}\n"
+        ),
+        encoding="utf-8",
+    )
+    dispatch_message = (
+        f"[{phase_id}] {purpose}\n"
+        f"输入上下文: {input_ref}\n"
+        f"完成标准: {done_definition}\n"
+        f"交接要求: {handoff_note}\n"
+        "请按上述约束执行并给出可追溯输出引用。"
+    )
+
+    dispatch_output_path = evidence_dir / f"{phase_id}_dispatch_output.json"
+    dispatch_cmd = [
+        sys.executable,
+        "skills/system/process-instance-manager/scripts/process_instance_runner.py",
+        "start",
+        "--process-id",
+        "quality-gate-evaluation",
+        "--phase-id",
+        phase_id,
+        "--instance-root",
+        str(resolve_path(root, instance_root)),
+        "--initiated-by",
+        "bpm",
+        "--input-ref",
+        input_ref,
+        "--dispatch-message",
+        dispatch_message,
+        "--openclaw-bin",
+        openclaw_bin,
+        "--openclaw-timeout-seconds",
+        str(openclaw_timeout_seconds),
+        "--output",
+        to_rel(dispatch_output_path, root),
+    ]
+    if execute_openclaw:
+        dispatch_cmd.append("--execute-openclaw")
+        if reset_openclaw_session:
+            dispatch_cmd.append("--reset-openclaw-session")
+        if strict_session_match:
+            dispatch_cmd.append("--strict-session-match")
+
+    proc = run_cmd(dispatch_cmd, root)
+    dispatch_stdout_path = evidence_dir / f"{phase_id}_dispatch_stdout.log"
+    dispatch_stderr_path = evidence_dir / f"{phase_id}_dispatch_stderr.log"
+    dispatch_stdout_path.write_text(proc.stdout, encoding="utf-8")
+    dispatch_stderr_path.write_text(proc.stderr, encoding="utf-8")
+    if proc.returncode != 0:
+        raise QualityGateEvaluationError(
+            f"{phase_id}_dispatch_failed:rc={proc.returncode}:stderr={proc.stderr.strip()}"
+        )
+
+    dispatch_output = load_json(dispatch_output_path)
+    instance_id = str(dispatch_output.get("instance_id") or "")
+    if not instance_id:
+        raise QualityGateEvaluationError(f"{phase_id}_dispatch_missing_instance_id")
+
+    session_id = ""
+    parent_session_id: Any = None
+    binding_ref_raw = dispatch_output.get("session_binding_ref")
+    if isinstance(binding_ref_raw, str) and binding_ref_raw.strip():
+        binding_payload = load_json(resolve_path(root, binding_ref_raw))
+        session_id = str(binding_payload.get("session_id") or "")
+        parent_session_id = binding_payload.get("parent_session_id")
+        if not session_id:
+            raise QualityGateEvaluationError(f"{phase_id}_dispatch_missing_session_id")
+
+    dispatch_exec = dispatch_output.get("dispatch")
+    dispatch_executed = bool(dispatch_exec.get("executed")) if isinstance(dispatch_exec, dict) else False
+
+    return {
+        "enabled": True,
+        "executed": dispatch_executed,
+        "instance_id": instance_id,
+        "session_id": session_id,
+        "parent_session_id": parent_session_id,
+        "dispatch_output_ref": to_rel(dispatch_output_path, root),
+        "dispatch_context_ref": to_rel(dispatch_context_path, root),
+        "dispatch_stdout_ref": to_rel(dispatch_stdout_path, root),
+        "dispatch_stderr_ref": to_rel(dispatch_stderr_path, root),
+    }
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run quality-gate-evaluation process")
     parser.add_argument("--input", required=True, help="Input JSON path")
@@ -110,6 +231,58 @@ def parse_args() -> argparse.Namespace:
         "--hold-governance-runner",
         default="processes/meta/hold-governance/scripts/hold_governance_runner.py",
         help="Repo-relative hold-governance runner path",
+    )
+    parser.add_argument(
+        "--enable-phase-dispatch",
+        action="store_true",
+        help="Enable collaboration pilot: dispatch each phase with isolated session",
+    )
+    parser.add_argument(
+        "--dispatch-openclaw",
+        action="store_true",
+        help="When phase dispatch is enabled, also execute openclaw agent dispatch",
+    )
+    parser.set_defaults(dispatch_reset_openclaw_session=True)
+    parser.add_argument(
+        "--dispatch-reset-openclaw-session",
+        dest="dispatch_reset_openclaw_session",
+        action="store_true",
+        help="When dispatching with openclaw, reset actor session before each phase (default true)",
+    )
+    parser.add_argument(
+        "--no-dispatch-reset-openclaw-session",
+        dest="dispatch_reset_openclaw_session",
+        action="store_false",
+        help="Disable openclaw session reset before each phase",
+    )
+    parser.set_defaults(dispatch_strict_session_match=True)
+    parser.add_argument(
+        "--dispatch-strict-session-match",
+        dest="dispatch_strict_session_match",
+        action="store_true",
+        help="Fail when openclaw actual session mismatches context session (default true)",
+    )
+    parser.add_argument(
+        "--no-dispatch-strict-session-match",
+        dest="dispatch_strict_session_match",
+        action="store_false",
+        help="Disable strict session mismatch checks",
+    )
+    parser.add_argument(
+        "--dispatch-instance-root",
+        default="tmp/m2-bpm-runtime/quality-gate-evaluation/phase-dispatch/instances",
+        help="Process instance root used by per-phase dispatch",
+    )
+    parser.add_argument(
+        "--dispatch-openclaw-bin",
+        default="openclaw",
+        help="OpenClaw binary used by phase dispatch",
+    )
+    parser.add_argument(
+        "--dispatch-openclaw-timeout-seconds",
+        type=int,
+        default=45,
+        help="Timeout seconds passed to `openclaw agent` in phase dispatch",
     )
     return parser.parse_args()
 
@@ -159,8 +332,29 @@ def main() -> int:
             raise QualityGateEvaluationError("profile_set_empty")
 
         force_hold = parse_bool(request.get("force_hold"))
+        phase_dispatch_enabled = args.enable_phase_dispatch
+        phase_dispatch_openclaw = args.dispatch_openclaw
+        phase_dispatch_reset_session = args.dispatch_reset_openclaw_session
+        phase_dispatch_strict_match = args.dispatch_strict_session_match
 
         # p1: objective evaluation (AP-007)
+        p1_dispatch = dispatch_phase(
+            enabled=phase_dispatch_enabled,
+            execute_openclaw=phase_dispatch_openclaw,
+            reset_openclaw_session=phase_dispatch_reset_session,
+            strict_session_match=phase_dispatch_strict_match,
+            root=root,
+            evidence_dir=evidence_dir,
+            phase_id="p1",
+            actor="qa",
+            input_ref=to_rel(input_path, root),
+            purpose="执行客观评测（AP-007）并产出 objective_eval_ref",
+            done_definition="必须产出可追溯 objective_eval_ref",
+            handoff_note="将 objective_eval_ref 交给 p2 主观评测阶段",
+            instance_root=args.dispatch_instance_root,
+            openclaw_bin=args.dispatch_openclaw_bin,
+            openclaw_timeout_seconds=args.dispatch_openclaw_timeout_seconds,
+        )
         p1_dir = evidence_dir / "p1_objective_eval"
         p1_dir.mkdir(parents=True, exist_ok=True)
         p1_cmd = [
@@ -194,11 +388,29 @@ def main() -> int:
                 "status": "pass",
                 "return_code": p1_proc.returncode,
                 "objective_eval_ref": objective_eval_ref,
+                "dispatch": p1_dispatch,
                 "ts": now_iso(),
             }
         )
 
         # p2: subjective evaluation (AP-008). For W3-B scheduling sample we keep deterministic outputs.
+        p2_dispatch = dispatch_phase(
+            enabled=phase_dispatch_enabled,
+            execute_openclaw=phase_dispatch_openclaw,
+            reset_openclaw_session=phase_dispatch_reset_session,
+            strict_session_match=phase_dispatch_strict_match,
+            root=root,
+            evidence_dir=evidence_dir,
+            phase_id="p2",
+            actor="qa",
+            input_ref=objective_eval_ref,
+            purpose="执行主观评测（AP-008）并产出 subjective_eval_ref",
+            done_definition="必须产出 subjective_eval_ref 且给出 hold/pass 判定",
+            handoff_note="将 subjective_eval_ref 交给 p3 回归评测阶段",
+            instance_root=args.dispatch_instance_root,
+            openclaw_bin=args.dispatch_openclaw_bin,
+            openclaw_timeout_seconds=args.dispatch_openclaw_timeout_seconds,
+        )
         p2_dir = evidence_dir / "p2_subjective_eval"
         p2_dir.mkdir(parents=True, exist_ok=True)
         subjective_eval_path = p2_dir / "subjective_eval.json"
@@ -226,11 +438,29 @@ def main() -> int:
                 "mode": "simulated",
                 "subjective_eval_ref": to_rel(subjective_eval_path, root),
                 "subjective_decision": subjective_decision,
+                "dispatch": p2_dispatch,
                 "ts": now_iso(),
             }
         )
 
         # p3: regression evaluation (AP-009)
+        p3_dispatch = dispatch_phase(
+            enabled=phase_dispatch_enabled,
+            execute_openclaw=phase_dispatch_openclaw,
+            reset_openclaw_session=phase_dispatch_reset_session,
+            strict_session_match=phase_dispatch_strict_match,
+            root=root,
+            evidence_dir=evidence_dir,
+            phase_id="p3",
+            actor="qa",
+            input_ref=to_rel(subjective_eval_path, root),
+            purpose="执行回归评测（AP-009）并产出 regression_eval_ref",
+            done_definition="必须产出可追溯 regression_eval_ref",
+            handoff_note="将三类评测引用交给 p4 聚合判定",
+            instance_root=args.dispatch_instance_root,
+            openclaw_bin=args.dispatch_openclaw_bin,
+            openclaw_timeout_seconds=args.dispatch_openclaw_timeout_seconds,
+        )
         p3_dir = evidence_dir / "p3_regression_eval"
         p3_dir.mkdir(parents=True, exist_ok=True)
         p3_cmd = [
@@ -265,11 +495,29 @@ def main() -> int:
                 "status": "pass",
                 "return_code": p3_proc.returncode,
                 "regression_eval_ref": regression_eval_ref,
+                "dispatch": p3_dispatch,
                 "ts": now_iso(),
             }
         )
 
         # p4: aggregate-gate-decision (AP-020)
+        p4_dispatch = dispatch_phase(
+            enabled=phase_dispatch_enabled,
+            execute_openclaw=phase_dispatch_openclaw,
+            reset_openclaw_session=phase_dispatch_reset_session,
+            strict_session_match=phase_dispatch_strict_match,
+            root=root,
+            evidence_dir=evidence_dir,
+            phase_id="p4",
+            actor="qa",
+            input_ref=regression_eval_ref,
+            purpose="聚合门禁判定（AP-020）并产出 final_gate_verdict_ref",
+            done_definition="必须产出 gate_decision 与 final_gate_verdict_ref",
+            handoff_note="若 gate_decision=hold，则交给 p5 处理 hold 治理路由",
+            instance_root=args.dispatch_instance_root,
+            openclaw_bin=args.dispatch_openclaw_bin,
+            openclaw_timeout_seconds=args.dispatch_openclaw_timeout_seconds,
+        )
         p4_dir = evidence_dir / "p4_aggregate_verdict"
         p4_dir.mkdir(parents=True, exist_ok=True)
         aggregation_rules_ref = str(
@@ -314,6 +562,7 @@ def main() -> int:
                 "gate_decision": gate_decision,
                 "return_code": p4_proc.returncode,
                 "final_gate_verdict_ref": final_gate_verdict_ref,
+                "dispatch": p4_dispatch,
                 "ts": now_iso(),
             }
         )
@@ -323,6 +572,23 @@ def main() -> int:
         hold_governance_output_ref = ""
         hold_resolution_ref = ""
         if hold_routed:
+            p5_dispatch = dispatch_phase(
+                enabled=phase_dispatch_enabled,
+                execute_openclaw=phase_dispatch_openclaw,
+                reset_openclaw_session=phase_dispatch_reset_session,
+                strict_session_match=phase_dispatch_strict_match,
+                root=root,
+                evidence_dir=evidence_dir,
+                phase_id="p5",
+                actor="bpm",
+                input_ref=final_gate_verdict_ref,
+                purpose="处理 hold 治理路由并输出 hold_resolution_ref",
+                done_definition="hold 场景必须产出 hold_resolution_ref 或 escalation_ref",
+                handoff_note="将 hold 处理结论回填主流程并结束本次门禁流程",
+                instance_root=args.dispatch_instance_root,
+                openclaw_bin=args.dispatch_openclaw_bin,
+                openclaw_timeout_seconds=args.dispatch_openclaw_timeout_seconds,
+            )
             hold_case_path = resolve_path(root, str(request.get("hold_case_ref") or to_rel(evidence_dir / "p5_hold_case.json", root)))
             runtime_log_path = resolve_path(root, str(request.get("runtime_log_ref") or to_rel(evidence_dir / "p5_runtime.log", root)))
             execution_state_path = resolve_path(root, str(request.get("execution_state_ref") or to_rel(evidence_dir / "p5_execution_state.json", root)))
@@ -403,6 +669,7 @@ def main() -> int:
                     "status": "pass",
                     "hold_governance_output_ref": hold_governance_output_ref,
                     "hold_resolution_ref": hold_resolution_ref,
+                    "dispatch": p5_dispatch,
                     "ts": now_iso(),
                 }
             )
@@ -415,6 +682,10 @@ def main() -> int:
                 "status": "ok" if gate_decision in {"pass", "hold"} else "failed",
                 "phase_trace": phase_trace,
                 "input_ref": to_rel(input_path, root),
+                "collaboration_mode": "phase-isolated-session" if phase_dispatch_enabled else "local-only",
+                "dispatch_openclaw": phase_dispatch_openclaw,
+                "dispatch_reset_openclaw_session": phase_dispatch_reset_session,
+                "dispatch_strict_session_match": phase_dispatch_strict_match,
             },
         )
 
@@ -431,6 +702,11 @@ def main() -> int:
             "hold_routed": hold_routed,
             "hold_governance_output_ref": hold_governance_output_ref,
             "hold_resolution_ref": hold_resolution_ref,
+            "collaboration_mode": "phase-isolated-session" if phase_dispatch_enabled else "local-only",
+            "phase_dispatch_enabled": phase_dispatch_enabled,
+            "dispatch_openclaw": phase_dispatch_openclaw,
+            "dispatch_reset_openclaw_session": phase_dispatch_reset_session,
+            "dispatch_strict_session_match": phase_dispatch_strict_match,
             "reasons": ["gate_aggregated", f"gate_decision={gate_decision}"],
         }
         dump_json(output_path, output)

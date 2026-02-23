@@ -1,0 +1,15 @@
+{
+  "runner": "agent_creator_runner",
+  "decision": "success",
+  "checked_fields": [
+    "agent_id",
+    "role_scope",
+    "interfaces",
+    "owner"
+  ],
+  "output_fields": [
+    "agent_doc_path",
+    "tools_doc_path",
+    "registry_patch_plan"
+  ]
+}

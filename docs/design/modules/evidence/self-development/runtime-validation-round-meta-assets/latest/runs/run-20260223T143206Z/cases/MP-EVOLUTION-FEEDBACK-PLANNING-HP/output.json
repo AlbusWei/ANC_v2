@@ -1,0 +1,17 @@
+{
+  "status": "pass",
+  "qa_payload": {
+    "gate_decision": "pass",
+    "asset_id": "evolution-feedback-planning",
+    "scenario": "HP",
+    "reason_code": "contract_satisfied",
+    "expected_exit_code": 0,
+    "traceability_refs": [
+      "processes/meta/evolution-feedback-planning/SKILL.md",
+      "processes/meta/evolution-feedback-planning/process.json",
+      "shared/registry/process_registry.json"
+    ],
+    "recovery_or_rollback": "none_required"
+  },
+  "generated_at": "2026-02-23T14:35:26Z"
+}

@@ -9,6 +9,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
+version: "0.2.0"
 ---
 
 # process-instance-manager
@@ -70,3 +71,8 @@ test_mount:
 ## Executable Runner
 
 `skills/system/process-instance-manager/scripts/process_instance_runner.py`
+
+新增会话治理参数（v0.2.0）：
+
+1. `--reset-openclaw-session`：分发前执行 `sessions.reset`，为同 actor 新建会话上下文。
+2. `--strict-session-match`：校验实际 OpenClaw 会话 ID 与上下文会话 ID 一致。

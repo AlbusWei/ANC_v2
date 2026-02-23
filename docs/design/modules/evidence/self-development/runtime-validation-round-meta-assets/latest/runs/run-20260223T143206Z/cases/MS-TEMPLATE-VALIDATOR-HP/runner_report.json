@@ -1,0 +1,10 @@
+{
+  "runner": "template_validator_runner",
+  "decision": "success",
+  "profile": "strict",
+  "checked_refs": {
+    "template_ref": "skills/meta/template-validator/SKILL.md",
+    "schema_ref": "shared/registry/skill_registry.json",
+    "target_asset_ref": "shared/registry/skill_registry.json"
+  }
+}

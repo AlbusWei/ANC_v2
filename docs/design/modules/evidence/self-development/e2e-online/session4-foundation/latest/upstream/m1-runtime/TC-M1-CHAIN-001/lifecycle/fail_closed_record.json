@@ -1,0 +1,6 @@
+{
+  "timestamp": "2026-02-23T13:01:11Z",
+  "status": "failed",
+  "reason": "registry_verify_failed:rc=1",
+  "fail_closed": true
+}

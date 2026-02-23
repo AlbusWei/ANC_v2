@@ -1,0 +1,3 @@
+Config warnings:\n- plugins.entries.matrix: plugin matrix: duplicate plugin id detected; later plugin may be overridden (/opt/homebrew/lib/node_modules/openclaw/extensions/matrix/index.ts)
+Config warnings:\n- plugins.entries.matrix: plugin matrix: duplicate plugin id detected; later plugin may be overridden (/opt/homebrew/lib/node_modules/openclaw/extensions/matrix/index.ts)
+Config warnings:\n- plugins.entries.matrix: plugin matrix: duplicate plugin id detected; later plugin may be overridden (/opt/homebrew/lib/node_modules/openclaw/extensions/matrix/index.ts)

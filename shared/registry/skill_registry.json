@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "skill_registry",
-  "updated_at": "2026-02-23T09:15:52Z",
+  "updated_at": "2026-02-23T12:25:25Z",
   "entry_contract": {
     "required": [
       "skill_id",
@@ -187,11 +187,11 @@
       "path": "skills/meta/agent-creator/SKILL.md",
       "layer": "meta",
       "owner": "architect",
-      "version": "0.1.0",
-      "status": "draft",
+      "version": "0.2.0",
+      "status": "review",
       "agentskills": {
         "name": "agent-creator",
-        "description": "Create or update agent design assets with lifecycle and registry-ready contracts",
+        "description": "创建或更新 Agent 设计资产，并输出可直接进入 registry 审查的补丁计划",
         "license": "Apache-2.0",
         "compatibility": {
           "openclaw": ">=2026.2",
@@ -218,11 +218,11 @@
       "path": "skills/meta/objective-writer/SKILL.md",
       "layer": "meta",
       "owner": "architect",
-      "version": "0.1.0",
-      "status": "draft",
+      "version": "0.2.0",
+      "status": "review",
       "agentskills": {
         "name": "objective-writer",
-        "description": "Draft objective contracts with measurable success criteria and fail-closed boundaries",
+        "description": "将原始需求归一为可执行 Objective 契约，输出可直接进入 Spec/Test 阶段的目标基线",
         "license": "Apache-2.0",
         "compatibility": {
           "openclaw": ">=2026.2",
@@ -249,11 +249,11 @@
       "path": "skills/meta/process-creator/SKILL.md",
       "layer": "meta",
       "owner": "architect",
-      "version": "0.1.0",
-      "status": "draft",
+      "version": "0.2.0",
+      "status": "review",
       "agentskills": {
         "name": "process-creator",
-        "description": "Create process assets with continuity and phase-closure constraints",
+        "description": "创建或重构流程资产，强制满足连续性约束、phase 闭合约束与断点拆分规则",
         "license": "Apache-2.0",
         "compatibility": {
           "openclaw": ">=2026.2",
@@ -276,15 +276,15 @@
     },
     {
       "skill_id": "meta.arch.skill-creator",
-      "name": "skill-creator",
+      "name": "meta-skill-creator",
       "path": "skills/skill-creator/SKILL.md",
       "layer": "meta",
       "owner": "architect",
-      "version": "0.1.0",
-      "status": "draft",
+      "version": "0.2.0",
+      "status": "review",
       "agentskills": {
-        "name": "skill-creator",
-        "description": "创建或更新技能资产，确保与 Objective->Spec->Test->Development 链路及 OpenClaw/Agent Skills 规范对齐。",
+        "name": "meta-skill-creator",
+        "description": "创建或重构 Skill 资产，输出可直接进入 review 门禁的文档、测试与 registry 变更计划",
         "license": "Apache-2.0",
         "compatibility": {
           "openclaw": ">=2026.2",
@@ -309,11 +309,11 @@
       "path": "skills/meta/spec-writer/SKILL.md",
       "layer": "meta",
       "owner": "architect",
-      "version": "0.2.0",
-      "status": "draft",
+      "version": "0.3.0",
+      "status": "review",
       "agentskills": {
         "name": "spec-writer",
-        "description": "Generate objective-aligned technical spec with enforceable constraints",
+        "description": "将 Objective 固化为可执行 Spec，明确 I/O 契约、验收条款、风险与回退边界",
         "license": "Apache-2.0",
         "compatibility": {
           "openclaw": ">=2026.2",
@@ -340,11 +340,11 @@
       "path": "skills/meta/template-validator/SKILL.md",
       "layer": "meta",
       "owner": "architect",
-      "version": "0.1.0",
-      "status": "draft",
+      "version": "0.2.0",
+      "status": "review",
       "agentskills": {
         "name": "template-validator",
-        "description": "Validate templates and contract bundles before lifecycle and registry handoff",
+        "description": "在 lifecycle 与 registry handoff 前执行模板契约校验，统一输出可审计 gate 结论",
         "license": "Apache-2.0",
         "compatibility": {
           "openclaw": ">=2026.2",
@@ -371,11 +371,11 @@
       "path": "skills/meta/llm-judge/SKILL.md",
       "layer": "meta",
       "owner": "qa",
-      "version": "0.2.0",
-      "status": "draft",
+      "version": "0.3.0",
+      "status": "review",
       "agentskills": {
         "name": "llm-judge",
-        "description": "Evaluate outputs against objective/spec and return structured verdict",
+        "description": "基于 Objective/Spec 对输出进行结构化评判，给出可执行 verdict 与改进建议",
         "license": "Apache-2.0",
         "compatibility": {
           "openclaw": ">=2026.2",
@@ -402,11 +402,11 @@
       "path": "skills/meta/test-designer/SKILL.md",
       "layer": "meta",
       "owner": "qa",
-      "version": "0.1.0",
-      "status": "draft",
+      "version": "0.2.0",
+      "status": "review",
       "agentskills": {
         "name": "test-designer",
-        "description": "Design objective-aligned test cases before implementation",
+        "description": "基于 Objective 与 Spec 设计测试用例，确保测试资产可直接驱动 TDD 与门禁判定",
         "license": "Apache-2.0",
         "compatibility": {
           "openclaw": ">=2026.2",
@@ -650,7 +650,7 @@
       "path": "skills/system/process-instance-manager/SKILL.md",
       "layer": "system",
       "owner": "bpm",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "review",
       "agentskills": {
         "name": "process-instance-manager",

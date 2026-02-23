@@ -1,0 +1,16 @@
+{
+  "status": "pass",
+  "qa_payload": {
+    "gate_decision": "test_invalid",
+    "asset_id": "meta.arch.process-creator",
+    "scenario": "RB",
+    "reason_code": "unsupported_scenario_code",
+    "expected_exit_code": 2,
+    "traceability_refs": [
+      "skills/meta/process-creator/SKILL.md",
+      "shared/registry/skill_registry.json"
+    ],
+    "recovery_or_rollback": "normalize_scenario_to_supported_profile_then_rerun_gate"
+  },
+  "generated_at": "2026-02-23T14:51:47Z"
+}

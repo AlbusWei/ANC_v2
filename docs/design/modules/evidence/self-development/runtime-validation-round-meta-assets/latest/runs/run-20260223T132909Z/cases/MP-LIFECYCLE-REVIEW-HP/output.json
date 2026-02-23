@@ -1,0 +1,15 @@
+{
+  "status": "fail",
+  "mode": "dry-run",
+  "reason_code": "online_asset_unavailable",
+  "defects": [
+    {
+      "reason_code": "online_asset_unavailable",
+      "details": {
+        "runtime_key": "lifecycle-review",
+        "return_code": 0
+      }
+    }
+  ],
+  "generated_at": "2026-02-23T13:29:37Z"
+}

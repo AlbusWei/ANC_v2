@@ -24,6 +24,17 @@
 2. 关键评测包不可解析。
 3. 证据不可追溯。
 
+## Collaboration Pilot (P8)
+
+1. 试点启用参数：
+   - `--enable-phase-dispatch`
+   - `--dispatch-openclaw`（可选；开启真实 agent 分发）
+   - `--dispatch-reset-openclaw-session`（默认开启；同 actor 每 phase 重置会话）
+   - `--dispatch-strict-session-match`（默认开启；校验会话 ID 一致性）
+2. 协作策略：每个 phase 使用独立 session，避免上下文堆积。
+3. 分发证据：每个 phase 产出 `pX_dispatch_context.md` 与 `pX_dispatch_output.json`。
+4. 试点目标：先跑通协作链路，再逐步收紧契约细节。
+
 ## Primary Evidence Bundle
 
 - `objective_eval_ref`

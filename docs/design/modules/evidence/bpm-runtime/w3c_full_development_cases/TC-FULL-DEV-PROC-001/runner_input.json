@@ -1,0 +1,6 @@
+{
+  "objective_context_ref": "docs/design/modules/evidence/bpm-runtime/w3c_full_development_cases/TC-FULL-DEV-PROC-001/objective_context.md",
+  "input_payload": "docs/design/modules/evidence/bpm-runtime/w3c_full_development_cases/TC-FULL-DEV-PROC-001/input_payload.json",
+  "target_asset_type": "process",
+  "lifecycle_target": "review"
+}

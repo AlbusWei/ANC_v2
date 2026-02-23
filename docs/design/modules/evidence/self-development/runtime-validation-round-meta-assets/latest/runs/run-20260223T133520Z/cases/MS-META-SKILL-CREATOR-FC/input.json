@@ -1,0 +1,11 @@
+{
+  "asset_id": "meta.arch.skill-creator",
+  "scenario": "FC",
+  "runner_input": {
+    "skill_name": "qa-meta-demo-skill",
+    "layer": "meta",
+    "namespace": "phase5",
+    "description": "触发缺字段",
+    "output_root": "__CASE_OUTPUT_ROOT__"
+  }
+}

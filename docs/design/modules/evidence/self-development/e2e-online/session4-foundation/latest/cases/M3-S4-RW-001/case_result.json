@@ -1,0 +1,29 @@
+{
+  "id": "M3-S4-RW-001",
+  "suite": "session4-rollback",
+  "category": "rollback",
+  "status": "pass",
+  "description": "验证 release-manager 回退/返工分支（rejected/blocked）有效。",
+  "assertions": [
+    {
+      "name": "upstream_m3_return_code",
+      "passed": true,
+      "details": "m3-runtime runner 返回码必须为 0。"
+    },
+    {
+      "name": "tc_release_fail_closed_reg_pass",
+      "passed": true,
+      "details": "TC-RELEASE-FC-REG 必须通过以证明返工阻断链路。"
+    },
+    {
+      "name": "tc_release_fail_closed_rb_pass",
+      "passed": true,
+      "details": "TC-RELEASE-FC-RB 必须通过以证明回退包缺失阻断链路。"
+    }
+  ],
+  "upstream_refs": {
+    "m3_report_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m3-runtime/skill_contract_validation_report.json"
+  },
+  "notes": [],
+  "generated_at": "2026-02-23T13:01:14Z"
+}

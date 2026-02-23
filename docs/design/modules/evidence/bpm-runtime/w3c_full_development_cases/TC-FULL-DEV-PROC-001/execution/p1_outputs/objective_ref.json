@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-02-23T16:53:55Z",
+  "phase_id": "p1",
+  "actor": "architect",
+  "field": "objective_ref",
+  "mode": "collaboration-skeleton",
+  "note": "本轮为协作骨架验证产物，后续可替换为真实子流程输出。"
+}

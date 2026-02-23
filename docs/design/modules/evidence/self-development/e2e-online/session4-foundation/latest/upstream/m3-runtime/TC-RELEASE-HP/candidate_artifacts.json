@@ -1,0 +1,7 @@
+{
+  "artifacts": [
+    "dist/release-v1.tar.gz",
+    "docs/changelog.md"
+  ],
+  "rollback_bundle_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m3-runtime/fixtures/rollback_bundle.json"
+}

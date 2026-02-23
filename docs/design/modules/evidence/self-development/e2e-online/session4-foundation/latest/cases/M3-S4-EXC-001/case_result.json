@@ -1,0 +1,29 @@
+{
+  "id": "M3-S4-EXC-001",
+  "suite": "session4-exception",
+  "category": "exception",
+  "status": "fail",
+  "description": "验证 M1 gate 决策中的 hold 路由（异常链路）可达。",
+  "assertions": [
+    {
+      "name": "upstream_m1_return_code",
+      "passed": false,
+      "details": "m1-runtime runner 返回码必须为 0。"
+    },
+    {
+      "name": "hold_coverage",
+      "passed": true,
+      "details": "decision_coverage.hold 必须为 true。"
+    },
+    {
+      "name": "tc_m1_hold_pass",
+      "passed": true,
+      "details": "TC-M1-CHAIN-003 必须通过。"
+    }
+  ],
+  "upstream_refs": {
+    "m1_report_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/latest_post_dev_regression_summary.json"
+  },
+  "notes": [],
+  "generated_at": "2026-02-23T13:01:14Z"
+}

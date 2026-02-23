@@ -1,0 +1,28 @@
+{
+  "status": "fail_closed",
+  "reason_code": "phase_closure_violation",
+  "message": "phase 字段不闭合或 spec 引用缺失。",
+  "details": {
+    "invalid_phases": [
+      {
+        "index": 0,
+        "reason": "missing_target_id",
+        "phase": {
+          "phase_id": "p1",
+          "target_type": "skill",
+          "requires_spec": true
+        }
+      },
+      {
+        "index": 0,
+        "reason": "missing_spec_ref",
+        "phase": {
+          "phase_id": "p1",
+          "target_type": "skill",
+          "requires_spec": true
+        }
+      }
+    ]
+  },
+  "exit_code": 2
+}

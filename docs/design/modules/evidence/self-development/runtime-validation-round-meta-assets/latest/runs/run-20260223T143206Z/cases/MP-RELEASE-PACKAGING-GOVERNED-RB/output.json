@@ -1,0 +1,17 @@
+{
+  "status": "pass",
+  "qa_payload": {
+    "gate_decision": "test_invalid",
+    "asset_id": "release-packaging-governed",
+    "scenario": "RB",
+    "reason_code": "unsupported_scenario_code",
+    "expected_exit_code": 2,
+    "traceability_refs": [
+      "processes/meta/release-packaging-governed/SKILL.md",
+      "processes/meta/release-packaging-governed/process.json",
+      "shared/registry/process_registry.json"
+    ],
+    "recovery_or_rollback": "normalize_scenario_to_supported_profile_then_rerun_gate"
+  },
+  "generated_at": "2026-02-23T14:47:54Z"
+}

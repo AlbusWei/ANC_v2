@@ -52,6 +52,9 @@
   - `manifest-parse`：校验 process manifest 与 phase 闭合
   - `phase-schedule`：基于 control_flow 生成调度决策
   - `lineage-guard`：执行递归深度与上下文隔离约束
+- 会话治理增强（v0.2.0）：
+  - `openclaw-session-reset`：phase 分发前可执行 `sessions.reset`，确保同 actor 跨 phase 新会话。
+  - `session-match-check`：可校验 dispatch 实际会话 ID 与实例上下文会话 ID 一致。
 - Fail-Closed：phase 不存在、上下文泄漏、递归深度超限、manifest 不闭合、会话绑定缺失或父子会话复用。
 - test_mount：`skills/system/process-instance-manager/TEST.md`
 

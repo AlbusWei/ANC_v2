@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-22T15:51:17Z",
+  "timestamp": "2026-02-23T16:32:04Z",
   "process_id": "quality-gate-evaluation",
   "status": "ok",
   "phase_trace": [
@@ -8,7 +8,16 @@
       "status": "pass",
       "return_code": 0,
       "objective_eval_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p1_objective_eval/raw_eval.json",
-      "ts": "2026-02-22T15:51:16Z"
+      "dispatch": {
+        "enabled": false,
+        "executed": false,
+        "instance_id": "",
+        "session_id": "",
+        "parent_session_id": null,
+        "dispatch_output_ref": "",
+        "dispatch_context_ref": ""
+      },
+      "ts": "2026-02-23T16:32:03Z"
     },
     {
       "phase": "p2-run-subjective-evaluation",
@@ -16,14 +25,32 @@
       "mode": "simulated",
       "subjective_eval_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p2_subjective_eval/subjective_eval.json",
       "subjective_decision": "hold",
-      "ts": "2026-02-22T15:51:16Z"
+      "dispatch": {
+        "enabled": false,
+        "executed": false,
+        "instance_id": "",
+        "session_id": "",
+        "parent_session_id": null,
+        "dispatch_output_ref": "",
+        "dispatch_context_ref": ""
+      },
+      "ts": "2026-02-23T16:32:03Z"
     },
     {
       "phase": "p3-run-regression-evaluation",
       "status": "pass",
       "return_code": 0,
       "regression_eval_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p3_regression_eval/regression_eval.json",
-      "ts": "2026-02-22T15:51:16Z"
+      "dispatch": {
+        "enabled": false,
+        "executed": false,
+        "instance_id": "",
+        "session_id": "",
+        "parent_session_id": null,
+        "dispatch_output_ref": "",
+        "dispatch_context_ref": ""
+      },
+      "ts": "2026-02-23T16:32:04Z"
     },
     {
       "phase": "p4-aggregate-gate-decision",
@@ -31,15 +58,37 @@
       "gate_decision": "hold",
       "return_code": 30,
       "final_gate_verdict_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p4_aggregate_verdict/final_gate_verdict.json",
-      "ts": "2026-02-22T15:51:16Z"
+      "dispatch": {
+        "enabled": false,
+        "executed": false,
+        "instance_id": "",
+        "session_id": "",
+        "parent_session_id": null,
+        "dispatch_output_ref": "",
+        "dispatch_context_ref": ""
+      },
+      "ts": "2026-02-23T16:32:04Z"
     },
     {
       "phase": "p5-govern-hold",
       "status": "pass",
       "hold_governance_output_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance_output.json",
       "hold_resolution_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance/p5_hold_resolution.json",
-      "ts": "2026-02-22T15:51:17Z"
+      "dispatch": {
+        "enabled": false,
+        "executed": false,
+        "instance_id": "",
+        "session_id": "",
+        "parent_session_id": null,
+        "dispatch_output_ref": "",
+        "dispatch_context_ref": ""
+      },
+      "ts": "2026-02-23T16:32:04Z"
     }
   ],
-  "input_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation_input.json"
+  "input_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation_input.json",
+  "collaboration_mode": "local-only",
+  "dispatch_openclaw": false,
+  "dispatch_reset_openclaw_session": true,
+  "dispatch_strict_session_match": true
 }

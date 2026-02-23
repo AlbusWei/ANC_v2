@@ -1,0 +1,10 @@
+{
+  "template_ref": "skills/meta/template-validator/SKILL.md",
+  "schema_ref": "shared/registry/skill_registry.json",
+  "target_asset_ref": "shared/registry/skill_registry.json",
+  "validation_profile": "strict",
+  "expected_keys": [
+    "schema_version",
+    "entries"
+  ]
+}

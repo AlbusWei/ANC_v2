@@ -1,11 +1,15 @@
 {
   "process_id": "hotfix",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [
+    "hotfix-intake-normalization",
+    "hotfix-scope-spec-baseline",
     "quality-gate-preparation",
-    "quality-gate-evaluation"
+    "implementation-execution-core",
+    "quality-gate-evaluation",
+    "release-packaging-governed"
   ],
   "lineage_policy": {
     "stack_depth_limit": 8,
@@ -18,20 +22,18 @@
   "input_contract": {
     "format": "json",
     "required": [
-      "incident_ref",
-      "objective_ref",
-      "impact_scope",
-      "rollback_plan",
+      "incident_context_ref",
       "target_asset_ref"
     ]
   },
   "output_contract": {
     "format": "json",
     "required": [
-      "hotfix_delivery_bundle_ref",
       "final_gate_verdict_ref",
       "lifecycle_transition_ref",
-      "hotfix_release_package_ref"
+      "registry_sync_ref",
+      "release_package_ref",
+      "rollback_bundle_ref"
     ]
   },
   "phases": [
@@ -40,33 +42,33 @@
       "name": "hotfix-intake",
       "actor": "architect",
       "target_type": "subprocess",
-      "target_id": "ap-001-002-bundle",
+      "target_id": "hotfix-intake-normalization",
       "requires_spec": false,
       "sipoc": {
         "supplier": "initiator",
-        "input": "incident and objective context",
-        "process": "normalize hotfix objective and impact scope",
-        "output": "hotfix_objective_ref",
+        "input": "incident_context_ref",
+        "process": "normalize hotfix objective, impact and rollback direction",
+        "output": "hotfix_objective_ref, impact_scope_ref, rollback_direction_ref",
         "client": "p2"
       },
-      "acceptance_criteria": "objective, impact and rollback direction are explicit"
+      "acceptance_criteria": "hotfix intake outputs are explicit and executable"
     },
     {
       "phase_id": "p2",
       "name": "scope-and-spec-fast-baseline",
       "actor": "architect",
       "target_type": "subprocess",
-      "target_id": "ap-003-004-bundle",
+      "target_id": "hotfix-scope-spec-baseline",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-004-spec-authoring.md#ap-004-spec-authoring",
       "sipoc": {
         "supplier": "p1",
-        "input": "hotfix objective",
-        "process": "generate constrained hotfix spec",
-        "output": "hotfix_spec_ref",
+        "input": "hotfix_objective_ref and impact_scope_ref",
+        "process": "compose scope baseline and spec baseline for hotfix",
+        "output": "hotfix_scope_baseline_ref and spec_ref",
         "client": "p3"
       },
-      "acceptance_criteria": "spec includes rollback and blast radius controls"
+      "acceptance_criteria": "scope and spec baseline include rollback and blast radius constraints"
     },
     {
       "phase_id": "p3",
@@ -78,29 +80,29 @@
       "spec_ref": "docs/design/processes/quality-gate-preparation-process.md#quality-gate-preparation-process",
       "sipoc": {
         "supplier": "p2",
-        "input": "hotfix spec",
+        "input": "spec_ref",
         "process": "prepare p0-focused hotfix tests",
-        "output": "hotfix_preparation_bundle_ref",
+        "output": "test_plan_ref and preparation_bundle_ref",
         "client": "p4"
       },
-      "acceptance_criteria": "hotfix regression scope and p0 coverage are complete"
+      "acceptance_criteria": "test_plan_ref is explicitly linked to spec_ref"
     },
     {
       "phase_id": "p4",
       "name": "hotfix-implementation",
       "actor": "kernel-dev",
       "target_type": "subprocess",
-      "target_id": "ap-006-bundle",
+      "target_id": "implementation-execution-core",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-006-implementation-execution.md#ap-006-implementation-execution",
       "sipoc": {
         "supplier": "p3",
-        "input": "hotfix_preparation_bundle_ref",
+        "input": "spec_ref and test_plan_ref",
         "process": "implement fix candidate",
-        "output": "hotfix_implementation_ref",
+        "output": "implementation_ref and candidate_artifacts_ref",
         "client": "p5"
       },
-      "acceptance_criteria": "hotfix candidate is traceable and reproducible"
+      "acceptance_criteria": "candidate artifacts are traceable to implementation output"
     },
     {
       "phase_id": "p5",
@@ -112,12 +114,12 @@
       "spec_ref": "docs/design/processes/quality-gate-evaluation-process.md#quality-gate-evaluation-process",
       "sipoc": {
         "supplier": "p4",
-        "input": "hotfix implementation",
-        "process": "evaluate hotfix objective and regression gate",
+        "input": "candidate_artifacts_ref",
+        "process": "evaluate objective and regression gates",
         "output": "final_gate_verdict_ref",
         "client": "p6"
       },
-      "acceptance_criteria": "gate decision is pass/fail and linked to evidence"
+      "acceptance_criteria": "gate decision is pass/fail and evidence complete"
     },
     {
       "phase_id": "p6",
@@ -131,24 +133,24 @@
         "supplier": "p5",
         "input": "final_gate_verdict_ref",
         "process": "validate lifecycle and registry handoff package",
-        "output": "lifecycle_transition_ref",
+        "output": "lifecycle_transition_ref and registry_sync_ref",
         "client": "p7"
       },
-      "acceptance_criteria": "lifecycle handoff package passes template and contract validation"
+      "acceptance_criteria": "lifecycle and registry handoff package is complete"
     },
     {
       "phase_id": "p7",
       "name": "release-packaging",
       "actor": "admin",
       "target_type": "subprocess",
-      "target_id": "ap-012-bundle",
+      "target_id": "release-packaging-governed",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-012-release-packaging.md#ap-012-release-packaging",
       "sipoc": {
         "supplier": "p6",
-        "input": "lifecycle_transition_ref",
-        "process": "package and publish emergency fix",
-        "output": "hotfix_release_package_ref",
+        "input": "candidate_artifacts_ref, final_gate_verdict_ref, lifecycle_transition_ref, registry_sync_ref",
+        "process": "package and publish hotfix release",
+        "output": "release_package_ref and rollback_bundle_ref",
         "client": "initiator"
       },
       "acceptance_criteria": "release package includes rollback and gate evidence"

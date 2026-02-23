@@ -1,0 +1,10 @@
+{
+  "mode": "dry-run",
+  "planned_commands": [
+    {
+      "kind": "online_qa",
+      "command": "openclaw agent --agent qa --message '<payload>' --json --timeout <seconds>"
+    }
+  ],
+  "generated_at": "2026-02-23T13:38:39Z"
+}

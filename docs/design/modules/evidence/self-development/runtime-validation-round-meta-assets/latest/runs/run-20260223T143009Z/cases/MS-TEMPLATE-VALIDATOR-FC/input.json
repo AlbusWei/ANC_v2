@@ -1,0 +1,5 @@
+{
+  "template_ref": "skills/meta/template-validator/SKILL.md",
+  "target_asset_ref": "shared/registry/skill_registry.json",
+  "validation_profile": "strict"
+}

@@ -1,0 +1,16 @@
+{
+  "status": "pass",
+  "qa_payload": {
+    "gate_decision": "fail_closed",
+    "asset_id": "meta.qa.test-designer",
+    "scenario": "FC",
+    "reason_code": "fail_closed_semantics_satisfied",
+    "expected_exit_code": 2,
+    "traceability_refs": [
+      "skills/meta/test-designer/SKILL.md",
+      "shared/registry/skill_registry.json"
+    ],
+    "recovery_or_rollback": "block_test_design_and_require_fail_closed_remediation_before_retry"
+  },
+  "generated_at": "2026-02-23T14:55:20Z"
+}

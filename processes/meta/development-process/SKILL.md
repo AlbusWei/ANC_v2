@@ -9,6 +9,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
+version: "0.3.0"
 ---
 
 # development-process

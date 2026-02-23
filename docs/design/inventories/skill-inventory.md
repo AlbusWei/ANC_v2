@@ -1,6 +1,6 @@
 # Skill 全量清单
 
-> 版本: v1.2.0 | SSOT: `shared/registry/skill_registry.json`
+> 版本: v1.4.0 | SSOT: `shared/registry/skill_registry.json`
 
 ## 已注册 Skill
 
@@ -35,6 +35,11 @@
 29. sys.arch.system-feedback-digest
 30. sys.arch.impact-analyzer
 31. sys.admin.release-manager
+
+运行名映射说明：
+
+1. `meta.arch.skill-creator` 的仓库内运行名为 `meta-skill-creator`。
+2. `skill-creator` 仅保留历史别名说明，不用于仓库内调用指令。
 
 ## 规划 Skill（节选）
 
@@ -106,3 +111,21 @@ W5 变更记录（M2 BPM Runtime Hardening）：
 2. `system-analyst` 生产链路改为调用 `sys.arch.system-feedback-digest` 输出 `digest/reject`。
 3. `sys.arch.system-feedback-digest` 生命周期状态为 `review`（本轮不推进 `active`）。
 4. 运行级验证入口：`tests/m2-bpm-runtime/run_tc_anl.py`（覆盖 `TC-ANL-001~003`）。
+
+W6 变更记录（m3-meta-asset-quality-hardening Phase3）：
+
+1. 8 个目标元技能（`meta.arch.*` + `meta.qa.*`）统一升级为执行级资产（触发矩阵、字段级 I/O、Fail-Closed 决策表、运行命令）。
+2. `meta.arch.agent-creator`、`meta.arch.process-creator`、`meta.arch.template-validator`、`meta.arch.skill-creator` 新增/升级统一 CLI runner（`--input/--output/[--report]`，返回码 `0/2/1`）。
+3. `meta.arch.skill-creator` 运行名切换为 `meta-skill-creator`，`skill-creator` 在仓库内软禁用（仅历史别名说明）。
+4. 8 个目标元技能生命周期统一推进到 `review`（不推进到 `active`）。
+
+W7 变更记录（m3-meta-asset-quality-hardening Phase4）：
+
+1. Phase4 联动复核确认：8 个目标元技能状态保持 `review`，本轮不推进 `active`。
+2. `meta.arch.skill-creator` 的仓库内运行入口保持 `meta-skill-creator`；`skill-creator` 仅用于历史别名追溯。
+3. `shared/registry/skill_registry.json` 完成核对且无字段增量（no-delta）。
+
+W8 变更记录（M3 协作骨架扩展：full-development）：
+
+1. `sys.bpm.process-instance-manager` 新增会话治理能力：`--reset-openclaw-session`、`--strict-session-match`。
+2. `sys.bpm.process-instance-manager` registry 版本由 `0.1.0` 升级到 `0.2.0`，生命周期保持 `review`。

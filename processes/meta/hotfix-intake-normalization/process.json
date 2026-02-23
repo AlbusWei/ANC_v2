@@ -1,0 +1,102 @@
+{
+  "process_id": "hotfix-intake-normalization",
+  "version": "0.1.0",
+  "process_level": "P5",
+  "parent_process_id": null,
+  "composed_processes": [],
+  "lineage_policy": {
+    "stack_depth_limit": 8,
+    "context_isolation": "strict",
+    "output_handoff_mode": "contract_only"
+  },
+  "objective_ref": "obj-m3-hotfix-intake-normalization",
+  "owner": "bpm",
+  "priority": "P0",
+  "input_contract": {
+    "format": "json",
+    "required": [
+      "incident_context_ref"
+    ]
+  },
+  "output_contract": {
+    "format": "json",
+    "required": [
+      "hotfix_objective_ref",
+      "impact_scope_ref",
+      "rollback_direction_ref"
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1",
+      "name": "hotfix-objective-intake",
+      "actor": "architect",
+      "target_type": "skill",
+      "target_id": "meta.arch.objective-writer",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-001-objective-intake.md#ap-001-objective-intake",
+      "sipoc": {
+        "supplier": "initiator",
+        "input": "incident_context_ref",
+        "process": "derive hotfix objective from incident context",
+        "output": "hotfix_objective_ref",
+        "client": "p2"
+      },
+      "acceptance_criteria": "hotfix objective is explicit and bounded"
+    },
+    {
+      "phase_id": "p2",
+      "name": "impact-and-rollback-normalization",
+      "actor": "architect",
+      "target_type": "skill",
+      "target_id": "system.ops.manual-task",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-002-objective-scope-normalization.md#ap-002-objective-scope-normalization",
+      "sipoc": {
+        "supplier": "p1",
+        "input": "hotfix_objective_ref",
+        "process": "normalize impact scope and rollback direction",
+        "output": "impact_scope_ref and rollback_direction_ref",
+        "client": "initiator"
+      },
+      "acceptance_criteria": "impact and rollback directions are actionable"
+    }
+  ],
+  "control_flow": [
+    {
+      "from": "p1",
+      "to": "p2",
+      "on": "success"
+    },
+    {
+      "from": "p2",
+      "to": "end",
+      "on": "success"
+    }
+  ],
+  "fail_policy": {
+    "mode": "fail_closed",
+    "retry": {
+      "max_attempts": 1
+    },
+    "escalation_chain": [
+      "actor",
+      "owner",
+      "bpm",
+      "admin",
+      "human"
+    ]
+  },
+  "evidence_policy": {
+    "required_fields": [
+      "timestamp",
+      "phase_id",
+      "actor",
+      "input_ref",
+      "output_ref",
+      "decision",
+      "reason",
+      "evidence_ref"
+    ]
+  }
+}

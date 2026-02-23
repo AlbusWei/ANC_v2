@@ -1,0 +1,86 @@
+{
+  "ts": "2026-02-23T13:01:14Z",
+  "suite": "session4-foundation-default",
+  "status": "fail",
+  "total": 4,
+  "passed": 2,
+  "failed": 2,
+  "cases": [
+    {
+      "id": "M3-S4-HAPPY-001",
+      "suite": "session4-happy",
+      "category": "happy",
+      "status": "pass",
+      "details": "assertions_ok",
+      "evidence_index_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/cases/M3-S4-HAPPY-001/case_result.json"
+    },
+    {
+      "id": "M3-S4-EXC-001",
+      "suite": "session4-exception",
+      "category": "exception",
+      "status": "fail",
+      "details": "assertions_failed",
+      "evidence_index_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/cases/M3-S4-EXC-001/case_result.json"
+    },
+    {
+      "id": "M3-S4-FC-001",
+      "suite": "session4-fail-closed",
+      "category": "fail-closed",
+      "status": "fail",
+      "details": "assertions_failed",
+      "evidence_index_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/cases/M3-S4-FC-001/case_result.json"
+    },
+    {
+      "id": "M3-S4-RW-001",
+      "suite": "session4-rollback",
+      "category": "rollback",
+      "status": "pass",
+      "details": "assertions_ok",
+      "evidence_index_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/cases/M3-S4-RW-001/case_result.json"
+    }
+  ],
+  "evidence_root": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest",
+  "natural_language_conclusion": "Session4 基座未通过：存在失败用例或覆盖/策略缺口，暂不具备 Session5 内部主线 E2E 准入条件。",
+  "selected_case_ids": [
+    "M3-S4-HAPPY-001",
+    "M3-S4-EXC-001",
+    "M3-S4-FC-001",
+    "M3-S4-RW-001"
+  ],
+  "reserved_case_ids": [],
+  "errors": [
+    "missing_session4_coverage:exception,fail-closed"
+  ],
+  "missing_coverage": [
+    "exception",
+    "fail-closed"
+  ],
+  "upstream": {
+    "m1-runtime": {
+      "status": "failed",
+      "return_code": 2,
+      "report_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/latest_post_dev_regression_summary.json",
+      "command_trace": {
+        "command_id": "run_m1_runtime",
+        "command": "python3 tests/m1-runtime/run_post_dev_regression.py --evidence-root docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime --report docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/latest_post_dev_regression_summary.json --markdown-report docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/latest_post_dev_regression_summary.md",
+        "return_code": 2,
+        "stdout_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/run_m1_runtime.stdout.txt",
+        "stderr_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/run_m1_runtime.stderr.txt",
+        "command_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/run_m1_runtime.command.txt"
+      }
+    },
+    "m3-runtime": {
+      "status": "ok",
+      "return_code": 0,
+      "report_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m3-runtime/skill_contract_validation_report.json",
+      "command_trace": {
+        "command_id": "run_m3_runtime",
+        "command": "python3 tests/m3-runtime/run_skill_contract_validation.py --evidence-root docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m3-runtime --report skill_contract_validation_report.json",
+        "return_code": 0,
+        "stdout_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m3-runtime/run_m3_runtime.stdout.txt",
+        "stderr_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m3-runtime/run_m3_runtime.stderr.txt",
+        "command_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m3-runtime/run_m3_runtime.command.txt"
+      }
+    }
+  }
+}

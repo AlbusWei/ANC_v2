@@ -1,0 +1,12 @@
+{
+  "profile_ids": [
+    "quality-gate.baseline@1.0.0"
+  ],
+  "tc_profile_map": {
+    "TC-001": "quality-gate.baseline@1.0.0",
+    "TC-002": "quality-gate.baseline@1.0.0",
+    "TC-003": "quality-gate.baseline@1.0.0"
+  },
+  "default_profile_id": "quality-gate.baseline@1.0.0",
+  "compiled_at": "2026-02-23T13:01:12.765699+00:00"
+}

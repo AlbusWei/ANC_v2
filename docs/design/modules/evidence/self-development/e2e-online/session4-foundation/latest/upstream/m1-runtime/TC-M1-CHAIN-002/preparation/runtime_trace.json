@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-02-23T13:01:11Z",
+  "process_id": "quality-gate-preparation",
+  "status": "failed",
+  "phase_trace": [],
+  "reason": "missing required input fields: risk_focus",
+  "fail_closed_record_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/preparation/fail_closed_record.json"
+}

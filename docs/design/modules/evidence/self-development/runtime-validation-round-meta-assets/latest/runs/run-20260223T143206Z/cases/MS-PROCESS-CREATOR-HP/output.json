@@ -1,0 +1,14 @@
+{
+  "status": "success",
+  "skill_id": "meta.arch.process-creator",
+  "process_manifest_path": "processes/meta/demo-meta-process/process.json",
+  "process_skill_path": "processes/meta/demo-meta-process/SKILL.md",
+  "process_guide_path": "processes/meta/demo-meta-process/PROCESS.md",
+  "registry_patch_plan": {
+    "process_id": "demo-meta-process",
+    "status": "review",
+    "version": "0.1.0"
+  },
+  "generated_at": "2026-02-23T14:51:12.601241+00:00",
+  "exit_code": 0
+}

@@ -1,0 +1,34 @@
+{
+  "assertions": [
+    {
+      "name": "openclaw_online_response_contract",
+      "passed": false,
+      "details": {
+        "return_code": 0,
+        "has_payload": false
+      }
+    },
+    {
+      "name": "required_output_fields",
+      "passed": false,
+      "details": {
+        "missing": [
+          "gate_decision",
+          "asset_id",
+          "scenario",
+          "reason_code",
+          "expected_exit_code",
+          "traceability_refs",
+          "recovery_or_rollback"
+        ]
+      }
+    },
+    {
+      "name": "rollback_or_recovery_semantics_complete",
+      "passed": true,
+      "details": {
+        "reason_code": "ok"
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+[prep] rc=2
+cmd: /opt/homebrew/opt/python@3.14/bin/python3.14 processes/meta/quality-gate-preparation/scripts/quality_gate_preparation_runner.py --input docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/prep_input_missing_required.json --output docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/prep_output.json --evidence-dir docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/preparation --run-id TC-M1-CHAIN-002-prep
+stdout: docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/prep.stdout.txt
+stderr: docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/prep.stderr.txt
+
+[lifecycle] rc=2
+cmd: /opt/homebrew/opt/python@3.14/bin/python3.14 processes/meta/lifecycle-review/scripts/lifecycle_review_runner.py --input docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/lifecycle_input.json --output docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/lifecycle_output.json --evidence-dir docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/lifecycle --run-id TC-M1-CHAIN-002-lifecycle
+stdout: docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/lifecycle.stdout.txt
+stderr: docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/lifecycle.stderr.txt

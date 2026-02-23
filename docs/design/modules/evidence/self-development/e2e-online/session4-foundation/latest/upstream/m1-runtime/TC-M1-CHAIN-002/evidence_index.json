@@ -1,0 +1,34 @@
+{
+  "tc_id": "TC-M1-CHAIN-002",
+  "status": "pass",
+  "gate_decision": "test_invalid",
+  "decision_class": "fail_closed",
+  "inputs": [
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/prep_input_missing_required.json",
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/target_asset_snapshot.json",
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/lifecycle_input.json"
+  ],
+  "outputs": [
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/prep_output.json",
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/lifecycle_output.json"
+  ],
+  "logs": [
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/prep.stdout.txt",
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/prep.stderr.txt",
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/lifecycle.stdout.txt",
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/lifecycle.stderr.txt",
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/commands.txt",
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/command_trace.json"
+  ],
+  "critical_refs": {
+    "prep_output_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/prep_output.json",
+    "prep_fail_closed_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/preparation/fail_closed_record.json",
+    "lifecycle_output_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/lifecycle_output.json",
+    "lifecycle_fail_closed_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-002/lifecycle/fail_closed_record.json",
+    "lifecycle_transition_ref": ""
+  },
+  "notes": [
+    "关键输入缺失触发 test_invalid/fail-closed，且 lifecycle transition 已阻断。"
+  ],
+  "generated_at": "2026-02-23T13:01:11Z"
+}

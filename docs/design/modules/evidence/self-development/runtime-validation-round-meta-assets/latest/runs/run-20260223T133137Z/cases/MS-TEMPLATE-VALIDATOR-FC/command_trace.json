@@ -1,0 +1,10 @@
+{
+  "mode": "dry-run",
+  "planned_commands": [
+    {
+      "kind": "runner",
+      "command": "python3 skills/meta/template-validator/scripts/template_validator_runner.py --input <input> --output <output> --report <report>"
+    }
+  ],
+  "generated_at": "2026-02-23T13:32:31Z"
+}

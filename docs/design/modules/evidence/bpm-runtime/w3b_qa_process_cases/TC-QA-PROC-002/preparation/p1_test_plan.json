@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-22T15:51:15Z",
+  "timestamp": "2026-02-23T16:32:03Z",
   "objective_ref": "obj-m1-unified-quality-gate",
   "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
   "test_doc_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md",

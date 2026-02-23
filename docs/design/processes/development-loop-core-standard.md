@@ -1,6 +1,6 @@
 # Development Loop Core Standard
 
-> 版本: v0.1.0 | 分类: Process Standard | 作用域: P4 开发型流程
+> 版本: v0.2.0 | 分类: Process Standard | 作用域: P4 开发型流程
 
 ## 1. 目标与边界
 
@@ -134,3 +134,17 @@
 1. `internal-productization-e2e-flow`：覆盖 O1~O8 的参考实现。
 2. `software-vendor-e2e-flow`：其 `delivery-iterations` 阶段采用 `dev.external-delivery-iteration` 义务集合的参考实现。
 3. 示例可替换，标准语义不可漂移。
+
+## 10. M3 Phase2 子流程模型约束（新增）
+
+1. `development-process/full-development/hotfix/refactor` 的核心阶段必须优先复用现行 P5 子流程库。
+2. 现行 P5 子流程库固定为：
+   1. `objective-scope-baseline`
+   2. `hotfix-intake-normalization`
+   3. `hotfix-scope-spec-baseline`
+   4. `spec-authoring-contract`
+   5. `implementation-execution-core`
+   6. `release-packaging-governed`
+   7. `evolution-feedback-planning`
+3. 历史包装流程已退役，禁止作为目标态 phase target 回流。
+4. 若检测到历史包装流程回流或 phase I/O 不闭合，必须 Fail-Closed 并阻断阶段收口。

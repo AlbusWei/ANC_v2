@@ -1,0 +1,34 @@
+{
+  "tc_id": "TC-M1-CHAIN-003",
+  "status": "pass",
+  "gate_decision": "hold",
+  "decision_class": "hold",
+  "inputs": [
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/prep_input.json",
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/hold_runtime.log",
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/runtime_health_policy.json",
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/eval_input_hold.json"
+  ],
+  "outputs": [
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/prep_output.json",
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/eval_output.json"
+  ],
+  "logs": [
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/prep.stdout.txt",
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/prep.stderr.txt",
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/eval.stdout.txt",
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/eval.stderr.txt",
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/commands.txt",
+    "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/command_trace.json"
+  ],
+  "critical_refs": {
+    "prep_output_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/prep_output.json",
+    "eval_output_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/eval_output.json",
+    "hold_governance_output_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/evaluation/p5_hold_governance_output.json",
+    "hold_resolution_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-003/evaluation/p5_hold_governance/p5_hold_resolution.json"
+  },
+  "notes": [
+    "evaluation hold 已成功路由 hold-governance 并产出 hold_resolution_ref。"
+  ],
+  "generated_at": "2026-02-23T13:01:12Z"
+}

@@ -1,79 +1,135 @@
-# M3 Self-Development Session4 测试基座
+# M3 Self-Development Meta 资产在线 QA 测试基座（Phase5）
 
-## 目标
+## 1. 测试目标与范围
 
-本测试基座用于 `m3-self-development-e2e-online` 的 Session4，作为 Session5/Session6 内外主线 E2E 的统一可复用入口。
+本测试基座服务于变更 `m3-meta-asset-quality-hardening` 的 Phase5，采用 QA 主导闭环：
 
-核心约束：
+1. `计划 -> 用例 -> 执行 -> 缺陷 -> 回归`。
+2. 以 `openclaw` 在线运行行为为主验收，静态校验仅作辅助。
+3. 覆盖全量 Meta 资产：
+   - 8 个 Meta Skills（`meta.*`）
+   - 20 个 Meta Processes（`processes/meta/*` 且已在 registry 登记）
+4. 每个具体资产固定覆盖四类场景：`HP/FC/TR/RB`。
 
-1. 采用单 runner：`tests/m3-self-development/run_tc_online.py`。
-2. 通过 `--suite/--case` 做执行选择，默认执行 Session4 四类基座用例。
-3. 复用既有评测能力，不重复实现评测引擎：
-   - `tests/m3-runtime/run_skill_contract_validation.py`
-   - `tests/m1-runtime/run_post_dev_regression.py`
+## 2. QA 闭环流程
 
-## 覆盖范围
+### 2.1 Plan（计划）
 
-### 1. 主链路（Happy Flow，最高优先级）
+1. 以 registry 为唯一资产发现入口，不手工维护资产名单。
+2. 每个资产自动展开四类场景：
+   - `HP`（Happy）
+   - `FC`（Fail-Closed）
+   - `TR`（Traceability）
+   - `RB`（Rollback/Recovery）
+3. 生成标准 case 对象（输入载荷、预期输出、判定规则、失败码、契约引用）。
 
-- Case: `M3-S4-HAPPY-001`
-- 目标：验证 Session3 落地的 `impact-analyzer/release-manager` 主链路可运行，作为后续 E2E 的基础前提。
+### 2.2 Case（用例）
 
-### 2. 异常链路（Exception）
+1. 每个 case 必须可回链到：
+   - 资产契约文档（`SKILL.md` / `process.json`）
+   - registry 记录（`skill_registry.json` / `process_registry.json`）
+2. 每个流程资产至少包含一条 `openclaw agent --agent qa` 在线调用场景。
+3. Runner 复用优先：
+   - Skill runner 模式：`agent-creator`、`process-creator`、`template-validator`、`meta-skill-creator`
+   - 已有上游复用：`tests/m1-runtime/run_post_dev_regression.py`、`tests/m3-runtime/run_skill_contract_validation.py`
 
-- Case: `M3-S4-EXC-001`
-- 目标：验证 `M3 -> M1` 门禁链中 `hold` 路由可达，异常并非静默通过。
+### 2.3 Execute（执行）
 
-### 3. Fail-Closed
+统一入口：`tests/m3-self-development/run_meta_qa_online.py`
 
-- Case: `M3-S4-FC-001`
-- 目标：验证关键输入异常时链路阻断生效（`fail_closed`），并可追溯证据。
+1. `--list-cases`：列出完整 case 清单。
+2. `--dry-run`：仅检查可执行性、覆盖完整性、追溯完整性，不执行在线 case。
+3. `run`：执行在线与 runner 场景并产出缺陷与回归输入。
 
-### 4. 回退/返工（Rollback/Rework）
+### 2.4 Defect（缺陷）
 
-- Case: `M3-S4-RW-001`
-- 目标：验证 release-manager 的拒绝/阻断分支（回退包缺失、registry 同步失败）被正确触发。
+缺陷记录固定字段：
 
-## 入口与证据
+1. `severity`：`P0|P1|P2`
+2. `asset_id`
+3. `scenario`
+4. `reason_code`
+5. `repro`
+6. `evidence_ref`
 
-- Runner: `tests/m3-self-development/run_tc_online.py`
-- 默认证据根目录：`docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest`
-- 固定结构：
-  - `upstream/m3-runtime/`
-  - `upstream/m1-runtime/`
-  - `cases/<case_id>/`
-  - `session4_tc_online_report.json`
-  - `session4_tc_online_summary.md`
+分级规则：
 
-## Session5/Session6 预留
+1. `P0`：Happy/Fail-Closed 主判定失败、在线调用不可执行。
+2. `P1`：Traceability/回退恢复断链。
+3. `P2`：非阻断类补充改进项。
 
-在 `tests/m3-self-development/live_cases.md` 预留并注册以下 case id，本会话仅登记，不执行：
+### 2.5 Regression（回归）
 
-1. `M3-INT-001~003`（Session5 内部主线）
-2. `M3-EXT-001~003`（Session6 外部主线）
-3. `M3-FC-101~103`（跨主线 Fail-Closed/旁路阻断）
+`final-regression` 采用分层执行：
 
-若在 Session4 强制执行上述预留 case，runner 必须 Fail-Closed 返回非零。
+1. 第一层：`online-critical`（每资产关键在线 + Fail-Closed）
+2. 第二层：`final-regression-full`（全量矩阵）
+3. 两层都通过才允许最终 `pass`。
 
-## Fail-Closed 策略
+## 3. 门禁规则（Fail-Closed）
 
-1. 未知 suite 或未知 case：立即失败。
-2. 选中 reserved case：立即失败（提示仅 Session5/Session6 可执行）。
-3. 上游 runner 返回非零、报告缺失或关键断言不成立：立即失败。
-4. 默认基座执行未覆盖四类判定（happy/exception/fail-closed/rollback）：立即失败。
+任一命中即判失败并返回非零：
 
-## 建议命令
+1. 仅有静态检查、没有在线场景。
+2. 任一 case 无法追溯到具体资产与契约。
+3. 任一流程资产缺少在线场景。
+4. `--dry-run` 未产出自然语言结论（目标/覆盖/现象/风险/准入）。
+
+返回码约定：
+
+1. `0`：通过。
+2. `2`：Fail-Closed（覆盖缺口/证据缺失/断言失败等）。
+3. `1`：执行异常。
+
+## 4. 证据目录规范
+
+证据根目录：
+
+`docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/`
+
+运行结构：
+
+1. `latest/`
+2. `latest/runs/<run_id>/`
+3. `latest/runs/<run_id>/cases/<case_id>/`
+
+每轮固定输出：
+
+1. `meta_qa_online_report.json`
+2. `meta_qa_online_summary.md`
+3. `defects.json`
+4. `defect_summary.md`
+5. `regression_plan.json`
+
+每 case 固定证据：
+
+1. `input.json`
+2. `output.json`
+3. `assertions.json`
+4. `command_trace.json`
+5. `stdout.txt`
+6. `stderr.txt`
+
+## 5. 运行命令
 
 ```bash
-# Session4 基座全量（默认）
-python3 tests/m3-self-development/run_tc_online.py
+# 列出全量 case（应为 112）
+python3 tests/m3-self-development/run_meta_qa_online.py --list-cases
 
-# 查看用例清单
-python3 tests/m3-self-development/run_tc_online.py --list-cases
+# Phase5 门禁：只做可执行性与覆盖校验
+python3 tests/m3-self-development/run_meta_qa_online.py --dry-run
 
-# 按 suite 执行
-python3 tests/m3-self-development/run_tc_online.py --suite session4-happy,session4-rollback
-
-# 按 case 执行
-python3 tests/m3-self-development/run_tc_online.py --case M3-S4-HAPPY-001
+# 按套件执行
+python3 tests/m3-self-development/run_meta_qa_online.py --suite meta-skills
+python3 tests/m3-self-development/run_meta_qa_online.py --suite online-critical
+python3 tests/m3-self-development/run_meta_qa_online.py --suite final-regression
 ```
+
+## 6. 准入判定（Phase5）
+
+Phase5 准入只看两件事：
+
+1. 在线用例是否可执行（运行入口、资产可见性、契约追溯完整）。
+2. 覆盖是否满足（每资产四类场景 + 每流程在线场景）。
+
+若任一未满足：`Phase5 = fail`，不得宣告 Done。

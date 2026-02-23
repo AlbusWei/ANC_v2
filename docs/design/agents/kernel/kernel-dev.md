@@ -1,6 +1,6 @@
 # Kernel-Dev Agent 详细设计
 
-> 版本: v0.1.0 | agent_id: kernel-dev | 层级: kernel | 权限: implementation-kernel
+> 版本: v0.2.0 | agent_id: kernel-dev | 层级: kernel | 权限: implementation-kernel | 生命周期边界: 本轮仅收敛到 review，不推进 active
 
 ## 1. 角色定位与权限
 
@@ -13,9 +13,9 @@
 
 | Skill | 用途 | 状态 |
 |---|---|---|
-| skill-creator | 创建 Skill 资产 | draft |
-| agent-creator | 创建 Agent 资产 | draft |
-| process-creator | 创建 Process 资产 | draft |
+| meta-skill-creator（`skill-creator` 仅历史别名） | 创建 Skill 资产 | review |
+| agent-creator | 创建 Agent 资产 | review |
+| process-creator | 创建 Process 资产 | review |
 
 > kernel-dev 是主要的实现执行者，未来将绑定更多实现类 Skill。
 

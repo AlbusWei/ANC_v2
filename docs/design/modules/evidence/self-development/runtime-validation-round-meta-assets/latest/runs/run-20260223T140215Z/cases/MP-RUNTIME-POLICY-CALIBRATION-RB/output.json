@@ -1,0 +1,17 @@
+{
+  "status": "pass",
+  "qa_payload": {
+    "gate_decision": "test_invalid",
+    "asset_id": "runtime-policy-calibration",
+    "scenario": "RB",
+    "reason_code": "unsupported_scenario_code",
+    "expected_exit_code": 2,
+    "traceability_refs": [
+      "processes/meta/runtime-policy-calibration/SKILL.md",
+      "processes/meta/runtime-policy-calibration/process.json",
+      "shared/registry/process_registry.json"
+    ],
+    "recovery_or_rollback": "normalize_scenario_to_supported_profile_then_rerun_gate"
+  },
+  "generated_at": "2026-02-23T14:19:53Z"
+}

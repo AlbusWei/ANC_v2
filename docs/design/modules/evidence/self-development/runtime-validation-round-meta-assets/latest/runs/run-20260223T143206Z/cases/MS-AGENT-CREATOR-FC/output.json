@@ -1,0 +1,12 @@
+{
+  "status": "fail_closed",
+  "reason_code": "missing_required_fields",
+  "message": "关键输入字段缺失，拒绝继续执行。",
+  "details": {
+    "missing_fields": [
+      "interfaces",
+      "owner"
+    ]
+  },
+  "exit_code": 2
+}

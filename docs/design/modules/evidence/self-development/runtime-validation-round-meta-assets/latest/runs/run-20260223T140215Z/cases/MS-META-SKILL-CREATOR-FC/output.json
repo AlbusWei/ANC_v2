@@ -1,0 +1,11 @@
+{
+  "status": "fail_closed",
+  "reason_code": "missing_required_fields",
+  "message": "关键输入字段缺失。",
+  "details": {
+    "missing_fields": [
+      "objective_ref"
+    ]
+  },
+  "exit_code": 2
+}

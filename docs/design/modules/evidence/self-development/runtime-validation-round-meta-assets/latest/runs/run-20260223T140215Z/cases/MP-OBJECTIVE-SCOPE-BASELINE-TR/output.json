@@ -1,0 +1,17 @@
+{
+  "status": "pass",
+  "qa_payload": {
+    "gate_decision": "test_invalid",
+    "asset_id": "objective-scope-baseline",
+    "scenario": "TR",
+    "reason_code": "unsupported_scenario_code",
+    "expected_exit_code": 2,
+    "traceability_refs": [
+      "processes/meta/objective-scope-baseline/SKILL.md",
+      "processes/meta/objective-scope-baseline/process.json",
+      "shared/registry/process_registry.json"
+    ],
+    "recovery_or_rollback": "normalize_scenario_to_supported_profile_then_rerun_gate"
+  },
+  "generated_at": "2026-02-23T14:14:15Z"
+}

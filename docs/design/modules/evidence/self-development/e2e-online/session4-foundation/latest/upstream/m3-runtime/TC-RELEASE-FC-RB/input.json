@@ -1,0 +1,6 @@
+{
+  "candidate_artifacts_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m3-runtime/TC-RELEASE-FC-RB/candidate_artifacts.json",
+  "final_gate_verdict_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m3-runtime/fixtures/final_gate_verdict_pass.json",
+  "lifecycle_transition_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m3-runtime/fixtures/lifecycle_transition.json",
+  "registry_sync_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m3-runtime/fixtures/registry_sync_pass.json"
+}

@@ -14,6 +14,11 @@
   "objective_ref": "obj-m1-unified-quality-gate",
   "owner": "bpm",
   "priority": "P0",
+  "collaboration_policy": {
+    "mode": "phase-isolated-session",
+    "pilot_scope": "qa-first",
+    "natural_context_first": true
+  },
   "input_contract": {
     "format": "json",
     "required": [

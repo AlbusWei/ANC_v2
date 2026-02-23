@@ -1,0 +1,34 @@
+{
+  "timestamp": "2026-02-23T13:01:13.902763+00:00",
+  "profile_set": "quality-gate.baseline@1.0.0",
+  "preparation_bundle_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-004/preparation/preparation_bundle.index.json",
+  "module_runs": [
+    {
+      "module": "M3",
+      "actual_output_refs": [
+        "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_pass.txt"
+      ],
+      "return_code": 0,
+      "decision": "pass",
+      "payload": {
+        "raw_eval_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-004/evaluation/p3_regression_eval/M3/raw_eval.json",
+        "runner_log_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-004/evaluation/p3_regression_eval/M3/runner.log",
+        "execution_state_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-004/evaluation/p3_regression_eval/M3/execution_state.json",
+        "evaluation_verdict": "pass",
+        "gate_decision": "pass",
+        "evidence_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m1-runtime/TC-M1-CHAIN-004/evaluation/p3_regression_eval/M3",
+        "reasons": [
+          "all_cases_passed"
+        ],
+        "profile_id": "quality-gate.baseline@1.0.0",
+        "retry_hint": "",
+        "raw_eval_summary": {
+          "mode": "regression",
+          "case_count": 3
+        }
+      },
+      "stderr": ""
+    }
+  ],
+  "release_gate_candidate": "pass"
+}

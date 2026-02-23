@@ -1,0 +1,10 @@
+{
+  "runner": "template_validator_runner",
+  "decision": "fail_closed",
+  "reason_code": "missing_required_fields",
+  "details": {
+    "missing_fields": [
+      "schema_ref"
+    ]
+  }
+}

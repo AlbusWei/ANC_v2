@@ -1,0 +1,52 @@
+{
+  "assertions": [
+    {
+      "name": "openclaw_online_response_contract",
+      "passed": true,
+      "details": {
+        "return_code": 0,
+        "has_payload": true,
+        "aborted": false,
+        "attempts": 1
+      }
+    },
+    {
+      "name": "required_output_fields",
+      "passed": true,
+      "details": "ok"
+    },
+    {
+      "name": "asset_id_match",
+      "passed": true,
+      "details": "meta.qa.llm-judge"
+    },
+    {
+      "name": "scenario_match",
+      "passed": true,
+      "details": "HP"
+    },
+    {
+      "name": "gate_decision_match",
+      "passed": true,
+      "details": "pass"
+    },
+    {
+      "name": "expected_exit_code_match",
+      "passed": true,
+      "details": 0
+    },
+    {
+      "name": "traceability_refs_non_empty",
+      "passed": true,
+      "details": [
+        "skills/meta/llm-judge/SKILL.md",
+        "shared/registry/skill_registry.json"
+      ]
+    },
+    {
+      "name": "recovery_or_rollback_non_empty",
+      "passed": true,
+      "details": "none_required"
+    }
+  ]
+}
