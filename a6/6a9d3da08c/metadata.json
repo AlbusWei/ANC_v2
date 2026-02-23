@@ -6073,6 +6073,13 @@
       "context": "/a6/6a9d3da08c/16/context.md",
       "content_hash": "/a6/6a9d3da08c/16/content_hash.txt",
       "prompt": "/a6/6a9d3da08c/16/prompt.txt"
+    },
+    {
+      "metadata": "/a6/6a9d3da08c/17/metadata.json",
+      "transcript": "/a6/6a9d3da08c/17/full.jsonl",
+      "context": "/a6/6a9d3da08c/17/context.md",
+      "content_hash": "/a6/6a9d3da08c/17/content_hash.txt",
+      "prompt": "/a6/6a9d3da08c/17/prompt.txt"
     }
   ],
   "token_usage": {
