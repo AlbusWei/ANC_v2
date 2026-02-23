@@ -243,6 +243,13 @@
       "context": "/a6/6a9d3da08c/6/context.md",
       "content_hash": "/a6/6a9d3da08c/6/content_hash.txt",
       "prompt": "/a6/6a9d3da08c/6/prompt.txt"
+    },
+    {
+      "metadata": "/a6/6a9d3da08c/7/metadata.json",
+      "transcript": "/a6/6a9d3da08c/7/full.jsonl",
+      "context": "/a6/6a9d3da08c/7/context.md",
+      "content_hash": "/a6/6a9d3da08c/7/content_hash.txt",
+      "prompt": "/a6/6a9d3da08c/7/prompt.txt"
     }
   ],
   "token_usage": {
