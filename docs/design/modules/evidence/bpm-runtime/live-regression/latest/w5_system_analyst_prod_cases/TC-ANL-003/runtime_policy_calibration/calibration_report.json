@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-02-22T17:18:13Z",
+  "issue_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases/TC-ANL-003/issue.json",
+  "digest_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/p3_analysis_digest.json",
+  "policy_change_proposal_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/p5_policy_change_proposal.json",
+  "decision_record_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/p5_decision_record.json",
+  "rollout_observation_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/p6_rollout_observation.json",
+  "status": "closed"
+}

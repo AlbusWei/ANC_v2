@@ -19,10 +19,10 @@
   "change_receipt": {
     "apply_receipt_ref": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/change_receipt_apply.json",
     "rollback_receipt_ref": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/change_receipt_rollback.json",
-    "hash_before": "89bb0855d6dca1723052e97bf4217d026fd89bd4a821775cf54a3d50ab0c7028",
-    "hash_after_apply": "7458cf30a9419a6c441e1abfa310c72b0511dcd178b645ad68df795b1cdb4453",
-    "hash_after_rollback": "50b448656665aabed21c636720fc4257c2d83278106c476d8497b14d1e91bd09"
+    "hash_before": "3f1c754e25473d80ba0de67d62345462a4af9ba4eb0390abf705f2310b47848f",
+    "hash_after_apply": "8363a019fc8dd0cb5680cf240df606b071bde829f0101afdeea9d48ec24879b2",
+    "hash_after_rollback": "29063f39b97da3245fe50449c833afcdffc2c3aed76311f995803fbf19dfa733"
   },
-  "run_id": "gcc-20260222T141454Z",
+  "run_id": "gcc-20260222T155313Z",
   "evidence_dir": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence"
 }

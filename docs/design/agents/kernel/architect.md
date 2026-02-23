@@ -1,6 +1,6 @@
 # Architect Agent 详细设计
 
-> 版本: v0.4.0 | agent_id: architect | 层级: kernel | 权限: architecture-governance
+> 版本: v0.5.0 | agent_id: architect | 层级: kernel | 权限: architecture-governance | 生命周期: review（M6 运行审查证据已落盘，未推进 active）
 
 ## 1. 角色定位与权限
 

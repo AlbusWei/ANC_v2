@@ -1,0 +1,31 @@
+{
+  "ts": "2026-02-22T16:08:45Z",
+  "suite": "TC-ANL-001~002",
+  "total": 2,
+  "passed": 2,
+  "failed": 0,
+  "evidence_root": "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases",
+  "agent_doc": "docs/design/agents/kernel/system-analyst.md",
+  "cases": [
+    {
+      "id": "TC-ANL-001",
+      "status": "pass",
+      "details": {
+        "doc_markers_missing": [],
+        "runtime_status": "completed",
+        "output_ref": "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-001/process_output.json",
+        "digest_ref": "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-001/analysis_digest.json"
+      }
+    },
+    {
+      "id": "TC-ANL-002",
+      "status": "pass",
+      "details": {
+        "runtime_status": "rejected",
+        "output_ref": "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-002/process_output.json",
+        "reject_ref": "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-002/reject_output.json",
+        "reason_code": "evidence_insufficient"
+      }
+    }
+  ]
+}

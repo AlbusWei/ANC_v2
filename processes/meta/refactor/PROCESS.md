@@ -13,9 +13,9 @@
 
 1. `p1` refactor-objective-and-scope (`meta.arch.objective-writer`)
 2. `p2` refactor-spec-authoring (`meta.arch.spec-writer`)
-3. `p3` refactor-test-preparation (`meta.qa.test-designer`)
+3. `p3` refactor-test-preparation（`subprocess: quality-gate-preparation`）
 4. `p4` refactor-implementation (`system.ops.manual-task`)
-5. `p5` refactor-gate-evaluation (`meta.qa.llm-judge`)
+5. `p5` refactor-gate-evaluation（`subprocess: quality-gate-evaluation`）
 6. `p6` lifecycle-gate-sync (`meta.arch.template-validator`)
 
 ## Control Rules

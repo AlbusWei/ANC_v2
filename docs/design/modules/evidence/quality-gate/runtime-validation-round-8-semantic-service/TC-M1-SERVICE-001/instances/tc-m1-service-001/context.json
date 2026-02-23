@@ -1,0 +1,33 @@
+{
+  "instance_id": "tc-m1-service-001",
+  "parent_instance_id": null,
+  "session_binding": {
+    "agent_id": "qa",
+    "session_key": "development-process:p2:f9395608",
+    "session_id": "sess-9c6b698d6d164bce",
+    "parent_session_id": null
+  },
+  "lineage_ref": "lineage/tc-m1-service-001",
+  "stack_depth": 0,
+  "process_id": "development-process",
+  "process_version": "0.1.0",
+  "process_level": "P4",
+  "objective_ref": "obj-m1-real-service-semantic-validation",
+  "initiated_by": "hr",
+  "status": "running",
+  "created_at": "2026-02-22T19:17:03Z",
+  "updated_at": "2026-02-22T19:17:03Z",
+  "current_phase": "p2",
+  "phase_results": [
+    {
+      "phase_id": "p2",
+      "status": "running",
+      "actor": "qa",
+      "session_id": "sess-9c6b698d6d164bce",
+      "input_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/TC-M1-SERVICE-001/service_request.md",
+      "output_ref": "",
+      "started_at": "2026-02-22T19:17:03Z",
+      "completed_at": ""
+    }
+  ]
+}

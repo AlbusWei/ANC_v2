@@ -1,0 +1,8 @@
+{
+  "round_id": "R-20260222-M6-m1-quality-gate-runtime-closure-01",
+  "openspec_ref": "m1-quality-gate-runtime-closure",
+  "show_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/openspec_show.json",
+  "status_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/openspec_status.json",
+  "validate_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/openspec_validate.json",
+  "sync_status": "needs_sync"
+}

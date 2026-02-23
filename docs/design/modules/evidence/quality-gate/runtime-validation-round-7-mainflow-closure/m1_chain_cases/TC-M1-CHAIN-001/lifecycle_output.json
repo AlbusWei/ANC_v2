@@ -1,0 +1,8 @@
+{
+  "status": "succeeded",
+  "process_id": "lifecycle-review",
+  "lifecycle_transition_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_chain_cases/TC-M1-CHAIN-001/lifecycle/p4_lifecycle_transition.json",
+  "registry_sync_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_chain_cases/TC-M1-CHAIN-001/lifecycle/p5_registry_sync.json",
+  "lifecycle_review_report_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_chain_cases/TC-M1-CHAIN-001/lifecycle/lifecycle_review_report.json",
+  "runtime_trace_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_chain_cases/TC-M1-CHAIN-001/lifecycle/runtime_trace.json"
+}

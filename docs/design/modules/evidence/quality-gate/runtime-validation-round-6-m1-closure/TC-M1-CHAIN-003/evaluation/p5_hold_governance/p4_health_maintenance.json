@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-02-22T18:43:40Z",
+  "triage_action": "debug",
+  "health_status": "stable",
+  "maintenance_action": "monitor",
+  "runtime_health_policy_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-003/runtime_health_policy.json",
+  "runtime_window_minutes": 45,
+  "max_retries": 2
+}

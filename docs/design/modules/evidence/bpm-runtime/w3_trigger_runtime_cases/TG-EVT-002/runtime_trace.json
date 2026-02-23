@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-22T14:47:48Z",
+  "timestamp": "2026-02-22T15:50:46Z",
   "status": "ok",
   "trigger_id": "trg-4bdb3484123e0c957801",
   "instance_id": "virtual-trg-4bdb3484123e0c957801",
@@ -12,7 +12,7 @@
     {
       "phase": "p1-normalize",
       "command": [
-        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
         "skills/system/trigger-ingress-normalizer/scripts/trigger_ingress_normalizer_runner.py",
         "--input",
         "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-002/p1_input.json",
@@ -26,12 +26,12 @@
       "return_code": 0,
       "stdout": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-002/p1_output.json",
       "stderr": "",
-      "ts": "2026-02-22T14:47:48Z"
+      "ts": "2026-02-22T15:50:46Z"
     },
     {
       "phase": "p2-match-dedupe",
       "command": [
-        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
         "skills/system/trigger-matcher-dedupe/scripts/trigger_matcher_dedupe_runner.py",
         "--input",
         "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-002/p2_input.json",
@@ -47,12 +47,12 @@
       "return_code": 0,
       "stdout": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-002/p2_output.json",
       "stderr": "",
-      "ts": "2026-02-22T14:47:48Z"
+      "ts": "2026-02-22T15:50:46Z"
     },
     {
       "phase": "p4-record-evidence",
       "command": [
-        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
         "skills/system/evidence-recorder/scripts/evidence_recorder_runner.py",
         "--input",
         "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-002/p4_input.json",
@@ -68,12 +68,12 @@
       "return_code": 0,
       "stdout": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-002/p4_output.json",
       "stderr": "",
-      "ts": "2026-02-22T14:47:48Z"
+      "ts": "2026-02-22T15:50:46Z"
     },
     {
       "phase": "p5-backfill-catchup",
       "command": [
-        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
         "skills/system/catchup-scheduler/scripts/catchup_scheduler_runner.py",
         "--input",
         "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-002/p5_input.json",
@@ -87,7 +87,7 @@
       "return_code": 0,
       "stdout": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-002/p5_output.json",
       "stderr": "",
-      "ts": "2026-02-22T14:47:48Z"
+      "ts": "2026-02-22T15:50:46Z"
     }
   ]
 }

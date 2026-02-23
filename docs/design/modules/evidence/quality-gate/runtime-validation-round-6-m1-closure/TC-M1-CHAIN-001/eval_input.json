@@ -1,0 +1,10 @@
+{
+  "preparation_bundle_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/preparation/preparation_bundle.index.json",
+  "actual_output_refs": [
+    "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_pass.txt"
+  ],
+  "profile_set": [
+    "quality-gate.baseline@1.0.0"
+  ],
+  "force_hold": false
+}

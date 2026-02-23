@@ -52,12 +52,15 @@
 - [x] 完成 M6 首轮运行级 dry-run（A 通过，B/C Fail-Closed），并落盘证据索引 `docs/design/modules/evidence/construction-plane/README.md`
 - [x] 将 `construction-plane-governance`、`sys.arch.construction-audit`、`system.integration.openspec-sync` 生命周期从 `draft` 提升到 `review`
 - [x] 完成 `m2-bpm-runtime-hardening` W2 配置治理闭环：`governed-config-change`/`config-change-gatekeeper`/`system-config-updater` 可执行，`TC-GCC-001~003` 运行级通过并落盘证据（`docs/design/modules/evidence/bpm-runtime/w2_*`）
+- [x] 完成 `m2-bpm-runtime-hardening` W5（门禁收口与状态提升）：新增 `verify-m2` 专项校验，`verify/verify-m2/verify-m6` 与 post-dev regression 同回合通过，关闭 `Q-001`，并将 `system-analyst`、`sys.arch.system-feedback-digest`、`runtime-policy-calibration` 生命周期统一收敛到 `review`（不推进 `active`）
+- [x] 新增 `lifecycle-review` 最小可执行流程资产（owner=`hr`，status=`draft`），并完成 design/inventory/registry/施工平面联动更新（Thread-2）
+- [x] 完成 Thread-4 状态联动收口：`qa/bpm/admin/architect/hr` 生命周期统一推进到 `review`；`lifecycle-review` 由 `draft` 推进到 `review`；`system-analyst` 保持“分析输入，不做 lifecycle owner”边界
+- [x] 完成 `R-20260222-M6-m1-quality-gate-runtime-closure-01` 回合关闭包：`round-output.json`、`round-evidence.jsonl`、`round_close_summary.md`、`openspec-sync-record.json`、`registry_verify.log`，并通过 `verify` 与 `verify-m6`
+- [x] 完成 `m1-quality-gate-runtime-closure` OpenSpec 归档：补齐 `specs/**` deltas 与 Scenario，`openspec validate` 通过并归档至 `openspec/changes/archive/2026-02-22-m1-quality-gate-runtime-closure/`
 
 ## 进行中（In Progress）
 
-- [ ] `m2-bpm-runtime-hardening` 基座线程已启动：OpenSpec apply-ready 已就绪，测试/证据脚手架初始化完成，状态维持 In Progress（`Q-001` 保持未关闭；本轮证据见 `docs/design/modules/evidence/bpm-runtime/precheck_apply_ready_evidence.md`）
-- [ ] `m2-bpm-runtime-hardening` W1（实例核心执行化）已落盘：runner/迁移/回放/`TC-INS-001~005` 证据已生成（见 `docs/design/modules/evidence/bpm-runtime/w1_*`），整体变更维持 In Progress
-- [ ] `m2-bpm-runtime-hardening` W3-A（Trigger Runtime 执行化）已落盘：5 个核心 skill runner + 2 个 process runner + `TG-SCH-001~004` / `TG-EVT-001~003` 运行级证据（见 `docs/design/modules/evidence/bpm-runtime/w3_*` 与 `w3_trigger_runtime_cases/`），整体变更维持 In Progress
+- [ ] 基于 `m2-bpm-runtime-hardening` 本轮收口结果，补齐从 `review` 推进到 `active` 的观测窗口、回滚演练与准入阈值
 - [ ] 将新增 App Agent、流程与技能逐步纳入 runtime registry（按生命周期进入 review）
 - [ ] 执行一致性检查脚本（术语、状态、路径、schema 字段）
 - [ ] 将 trigger governance 最小 dry-run 从文档级证据升级到运行级证据
@@ -65,20 +68,34 @@
 - [ ] 建立 `runtime-policy-calibration` 治理节奏并纳入 M1/M2 首批后验议题
 - [ ] 触发 M3 `full-development/hotfix/refactor` 首轮运行级 dry-run 并沉淀证据
 - [ ] 基于首轮证据推进 M6 第二轮运行级回归（含 git-range + trailer 实盘对账）
+- [ ] 推进 `m3-self-development-e2e-online`：完成 Session2~Session7 设计闭合与双主线 E2E 收口（本轮 Session1 基座已初始化）
 
 ## 下一步（Next）
 
 1. 为 P6 原子流程补充 process.json 样板定义。
-2. 将 lifecycle-review、registry-sync、escalation 具象化为可执行流程资产。
+2. 将 registry-sync、escalation 具象化为可执行流程资产（`lifecycle-review` 已在 Thread-4 完成首轮运行证据并推进到 `review`）。
 3. 完成 `review-processes-business` 未闭环项：`governance_bundle` 落地、legacy 语义收敛、canonical 路径策略定稿。
 4. 触发一次双主线 dry-run（运行级）并沉淀证据目录。
 5. 执行一次 governed-config-change 运行级 dry-run，补齐标准证据包模板。
-6. 将 `lifecycle-review/registry-sync/escalation` 具象化为可执行流程资产，替代当前文档化审批证据。
+6. 在后续线程补齐 `lifecycle-review` 与 M3 接线并扩展多场景运行证据，并继续推进 `registry-sync/escalation` 可执行化。
 7. 进行 trigger runtime 动态策略回放并回写 `catchup_policy_ref` 校准证据。
 8. 将 M1 测试时长估计与 M2 动态策略问题统一纳入 `runtime-policy-calibration` 治理回路。
 9. 收敛 M6 周期审查节奏与 owner 责任模型，并写入治理流程基线。
 10. 与 OpenSpec 协同线程联调一次“冲突裁决 -> 双向回写”演练。
-11. 收敛 `verify-m6` 与 CI/pre-close gate 集成方式，避免人工绕过。
+11. 收敛 `verify-m2`/`verify-m6` 与 CI/pre-close gate 集成方式，避免人工绕过。
+
+## m3-self-development-e2e-online 会话推进计划（Session2~Session7）
+
+> 前置约束：Session1 仅完成审计与基座，不做功能开发；生命周期目标上限为 `review`（禁止推进 `active`）。
+
+| 会话 | 依赖 | 会话目标 | 输入（必须具备） | 输出（必须落盘） | DoD（命令化门禁） |
+|---|---|---|---|---|---|
+| Session2 | Session1 | 完成 M3 设计闭合差距收敛（仅设计，不落运行资产） | `openspec/changes/m3-self-development-e2e-online/m3-gap-baseline.md`、`openspec/changes/m3-self-development-e2e-online/design.md`、`openspec/changes/m3-self-development-e2e-online/tasks.md`、`openspec/changes/m3-self-development-e2e-online/specs/**/spec.md` | 设计闭合产物清单：`docs/design/processes/{registry-sync-process.md,escalation-process.md}`、`docs/design/skills/{system-skills.md,self-development-skills.md}`、`docs/design/agents/app/delivery/release-manager-agent.md`、`docs/design/modules/M3-self-development.md`、inventory 联动文档 + 拆分状态后的 `m3-gap-baseline.md` | `openspec validate m3-self-development-e2e-online --json` pass；`python3 shared/registry/registry_contract_tool.py verify` pass；`m3-gap-baseline.md` 明确 `closed(design)` 与 `open(implementation)`；DoD 仅判设计文档闭合，不宣称运行可用 |
+| Session3 | Session2 | 落地五项缺失资产最小可执行骨架 | Session2 闭合清单 + `docs/design/skills/system-skills.md` + `docs/design/processes/governance-processes.md` + `docs/design/agents/app/delivery/release-manager-agent.md` | `skills/system/{impact-analyzer,release-manager}/`、`processes/meta/{registry-sync,escalation}/`、`agents/app/delivery/release-manager-agent/`；对应 design/inventory/registry/施工平面联动更新 | `python3 shared/registry/registry_contract_tool.py verify` pass；`rg -n \"impact-analyzer|release-manager|registry-sync|escalation|release-manager-agent\" docs/design shared/registry` 可定位新增项；状态仅到 `draft/review` |
+| Session4 | Session3 | 建立 M3 专项运行级测试基座 | Session3 资产 + M3 三流程 manifest | `tests/m3-self-development/TEST.md`、`tests/m3-self-development/run_tc_online.py`、`tests/m3-self-development/live_cases.md`、对应 evidence 索引 | `python3 tests/m3-self-development/run_tc_online.py --help` 可执行；`TEST.md` 覆盖主链路/异常链路/Fail-Closed/回退路径；证据索引可追溯 |
+| Session5 | Session4 | 完成内部主线 E2E | Session4 测试基座 + M3 canonical 流程资产 | 内部主线 E2E 证据目录与摘要（包含关键异常可回退记录） | 内部主线关键场景通过；失败场景可恢复/可回退；`M3 -> M1 -> M4` 门禁链路有证据且无旁路 |
+| Session6 | Session5 | 完成外部主线 E2E（复用 M3 canonical） | Session5 内部主线基线 + 外部交付主线上下文 | 外部主线 E2E 证据目录、内外复用对照结论 | 外部主线关键场景通过；复用路径不绕过 M3 canonical；旁路检测为 0 |
+| Session7 | Session6 | 执行全链路对账并收敛到 review | Session1~Session6 全量证据 + OpenSpec/registry/施工平面改动 | 收口记录、对账报告、回合关闭证据 | `openspec validate m3-self-development-e2e-online --json` pass；`python3 shared/registry/registry_contract_tool.py verify` pass；提交后 `git log -1 --pretty=raw` 含 `Entire-Checkpoint`；生命周期仅收敛到 `review` |
 
 ## 里程碑
 
@@ -96,7 +113,7 @@
 
 | 编号 | 问题 | 计划处理阶段 | Owner |
 |---|---|---|---|
-| Q-001 | OpenClaw session 是否足够支撑严格实例隔离？ | Phase 1 | Albus |
+| Q-001 | OpenClaw session 是否足够支撑严格实例隔离？ | Phase 1 | Closed（W5 门禁收口完成：`verify/verify-m2/verify-m6` + post-dev regression） |
 | Q-002 | LLM Judge 多轮评估并发策略如何控成本？ | Phase 1 | Albus |
 | Q-003 | 元层自修改审批阈值如何量化？ | Phase 4 | TBD |
 | Q-004 | development-process 双路径归一化策略 | Phase 1 | Closed（已归一为 meta canonical） |

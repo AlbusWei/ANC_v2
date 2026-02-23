@@ -1,15 +1,15 @@
 {
-  "timestamp": "2026-02-22T14:47:47Z",
+  "timestamp": "2026-02-22T15:50:44Z",
   "trigger_to_instance": {
     "trigger_id": "trg-52c934dc20c5835a25ba",
-    "instance_id": "run-development-process-20260222144747-47ef"
+    "instance_id": "run-development-process-20260222155044-0152"
   },
   "instance_to_trigger": {
-    "instance_id": "run-development-process-20260222144747-47ef",
+    "instance_id": "run-development-process-20260222155044-0152",
     "trigger_id": "trg-52c934dc20c5835a25ba"
   },
   "session_binding": {
-    "session_id": "sess-807cb3940f6e452e",
+    "session_id": "sess-2412b483e012459f",
     "parent_session_id": null
   }
 }

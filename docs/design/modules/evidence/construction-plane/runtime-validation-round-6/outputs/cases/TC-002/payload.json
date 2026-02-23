@@ -11,9 +11,12 @@
     "--scenario",
     "A"
   ],
-  "return_code": 0,
+  "return_code": 1,
   "expected_return_code": 0,
-  "passed": true,
-  "reasons": [],
+  "passed": false,
+  "reasons": [
+    "return_code_mismatch:1!=0",
+    "round_status_mismatch:failed!=passed"
+  ],
   "stdout_json": null
 }

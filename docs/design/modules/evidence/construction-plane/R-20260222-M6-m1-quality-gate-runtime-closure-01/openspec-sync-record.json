@@ -1,0 +1,58 @@
+{
+  "record_id": "osc-20260222-m1-runtime-closure-01",
+  "round_id": "R-20260222-M6-m1-quality-gate-runtime-closure-01",
+  "round_goal": "Close M1 runtime-closure governance round with auditable status linkage and OpenSpec sync record",
+  "module_scope": [
+    "M1",
+    "M6"
+  ],
+  "owner": "architect",
+  "openspec_ref": "m1-quality-gate-runtime-closure",
+  "anc_design_refs": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/inventories/agent-inventory.md",
+    "docs/design/inventories/process-inventory.md",
+    "docs/design/agents/kernel/qa.md",
+    "docs/design/processes/lifecycle-review-process.md",
+    "openspec/changes/m1-quality-gate-runtime-closure/tasks.md"
+  ],
+  "decision_snapshot_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/decision_snapshot.md",
+  "sync_status": "needs_sync",
+  "sync_timestamp": "2026-02-22T20:10:00Z",
+  "sync_actor": "architect",
+  "trigger_mode": "change_triggered",
+  "inspection_profile": {
+    "cadence_mode": "adaptive",
+    "cadence_hint": "round-close",
+    "primary_signal": "open_questions"
+  },
+  "risk_level": "medium",
+  "conflict_state": {
+    "has_conflict": false,
+    "resolved": true,
+    "resolution_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/decision_snapshot.md"
+  },
+  "checkpoint_count": 5,
+  "commit_count": 5,
+  "evidence_bundle": {
+    "openspec_linkage_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/openspec_linkage.json",
+    "anc_delta_index_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/m6_update_bundle.json",
+    "sync_check_report_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/sync_check_report.md",
+    "status_report_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/openspec_status_report.json",
+    "round_evidence_log_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/round-evidence.jsonl"
+  },
+  "sync_actions": [
+    {
+      "action": "openspec_show",
+      "result": "ok"
+    },
+    {
+      "action": "openspec_status",
+      "result": "ok"
+    },
+    {
+      "action": "openspec_validate_strict",
+      "result": "failed"
+    }
+  ]
+}

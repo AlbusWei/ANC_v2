@@ -1,6 +1,6 @@
 {
-  "hash_before": "89bb0855d6dca1723052e97bf4217d026fd89bd4a821775cf54a3d50ab0c7028",
-  "hash_after": "7458cf30a9419a6c441e1abfa310c72b0511dcd178b645ad68df795b1cdb4453",
+  "hash_before": "3f1c754e25473d80ba0de67d62345462a4af9ba4eb0390abf705f2310b47848f",
+  "hash_after": "8363a019fc8dd0cb5680cf240df606b071bde829f0101afdeea9d48ec24879b2",
   "execution_status": "success",
   "receipt_ref": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/change_receipt_apply.json",
   "patch_summary": {
