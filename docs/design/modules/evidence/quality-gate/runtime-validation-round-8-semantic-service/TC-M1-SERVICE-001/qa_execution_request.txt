@@ -1,0 +1,52 @@
+你是 QA Agent。已完成一次真实服务评测，请基于以下信息输出严格 JSON（禁止额外文本）：
+{
+  "gate_decision_recommendation": "fail|hold|pass",
+  "findings": [
+    {
+      "id": "F-*",
+      "severity": "P0|P1|P2",
+      "title": "简短标题",
+      "evidence": "引用哪条评测证据",
+      "repro_steps": ["复现步骤"],
+      "debug_steps": ["调试步骤"]
+    }
+  ],
+  "debug_plan": ["总体调试计划"],
+  "conclusion": "结论"
+}
+
+产品需求：
+# 产品需求（真实服务模拟）
+
+## 背景
+HR 需要上线一个“员工请假审批”能力，覆盖提交、审批、审计和风控，作为公司内网系统的首批上线功能。
+
+## 目标
+1. 员工可提交请假申请（开始/结束时间、原因、附件）。
+2. 直属主管可审批（通过/拒绝）并附理由。
+3. 系统必须记录审计日志（提交、审批、状态变化）。
+4. 必须有基础权限控制（员工仅可看本人申请，主管仅可看本团队申请）。
+5. 必须有接口级限流（避免刷接口）。
+6. 必须有最小可执行测试证据（至少包含关键路径与异常路径）。
+
+## 验收口径
+若交付结果缺失任一核心能力（权限、审计、限流、关键测试证据），判定为不通过，禁止进入发布门禁。
+
+
+Mock 开发交付：
+# 开发交付说明（Mock）
+
+本次仅完成：
+1. README 文档补充。
+2. 提交了占位 API 路由，未实现真实业务逻辑。
+
+未完成项：
+1. 权限控制（RBAC）后续再做。
+2. 审计日志后续再做。
+3. 限流策略后续再做。
+4. 自动化测试后续再做。
+
+
+语义评测输出引用：
+- raw_eval_ref: docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/TC-M1-SERVICE-001/evaluation/raw_eval.json
+- gate_decision: fail

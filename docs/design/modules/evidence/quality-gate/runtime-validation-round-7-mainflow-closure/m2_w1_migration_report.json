@@ -1,0 +1,15 @@
+{
+  "ts": "2026-02-22T19:02:06Z",
+  "instance_root": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/agents/control/BPM/memory/process_instances",
+  "total": 1,
+  "migrated": 0,
+  "validated_existing": 1,
+  "failed": 0,
+  "results": [
+    {
+      "instance_id": "run-phase05-dryrun-20260218-001",
+      "status": "validated_existing",
+      "reason": "ok"
+    }
+  ]
+}

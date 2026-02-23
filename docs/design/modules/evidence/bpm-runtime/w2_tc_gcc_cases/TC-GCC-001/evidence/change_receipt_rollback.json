@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-02-22T14:15:14Z",
+  "timestamp": "2026-02-22T15:53:32Z",
   "execution_status": "success",
-  "hash_before": "7458cf30a9419a6c441e1abfa310c72b0511dcd178b645ad68df795b1cdb4453",
-  "hash_after": "50b448656665aabed21c636720fc4257c2d83278106c476d8497b14d1e91bd09",
+  "hash_before": "8363a019fc8dd0cb5680cf240df606b071bde829f0101afdeea9d48ec24879b2",
+  "hash_after": "29063f39b97da3245fe50449c833afcdffc2c3aed76311f995803fbf19dfa733",
   "target_path": "messages.groupChat.historyLimit",
   "patch_summary": {
     "top_level_keys": [
@@ -17,7 +17,7 @@
     "ok": true,
     "restart": {
       "ok": true,
-      "pid": 49346,
+      "pid": 87398,
       "signal": "SIGUSR1",
       "delayMs": 2000,
       "reason": "config.patch",
@@ -28,7 +28,7 @@
       "payload": {
         "kind": "config-apply",
         "status": "ok",
-        "ts": 1771769712301,
+        "ts": 1771775610935,
         "message": null,
         "doctorHint": "Run: openclaw doctor --non-interactive",
         "stats": {

@@ -1,0 +1,9 @@
+{
+  "gate_decision": "hold",
+  "reasons": [
+    "hold_present"
+  ],
+  "evidence_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p4_aggregate_verdict",
+  "final_gate_verdict_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p4_aggregate_verdict/final_gate_verdict.json",
+  "aggregation_trace_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p4_aggregate_verdict/aggregation_trace.json"
+}

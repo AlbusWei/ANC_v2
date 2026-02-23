@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-02-22T17:18:07Z",
+  "actor": "bpm",
+  "trigger_id": "trg-52c934dc20c5835a25ba",
+  "instance_id": "run-development-process-20260222171807-63ee",
+  "match_result": "hit",
+  "dedupe_decision": "allow",
+  "session_id": "sess-685a0d1060b64351",
+  "parent_session_id": null,
+  "dispatch_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-001/p3_dispatch_output.json"
+}

@@ -1,6 +1,6 @@
 # Runtime Policy Calibration Process
 
-> 版本: v0.1.0 | 层级: P5 | 类型: 治理模式流程 | process_id: runtime-policy-calibration
+> 版本: v1.0.0 | 层级: P5 | 类型: 治理复合流程 | process_id: runtime-policy-calibration | 生命周期: review
 
 ## 目标
 
@@ -39,6 +39,7 @@
 2. `runtime_evidence_refs`
 3. `current_policy_ref`
 4. `risk_constraints_ref`
+5. `handoff_ref`
 
 ## 输出契约
 
@@ -53,6 +54,18 @@
 1. 证据样本不足且无法补证，不得输出参数更新结论。
 2. 未完成 `system-analyst -> architect/admin/bpm` 同步，不得推进策略更新。
 3. 高风险策略变更未经 admin 确认，不得下发执行。
+
+## 运行入口
+
+1. Process 资产：`processes/meta/runtime-policy-calibration/process.json`
+2. Runner：`processes/meta/runtime-policy-calibration/scripts/runtime_policy_calibration_runner.py`
+3. 核心技能：`skills/system/system-feedback-digest/scripts/system_feedback_digest_runner.py`
+
+## 测试挂载
+
+1. 用例文档：`tests/m2-bpm-runtime/TC-ANL.md`
+2. 回归入口：`tests/m2-bpm-runtime/run_tc_anl.py`
+3. 生产证据：`docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/`
 
 ## 证据要求
 

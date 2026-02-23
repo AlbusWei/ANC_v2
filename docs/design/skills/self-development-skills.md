@@ -1,6 +1,6 @@
 # Self-Development Skills 设计包
 
-> 版本: v0.1.0 | 分类: Meta Skills | 模块: M3 Self-Development | 最后更新: 2026-02-21
+> 版本: v0.2.0 | 分类: Meta Skills | 模块: M3 Self-Development | 最后更新: 2026-02-22
 
 ## 目标
 
@@ -56,6 +56,50 @@
 - Fail-Closed：schema 缺失、必填字段不匹配、阻断问题未解。
 - test_mount：`skills/meta/template-validator/TEST.md`
 
+## 系统治理依赖技能（Session2 设计闭合）
+
+> 本节只闭合接口契约，不在本回合创建运行目录。
+
+### 6. sys.arch.impact-analyzer（依赖）
+
+- 引用来源：`docs/design/skills/system-skills.md`
+- 在 M3 中的使用点：
+  1. `full-development` 的变更前影响评估。
+  2. `refactor` 的风险/回滚边界判定。
+  3. 元层自修改链路的 Step 2 影响分析。
+- 输入接口（固定）：
+  - `change_proposal_ref`
+  - `affected_scope_ref`
+  - `risk_constraints_ref`
+- 输出接口（固定）：
+  - `impact_report_ref`
+  - `risk_level`
+  - `rollback_requirements`
+  - `gating_recommendation`
+- Fail-Closed：影响范围不可达或风险冲突未裁决时拒绝放行。
+- test_mount（计划字段）：`tests/m3-self-development/TC-IMPACT-ANALYZER.md`
+- 生命周期预期：`draft`
+
+### 7. sys.admin.release-manager（依赖）
+
+- 引用来源：`docs/design/skills/system-skills.md`
+- 在 M3 中的使用点：
+  1. `full-development/hotfix` 的 `release-packaging` 阶段。
+  2. `release-manager-agent` 的默认核心能力。
+- 输入接口（固定）：
+  - `candidate_artifacts_ref`
+  - `final_gate_verdict_ref`
+  - `lifecycle_transition_ref`
+  - `registry_sync_ref`
+- 输出接口（固定）：
+  - `release_package_ref`
+  - `changelog_ref`
+  - `release_decision`
+  - `rollback_bundle_ref`
+- Fail-Closed：门禁证据缺失或回滚包不可用时拒绝发布。
+- test_mount（计划字段）：`tests/m3-self-development/TC-RELEASE-MANAGER.md`
+- 生命周期预期：`draft`
+
 ## 生命周期与落盘状态
 
 1. 本轮状态：M3 5 个关键技能已形成资产并接入 registry（状态 `draft`）。
@@ -63,3 +107,5 @@
    - 对应 `SKILL.md/TEST.md` 资产通过 capability contract 校验
    - `registry_contract_tool.py verify` 通过
    - 与 `full-development/hotfix/refactor` I/O 契约一致
+3. Session2 设计闭合新增约束：
+   - `sys.arch.impact-analyzer`、`sys.admin.release-manager` 仅做契约落盘，不在本回合落运行资产。

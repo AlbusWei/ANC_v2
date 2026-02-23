@@ -1,0 +1,5 @@
+{
+  "issue_id": "rpc-issue-001",
+  "scope": "m2-catchup-window-calibration",
+  "objective_ref": "docs/design/processes/runtime-policy-calibration-process.md#目标"
+}

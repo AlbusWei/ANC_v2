@@ -1,0 +1,14 @@
+{
+  "ts": "2026-02-22T17:17:24Z",
+  "instance_root": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/agents/control/BPM/memory/process_instances",
+  "total": 1,
+  "passed": 1,
+  "failed": 0,
+  "details": [
+    {
+      "instance_id": "run-phase05-dryrun-20260218-001",
+      "status": "pass",
+      "errors": []
+    }
+  ]
+}

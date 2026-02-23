@@ -1,0 +1,9 @@
+{
+  "gate_decision": "pass",
+  "reasons": [
+    "all_evals_pass"
+  ],
+  "evidence_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_chain_cases/TC-M1-CHAIN-004/evaluation/p4_aggregate_verdict",
+  "final_gate_verdict_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_chain_cases/TC-M1-CHAIN-004/evaluation/p4_aggregate_verdict/final_gate_verdict.json",
+  "aggregation_trace_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_chain_cases/TC-M1-CHAIN-004/evaluation/p4_aggregate_verdict/aggregation_trace.json"
+}

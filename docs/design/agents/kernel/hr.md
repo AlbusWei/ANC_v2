@@ -1,6 +1,6 @@
 # HR Agent 详细设计
 
-> 版本: v0.3.0 | agent_id: hr | 层级: kernel | 权限: lifecycle-governance
+> 版本: v0.4.0 | agent_id: hr | 层级: kernel | 权限: lifecycle-governance | 生命周期: review（lifecycle-review 运行链路已验证，未推进 active）
 
 ## 1. 角色定位与权限
 

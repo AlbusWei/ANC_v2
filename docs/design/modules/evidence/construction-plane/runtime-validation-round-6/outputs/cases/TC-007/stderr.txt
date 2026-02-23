@@ -1,5 +1,5 @@
 /Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/tmp/m6-round-regression-v2/C/round-output.json: missing round output bundle
-pre-close gate: missing round_close_summary_ref
+pre-close gate: round_close_summary_ref missing
 round_close must be the last event
 round_close must appear exactly once
 round output missing openspec_sync_ref

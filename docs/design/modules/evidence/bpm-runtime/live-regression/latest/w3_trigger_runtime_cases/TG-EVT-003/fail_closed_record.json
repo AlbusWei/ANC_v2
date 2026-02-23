@@ -1,0 +1,6 @@
+{
+  "timestamp": "2026-02-22T17:18:08Z",
+  "status": "failed",
+  "reason": "missing_transition_evidence_ref",
+  "fail_closed": true
+}

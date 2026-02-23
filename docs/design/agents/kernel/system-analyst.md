@@ -1,106 +1,176 @@
 # System Analyst Agent 详细设计
 
-> 版本: v0.3.0 | agent_id: system-analyst | 层级: kernel | 权限: system-analysis-governance
+> 版本: v1.0.0 | agent_id: system-analyst | 层级: kernel | 权限: system-analysis-governance | 生命周期: review（运行级验证完成，待 active 准入）
 
-## 1. 角色定位与权限
+## 1. 角色定位与治理目标
 
-- **定位**: 全系统问题与反馈分析中枢，负责跨内部产品的信息归集、诊断与洞察产出。
+- **定位**: BPM/architect 的系统级分析节点，负责接收 role handoff、执行证据校验并产出结构化治理摘要。
 - **owner**: admin
-- **权限**: system-analysis-governance — 读取全系统运行证据、输出架构反馈与改进机会。
-- **原则**:
-  1. 数据先于结论。
-  2. 证据不足不下结论。
-  3. 洞察必须可消费、可追踪、可回放。
+- **权限**: `system-analysis-governance`（只读证据 + 产出分析结论，不含执行写权限）。
+- **生产目标**:
+  1. 可被 BPM/architect 稳定调用。
+  2. 可在运行链路输出结构化 digest。
+  3. 证据不足时严格 Fail-Closed 并保留可审计拒绝记录。
 
-## 2. 输入域（统一信息入口）
+## 2. 绑定 Skill（bound_skills）
 
-1. 全系统日志与运行指标。
-2. incident 报告与分级结果。
-3. review 与 retrospective 报告。
-4. lifecycle 与 performance 数据。
-5. BPM 流程证据链与升级记录。
-
-## 3. 输出工件
-
-| 工件 | 用途 | 主要消费方 |
+| skill_id | 用途 | 生命周期 |
 |---|---|---|
-| `architecture_feedback_digest_ref` | 架构级问题摘要与趋势 | architect |
-| `cross-product problem taxonomy` | 跨内部产品问题分类体系 | architect, hr, product-manager |
-| `improvement opportunity backlog` | 可执行改进机会池与优先级建议 | architect, product-manager, bpm |
+| `sys.arch.system-feedback-digest` | 校验 handoff 与证据，生成 digest/reject 输出 | review |
 
-## 4. 绑定 Skill 清单
+## 3. 参与流程（participating_processes）
 
-| Skill | 用途 | 状态 |
+| process_id | 角色 | 说明 |
 |---|---|---|
-| signal-aggregator | 归集多源问题与反馈信号 | 规划 |
-| root-cause-analyzer | 根因分析与影响面识别 | 规划 |
-| insight-summarizer | 生成可消费诊断摘要 | 规划 |
+| `runtime-policy-calibration` | 主责分析节点 | 输出后验分析结论与策略提案输入 |
+| `construction-plane-governance` | 巡检输入提供方 | 提供系统风险信号，不执行裁决 |
+| `escalation` | 分析支撑节点 | 在升级链路提供证据化诊断 |
 
-## 5. 参与 Process 清单
+## 4. 最小输入契约（handoff_in）
 
-| Process | 角色 | 说明 |
+### 4.1 协议来源
+
+- `docs/design/interfaces/role-handoff-protocol.md`
+- `docs/design/interfaces/bpm-actor-protocol.md`
+
+### 4.2 必填字段
+
+1. `instance_id`
+2. `parent_instance_id`（允许 `null`，字段必须存在）
+3. `lineage_ref`
+4. `stack_depth`
+5. `phase_id`
+6. `objective_ref`
+7. `input_ref`
+8. `output_ref`
+9. `output_contract`
+10. `from_role`
+11. `to_role`（必须等于 `system-analyst`）
+12. `acceptance_criteria`
+13. `deadline`
+14. `risk_notes`
+15. `evidence_ref`
+
+### 4.3 输入校验规则（Fail-Closed）
+
+1. 任一必填字段缺失或为空，拒收。
+2. `to_role != system-analyst`，拒收。
+3. `objective_ref` 不可追溯到仓库内文档路径，拒收。
+4. `evidence_ref` 不可达、索引为空或索引内证据不可达，拒收。
+5. `stack_depth` 与 `lineage_ref` 不一致，拒收。
+
+## 5. 最小输出契约（digest_out / reject_out）
+
+### 5.1 成功输出（digest_out）
+
+```json
+{
+  "digest_id": "anl-<hash>",
+  "instance_id": "string",
+  "objective_ref": "string",
+  "source_handoff_ref": "string",
+  "summary": "string",
+  "findings": [
+    {
+      "signal": "string",
+      "impact": "string",
+      "confidence": "low|medium|high",
+      "evidence_refs": ["string"]
+    }
+  ],
+  "risk_level": "low|medium|high",
+  "recommendations": [
+    {
+      "action": "string",
+      "target_role": "architect|bpm|admin",
+      "requires_decision": true
+    }
+  ],
+  "generated_at": "ISO8601"
+}
+```
+
+### 5.2 拒绝输出（reject_out）
+
+```json
+{
+  "status": "rejected",
+  "reason_code": "handoff_contract_violation|evidence_insufficient|lineage_mismatch",
+  "instance_id": "string",
+  "missing_fields": ["string"],
+  "missing_evidence_refs": ["string"],
+  "required_actions": ["补齐证据索引", "修复handoff字段"],
+  "auditable_ref": "string",
+  "generated_at": "ISO8601"
+}
+```
+
+## 6. Handoff 接口与拒绝路径
+
+### 6.1 接收入口
+
+- `from_role`: `bpm` 或 `architect`
+- `to_role`: `system-analyst`
+- `output_contract`: `system-analyst.digest.v1`
+
+### 6.2 正常路径
+
+1. 接收 handoff 包并执行契约校验。
+2. 校验通过后读取证据索引，归纳系统信号。
+3. 输出 `architecture_feedback_digest_ref`，并回传 completion。
+
+### 6.3 拒绝路径（Fail-Closed）
+
+1. 校验失败立即返回 `reject_out`。
+2. 必须记录 `reason_code/missing_fields/missing_evidence_refs`。
+3. 禁止无证据结论或推测性补全。
+
+## 7. 最小权限边界
+
+| 能力 | 允许 | 禁止 |
 |---|---|---|
-| evolution-feedback | 系统级分析者 | 汇总与分析全系统反馈 |
-| improvement-review | 洞察提供者 | 提供跨产品改进候选 |
-| escalation | 分析支持节点 | 为升级链路提供证据与诊断 |
-| construction-plane-governance | 巡检触发建议者 | 基于风险与变更密度建议巡检频率与范围 |
+| 读取证据文件 | 是（仅仓库内证据路径） | 读取未授权外部系统 |
+| 生成分析工件 | 是（digest/reject） | 直接修改流程状态 |
+| 调度行为 | 可建议下一步角色 | 调度 override / 强制推进 |
+| 配置变更 | 否 | `config.patch` 与所有配置写操作 |
+| 生命周期审批 | 否 | 直接审批 `review->active` |
 
-## 6. 协作关系
+## 8. 决策边界（decision_boundary）
 
-- **上级**: admin
-- **平级**: architect, hr, bpm, qa, product-manager
-- **上游输入方**: monitor, delivery-manager, app/evolution/analyst
-- **下游消费方**: architect（架构迭代主责）, hr（运营治理）, PM（优先级管理）
-
-## 7. 决策权限边界
-
-| 决策类型 | 权限 |
+| 决策类型 | 权限边界 |
 |---|---|
-| 问题归集与根因分析 | 完全自主 |
-| 改进机会建议与排序建议 | 可执行 |
-| 架构原则修改 | 不可，交由 architect |
-| 生命周期状态迁移审批 | 不可，交由 hr |
-| 发布与配置写操作 | 不可，交由 bpm/admin |
+| 后验信号归纳与风险分级 | 完全自主 |
+| 策略变更建议 | 可提案，需 architect/admin/bpm 决策 |
+| 架构原则修改 | 不可 |
+| 配置写操作与发布执行 | 不可 |
 
-## 8. Fail-Closed 规则
+## 9. Fail-Closed 行为（fail_closed_behavior）
 
-1. 关键证据缺失时，不输出结论性根因判断。
-2. 数据时效过期或来源不可追溯时，标记为不可信并退回补数。
-3. 未建立目标映射（Objective 层级）的改进建议不得进入执行队列。
-4. M6 巡检建议缺少证据依据时，不得输出固定频率要求。
+触发即失败：
 
-## 9. 记忆与上下文策略
+1. handoff 契约缺字段。
+2. evidence 索引不可达或样本不足。
+3. objective 路径不可追溯。
+4. 高风险场景缺失审批链要求。
 
-- **持久记忆**: `agents/kernel/system-analyst/memory/`（规划）
-- **上下文来源**: incident、retro、review、lifecycle、performance、process evidence
-- **跨会话传递**: 通过 `architecture_feedback_digest_ref` 与改进机会池传递
+升级链：`system-analyst -> bpm -> admin`
 
-## 10. 验收标准（实现导向）
+## 10. 上下文与记忆策略
 
-### A. 全系统信号归集能力
+- 持久记忆目录：`agents/kernel/system-analyst/memory/`
+- 运行证据目录：`docs/design/modules/evidence/bpm-runtime/`
+- 跨会话传递：仅通过 digest/reject 与流程 evidence 引用，不依赖隐式会话记忆。
 
-| 场景 | 验收输入 | 期望执行行为 | 必备证据 | 失败判定 |
-|---|---|---|---|---|
-| A1 多源信号归集 | logs + incidents + reviews + retros + lifecycle/performance 数据 | system-analyst 完成统一归集与去重，形成可分析输入集 | 数据来源清单 + 归集时间戳 + 去重规则 | 数据源缺失未标注仍输出完整结论 |
-| A2 数据可信性校验 | 含过期/不可追溯数据 | system-analyst 标记低可信并触发补数 | 数据质量报告 + 补数请求 | 不可信数据直接进入结论 |
+## 11. 测试挂载（生产）
 
-### B. 洞察产出能力
+- 用例文档: `tests/m2-bpm-runtime/TC-ANL.md`
+- 执行入口: `tests/m2-bpm-runtime/run_tc_anl.py`
+- 证据目录: `docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/`
+- 汇总报告: `docs/design/modules/evidence/bpm-runtime/w5_tc_anl_report.json`
 
-| 场景 | 验收输入 | 期望执行行为 | 必备证据 | 失败判定 |
-|---|---|---|---|---|
-| B1 架构反馈摘要 | 完整归集输入集 | 产出 `architecture_feedback_digest_ref`，包含问题趋势、影响范围、优先级建议 | digest 文档 + 证据引用 | digest 无证据引用或不可消费 |
-| B2 跨产品问题建模 | 多产品问题样本 | 产出 `cross-product problem taxonomy`，至少覆盖两个内部产品 | taxonomy 文档 + 样本映射表 | 分类不可映射到具体产品 |
-| B3 改进机会池 | 根因与影响分析结果 | 产出 `improvement opportunity backlog`，每项含收益假设和风险 | backlog + 评分依据 | backlog 无优先级或无收益假设 |
+## 12. DoD（生产）
 
-### C. 治理链路支持能力
-
-| 场景 | 验收输入 | 期望执行行为 | 必备证据 | 失败判定 |
-|---|---|---|---|---|
-| C1 架构回流 | 高优先级系统问题 | 向 architect 提交可执行洞察与目标映射建议 | handoff 记录 + objective mapping | 无 objective 映射直接下发执行 |
-| C2 升级链支持 | escalation 触发事件 | 向 HR/BPM/admin 提供诊断与影响证据 | escalation evidence bundle | 升级缺少分析支撑材料 |
-
-### D. 核心功能验收完成条件
-
-1. 100% 架构级问题输出可追溯到 `architecture_feedback_digest_ref`。
-2. 问题分类至少覆盖两个内部产品并可复用到后续迭代。
-3. 证据不足场景被正确阻断并产生补数动作记录。
+1. `TC-ANL-001`: handoff -> digest 成功。
+2. `TC-ANL-002`: 证据不足拒绝且可审计。
+3. `TC-ANL-003`: `runtime-policy-calibration` 端到端成功并产出 5 项治理输出。
+4. agent/skill/process 文档 + inventory + registry 一致并通过 `registry_contract_tool.py verify`。

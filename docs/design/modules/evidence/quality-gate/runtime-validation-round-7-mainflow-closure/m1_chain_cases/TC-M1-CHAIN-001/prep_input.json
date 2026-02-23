@@ -1,0 +1,9 @@
+{
+  "objective_ref": "obj-m3-full-development-loop",
+  "spec_ref": "docs/design/processes/full-development-process.md",
+  "test_doc_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md",
+  "risk_focus": [
+    "P0",
+    "P1"
+  ]
+}

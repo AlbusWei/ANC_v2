@@ -1,0 +1,6 @@
+{
+  "trigger_id": "trg-52c934dc20c5835a25ba",
+  "instance_id": "run-development-process-20260222171807-63ee",
+  "decision": "hit",
+  "evidence_payload_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-001/p4_evidence_payload.json"
+}
