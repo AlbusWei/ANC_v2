@@ -10,7 +10,9 @@
   ],
   "return_code": 1,
   "expected_return_code": 1,
-  "passed": true,
-  "reasons": [],
+  "passed": false,
+  "reasons": [
+    "stderr_missing:checkpoint_count must equal commit_count"
+  ],
   "stdout_json": null
 }

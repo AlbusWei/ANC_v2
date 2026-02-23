@@ -1,6 +1,6 @@
 # Hotfix Process
 
-> 版本: v0.1.0 | 层级: P4 | 类型: 复合流程 | process_id: hotfix
+> 版本: v0.2.0 | 层级: P4 | 类型: 复合流程 | process_id: hotfix | process_type: dev.hotfix
 
 ## 目标
 
@@ -33,6 +33,41 @@
 | hotfix-gate-evaluation | 子流程 quality-gate-evaluation（内部：AP-007, AP-009, AP-020） | hotfix_gate_decision |
 | lifecycle-gate-sync | AP-010, AP-011 | lifecycle_transition_ref + registry_sync_ref |
 | release-packaging | AP-012 | hotfix_release_package_ref |
+
+## 治理绑定实施蓝图（Session2 设计闭合）
+
+### process_type 固定值
+
+1. `process_type = dev.hotfix`
+
+### governance_bundle 固定引用
+
+1. `syntax_ref`: `docs/design/processes/development-loop-core-standard.md`
+2. `obligation_ref`: `docs/design/processes/development-loop-core-standard.md`
+3. `risk_policy_ref`: `docs/design/processes/governance-processes.md`
+4. `checklist_ref`: `docs/design/modules/M3-self-development.md`
+
+说明：
+
+1. Session2 完成文档闭合，Session3 将治理字段写入 `processes/meta/hotfix/process.json`。
+2. 缺失 `governance_bundle` 或引用冲突时，hotfix 流程必须拒绝启动。
+
+## phase 目标态映射（用于 Session3 manifest 改造）
+
+| phase_id | 阶段 | 目标 target_type | 目标 target_id | AP/子流程映射 |
+|---|---|---|---|---|
+| p1 | hotfix-intake | atomic | AP-001/AP-002 包装执行单元 | AP-001, AP-002 |
+| p2 | scope-and-spec-fast-baseline | atomic | AP-003/AP-004 包装执行单元 | AP-003, AP-004 |
+| p3 | fast-test-preparation | subprocess | quality-gate-preparation | AP-005, AP-018, AP-019 |
+| p4 | hotfix-implementation | atomic | AP-006 包装执行单元 | AP-006 |
+| p5 | hotfix-gate-evaluation | subprocess | quality-gate-evaluation | AP-007, AP-009, AP-020 |
+| p6 | lifecycle-gate-sync | subprocess | lifecycle-review | AP-010, AP-011 |
+| p7 | release-packaging | atomic | AP-012 包装执行单元 | AP-012 |
+
+约束：
+
+1. hotfix 即使走快速路径，也不得出现 phase 直连 skill。
+2. 仅在 `gate_decision=pass` 且 `registry-sync` 证据可达时允许进入发布阶段。
 
 ## 输入契约
 

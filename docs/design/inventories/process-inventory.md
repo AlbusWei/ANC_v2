@@ -1,6 +1,6 @@
 # Process 全量清单
 
-> 版本: v1.2.0 | SSOT 上游: `shared/registry/process_registry.json`
+> 版本: v1.3.0 | SSOT 上游: `shared/registry/process_registry.json`
 
 ## Canonical Process Paths
 
@@ -54,8 +54,8 @@
 
 | process_id | 类型 | 规划阶段 | 用途 |
 |---|---|---|---|
-| registry-sync | 原子 | Phase 1 | 注册表同步 |
-| escalation | 复合 | Phase 1 | 异常升级 |
+| registry-sync | 原子（P6/AP-011） | Session2 设计闭合（待 Session3 实现） | 注册表同步（生命周期目标 `draft`） |
+| escalation | P5 子流程模式 | Session2 设计闭合（待 Session3 实现） | 异常升级复用流程（生命周期目标 `draft`） |
 | trigger-runtime-supervisor | 模式（P5） | Phase 1 | 触发运行时上级路由（可选） |
 
 ## 规划中 Process — 演化流程
@@ -85,6 +85,11 @@
 11. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/construction-plane-governance-process.md`
 12. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/construction-plane-governance-runtime-contract-baseline.md`
 13. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/lifecycle-review-process.md`
+
+本回合新增治理流程设计文档（设计闭合，待实现）：
+
+1. `docs/design/processes/registry-sync-process.md`（P6 原子语义）
+2. `docs/design/processes/escalation-process.md`（P5 可复用子流程）
 
 新增策略参考文档：
 

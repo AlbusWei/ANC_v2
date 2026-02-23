@@ -1,6 +1,6 @@
 # 系统技能清单与设计
 
-> 版本: v0.9.0 | 分类: System Skills | 层级: L2 | 最后更新: 2026-02-22
+> 版本: v1.0.0 | 分类: System Skills | 层级: L2 | 最后更新: 2026-02-22
 
 ## 核心系统技能
 
@@ -83,6 +83,53 @@
 治理补充：
 
 1. 对于需后验运营分析的问题，优先由 `sys.arch.impact-analyzer` + `system-analyst` 进入 `runtime-policy-calibration` 流程输出治理提案。
+
+## M3 Session2 设计闭合定义卡（待实现）
+
+### 1. sys.arch.impact-analyzer
+
+- 定位：在元层与流程层变更前执行影响面分析与回滚需求评估，为架构裁决提供结构化输入。
+- 输入契约：
+  - `change_proposal_ref`
+  - `affected_scope_ref`
+  - `risk_constraints_ref`
+  - `evidence_ref`（可选，若已有历史运行证据）
+- 输出契约：
+  - `impact_report_ref`
+  - `risk_level`（`low|medium|high|critical`）
+  - `rollback_requirements`
+  - `gating_recommendation`（`allow|hold|reject`）
+- Fail-Closed：
+  - 变更提案不可解析 -> `reject`
+  - 影响范围证据不可达 -> `hold`
+  - 风险约束冲突且无裁决记录 -> `reject`
+- test_mount（计划字段）：
+  - `tests/m3-self-development/TC-IMPACT-ANALYZER.md`
+  - `tests/m3-self-development/run_tc_online.py --case TC-IMPACT-ANALYZER-001`
+- 生命周期预期：`draft`（Session2 设计闭合，Session3 落运行资产）
+
+### 2. sys.admin.release-manager
+
+- 定位：在发布阶段统一执行发布包组装、变更日志生成、发布决策与回滚包约束校验。
+- 输入契约：
+  - `candidate_artifacts_ref`
+  - `final_gate_verdict_ref`
+  - `lifecycle_transition_ref`
+  - `registry_sync_ref`
+  - `release_policy_ref`（可选）
+- 输出契约：
+  - `release_package_ref`
+  - `changelog_ref`
+  - `release_decision`（`approved|rejected|blocked`）
+  - `rollback_bundle_ref`
+- Fail-Closed：
+  - 任一前置门禁证据缺失 -> `rejected`
+  - `registry_sync_ref` 校验失败 -> `blocked`
+  - 回滚包不可用 -> `rejected`
+- test_mount（计划字段）：
+  - `tests/m3-self-development/TC-RELEASE-MANAGER.md`
+  - `tests/m3-self-development/run_tc_online.py --case TC-RELEASE-MANAGER-001`
+- 生命周期预期：`draft`（Session2 设计闭合，Session3 落运行资产）
 
 ## 生命周期
 

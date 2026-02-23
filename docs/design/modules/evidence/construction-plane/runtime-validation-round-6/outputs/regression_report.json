@@ -1,13 +1,16 @@
 {
-  "gate_decision": "pass",
+  "gate_decision": "fail",
   "evidence_ref": "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs",
   "reasons": [
-    "all_cases_passed"
+    "TC-002:return_code_mismatch:1!=0;round_status_mismatch:failed!=passed",
+    "TC-003:failed_phase_mismatch:p4!=p5",
+    "TC-005:return_code_mismatch:1!=0;stdout_missing:verify-m6 passed",
+    "TC-006:stderr_missing:checkpoint_count must equal commit_count"
   ],
   "case_count": 13,
-  "passed_count": 13,
-  "failed_count": 0,
-  "generated_at": "2026-02-22T12:49:39.254237+00:00",
+  "passed_count": 9,
+  "failed_count": 4,
+  "generated_at": "2026-02-22T19:09:01.107572+00:00",
   "case_results": [
     {
       "case_id": "TC-001",
@@ -38,10 +41,13 @@
         "--scenario",
         "A"
       ],
-      "return_code": 0,
+      "return_code": 1,
       "expected_return_code": 0,
-      "passed": true,
-      "reasons": [],
+      "passed": false,
+      "reasons": [
+        "return_code_mismatch:1!=0",
+        "round_status_mismatch:failed!=passed"
+      ],
       "stdout_ref": "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/cases/TC-002/stdout.txt",
       "stderr_ref": "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/cases/TC-002/stderr.txt",
       "payload_ref": "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/cases/TC-002/payload.json"
@@ -61,8 +67,10 @@
       ],
       "return_code": 1,
       "expected_return_code": 1,
-      "passed": true,
-      "reasons": [],
+      "passed": false,
+      "reasons": [
+        "failed_phase_mismatch:p4!=p5"
+      ],
       "stdout_ref": "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/cases/TC-003/stdout.txt",
       "stderr_ref": "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/cases/TC-003/stderr.txt",
       "payload_ref": "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/cases/TC-003/payload.json"
@@ -98,10 +106,13 @@
         "--round-dir",
         "tmp/m6-round-regression-v2/A"
       ],
-      "return_code": 0,
+      "return_code": 1,
       "expected_return_code": 0,
-      "passed": true,
-      "reasons": [],
+      "passed": false,
+      "reasons": [
+        "return_code_mismatch:1!=0",
+        "stdout_missing:verify-m6 passed"
+      ],
       "stdout_ref": "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/cases/TC-005/stdout.txt",
       "stderr_ref": "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/cases/TC-005/stderr.txt",
       "payload_ref": "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/cases/TC-005/payload.json"
@@ -118,8 +129,10 @@
       ],
       "return_code": 1,
       "expected_return_code": 1,
-      "passed": true,
-      "reasons": [],
+      "passed": false,
+      "reasons": [
+        "stderr_missing:checkpoint_count must equal commit_count"
+      ],
       "stdout_ref": "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/cases/TC-006/stdout.txt",
       "stderr_ref": "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/cases/TC-006/stderr.txt",
       "payload_ref": "docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outputs/cases/TC-006/payload.json"

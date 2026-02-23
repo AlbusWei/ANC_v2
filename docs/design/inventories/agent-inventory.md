@@ -1,6 +1,6 @@
 # Agent 全量清单
 
-> 版本: v0.8.0 | SSOT: `shared/registry/agent_directory.json`
+> 版本: v0.9.0 | SSOT: `shared/registry/agent_directory.json`
 
 ## 已注册 Agent
 
@@ -27,7 +27,13 @@ monitor, analyst, planner
 
 ### Delivery
 
-business-analyst, product-manager, tech-lead, solution-architect, frontend-dev, backend-dev, data-engineer, integration-engineer, qa-engineer, devops-engineer, release-manager-agent, delivery-manager, customer-success-manager
+business-analyst, product-manager, tech-lead, solution-architect, frontend-dev, backend-dev, data-engineer, integration-engineer, qa-engineer, devops-engineer, delivery-manager, customer-success-manager
+
+Session2 设计闭合（待 Session3 运行资产实现）：
+
+| agent_id | 设计状态 | 生命周期目标 | 说明 |
+|---|---|---|---|
+| release-manager-agent | 已完成可运行资产口径设计 | draft | 已补齐 bound_skills、流程参与、handoff 输入/输出、Fail-Closed、test_mount |
 
 ## 职责边界注记
 
