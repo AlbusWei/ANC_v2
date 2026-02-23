@@ -3,7 +3,7 @@
   "checkpoint_id": "8d4402d699eb",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/design/modules/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/open_questions.md",
@@ -42,6 +42,13 @@
       "context": "/8d/4402d699eb/3/context.md",
       "content_hash": "/8d/4402d699eb/3/content_hash.txt",
       "prompt": "/8d/4402d699eb/3/prompt.txt"
+    },
+    {
+      "metadata": "/8d/4402d699eb/4/metadata.json",
+      "transcript": "/8d/4402d699eb/4/full.jsonl",
+      "context": "/8d/4402d699eb/4/context.md",
+      "content_hash": "/8d/4402d699eb/4/content_hash.txt",
+      "prompt": "/8d/4402d699eb/4/prompt.txt"
     }
   ],
   "token_usage": {
