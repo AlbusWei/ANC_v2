@@ -1,9 +1,11 @@
 {
   "cli_version": "0.4.5",
   "checkpoint_id": "a66a9d3da08c",
+  "session_id": "codex-a92866fa0818",
   "strategy": "manual-commit",
+  "created_at": "2026-02-23T17:04:16.673182Z",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 6,
+  "checkpoints_count": 1,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/architecture/process_architecture.md",
@@ -57,10 +59,6 @@
     "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/defects.json",
     "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/meta_qa_online_report.json",
     "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/meta_qa_online_summary.md",
-    "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase6_defect_closure.json",
-    "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase6_defect_closure.md",
-    "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase6_execution_rounds.json",
-    "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase6_final_conclusion.md",
     "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/regression_plan.json",
     "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/README.md",
     "docs/design/modules/module-dependency-matrix.md",
@@ -80,7 +78,6 @@
     "docs/design/standards/reference-implementation-skill-creator.md",
     "openspec/changes/m3-meta-asset-quality-hardening/design.md",
     "openspec/changes/m3-meta-asset-quality-hardening/meta-gap-baseline.md",
-    "openspec/changes/m3-meta-asset-quality-hardening/process-collaboration-skeleton-v1-plan.md",
     "openspec/changes/m3-meta-asset-quality-hardening/proposal.md",
     "openspec/changes/m3-meta-asset-quality-hardening/specs/meta-asset-quality/spec.md",
     "openspec/changes/m3-meta-asset-quality-hardening/specs/process-architecture-refactor/spec.md",
@@ -133,8 +130,6 @@
     "processes/meta/objective-scope-baseline/SKILL.md",
     "processes/meta/objective-scope-baseline/TEST.md",
     "processes/meta/objective-scope-baseline/process.json",
-    "processes/meta/quality-gate-evaluation/PROCESS.md",
-    "processes/meta/quality-gate-evaluation/process.json",
     "processes/meta/quality-gate-evaluation/scripts/quality_gate_evaluation_runner.py",
     "processes/meta/refactor/SKILL.md",
     "processes/meta/refactor/process.json",
@@ -194,90 +189,24 @@
     "tests/m3-self-development/run_meta_qa_online.py",
     "tests/skill-creator/TEST.md"
   ],
-  "sessions": [
-    {
-      "metadata": "/a6/6a9d3da08c/0/metadata.json",
-      "transcript": "/a6/6a9d3da08c/0/full.jsonl",
-      "context": "/a6/6a9d3da08c/0/context.md",
-      "content_hash": "/a6/6a9d3da08c/0/content_hash.txt",
-      "prompt": "/a6/6a9d3da08c/0/prompt.txt"
-    },
-    {
-      "metadata": "/a6/6a9d3da08c/1/metadata.json",
-      "transcript": "/a6/6a9d3da08c/1/full.jsonl",
-      "context": "/a6/6a9d3da08c/1/context.md",
-      "content_hash": "/a6/6a9d3da08c/1/content_hash.txt",
-      "prompt": "/a6/6a9d3da08c/1/prompt.txt"
-    },
-    {
-      "metadata": "/a6/6a9d3da08c/2/metadata.json",
-      "transcript": "/a6/6a9d3da08c/2/full.jsonl",
-      "context": "/a6/6a9d3da08c/2/context.md",
-      "content_hash": "/a6/6a9d3da08c/2/content_hash.txt",
-      "prompt": "/a6/6a9d3da08c/2/prompt.txt"
-    },
-    {
-      "metadata": "/a6/6a9d3da08c/3/metadata.json",
-      "transcript": "/a6/6a9d3da08c/3/full.jsonl",
-      "context": "/a6/6a9d3da08c/3/context.md",
-      "content_hash": "/a6/6a9d3da08c/3/content_hash.txt",
-      "prompt": "/a6/6a9d3da08c/3/prompt.txt"
-    },
-    {
-      "metadata": "/a6/6a9d3da08c/4/metadata.json",
-      "transcript": "/a6/6a9d3da08c/4/full.jsonl",
-      "context": "/a6/6a9d3da08c/4/context.md",
-      "content_hash": "/a6/6a9d3da08c/4/content_hash.txt",
-      "prompt": "/a6/6a9d3da08c/4/prompt.txt"
-    },
-    {
-      "metadata": "/a6/6a9d3da08c/5/metadata.json",
-      "transcript": "/a6/6a9d3da08c/5/full.jsonl",
-      "context": "/a6/6a9d3da08c/5/context.md",
-      "content_hash": "/a6/6a9d3da08c/5/content_hash.txt",
-      "prompt": "/a6/6a9d3da08c/5/prompt.txt"
-    },
-    {
-      "metadata": "/a6/6a9d3da08c/6/metadata.json",
-      "transcript": "/a6/6a9d3da08c/6/full.jsonl",
-      "context": "/a6/6a9d3da08c/6/context.md",
-      "content_hash": "/a6/6a9d3da08c/6/content_hash.txt",
-      "prompt": "/a6/6a9d3da08c/6/prompt.txt"
-    },
-    {
-      "metadata": "/a6/6a9d3da08c/7/metadata.json",
-      "transcript": "/a6/6a9d3da08c/7/full.jsonl",
-      "context": "/a6/6a9d3da08c/7/context.md",
-      "content_hash": "/a6/6a9d3da08c/7/content_hash.txt",
-      "prompt": "/a6/6a9d3da08c/7/prompt.txt"
-    },
-    {
-      "metadata": "/a6/6a9d3da08c/8/metadata.json",
-      "transcript": "/a6/6a9d3da08c/8/full.jsonl",
-      "context": "/a6/6a9d3da08c/8/context.md",
-      "content_hash": "/a6/6a9d3da08c/8/content_hash.txt",
-      "prompt": "/a6/6a9d3da08c/8/prompt.txt"
-    },
-    {
-      "metadata": "/a6/6a9d3da08c/9/metadata.json",
-      "transcript": "/a6/6a9d3da08c/9/full.jsonl",
-      "context": "/a6/6a9d3da08c/9/context.md",
-      "content_hash": "/a6/6a9d3da08c/9/content_hash.txt",
-      "prompt": "/a6/6a9d3da08c/9/prompt.txt"
-    },
-    {
-      "metadata": "/a6/6a9d3da08c/10/metadata.json",
-      "transcript": "/a6/6a9d3da08c/10/full.jsonl",
-      "context": "/a6/6a9d3da08c/10/context.md",
-      "content_hash": "/a6/6a9d3da08c/10/content_hash.txt",
-      "prompt": "/a6/6a9d3da08c/10/prompt.txt"
-    }
-  ],
+  "agent": "Gemini CLI",
+  "turn_id": "98dac0ccbb0d",
+  "transcript_identifier_at_start": "gemini-510aece138",
   "token_usage": {
     "input_tokens": 0,
     "cache_creation_tokens": 0,
     "cache_read_tokens": 0,
     "output_tokens": 0,
     "api_call_count": 0
-  }
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-23T17:04:16.296483Z",
+    "agent_lines": 5524,
+    "human_added": 266554,
+    "human_modified": 290,
+    "human_removed": 0,
+    "total_committed": 272368,
+    "agent_percentage": 2.0281384009869
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
 }
