@@ -5,7 +5,7 @@
 - round_id: `R-20260222-M6-m3-self-development-e2e-online-01`
 - openspec_ref: `m3-self-development-e2e-online`
 - 本文角色: 本 change 会话编排唯一对齐源
-- 本轮边界: Session1 仅做审计与基座，不做功能开发
+- 本轮边界: Session3 运行资产全量落地已完成，当前进入 Session4+ 运行级扩展阶段
 
 ## 线程顺序
 
@@ -48,22 +48,26 @@
 - 输入: Session2 闭合清单。
 - 输出:
   - 5 项缺失资产最小可执行落盘（skill/process/agent）
-  - 对应设计文档、inventories、registries、construction plane 联动更新
+  - AP 包装流程族全量落地（7 个 bundle）与三主流程 manifest 改造闭合
+  - `tests/m3-runtime/run_skill_contract_validation.py` 统一契约验证入口与 evidence 输出
+  - 对应设计文档、inventories、registries、construction plane、OpenSpec 联动更新
 - 依赖: Session2 完成并提交。
 - DoD:
   - 缺失资产路径可达、契约可解析。
+  - `python3 tests/m3-runtime/run_skill_contract_validation.py` pass。
   - `python3 shared/registry/registry_contract_tool.py verify` pass。
+  - `openspec validate m3-self-development-e2e-online --json` 返回 `valid=true`。
   - 生命周期状态保持 `draft/review` 合规，不越级 `active`。
 
 ### Session4（M3 专项测试基座）
 
 - 输入: Session3 资产。
 - 输出:
-  - M3 专项 `TEST.md`、runner、case 索引
+  - 在 `tests/m3-runtime/` 扩展 M3 主链路/异常链路/回退路径 case 索引
   - Fail-Closed 与回退路径测试说明
 - 依赖: Session3 完成并提交。
 - DoD:
-  - 测试入口可执行。
+  - `tests/m3-runtime/run_skill_contract_validation.py` 持续可执行。
   - 失败路径与恢复/回退路径均有证据。
 
 ### Session5（内部主线 E2E）

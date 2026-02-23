@@ -1,0 +1,18 @@
+{
+  "status": "completed",
+  "change_id": "chg-m3-s3-001",
+  "proposal_ref": "docs/design/modules/evidence/self-development/runtime-validation-round-session3/fixtures/change_proposal.json",
+  "affected_scope_ref": "docs/design/modules/evidence/self-development/runtime-validation-round-session3/fixtures/affected_scope_ok.json",
+  "risk_constraints_ref": "docs/design/modules/evidence/self-development/runtime-validation-round-session3/fixtures/risk_constraints_ok.json",
+  "affected_assets": [
+    "skills/system/impact-analyzer",
+    "skills/system/release-manager"
+  ],
+  "risk_level": "medium",
+  "gating_recommendation": "allow",
+  "rollback_requirements": [
+    "保留回滚补丁",
+    "提供回滚验证记录"
+  ],
+  "generated_at": "2026-02-23T09:24:30Z"
+}
