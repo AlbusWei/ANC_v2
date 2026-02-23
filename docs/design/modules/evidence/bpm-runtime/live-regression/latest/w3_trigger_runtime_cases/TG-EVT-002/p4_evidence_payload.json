@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-02-22T17:18:08Z",
+  "actor": "bpm",
+  "trigger_id": "trg-4bdb3484123e0c957801",
+  "instance_id": "virtual-trg-4bdb3484123e0c957801",
+  "match_result": "hit",
+  "dedupe_decision": "reject",
+  "session_id": "",
+  "parent_session_id": null,
+  "dispatch_ref": ""
+}

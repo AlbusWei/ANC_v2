@@ -1,0 +1,12 @@
+{
+  "m6_update_bundle_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/m6_update_bundle.json",
+  "linkage_report_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/linkage_report.md",
+  "openspec_sync_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/openspec-sync-record.json",
+  "registry_verify_report_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/registry_verify.log",
+  "registry_verify_m6_report_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/registry_verify_m6.log",
+  "construction_plane_delta_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/construction_plane_delta.md",
+  "open_questions_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/open_questions.md",
+  "round_evidence_log_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/round-evidence.jsonl",
+  "round_close_summary_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/round_close_summary.md",
+  "thread_commit_trailer_audit_ref": "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/thread_commit_trailer_audit.log"
+}

@@ -1,6 +1,6 @@
 # QA Agent 详细设计
 
-> 版本: v0.2.0 | agent_id: qa | 层级: kernel | 权限: quality-governance
+> 版本: v0.3.0 | agent_id: qa | 层级: kernel | 权限: quality-governance | 生命周期: review（M1/M2 运行证据已落盘，未推进 active）
 
 ## 1. 角色定位与权限
 
@@ -19,16 +19,18 @@
 |---|---|---|
 | meta.qa.test-designer | AP-005 测试设计 | draft（已注册） |
 | meta.qa.llm-judge | 评测语义判定内核 | draft（已注册） |
-| sys.qa.test-compiler | AP-018/019 编译与 profile 绑定 | draft（已注册） |
-| sys.qa.evaluation-runner | AP-007/008 统一评测入口 | draft（已注册） |
-| sys.qa.verdict-normalizer | AP-020 门禁聚合 | draft（已注册） |
-| sys.qa.regression-runner | AP-009 跨模块回归 | draft（已注册） |
-| sys.qa.hold-triage | AP-021/022/023 HOLD 治理 | draft（已注册） |
+| sys.qa.test-compiler | AP-018/019 编译与 profile 绑定 | active（已注册） |
+| sys.qa.evaluation-runner | AP-007/008 统一评测入口 | active（已注册） |
+| sys.qa.verdict-normalizer | AP-020 门禁聚合 | active（已注册） |
+| sys.qa.regression-runner | AP-009 跨模块回归 | active（已注册） |
+| sys.qa.hold-triage | AP-021/022/023 HOLD 治理 | active（已注册） |
+| sys.qa.registry-validator | AP-011 registry 合规校验 | active（已注册） |
+| sys.qa.evidence-archiver | 证据归档与可追溯索引 | active（已注册） |
 
 设计约束：
 
 1. 采用一次性能力设计覆盖（核心评测 + HOLD + 回归），后续通过生命周期状态控制启用节奏。
-2. 任何 `sys.qa.*` 从 `draft` 进入 `review/active` 前，必须完成 `registry_contract_tool.py verify` 并补齐运行证据。
+2. 任何新增或重构的 `sys.qa.*` 推进生命周期前，必须完成 `registry_contract_tool.py verify` 并补齐运行证据。
 
 ## 3. 参与流程清单（participating_processes）
 

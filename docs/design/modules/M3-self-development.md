@@ -1,6 +1,6 @@
 # M3 — 反身自开发模块详细设计
 
-> 版本: v0.5.0 | 建设优先级: P1 | 最后更新: 2026-02-21
+> 版本: v0.6.0 | 建设优先级: P1 | 最后更新: 2026-02-22
 
 ## 模块定位
 
@@ -106,10 +106,18 @@
 3. 风险：开发型流程违反连续性约束。  
 缓解：拆分断点前后流程并由上级流程编排，禁止顺序链硬拼。
 
-## 验收清单
+## 验收矩阵（Session2 设计闭合版）
 
-- [ ] `full-development/hotfix/refactor` 已注册并可被 BPM 调度
-- [ ] M3 核心技能已注册且具备 Capability Contract + test_mount
-- [ ] `M1` gate 失败可真实阻断 `M3 -> M4`
-- [ ] 外部 `delivery-iterations` 复用路径无旁路
-- [ ] 连续性约束与 phase 闭合约束通过文档与 manifest 双重校验
+| 验收 ID | 验收条目 | 验证命令 | 证据路径 | 通过判据 | 失败判据 |
+|---|---|---|---|---|---|
+| M3-AC-01 | 三主流程文档具备治理绑定蓝图（`process_type + governance_bundle`） | `rg -n "process_type|governance_bundle" docs/design/processes/{full-development-process.md,hotfix-process.md,refactor-process.md}` | `docs/design/processes/full-development-process.md`<br>`docs/design/processes/hotfix-process.md`<br>`docs/design/processes/refactor-process.md` | 三份文档都命中 `process_type` 与 `governance_bundle` 固定值 | 任一文档缺失字段或语义不一致 |
+| M3-AC-02 | `registry-sync/escalation` 设计文档闭合（含输入/输出/Fail-Closed/test_mount/生命周期） | `rg -n "输入契约|输出契约|Fail-Closed|test_mount|生命周期" docs/design/processes/{registry-sync-process.md,escalation-process.md}` | `docs/design/processes/registry-sync-process.md`<br>`docs/design/processes/escalation-process.md` | 两份文档均命中全部契约关键字 | 缺任一关键字段即不通过 |
+| M3-AC-03 | M3 技能包补齐系统治理依赖技能接口 | `rg -n "impact-analyzer|release-manager|系统治理依赖技能" docs/design/skills/{system-skills.md,self-development-skills.md}` | `docs/design/skills/system-skills.md`<br>`docs/design/skills/self-development-skills.md` | 两个技能定义卡字段完整且生命周期为 `draft` | 仅出现名称、未出现契约字段 |
+| M3-AC-04 | `release-manager-agent` 达到可运行资产口径（设计） | `rg -n "bound_skills|participating_processes|release_request_in|release_delivery_out|release_reject_out|Fail-Closed|test_mount" docs/design/agents/app/delivery/release-manager-agent.md` | `docs/design/agents/app/delivery/release-manager-agent.md` | 输入/成功输出/拒绝输出三类契约均完整 | 缺少任一输出结构或 Fail-Closed 路径 |
+| M3-AC-05 | OpenSpec 与 gap 基线对齐且可校验 | `openspec validate m3-self-development-e2e-online --json` | `openspec/changes/m3-self-development-e2e-online/design.md`<br>`openspec/changes/m3-self-development-e2e-online/tasks.md`<br>`openspec/changes/m3-self-development-e2e-online/m3-gap-baseline.md` | validate 返回 `valid=true` 且 Session2 条目状态一致 | validate 失败或文档状态冲突 |
+| M3-AC-06 | registry 契约门禁通过（设计层联动无破坏） | `python3 shared/registry/registry_contract_tool.py verify` | `shared/registry/*.json`（只读门禁） | verify 通过且无 contract/projection 破坏 | verify 非零退出或契约报错 |
+
+说明：
+
+1. Session2 只验设计闭合，不宣称运行资产可执行。
+2. Session3 才进入 `skills/processes/agents` 目录级实现与 registry 实条目落地。

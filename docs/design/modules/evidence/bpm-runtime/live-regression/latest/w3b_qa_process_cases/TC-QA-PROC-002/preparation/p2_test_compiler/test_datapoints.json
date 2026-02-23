@@ -1,0 +1,107 @@
+{
+  "datapoints": [
+    {
+      "tc_id": "TC-001",
+      "title": "Objective Gate Decision Fields",
+      "index": 1,
+      "type": "Objective",
+      "priority": "P0",
+      "evaluation_method": "Rule Match",
+      "input_payload": "fixture pass output",
+      "expected": "output includes pass contract fields",
+      "expected_conditions": [
+        "gate_decision=pass",
+        "compile_success"
+      ],
+      "judge_payload": {
+        "expected_conditions": "[gate_decision=pass, compile_success]"
+      },
+      "grader_plan": null,
+      "grader_selection": [],
+      "grader_weights": {},
+      "min_score_per_grader": {},
+      "must_pass_graders": [],
+      "objective_ref": "obj-m1-unified-quality-gate",
+      "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
+      "profile_id": "quality-gate.baseline@1.0.0",
+      "test_doc_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md"
+    },
+    {
+      "tc_id": "TC-002",
+      "title": "Evidence Traceability Fields",
+      "index": 2,
+      "type": "Objective",
+      "priority": "P0",
+      "evaluation_method": "Rule Match",
+      "input_payload": "fixture pass output",
+      "expected": "output includes evidence references",
+      "expected_conditions": [
+        "evidence_ref=",
+        "reasons="
+      ],
+      "judge_payload": {
+        "expected_conditions": "[evidence_ref=, reasons=]"
+      },
+      "grader_plan": null,
+      "grader_selection": [],
+      "grader_weights": {},
+      "min_score_per_grader": {},
+      "must_pass_graders": [],
+      "objective_ref": "obj-m1-unified-quality-gate",
+      "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
+      "profile_id": "quality-gate.baseline@1.0.0",
+      "test_doc_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md"
+    },
+    {
+      "tc_id": "TC-003",
+      "title": "Module Marker",
+      "index": 3,
+      "type": "Objective",
+      "priority": "P0",
+      "evaluation_method": "Rule Match",
+      "input_payload": "fixture pass output",
+      "expected": "output includes module marker",
+      "expected_conditions": [
+        "module=M3"
+      ],
+      "judge_payload": {
+        "expected_conditions": "[module=M3]"
+      },
+      "grader_plan": null,
+      "grader_selection": [],
+      "grader_weights": {},
+      "min_score_per_grader": {},
+      "must_pass_graders": [],
+      "objective_ref": "obj-m1-unified-quality-gate",
+      "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
+      "profile_id": "quality-gate.baseline@1.0.0",
+      "test_doc_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md"
+    }
+  ],
+  "metadata": {
+    "compiled_at": "2026-02-22T17:18:11.998433+00:00",
+    "test_doc_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md",
+    "objective_ref": "obj-m1-unified-quality-gate",
+    "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
+    "profile_set": [
+      "quality-gate.baseline@1.0.0"
+    ],
+    "evaluation_configuration": {
+      "objective_eval_rounds": 1,
+      "subjective_eval_rounds": 5,
+      "subjective_seed": 42,
+      "judge_perspectives": [
+        "qa"
+      ],
+      "timeout_seconds": 600,
+      "retry_policy": "max 1",
+      "grader_selection": [],
+      "grader_weights": {},
+      "min_score_per_grader": {},
+      "must_pass_graders": []
+    },
+    "case_count": 3,
+    "p0_case_count": 3,
+    "warnings": []
+  }
+}

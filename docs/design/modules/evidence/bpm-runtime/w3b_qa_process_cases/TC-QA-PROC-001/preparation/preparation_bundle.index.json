@@ -1,0 +1,12 @@
+{
+  "objective_ref": "obj-m1-unified-quality-gate",
+  "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
+  "test_doc_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md",
+  "test_datapoints_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-001/preparation/p2_test_compiler/test_datapoints.json",
+  "tc_profile_map_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-001/preparation/p2_test_compiler/tc_profile_map.json",
+  "compile_report_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-001/preparation/p2_test_compiler/compile_report.json",
+  "producer_process_id": "quality-gate-preparation",
+  "timestamps": {
+    "generated_at": "2026-02-22T15:51:09Z"
+  }
+}

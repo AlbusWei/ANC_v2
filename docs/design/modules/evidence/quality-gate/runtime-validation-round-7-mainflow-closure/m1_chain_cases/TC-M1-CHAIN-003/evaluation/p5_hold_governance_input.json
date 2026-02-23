@@ -1,0 +1,8 @@
+{
+  "hold_case_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/hold_case.json",
+  "runtime_log_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_chain_cases/TC-M1-CHAIN-003/hold_runtime.log",
+  "execution_state_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/execution_state.json",
+  "triage_policy_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/triage_policy.json",
+  "runtime_health_policy_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_chain_cases/TC-M1-CHAIN-003/runtime_health_policy.json",
+  "current_owner": "qa"
+}

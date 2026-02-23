@@ -1,0 +1,7 @@
+{
+  "timestamp": "2026-02-22T16:34:54Z",
+  "decision_record_ref": "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/p5_decision_record.json",
+  "observation_window": "next-1-round",
+  "status": "monitoring",
+  "notes": "观测窗口已建立，待下一轮采样回灌。"
+}

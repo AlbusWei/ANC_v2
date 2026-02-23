@@ -1,121 +1,121 @@
-2026-02-22 20:49:39.117 | ERROR    | openjudge.graders.common.relevance:_aevaluate:356 - Error evaluating relevance: Error code: 400 - {'error': '端点/codex未配置模型invalid-model-for-fail-closed'}
+2026-02-23 03:09:00.968 | ERROR    | openjudge.graders.common.relevance:_aevaluate:356 - Error evaluating relevance: Error code: 400 - {'error': '端点/codex未配置模型invalid-model-for-fail-closed'}
 Traceback (most recent call last):
 
   File "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/skills/system/qa/evaluation-runner/scripts/quality_eval_runner_impl.py", line 1485, in <module>
     raise SystemExit(main())
-                     └ <function main at 0x10d8e9300>
+                     └ <function main at 0x10bf29300>
 
   File "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/skills/system/qa/evaluation-runner/scripts/quality_eval_runner_impl.py", line 1480, in main
     return run(args)
            │   └ Namespace(command='run', preparation_bundle='docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outpu...
-           └ <function run at 0x10d8e9260>
+           └ <function run at 0x10bf29260>
 
   File "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/skills/system/qa/evaluation-runner/scripts/quality_eval_runner_impl.py", line 1330, in run
     run_result = run_objective_or_regression(
-                 └ <function run_objective_or_regression at 0x10d8e8ea0>
+                 └ <function run_objective_or_regression at 0x10bf28ea0>
 
   File "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/skills/system/qa/evaluation-runner/scripts/quality_eval_runner_impl.py", line 869, in run_objective_or_regression
     scored = score_case(case, output_obj["text"], args)
              │          │     │                   └ Namespace(command='run', preparation_bundle='docs/design/modules/evidence/construction-plane/runtime-validation-round-6/outpu...
              │          │     └ {'ref': 'tmp/m6-round-regression-v2/A/round-result.json', 'text': '{"round_id": "R-20260221-M6-m6-construction-round-sync-11"...
              │          └ {'tc_id': 'TC-001', 'title': 'M6 结果 LLM 评测契约', 'index': 1, 'type': 'Objective', 'priority': 'P0', 'evaluation_method': 'LLM-J...
-             └ <function score_case at 0x10d8e8d60>
+             └ <function score_case at 0x10bf28d60>
 
   File "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/skills/system/qa/evaluation-runner/scripts/quality_eval_runner_impl.py", line 832, in score_case
     return evaluate_llm_judge(
-           └ <function evaluate_llm_judge at 0x10d8e8cc0>
+           └ <function evaluate_llm_judge at 0x10bf28cc0>
 
   File "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/skills/system/qa/evaluation-runner/scripts/quality_eval_runner_impl.py", line 746, in evaluate_llm_judge
     results = run_async(runner.arun(dataset))
               │         │      │    └ [{'query': 'verify the M6 round result represents a successfully closed governance round', 'response': '{"round_id": "R-20260...
-              │         │      └ <function GradingRunner.arun at 0x10d8cfb00>
-              │         └ <openjudge.runner.grading_runner.GradingRunner object at 0x10ca873d0>
-              └ <function run_async at 0x10d8e85e0>
+              │         │      └ <function GradingRunner.arun at 0x10bf0fb00>
+              │         └ <openjudge.runner.grading_runner.GradingRunner object at 0x10a66f3d0>
+              └ <function run_async at 0x10bf285e0>
 
   File "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/skills/system/qa/evaluation-runner/scripts/quality_eval_runner_impl.py", line 393, in run_async
     return asyncio.run(coro)
-           │       │   └ <coroutine object GradingRunner.arun at 0x10d013780>
-           │       └ <function run at 0x10594b7e0>
+           │       │   └ <coroutine object GradingRunner.arun at 0x10abfb780>
+           │       └ <function run at 0x1034db7e0>
            └ <module 'asyncio' from '/Users/albus/.local/share/uv/python/cpython-3.11.14-macos-aarch64-none/lib/python3.11/asyncio/__init_...
 
   File "/Users/albus/.local/share/uv/python/cpython-3.11.14-macos-aarch64-none/lib/python3.11/asyncio/runners.py", line 190, in run
     return runner.run(main)
-           │      │   └ <coroutine object GradingRunner.arun at 0x10d013780>
-           │      └ <function Runner.run at 0x10594bba0>
-           └ <asyncio.runners.Runner object at 0x10d8f1990>
+           │      │   └ <coroutine object GradingRunner.arun at 0x10abfb780>
+           │      └ <function Runner.run at 0x1034dbba0>
+           └ <asyncio.runners.Runner object at 0x10bf32710>
   File "/Users/albus/.local/share/uv/python/cpython-3.11.14-macos-aarch64-none/lib/python3.11/asyncio/runners.py", line 118, in run
     return self._loop.run_until_complete(task)
            │    │     │                  └ <Task pending name='Task-1' coro=<GradingRunner.arun() running at /Users/albus/.cache/uv/archive-v0/xjtMR9xrH5UYR9teHXfh8/lib...
-           │    │     └ <function BaseEventLoop.run_until_complete at 0x1059496c0>
+           │    │     └ <function BaseEventLoop.run_until_complete at 0x1034d96c0>
            │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
-           └ <asyncio.runners.Runner object at 0x10d8f1990>
+           └ <asyncio.runners.Runner object at 0x10bf32710>
   File "/Users/albus/.local/share/uv/python/cpython-3.11.14-macos-aarch64-none/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
     self.run_forever()
-    │    └ <function BaseEventLoop.run_forever at 0x105949620>
+    │    └ <function BaseEventLoop.run_forever at 0x1034d9620>
     └ <_UnixSelectorEventLoop running=True closed=False debug=False>
   File "/Users/albus/.local/share/uv/python/cpython-3.11.14-macos-aarch64-none/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
     self._run_once()
-    │    └ <function BaseEventLoop._run_once at 0x10594b420>
+    │    └ <function BaseEventLoop._run_once at 0x1034db420>
     └ <_UnixSelectorEventLoop running=True closed=False debug=False>
   File "/Users/albus/.local/share/uv/python/cpython-3.11.14-macos-aarch64-none/lib/python3.11/asyncio/base_events.py", line 1936, in _run_once
     handle._run()
-    │      └ <function Handle._run at 0x1058b4860>
-    └ <Handle <TaskStepMethWrapper object at 0x10e92c250>()>
+    │      └ <function Handle._run at 0x103444860>
+    └ <Handle <TaskStepMethWrapper object at 0x10c52c1f0>()>
   File "/Users/albus/.local/share/uv/python/cpython-3.11.14-macos-aarch64-none/lib/python3.11/asyncio/events.py", line 84, in _run
     self._context.run(self._callback, *self._args)
     │    │            │    │           │    └ <member '_args' of 'Handle' objects>
-    │    │            │    │           └ <Handle <TaskStepMethWrapper object at 0x10e92c250>()>
+    │    │            │    │           └ <Handle <TaskStepMethWrapper object at 0x10c52c1f0>()>
     │    │            │    └ <member '_callback' of 'Handle' objects>
-    │    │            └ <Handle <TaskStepMethWrapper object at 0x10e92c250>()>
+    │    │            └ <Handle <TaskStepMethWrapper object at 0x10c52c1f0>()>
     │    └ <member '_context' of 'Handle' objects>
-    └ <Handle <TaskStepMethWrapper object at 0x10e92c250>()>
+    └ <Handle <TaskStepMethWrapper object at 0x10c52c1f0>()>
 
   File "/Users/albus/.cache/uv/archive-v0/xjtMR9xrH5UYR9teHXfh8/lib/python3.11/site-packages/openjudge/runner/grading_runner.py", line 244, in _arun
     return await isolated_grader.aevaluate(executor=executor, **data)
                  │               │                  │           └ {'query': 'verify the M6 round result represents a successfully closed governance round', 'response': '{"round_id": "R-202602...
-                 │               │                  └ <openjudge.runner.resource_executor.semaphore_resource_executor.SemaphoreResourceExecutor object at 0x10d91d6d0>
-                 │               └ <function BaseGrader.aevaluate at 0x104b4ba60>
-                 └ <openjudge.graders.common.relevance.RelevanceGrader object at 0x10cb40890>
+                 │               │                  └ <openjudge.runner.resource_executor.semaphore_resource_executor.SemaphoreResourceExecutor object at 0x10a629450>
+                 │               └ <function BaseGrader.aevaluate at 0x1026e3a60>
+                 └ <openjudge.graders.common.relevance.RelevanceGrader object at 0x10a780890>
 
   File "/Users/albus/.cache/uv/archive-v0/xjtMR9xrH5UYR9teHXfh8/lib/python3.11/site-packages/openjudge/graders/base_grader.py", line 180, in aevaluate
     return await managed_fn(**kwargs)
                  │            └ {'query': 'verify the M6 round result represents a successfully closed governance round', 'response': '{"round_id": "R-202602...
-                 └ <function BaseGrader.aevaluate.<locals>.managed_fn at 0x10d99a160>
+                 └ <function BaseGrader.aevaluate.<locals>.managed_fn at 0x10bfda160>
 
   File "/Users/albus/.cache/uv/archive-v0/xjtMR9xrH5UYR9teHXfh8/lib/python3.11/site-packages/openjudge/graders/base_grader.py", line 173, in managed_fn
     return await executor.submit(bound_method, **runtime_kwargs)
                  │        │      │               └ {'query': 'verify the M6 round result represents a successfully closed governance round', 'response': '{"round_id": "R-202602...
-                 │        │      └ <bound method RelevanceGrader._aevaluate of <openjudge.graders.common.relevance.RelevanceGrader object at 0x10cb40890>>
-                 │        └ <function SemaphoreResourceExecutor.submit at 0x10b144c20>
-                 └ <openjudge.runner.resource_executor.semaphore_resource_executor.SemaphoreResourceExecutor object at 0x10d91d6d0>
+                 │        │      └ <bound method RelevanceGrader._aevaluate of <openjudge.graders.common.relevance.RelevanceGrader object at 0x10a780890>>
+                 │        └ <function SemaphoreResourceExecutor.submit at 0x108c8cc20>
+                 └ <openjudge.runner.resource_executor.semaphore_resource_executor.SemaphoreResourceExecutor object at 0x10a629450>
 
   File "/Users/albus/.cache/uv/archive-v0/xjtMR9xrH5UYR9teHXfh8/lib/python3.11/site-packages/openjudge/runner/resource_executor/semaphore_resource_executor.py", line 58, in submit
     return await fn(**kwargs)
                  │    └ {'query': 'verify the M6 round result represents a successfully closed governance round', 'response': '{"round_id": "R-202602...
-                 └ <bound method RelevanceGrader._aevaluate of <openjudge.graders.common.relevance.RelevanceGrader object at 0x10cb40890>>
+                 └ <bound method RelevanceGrader._aevaluate of <openjudge.graders.common.relevance.RelevanceGrader object at 0x10a780890>>
 
 > File "/Users/albus/.cache/uv/archive-v0/xjtMR9xrH5UYR9teHXfh8/lib/python3.11/site-packages/openjudge/graders/common/relevance.py", line 327, in _aevaluate
     result = await super()._aevaluate(
 
   File "/Users/albus/.cache/uv/archive-v0/xjtMR9xrH5UYR9teHXfh8/lib/python3.11/site-packages/openjudge/graders/llm_grader.py", line 310, in _aevaluate
     chat_response = await self.model.achat(
-                          │    │     └ <function OpenAIChatModel.achat at 0x10c01e7a0>
-                          │    └ <openjudge.models.openai_chat_model.OpenAIChatModel object at 0x10d8f1350>
-                          └ <openjudge.graders.common.relevance.RelevanceGrader object at 0x10cb40890>
+                          │    │     └ <function OpenAIChatModel.achat at 0x109b667a0>
+                          │    └ <openjudge.models.openai_chat_model.OpenAIChatModel object at 0x10bf314d0>
+                          └ <openjudge.graders.common.relevance.RelevanceGrader object at 0x10a780890>
 
   File "/Users/albus/.cache/uv/archive-v0/xjtMR9xrH5UYR9teHXfh8/lib/python3.11/site-packages/openjudge/models/openai_chat_model.py", line 231, in achat
     response = await self.client.chat.completions.parse(**kwargs)
                      │    │      │    │           │       └ {'model': 'invalid-model-for-fail-closed', 'messages': [{'role': 'user', 'content': 'You are a professional data annotator re...
-                     │    │      │    │           └ <function AsyncCompletions.parse at 0x10e464fe0>
-                     │    │      │    └ <openai.resources.chat.completions.completions.AsyncCompletions object at 0x10d99de50>
-                     │    │      └ <openai.resources.chat.chat.AsyncChat object at 0x10d8f1b90>
-                     │    └ <openai.AsyncOpenAI object at 0x10d8f1450>
-                     └ <openjudge.models.openai_chat_model.OpenAIChatModel object at 0x10d8f1350>
+                     │    │      │    │           └ <function AsyncCompletions.parse at 0x10c118fe0>
+                     │    │      │    └ <openai.resources.chat.completions.completions.AsyncCompletions object at 0x10bfddf50>
+                     │    │      └ <openai.resources.chat.chat.AsyncChat object at 0x10bfdde10>
+                     │    └ <openai.AsyncOpenAI object at 0x10bf315d0>
+                     └ <openjudge.models.openai_chat_model.OpenAIChatModel object at 0x10bf314d0>
 
   File "/Users/albus/.cache/uv/archive-v0/xjtMR9xrH5UYR9teHXfh8/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 1668, in parse
     return await self._post(
-                 │    └ <bound method AsyncAPIClient.post of <openai.AsyncOpenAI object at 0x10d8f1450>>
-                 └ <openai.resources.chat.completions.completions.AsyncCompletions object at 0x10d99de50>
+                 │    └ <bound method AsyncAPIClient.post of <openai.AsyncOpenAI object at 0x10bf315d0>>
+                 └ <openai.resources.chat.completions.completions.AsyncCompletions object at 0x10bfddf50>
 
   File "/Users/albus/.cache/uv/archive-v0/xjtMR9xrH5UYR9teHXfh8/lib/python3.11/site-packages/openai/_base_client.py", line 1884, in post
     return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
@@ -123,12 +123,12 @@ Traceback (most recent call last):
                  │    │       │        │            └ False
                  │    │       │        └ FinalRequestOptions(method='post', url='/chat/completions', params={}, headers={'X-Stainless-Helper-Method': 'chat.completion...
                  │    │       └ <class 'openai.types.chat.chat_completion.ChatCompletion'>
-                 │    └ <function AsyncAPIClient.request at 0x10be77c40>
-                 └ <openai.AsyncOpenAI object at 0x10d8f1450>
+                 │    └ <function AsyncAPIClient.request at 0x1099bfc40>
+                 └ <openai.AsyncOpenAI object at 0x10bf315d0>
 
   File "/Users/albus/.cache/uv/archive-v0/xjtMR9xrH5UYR9teHXfh8/lib/python3.11/site-packages/openai/_base_client.py", line 1669, in request
     raise self._make_status_error_from_response(err.response) from None
-          │    └ <function BaseClient._make_status_error_from_response at 0x10be74e00>
-          └ <openai.AsyncOpenAI object at 0x10d8f1450>
+          │    └ <function BaseClient._make_status_error_from_response at 0x1099bce00>
+          └ <openai.AsyncOpenAI object at 0x10bf315d0>
 
 openai.BadRequestError: Error code: 400 - {'error': '端点/codex未配置模型invalid-model-for-fail-closed'}

@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-02-22T17:18:08Z",
+  "trigger_id": "trg-f4645121047cf4b4faa1",
+  "decision": "allow",
+  "reason": "first_delivery",
+  "primary_key": "scheduler-main|sch-004",
+  "fallback_key": "scheduler-main|internal.schedule.tick|module|M2|active|active|scheduler|20260222T1718",
+  "selected_mode": "primary",
+  "match_result": "hit"
+}

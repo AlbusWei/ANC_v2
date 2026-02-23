@@ -1,6 +1,6 @@
 # Refactor Process
 
-> 版本: v0.1.0 | 层级: P4 | 类型: 复合流程 | process_id: refactor
+> 版本: v0.2.0 | 层级: P4 | 类型: 复合流程 | process_id: refactor | process_type: dev.refactor
 
 ## 目标
 
@@ -16,21 +16,55 @@
 
 1. `refactor-objective-and-scope`（AP-001/002/003）
 2. `refactor-spec-authoring`（AP-004）
-3. `refactor-test-preparation`（AP-005/018/019）
+3. `refactor-test-preparation`（子流程 `quality-gate-preparation`，内部覆盖 AP-005/018/019）
 4. `refactor-implementation`（AP-006）
-5. `refactor-gate-evaluation`（AP-007/009/020）
+5. `refactor-gate-evaluation`（子流程 `quality-gate-evaluation`，内部覆盖 AP-007/009/020）
 6. `lifecycle-gate-sync`（AP-010/011）
 
-## 阶段到原子流程映射
+## 阶段到流程映射
 
-| 阶段 | 原子流程 | 输出 |
+| 阶段 | 流程映射 | 输出 |
 |---|---|---|
 | refactor-objective-and-scope | AP-001, AP-002, AP-003 | refactor_objective_ref + scope_baseline_ref |
 | refactor-spec-authoring | AP-004 | refactor_spec_ref |
-| refactor-test-preparation | AP-005, AP-018, AP-019 | refactor_preparation_bundle_ref |
+| refactor-test-preparation | 子流程 quality-gate-preparation（内部：AP-005, AP-018, AP-019） | refactor_preparation_bundle_ref |
 | refactor-implementation | AP-006 | refactor_implementation_ref |
-| refactor-gate-evaluation | AP-007, AP-009, AP-020 | refactor_gate_decision |
+| refactor-gate-evaluation | 子流程 quality-gate-evaluation（内部：AP-007, AP-009, AP-020） | refactor_gate_decision |
 | lifecycle-gate-sync | AP-010, AP-011 | lifecycle_transition_ref + registry_sync_ref |
+
+## 治理绑定实施蓝图（Session2 设计闭合）
+
+### process_type 固定值
+
+1. `process_type = dev.refactor`
+
+### governance_bundle 固定引用
+
+1. `syntax_ref`: `docs/design/processes/development-loop-core-standard.md`
+2. `obligation_ref`: `docs/design/processes/development-loop-core-standard.md`
+3. `risk_policy_ref`: `docs/design/processes/governance-processes.md`
+4. `checklist_ref`: `docs/design/modules/M3-self-development.md`
+
+说明：
+
+1. Session2 完成文档闭合，Session3 将治理字段写入 `processes/meta/refactor/process.json`。
+2. 任何治理引用缺失都视为流程不可执行，默认 Fail-Closed。
+
+## phase 目标态映射（用于 Session3 manifest 改造）
+
+| phase_id | 阶段 | 目标 target_type | 目标 target_id | AP/子流程映射 |
+|---|---|---|---|---|
+| p1 | refactor-objective-and-scope | atomic | AP-001/AP-002/AP-003 包装执行单元 | AP-001, AP-002, AP-003 |
+| p2 | refactor-spec-authoring | atomic | AP-004 包装执行单元 | AP-004 |
+| p3 | refactor-test-preparation | subprocess | quality-gate-preparation | AP-005, AP-018, AP-019 |
+| p4 | refactor-implementation | atomic | AP-006 包装执行单元 | AP-006 |
+| p5 | refactor-gate-evaluation | subprocess | quality-gate-evaluation | AP-007, AP-009, AP-020 |
+| p6 | lifecycle-gate-sync | subprocess | lifecycle-review | AP-010, AP-011 |
+
+约束：
+
+1. refactor 阶段必须维持“目标不变、结构可回退”语义，不允许直接改写生命周期策略。
+2. phase 必须通过 AP/子流程闭合，禁止出现 `target_type=skill`。
 
 ## 输入契约
 

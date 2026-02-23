@@ -1,0 +1,18 @@
+{
+  "triage_action": "continue",
+  "gate_decision": "pass",
+  "reasons": [
+    "triage_action=continue",
+    "log_delta=True",
+    "phase_progress=True",
+    "output_heartbeat=True"
+  ],
+  "progress_signals_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance/p1_p3_hold_triage/progress_signals.json",
+  "policy_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3b_qa_process_cases/TC-QA-PROC-002/triage_policy.json",
+  "runtime_refs": {
+    "current_runtime_log_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3b_qa_process_cases/TC-QA-PROC-002/runtime.log",
+    "current_execution_state_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3b_qa_process_cases/TC-QA-PROC-002/execution_state.json",
+    "previous_runtime_log_ref": "",
+    "previous_execution_state_ref": ""
+  }
+}

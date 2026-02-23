@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-02-22T19:01:45Z",
+  "process_id": "quality-gate-preparation",
+  "status": "ok",
+  "phase_trace": [
+    {
+      "phase": "p1-design-tests",
+      "status": "pass",
+      "test_plan_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m2_w3b_qa_process_cases/TC-QA-PROC-002/preparation/p1_test_plan.json",
+      "ts": "2026-02-22T19:01:45Z"
+    },
+    {
+      "phase": "p2-compile-test-datapoints",
+      "status": "pass",
+      "return_code": 0,
+      "compile_report_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m2_w3b_qa_process_cases/TC-QA-PROC-002/preparation/p2_test_compiler/compile_report.json",
+      "ts": "2026-02-22T19:01:45Z"
+    },
+    {
+      "phase": "p3-bind-test-profiles",
+      "status": "pass",
+      "preparation_bundle_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m2_w3b_qa_process_cases/TC-QA-PROC-002/preparation/preparation_bundle.index.json",
+      "ts": "2026-02-22T19:01:45Z"
+    }
+  ],
+  "input_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m2_w3b_qa_process_cases/TC-QA-PROC-002/prep_input.json"
+}

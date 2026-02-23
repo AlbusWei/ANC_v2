@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-02-22T17:18:08Z",
+  "status": "ok",
+  "trigger_type": "event",
+  "trigger_source": "lifecycle",
+  "checks": {
+    "received_at_rfc3339": true,
+    "payload_ref_reachable": true,
+    "event_contract_valid": true
+  }
+}

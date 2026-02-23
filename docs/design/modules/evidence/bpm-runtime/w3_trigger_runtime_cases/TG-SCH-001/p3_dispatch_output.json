@@ -1,9 +1,9 @@
 {
   "status": "ok",
-  "instance_id": "run-development-process-20260222144747-47ef",
-  "context_ref": "tmp/m2-bpm-runtime/tc-tg-sandbox/instances/run-development-process-20260222144747-47ef/context.json",
-  "session_binding_ref": "tmp/m2-bpm-runtime/tc-tg-sandbox/instances/run-development-process-20260222144747-47ef/session_binding.json",
-  "state_transition_ref": "tmp/m2-bpm-runtime/tc-tg-sandbox/instances/run-development-process-20260222144747-47ef/evidence/state_transition_start.json",
+  "instance_id": "run-development-process-20260222155044-0152",
+  "context_ref": "tmp/m2-bpm-runtime/tc-tg-sandbox/instances/run-development-process-20260222155044-0152/context.json",
+  "session_binding_ref": "tmp/m2-bpm-runtime/tc-tg-sandbox/instances/run-development-process-20260222155044-0152/session_binding.json",
+  "state_transition_ref": "tmp/m2-bpm-runtime/tc-tg-sandbox/instances/run-development-process-20260222155044-0152/evidence/state_transition_start.json",
   "runtime_state": "running",
   "dispatch": {
     "executed": false,
@@ -13,7 +13,7 @@
       "--agent",
       "architect",
       "--session-id",
-      "sess-807cb3940f6e452e",
+      "sess-2412b483e012459f",
       "--message",
       "execute assigned phase by process-instance-manager contract",
       "--json"
@@ -22,5 +22,5 @@
     "stdout": "",
     "stderr": ""
   },
-  "evidence_ref": "tmp/m2-bpm-runtime/tc-tg-sandbox/instances/run-development-process-20260222144747-47ef/evidence"
+  "evidence_ref": "tmp/m2-bpm-runtime/tc-tg-sandbox/instances/run-development-process-20260222155044-0152/evidence"
 }

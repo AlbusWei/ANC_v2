@@ -1,0 +1,17 @@
+{
+  "base_hash": "1b09640074c9bcbddd79a63cd1735ee1edb0503c696e8cc2d5afa36693d71b99",
+  "patch_raw": "{\"messages\": {\"groupChat\": {\"historyLimit\": 125}}}",
+  "rollback_plan": {
+    "mode": "restore_previous_value",
+    "executable": true
+  },
+  "authorization": {
+    "approved": true,
+    "approved_by_role": "admin",
+    "approval_id": "TC-GCC-002",
+    "allowed_paths": [
+      "messages.groupChat.historyLimit"
+    ]
+  },
+  "target_path": "messages.groupChat.historyLimit"
+}

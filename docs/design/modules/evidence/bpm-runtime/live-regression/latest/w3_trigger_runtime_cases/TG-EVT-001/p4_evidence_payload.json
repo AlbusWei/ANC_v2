@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-02-22T17:18:08Z",
+  "actor": "bpm",
+  "trigger_id": "trg-4bdb3484123e0c957801",
+  "instance_id": "run-development-process-20260222171808-4b53",
+  "match_result": "hit",
+  "dedupe_decision": "allow",
+  "session_id": "sess-eb3d76e771a44c94",
+  "parent_session_id": null,
+  "dispatch_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-EVT-001/p3_dispatch_output.json"
+}

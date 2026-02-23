@@ -1,0 +1,22 @@
+{
+  "instance_id": "inst-anl-001",
+  "parent_instance_id": null,
+  "lineage_ref": "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-001/lineage.json",
+  "stack_depth": 1,
+  "phase_id": "p1-system-analysis",
+  "objective_ref": "docs/design/modules/M2-bpm-engine.md#system-analyst-runtime-calibration",
+  "input_ref": "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-001/handoff_input.json",
+  "output_ref": "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-001/process_output.json",
+  "output_contract": "system-analyst.digest.v1",
+  "from_role": "bpm",
+  "to_role": "system-analyst",
+  "acceptance_criteria": [
+    "产出结构化digest",
+    "证据可追溯"
+  ],
+  "deadline": "2026-02-23T00:00:00Z",
+  "risk_notes": [
+    "需要验证证据覆盖度"
+  ],
+  "evidence_ref": "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-001/handoff_evidence_index.json"
+}

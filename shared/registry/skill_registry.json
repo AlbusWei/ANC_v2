@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "skill_registry",
-  "updated_at": "2026-02-22T13:30:00Z",
+  "updated_at": "2026-02-22T17:10:00Z",
   "entry_contract": {
     "required": [
       "skill_id",
@@ -457,6 +457,37 @@
       },
       "tests": {
         "test_doc": "skills/system/trigger-matcher-dedupe/TEST.md",
+        "methodology_ref": "docs/architecture/test_methodology.md"
+      }
+    },
+    {
+      "skill_id": "sys.arch.system-feedback-digest",
+      "name": "system-feedback-digest",
+      "path": "skills/system/system-feedback-digest/SKILL.md",
+      "layer": "system",
+      "owner": "system-analyst",
+      "version": "0.1.0",
+      "status": "review",
+      "agentskills": {
+        "name": "system-feedback-digest",
+        "description": "Validate system-analysis handoff and produce auditable structured digest or fail-closed rejection",
+        "license": "Apache-2.0",
+        "compatibility": {
+          "openclaw": ">=2026.2",
+          "agentskills": ">=0.2"
+        }
+      },
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-system-skills",
+        "bundle_source": "skills/system",
+        "entry_key": "sys.arch.system-feedback-digest",
+        "source": "skills/system/system-feedback-digest",
+        "install_strategy": "lazy",
+        "allow_draft_projection": true
+      },
+      "tests": {
+        "test_doc": "skills/system/system-feedback-digest/TEST.md",
         "methodology_ref": "docs/architecture/test_methodology.md"
       }
     },

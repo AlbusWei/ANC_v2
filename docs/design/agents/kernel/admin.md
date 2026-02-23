@@ -1,6 +1,6 @@
 # Admin Agent 详细设计
 
-> 版本: v0.3.0 | agent_id: admin | 层级: kernel | 权限: system-root
+> 版本: v0.4.0 | agent_id: admin | 层级: kernel | 权限: system-root | 生命周期: review（具备运行级治理证据，未推进 active）
 
 ## 1. 角色定位与权限
 
