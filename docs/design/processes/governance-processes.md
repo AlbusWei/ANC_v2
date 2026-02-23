@@ -1,6 +1,6 @@
 # 治理流程清单与设计
 
-> 版本: v1.0.0 | 分类: Governance Processes
+> 版本: v1.3.0 | 分类: Governance Processes
 
 ## 核心治理流程
 
@@ -12,10 +12,20 @@
 6. trigger-schedule-runtime
 7. trigger-event-runtime
 8. trigger-runtime-supervisor（P5 模式，规划）
-9. runtime-policy-calibration（P5 治理模式，规划）
+9. runtime-policy-calibration（P5 治理模式，可执行）
 10. construction-plane-governance
 
-## lifecycle-review
+## lifecycle-review（可执行资产，review）
+
+设计文档：`docs/design/processes/lifecycle-review-process.md`
+流程资产：`processes/meta/lifecycle-review/process.json`
+运行入口：`processes/meta/lifecycle-review/scripts/lifecycle_review_runner.py`
+owner：`hr`（`system-analyst` 仅提供分析输入，不作为 owner）
+
+状态证据：
+
+1. `docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle_output.json`
+2. `docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle/lifecycle_review_report.json`
 
 阶段：
 
@@ -25,11 +35,93 @@
 4. execute-transition
 5. sync-registry
 
+输入契约：
+
+1. `final_gate_verdict_ref`
+2. `target_asset_ref`
+3. `requested_transition`
+
+输出契约：
+
+1. `lifecycle_transition_ref`
+2. `registry_sync_ref`
+3. `lifecycle_review_report_ref`
+
 状态规则：`draft -> review -> active -> deprecated -> retired`
 
-## escalation
+Fail-Closed：
 
-升级链：`actor -> owner -> bpm -> admin -> human`
+1. 非法状态迁移直接拒绝。
+2. 证据缺失或不可解析直接拒绝。
+3. registry 校验失败直接阻断。
+
+## registry-sync（P6 原子语义，设计闭合）
+
+设计文档：`docs/design/processes/registry-sync-process.md`  
+预期资产目录（Session3）：`processes/meta/registry-sync/`
+
+定位：
+
+1. AP-011 的治理包装流程，负责 registry 同步与校验证据输出。
+2. 保持 P6 原子口径，不升级为 P5/P4 复合流程。
+
+输入契约：
+
+1. `target_registry_ref`
+2. `registry_patch_plan_ref`
+3. `requested_transition_ref`
+4. `verify_scope`
+
+输出契约：
+
+1. `registry_sync_ref`
+2. `registry_verify_report_ref`
+3. `sync_decision`
+
+Fail-Closed：
+
+1. patch plan 缺失或不可解析 -> `fail`
+2. registry verify 非零退出 -> `fail`
+3. 证据不可追溯 -> `blocked`
+
+生命周期预期：`draft`（Session2 仅设计闭合）
+
+## escalation（P5 模式，设计闭合）
+
+设计文档：`docs/design/processes/escalation-process.md`  
+预期资产目录（Session3）：`processes/meta/escalation/`
+
+固定升级链：`actor -> owner -> bpm -> admin -> human`
+
+phase 映射：
+
+1. `incident-intake`（AP-013）
+2. `policy-check`（AP-031 前置校验）
+3. `chain-routing`（AP-031）
+4. `resolution-or-human`（AP-025）
+
+输入契约：
+
+1. `incident_ref`
+2. `severity`
+3. `current_owner`
+4. `escalation_policy_ref`
+5. `evidence_ref`
+
+输出契约：
+
+1. `escalation_ref`
+2. `escalation_trace`
+3. `final_owner`
+4. `escalation_decision`
+
+Fail-Closed：
+
+1. 升级链不完整或越级 -> `fail`
+2. incident/evidence 缺失 -> `fail`
+3. policy 冲突不可裁决 -> `blocked`
+
+生命周期预期：`draft`（Session2 仅设计闭合）
 
 ## governed-config-change
 
@@ -56,7 +148,7 @@
 
 ## hold-governance
 
-设计文档：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/hold-governance-process.md`
+设计文档：`docs/design/processes/hold-governance-process.md`
 
 阶段：
 
@@ -75,8 +167,8 @@
 
 ## trigger-schedule-runtime
 
-设计文档：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/trigger-schedule-runtime-process.md`
-策略参考：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/trigger-runtime-policy-guidelines.md`
+设计文档：`docs/design/processes/trigger-schedule-runtime-process.md`
+策略参考：`docs/design/processes/trigger-runtime-policy-guidelines.md`
 
 阶段：
 
@@ -89,8 +181,8 @@
 
 ## trigger-event-runtime
 
-设计文档：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/trigger-event-runtime-process.md`
-策略参考：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/trigger-runtime-policy-guidelines.md`
+设计文档：`docs/design/processes/trigger-event-runtime-process.md`
+策略参考：`docs/design/processes/trigger-runtime-policy-guidelines.md`
 
 阶段：
 
@@ -103,8 +195,8 @@
 
 ## construction-plane-governance
 
-设计文档：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/construction-plane-governance-process.md`
-协同协议：`/Users/albus/MyProjects/ANC_v2/docs/design/interfaces/openspec-collaboration-protocol.md`
+设计文档：`docs/design/processes/construction-plane-governance-process.md`
+协同协议：`docs/design/interfaces/openspec-collaboration-protocol.md`
 owner：`architect`（语义），`bpm`（编排执行）
 
 阶段：
@@ -134,13 +226,19 @@ owner：`architect`（语义），`bpm`（编排执行）
 2. 仅在触发家族明显增多或跨触发治理逻辑增厚时启用。
 3. 模式定义见：`docs/design/processes/trigger-runtime-supervisor-pattern.md`。
 
-## runtime-policy-calibration（P5 治理模式，规划）
+## runtime-policy-calibration（P5 治理模式，可执行）
 
 定位：
 
 1. 统一承接“需要运营后验分析才可形成实证结论”的参数与策略议题。
 2. 由 `kernel/system-analyst` 主责分析，并同步给 `architect/admin/bpm` 做治理决策。
 3. 模式定义见：`docs/design/processes/runtime-policy-calibration-process.md`。
+
+运行入口与测试：
+
+1. 执行入口：`processes/meta/runtime-policy-calibration/scripts/runtime_policy_calibration_runner.py`
+2. 核心技能：`skills/system/system-feedback-digest/scripts/system_feedback_digest_runner.py`
+3. 运行级用例：`tests/m2-bpm-runtime/TC-ANL.md`（`TC-ANL-001~003`）
 
 适用议题：
 

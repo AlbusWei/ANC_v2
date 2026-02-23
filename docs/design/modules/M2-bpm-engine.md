@@ -99,6 +99,8 @@
 
 1. `catchup_policy_ref`、`time_bucket_strategy` 等动态参数不在 `M2` 文档内直接硬编码定值。
 2. 必须进入 `runtime-policy-calibration` 治理流程，由 `kernel/system-analyst` 做后验分析并同步给 `architect/admin/bpm` 决策。
+3. `runtime-policy-calibration` 运行入口：`processes/meta/runtime-policy-calibration/scripts/runtime_policy_calibration_runner.py`。
+4. 生产回归入口：`tests/m2-bpm-runtime/run_tc_anl.py`（覆盖 `TC-ANL-001~003`）。
 
 ## 验收清单
 
@@ -109,3 +111,4 @@
 - [x] TG-EVT-001/002/003 具备运行级证据
 - [x] 动态 catchup 策略已在运行证据中验证
 - [x] TC-GCC-001/002/003 具备运行级证据（真实 patch + rollback + 拒绝分支）
+- [x] TC-ONLINE-001/002/003/004 具备线上可达性证据（OpenClaw 网关、核心 agent、核心 skill/process）

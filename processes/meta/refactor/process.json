@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "process_level": "P4",
   "parent_process_id": null,
-  "composed_processes": [],
+  "composed_processes": [
+    "quality-gate-preparation",
+    "quality-gate-evaluation"
+  ],
   "lineage_policy": {
     "stack_depth_limit": 8,
     "context_isolation": "strict",
@@ -68,8 +71,8 @@
       "phase_id": "p3",
       "name": "refactor-test-preparation",
       "actor": "qa",
-      "target_type": "skill",
-      "target_id": "meta.qa.test-designer",
+      "target_type": "subprocess",
+      "target_id": "quality-gate-preparation",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/quality-gate-preparation-process.md#quality-gate-preparation-process",
       "sipoc": {
@@ -102,8 +105,8 @@
       "phase_id": "p5",
       "name": "refactor-gate-evaluation",
       "actor": "qa",
-      "target_type": "skill",
-      "target_id": "meta.qa.llm-judge",
+      "target_type": "subprocess",
+      "target_id": "quality-gate-evaluation",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/quality-gate-evaluation-process.md#quality-gate-evaluation-process",
       "sipoc": {

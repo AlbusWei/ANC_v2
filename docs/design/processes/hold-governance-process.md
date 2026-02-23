@@ -12,6 +12,12 @@
 2. 运行任务具备长时执行特征且需活性确认
 3. `M2` 检测到流程卡滞但未满足直接 `fail` 条件
 
+## 生命周期与调度状态
+
+1. Registry 生命周期：`review`（W3-B）。
+2. Runtime 入口：`processes/meta/hold-governance/scripts/hold_governance_runner.py`。
+3. 当前由 `quality-gate-evaluation` 的 `p5 govern-hold` 子流程调用。
+
 ## 阶段定义
 
 1. `collect-progress-evidence`（AP-021）
@@ -65,8 +71,14 @@
 
 ## 依赖流程
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/atomic/AP-021-hold-progress-evidence-collection.md`
-2. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/atomic/AP-022-hold-triage-classification.md`
-3. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/atomic/AP-023-hold-triage-action-execution.md`
-4. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/atomic/AP-024-runtime-health-maintenance.md`
-5. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/atomic/AP-025-hold-resolution-and-escalation.md`
+1. `docs/design/processes/atomic/AP-021-hold-progress-evidence-collection.md`
+2. `docs/design/processes/atomic/AP-022-hold-triage-classification.md`
+3. `docs/design/processes/atomic/AP-023-hold-triage-action-execution.md`
+4. `docs/design/processes/atomic/AP-024-runtime-health-maintenance.md`
+5. `docs/design/processes/atomic/AP-025-hold-resolution-and-escalation.md`
+
+## W3-B 运行级证据
+
+1. HOLD 路由 case：`docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/`
+2. 子流程输出：`docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance_output.json`
+3. 治理闭环输出：`docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance/p5_hold_resolution.json`

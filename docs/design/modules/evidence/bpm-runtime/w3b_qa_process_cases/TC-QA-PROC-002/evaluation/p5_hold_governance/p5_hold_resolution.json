@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-02-22T15:51:17Z",
+  "triage_action": "continue",
+  "resolution_decision": "close",
+  "final_owner": "qa",
+  "escalation_ref": "",
+  "gate_decision": "pass"
+}

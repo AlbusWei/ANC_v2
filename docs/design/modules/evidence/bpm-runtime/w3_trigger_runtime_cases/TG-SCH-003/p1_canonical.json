@@ -1,8 +1,8 @@
 {
   "trigger_type": "schedule",
   "trigger_source": "scheduler-main",
-  "received_at": "2026-02-22T14:47:47Z",
-  "time_bucket": "20260222T1447",
+  "received_at": "2026-02-22T15:50:45Z",
+  "time_bucket": "20260222T1550",
   "event_id": "sch-003",
   "event_time": null,
   "entity_type": "module",
@@ -13,6 +13,6 @@
   "canonical_event": "internal.schedule.tick",
   "evidence_ref": null,
   "payload_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-003/payload.json",
-  "normalized_at": "2026-02-22T14:47:48Z",
+  "normalized_at": "2026-02-22T15:50:45Z",
   "trigger_id": "trg-4cc8a31ec7fb9a73c378"
 }

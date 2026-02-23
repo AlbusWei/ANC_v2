@@ -1,0 +1,46 @@
+{
+  "ts": "2026-02-22T16:34:54Z",
+  "suite": "TC-ANL-001~003",
+  "total": 3,
+  "passed": 3,
+  "failed": 0,
+  "evidence_root": "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases",
+  "agent_doc": "docs/design/agents/kernel/system-analyst.md",
+  "digest_runner": "skills/system/system-feedback-digest/scripts/system_feedback_digest_runner.py",
+  "process_runner": "processes/meta/runtime-policy-calibration/scripts/runtime_policy_calibration_runner.py",
+  "cases": [
+    {
+      "id": "TC-ANL-001",
+      "status": "pass",
+      "details": {
+        "doc_markers_missing": [],
+        "return_code": 0,
+        "stdout": "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-001/digest_output.json",
+        "stderr": "",
+        "digest_ref": "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-001/analysis_digest.json"
+      }
+    },
+    {
+      "id": "TC-ANL-002",
+      "status": "pass",
+      "details": {
+        "return_code": 2,
+        "stdout": "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-002/digest_output.json",
+        "stderr": "",
+        "reject_ref": "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-002/reject_output.json",
+        "reason_code": "evidence_insufficient"
+      }
+    },
+    {
+      "id": "TC-ANL-003",
+      "status": "pass",
+      "details": {
+        "return_code": 0,
+        "stdout": "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/process_output.json",
+        "stderr": "",
+        "runtime_trace_ref": "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/runtime_trace.json",
+        "decision_record_ref": "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-003/runtime_policy_calibration/p5_decision_record.json"
+      }
+    }
+  ]
+}

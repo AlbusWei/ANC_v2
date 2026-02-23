@@ -18,6 +18,10 @@
         "workspace": "agents/kernel/kernel-dev"
       },
       {
+        "id": "system-analyst",
+        "workspace": "agents/kernel/system-analyst"
+      },
+      {
         "id": "bpm",
         "workspace": "agents/control/BPM"
       },

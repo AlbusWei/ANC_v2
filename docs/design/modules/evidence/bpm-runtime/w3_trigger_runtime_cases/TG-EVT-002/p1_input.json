@@ -2,6 +2,6 @@
   "trigger_type": "event",
   "trigger_source": "lifecycle",
   "payload_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-002/event_payload.json",
-  "received_at": "2026-02-22T14:47:48Z",
+  "received_at": "2026-02-22T15:50:46Z",
   "canonical_event": "internal.lifecycle.transitioned"
 }

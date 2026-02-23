@@ -1,5 +1,5 @@
 {
-  "ts": "2026-02-22T14:47:48Z",
+  "ts": "2026-02-22T15:50:46Z",
   "suite": "TG-SCH-001~004 + TG-EVT-001~003",
   "total": 7,
   "passed": 7,
@@ -16,7 +16,7 @@
         "status": "ok",
         "trigger_receipt_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-001/p4_trigger_receipt.json",
         "admin_forward_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-001/admin_forward.json",
-        "instance_id": "run-development-process-20260222144747-47ef"
+        "instance_id": "run-development-process-20260222155044-0152"
       }
     },
     {
@@ -29,7 +29,7 @@
         "output_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-002/process_output.json",
         "status": "ok",
         "trigger_ledger_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-002/trigger_ledger.json",
-        "instance_id": "run-development-process-20260222144747-f1e6"
+        "instance_id": "run-development-process-20260222155044-b05c"
       }
     },
     {
@@ -70,7 +70,7 @@
         "status": "ok",
         "event_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/event_payload.json",
         "trigger_receipt_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p4_trigger_receipt.json",
-        "instance_id": "run-development-process-20260222144748-ff20"
+        "instance_id": "run-development-process-20260222155045-c3b2"
       }
     },
     {

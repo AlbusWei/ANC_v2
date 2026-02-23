@@ -13,9 +13,9 @@
 
 1. `p1` hotfix-intake (`meta.arch.objective-writer`)
 2. `p2` scope-and-spec-fast-baseline (`meta.arch.spec-writer`)
-3. `p3` fast-test-preparation (`meta.qa.test-designer`)
+3. `p3` fast-test-preparation（`subprocess: quality-gate-preparation`）
 4. `p4` hotfix-implementation (`system.ops.manual-task`)
-5. `p5` hotfix-gate-evaluation (`meta.qa.llm-judge`)
+5. `p5` hotfix-gate-evaluation（`subprocess: quality-gate-evaluation`）
 6. `p6` lifecycle-gate-sync (`meta.arch.template-validator`)
 7. `p7` release-packaging (`system.ops.manual-task`)
 

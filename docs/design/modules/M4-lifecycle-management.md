@@ -1,6 +1,6 @@
 # M4 — 生命周期管理模块详细设计
 
-> 版本: v0.3.0 | 建设优先级: P1
+> 版本: v0.3.1 | 建设优先级: P1
 
 ## 模块定位
 
@@ -18,6 +18,15 @@
 4. lifecycle-review
 5. trigger-policy-manager
 6. override-decision-recorder
+
+## lifecycle-review 最小可执行接点（M1 -> M4）
+
+1. owner 固定为 `hr`（`system-analyst` 仅提供分析输入，不作为 owner）。
+2. 生命周期状态：`draft`（后续线程基于运行证据推进到 `review/active`）。
+3. 流程资产：`processes/meta/lifecycle-review/process.json`
+4. 运行入口：`processes/meta/lifecycle-review/scripts/lifecycle_review_runner.py`
+5. 输入契约最小集：`final_gate_verdict_ref`、`target_asset_ref`、`requested_transition`
+6. 输出契约最小集：`lifecycle_transition_ref`、`registry_sync_ref`、`lifecycle_review_report_ref`
 
 ## 触发策略治理资产（规划）
 

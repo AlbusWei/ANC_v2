@@ -12,6 +12,12 @@
 2. 本流程结束后应进入 `AP-006 implementation-execution`。
 3. 评测执行由独立流程 `quality-gate-evaluation` 在实现后触发。
 
+## 生命周期与调度状态
+
+1. Registry 生命周期：`review`（W3-B）。
+2. Runtime 入口：`processes/meta/quality-gate-preparation/scripts/quality_gate_preparation_runner.py`。
+3. 调度样例用例：`TC-QA-PROC-001`（主链路前半段）。
+
 ## 阶段定义
 
 1. `design-tests`（AP-005）
@@ -58,9 +64,9 @@
 
 ## 依赖流程
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/atomic/AP-005-test-design.md`
-2. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/atomic/AP-018-test-datapoint-compilation.md`
-3. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/atomic/AP-019-test-profile-binding.md`
+1. `docs/design/processes/atomic/AP-005-test-design.md`
+2. `docs/design/processes/atomic/AP-018-test-datapoint-compilation.md`
+3. `docs/design/processes/atomic/AP-019-test-profile-binding.md`
 
 ## 证据
 
@@ -68,3 +74,8 @@
 2. `compile_report_ref`
 3. `tc_profile_map_ref`
 4. `preparation_bundle_ref`
+
+## W3-B 运行级证据
+
+1. 套件报告：`docs/design/modules/evidence/bpm-runtime/w3b_tc_qa_proc_report.json`
+2. Case 目录：`docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-001/`

@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-02-22T19:01:45Z",
+  "process_id": "quality-gate-evaluation",
+  "status": "ok",
+  "phase_trace": [
+    {
+      "phase": "p1-run-objective-evaluation",
+      "status": "pass",
+      "return_code": 0,
+      "objective_eval_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_chain_cases/TC-M1-CHAIN-001/evaluation/p1_objective_eval/raw_eval.json",
+      "ts": "2026-02-22T19:01:44Z"
+    },
+    {
+      "phase": "p2-run-subjective-evaluation",
+      "status": "pass",
+      "mode": "simulated",
+      "subjective_eval_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_chain_cases/TC-M1-CHAIN-001/evaluation/p2_subjective_eval/subjective_eval.json",
+      "subjective_decision": "pass",
+      "ts": "2026-02-22T19:01:44Z"
+    },
+    {
+      "phase": "p3-run-regression-evaluation",
+      "status": "pass",
+      "return_code": 0,
+      "regression_eval_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_chain_cases/TC-M1-CHAIN-001/evaluation/p3_regression_eval/regression_eval.json",
+      "ts": "2026-02-22T19:01:45Z"
+    },
+    {
+      "phase": "p4-aggregate-gate-decision",
+      "status": "pass",
+      "gate_decision": "pass",
+      "return_code": 0,
+      "final_gate_verdict_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_chain_cases/TC-M1-CHAIN-001/evaluation/p4_aggregate_verdict/final_gate_verdict.json",
+      "ts": "2026-02-22T19:01:45Z"
+    }
+  ],
+  "input_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_chain_cases/TC-M1-CHAIN-001/eval_input.json"
+}

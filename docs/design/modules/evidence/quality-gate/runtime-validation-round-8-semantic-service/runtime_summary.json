@@ -1,0 +1,25 @@
+{
+  "ts": "2026-02-22T19:18:19Z",
+  "suite": "TC-M1-SERVICE-001",
+  "status": "pass",
+  "gate_decision": "fail",
+  "qa_findings_count": 5,
+  "qa_debug_steps_count": 5,
+  "llm_judge_used": true,
+  "semantic_detection_ok": true,
+  "critical_refs": {
+    "service_request_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/TC-M1-SERVICE-001/service_request.md",
+    "process_instance_start_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/TC-M1-SERVICE-001/process_instance_start.json",
+    "process_instance_validate_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/TC-M1-SERVICE-001/process_instance_validate.json",
+    "process_instance_replay_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/TC-M1-SERVICE-001/process_instance_replay.json",
+    "qa_design_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/TC-M1-SERVICE-001/qa_design_payload.json",
+    "test_doc_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/TC-M1-SERVICE-001/TEST_service_llm.md",
+    "preparation_output_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/TC-M1-SERVICE-001/prep_output.json",
+    "evaluation_output_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/TC-M1-SERVICE-001/evaluation/raw_eval.json",
+    "raw_eval_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/TC-M1-SERVICE-001/evaluation/raw_eval.json",
+    "qa_execution_report_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/TC-M1-SERVICE-001/qa_execution_report.json",
+    "command_trace_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/TC-M1-SERVICE-001/command_trace.json"
+  },
+  "risks": [],
+  "natural_language_conclusion": "已完成真实服务场景验证：QA agent 先产出测试设计，再对 mock 交付进行 LLM 语义评审，门禁阻断并输出可执行 debug 建议。"
+}
