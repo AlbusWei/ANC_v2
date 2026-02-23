@@ -5,7 +5,7 @@
 - round_id: `R-20260222-M6-m3-self-development-e2e-online-01`
 - openspec_ref: `m3-self-development-e2e-online`
 - 本文角色: 本 change 会话编排唯一对齐源
-- 本轮边界: Session3 运行资产全量落地已完成，当前进入 Session4+ 运行级扩展阶段
+- 本轮边界: Session4 测试基座已落地，当前进入 Session5/Session6 内外主线 E2E 阶段
 
 ## 线程顺序
 
@@ -63,12 +63,14 @@
 
 - 输入: Session3 资产。
 - 输出:
-  - 在 `tests/m3-runtime/` 扩展 M3 主链路/异常链路/回退路径 case 索引
-  - Fail-Closed 与回退路径测试说明
+  - 新增 `tests/m3-self-development/{TEST.md,live_cases.md,run_tc_online.py}` 统一测试基座
+  - 复用 `tests/m3-runtime` 与 `tests/m1-runtime` 上游 runner，形成四类断言与 evidence 索引
+  - 为 Session5/Session6 预留 `M3-INT-*`、`M3-EXT-*`、`M3-FC-*` case id
 - 依赖: Session3 完成并提交。
 - DoD:
-  - `tests/m3-runtime/run_skill_contract_validation.py` 持续可执行。
-  - 失败路径与恢复/回退路径均有证据。
+  - `python3 tests/m3-self-development/run_tc_online.py --help` pass。
+  - 默认执行覆盖主链路/异常链路/Fail-Closed/回退返工四类且产出证据。
+  - Session5/Session6 预留 case 被 Session4 强制执行时触发 Fail-Closed。
 
 ### Session5（内部主线 E2E）
 

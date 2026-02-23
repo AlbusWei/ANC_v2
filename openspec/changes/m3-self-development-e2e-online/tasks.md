@@ -26,9 +26,9 @@
 
 ## 4. Session4（M3 专项运行级测试基座）
 
-- [x] 4.1 新建 `tests/m3-runtime/TEST.md`。
-- [x] 4.2 新建 `tests/m3-runtime/run_skill_contract_validation.py`。
-- [x] 4.3 覆盖 `impact-analyzer/release-manager` 的 happy path + fail-closed path，并产出 evidence 报告索引。
+- [x] 4.1 新建 `tests/m3-self-development/TEST.md` 与 `tests/m3-self-development/live_cases.md`，固化 Session4 四类覆盖与 Session5/6 预留 case 规则。
+- [x] 4.2 新建 `tests/m3-self-development/run_tc_online.py` 单 runner（`--suite/--case` 统一入口）。
+- [x] 4.3 复用 `tests/m3-runtime/run_skill_contract_validation.py` 与 `tests/m1-runtime/run_post_dev_regression.py`，完成主链路/异常链路/Fail-Closed/回退返工四类断言并产出 evidence 索引。
 
 ## 5. Session5（内部主线 E2E）
 

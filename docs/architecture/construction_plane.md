@@ -57,6 +57,7 @@
 - [x] 完成 `R-20260222-M6-m1-quality-gate-runtime-closure-01` 回合关闭包：`round-output.json`、`round-evidence.jsonl`、`round_close_summary.md`、`openspec-sync-record.json`、`registry_verify.log`，并通过 `verify` 与 `verify-m6`
 - [x] 完成 `m1-quality-gate-runtime-closure` OpenSpec 归档：补齐 `specs/**` deltas 与 Scenario，`openspec validate` 通过并归档至 `openspec/changes/archive/2026-02-22-m1-quality-gate-runtime-closure/`
 - [x] 完成 `m3-self-development-e2e-online` Session3 运行资产落地：新增 `impact-analyzer/release-manager` 技能、`registry-sync/escalation` 流程、7 个 AP 包装流程、`release-manager-agent` 目录，并完成 registry/OpenSpec/施工平面联动
+- [x] 完成 `m3-self-development-e2e-online` Session4 测试基座：新增 `tests/m3-self-development/{TEST.md,live_cases.md,run_tc_online.py}`，复用 `m3-runtime + m1-runtime` runner 形成四类断言并预留 Session5/6 case 体系
 
 ## 进行中（In Progress）
 
@@ -68,13 +69,13 @@
 - [ ] 建立 `runtime-policy-calibration` 治理节奏并纳入 M1/M2 首批后验议题
 - [ ] 触发 M3 `full-development/hotfix/refactor` 首轮运行级 dry-run 并沉淀证据
 - [ ] 基于首轮证据推进 M6 第二轮运行级回归（含 git-range + trailer 实盘对账）
-- [ ] 推进 `m3-self-development-e2e-online`：完成 Session4~Session7 运行级测试与双主线 E2E 收口（Session3 运行资产已落地）
+- [ ] 推进 `m3-self-development-e2e-online`：完成 Session5~Session7 运行级测试与双主线 E2E 收口（Session4 测试基座已落地）
 
 ## 下一步（Next）
 
 1. 为 P6 原子流程补充 process.json 样板定义。
 2. 完成 `review-processes-business` 未闭环项：`governance_bundle` 落地、legacy 语义收敛、canonical 路径策略定稿。
-3. 基于 `tests/m3-runtime` 入口扩展 Session4 契约与异常链路测试覆盖。
+3. 基于 `tests/m3-self-development/run_tc_online.py` 执行 Session5 内部主线 E2E 并沉淀证据。
 4. 触发一次双主线 dry-run（运行级）并沉淀证据目录。
 5. 执行一次 governed-config-change 运行级 dry-run，补齐标准证据包模板。
 6. 在后续线程补齐 `lifecycle-review` 与 M3 接线并扩展多场景运行证据。
@@ -92,8 +93,8 @@
 |---|---|---|---|---|---|
 | Session2 | Session1 | 完成 M3 设计闭合差距收敛（仅设计，不落运行资产） | `openspec/changes/m3-self-development-e2e-online/m3-gap-baseline.md`、`openspec/changes/m3-self-development-e2e-online/design.md`、`openspec/changes/m3-self-development-e2e-online/tasks.md`、`openspec/changes/m3-self-development-e2e-online/specs/**/spec.md` | 设计闭合产物清单：`docs/design/processes/{registry-sync-process.md,escalation-process.md}`、`docs/design/skills/{system-skills.md,self-development-skills.md}`、`docs/design/agents/app/delivery/release-manager-agent.md`、`docs/design/modules/M3-self-development.md`、inventory 联动文档 + 拆分状态后的 `m3-gap-baseline.md` | `openspec validate m3-self-development-e2e-online --json` pass；`python3 shared/registry/registry_contract_tool.py verify` pass；`m3-gap-baseline.md` 明确 `closed(design)` 与 `open(implementation)`；DoD 仅判设计文档闭合，不宣称运行可用 |
 | Session3 | Session2 | 落地五项缺失资产最小可执行骨架（已完成 2026-02-23） | Session2 闭合清单 + `docs/design/skills/system-skills.md` + `docs/design/processes/governance-processes.md` + `docs/design/agents/app/delivery/release-manager-agent.md` | `skills/system/{impact-analyzer,release-manager}/`、`processes/meta/{registry-sync,escalation,ap-*-bundle}/`、`agents/app/delivery/release-manager-agent/`、`tests/m3-runtime/run_skill_contract_validation.py`；对应 design/inventory/registry/施工平面联动更新 | `python3 tests/m3-runtime/run_skill_contract_validation.py` pass；`python3 shared/registry/registry_contract_tool.py verify` pass；`openspec validate m3-self-development-e2e-online --json` pass；状态仅到 `draft/review` |
-| Session4 | Session3 | 建立 M3 专项运行级测试扩展基座 | Session3 资产 + `tests/m3-runtime/run_skill_contract_validation.py` + M3 三流程 manifest | 在 `tests/m3-runtime/` 扩展更多主链路/异常链路/回退场景与 evidence 索引 | `python3 tests/m3-runtime/run_skill_contract_validation.py` 持续通过；新增用例可追溯并覆盖关键恢复路径 |
-| Session5 | Session4 | 完成内部主线 E2E | Session4 测试基座 + M3 canonical 流程资产 | 内部主线 E2E 证据目录与摘要（包含关键异常可回退记录） | 内部主线关键场景通过；失败场景可恢复/可回退；`M3 -> M1 -> M4` 门禁链路有证据且无旁路 |
+| Session4 | Session3 | 建立 M3 专项运行级测试扩展基座（已完成 2026-02-23） | Session3 资产 + `tests/m3-runtime/run_skill_contract_validation.py` + M3 三流程 manifest | 新增 `tests/m3-self-development/{TEST.md,live_cases.md,run_tc_online.py}`，并在 `docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/` 输出四类断言证据与汇总报告 | `python3 tests/m3-self-development/run_tc_online.py --help` pass；默认执行覆盖主链路/异常链路/Fail-Closed/回退返工四类；预留 case 在 Session4 强制执行时 Fail-Closed |
+| Session5 | Session4 | 完成内部主线 E2E | Session4 测试基座（`tests/m3-self-development/run_tc_online.py` + `tests/m3-self-development/live_cases.md`）+ M3 canonical 流程资产 | 内部主线 E2E 证据目录与摘要（包含关键异常可回退记录） | 内部主线关键场景通过；失败场景可恢复/可回退；`M3 -> M1 -> M4` 门禁链路有证据且无旁路 |
 | Session6 | Session5 | 完成外部主线 E2E（复用 M3 canonical） | Session5 内部主线基线 + 外部交付主线上下文 | 外部主线 E2E 证据目录、内外复用对照结论 | 外部主线关键场景通过；复用路径不绕过 M3 canonical；旁路检测为 0 |
 | Session7 | Session6 | 执行全链路对账并收敛到 review | Session1~Session6 全量证据 + OpenSpec/registry/施工平面改动 | 收口记录、对账报告、回合关闭证据 | `openspec validate m3-self-development-e2e-online --json` pass；`python3 shared/registry/registry_contract_tool.py verify` pass；提交后 `git log -1 --pretty=raw` 含 `Entire-Checkpoint`；生命周期仅收敛到 `review` |
 
