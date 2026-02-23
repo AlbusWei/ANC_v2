@@ -1,0 +1,39 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "af2428b2ac6f",
+  "session_id": "codex-1e5b3b7b8a44",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-23T09:26:09.766236Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "config/openclaw.phase05.with-entry.fragment.json",
+    "config/openclaw.projection.profiles.json",
+    "processes/meta/full-development/process.json",
+    "processes/meta/hotfix/process.json",
+    "processes/meta/refactor/process.json",
+    "shared/registry/skill_registry.json"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "d4269eb1f2a7",
+  "transcript_identifier_at_start": "gemini-9cf0c19ecb",
+  "checkpoint_transcript_start": 74,
+  "transcript_lines_at_start": 74,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-23T09:26:09.706106Z",
+    "agent_lines": 439,
+    "human_added": 3461,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 3900,
+    "agent_percentage": 11.256410256410257
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
