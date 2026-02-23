@@ -1,0 +1,6 @@
+{
+  "impact_report_ref": "docs/design/modules/evidence/self-development/runtime-validation-round-session3/TC-IMPACT-FC/impact_reject_report.json",
+  "risk_level": "high",
+  "rollback_requirements": [],
+  "gating_recommendation": "hold"
+}

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "process_registry",
-  "updated_at": "2026-02-22T23:29:33Z",
+  "updated_at": "2026-02-23T09:15:52Z",
   "entry_contract": {
     "required": [
       "process_id",
@@ -113,6 +113,158 @@
   },
   "entries": [
     {
+      "process_id": "ap-001-002-003-bundle",
+      "skill_name": "ap-001-002-003-bundle",
+      "skill_path": "processes/meta/ap-001-002-003-bundle/SKILL.md",
+      "manifest_path": "processes/meta/ap-001-002-003-bundle/process.json",
+      "objective_ref": "obj-m3-ap-001-002-003-bundle",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 1,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "ap-001-002-003-bundle",
+        "source": "processes/meta/ap-001-002-003-bundle",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "ap-001-002-bundle",
+      "skill_name": "ap-001-002-bundle",
+      "skill_path": "processes/meta/ap-001-002-bundle/SKILL.md",
+      "manifest_path": "processes/meta/ap-001-002-bundle/process.json",
+      "objective_ref": "obj-m3-ap-001-002-bundle",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 1,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "ap-001-002-bundle",
+        "source": "processes/meta/ap-001-002-bundle",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "ap-003-004-bundle",
+      "skill_name": "ap-003-004-bundle",
+      "skill_path": "processes/meta/ap-003-004-bundle/SKILL.md",
+      "manifest_path": "processes/meta/ap-003-004-bundle/process.json",
+      "objective_ref": "obj-m3-ap-003-004-bundle",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 1,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "ap-003-004-bundle",
+        "source": "processes/meta/ap-003-004-bundle",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "ap-004-bundle",
+      "skill_name": "ap-004-bundle",
+      "skill_path": "processes/meta/ap-004-bundle/SKILL.md",
+      "manifest_path": "processes/meta/ap-004-bundle/process.json",
+      "objective_ref": "obj-m3-ap-004-bundle",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 1,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "ap-004-bundle",
+        "source": "processes/meta/ap-004-bundle",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "ap-006-bundle",
+      "skill_name": "ap-006-bundle",
+      "skill_path": "processes/meta/ap-006-bundle/SKILL.md",
+      "manifest_path": "processes/meta/ap-006-bundle/process.json",
+      "objective_ref": "obj-m3-ap-006-bundle",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 1,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "ap-006-bundle",
+        "source": "processes/meta/ap-006-bundle",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "ap-012-bundle",
+      "skill_name": "ap-012-bundle",
+      "skill_path": "processes/meta/ap-012-bundle/SKILL.md",
+      "manifest_path": "processes/meta/ap-012-bundle/process.json",
+      "objective_ref": "obj-m3-ap-012-bundle",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 1,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "ap-012-bundle",
+        "source": "processes/meta/ap-012-bundle",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "ap-013-014-015-017-bundle",
+      "skill_name": "ap-013-014-015-017-bundle",
+      "skill_path": "processes/meta/ap-013-014-015-017-bundle/SKILL.md",
+      "manifest_path": "processes/meta/ap-013-014-015-017-bundle/process.json",
+      "objective_ref": "obj-m3-ap-013-014-015-017-bundle",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 1,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "ap-013-014-015-017-bundle",
+        "source": "processes/meta/ap-013-014-015-017-bundle",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "construction-plane-governance",
+      "skill_name": "construction-plane-governance",
+      "skill_path": "processes/meta/construction-plane-governance/SKILL.md",
+      "manifest_path": "processes/meta/construction-plane-governance/process.json",
+      "objective_ref": "obj-m6-construction-plane-governance",
+      "owner": "architect",
+      "version": "0.3.0",
+      "status": "review",
+      "phase_count": 5,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "construction-plane-governance",
+        "source": "processes/meta/construction-plane-governance",
+        "allow_draft_projection": true
+      }
+    },
+    {
       "process_id": "development-process",
       "skill_name": "development-process",
       "skill_path": "processes/meta/development-process/SKILL.md",
@@ -128,6 +280,44 @@
         "bundle_source": "processes/meta",
         "entry_key": "development-process",
         "source": "processes/meta/development-process",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "escalation",
+      "skill_name": "escalation",
+      "skill_path": "processes/meta/escalation/SKILL.md",
+      "manifest_path": "processes/meta/escalation/process.json",
+      "objective_ref": "obj-m3-escalation-runtime",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 4,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "escalation",
+        "source": "processes/meta/escalation",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "full-development",
+      "skill_name": "full-development",
+      "skill_path": "processes/meta/full-development/SKILL.md",
+      "manifest_path": "processes/meta/full-development/process.json",
+      "objective_ref": "obj-m3-full-development-loop",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 8,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "full-development",
+        "source": "processes/meta/full-development",
         "allow_draft_projection": true
       }
     },
@@ -151,21 +341,59 @@
       }
     },
     {
-      "process_id": "quality-gate-preparation",
-      "skill_name": "quality-gate-preparation",
-      "skill_path": "processes/meta/quality-gate-preparation/SKILL.md",
-      "manifest_path": "processes/meta/quality-gate-preparation/process.json",
+      "process_id": "hold-governance",
+      "skill_name": "hold-governance",
+      "skill_path": "processes/meta/hold-governance/SKILL.md",
+      "manifest_path": "processes/meta/hold-governance/process.json",
       "objective_ref": "obj-m1-unified-quality-gate",
       "owner": "bpm",
       "version": "0.1.0",
       "status": "review",
-      "phase_count": 3,
+      "phase_count": 5,
       "openclaw": {
         "projection_mode": "bundle",
         "bundle_key": "anc-v2-meta-processes",
         "bundle_source": "processes/meta",
-        "entry_key": "quality-gate-preparation",
-        "source": "processes/meta/quality-gate-preparation",
+        "entry_key": "hold-governance",
+        "source": "processes/meta/hold-governance",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "hotfix",
+      "skill_name": "hotfix",
+      "skill_path": "processes/meta/hotfix/SKILL.md",
+      "manifest_path": "processes/meta/hotfix/process.json",
+      "objective_ref": "obj-m3-hotfix-loop",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 7,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "hotfix",
+        "source": "processes/meta/hotfix",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "lifecycle-review",
+      "skill_name": "lifecycle-review",
+      "skill_path": "processes/meta/lifecycle-review/SKILL.md",
+      "manifest_path": "processes/meta/lifecycle-review/process.json",
+      "objective_ref": "obj-m4-lifecycle-review-runtime",
+      "owner": "hr",
+      "version": "0.1.0",
+      "status": "review",
+      "phase_count": 5,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "lifecycle-review",
+        "source": "processes/meta/lifecycle-review",
         "allow_draft_projection": true
       }
     },
@@ -189,21 +417,59 @@
       }
     },
     {
-      "process_id": "hold-governance",
-      "skill_name": "hold-governance",
-      "skill_path": "processes/meta/hold-governance/SKILL.md",
-      "manifest_path": "processes/meta/hold-governance/process.json",
+      "process_id": "quality-gate-preparation",
+      "skill_name": "quality-gate-preparation",
+      "skill_path": "processes/meta/quality-gate-preparation/SKILL.md",
+      "manifest_path": "processes/meta/quality-gate-preparation/process.json",
       "objective_ref": "obj-m1-unified-quality-gate",
       "owner": "bpm",
       "version": "0.1.0",
       "status": "review",
-      "phase_count": 5,
+      "phase_count": 3,
       "openclaw": {
         "projection_mode": "bundle",
         "bundle_key": "anc-v2-meta-processes",
         "bundle_source": "processes/meta",
-        "entry_key": "hold-governance",
-        "source": "processes/meta/hold-governance",
+        "entry_key": "quality-gate-preparation",
+        "source": "processes/meta/quality-gate-preparation",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "refactor",
+      "skill_name": "refactor",
+      "skill_path": "processes/meta/refactor/SKILL.md",
+      "manifest_path": "processes/meta/refactor/process.json",
+      "objective_ref": "obj-m3-refactor-loop",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 6,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "refactor",
+        "source": "processes/meta/refactor",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "registry-sync",
+      "skill_name": "registry-sync",
+      "skill_path": "processes/meta/registry-sync/SKILL.md",
+      "manifest_path": "processes/meta/registry-sync/process.json",
+      "objective_ref": "obj-m3-registry-sync-runtime",
+      "owner": "hr",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 1,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-meta-processes",
+        "bundle_source": "processes/meta",
+        "entry_key": "registry-sync",
+        "source": "processes/meta/registry-sync",
         "allow_draft_projection": true
       }
     },
@@ -261,101 +527,6 @@
         "bundle_source": "processes/control",
         "entry_key": "trigger-schedule-runtime",
         "source": "processes/control/trigger-schedule-runtime",
-        "allow_draft_projection": true
-      }
-    },
-    {
-      "process_id": "full-development",
-      "skill_name": "full-development",
-      "skill_path": "processes/meta/full-development/SKILL.md",
-      "manifest_path": "processes/meta/full-development/process.json",
-      "objective_ref": "obj-m3-full-development-loop",
-      "owner": "bpm",
-      "version": "0.1.0",
-      "status": "draft",
-      "phase_count": 8,
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-meta-processes",
-        "bundle_source": "processes/meta",
-        "entry_key": "full-development",
-        "source": "processes/meta/full-development",
-        "allow_draft_projection": true
-      }
-    },
-    {
-      "process_id": "hotfix",
-      "skill_name": "hotfix",
-      "skill_path": "processes/meta/hotfix/SKILL.md",
-      "manifest_path": "processes/meta/hotfix/process.json",
-      "objective_ref": "obj-m3-hotfix-loop",
-      "owner": "bpm",
-      "version": "0.1.0",
-      "status": "draft",
-      "phase_count": 7,
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-meta-processes",
-        "bundle_source": "processes/meta",
-        "entry_key": "hotfix",
-        "source": "processes/meta/hotfix",
-        "allow_draft_projection": true
-      }
-    },
-    {
-      "process_id": "refactor",
-      "skill_name": "refactor",
-      "skill_path": "processes/meta/refactor/SKILL.md",
-      "manifest_path": "processes/meta/refactor/process.json",
-      "objective_ref": "obj-m3-refactor-loop",
-      "owner": "bpm",
-      "version": "0.1.0",
-      "status": "draft",
-      "phase_count": 6,
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-meta-processes",
-        "bundle_source": "processes/meta",
-        "entry_key": "refactor",
-        "source": "processes/meta/refactor",
-        "allow_draft_projection": true
-      }
-    },
-    {
-      "process_id": "construction-plane-governance",
-      "skill_name": "construction-plane-governance",
-      "skill_path": "processes/meta/construction-plane-governance/SKILL.md",
-      "manifest_path": "processes/meta/construction-plane-governance/process.json",
-      "objective_ref": "obj-m6-construction-plane-governance",
-      "owner": "architect",
-      "version": "0.3.0",
-      "status": "review",
-      "phase_count": 5,
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-meta-processes",
-        "bundle_source": "processes/meta",
-        "entry_key": "construction-plane-governance",
-        "source": "processes/meta/construction-plane-governance",
-        "allow_draft_projection": true
-      }
-    },
-    {
-      "process_id": "lifecycle-review",
-      "skill_name": "lifecycle-review",
-      "skill_path": "processes/meta/lifecycle-review/SKILL.md",
-      "manifest_path": "processes/meta/lifecycle-review/process.json",
-      "objective_ref": "obj-m4-lifecycle-review-runtime",
-      "owner": "hr",
-      "version": "0.1.0",
-      "status": "review",
-      "phase_count": 5,
-      "openclaw": {
-        "projection_mode": "bundle",
-        "bundle_key": "anc-v2-meta-processes",
-        "bundle_source": "processes/meta",
-        "entry_key": "lifecycle-review",
-        "source": "processes/meta/lifecycle-review",
         "allow_draft_projection": true
       }
     }

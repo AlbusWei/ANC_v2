@@ -1,6 +1,6 @@
 # 治理流程清单与设计
 
-> 版本: v1.3.0 | 分类: Governance Processes
+> 版本: v1.4.0 | 分类: Governance Processes
 
 ## 核心治理流程
 
@@ -55,15 +55,16 @@ Fail-Closed：
 2. 证据缺失或不可解析直接拒绝。
 3. registry 校验失败直接阻断。
 
-## registry-sync（P6 原子语义，设计闭合）
+## registry-sync（P6 原子语义，可执行资产）
 
 设计文档：`docs/design/processes/registry-sync-process.md`  
-预期资产目录（Session3）：`processes/meta/registry-sync/`
+流程资产：`processes/meta/registry-sync/process.json`  
+运行入口：`processes/meta/registry-sync/scripts/registry_sync_runner.py`
 
 定位：
 
 1. AP-011 的治理包装流程，负责 registry 同步与校验证据输出。
-2. 保持 P6 原子口径，不升级为 P5/P4 复合流程。
+2. 固定保持 P6 原子口径，不升级为 P5/P4 复合流程。
 
 输入契约：
 
@@ -71,12 +72,14 @@ Fail-Closed：
 2. `registry_patch_plan_ref`
 3. `requested_transition_ref`
 4. `verify_scope`
+5. `evidence_ref`
 
 输出契约：
 
 1. `registry_sync_ref`
 2. `registry_verify_report_ref`
 3. `sync_decision`
+4. `reasons`
 
 Fail-Closed：
 
@@ -84,12 +87,18 @@ Fail-Closed：
 2. registry verify 非零退出 -> `fail`
 3. 证据不可追溯 -> `blocked`
 
-生命周期预期：`draft`（Session2 仅设计闭合）
+test_mount：
 
-## escalation（P5 模式，设计闭合）
+1. `tests/m3-runtime/run_skill_contract_validation.py`（统一入口）
+2. `python3 shared/registry/registry_contract_tool.py verify`（合规门禁）
+
+生命周期：`draft`（Session3 已落地，保持不越级）
+
+## escalation（P5 模式，可执行资产）
 
 设计文档：`docs/design/processes/escalation-process.md`  
-预期资产目录（Session3）：`processes/meta/escalation/`
+流程资产：`processes/meta/escalation/process.json`  
+运行入口：`processes/meta/escalation/scripts/escalation_runner.py`
 
 固定升级链：`actor -> owner -> bpm -> admin -> human`
 
@@ -114,6 +123,7 @@ phase 映射：
 2. `escalation_trace`
 3. `final_owner`
 4. `escalation_decision`
+5. `reasons`
 
 Fail-Closed：
 
@@ -121,7 +131,30 @@ Fail-Closed：
 2. incident/evidence 缺失 -> `fail`
 3. policy 冲突不可裁决 -> `blocked`
 
-生命周期预期：`draft`（Session2 仅设计闭合）
+test_mount：
+
+1. `tests/m3-runtime/run_skill_contract_validation.py`（统一入口）
+2. `python3 shared/registry/registry_contract_tool.py verify`（注册链路一致性）
+
+生命周期：`draft`（Session3 已落地，保持不越级）
+
+## M3 AP 包装流程族（Session3 新增）
+
+为消除 `full-development/hotfix/refactor` phase 直连 skill，本回合新增 7 个 AP 包装流程：
+
+1. `ap-001-002-003-bundle`
+2. `ap-001-002-bundle`
+3. `ap-003-004-bundle`
+4. `ap-004-bundle`（绑定 `meta.arch.spec-writer`）
+5. `ap-006-bundle`（绑定 `system.ops.manual-task`）
+6. `ap-012-bundle`（绑定 `sys.admin.release-manager`）
+7. `ap-013-014-015-017-bundle`
+
+约束：
+
+1. 上述流程均固定为 P6 最小可调度骨架。
+2. 生命周期统一保持 `draft`。
+3. 仅承担 AP 包装语义，不在本回合扩展复杂业务逻辑。
 
 ## governed-config-change
 

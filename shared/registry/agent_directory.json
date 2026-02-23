@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "agent_directory",
-  "updated_at": "2026-02-22T23:29:33Z",
+  "updated_at": "2026-02-23T09:15:52Z",
   "entry_contract": {
     "required": [
       "agent_id",
@@ -119,6 +119,21 @@
       }
     },
     {
+      "agent_id": "bpm",
+      "layer": "control",
+      "path": "agents/control/BPM",
+      "default_model": "rightcode/gpt-5.3-codex",
+      "owner": "admin",
+      "status": "review",
+      "permissions": [
+        "orchestration-control"
+      ],
+      "bindings": {
+        "channels": [],
+        "channelsConfig": {}
+      }
+    },
+    {
       "agent_id": "hr",
       "layer": "kernel",
       "path": "agents/kernel/hr",
@@ -149,21 +164,6 @@
       }
     },
     {
-      "agent_id": "bpm",
-      "layer": "control",
-      "path": "agents/control/BPM",
-      "default_model": "rightcode/gpt-5.3-codex",
-      "owner": "admin",
-      "status": "review",
-      "permissions": [
-        "orchestration-control"
-      ],
-      "bindings": {
-        "channels": [],
-        "channelsConfig": {}
-      }
-    },
-    {
       "agent_id": "personal-assistant",
       "layer": "app",
       "path": "agents/app/entry/personal-assistant",
@@ -187,6 +187,21 @@
       "status": "review",
       "permissions": [
         "quality-governance"
+      ],
+      "bindings": {
+        "channels": [],
+        "channelsConfig": {}
+      }
+    },
+    {
+      "agent_id": "release-manager-agent",
+      "layer": "app",
+      "path": "agents/app/delivery/release-manager-agent",
+      "default_model": "rightcode/gpt-5.3-codex",
+      "owner": "admin",
+      "status": "draft",
+      "permissions": [
+        "release-governance"
       ],
       "bindings": {
         "channels": [],
