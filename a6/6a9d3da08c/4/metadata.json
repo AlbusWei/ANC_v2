@@ -1,9 +1,11 @@
 {
   "cli_version": "0.4.5",
   "checkpoint_id": "a66a9d3da08c",
+  "session_id": "codex-552ebf097f8c",
   "strategy": "manual-commit",
+  "created_at": "2026-02-23T17:03:58.279809Z",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 4,
+  "checkpoints_count": 1,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/architecture/process_architecture.md",
@@ -80,7 +82,6 @@
     "docs/design/standards/reference-implementation-skill-creator.md",
     "openspec/changes/m3-meta-asset-quality-hardening/design.md",
     "openspec/changes/m3-meta-asset-quality-hardening/meta-gap-baseline.md",
-    "openspec/changes/m3-meta-asset-quality-hardening/process-collaboration-skeleton-v1-plan.md",
     "openspec/changes/m3-meta-asset-quality-hardening/proposal.md",
     "openspec/changes/m3-meta-asset-quality-hardening/specs/meta-asset-quality/spec.md",
     "openspec/changes/m3-meta-asset-quality-hardening/specs/process-architecture-refactor/spec.md",
@@ -133,8 +134,6 @@
     "processes/meta/objective-scope-baseline/SKILL.md",
     "processes/meta/objective-scope-baseline/TEST.md",
     "processes/meta/objective-scope-baseline/process.json",
-    "processes/meta/quality-gate-evaluation/PROCESS.md",
-    "processes/meta/quality-gate-evaluation/process.json",
     "processes/meta/quality-gate-evaluation/scripts/quality_gate_evaluation_runner.py",
     "processes/meta/refactor/SKILL.md",
     "processes/meta/refactor/process.json",
@@ -194,48 +193,24 @@
     "tests/m3-self-development/run_meta_qa_online.py",
     "tests/skill-creator/TEST.md"
   ],
-  "sessions": [
-    {
-      "metadata": "/a6/6a9d3da08c/0/metadata.json",
-      "transcript": "/a6/6a9d3da08c/0/full.jsonl",
-      "context": "/a6/6a9d3da08c/0/context.md",
-      "content_hash": "/a6/6a9d3da08c/0/content_hash.txt",
-      "prompt": "/a6/6a9d3da08c/0/prompt.txt"
-    },
-    {
-      "metadata": "/a6/6a9d3da08c/1/metadata.json",
-      "transcript": "/a6/6a9d3da08c/1/full.jsonl",
-      "context": "/a6/6a9d3da08c/1/context.md",
-      "content_hash": "/a6/6a9d3da08c/1/content_hash.txt",
-      "prompt": "/a6/6a9d3da08c/1/prompt.txt"
-    },
-    {
-      "metadata": "/a6/6a9d3da08c/2/metadata.json",
-      "transcript": "/a6/6a9d3da08c/2/full.jsonl",
-      "context": "/a6/6a9d3da08c/2/context.md",
-      "content_hash": "/a6/6a9d3da08c/2/content_hash.txt",
-      "prompt": "/a6/6a9d3da08c/2/prompt.txt"
-    },
-    {
-      "metadata": "/a6/6a9d3da08c/3/metadata.json",
-      "transcript": "/a6/6a9d3da08c/3/full.jsonl",
-      "context": "/a6/6a9d3da08c/3/context.md",
-      "content_hash": "/a6/6a9d3da08c/3/content_hash.txt",
-      "prompt": "/a6/6a9d3da08c/3/prompt.txt"
-    },
-    {
-      "metadata": "/a6/6a9d3da08c/4/metadata.json",
-      "transcript": "/a6/6a9d3da08c/4/full.jsonl",
-      "context": "/a6/6a9d3da08c/4/context.md",
-      "content_hash": "/a6/6a9d3da08c/4/content_hash.txt",
-      "prompt": "/a6/6a9d3da08c/4/prompt.txt"
-    }
-  ],
+  "agent": "Gemini CLI",
+  "turn_id": "68753be73cc0",
+  "transcript_identifier_at_start": "gemini-771dbd468d",
   "token_usage": {
     "input_tokens": 0,
     "cache_creation_tokens": 0,
     "cache_read_tokens": 0,
     "output_tokens": 0,
     "api_call_count": 0
-  }
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-23T17:03:57.843594Z",
+    "agent_lines": 13467,
+    "human_added": 259191,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 272658,
+    "agent_percentage": 4.939154545254495
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
 }
