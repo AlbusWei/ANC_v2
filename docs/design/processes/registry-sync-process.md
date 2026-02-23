@@ -19,8 +19,11 @@
    - `hotfix`（`lifecycle-gate-sync` 阶段）
    - `refactor`（`lifecycle-gate-sync` 阶段）
    - `lifecycle-review`（`sync-registry` 阶段）
-2. 预期实现落点：
-   - `processes/meta/registry-sync/`（Session3 运行资产落地目标）
+2. 实现落点（Session3 已落地）：
+   - `processes/meta/registry-sync/SKILL.md`
+   - `processes/meta/registry-sync/PROCESS.md`
+   - `processes/meta/registry-sync/process.json`
+   - `processes/meta/registry-sync/scripts/registry_sync_runner.py`
 
 ## 输入契约
 
@@ -58,14 +61,13 @@
 3. `python3 shared/registry/registry_contract_tool.py verify` 返回非零，`sync_decision=fail`。
 4. 证据链不可追溯时 `blocked`，禁止上游流程继续推进生命周期迁移。
 
-## test_mount（计划字段）
+## test_mount（统一入口）
 
-1. `tests/m3-self-development/TC-REGISTRY-SYNC.md`
-2. `tests/m3-self-development/run_tc_online.py --case TC-REGISTRY-SYNC-001`
+1. `tests/m3-runtime/run_skill_contract_validation.py`（统一技能契约入口）
+2. `python3 shared/registry/registry_contract_tool.py verify`
 
 ## 生命周期与推进规则
 
-1. 本文档阶段：设计闭合（`draft`）。
-2. Session3 才允许新增运行目录与 registry 实条目。
-3. 未落地运行资产前，禁止将流程状态声明为 `review/active`。
-
+1. 本文档阶段：运行资产已落地，生命周期保持 `draft`。
+2. 本回合已新增运行目录与 registry 实条目，并通过 contract 校验。
+3. 在完成更大规模运行级回归前，禁止将流程状态声明为 `review/active`。

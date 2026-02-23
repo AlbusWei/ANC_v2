@@ -1,6 +1,6 @@
 # Skill 全量清单
 
-> 版本: v1.1.0 | SSOT: `shared/registry/skill_registry.json`
+> 版本: v1.2.0 | SSOT: `shared/registry/skill_registry.json`
 
 ## 已注册 Skill
 
@@ -33,6 +33,8 @@
 27. sys.qa.registry-validator
 28. sys.qa.evidence-archiver
 29. sys.arch.system-feedback-digest
+30. sys.arch.impact-analyzer
+31. sys.admin.release-manager
 
 ## 规划 Skill（节选）
 
@@ -40,8 +42,13 @@
 |---|---|---|---|
 | sys.hr.lifecycle-transition | 规划中（未闭合） | draft | TBA |
 | sys.hr.permission-checker | 规划中（未闭合） | draft | TBA |
-| sys.arch.impact-analyzer | Session2 设计已闭合（待 Session3 实现） | draft | `tests/m3-self-development/TC-IMPACT-ANALYZER.md` |
-| sys.admin.release-manager | Session2 设计已闭合（待 Session3 实现） | draft | `tests/m3-self-development/TC-RELEASE-MANAGER.md` |
+
+## M3 Session3 已落地 Skill
+
+| skill_id | 实现状态 | 生命周期 | test_mount |
+|---|---|---|---|
+| sys.arch.impact-analyzer | 已落地 `SKILL.md/TEST.md/runner` 并完成契约联测 | draft | `skills/system/impact-analyzer/TEST.md` + `tests/m3-runtime/run_skill_contract_validation.py` |
+| sys.admin.release-manager | 已落地 `SKILL.md/TEST.md/runner` 并完成契约联测 | draft | `skills/system/release-manager/TEST.md` + `tests/m3-runtime/run_skill_contract_validation.py` |
 
 ## 技能粒度决策（M2）
 

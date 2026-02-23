@@ -1,6 +1,6 @@
 # 系统技能清单与设计
 
-> 版本: v1.0.0 | 分类: System Skills | 层级: L2 | 最后更新: 2026-02-22
+> 版本: v1.1.0 | 分类: System Skills | 层级: L2 | 最后更新: 2026-02-23
 
 ## 核心系统技能
 
@@ -74,7 +74,7 @@
 
 统一 Git worktree 协同技能设计见：
 
-- `/Users/albus/MyProjects/ANC_v2/docs/design/skills/git-operations-skills.md`
+- `docs/design/skills/git-operations-skills.md`
 
 ## 目标
 
@@ -84,7 +84,7 @@
 
 1. 对于需后验运营分析的问题，优先由 `sys.arch.impact-analyzer` + `system-analyst` 进入 `runtime-policy-calibration` 流程输出治理提案。
 
-## M3 Session2 设计闭合定义卡（待实现）
+## M3 Session3 运行资产定义卡（已落地）
 
 ### 1. sys.arch.impact-analyzer
 
@@ -103,10 +103,10 @@
   - 变更提案不可解析 -> `reject`
   - 影响范围证据不可达 -> `hold`
   - 风险约束冲突且无裁决记录 -> `reject`
-- test_mount（计划字段）：
-  - `tests/m3-self-development/TC-IMPACT-ANALYZER.md`
-  - `tests/m3-self-development/run_tc_online.py --case TC-IMPACT-ANALYZER-001`
-- 生命周期预期：`draft`（Session2 设计闭合，Session3 落运行资产）
+- test_mount（运行入口）：
+  - `skills/system/impact-analyzer/TEST.md`
+  - `tests/m3-runtime/run_skill_contract_validation.py`（覆盖 `TC-IMPACT-HP`、`TC-IMPACT-FC`）
+- 生命周期预期：`draft`（Session3 已落运行资产，后续回合补充更大规模 E2E 回归）
 
 ### 2. sys.admin.release-manager
 
@@ -126,10 +126,10 @@
   - 任一前置门禁证据缺失 -> `rejected`
   - `registry_sync_ref` 校验失败 -> `blocked`
   - 回滚包不可用 -> `rejected`
-- test_mount（计划字段）：
-  - `tests/m3-self-development/TC-RELEASE-MANAGER.md`
-  - `tests/m3-self-development/run_tc_online.py --case TC-RELEASE-MANAGER-001`
-- 生命周期预期：`draft`（Session2 设计闭合，Session3 落运行资产）
+- test_mount（运行入口）：
+  - `skills/system/release-manager/TEST.md`
+  - `tests/m3-runtime/run_skill_contract_validation.py`（覆盖 `TC-RELEASE-HP`、`TC-RELEASE-FC-REG`、`TC-RELEASE-FC-RB`）
+- 生命周期预期：`draft`（Session3 已落运行资产，后续回合补充跨流程 E2E）
 
 ## 生命周期
 
