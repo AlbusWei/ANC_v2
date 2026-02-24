@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "3fe73657980c",
+  "strategy": "manual-commit",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "AGENTS.md",
+    "config/README.md",
+    "docs/architecture/README.md",
+    "docs/architecture/construction_plane.md",
+    "docs/architecture/release_isolation_policy.md",
+    "docs/architecture/release_packaging_sop.md",
+    "tools/release/build_release_bundle.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/3f/e73657980c/0/metadata.json",
+      "transcript": "/3f/e73657980c/0/full.jsonl",
+      "context": "/3f/e73657980c/0/context.md",
+      "content_hash": "/3f/e73657980c/0/content_hash.txt",
+      "prompt": "/3f/e73657980c/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
