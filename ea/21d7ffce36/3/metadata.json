@@ -1,9 +1,11 @@
 {
   "cli_version": "0.4.5",
   "checkpoint_id": "ea21d7ffce36",
+  "session_id": "codex-2052c64a13ef",
   "strategy": "manual-commit",
+  "created_at": "2026-02-24T04:35:03.130063Z",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 1,
+  "checkpoints_count": 0,
   "files_touched": [
     "docs/design/data-models/context-schemas.md",
     "docs/design/data-models/process-instance-schemas.md",
@@ -34,41 +36,26 @@
     "shared/registry/registry_contract_tool.py",
     "tests/m2-bpm-runtime/TEST.md"
   ],
-  "sessions": [
-    {
-      "metadata": "/ea/21d7ffce36/0/metadata.json",
-      "transcript": "/ea/21d7ffce36/0/full.jsonl",
-      "context": "/ea/21d7ffce36/0/context.md",
-      "content_hash": "/ea/21d7ffce36/0/content_hash.txt",
-      "prompt": "/ea/21d7ffce36/0/prompt.txt"
-    },
-    {
-      "metadata": "/ea/21d7ffce36/1/metadata.json",
-      "transcript": "/ea/21d7ffce36/1/full.jsonl",
-      "context": "/ea/21d7ffce36/1/context.md",
-      "content_hash": "/ea/21d7ffce36/1/content_hash.txt",
-      "prompt": "/ea/21d7ffce36/1/prompt.txt"
-    },
-    {
-      "metadata": "/ea/21d7ffce36/2/metadata.json",
-      "transcript": "/ea/21d7ffce36/2/full.jsonl",
-      "context": "/ea/21d7ffce36/2/context.md",
-      "content_hash": "/ea/21d7ffce36/2/content_hash.txt",
-      "prompt": "/ea/21d7ffce36/2/prompt.txt"
-    },
-    {
-      "metadata": "/ea/21d7ffce36/3/metadata.json",
-      "transcript": "/ea/21d7ffce36/3/full.jsonl",
-      "context": "/ea/21d7ffce36/3/context.md",
-      "content_hash": "/ea/21d7ffce36/3/content_hash.txt",
-      "prompt": "/ea/21d7ffce36/3/prompt.txt"
-    }
-  ],
+  "agent": "Gemini CLI",
+  "turn_id": "811e77852360",
+  "transcript_identifier_at_start": "gemini-80a37b13d3",
+  "checkpoint_transcript_start": 108,
+  "transcript_lines_at_start": 108,
   "token_usage": {
     "input_tokens": 0,
     "cache_creation_tokens": 0,
     "cache_read_tokens": 0,
     "output_tokens": 0,
     "api_call_count": 0
-  }
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-24T04:35:02.764891Z",
+    "agent_lines": 1075,
+    "human_added": 3798,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 4873,
+    "agent_percentage": 22.060332444079624
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
 }
