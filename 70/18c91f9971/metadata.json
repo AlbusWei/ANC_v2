@@ -5,9 +5,19 @@
   "branch": "codex/review-layers-modules",
   "checkpoints_count": 1,
   "files_touched": [
+    "docs/design/inventories/skill-inventory.md",
     "docs/design/modules/M2-bpm-engine.md",
+    "docs/design/skills/bpm-runtime-skills.md",
+    "docs/design/skills/self-development-skills.md",
     "processes/control/trigger-event-runtime/SKILL.md",
     "processes/control/trigger-schedule-runtime/SKILL.md",
+    "shared/registry/skill_registry.json",
+    "skills/meta/process-creator/SKILL.md",
+    "skills/meta/process-creator/TEST.md",
+    "skills/meta/process-creator/references/phase-closure-checklist.md",
+    "skills/meta/process-creator/references/process-manifest-schema.md",
+    "skills/meta/process-creator/scripts/process_creator_runner.py",
+    "skills/system/process-instance-manager/SKILL.md",
     "skills/system/process-instance-manager/TEST.md",
     "tests/m2-bpm-runtime/run_tc_ins.py"
   ],
@@ -39,6 +49,13 @@
       "context": "/70/18c91f9971/3/context.md",
       "content_hash": "/70/18c91f9971/3/content_hash.txt",
       "prompt": "/70/18c91f9971/3/prompt.txt"
+    },
+    {
+      "metadata": "/70/18c91f9971/4/metadata.json",
+      "transcript": "/70/18c91f9971/4/full.jsonl",
+      "context": "/70/18c91f9971/4/context.md",
+      "content_hash": "/70/18c91f9971/4/content_hash.txt",
+      "prompt": "/70/18c91f9971/4/prompt.txt"
     }
   ],
   "token_usage": {
