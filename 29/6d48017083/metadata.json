@@ -3,7 +3,7 @@
   "checkpoint_id": "296d48017083",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     "AGENTS.md",
     "processes/meta/full-development/scripts/full_development_runner.py",
@@ -137,6 +137,13 @@
       "context": "/29/6d48017083/17/context.md",
       "content_hash": "/29/6d48017083/17/content_hash.txt",
       "prompt": "/29/6d48017083/17/prompt.txt"
+    },
+    {
+      "metadata": "/29/6d48017083/18/metadata.json",
+      "transcript": "/29/6d48017083/18/full.jsonl",
+      "context": "/29/6d48017083/18/context.md",
+      "content_hash": "/29/6d48017083/18/content_hash.txt",
+      "prompt": "/29/6d48017083/18/prompt.txt"
     }
   ],
   "token_usage": {
