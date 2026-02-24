@@ -1,6 +1,6 @@
 # ANC v2 流程架构（SSOT-Process）
 
-最后更新：2026-02-21  
+最后更新：2026-02-24  
 版本：2.2.0-alpha
 
 > 本文档定义 ANC v2 的流程原语、实例治理、调度协议、门禁规则与证据规范。
@@ -212,7 +212,7 @@ lineage:
 `development-process` 唯一 canonical 路径：
 `processes/meta/development-process/`
 
-`processes/development-process/` 视为 legacy。
+`processes/development-process/` 已退役并从运行资产中移除（仅保留历史提交追溯）。
 
 ## 10. 双主线流程
 

@@ -1,6 +1,6 @@
 {
   "process_id": "development-process",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [
@@ -50,7 +50,11 @@
         "output": "objective_ref and scope_baseline_ref",
         "client": "p2"
       },
-      "acceptance_criteria": "objective and scope baseline are complete"
+      "acceptance_criteria": "objective and scope baseline are complete",
+      "phase_purpose": "把开发需求先收敛成可执行目标与范围基线，避免后续阶段在语义不清的输入上反复返工。",
+      "input_context_ref": "objective_context_ref",
+      "done_definition": "必须产出 objective_ref 与 scope_baseline_ref，并明确本轮开发不覆盖的范围。",
+      "handoff_note": "将 objective_ref 与 scope_baseline_ref 交接给 p2，作为规格编写唯一输入基线。"
     },
     {
       "phase_id": "p2",
@@ -67,7 +71,11 @@
         "output": "spec_ref",
         "client": "p3"
       },
-      "acceptance_criteria": "spec contract is parseable and auditable"
+      "acceptance_criteria": "spec contract is parseable and auditable",
+      "phase_purpose": "将目标与范围翻译为可执行规格，让开发与测试共享同一份可追溯语义。",
+      "input_context_ref": "objective_ref,scope_baseline_ref",
+      "done_definition": "必须产出 spec_ref，且规格包含验收标准与必要约束。",
+      "handoff_note": "将 spec_ref 交接给 p3，用于质量门禁准备。"
     },
     {
       "phase_id": "p3",
@@ -84,7 +92,11 @@
         "output": "test_plan_ref",
         "client": "p4"
       },
-      "acceptance_criteria": "test plan is complete and traceable"
+      "acceptance_criteria": "test plan is complete and traceable",
+      "phase_purpose": "在实现前完成测试准备，确保实现阶段不是盲写代码，而是对齐可验证目标。",
+      "input_context_ref": "spec_ref",
+      "done_definition": "必须产出 test_plan_ref，并明确关键链路的验证方法。",
+      "handoff_note": "将 test_plan_ref 交接给 p4，作为实现阶段的验证约束。"
     },
     {
       "phase_id": "p4",
@@ -101,7 +113,11 @@
         "output": "implementation_ref",
         "client": "p5"
       },
-      "acceptance_criteria": "implementation is generated and linked to tests"
+      "acceptance_criteria": "implementation is generated and linked to tests",
+      "phase_purpose": "在规格与测试基线下完成实现候选物，保证产物可被门禁直接评测。",
+      "input_context_ref": "spec_ref,test_plan_ref",
+      "done_definition": "必须产出 implementation_ref，且实现与规格/测试计划有明确映射。",
+      "handoff_note": "将 implementation_ref 交接给 p5，进入统一门禁评测。"
     },
     {
       "phase_id": "p5",
@@ -118,7 +134,11 @@
         "output": "final_gate_verdict_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "verdict has pass/fail and evidence references"
+      "acceptance_criteria": "verdict has pass/fail and evidence references",
+      "phase_purpose": "输出可执行的放行结论，让上层业务流程决定是否继续生命周期、发布或回退。",
+      "input_context_ref": "implementation_ref,test_plan_ref,objective_ref",
+      "done_definition": "必须产出 final_gate_verdict_ref，包含 pass/fail 与关键证据。",
+      "handoff_note": "门禁通过则交回发起方；失败按回路回流 p4 迭代修复。"
     }
   ],
   "control_flow": [
@@ -179,5 +199,20 @@
       "decision",
       "reason"
     ]
+  },
+  "process_type": "dev.meta-min-loop",
+  "governance_bundle": {
+    "syntax_ref": "docs/design/processes/development-loop-core-standard.md",
+    "obligation_ref": "docs/design/processes/development-loop-core-standard.md",
+    "risk_policy_ref": "docs/design/processes/governance-processes.md",
+    "checklist_ref": "docs/design/modules/M3-self-development.md"
+  },
+  "collaboration_policy": {
+    "mode": "phase-isolated-session",
+    "dispatch_runtime": "openclaw-required",
+    "session_reset": "per-phase-reset",
+    "pilot_scope": "development-process-baseline",
+    "natural_context_first": true,
+    "ap_migration_strategy": "sequential"
   }
 }

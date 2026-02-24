@@ -64,6 +64,7 @@
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase9 `full-development` 首轮运行级真实分发 dry-run：`TC-FULL-DEV-PROC-001` 在 8 phase 下通过，真实 openclaw 分发 + 同 actor 跨 phase 会话隔离校验通过
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase10 AP 语义统一：18 份流程 manifest 去除 `target_type=skill`，统一为 `target_type=subprocess` + `inline_ap` 临时 AP 语法，并启用“同 Actor 可穿透执行”规则
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase11 `hotfix/refactor` 首轮运行级真实分发 dry-run：`TC-HOTFIX-PROC-001` 与 `TC-REFACTOR-PROC-001` 均通过，phase 全量分发、session 严格匹配、同 actor 跨 phase 隔离全部通过（证据：`docs/design/modules/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json`）
+- [x] 完成 `m3-meta-asset-quality-hardening` Phase12 `development-process` 协作语义补齐：明确“最小开发内核”定位，补齐 phase 语义字段与 `collaboration_policy`，并退役移除 `processes/development-process/` legacy 路径
 
 ## 进行中（In Progress）
 

@@ -1,6 +1,6 @@
 # Process 全量清单
 
-> 版本: v1.6.0 | SSOT 上游: `shared/registry/process_registry.json`
+> 版本: v1.7.0 | SSOT 上游: `shared/registry/process_registry.json`
 
 ## Canonical Process Paths
 
@@ -26,12 +26,6 @@
 | lifecycle-review | `/Users/albus/MyProjects/ANC_v2/processes/meta/lifecycle-review/` | canonical |
 | trigger-schedule-runtime | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-schedule-runtime/` | canonical |
 | trigger-event-runtime | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-event-runtime/` | canonical |
-
-## Legacy Paths
-
-| path | status | 说明 |
-|---|---|---|
-| `/Users/albus/MyProjects/ANC_v2/processes/development-process/` | legacy | Phase 0.5 历史路径，仅保留参考，不再作为 registry 真相源 |
 
 ## 已注册 Process
 
@@ -208,3 +202,10 @@ Session3 已落地治理流程设计文档与运行资产：
 5. 证据索引：
    - `docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/`
    - `docs/design/modules/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json`
+
+## W11 联动备注（M3 协作骨架扩展：development-process）
+
+1. `development-process` 主流程补齐 phase 协作语义字段：`phase_purpose/input_context_ref/done_definition/handoff_note`，并明确其“最小开发内核”定位。
+2. `development-process` 新增 `collaboration_policy`，与 `full-development/hotfix/refactor` 保持一致：`mode=phase-isolated-session`、`dispatch_runtime=openclaw-required`、`session_reset=per-phase-reset`。
+3. `development-process` 版本升级：`0.3.0 -> 0.4.0`（manifest + SKILL + registry 三方对齐）。
+4. 历史路径 `processes/development-process/` 正式退役移除，避免 canonical/legacy 双路径混淆。

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "process_registry",
-  "updated_at": "2026-02-23T18:30:00Z",
+  "updated_at": "2026-02-24T20:10:00Z",
   "entry_contract": {
     "required": [
       "process_id",
@@ -138,7 +138,7 @@
       "manifest_path": "processes/meta/development-process/process.json",
       "objective_ref": "obj-phase1-min-loop",
       "owner": "bpm",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "status": "review",
       "phase_count": 5,
       "openclaw": {
