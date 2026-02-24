@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "296d48017083",
+  "session_id": "codex-c3c7d6306ff7",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-24T01:22:45.916469Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "processes/meta/full-development/scripts/full_development_runner.py",
+    "processes/meta/quality-gate-evaluation/scripts/quality_gate_evaluation_runner.py",
+    "skills/system/process-instance-manager/SKILL.md",
+    "skills/system/process-instance-manager/scripts/process_instance_runner.py",
+    "AGENTS.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "ae6255740130",
+  "transcript_identifier_at_start": "gemini-11c95e7643",
+  "checkpoint_transcript_start": 104,
+  "transcript_lines_at_start": 104,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-24T01:22:45.554012Z",
+    "agent_lines": 339,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 339,
+    "agent_percentage": 100
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
