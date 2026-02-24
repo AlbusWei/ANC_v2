@@ -928,6 +928,13 @@
       "context": "/59/41bd672fa8/31/context.md",
       "content_hash": "/59/41bd672fa8/31/content_hash.txt",
       "prompt": "/59/41bd672fa8/31/prompt.txt"
+    },
+    {
+      "metadata": "/59/41bd672fa8/32/metadata.json",
+      "transcript": "/59/41bd672fa8/32/full.jsonl",
+      "context": "/59/41bd672fa8/32/context.md",
+      "content_hash": "/59/41bd672fa8/32/content_hash.txt",
+      "prompt": "/59/41bd672fa8/32/prompt.txt"
     }
   ],
   "token_usage": {
