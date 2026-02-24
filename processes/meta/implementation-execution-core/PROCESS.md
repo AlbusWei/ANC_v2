@@ -23,10 +23,10 @@
 ### p1 implementation-execution
 
 - 执行角色：`kernel-dev`
-- 阶段目的：本阶段围绕以下业务动作推进：按规格与测试执行候选实现。
-- 输入语义：本阶段主要消费以下输入：spec_ref + test_plan_ref。
-- 完成标准：完成判据：必须产出 implementation_ref，并满足“实现保持对规格与测试的可追溯性”。
-- 交接说明：交接要求：将 implementation_ref 交接给 initiator。
+- 阶段目的：按规格与测试执行候选实现。
+- 输入语义：spec_ref + test_plan_ref。
+- 完成标准：必须产出 implementation_ref，并满足“实现保持对规格与测试的可追溯性”。
+- 交接说明：将 implementation_ref 交接给 initiator。
 - 执行单元：`subprocess:inline-ap:implementation-execution-core:p1`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ## 控制流与回退

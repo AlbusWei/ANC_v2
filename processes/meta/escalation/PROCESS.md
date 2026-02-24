@@ -24,37 +24,37 @@
 ### p1 incident-intake
 
 - 执行角色：`bpm`
-- 阶段目的：本阶段围绕以下业务动作推进：归一化故障事件上下文。
-- 输入语义：本阶段主要消费以下输入：incident 与 severity。
-- 完成标准：完成判据：必须产出 incident_snapshot_ref，并满足“事件字段与证据引用完整”。
-- 交接说明：交接要求：将 incident_snapshot_ref 交接给 p2。
+- 阶段目的：归一化故障事件上下文。
+- 输入语义：incident 与 severity。
+- 完成标准：必须产出 incident_snapshot_ref，并满足“事件字段与证据引用完整”。
+- 交接说明：将 incident_snapshot_ref 交接给 p2。
 - 执行单元：`subprocess:inline-ap:escalation:p1`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p2 policy-check
 
 - 执行角色：`bpm`
-- 阶段目的：本阶段围绕以下业务动作推进：校验策略与治理边界。
-- 输入语义：本阶段主要消费以下输入：incident_snapshot 与 escalation_policy。
-- 完成标准：完成判据：必须产出 policy_check_ref，并满足“策略可解析且链路有效”。
-- 交接说明：交接要求：将 policy_check_ref 交接给 p3。
+- 阶段目的：校验策略与治理边界。
+- 输入语义：incident_snapshot 与 escalation_policy。
+- 完成标准：必须产出 policy_check_ref，并满足“策略可解析且链路有效”。
+- 交接说明：将 policy_check_ref 交接给 p3。
 - 执行单元：`subprocess:inline-ap:escalation:p2`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p3 chain-routing
 
 - 执行角色：`bpm`
-- 阶段目的：本阶段围绕以下业务动作推进：按治理升级链路进行分发。
-- 输入语义：本阶段主要消费以下输入：policy_check_ref。
-- 完成标准：完成判据：必须产出 escalation_trace，并满足“升级轨迹可审计且最终负责人在链路内”。
-- 交接说明：交接要求：将 escalation_trace 交接给 p4。
+- 阶段目的：按治理升级链路进行分发。
+- 输入语义：policy_check_ref。
+- 完成标准：必须产出 escalation_trace，并满足“升级轨迹可审计且最终负责人在链路内”。
+- 交接说明：将 escalation_trace 交接给 p4。
 - 执行单元：`subprocess:inline-ap:escalation:p3`。该阶段采用临时 AP 语法，映射 skill 为 `sys.bpm.escalation-handler`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p4 resolution-or-human
 
 - 执行角色：`bpm`
-- 阶段目的：本阶段围绕以下业务动作推进：以 resolved/escalated/human-required 结论收口升级。
-- 输入语义：本阶段主要消费以下输入：escalation_trace。
-- 完成标准：完成判据：必须产出 escalation_output_ref，并满足“决策结论明确且原因完整”。
-- 交接说明：交接要求：将 escalation_output_ref 交接给 initiator。
+- 阶段目的：以 resolved/escalated/human-required 结论收口升级。
+- 输入语义：escalation_trace。
+- 完成标准：必须产出 escalation_output_ref，并满足“决策结论明确且原因完整”。
+- 交接说明：将 escalation_output_ref 交接给 initiator。
 - 执行单元：`subprocess:inline-ap:escalation:p4`。该阶段采用临时 AP 语法，映射 skill 为 `sys.bpm.escalation-handler`，穿透执行策略：允许（同 Actor 场景）。
 
 ## 控制流与回退

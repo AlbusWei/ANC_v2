@@ -24,46 +24,46 @@
 ### p1 scope-intake-and-baseline
 
 - 执行角色：`bpm`
-- 阶段目的：本阶段围绕以下业务动作推进：设定本轮治理的范围与边界基线。
-- 输入语义：本阶段主要消费以下输入：round_id + round_goal + change_scope_ref + changed_assets + linkage_targets + openspec_ref。
-- 完成标准：完成判据：必须产出 scope_baseline_ref，并满足“范围基线包含模块边界与联动目标”。
-- 交接说明：交接要求：将 scope_baseline_ref 交接给 p2。
+- 阶段目的：设定本轮治理的范围与边界基线。
+- 输入语义：round_id + round_goal + change_scope_ref + changed_assets + linkage_targets + openspec_ref。
+- 完成标准：必须产出 scope_baseline_ref，并满足“范围基线包含模块边界与联动目标”。
+- 交接说明：将 scope_baseline_ref 交接给 p2。
 - 执行单元：`subprocess:inline-ap:construction-plane-governance:p1`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p2 run-construction-audit
 
 - 执行角色：`architect`
-- 阶段目的：本阶段围绕以下业务动作推进：审计联动项完整性并识别阻塞缺口。
-- 输入语义：本阶段主要消费以下输入：round_id + scope_baseline_ref + linkage_targets + changed_assets + openspec_ref。
-- 完成标准：完成判据：必须产出 linkage_report_ref，并满足“联动报告包含缺项与阻塞风险”。
-- 交接说明：交接要求：将 linkage_report_ref 交接给 p3。
+- 阶段目的：审计联动项完整性并识别阻塞缺口。
+- 输入语义：round_id + scope_baseline_ref + linkage_targets + changed_assets + openspec_ref。
+- 完成标准：必须产出 linkage_report_ref，并满足“联动报告包含缺项与阻塞风险”。
+- 交接说明：将 linkage_report_ref 交接给 p3。
 - 执行单元：`subprocess:inline-ap:construction-plane-governance:p2`。该阶段采用临时 AP 语法，映射 skill 为 `sys.arch.construction-audit`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p3 execute-linked-updates
 
 - 执行角色：`architect`
-- 阶段目的：本阶段围绕以下业务动作推进：在设计文档、清单与注册表中同步落盘联动更新。
-- 输入语义：本阶段主要消费以下输入：round_id + linkage_report_ref + changed_assets。
-- 完成标准：完成判据：必须产出 m6_update_bundle_ref + construction_plane_delta_ref + open_questions_ref，并满足“所有必需联动资产在同一轮次完成更新”。
-- 交接说明：交接要求：将 m6_update_bundle_ref + construction_plane_delta_ref + open_questions_ref 交接给 p4。
+- 阶段目的：在设计文档、清单与注册表中同步落盘联动更新。
+- 输入语义：round_id + linkage_report_ref + changed_assets。
+- 完成标准：必须产出 m6_update_bundle_ref + construction_plane_delta_ref + open_questions_ref，并满足“所有必需联动资产在同一轮次完成更新”。
+- 交接说明：将 m6_update_bundle_ref + construction_plane_delta_ref + open_questions_ref 交接给 p4。
 - 执行单元：`subprocess:inline-ap:construction-plane-governance:p3`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p4 sync-openspec-state
 
 - 执行角色：`architect`
-- 阶段目的：本阶段围绕以下业务动作推进：执行 OpenSpec 同步并生成机器可读记录。
-- 输入语义：本阶段主要消费以下输入：round_id + round_goal + openspec_ref + anc_design_refs + decision_snapshot_ref + sync_actor + trigger_mode + risk_level + checkpoint_count + commit_count + round_evidence_log_ref + output_ref。
-- 完成标准：完成判据：必须产出 openspec_sync_ref，并满足“OpenSpec 同步记录已生成且符合 schema”。
-- 交接说明：交接要求：将 openspec_sync_ref 交接给 p5。
+- 阶段目的：执行 OpenSpec 同步并生成机器可读记录。
+- 输入语义：round_id + round_goal + openspec_ref + anc_design_refs + decision_snapshot_ref + sync_actor + trigger_mode + risk_level + checkpoint_count + commit_count + round_evidence_log_ref + output_ref。
+- 完成标准：必须产出 openspec_sync_ref，并满足“OpenSpec 同步记录已生成且符合 schema”。
+- 交接说明：将 openspec_sync_ref 交接给 p5。
 - 执行单元：`subprocess:inline-ap:construction-plane-governance:p4`。该阶段采用临时 AP 语法，映射 skill 为 `system.integration.openspec-sync`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p5 verify-and-close
 
 - 执行角色：`bpm`
-- 阶段目的：本阶段围绕以下业务动作推进：执行 registry 校验并完成 checkpoint 与开放问题对账后收口本轮。
-- 输入语义：本阶段主要消费以下输入：round_id + m6_update_bundle_ref + openspec_sync_ref + round_evidence_log_ref + open_questions_ref。
-- 完成标准：完成判据：必须产出 registry_verify_report_ref + round_close_summary_ref + construction_plane_delta_ref + open_questions_ref，并满足“registry 校验通过且开放问题已落实负责人”。
-- 交接说明：交接要求：将 registry_verify_report_ref + round_close_summary_ref + construction_plane_delta_ref + open_questions_ref 交接给 initiator。
+- 阶段目的：执行 registry 校验并完成 checkpoint 与开放问题对账后收口本轮。
+- 输入语义：round_id + m6_update_bundle_ref + openspec_sync_ref + round_evidence_log_ref + open_questions_ref。
+- 完成标准：必须产出 registry_verify_report_ref + round_close_summary_ref + construction_plane_delta_ref + open_questions_ref，并满足“registry 校验通过且开放问题已落实负责人”。
+- 交接说明：将 registry_verify_report_ref + round_close_summary_ref + construction_plane_delta_ref + open_questions_ref 交接给 initiator。
 - 执行单元：`subprocess:inline-ap:construction-plane-governance:p5`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ## 控制流与回退
@@ -73,6 +73,13 @@
 - `p3` 在 `success` 条件下流转到 `p4`。
 - `p4` 在 `success` 条件下流转到 `p5`。
 - `p5` 在 `success` 条件下流转到 `end`。
+
+## 协作策略（运行态）
+
+1. 协作模式：`phase-isolated-session`。
+2. 分发运行时：`openclaw-required`。
+3. 会话重置策略：`per-phase-reset`。
+4. phase 交接以自然语言任务说明 + 引用交接为主，不依赖隐式会话记忆。
 
 ## Fail-Closed 触发条件
 

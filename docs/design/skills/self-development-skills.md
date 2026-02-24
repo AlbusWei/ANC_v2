@@ -1,6 +1,6 @@
 # Self-Development Skills 设计包
 
-> 版本: v0.4.0 | 分类: Meta Skills | 模块: M3 Self-Development | 最后更新: 2026-02-23
+> 版本: v0.5.0 | 分类: Meta Skills | 模块: M3 Self-Development | 最后更新: 2026-02-24
 
 ## 目标
 
@@ -39,10 +39,10 @@
 ### 3. `meta.arch.process-creator`
 
 - 运行名：`process-creator`
-- 定位：创建流程资产并强制连续性/phase 闭合约束。
-- 输入契约：`process_id`, `process_level`, `phases`, `control_flow`, `fail_policy`
-- 输出契约：`process_manifest_path`, `process_skill_path`, `process_guide_path`
-- Fail-Closed：跨非连续生命周期段、phase 无映射、`requires_spec=true` 且缺 `spec_ref`。
+- 定位：创建流程资产并强制 canonical schema、phase 闭合与 inline_ap 映射约束。
+- 输入契约：`process_id`, `version`, `process_level`, `phases`, `control_flow`, `fail_policy`, `evidence_policy`, `lineage_policy`
+- 输出契约：`process_manifest_path`, `process_skill_path`, `process_guide_path`, `registry_patch_plan`
+- Fail-Closed：跨非连续生命周期段、phase 无映射、inline_ap 非法、`requires_spec=true` 且缺 `spec_ref`、`P4/P5/P6` 协作策略约束不满足、legacy 字段残留。
 - 运行方式：`python3 skills/meta/process-creator/scripts/process_creator_runner.py --input <json> --output <json> [--report <json>]`
 - test_mount：`skills/meta/process-creator/TEST.md`
 

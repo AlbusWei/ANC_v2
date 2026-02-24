@@ -132,6 +132,10 @@ def main() -> int:
         start_payload = load_json(tc1_out)
         context_path = root / start_payload["context_ref"]
         binding_path = root / start_payload["session_binding_ref"]
+        dispatch_context_ref = str(start_payload.get("dispatch_context_ref") or "")
+        task_dispatch_ref = str(start_payload.get("task_dispatch_ref") or "")
+        dispatch_context_path = root / dispatch_context_ref if dispatch_context_ref else Path("/non-existent")
+        task_dispatch_path = root / task_dispatch_ref if task_dispatch_ref else Path("/non-existent")
         root_context = load_json(context_path)
         root_binding = load_json(binding_path)
 
@@ -145,12 +149,14 @@ def main() -> int:
         missing = [key for key in required if key not in root_context]
         phase_session_ok = bool(root_context.get("phase_results") and root_context["phase_results"][0].get("session_id"))
         binding_match = root_context.get("session_binding") == root_binding
-        tc1_ok = tc1_ok and not missing and phase_session_ok and binding_match
+        dispatch_refs_ok = dispatch_context_path.exists() and task_dispatch_path.exists()
+        tc1_ok = tc1_ok and not missing and phase_session_ok and binding_match and dispatch_refs_ok
         tc1_details.update(
             {
                 "missing_fields": missing,
                 "phase_session_ok": phase_session_ok,
                 "binding_match": binding_match,
+                "dispatch_refs_ok": dispatch_refs_ok,
             }
         )
     append_case(cases, "TC-INS-001", tc1_ok, tc1_details)

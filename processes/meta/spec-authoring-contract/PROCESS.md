@@ -23,10 +23,10 @@
 ### p1 spec-authoring
 
 - 执行角色：`architect`
-- 阶段目的：本阶段围绕以下业务动作推进：产出可执行规格契约。
-- 输入语义：本阶段主要消费以下输入：objective_ref + scope_baseline_ref。
-- 完成标准：完成判据：必须产出 spec_ref，并满足“规格可解析并关联 objective/scope”。
-- 交接说明：交接要求：将 spec_ref 交接给 initiator。
+- 阶段目的：产出可执行规格契约。
+- 输入语义：objective_ref + scope_baseline_ref。
+- 完成标准：必须产出 spec_ref，并满足“规格可解析并关联 objective/scope”。
+- 交接说明：将 spec_ref 交接给 initiator。
 - 执行单元：`subprocess:inline-ap:spec-authoring-contract:p1`。该阶段采用临时 AP 语法，映射 skill 为 `meta.arch.spec-writer`，穿透执行策略：允许（同 Actor 场景）。
 
 ## 控制流与回退

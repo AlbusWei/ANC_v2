@@ -52,7 +52,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "校验生命周期评审请求结构与字段完整性",
+      "input_context_ref": "final_gate_verdict_ref + target_asset_ref + requested_transition",
+      "done_definition": "必须产出 validated_request_ref，并满足“必填字段完整且引用可达”",
+      "handoff_note": "将 validated_request_ref 交接给 p2"
     },
     {
       "phase_id": "p2",
@@ -77,7 +81,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "核查当前生命周期状态与迁移前置条件",
+      "input_context_ref": "validated_request_ref + target_asset_ref + requested_transition",
+      "done_definition": "必须产出 prerequisites_check_ref，并满足“迁移路径符合五态生命周期规则”",
+      "handoff_note": "将 prerequisites_check_ref 交接给 p3"
     },
     {
       "phase_id": "p3",
@@ -102,7 +110,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "在迁移前确认门禁结论为 pass",
+      "input_context_ref": "final_gate_verdict_ref",
+      "done_definition": "必须产出 quality_gate_check_ref，并满足“质量门禁结论为 pass 且证据可追溯”",
+      "handoff_note": "将 quality_gate_check_ref 交接给 p4"
     },
     {
       "phase_id": "p4",
@@ -127,7 +139,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "在门禁通过后记录生命周期迁移",
+      "input_context_ref": "target_asset_ref + from_status + requested_transition",
+      "done_definition": "必须产出 lifecycle_transition_ref，并满足“迁移记录包含 from/to 状态、actor 与证据引用”",
+      "handoff_note": "将 lifecycle_transition_ref 交接给 p5"
     },
     {
       "phase_id": "p5",
@@ -152,7 +168,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "校验 registry 一致性并落盘同步记录",
+      "input_context_ref": "lifecycle_transition_ref",
+      "done_definition": "必须产出 registry_sync_ref + lifecycle_review_report_ref，并满足“registry 校验通过且同步证据已落盘”",
+      "handoff_note": "将 registry_sync_ref + lifecycle_review_report_ref 交接给 initiator"
     }
   ],
   "control_flow": [
@@ -205,5 +225,12 @@
       "decision",
       "reason"
     ]
+  },
+  "collaboration_policy": {
+    "mode": "phase-isolated-session",
+    "dispatch_runtime": "openclaw-required",
+    "session_reset": "per-phase-reset",
+    "natural_context_first": true,
+    "ap_migration_strategy": "sequential"
   }
 }

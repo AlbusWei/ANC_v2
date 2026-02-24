@@ -1,6 +1,6 @@
 # Process 全量清单
 
-> 版本: v1.7.0 | SSOT 上游: `shared/registry/process_registry.json`
+> 版本: v1.9.0 | SSOT 上游: `shared/registry/process_registry.json`
 
 ## Canonical Process Paths
 
@@ -209,3 +209,23 @@ Session3 已落地治理流程设计文档与运行资产：
 2. `development-process` 新增 `collaboration_policy`，与 `full-development/hotfix/refactor` 保持一致：`mode=phase-isolated-session`、`dispatch_runtime=openclaw-required`、`session_reset=per-phase-reset`。
 3. `development-process` 版本升级：`0.3.0 -> 0.4.0`（manifest + SKILL + registry 三方对齐）。
 4. 历史路径 `processes/development-process/` 正式退役移除，避免 canonical/legacy 双路径混淆。
+
+## W12 联动备注（M3 流程标准一致性收口：trigger-runtime）
+
+1. `trigger-schedule-runtime`、`trigger-event-runtime` 两流程补齐 phase 协作语义字段：`phase_purpose/input_context_ref/done_definition/handoff_note`。
+2. 两流程新增 `collaboration_policy`，统一为：
+   - `mode=phase-isolated-session`
+   - `dispatch_runtime=openclaw-required`
+   - `session_reset=per-phase-reset`
+3. 两流程版本由 `0.2.0` 升级到 `0.3.0`（manifest + SKILL + registry 三方对齐）。
+
+## W13 联动备注（M3 流程标准一致性收口：P4 协作策略统一）
+
+1. 补齐 5 个 P4 流程的 `collaboration_policy`：`construction-plane-governance`、`governed-config-change`、`hold-governance`、`lifecycle-review`、`quality-gate-preparation`。
+2. 统一策略基线：`phase-isolated-session + openclaw-required + per-phase-reset`。
+
+## W14 联动备注（M3 流程执行语义补全：去模板化 + P5 强协作）
+
+1. 全量 `PROCESS.md` 阶段语义去模板化：移除“本阶段围绕以下业务动作推进”等通用套话，改为直接业务语义描述。
+2. `P5` 多 Actor 协作流程补齐 `collaboration_policy`：`evolution-feedback-planning`、`runtime-policy-calibration`。
+3. 两流程版本同步升级：`0.1.0 -> 0.2.0`（manifest + process_registry 对齐）。

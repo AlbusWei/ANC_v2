@@ -55,7 +55,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "执行 registry 校验并落盘同步记录",
+      "input_context_ref": "registry_patch 与 transition_request",
+      "done_definition": "必须产出 registry_sync_ref + registry_verify_report_ref，并满足“registry 校验结果明确且可审计”",
+      "handoff_note": "将 registry_sync_ref + registry_verify_report_ref 交接给 initiator"
     }
   ],
   "control_flow": [

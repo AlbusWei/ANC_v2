@@ -23,19 +23,19 @@
 ### p1 hotfix-scope-baseline
 
 - 执行角色：`architect`
-- 阶段目的：本阶段围绕以下业务动作推进：产出包含爆炸半径控制的 hotfix 范围基线。
-- 输入语义：本阶段主要消费以下输入：hotfix_objective_ref + impact_scope_ref。
-- 完成标准：完成判据：必须产出 hotfix_scope_baseline_ref，并满足“范围基线包含回滚边界”。
-- 交接说明：交接要求：将 hotfix_scope_baseline_ref 交接给 p2。
+- 阶段目的：产出包含爆炸半径控制的 hotfix 范围基线。
+- 输入语义：hotfix_objective_ref + impact_scope_ref。
+- 完成标准：必须产出 hotfix_scope_baseline_ref，并满足“范围基线包含回滚边界”。
+- 交接说明：将 hotfix_scope_baseline_ref 交接给 p2。
 - 执行单元：`subprocess:inline-ap:hotfix-scope-spec-baseline:p1`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p2 hotfix-spec-authoring
 
 - 执行角色：`architect`
-- 阶段目的：本阶段围绕以下业务动作推进：组合规格编写契约并将 spec_ref 映射为 hotfix_spec_ref。
-- 输入语义：本阶段主要消费以下输入：hotfix_scope_baseline_ref。
-- 完成标准：完成判据：必须产出 hotfix_spec_ref，并满足“hotfix 规格保持 AP-004 契约且无重复定义”。
-- 交接说明：交接要求：将 hotfix_spec_ref 交接给 initiator。
+- 阶段目的：组合规格编写契约并将 spec_ref 映射为 hotfix_spec_ref。
+- 输入语义：hotfix_scope_baseline_ref。
+- 完成标准：必须产出 hotfix_spec_ref，并满足“hotfix 规格保持 AP-004 契约且无重复定义”。
+- 交接说明：将 hotfix_spec_ref 交接给 initiator。
 - 执行单元：`subprocess:spec-authoring-contract`。
 
 ## 控制流与回退

@@ -45,7 +45,7 @@
 ## skill_registry.json
 
 - schema_version: `1.1.0`
-- updated_at: `2026-02-23T12:25:25Z`
+- updated_at: `2026-02-24T10:41:02Z`
 - strict mode: `true`
 
 | 字段 | 类型 | 必填 | 约束 | 说明 |
@@ -115,7 +115,7 @@
 ## process_registry.json
 
 - schema_version: `1.1.0`
-- updated_at: `2026-02-24T20:10:00Z`
+- updated_at: `2026-02-24T10:41:02Z`
 - strict mode: `true`
 
 | 字段 | 类型 | 必填 | 约束 | 说明 |

@@ -49,7 +49,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "产出可执行规格契约",
+      "input_context_ref": "objective_ref + scope_baseline_ref",
+      "done_definition": "必须产出 spec_ref，并满足“规格可解析并关联 objective/scope”",
+      "handoff_note": "将 spec_ref 交接给 initiator"
     }
   ],
   "control_flow": [

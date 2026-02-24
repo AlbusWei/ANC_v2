@@ -1,6 +1,6 @@
 # Process Definition Standard
 
-> 版本: v0.6.0 | 适用范围: 原子/复合/业务流程
+> 版本: v0.7.0 | 适用范围: 原子/复合/业务流程
 
 ## 1. 目标
 
@@ -23,6 +23,12 @@
 6. `fail_policy`
 7. `evidence_policy`
 8. `lineage_policy`
+
+协作策略字段约束：
+
+1. `P4` 流程必须声明 `collaboration_policy`。
+2. `P5/P6` 在多 Actor 强协作场景必须声明 `collaboration_policy`。
+3. `collaboration_policy` 最小字段：`mode`、`dispatch_runtime`、`session_reset`。
 
 ## 2.1 P-Level 语义约束
 
@@ -108,5 +114,6 @@
 - [ ] 失败策略可执行
 - [ ] 生命周期连续性约束满足
 - [ ] phase 闭合约束满足
+- [ ] 协作策略约束满足（P4 强制；P5/P6 多 Actor 条件强制）
 - [ ] 方法论检查项（MECE/金字塔/SRP/DIP/LoD/组合复用）满足
 - [ ] bundle 非目标态约束满足

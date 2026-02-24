@@ -1,6 +1,6 @@
 # L2 — 编排治理层详细设计
 
-> 版本: v0.3.0
+> 版本: v0.5.0 | 最后更新: 2026-02-24
 
 ## 层级定位
 
@@ -24,6 +24,8 @@
 2. M4 负责触发策略治理（策略生命周期、owner override、风险分级）。
 3. 外部事件必须先归一化为内部 canonical event 后再进入 BPM 匹配。
 4. App 层与 owner 不能直达 admin，必须走 BPM 升级链。
+5. trigger-runtime 流程执行统一采用 `phase-isolated-session`，并要求显式 OpenClaw 会话绑定。
+6. BPM phase 分发必须显式落盘 `task_dispatch` 与 `dispatch_context`，并按“显式输入 -> 上游输出 -> spec_ref”拼接输入上下文。
 
 ## 关键门禁
 

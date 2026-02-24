@@ -50,7 +50,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "从故障上下文中提炼 hotfix 目标",
+      "input_context_ref": "incident_context_ref",
+      "done_definition": "必须产出 hotfix_objective_ref，并满足“hotfix 目标明确且边界清晰”",
+      "handoff_note": "将 hotfix_objective_ref 交接给 p2"
     },
     {
       "phase_id": "p2",
@@ -75,7 +79,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "归一化影响范围与回滚方向",
+      "input_context_ref": "hotfix_objective_ref",
+      "done_definition": "必须产出 impact_scope_ref + rollback_direction_ref，并满足“影响范围与回滚方向可直接执行”",
+      "handoff_note": "将 impact_scope_ref + rollback_direction_ref 交接给 initiator"
     }
   ],
   "control_flow": [

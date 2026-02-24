@@ -54,7 +54,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "打包发布产物并形成发布决策",
+      "input_context_ref": "candidate_artifacts 与 governed_release_prerequisites",
+      "done_definition": "必须产出 release_package_ref + rollback_bundle_ref，并满足“发布决策与回滚包均明确”",
+      "handoff_note": "将 release_package_ref + rollback_bundle_ref 交接给 initiator"
     }
   ],
   "control_flow": [

@@ -53,7 +53,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "设计与目标对齐且覆盖 P0 风险的测试",
+      "input_context_ref": "objective_ref + spec_ref + test_doc_ref",
+      "done_definition": "必须产出 test_plan_ref，并满足“P0 风险覆盖显式且可追溯”",
+      "handoff_note": "将 test_plan_ref 交接给 p2"
     },
     {
       "phase_id": "p2",
@@ -78,7 +82,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "将 TEST.md 编译为可执行数据点",
+      "input_context_ref": "test_plan_ref + test_doc_ref",
+      "done_definition": "必须产出 test_datapoints_ref + compile_report_ref，并满足“编译报告完整且数据点可执行”",
+      "handoff_note": "将 test_datapoints_ref + compile_report_ref 交接给 p3"
     },
     {
       "phase_id": "p3",
@@ -103,7 +111,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "绑定 tc_id 与 profile_id 并打包准备集",
+      "input_context_ref": "test_datapoints_ref + compile_report_ref + profile_set",
+      "done_definition": "必须产出 preparation_bundle_ref，并满足“tc_id 与 profile_id 映射一一对应且可追溯”",
+      "handoff_note": "将 preparation_bundle_ref 交接给 initiator"
     }
   ],
   "control_flow": [
@@ -146,5 +158,12 @@
       "decision",
       "reason"
     ]
+  },
+  "collaboration_policy": {
+    "mode": "phase-isolated-session",
+    "dispatch_runtime": "openclaw-required",
+    "session_reset": "per-phase-reset",
+    "natural_context_first": true,
+    "ap_migration_strategy": "sequential"
   }
 }

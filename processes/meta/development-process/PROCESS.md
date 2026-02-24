@@ -74,7 +74,7 @@
 - `p2` 在 `success` 条件下流转到 `p3`。
 - `p3` 在 `success` 条件下流转到 `p4`。
 - `p4` 在 `success` 条件下流转到 `p5`。
-- `p5` 在 `failure` 条件下流转到 `p4`（条件：`iterations < 2`）。
+- `p5` 在 `failure` 条件下流转到 `p4`（条件：`iterations < max_iterations`， max_iterations视上游输入决定，默认值为5）。
 - `p5` 在 `success` 条件下流转到 `end`。
 
 ## 协作策略（运行态）

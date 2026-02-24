@@ -24,46 +24,46 @@
 ### p1 intake-and-normalize
 
 - 执行角色：`bpm`
-- 阶段目的：本阶段围绕以下业务动作推进：将请求归一为结构化 config_change_request。
-- 输入语义：本阶段主要消费以下输入：change_request。
-- 完成标准：完成判据：必须产出 normalized_request，并满足“请求包含目标范围、预期影响与回滚方案”。
-- 交接说明：交接要求：将 normalized_request 交接给 p2。
+- 阶段目的：将请求归一为结构化 config_change_request。
+- 输入语义：change_request。
+- 完成标准：必须产出 normalized_request，并满足“请求包含目标范围、预期影响与回滚方案”。
+- 交接说明：将 normalized_request 交接给 p2。
 - 执行单元：`subprocess:inline-ap:governed-config-change:p1`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p2 gate-and-risk-classification
 
 - 执行角色：`bpm`
-- 阶段目的：本阶段围绕以下业务动作推进：校验必需证据并完成风险分级。
-- 输入语义：本阶段主要消费以下输入：normalized_request。
-- 完成标准：完成判据：必须产出 approved_request，并满足“objective/spec/test 链路完整且风险等级已记录”。
-- 交接说明：交接要求：将 approved_request 交接给 p3。
+- 阶段目的：校验必需证据并完成风险分级。
+- 输入语义：normalized_request。
+- 完成标准：必须产出 approved_request，并满足“objective/spec/test 链路完整且风险等级已记录”。
+- 交接说明：将 approved_request 交接给 p3。
 - 执行单元：`subprocess:inline-ap:governed-config-change:p2`。该阶段采用临时 AP 语法，映射 skill 为 `system.control.config-change-gatekeeper`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p3 authorize-change
 
 - 执行角色：`admin`
-- 阶段目的：本阶段围绕以下业务动作推进：批准或驳回执行窗口与变更范围。
-- 输入语义：本阶段主要消费以下输入：approved_request。
-- 完成标准：完成判据：必须产出 authorization_decision，并满足“授权决策包含批准结果、约束条件与回滚触发条件”。
-- 交接说明：交接要求：将 authorization_decision 交接给 p4。
+- 阶段目的：批准或驳回执行窗口与变更范围。
+- 输入语义：approved_request。
+- 完成标准：必须产出 authorization_decision，并满足“授权决策包含批准结果、约束条件与回滚触发条件”。
+- 交接说明：将 authorization_decision 交接给 p4。
 - 执行单元：`subprocess:inline-ap:governed-config-change:p3`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p4 execute-config-change
 
 - 执行角色：`admin`
-- 阶段目的：本阶段围绕以下业务动作推进：基于 baseHash 执行 OpenClaw 配置变更并记录回执。
-- 输入语义：本阶段主要消费以下输入：authorization_decision。
-- 完成标准：完成判据：必须产出 change_receipt，并满足“变更回执包含 hash_before/hash_after、补丁摘要与执行状态”。
-- 交接说明：交接要求：将 change_receipt 交接给 p5。
+- 阶段目的：基于 baseHash 执行 OpenClaw 配置变更并记录回执。
+- 输入语义：authorization_decision。
+- 完成标准：必须产出 change_receipt，并满足“变更回执包含 hash_before/hash_after、补丁摘要与执行状态”。
+- 交接说明：将 change_receipt 交接给 p5。
 - 执行单元：`subprocess:inline-ap:governed-config-change:p4`。该阶段采用临时 AP 语法，映射 skill 为 `system.admin.system-config-updater`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p5 verify-and-archive
 
 - 执行角色：`bpm`
-- 阶段目的：本阶段围绕以下业务动作推进：校验变更后健康状态、归档证据并通知请求方。
-- 输入语义：本阶段主要消费以下输入：change_receipt。
-- 完成标准：完成判据：必须产出 final_output，并满足“健康校验通过且证据包完整”。
-- 交接说明：交接要求：将 final_output 交接给 initiator。
+- 阶段目的：校验变更后健康状态、归档证据并通知请求方。
+- 输入语义：change_receipt。
+- 完成标准：必须产出 final_output，并满足“健康校验通过且证据包完整”。
+- 交接说明：将 final_output 交接给 initiator。
 - 执行单元：`subprocess:inline-ap:governed-config-change:p5`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ## 控制流与回退
@@ -73,6 +73,13 @@
 - `p3` 在 `success` 条件下流转到 `p4`。
 - `p4` 在 `success` 条件下流转到 `p5`。
 - `p5` 在 `success` 条件下流转到 `end`。
+
+## 协作策略（运行态）
+
+1. 协作模式：`phase-isolated-session`。
+2. 分发运行时：`openclaw-required`。
+3. 会话重置策略：`per-phase-reset`。
+4. phase 交接以自然语言任务说明 + 引用交接为主，不依赖隐式会话记忆。
 
 ## Fail-Closed 触发条件
 

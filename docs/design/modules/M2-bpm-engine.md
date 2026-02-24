@@ -1,6 +1,6 @@
 # M2 — BPM 引擎模块详细设计
 
-> 版本: v0.7.0 | 建设优先级: P0 | 最后更新: 2026-02-22
+> 版本: v0.9.0 | 建设优先级: P0 | 最后更新: 2026-02-24
 
 ## 模块定位
 
@@ -51,6 +51,8 @@
 3. 强制会话绑定：`session_binding.json` 固化 `agent_id/session_key/session_id/parent_session_id`。
 4. BPM 调度调用必须显式传 `--session-id`。
 5. 超深度递归或上下文泄漏触发 Fail-Closed。
+6. phase 分发前强制组装 `dispatch_context.json` 与 `task_dispatch.json`，把 `phase_purpose/done_definition/handoff_note` 显式交给 Actor。
+7. phase 输入拼接顺序固定为：显式 `input_ref` -> 父实例最近输出 -> `spec_ref`（当 `requires_spec=true`）。
 
 ## 触发运行时能力
 
@@ -82,6 +84,17 @@
    - `docs/design/modules/evidence/bpm-runtime/w3_tc_tg_report.json`
    - `docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/`
    - `docs/design/modules/evidence/bpm-runtime/w3_execution_summary.md`
+
+## W4 一致性收口（流程标准对齐）
+
+1. `trigger-schedule-runtime`、`trigger-event-runtime` manifest 升级到 `0.3.0`，补齐 phase 协作语义字段与 `collaboration_policy`。
+2. `sys.bpm.process-instance-manager` 升级到 `0.3.0`，manifest 解析强制执行 `subprocess + inline_ap + spec_ref anchor` canonical 规则。
+
+## W13 执行语义补全（process-instance-manager）
+
+1. `sys.bpm.process-instance-manager` 升级到 `0.4.0`，新增 `dispatch_context/task_dispatch/dispatch_prompt` 三类分发证据。
+2. 明确 phase 输入拼接与交接规则，避免多会话协作依赖隐式上下文记忆。
+3. `manual-task` 改为“Actor 通用执行入口”，用于承接 BPM 自然语言分发并产出协议化留档。
 
 ## Fail-Closed 与安全约束
 

@@ -49,7 +49,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "按规格与测试执行候选实现",
+      "input_context_ref": "spec_ref + test_plan_ref",
+      "done_definition": "必须产出 implementation_ref，并满足“实现保持对规格与测试的可追溯性”",
+      "handoff_note": "将 implementation_ref 交接给 initiator"
     }
   ],
   "control_flow": [

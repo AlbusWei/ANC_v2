@@ -23,10 +23,10 @@
 ### p1 verify-registry-and-sync
 
 - 执行角色：`hr`
-- 阶段目的：本阶段围绕以下业务动作推进：执行 registry 校验并落盘同步记录。
-- 输入语义：本阶段主要消费以下输入：registry_patch 与 transition_request。
-- 完成标准：完成判据：必须产出 registry_sync_ref + registry_verify_report_ref，并满足“registry 校验结果明确且可审计”。
-- 交接说明：交接要求：将 registry_sync_ref + registry_verify_report_ref 交接给 initiator。
+- 阶段目的：执行 registry 校验并落盘同步记录。
+- 输入语义：registry_patch 与 transition_request。
+- 完成标准：必须产出 registry_sync_ref + registry_verify_report_ref，并满足“registry 校验结果明确且可审计”。
+- 交接说明：将 registry_sync_ref + registry_verify_report_ref 交接给 initiator。
 - 执行单元：`subprocess:inline-ap:registry-sync:p1`。该阶段采用临时 AP 语法，映射 skill 为 `sys.qa.registry-validator`，穿透执行策略：允许（同 Actor 场景）。
 
 ## 控制流与回退

@@ -1,6 +1,6 @@
 {
   "process_id": "runtime-policy-calibration",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "process_level": "P5",
   "parent_process_id": null,
   "composed_processes": [],
@@ -56,7 +56,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "校验议题范围与契约完整性",
+      "input_context_ref": "issue_ref + handoff_ref",
+      "done_definition": "必须产出 scope_lock_ref，并满足“范围、目标与交接契约均已锁定”",
+      "handoff_note": "将 scope_lock_ref 交接给 p2"
     },
     {
       "phase_id": "p2",
@@ -81,7 +85,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "构建证据索引与基线指标",
+      "input_context_ref": "runtime_evidence_refs + risk_constraints_ref",
+      "done_definition": "必须产出 evidence_index_ref + baseline_ref，并满足“证据索引可访问且样本覆盖范围明确”",
+      "handoff_note": "将 evidence_index_ref + baseline_ref 交接给 p3"
     },
     {
       "phase_id": "p3",
@@ -106,7 +114,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "生成后验摘要与策略假设",
+      "input_context_ref": "handoff_ref + evidence_index_ref",
+      "done_definition": "必须产出 architecture_feedback_digest_ref，并满足“摘要包含风险等级、发现项与可决策建议”",
+      "handoff_note": "将 architecture_feedback_digest_ref 交接给 p4"
     },
     {
       "phase_id": "p4",
@@ -131,7 +143,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "与 architect/admin/bpm 同步评审并记录纪要",
+      "input_context_ref": "architecture_feedback_digest_ref",
+      "done_definition": "必须产出 governance_sync_minutes_ref，并满足“治理同步参与方与结论可审计”",
+      "handoff_note": "将 governance_sync_minutes_ref 交接给 p5"
     },
     {
       "phase_id": "p5",
@@ -156,7 +172,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "对策略提案做批准或驳回并确定上线方案",
+      "input_context_ref": "governance_sync_minutes_ref + risk_constraints_ref",
+      "done_definition": "必须产出 policy_change_proposal_ref + decision_record_ref，并满足“高风险变更具备明确的 admin 决策”",
+      "handoff_note": "将 policy_change_proposal_ref + decision_record_ref 交接给 p6"
     },
     {
       "phase_id": "p6",
@@ -181,7 +201,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "记录上线观测并关闭本轮校准",
+      "input_context_ref": "decision_record_ref + current_policy_ref",
+      "done_definition": "必须产出 rollout_observation_ref + calibration_report_ref，并满足“观测结果已关联决策与提案引用”",
+      "handoff_note": "将 rollout_observation_ref + calibration_report_ref 交接给 initiator"
     }
   ],
   "control_flow": [
@@ -239,5 +263,11 @@
       "decision",
       "reason"
     ]
+  },
+  "collaboration_policy": {
+    "mode": "phase-isolated-session",
+    "dispatch_runtime": "openclaw-required",
+    "session_reset": "per-phase-reset",
+    "natural_context_first": true
   }
 }

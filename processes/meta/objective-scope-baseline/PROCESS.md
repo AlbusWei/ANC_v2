@@ -23,28 +23,28 @@
 ### p1 objective-intake
 
 - 执行角色：`architect`
-- 阶段目的：本阶段围绕以下业务动作推进：提炼目标与成功判据基线。
-- 输入语义：本阶段主要消费以下输入：objective_context_ref。
-- 完成标准：完成判据：必须产出 objective_ref，并满足“目标具备可衡量范围且约束明确”。
-- 交接说明：交接要求：将 objective_ref 交接给 p2。
+- 阶段目的：提炼目标与成功判据基线。
+- 输入语义：objective_context_ref。
+- 完成标准：必须产出 objective_ref，并满足“目标具备可衡量范围且约束明确”。
+- 交接说明：将 objective_ref 交接给 p2。
 - 执行单元：`subprocess:inline-ap:objective-scope-baseline:p1`。该阶段采用临时 AP 语法，映射 skill 为 `meta.arch.objective-writer`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p2 scope-normalization
 
 - 执行角色：`architect`
-- 阶段目的：本阶段围绕以下业务动作推进：归一化范围边界与非目标。
-- 输入语义：本阶段主要消费以下输入：objective_ref。
-- 完成标准：完成判据：必须产出 scope_draft_ref，并满足“范围草案包含边界与排除域”。
-- 交接说明：交接要求：将 scope_draft_ref 交接给 p3。
+- 阶段目的：归一化范围边界与非目标。
+- 输入语义：objective_ref。
+- 完成标准：必须产出 scope_draft_ref，并满足“范围草案包含边界与排除域”。
+- 交接说明：将 scope_draft_ref 交接给 p3。
 - 执行单元：`subprocess:inline-ap:objective-scope-baseline:p2`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p3 scope-baseline-finalization
 
 - 执行角色：`architect`
-- 阶段目的：本阶段围绕以下业务动作推进：固化治理化范围基线。
-- 输入语义：本阶段主要消费以下输入：scope_draft_ref。
-- 完成标准：完成判据：必须产出 scope_baseline_ref，并满足“范围基线可追溯且无冲突”。
-- 交接说明：交接要求：将 scope_baseline_ref 交接给 initiator。
+- 阶段目的：固化治理化范围基线。
+- 输入语义：scope_draft_ref。
+- 完成标准：必须产出 scope_baseline_ref，并满足“范围基线可追溯且无冲突”。
+- 交接说明：将 scope_baseline_ref 交接给 initiator。
 - 执行单元：`subprocess:inline-ap:objective-scope-baseline:p3`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ## 控制流与回退

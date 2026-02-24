@@ -1,6 +1,6 @@
 {
   "process_id": "evolution-feedback-planning",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "process_level": "P5",
   "parent_process_id": null,
   "composed_processes": [],
@@ -49,7 +49,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "归一化运行反馈并提炼关键信号",
+      "input_context_ref": "feedback_evidence_ref",
+      "done_definition": "必须产出 feedback_digest_ref，并满足“反馈摘要完整且可追溯”",
+      "handoff_note": "将 feedback_digest_ref 交接给 p2"
     },
     {
       "phase_id": "p2",
@@ -74,7 +78,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "对问题进行分类并划定优先级分桶",
+      "input_context_ref": "feedback_digest_ref",
+      "done_definition": "必须产出 priority_matrix_ref，并满足“优先级矩阵包含依据与影响评估”",
+      "handoff_note": "将 priority_matrix_ref 交接给 p3"
     },
     {
       "phase_id": "p3",
@@ -99,7 +107,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "起草下一轮改进计划",
+      "input_context_ref": "priority_matrix_ref",
+      "done_definition": "必须产出 improvement_plan_ref，并满足“计划包含负责人、优先级顺序与回滚方向”",
+      "handoff_note": "将 improvement_plan_ref 交接给 p4"
     },
     {
       "phase_id": "p4",
@@ -124,7 +136,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "产出复盘报告并闭环本轮改进",
+      "input_context_ref": "improvement_plan_ref",
+      "done_definition": "必须产出 retro_report_ref，并满足“复盘报告与改进计划均已发布”",
+      "handoff_note": "将 retro_report_ref 交接给 initiator"
     }
   ],
   "control_flow": [
@@ -173,5 +189,11 @@
       "reason",
       "evidence_ref"
     ]
+  },
+  "collaboration_policy": {
+    "mode": "phase-isolated-session",
+    "dispatch_runtime": "openclaw-required",
+    "session_reset": "per-phase-reset",
+    "natural_context_first": true
   }
 }

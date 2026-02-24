@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "skill_registry",
-  "updated_at": "2026-02-23T12:25:25Z",
+  "updated_at": "2026-02-24T10:41:02Z",
   "entry_contract": {
     "required": [
       "skill_id",
@@ -249,7 +249,7 @@
       "path": "skills/meta/process-creator/SKILL.md",
       "layer": "meta",
       "owner": "architect",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "status": "review",
       "agentskills": {
         "name": "process-creator",
@@ -650,11 +650,11 @@
       "path": "skills/system/process-instance-manager/SKILL.md",
       "layer": "system",
       "owner": "bpm",
-      "version": "0.2.0",
+      "version": "0.4.0",
       "status": "review",
       "agentskills": {
         "name": "process-instance-manager",
-        "description": "Manage BPM process instance lifecycle with strict lineage isolation",
+        "description": "Manage BPM process instance lifecycle with canonical phase dispatch context and strict lineage isolation",
         "license": "Apache-2.0",
         "compatibility": {
           "openclaw": ">=2026.2",
@@ -1105,11 +1105,11 @@
       "path": "skills/system/manual-task/SKILL.md",
       "layer": "system",
       "owner": "bpm",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "draft",
       "agentskills": {
         "name": "manual-task",
-        "description": "Execute controlled human-in-the-loop task with evidence output",
+        "description": "Execute BPM actor task from natural-language dispatch context and archive protocol evidence",
         "license": "Apache-2.0",
         "compatibility": {
           "openclaw": ">=2026.2",

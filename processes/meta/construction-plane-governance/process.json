@@ -61,7 +61,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "设定本轮治理的范围与边界基线",
+      "input_context_ref": "round_id + round_goal + change_scope_ref + changed_assets + linkage_targets + openspec_ref",
+      "done_definition": "必须产出 scope_baseline_ref，并满足“范围基线包含模块边界与联动目标”",
+      "handoff_note": "将 scope_baseline_ref 交接给 p2"
     },
     {
       "phase_id": "p2",
@@ -86,7 +90,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "审计联动项完整性并识别阻塞缺口",
+      "input_context_ref": "round_id + scope_baseline_ref + linkage_targets + changed_assets + openspec_ref",
+      "done_definition": "必须产出 linkage_report_ref，并满足“联动报告包含缺项与阻塞风险”",
+      "handoff_note": "将 linkage_report_ref 交接给 p3"
     },
     {
       "phase_id": "p3",
@@ -111,7 +119,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "在设计文档、清单与注册表中同步落盘联动更新",
+      "input_context_ref": "round_id + linkage_report_ref + changed_assets",
+      "done_definition": "必须产出 m6_update_bundle_ref + construction_plane_delta_ref + open_questions_ref，并满足“所有必需联动资产在同一轮次完成更新”",
+      "handoff_note": "将 m6_update_bundle_ref + construction_plane_delta_ref + open_questions_ref 交接给 p4"
     },
     {
       "phase_id": "p4",
@@ -136,7 +148,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "执行 OpenSpec 同步并生成机器可读记录",
+      "input_context_ref": "round_id + round_goal + openspec_ref + anc_design_refs + decision_snapshot_ref + sync_actor + trigger_mode + risk_level + checkpoint_count + commit_count + round_evidence_log_ref + output_ref",
+      "done_definition": "必须产出 openspec_sync_ref，并满足“OpenSpec 同步记录已生成且符合 schema”",
+      "handoff_note": "将 openspec_sync_ref 交接给 p5"
     },
     {
       "phase_id": "p5",
@@ -161,7 +177,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "执行 registry 校验并完成 checkpoint 与开放问题对账后收口本轮",
+      "input_context_ref": "round_id + m6_update_bundle_ref + openspec_sync_ref + round_evidence_log_ref + open_questions_ref",
+      "done_definition": "必须产出 registry_verify_report_ref + round_close_summary_ref + construction_plane_delta_ref + open_questions_ref，并满足“registry 校验通过且开放问题已落实负责人”",
+      "handoff_note": "将 registry_verify_report_ref + round_close_summary_ref + construction_plane_delta_ref + open_questions_ref 交接给 initiator"
     }
   ],
   "control_flow": [
@@ -214,5 +234,12 @@
       "decision",
       "reason"
     ]
+  },
+  "collaboration_policy": {
+    "mode": "phase-isolated-session",
+    "dispatch_runtime": "openclaw-required",
+    "session_reset": "per-phase-reset",
+    "natural_context_first": true,
+    "ap_migration_strategy": "sequential"
   }
 }

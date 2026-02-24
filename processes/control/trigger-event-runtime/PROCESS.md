@@ -4,7 +4,7 @@
 
 - 流程级别：`P4`
 - 负责人：`bpm`
-- 版本：`0.2.0`
+- 版本：`0.3.0`
 - Objective 引用：`obj-m2-trigger-governance-runtime`
 
 ## 流程目标（自然语言）
@@ -24,55 +24,55 @@
 ### p1 normalize-event-ingress
 
 - 执行角色：`bpm`
-- 阶段目的：本阶段围绕以下业务动作推进：将事件归一为标准触发包。
-- 输入语义：本阶段主要消费以下输入：event payload。
-- 完成标准：完成判据：必须产出 canonical_trigger_ref，并满足“事件字段满足最小标准契约”。
-- 交接说明：交接要求：将 canonical_trigger_ref 交接给 p2。
+- 阶段目的：将事件归一为标准触发包。
+- 输入语义：event payload。
+- 完成标准：必须产出 canonical_trigger_ref，并满足“事件字段满足最小标准契约”。
+- 交接说明：将 canonical_trigger_ref 交接给 p2。
 - 执行单元：`subprocess:inline-ap:trigger-event-runtime:p1`。该阶段采用临时 AP 语法，映射 skill 为 `sys.bpm.trigger-ingress-normalizer`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p2 match-and-dedupe
 
 - 执行角色：`bpm`
-- 阶段目的：本阶段围绕以下业务动作推进：匹配目标流程并完成事件去重。
-- 输入语义：本阶段主要消费以下输入：canonical_trigger_ref。
-- 完成标准：完成判据：必须产出 dedupe_decision，并满足“去重决策具备确定性且可追溯”。
-- 交接说明：交接要求：将 dedupe_decision 交接给 p3。
+- 阶段目的：匹配目标流程并完成事件去重。
+- 输入语义：canonical_trigger_ref。
+- 完成标准：必须产出 dedupe_decision，并满足“去重决策具备确定性且可追溯”。
+- 交接说明：将 dedupe_decision 交接给 p3。
 - 执行单元：`subprocess:inline-ap:trigger-event-runtime:p2`。该阶段采用临时 AP 语法，映射 skill 为 `sys.bpm.trigger-matcher-dedupe`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p3 dispatch-instance
 
 - 执行角色：`bpm`
-- 阶段目的：本阶段围绕以下业务动作推进：为命中事件创建运行时实例。
-- 输入语义：本阶段主要消费以下输入：dedupe_decision。
-- 完成标准：完成判据：必须产出 instance_id，并满足“事件命中后仅产生一个实例”。
-- 交接说明：交接要求：将 instance_id 交接给 p4。
+- 阶段目的：为命中事件创建运行时实例。
+- 输入语义：dedupe_decision。
+- 完成标准：必须产出 instance_id，并满足“事件命中后仅产生一个实例”。
+- 交接说明：将 instance_id 交接给 p4。
 - 执行单元：`subprocess:inline-ap:trigger-event-runtime:p3`。该阶段采用临时 AP 语法，映射 skill 为 `sys.bpm.process-instance-manager`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p4 record-trigger-evidence
 
 - 执行角色：`bpm`
-- 阶段目的：本阶段围绕以下业务动作推进：持久化触发回执与可追溯链路。
-- 输入语义：本阶段主要消费以下输入：instance_id。
-- 完成标准：完成判据：必须产出 trigger_receipt_ref，并满足“触发回执包含去重与分发决策”。
-- 交接说明：交接要求：将 trigger_receipt_ref 交接给 p5。
+- 阶段目的：持久化触发回执与可追溯链路。
+- 输入语义：instance_id。
+- 完成标准：必须产出 trigger_receipt_ref，并满足“触发回执包含去重与分发决策”。
+- 交接说明：将 trigger_receipt_ref 交接给 p5。
 - 执行单元：`subprocess:inline-ap:trigger-event-runtime:p4`。该阶段采用临时 AP 语法，映射 skill 为 `sys.bpm.evidence-recorder`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p5 request-backfill-or-catchup
 
 - 执行角色：`bpm`
-- 阶段目的：本阶段围绕以下业务动作推进：证据不足时给出补数或动态补跑决策。
-- 输入语义：本阶段主要消费以下输入：trigger_receipt_ref。
-- 完成标准：完成判据：必须产出 catchup_decision，并满足“证据缺失时会给出明确补数或升级提示”。
-- 交接说明：交接要求：将 catchup_decision 交接给 p6。
+- 阶段目的：证据不足时给出补数或动态补跑决策。
+- 输入语义：trigger_receipt_ref。
+- 完成标准：必须产出 catchup_decision，并满足“证据缺失时会给出明确补数或升级提示”。
+- 交接说明：将 catchup_decision 交接给 p6。
 - 执行单元：`subprocess:inline-ap:trigger-event-runtime:p5`。该阶段采用临时 AP 语法，映射 skill 为 `sys.bpm.catchup-scheduler`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p6 escalate-runtime-anomaly
 
 - 执行角色：`bpm`
-- 阶段目的：本阶段围绕以下业务动作推进：升级未解决的事件运行时异常。
-- 输入语义：本阶段主要消费以下输入：catchup_decision。
-- 完成标准：完成判据：必须产出 escalation_ref，并满足“升级链完整且可审计”。
-- 交接说明：交接要求：将 escalation_ref 交接给 initiator。
+- 阶段目的：升级未解决的事件运行时异常。
+- 输入语义：catchup_decision。
+- 完成标准：必须产出 escalation_ref，并满足“升级链完整且可审计”。
+- 交接说明：将 escalation_ref 交接给 initiator。
 - 执行单元：`subprocess:inline-ap:trigger-event-runtime:p6`。该阶段采用临时 AP 语法，映射 skill 为 `sys.bpm.escalation-handler`，穿透执行策略：允许（同 Actor 场景）。
 
 ## 控制流与回退
@@ -85,6 +85,13 @@
 - `p5` 在 `success` 条件下流转到 `end`（条件：catchup_decision == run || catchup_decision == skip）。
 - `p5` 在 `success` 条件下流转到 `p6`（条件：catchup_decision == escalate）。
 - `p6` 在 `success` 条件下流转到 `end`。
+
+## 协作策略（运行态）
+
+1. 协作模式：`phase-isolated-session`。
+2. 分发运行时：`openclaw-required`。
+3. 会话重置策略：`per-phase-reset`。
+4. 优先使用自然语言上下文 + 引用标识完成跨阶段交接。
 
 ## Fail-Closed 触发条件
 

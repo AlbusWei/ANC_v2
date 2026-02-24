@@ -23,46 +23,46 @@
 ### p1 run-objective-evaluation
 
 - 执行角色：`qa`
-- 阶段目的：本阶段围绕以下业务动作推进：执行客观评测 profile。
-- 输入语义：本阶段主要消费以下输入：preparation_bundle_ref + actual_output_refs。
-- 完成标准：完成判据：必须产出 objective_eval_ref，并满足“目标评测结论可解析且可追溯”。
-- 交接说明：交接要求：将 objective_eval_ref 交接给 p2。
+- 阶段目的：执行客观评测 profile。
+- 输入语义：preparation_bundle_ref + actual_output_refs。
+- 完成标准：必须产出 objective_eval_ref，并满足“目标评测结论可解析且可追溯”。
+- 交接说明：将 objective_eval_ref 交接给 p2。
 - 执行单元：`subprocess:inline-ap:quality-gate-evaluation:p1`。该阶段采用临时 AP 语法，映射 skill 为 `sys.qa.evaluation-runner`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p2 run-subjective-evaluation
 
 - 执行角色：`qa`
-- 阶段目的：本阶段围绕以下业务动作推进：默认执行盲评主观评测。
-- 输入语义：本阶段主要消费以下输入：preparation_bundle_ref + actual_output_refs + subjective_plan。
-- 完成标准：完成判据：必须产出 subjective_eval_ref，并满足“主观评测记录包含 seed 轮次与结论”。
-- 交接说明：交接要求：将 subjective_eval_ref 交接给 p3。
+- 阶段目的：默认执行盲评主观评测。
+- 输入语义：preparation_bundle_ref + actual_output_refs + subjective_plan。
+- 完成标准：必须产出 subjective_eval_ref，并满足“主观评测记录包含 seed 轮次与结论”。
+- 交接说明：将 subjective_eval_ref 交接给 p3。
 - 执行单元：`subprocess:inline-ap:quality-gate-evaluation:p2`。该阶段采用临时 AP 语法，映射 skill 为 `sys.qa.evaluation-runner`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p3 run-regression-evaluation
 
 - 执行角色：`qa`
-- 阶段目的：本阶段围绕以下业务动作推进：执行跨模块回归评测。
-- 输入语义：本阶段主要消费以下输入：preparation_bundle_ref + profile_set + actual_output_refs。
-- 完成标准：完成判据：必须产出 regression_eval_ref，并满足“回归报告包含模块级结论”。
-- 交接说明：交接要求：将 regression_eval_ref 交接给 p4。
+- 阶段目的：执行跨模块回归评测。
+- 输入语义：preparation_bundle_ref + profile_set + actual_output_refs。
+- 完成标准：必须产出 regression_eval_ref，并满足“回归报告包含模块级结论”。
+- 交接说明：将 regression_eval_ref 交接给 p4。
 - 执行单元：`subprocess:inline-ap:quality-gate-evaluation:p3`。该阶段采用临时 AP 语法，映射 skill 为 `sys.qa.regression-runner`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p4 aggregate-gate-decision
 
 - 执行角色：`qa`
-- 阶段目的：本阶段围绕以下业务动作推进：汇总形成统一门禁结论。
-- 输入语义：本阶段主要消费以下输入：objective_eval_ref + subjective_eval_ref + regression_eval_ref。
-- 完成标准：完成判据：必须产出 gate_decision，并满足“门禁决策遵循统一 verdict 枚举与 P0 优先规则”。
-- 交接说明：交接要求：将 gate_decision 交接给 initiator。
+- 阶段目的：汇总形成统一门禁结论。
+- 输入语义：objective_eval_ref + subjective_eval_ref + regression_eval_ref。
+- 完成标准：必须产出 gate_decision，并满足“门禁决策遵循统一 verdict 枚举与 P0 优先规则”。
+- 交接说明：将 gate_decision 交接给 initiator。
 - 执行单元：`subprocess:inline-ap:quality-gate-evaluation:p4`。该阶段采用临时 AP 语法，映射 skill 为 `sys.qa.verdict-normalizer`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p5 govern-hold
 
 - 执行角色：`bpm`
-- 阶段目的：本阶段围绕以下业务动作推进：将 hold 案例路由至 hold 治理子流程。
-- 输入语义：本阶段主要消费以下输入：hold_case_ref。
-- 完成标准：完成判据：必须产出 hold_resolution_ref，并满足“hold 案例在证据支撑下被解决或升级”。
-- 交接说明：交接要求：将 hold_resolution_ref 交接给 initiator。
+- 阶段目的：将 hold 案例路由至 hold 治理子流程。
+- 输入语义：hold_case_ref。
+- 完成标准：必须产出 hold_resolution_ref，并满足“hold 案例在证据支撑下被解决或升级”。
+- 交接说明：将 hold_resolution_ref 交接给 initiator。
 - 执行单元：`subprocess:hold-governance`。
 
 ## 控制流与回退
@@ -73,6 +73,13 @@
 - `p4` 在 `hold` 条件下流转到 `p5`。
 - `p4` 在 `success` 条件下流转到 `end`。
 - `p5` 在 `success` 条件下流转到 `end`。
+
+## 协作策略（运行态）
+
+1. 协作模式：`phase-isolated-session`。
+2. 分发运行时：`openclaw-required`。
+3. 会话重置策略：`per-phase-reset`。
+4. phase 交接以自然语言任务说明 + 引用交接为主，不依赖隐式会话记忆。
 
 ## Fail-Closed 触发条件
 

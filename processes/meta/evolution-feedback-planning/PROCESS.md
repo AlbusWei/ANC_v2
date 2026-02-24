@@ -4,7 +4,7 @@
 
 - 流程级别：`P5`
 - 负责人：`bpm`
-- 版本：`0.1.0`
+- 版本：`0.2.0`
 - Objective 引用：`obj-m3-evolution-feedback-planning`
 
 ## 流程目标（自然语言）
@@ -23,37 +23,37 @@
 ### p1 feedback-intake
 
 - 执行角色：`system-analyst`
-- 阶段目的：本阶段围绕以下业务动作推进：归一化运行反馈并提炼关键信号。
-- 输入语义：本阶段主要消费以下输入：feedback_evidence_ref。
-- 完成标准：完成判据：必须产出 feedback_digest_ref，并满足“反馈摘要完整且可追溯”。
-- 交接说明：交接要求：将 feedback_digest_ref 交接给 p2。
+- 阶段目的：归一化运行反馈并提炼关键信号。
+- 输入语义：feedback_evidence_ref。
+- 完成标准：必须产出 feedback_digest_ref，并满足“反馈摘要完整且可追溯”。
+- 交接说明：将 feedback_digest_ref 交接给 p2。
 - 执行单元：`subprocess:inline-ap:evolution-feedback-planning:p1`。该阶段采用临时 AP 语法，映射 skill 为 `sys.arch.system-feedback-digest`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p2 classify-and-prioritize
 
 - 执行角色：`architect`
-- 阶段目的：本阶段围绕以下业务动作推进：对问题进行分类并划定优先级分桶。
-- 输入语义：本阶段主要消费以下输入：feedback_digest_ref。
-- 完成标准：完成判据：必须产出 priority_matrix_ref，并满足“优先级矩阵包含依据与影响评估”。
-- 交接说明：交接要求：将 priority_matrix_ref 交接给 p3。
+- 阶段目的：对问题进行分类并划定优先级分桶。
+- 输入语义：feedback_digest_ref。
+- 完成标准：必须产出 priority_matrix_ref，并满足“优先级矩阵包含依据与影响评估”。
+- 交接说明：将 priority_matrix_ref 交接给 p3。
 - 执行单元：`subprocess:inline-ap:evolution-feedback-planning:p2`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p3 draft-improvement-plan
 
 - 执行角色：`architect`
-- 阶段目的：本阶段围绕以下业务动作推进：起草下一轮改进计划。
-- 输入语义：本阶段主要消费以下输入：priority_matrix_ref。
-- 完成标准：完成判据：必须产出 improvement_plan_ref，并满足“计划包含负责人、优先级顺序与回滚方向”。
-- 交接说明：交接要求：将 improvement_plan_ref 交接给 p4。
+- 阶段目的：起草下一轮改进计划。
+- 输入语义：priority_matrix_ref。
+- 完成标准：必须产出 improvement_plan_ref，并满足“计划包含负责人、优先级顺序与回滚方向”。
+- 交接说明：将 improvement_plan_ref 交接给 p4。
 - 执行单元：`subprocess:inline-ap:evolution-feedback-planning:p3`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p4 retro-and-loop-close
 
 - 执行角色：`architect`
-- 阶段目的：本阶段围绕以下业务动作推进：产出复盘报告并闭环本轮改进。
-- 输入语义：本阶段主要消费以下输入：improvement_plan_ref。
-- 完成标准：完成判据：必须产出 retro_report_ref，并满足“复盘报告与改进计划均已发布”。
-- 交接说明：交接要求：将 retro_report_ref 交接给 initiator。
+- 阶段目的：产出复盘报告并闭环本轮改进。
+- 输入语义：improvement_plan_ref。
+- 完成标准：必须产出 retro_report_ref，并满足“复盘报告与改进计划均已发布”。
+- 交接说明：将 retro_report_ref 交接给 initiator。
 - 执行单元：`subprocess:inline-ap:evolution-feedback-planning:p4`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ## 控制流与回退
@@ -62,6 +62,13 @@
 - `p2` 在 `success` 条件下流转到 `p3`。
 - `p3` 在 `success` 条件下流转到 `p4`。
 - `p4` 在 `success` 条件下流转到 `end`。
+
+## 协作策略（运行态）
+
+1. 协作模式：`phase-isolated-session`。
+2. 分发运行时：`openclaw-required`。
+3. 会话重置策略：`per-phase-reset`。
+4. 跨角色交接优先使用自然语言任务说明 + 引用交接，不依赖隐式会话记忆。
 
 ## Fail-Closed 触发条件
 

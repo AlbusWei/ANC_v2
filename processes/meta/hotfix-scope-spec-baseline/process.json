@@ -52,7 +52,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "产出包含爆炸半径控制的 hotfix 范围基线",
+      "input_context_ref": "hotfix_objective_ref + impact_scope_ref",
+      "done_definition": "必须产出 hotfix_scope_baseline_ref，并满足“范围基线包含回滚边界”",
+      "handoff_note": "将 hotfix_scope_baseline_ref 交接给 p2"
     },
     {
       "phase_id": "p2",
@@ -69,7 +73,11 @@
         "output": "hotfix_spec_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "hotfix spec keeps AP-004 contract without duplication"
+      "acceptance_criteria": "hotfix spec keeps AP-004 contract without duplication",
+      "phase_purpose": "组合规格编写契约并将 spec_ref 映射为 hotfix_spec_ref",
+      "input_context_ref": "hotfix_scope_baseline_ref",
+      "done_definition": "必须产出 hotfix_spec_ref，并满足“hotfix 规格保持 AP-004 契约且无重复定义”",
+      "handoff_note": "将 hotfix_spec_ref 交接给 initiator"
     }
   ],
   "control_flow": [

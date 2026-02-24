@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "process_registry",
-  "updated_at": "2026-02-24T20:10:00Z",
+  "updated_at": "2026-02-24T10:41:02Z",
   "entry_contract": {
     "required": [
       "process_id",
@@ -176,7 +176,7 @@
       "manifest_path": "processes/meta/evolution-feedback-planning/process.json",
       "objective_ref": "obj-m3-evolution-feedback-planning",
       "owner": "bpm",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "review",
       "phase_count": 4,
       "openclaw": {
@@ -461,7 +461,7 @@
       "manifest_path": "processes/meta/runtime-policy-calibration/process.json",
       "objective_ref": "obj-runtime-policy-calibration",
       "owner": "bpm",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "review",
       "phase_count": 6,
       "openclaw": {
@@ -499,7 +499,7 @@
       "manifest_path": "processes/control/trigger-event-runtime/process.json",
       "objective_ref": "obj-m2-trigger-governance-runtime",
       "owner": "bpm",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "status": "draft",
       "phase_count": 6,
       "openclaw": {
@@ -518,7 +518,7 @@
       "manifest_path": "processes/control/trigger-schedule-runtime/process.json",
       "objective_ref": "obj-m2-trigger-governance-runtime",
       "owner": "bpm",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "status": "draft",
       "phase_count": 6,
       "openclaw": {

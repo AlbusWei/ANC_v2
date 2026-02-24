@@ -4,56 +4,67 @@
 
 - 流程级别：`P4`
 - 负责人：`bpm`
-- 版本：`0.1.0`
+- 版本：`0.2.0`
 - Objective 引用：`obj-template`
 
 ## 流程目标（自然语言）
 
-该流程是流程建模模板，用于演示最小 phase 协作骨架与文档写法，不承载实际业务治理职责。其目标是为新增流程提供一致的起步结构，降低定义偏差。
+该模板用于快速创建“可执行而非仅格式化”的流程骨架。它不替代业务设计，而是确保新流程从第一版就具备：
+可调度 phase、明确交接、可回退控制流和可落盘证据字段。
 
 ## 协作编排原则
 
-1. 模板的目标是提供可复用骨架，不预置具体业务结论。
-2. 示例文本应强调如何表达意图与边界，而非填充格式占位语句。
-3. 引用模板创建新流程时，必须替换为流程特异化语义后才可进入评审。
-4. 模板不承担治理豁免：连续性、phase 闭合与可执行性约束仍然生效。
+1. 模板只提供结构，不提供业务结论；所有阶段语义必须由实际流程 owner 重写。
+2. 默认采用 `phase-isolated-session`，避免把阶段协作退化为单会话对话。
+3. `inline_ap` 仅用于临时承载 AP 语义，后续可逐步收敛为显式子流程。
+4. 模板流程也必须遵守 Fail-Closed，不提供“样例豁免”。
 
 ## 阶段语义定义
 
 ### p1 clarify-objective
 
 - 执行角色：`architect`
-- 阶段目的：本阶段围绕以下业务动作推进：澄清目标与约束。
-- 输入语义：本阶段主要消费以下输入：input_payload。
-- 完成标准：完成判据：必须产出 normalized_requirement，并满足“目标与约束明确”。
-- 交接说明：交接要求：将 normalized_requirement 交接给 p2。
-- 执行单元：`subprocess:`。
+- 阶段目的：将输入需求收敛为可执行目标与边界。
+- 输入语义：`objective_context_ref`
+- 完成标准：产出 `normalized_requirement_ref`，并明确约束与非目标。
+- 交接说明：将 `normalized_requirement_ref` 交接给 `p2`。
+- 执行单元：`subprocess:inline-ap:process-template:p1`（`skill_id=system.ops.manual-task`）。
 
 ### p2 execute-main
 
 - 执行角色：`kernel-dev`
-- 阶段目的：本阶段围绕以下业务动作推进：执行实现工作流。
-- 输入语义：本阶段主要消费以下输入：normalized_requirement。
-- 完成标准：完成判据：必须产出 deliverable，并满足“产物已按约定生成”。
-- 交接说明：交接要求：将 deliverable 交接给 p3。
-- 执行单元：`subprocess:`。
+- 阶段目的：执行核心任务并输出候选产物。
+- 输入语义：`normalized_requirement_ref`
+- 完成标准：产出 `deliverable_ref`，且产物可追溯到目标输入。
+- 交接说明：将 `deliverable_ref` 交接给 `p3`。
+- 执行单元：`subprocess:inline-ap:process-template:p2`（`skill_id=system.ops.manual-task`）。
 
 ### p3 verify-objective
 
 - 执行角色：`qa`
-- 阶段目的：本阶段围绕以下业务动作推进：执行目标对齐验证。
-- 输入语义：本阶段主要消费以下输入：deliverable。
-- 完成标准：完成判据：必须产出 verdict_and_feedback，并满足“结论与改进行动已生成”。
-- 交接说明：交接要求：将 verdict_and_feedback 交接给 initiator。
-- 执行单元：`subprocess:`。
+- 阶段目的：评估产物是否达成目标并输出结论。
+- 输入语义：`deliverable_ref`, `normalized_requirement_ref`
+- 完成标准：产出 `final_verdict_ref`，包含结论与原因。
+- 交接说明：将 `final_verdict_ref` 交接给 `initiator`；失败时按控制流回到 `p2`。
+- 执行单元：`subprocess:inline-ap:process-template:p3`（`skill_id=system.ops.manual-task`）。
 
 ## 控制流与回退
 
-- 未声明控制流，默认按阶段顺序执行。
+- `p1 -> p2`：`success`
+- `p2 -> p3`：`success`
+- `p3 -> p2`：`failure`（`iterations < max_iterations`， max_iterations视上游输入决定，默认值为1）
+- `p3 -> end`：`success`
+
+## 协作策略（运行态）
+
+1. 协作模式：`phase-isolated-session`。
+2. 分发运行时：`openclaw-required`。
+3. 会话重置策略：`per-phase-reset`。
+4. 输入输出优先使用自然语言上下文 + 引用交接，不用模板话术替代设计意图。
 
 ## Fail-Closed 触发条件
 
-1. 阶段输入不可解析、缺失或与目标语义不一致。
-2. 阶段输出不可追溯，或无法支撑下一阶段继续执行。
-3. 交接语义不完整，导致跨角色协作中断。
-4. 回退/重试策略由上级流程或运行配置决定。
+1. 任一阶段输入不可解析或语义不完整。
+2. 任一阶段输出无法支撑下一阶段。
+3. 证据字段缺失导致不可追溯。
+4. 超过回退上限仍无法收敛。

@@ -1,6 +1,6 @@
 {
   "process_id": "trigger-event-runtime",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [],
@@ -59,7 +59,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "将事件输入归一为统一触发包，保证后续判定基于同一语义平面。",
+      "input_context_ref": "event payload",
+      "done_definition": "必须产出 canonical_trigger_ref，且事件关键字段齐全。",
+      "handoff_note": "将 canonical_trigger_ref 交接给 p2。"
     },
     {
       "phase_id": "p2",
@@ -84,7 +88,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "执行事件匹配与去重，拦截重复或无效事件进入实例层。",
+      "input_context_ref": "canonical_trigger_ref",
+      "done_definition": "必须产出 dedupe_decision，并可追溯匹配依据。",
+      "handoff_note": "将 dedupe_decision 交接给 p3（或按拒绝分支流向 p4）。"
     },
     {
       "phase_id": "p3",
@@ -109,7 +117,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "为命中事件启动流程实例，将事件治理结果转为执行动作。",
+      "input_context_ref": "dedupe_decision",
+      "done_definition": "必须产出 instance_id，且事件命中仅对应单实例。",
+      "handoff_note": "将 instance_id 交接给 p4。"
     },
     {
       "phase_id": "p4",
@@ -134,7 +146,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "记录事件触发回执与证据链，保障事件到实例的可审计性。",
+      "input_context_ref": "instance_id",
+      "done_definition": "必须产出 trigger_receipt_ref，包含去重与分发决策。",
+      "handoff_note": "将 trigger_receipt_ref 交接给 p5。"
     },
     {
       "phase_id": "p5",
@@ -159,7 +175,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "对证据不足场景给出补数或补跑判断，避免缺证据直接放行。",
+      "input_context_ref": "trigger_receipt_ref",
+      "done_definition": "必须产出 catchup_decision，并附带可解释原因。",
+      "handoff_note": "将 catchup_decision 交接给 p6 或直接结束。"
     },
     {
       "phase_id": "p6",
@@ -184,7 +204,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "对事件运行异常执行升级链收口，确保流程可终止可追责。",
+      "input_context_ref": "catchup_decision",
+      "done_definition": "必须产出 escalation_ref，并满足升级链可审计。",
+      "handoff_note": "将 escalation_ref 交接给 initiator。"
     }
   ],
   "control_flow": [
@@ -258,5 +282,12 @@
       "reason",
       "evidence_ref"
     ]
+  },
+  "collaboration_policy": {
+    "mode": "phase-isolated-session",
+    "dispatch_runtime": "openclaw-required",
+    "session_reset": "per-phase-reset",
+    "natural_context_first": true,
+    "ap_migration_strategy": "sequential"
   }
 }

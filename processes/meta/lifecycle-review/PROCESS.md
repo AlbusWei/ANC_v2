@@ -23,46 +23,46 @@
 ### p1 validate-request
 
 - 执行角色：`hr`
-- 阶段目的：本阶段围绕以下业务动作推进：校验生命周期评审请求结构与字段完整性。
-- 输入语义：本阶段主要消费以下输入：final_gate_verdict_ref + target_asset_ref + requested_transition。
-- 完成标准：完成判据：必须产出 validated_request_ref，并满足“必填字段完整且引用可达”。
-- 交接说明：交接要求：将 validated_request_ref 交接给 p2。
+- 阶段目的：校验生命周期评审请求结构与字段完整性。
+- 输入语义：final_gate_verdict_ref + target_asset_ref + requested_transition。
+- 完成标准：必须产出 validated_request_ref，并满足“必填字段完整且引用可达”。
+- 交接说明：将 validated_request_ref 交接给 p2。
 - 执行单元：`subprocess:inline-ap:lifecycle-review:p1`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p2 check-prerequisites
 
 - 执行角色：`hr`
-- 阶段目的：本阶段围绕以下业务动作推进：核查当前生命周期状态与迁移前置条件。
-- 输入语义：本阶段主要消费以下输入：validated_request_ref + target_asset_ref + requested_transition。
-- 完成标准：完成判据：必须产出 prerequisites_check_ref，并满足“迁移路径符合五态生命周期规则”。
-- 交接说明：交接要求：将 prerequisites_check_ref 交接给 p3。
+- 阶段目的：核查当前生命周期状态与迁移前置条件。
+- 输入语义：validated_request_ref + target_asset_ref + requested_transition。
+- 完成标准：必须产出 prerequisites_check_ref，并满足“迁移路径符合五态生命周期规则”。
+- 交接说明：将 prerequisites_check_ref 交接给 p3。
 - 执行单元：`subprocess:inline-ap:lifecycle-review:p2`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p3 quality-gate
 
 - 执行角色：`hr`
-- 阶段目的：本阶段围绕以下业务动作推进：在迁移前确认门禁结论为 pass。
-- 输入语义：本阶段主要消费以下输入：final_gate_verdict_ref。
-- 完成标准：完成判据：必须产出 quality_gate_check_ref，并满足“质量门禁结论为 pass 且证据可追溯”。
-- 交接说明：交接要求：将 quality_gate_check_ref 交接给 p4。
+- 阶段目的：在迁移前确认门禁结论为 pass。
+- 输入语义：final_gate_verdict_ref。
+- 完成标准：必须产出 quality_gate_check_ref，并满足“质量门禁结论为 pass 且证据可追溯”。
+- 交接说明：将 quality_gate_check_ref 交接给 p4。
 - 执行单元：`subprocess:inline-ap:lifecycle-review:p3`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p4 execute-transition
 
 - 执行角色：`hr`
-- 阶段目的：本阶段围绕以下业务动作推进：在门禁通过后记录生命周期迁移。
-- 输入语义：本阶段主要消费以下输入：target_asset_ref + from_status + requested_transition。
-- 完成标准：完成判据：必须产出 lifecycle_transition_ref，并满足“迁移记录包含 from/to 状态、actor 与证据引用”。
-- 交接说明：交接要求：将 lifecycle_transition_ref 交接给 p5。
+- 阶段目的：在门禁通过后记录生命周期迁移。
+- 输入语义：target_asset_ref + from_status + requested_transition。
+- 完成标准：必须产出 lifecycle_transition_ref，并满足“迁移记录包含 from/to 状态、actor 与证据引用”。
+- 交接说明：将 lifecycle_transition_ref 交接给 p5。
 - 执行单元：`subprocess:inline-ap:lifecycle-review:p4`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p5 sync-registry
 
 - 执行角色：`hr`
-- 阶段目的：本阶段围绕以下业务动作推进：校验 registry 一致性并落盘同步记录。
-- 输入语义：本阶段主要消费以下输入：lifecycle_transition_ref。
-- 完成标准：完成判据：必须产出 registry_sync_ref + lifecycle_review_report_ref，并满足“registry 校验通过且同步证据已落盘”。
-- 交接说明：交接要求：将 registry_sync_ref + lifecycle_review_report_ref 交接给 initiator。
+- 阶段目的：校验 registry 一致性并落盘同步记录。
+- 输入语义：lifecycle_transition_ref。
+- 完成标准：必须产出 registry_sync_ref + lifecycle_review_report_ref，并满足“registry 校验通过且同步证据已落盘”。
+- 交接说明：将 registry_sync_ref + lifecycle_review_report_ref 交接给 initiator。
 - 执行单元：`subprocess:inline-ap:lifecycle-review:p5`。该阶段采用临时 AP 语法，映射 skill 为 `sys.qa.registry-validator`，穿透执行策略：允许（同 Actor 场景）。
 
 ## 控制流与回退
@@ -72,6 +72,13 @@
 - `p3` 在 `success` 条件下流转到 `p4`。
 - `p4` 在 `success` 条件下流转到 `p5`。
 - `p5` 在 `success` 条件下流转到 `end`。
+
+## 协作策略（运行态）
+
+1. 协作模式：`phase-isolated-session`。
+2. 分发运行时：`openclaw-required`。
+3. 会话重置策略：`per-phase-reset`。
+4. phase 交接以自然语言任务说明 + 引用交接为主，不依赖隐式会话记忆。
 
 ## Fail-Closed 触发条件
 

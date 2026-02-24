@@ -54,7 +54,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "收集最小进展信号集",
+      "input_context_ref": "hold_case_ref + runtime_log_ref + execution_state_ref",
+      "done_definition": "必须产出 progress_signals_ref，并满足“三类进展信号已收集或已明确记录失败原因”",
+      "handoff_note": "将 progress_signals_ref 交接给 p2"
     },
     {
       "phase_id": "p2",
@@ -79,7 +83,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "对 hold 场景进行处置分级",
+      "input_context_ref": "progress_signals_ref + triage_policy_ref",
+      "done_definition": "必须产出 triage_action，并满足“分诊动作明确且符合策略”",
+      "handoff_note": "将 triage_action 交接给 p3"
     },
     {
       "phase_id": "p3",
@@ -104,7 +112,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "执行选定的分诊动作",
+      "input_context_ref": "triage_action + triage_report_ref",
+      "done_definition": "必须产出 action_execution_ref，并满足“动作执行与分诊决策一致”",
+      "handoff_note": "将 action_execution_ref 交接给 p4"
     },
     {
       "phase_id": "p4",
@@ -129,7 +141,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "维护运行时健康与恢复状态",
+      "input_context_ref": "action_execution_ref + runtime_health_policy_ref",
+      "done_definition": "必须产出 health_maintenance_ref，并满足“健康结果可追溯且可恢复性明确”",
+      "handoff_note": "将 health_maintenance_ref 交接给 p5"
     },
     {
       "phase_id": "p5",
@@ -154,7 +170,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "收敛 hold 案例或继续升级",
+      "input_context_ref": "triage_action + health_maintenance_ref",
+      "done_definition": "必须产出 hold_resolution_ref，并满足“hold 案例按治理链路收敛或升级”",
+      "handoff_note": "将 hold_resolution_ref 交接给 initiator"
     }
   ],
   "control_flow": [
@@ -207,5 +227,12 @@
       "decision",
       "reason"
     ]
+  },
+  "collaboration_policy": {
+    "mode": "phase-isolated-session",
+    "dispatch_runtime": "openclaw-required",
+    "session_reset": "per-phase-reset",
+    "natural_context_first": true,
+    "ap_migration_strategy": "sequential"
   }
 }

@@ -25,6 +25,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 
 REPO_REL_RE = re.compile(r"^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+")
+REPO_REL_ANCHOR_RE = re.compile(r"^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+#[^#]+$")
 ISO_Z_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
 MIN_STALL_THRESHOLD_SECONDS = 15 * 60
 
@@ -70,6 +71,10 @@ def ensure_repo_rel(path: str, field: str) -> str:
     if not isinstance(path, str) or REPO_REL_RE.match(path) is None:
         raise RunnerError(f"{field} must be repo-relative path without '..': {path!r}")
     return path
+
+
+def is_repo_rel_anchor(value: Any) -> bool:
+    return isinstance(value, str) and REPO_REL_ANCHOR_RE.match(value) is not None
 
 
 def resolve_instance_root(root: Path, raw: Optional[str]) -> Path:
@@ -137,6 +142,18 @@ def load_process_registry(root: Path) -> Dict[str, Dict[str, Any]]:
     return index
 
 
+def load_skill_registry_ids(root: Path) -> set[str]:
+    payload = load_json(root / "shared/registry/skill_registry.json")
+    entries = payload.get("entries", [])
+    if not isinstance(entries, list):
+        raise RunnerError("skill_registry.entries must be array")
+    skill_ids: set[str] = set()
+    for entry in entries:
+        if isinstance(entry, dict) and isinstance(entry.get("skill_id"), str):
+            skill_ids.add(entry["skill_id"])
+    return skill_ids
+
+
 def load_process_manifest(root: Path, process_id: str) -> Dict[str, Any]:
     registry = load_process_registry(root)
     entry = registry.get(process_id)
@@ -148,11 +165,21 @@ def load_process_manifest(root: Path, process_id: str) -> Dict[str, Any]:
         raise RunnerError(f"invalid manifest_path for process {process_id!r}: {manifest_rel!r}")
 
     manifest = load_json(root / manifest_rel)
-    validate_manifest(manifest)
+    manifest["__manifest_path"] = manifest_rel
+    validate_manifest(
+        manifest,
+        process_ids=set(registry.keys()),
+        skill_ids=load_skill_registry_ids(root),
+    )
     return manifest
 
 
-def validate_manifest(manifest: Dict[str, Any]) -> None:
+def validate_manifest(
+    manifest: Dict[str, Any],
+    *,
+    process_ids: set[str],
+    skill_ids: set[str],
+) -> None:
     required = ["process_id", "version", "process_level", "phases", "control_flow", "lineage_policy"]
     for key in required:
         if key not in manifest:
@@ -166,13 +193,57 @@ def validate_manifest(manifest: Dict[str, Any]) -> None:
     for idx, phase in enumerate(phases):
         if not isinstance(phase, dict):
             raise RunnerError(f"phases[{idx}] must be object")
-        for key in ["phase_id", "actor", "target_type", "target_id"]:
+        for key in ["phase_id", "actor", "target_type", "target_id", "requires_spec"]:
             if key not in phase:
                 raise RunnerError(f"phases[{idx}] missing field: {key}")
         phase_id = phase["phase_id"]
         if not isinstance(phase_id, str) or not phase_id:
             raise RunnerError(f"phases[{idx}].phase_id must be non-empty string")
         phase_ids.append(phase_id)
+
+        target_type = phase.get("target_type")
+        if target_type != "subprocess":
+            raise RunnerError(f"phases[{idx}].target_type must be 'subprocess'")
+
+        requires_spec = phase.get("requires_spec")
+        if not isinstance(requires_spec, bool):
+            raise RunnerError(f"phases[{idx}].requires_spec must be boolean")
+        if requires_spec and not is_repo_rel_anchor(phase.get("spec_ref")):
+            raise RunnerError(
+                f"phases[{idx}].spec_ref must be repo_relative_path#anchor when requires_spec=true"
+            )
+
+        target_id = phase.get("target_id")
+        if not isinstance(target_id, str) or not target_id.strip():
+            raise RunnerError(f"phases[{idx}].target_id must be non-empty string")
+
+        if target_id in process_ids:
+            if "inline_ap" in phase:
+                raise RunnerError(f"phases[{idx}] registered subprocess target must not define inline_ap")
+            continue
+
+        inline_ap = phase.get("inline_ap")
+        if not isinstance(inline_ap, dict):
+            raise RunnerError(
+                f"phases[{idx}] target_id not in process_registry requires inline_ap object"
+            )
+        for field in ["ap_id", "skill_id", "actor", "pierce_allowed"]:
+            if field not in inline_ap:
+                raise RunnerError(f"phases[{idx}].inline_ap missing field: {field}")
+        if inline_ap.get("ap_id") != target_id:
+            raise RunnerError(f"phases[{idx}].inline_ap.ap_id must equal target_id")
+
+        skill_id = inline_ap.get("skill_id")
+        if not isinstance(skill_id, str) or skill_id not in skill_ids:
+            raise RunnerError(f"phases[{idx}].inline_ap.skill_id not found in skill_registry: {skill_id!r}")
+
+        pierce_allowed = inline_ap.get("pierce_allowed")
+        if not isinstance(pierce_allowed, bool):
+            raise RunnerError(f"phases[{idx}].inline_ap.pierce_allowed must be boolean")
+        if pierce_allowed and inline_ap.get("actor") != phase.get("actor"):
+            raise RunnerError(
+                f"phases[{idx}].inline_ap.pierce_allowed=true requires inline_ap.actor == phase.actor"
+            )
 
     control_flow = manifest.get("control_flow")
     if not isinstance(control_flow, list) or not control_flow:
@@ -213,6 +284,67 @@ def phase_by_id(manifest: Dict[str, Any], phase_id: str) -> Dict[str, Any]:
         if phase.get("phase_id") == phase_id:
             return phase
     raise RunnerError(f"phase not found in manifest: {phase_id}")
+
+
+def to_repo_rel(path: Path, root: Path) -> str:
+    return path.resolve().relative_to(root).as_posix()
+
+
+def parse_ref_list(raw: str) -> List[str]:
+    if not raw.strip():
+        return []
+    refs: List[str] = []
+    seen: set[str] = set()
+    for token in re.split(r"[,;\n]+", raw):
+        value = token.strip()
+        if not value or value in seen:
+            continue
+        refs.append(value)
+        seen.add(value)
+    return refs
+
+
+def latest_output_ref(context: Dict[str, Any]) -> str:
+    phase_results = context.get("phase_results")
+    if not isinstance(phase_results, list):
+        return ""
+    for item in reversed(phase_results):
+        if not isinstance(item, dict):
+            continue
+        output_ref = str(item.get("output_ref") or "").strip()
+        if output_ref:
+            return output_ref
+    return ""
+
+
+def build_dispatch_prompt(
+    *,
+    process_id: str,
+    phase: Dict[str, Any],
+    input_refs: List[str],
+    task_dispatch_ref: str,
+    extra_instruction: str,
+) -> str:
+    phase_id = str(phase.get("phase_id") or "")
+    phase_name = str(phase.get("name") or phase_id)
+    phase_purpose = str(phase.get("phase_purpose") or f"完成 {phase_name} 阶段目标")
+    done_definition = str(phase.get("done_definition") or "产出可追溯输出引用")
+    handoff_note = str(phase.get("handoff_note") or "将阶段输出交接给下一阶段")
+    input_text = ", ".join(input_refs) if input_refs else "(无显式输入引用)"
+
+    lines = [
+        f"你是 {phase.get('actor')}，正在执行流程 {process_id} 的阶段 {phase_id}（{phase_name}）。",
+        f"阶段目标：{phase_purpose}",
+        f"输入引用：{input_text}",
+        f"完成标准：{done_definition}",
+        f"交接要求：{handoff_note}",
+        f"任务分发包：{task_dispatch_ref}",
+        "请基于以上上下文完成阶段任务，并输出：阶段摘要、output_ref、self_check(decision/reason/rule_refs)。",
+    ]
+    extra = extra_instruction.strip()
+    if extra:
+        lines.append(f"补充指令：{extra}")
+    return "\n".join(lines)
 
 
 def read_instance_record(instance_root: Path, instance_id: str) -> Tuple[Dict[str, Any], Dict[str, Any]]:
@@ -611,7 +743,7 @@ def collect_required_field_errors(context: Dict[str, Any], binding: Dict[str, An
             if not isinstance(item, dict):
                 errors.append(f"phase_results[{idx}]_not_object")
                 continue
-            for key in ["phase_id", "status", "actor", "session_id"]:
+            for key in ["phase_id", "status", "actor", "session_id", "input_ref", "output_ref"]:
                 if key not in item:
                     errors.append(f"missing_phase_result_field:{idx}:{key}")
 
@@ -764,6 +896,18 @@ def start_command(args: argparse.Namespace) -> int:
         else:
             lineage_ref = f"{parent_context.get('lineage_ref', 'lineage/unknown')}/{instance_id}"
 
+    explicit_input_refs = parse_ref_list(str(args.input_ref or ""))
+    inherited_input_ref = ""
+    spec_ref = str(phase.get("spec_ref") or "").strip()
+    input_refs: List[str] = list(explicit_input_refs)
+    if not input_refs and parent_context is not None:
+        inherited_input_ref = latest_output_ref(parent_context)
+        if inherited_input_ref:
+            input_refs.append(inherited_input_ref)
+    if bool(phase.get("requires_spec")) and spec_ref and spec_ref not in input_refs:
+        input_refs.append(spec_ref)
+    normalized_input_ref = ",".join(input_refs)
+
     ts = now_iso()
     binding = {
         "agent_id": actor,
@@ -793,7 +937,7 @@ def start_command(args: argparse.Namespace) -> int:
                 "status": "running",
                 "actor": actor,
                 "session_id": session_id,
-                "input_ref": args.input_ref,
+                "input_ref": normalized_input_ref,
                 "output_ref": "",
                 "started_at": ts,
                 "completed_at": "",
@@ -808,10 +952,84 @@ def start_command(args: argparse.Namespace) -> int:
 
     context_ref = instance_dir / "context.json"
     binding_ref = instance_dir / "session_binding.json"
-    transition_ref = instance_dir / "evidence" / "state_transition_start.json"
+    evidence_dir = instance_dir / "evidence"
+    transition_ref = evidence_dir / "state_transition_start.json"
+    dispatch_context_ref = evidence_dir / "dispatch_context.json"
+    task_dispatch_ref = evidence_dir / "task_dispatch.json"
+    dispatch_prompt_ref = evidence_dir / "dispatch_prompt.md"
+
+    manifest_path = str(manifest.get("__manifest_path") or "").strip()
+    output_contract_ref = (
+        f"{manifest_path}#output_contract"
+        if manifest_path
+        else f"processes/meta/{manifest.get('process_id', args.process_id)}/process.json#output_contract"
+    )
+    retry = manifest.get("fail_policy", {}).get("retry", {})
+    max_retries = None
+    if isinstance(retry, dict):
+        raw_max = retry.get("max_attempts")
+        if isinstance(raw_max, int):
+            max_retries = raw_max
+        raw_loop = retry.get("max_iterations")
+        if max_retries is None and isinstance(raw_loop, int):
+            max_retries = raw_loop
+
+    task_dispatch_payload: Dict[str, Any] = {
+        "type": "task_dispatch",
+        "instance_id": instance_id,
+        "phase_id": args.phase_id,
+        "actor": actor,
+        "target_type": str(phase.get("target_type") or ""),
+        "target_id": str(phase.get("target_id") or ""),
+        "input_ref": normalized_input_ref,
+        "objective_ref": context.get("objective_ref"),
+        "output_contract": output_contract_ref,
+        "lineage_ref": lineage_ref,
+        "stack_depth": stack_depth,
+        "process_version": manifest.get("version"),
+        "process_level": manifest.get("process_level"),
+        "session_binding": binding,
+        "evidence_dir": to_repo_rel(evidence_dir, root),
+    }
+    if parent_instance_id:
+        task_dispatch_payload["parent_instance_id"] = parent_instance_id
+    if bool(phase.get("requires_spec")) and spec_ref:
+        task_dispatch_payload["spec_ref"] = spec_ref
+    if max_retries is not None:
+        task_dispatch_payload["constraints"] = {"max_retries": max_retries}
+
+    dispatch_context_payload: Dict[str, Any] = {
+        "generated_at": ts,
+        "process_id": manifest.get("process_id"),
+        "phase_id": args.phase_id,
+        "phase_name": phase.get("name"),
+        "phase_actor": actor,
+        "phase_purpose": phase.get("phase_purpose"),
+        "input_context_ref": phase.get("input_context_ref"),
+        "done_definition": phase.get("done_definition"),
+        "handoff_note": phase.get("handoff_note"),
+        "normalized_input_refs": input_refs,
+        "input_source": {
+            "explicit_refs": explicit_input_refs,
+            "inherited_parent_output_ref": inherited_input_ref,
+            "spec_ref_injected": spec_ref if (bool(phase.get("requires_spec")) and spec_ref) else "",
+        },
+        "task_dispatch_ref": to_repo_rel(task_dispatch_ref, root),
+    }
+
+    auto_dispatch_message = build_dispatch_prompt(
+        process_id=str(manifest.get("process_id") or args.process_id),
+        phase=phase,
+        input_refs=input_refs,
+        task_dispatch_ref=to_repo_rel(task_dispatch_ref, root),
+        extra_instruction=args.dispatch_message,
+    )
 
     dump_json(context_ref, context)
     dump_json(binding_ref, binding)
+    dump_json(dispatch_context_ref, dispatch_context_payload)
+    dump_json(task_dispatch_ref, task_dispatch_payload)
+    dispatch_prompt_ref.write_text(auto_dispatch_message + "\n", encoding="utf-8")
     dump_json(
         transition_ref,
         {
@@ -823,6 +1041,9 @@ def start_command(args: argparse.Namespace) -> int:
             "actor": actor,
             "lineage_ref": lineage_ref,
             "stack_depth": stack_depth,
+            "input_ref": normalized_input_ref,
+            "dispatch_context_ref": to_repo_rel(dispatch_context_ref, root),
+            "task_dispatch_ref": to_repo_rel(task_dispatch_ref, root),
         },
     )
 
@@ -830,7 +1051,7 @@ def start_command(args: argparse.Namespace) -> int:
         args.openclaw_bin,
         actor,
         session_id,
-        args.dispatch_message,
+        auto_dispatch_message,
     )
     dispatch_result: Dict[str, Any] = {
         "executed": False,
@@ -884,12 +1105,15 @@ def start_command(args: argparse.Namespace) -> int:
     result = {
         "status": "ok",
         "instance_id": instance_id,
-        "context_ref": str(context_ref.relative_to(root).as_posix()),
-        "session_binding_ref": str(binding_ref.relative_to(root).as_posix()),
-        "state_transition_ref": str(transition_ref.relative_to(root).as_posix()),
+        "context_ref": to_repo_rel(context_ref, root),
+        "session_binding_ref": to_repo_rel(binding_ref, root),
+        "state_transition_ref": to_repo_rel(transition_ref, root),
+        "dispatch_context_ref": to_repo_rel(dispatch_context_ref, root),
+        "task_dispatch_ref": to_repo_rel(task_dispatch_ref, root),
+        "dispatch_prompt_ref": to_repo_rel(dispatch_prompt_ref, root),
         "runtime_state": "running",
         "dispatch": dispatch_result,
-        "evidence_ref": str((instance_dir / "evidence").relative_to(root).as_posix()),
+        "evidence_ref": to_repo_rel(evidence_dir, root),
     }
 
     if args.output:
@@ -1227,7 +1451,11 @@ def build_parser() -> argparse.ArgumentParser:
     p_start.add_argument("--objective-ref")
     p_start.add_argument("--initiated-by", default="bpm")
     p_start.add_argument("--input-ref", default="")
-    p_start.add_argument("--dispatch-message", default="execute assigned phase by process-instance-manager contract")
+    p_start.add_argument(
+        "--dispatch-message",
+        default="",
+        help="可选补充自然语言指令，会附加到标准 phase 调度提示词后。",
+    )
     p_start.add_argument("--openclaw-bin", default="openclaw")
     p_start.add_argument(
         "--openclaw-stall-threshold-seconds",

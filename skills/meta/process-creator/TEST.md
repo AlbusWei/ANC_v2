@@ -10,7 +10,7 @@
 
 - Type: Objective
 - Priority: P0
-- Input: 合法 `process_id/process_level/phases/control_flow/fail_policy`
+- Input: 合法 `process_id/version/process_level/phases/control_flow/fail_policy/evidence_policy/lineage_policy`
 - Expected: 输出 `process_manifest_path/process_skill_path/process_guide_path`，并可通过 registry verify
 - Evaluation Method: Exact Match
 
@@ -35,7 +35,7 @@
 - Type: Objective
 - Priority: P1
 - Input: 多 phase 输入
-- Expected: 每个 phase 都能映射到 `target_type/target_id`
+- Expected: 每个 phase 都能映射到 `target_type/target_id`，未注册 target 必须提供合法 `inline_ap`
 - Evaluation Method: Rule Match
 
 ### TC-005: 连续性约束检查 - 跨非连续生命周期段
@@ -52,6 +52,22 @@
 - Priority: P2
 - Input: 触发 Fail-Closed 的输入 + `--report`
 - Expected: 报告含 `decision=fail_closed` 与违规 phase 清单
+- Evaluation Method: Exact Match
+
+### TC-007: Fail-Closed - P4 缺协作策略
+
+- Type: Objective
+- Priority: P0
+- Input: `process_level=P4` 且缺 `collaboration_policy`
+- Expected: 阻断生成并返回 `collaboration_policy:required_for_p4`
+- Evaluation Method: Exact Match
+
+### TC-008: Fail-Closed - 多 Actor 的 P5 缺协作策略
+
+- Type: Objective
+- Priority: P1
+- Input: `process_level=P5` 且 phase 存在多个 actor，但缺 `collaboration_policy`
+- Expected: 阻断生成并返回 `collaboration_policy:required_for_multi_actor_p5_p6`
 - Evaluation Method: Exact Match
 
 ## Evaluation Configuration

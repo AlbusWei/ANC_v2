@@ -23,10 +23,10 @@
 ### p1 release-packaging
 
 - 执行角色：`admin`
-- 阶段目的：本阶段围绕以下业务动作推进：打包发布产物并形成发布决策。
-- 输入语义：本阶段主要消费以下输入：candidate_artifacts 与 governed_release_prerequisites。
-- 完成标准：完成判据：必须产出 release_package_ref + rollback_bundle_ref，并满足“发布决策与回滚包均明确”。
-- 交接说明：交接要求：将 release_package_ref + rollback_bundle_ref 交接给 initiator。
+- 阶段目的：打包发布产物并形成发布决策。
+- 输入语义：candidate_artifacts 与 governed_release_prerequisites。
+- 完成标准：必须产出 release_package_ref + rollback_bundle_ref，并满足“发布决策与回滚包均明确”。
+- 交接说明：将 release_package_ref + rollback_bundle_ref 交接给 initiator。
 - 执行单元：`subprocess:inline-ap:release-packaging-governed:p1`。该阶段采用临时 AP 语法，映射 skill 为 `sys.admin.release-manager`，穿透执行策略：允许（同 Actor 场景）。
 
 ## 控制流与回退

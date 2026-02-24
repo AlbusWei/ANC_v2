@@ -1,6 +1,6 @@
 # BPM Runtime Skills 设计包
 
-> 版本: v0.3.0 | 分类: System Skills | 模块: M2 BPM Engine | 最后更新: 2026-02-22
+> 版本: v0.5.0 | 分类: System Skills | 模块: M2 BPM Engine | 最后更新: 2026-02-24
 
 ## 目标
 
@@ -47,15 +47,23 @@
 
 - 定位：实例创建、状态推进、父子上下文隔离，并内含 parser/scheduler/lineage 子能力。
 - 输入契约：`process_id`, `phase_id`, `instance_context_ref`, `lineage_ref`, `stack_depth`, `process_version`, `process_level`, `session_binding`
-- 输出契约：`instance_id`, `runtime_state`, `state_transition_ref`, `evidence_ref`
+- 输出契约：`instance_id`, `runtime_state`, `state_transition_ref`, `task_dispatch_ref`, `dispatch_context_ref`, `evidence_ref`
 - 子能力：
   - `manifest-parse`：校验 process manifest 与 phase 闭合
-  - `phase-schedule`：基于 control_flow 生成调度决策
+  - `phase-schedule`：基于 control_flow 生成调度决策与 task dispatch 包
   - `lineage-guard`：执行递归深度与上下文隔离约束
-- 会话治理增强（v0.2.0）：
+- phase 上下文规则（v0.4.0）：
+  - 输入拼接优先级：显式 `input_ref` -> 父实例最近输出 -> `spec_ref`
+  - 每次分发必须落盘 `dispatch_context.json` 与 `dispatch_prompt.md`
+  - Actor 侧执行提示必须携带 `phase_purpose/done_definition/handoff_note`
+- 会话治理增强（v0.3.0）：
   - `openclaw-session-reset`：phase 分发前可执行 `sessions.reset`，确保同 actor 跨 phase 新会话。
   - `session-match-check`：可校验 dispatch 实际会话 ID 与实例上下文会话 ID 一致。
-- Fail-Closed：phase 不存在、上下文泄漏、递归深度超限、manifest 不闭合、会话绑定缺失或父子会话复用。
+- canonical 校验增强（v0.3.0）：
+  - `target_type` 仅允许 `subprocess`。
+  - `requires_spec=true` 时 `spec_ref` 必须为 `repo_relative_path#anchor`。
+  - 未注册 `target_id` 必须声明合法 `inline_ap`，且 `skill_id` 命中 skill registry。
+- Fail-Closed：phase 不存在、上下文泄漏、递归深度超限、manifest 不闭合、inline_ap 映射无效、会话绑定缺失或父子会话复用。
 - test_mount：`skills/system/process-instance-manager/TEST.md`
 
 ### 4. sys.bpm.evidence-recorder
@@ -105,3 +113,13 @@ W3 变更记录（M2 BPM Runtime Hardening）：
 1. 新增 5 个触发链路核心 runner（normalizer/matcher/evidence/catchup/escalation）。
 2. 新增流程 runner：`trigger_schedule_runtime_runner.py`、`trigger_event_runtime_runner.py`。
 3. 运行级回归入口升级为 `tests/m2-bpm-runtime/run_tc_tg.py`，覆盖 `TG-SCH-001~004`、`TG-EVT-001~003`。
+
+W9 变更记录（M3 流程标准一致性收口）：
+
+1. `sys.bpm.process-instance-manager` manifest 校验升级为 canonical 口径（`subprocess + inline_ap + spec_ref anchor`）。
+2. `sys.bpm.process-instance-manager` registry 版本由 `0.2.0` 升级到 `0.3.0`，生命周期保持 `review`。
+
+W13 变更记录（流程执行语义补全）：
+
+1. `sys.bpm.process-instance-manager` 新增 `task_dispatch`/`dispatch_context`/`dispatch_prompt` 三类分发证据落盘。
+2. phase 输入拼接与跨 phase 交接规则按 `process_architecture` 固化为可执行逻辑。

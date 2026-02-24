@@ -1,6 +1,6 @@
 # Skill 全量清单
 
-> 版本: v1.4.0 | SSOT: `shared/registry/skill_registry.json`
+> 版本: v1.6.0 | SSOT: `shared/registry/skill_registry.json`
 
 ## 已注册 Skill
 
@@ -129,3 +129,17 @@ W8 变更记录（M3 协作骨架扩展：full-development）：
 
 1. `sys.bpm.process-instance-manager` 新增会话治理能力：`--reset-openclaw-session`、`--strict-session-match`。
 2. `sys.bpm.process-instance-manager` registry 版本由 `0.1.0` 升级到 `0.2.0`，生命周期保持 `review`。
+
+W9 变更记录（M3 流程标准一致性收口）：
+
+1. `meta.arch.process-creator` runner 升级为 canonical 校验口径，拒绝 legacy 字段并强制 `inline_ap`/`spec_ref` 规则。
+2. `meta.arch.process-creator` registry 版本由 `0.2.0` 升级到 `0.3.0`，生命周期保持 `review`。
+3. `sys.bpm.process-instance-manager` manifest 校验增强（`subprocess + inline_ap + spec_ref anchor`）。
+4. `sys.bpm.process-instance-manager` registry 版本由 `0.2.0` 升级到 `0.3.0`，生命周期保持 `review`。
+
+W14 变更记录（M3 流程执行语义补全）：
+
+1. `sys.bpm.process-instance-manager` 新增 phase 分发语义落盘（`task_dispatch/dispatch_context/dispatch_prompt`）。
+2. `sys.bpm.process-instance-manager` registry 版本由 `0.3.0` 升级到 `0.4.0`，生命周期保持 `review`。
+3. `system.ops.manual-task` 从“人工兜底”改为“Actor 通用执行入口”，支持 BPM dispatch 输入并产出 `task_completion` 留档。
+4. `system.ops.manual-task` registry 版本由 `0.1.0` 升级到 `0.2.0`，生命周期保持 `draft`。

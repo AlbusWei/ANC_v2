@@ -7,6 +7,27 @@
 
 ## 1. 目标与边界
 
+目标：
+
+本体系是AI Native Company能够实现其愿景的核心模块。
+我们希望能够将企业的业务价值创造过程，转化为被形式定义的、可被执行、追踪与恢复的、稳定流程实例。
+则我们可以通过本流程体系，模拟一切企业业务体系，实现AI托管的全自动价值创造。
+所需要模拟的业务流程包括但不限于：
+1. 产品生命周期管理（PLM）
+2. 需求管理（RM）
+3. 项目管理（PM）
+4. 测试管理（TM）
+5. 部署管理（DM）
+6. 运维管理（OM）
+7. 客户服务管理（CSM）
+8. 销售管理（SM）
+9. 采购管理（PM）
+10. 资金管理（FM）
+11. 风险管理（RM）
+12. 合规管理（CM）
+……
+
+
 流程架构保障：
 
 1. 反身自开发/自进化可被执行、追踪与恢复。
@@ -30,6 +51,9 @@ P1-P6 是流程设计抽象层，支持 top-down 建模：
 4. P4 可以实现端到端价值交付的完整流程
 5. P5 子流程模式，可复用的、有一定整体性的任务序列，如产品生命周期管理中的需求分析、产品设计、开发、测试、部署等阶段的子流程。
 6. P6 原子流程，某角色执行某具体任务（技能），如测试流程中的测试用例写作、测试执行等。
+
+P4是我们常识中的“流程/SOP”所处的位置，往往可以完成一件用户可见的工作、带来一定价值，比如发布某个产品的一个版本更新到线上；针对某个采购需求进行供应商调研并产出报告；进行一周的retrospective、产出复盘报告……
+P3往往就是一系列流程的portfolio，支撑某个具体的业务场景，比如内部产品的生命周期管理，实际上涉及许多相对独立的SOP，而不一定串行执行，比如需求分析和retrospective是周期性触发的流程，而产品研发流程是需要主动触发的（比如确定了一个研发计划后）。所以P3及以上的流程不会作为一个可执行资产注册在注册表里，但是会作为知识文档存在，指导一个业务线条的owner如何管理其日常工作，并确定可以被相关角色频繁阅读。
 
 规则：
 
@@ -81,6 +105,13 @@ P1-P6 是流程设计抽象层，支持 top-down 建模：
 5. `phases[].target_type`
 6. `phases[].target_id`
 7. `phases[].requires_spec`
+8. `collaboration_policy`（分层条件字段）
+
+`collaboration_policy` 约束：
+
+1. `P4` 流程必须声明。
+2. `P5/P6` 若存在多 Actor 强协作，也必须声明。
+3. 最小字段：`mode`、`dispatch_runtime`、`session_reset`。
 
 ## 5. 递归实例治理
 
@@ -166,10 +197,26 @@ lineage:
 
 1. `target_type` 只允许 `subprocess`。
 2. `target_id` 必须满足二选一：命中 `process_registry.process_id`，或命中 `inline_ap.ap_id`。
-3. 采用 `inline_ap` 时，`inline_ap.skill_id` 必须命中 `skill_registry.skill_id`。
+3. 采用 `inline_ap` 时，`inline_ap.skill_id` 必须命中 `skill_registry.skill_id`；这种情况意味着，该phase的执行者和当前流程的执行者是同一个人，所以可以不新建会话直接穿透执行所包装的技能。
 4. `output_contract` 使用 `contract_ref`（稳定 ID 或 `repo_relative_path#anchor`）。
 5. 当 `phase.requires_spec=true` 时，`spec_ref` 必填。
 6. `session_binding.session_id` 必须随调度显式映射到 OpenClaw `--session-id`。
+
+### 6.1 phase 输入拼接与跨 phase 交接规则
+
+> 目标：保证“多 agent 多会话协作”在自然语言主导下仍有稳定交接骨架。
+
+1. BPM 在分发前必须组装 `dispatch_context`，至少包含：
+   - phase 目的（`phase_purpose`）、完成标准（`done_definition`）、交接要求（`handoff_note`）
+   - 本 phase 输入引用（`input_ref`，可为多引用列表）
+   - 上游交接摘要（如上一阶段输出引用与关键结论）
+2. phase 输入拼接优先级：
+   - 显式输入（上级流程/编排器提供的输入引用）
+   - 父实例最近可用输出引用
+   - `requires_spec=true` 时的 `spec_ref`
+3. BPM 发给 Actor 的消息应优先采用自然语言任务描述，但必须显式附带输入引用与完成标准，禁止只给“执行 pX”。
+4. phase 完成后，Actor 至少回填：`output_ref`、`self_check.decision`、`self_check.reason`；下一阶段只消费可追溯引用，不消费隐式会话记忆。
+5. 若输入引用缺失、上游输出不可达或交接语义不完整，按 Fail-Closed 处理，不得静默跳过。
 
 ### 完成应答（Completion）
 

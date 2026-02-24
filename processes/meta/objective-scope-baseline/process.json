@@ -49,7 +49,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "提炼目标与成功判据基线",
+      "input_context_ref": "objective_context_ref",
+      "done_definition": "必须产出 objective_ref，并满足“目标具备可衡量范围且约束明确”",
+      "handoff_note": "将 objective_ref 交接给 p2"
     },
     {
       "phase_id": "p2",
@@ -74,7 +78,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "归一化范围边界与非目标",
+      "input_context_ref": "objective_ref",
+      "done_definition": "必须产出 scope_draft_ref，并满足“范围草案包含边界与排除域”",
+      "handoff_note": "将 scope_draft_ref 交接给 p3"
     },
     {
       "phase_id": "p3",
@@ -99,7 +107,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "固化治理化范围基线",
+      "input_context_ref": "scope_draft_ref",
+      "done_definition": "必须产出 scope_baseline_ref，并满足“范围基线可追溯且无冲突”",
+      "handoff_note": "将 scope_baseline_ref 交接给 initiator"
     }
   ],
   "control_flow": [

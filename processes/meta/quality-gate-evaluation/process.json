@@ -59,7 +59,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "执行客观评测 profile",
+      "input_context_ref": "preparation_bundle_ref + actual_output_refs",
+      "done_definition": "必须产出 objective_eval_ref，并满足“目标评测结论可解析且可追溯”",
+      "handoff_note": "将 objective_eval_ref 交接给 p2"
     },
     {
       "phase_id": "p2",
@@ -84,7 +88,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "默认执行盲评主观评测",
+      "input_context_ref": "preparation_bundle_ref + actual_output_refs + subjective_plan",
+      "done_definition": "必须产出 subjective_eval_ref，并满足“主观评测记录包含 seed 轮次与结论”",
+      "handoff_note": "将 subjective_eval_ref 交接给 p3"
     },
     {
       "phase_id": "p3",
@@ -109,7 +117,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "执行跨模块回归评测",
+      "input_context_ref": "preparation_bundle_ref + profile_set + actual_output_refs",
+      "done_definition": "必须产出 regression_eval_ref，并满足“回归报告包含模块级结论”",
+      "handoff_note": "将 regression_eval_ref 交接给 p4"
     },
     {
       "phase_id": "p4",
@@ -134,7 +146,11 @@
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
-      }
+      },
+      "phase_purpose": "汇总形成统一门禁结论",
+      "input_context_ref": "objective_eval_ref + subjective_eval_ref + regression_eval_ref",
+      "done_definition": "必须产出 gate_decision，并满足“门禁决策遵循统一 verdict 枚举与 P0 优先规则”",
+      "handoff_note": "将 gate_decision 交接给 initiator"
     },
     {
       "phase_id": "p5",
@@ -151,7 +167,11 @@
         "output": "hold_resolution_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "hold cases are resolved or escalated with evidence"
+      "acceptance_criteria": "hold cases are resolved or escalated with evidence",
+      "phase_purpose": "将 hold 案例路由至 hold 治理子流程",
+      "input_context_ref": "hold_case_ref",
+      "done_definition": "必须产出 hold_resolution_ref，并满足“hold 案例在证据支撑下被解决或升级”",
+      "handoff_note": "将 hold_resolution_ref 交接给 initiator"
     }
   ],
   "control_flow": [

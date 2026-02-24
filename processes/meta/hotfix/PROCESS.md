@@ -23,64 +23,64 @@
 ### p1 hotfix-intake
 
 - 执行角色：`architect`
-- 阶段目的：本阶段围绕以下业务动作推进：归一化 hotfix 目标、影响范围与回滚方向。
-- 输入语义：本阶段主要消费以下输入：incident_context_ref。
-- 完成标准：完成判据：必须产出 hotfix_objective_ref, impact_scope_ref, rollback_direction_ref，并满足“hotfix 入口产出明确且可执行”。
-- 交接说明：交接要求：将 hotfix_objective_ref, impact_scope_ref, rollback_direction_ref 交接给 p2。
+- 阶段目的：归一化 hotfix 目标、影响范围与回滚方向。
+- 输入语义：incident_context_ref。
+- 完成标准：必须产出 hotfix_objective_ref, impact_scope_ref, rollback_direction_ref，并满足“hotfix 入口产出明确且可执行”。
+- 交接说明：将 hotfix_objective_ref, impact_scope_ref, rollback_direction_ref 交接给 p2。
 - 执行单元：`subprocess:hotfix-intake-normalization`。
 
 ### p2 scope-and-spec-fast-baseline
 
 - 执行角色：`architect`
-- 阶段目的：本阶段围绕以下业务动作推进：为 hotfix 形成范围基线与规格基线。
-- 输入语义：本阶段主要消费以下输入：hotfix_objective_ref + impact_scope_ref。
-- 完成标准：完成判据：必须产出 hotfix_scope_baseline_ref + spec_ref，并满足“范围与规格基线包含回滚及爆炸半径约束”。
-- 交接说明：交接要求：将 hotfix_scope_baseline_ref + spec_ref 交接给 p3。
+- 阶段目的：为 hotfix 形成范围基线与规格基线。
+- 输入语义：hotfix_objective_ref + impact_scope_ref。
+- 完成标准：必须产出 hotfix_scope_baseline_ref + spec_ref，并满足“范围与规格基线包含回滚及爆炸半径约束”。
+- 交接说明：将 hotfix_scope_baseline_ref + spec_ref 交接给 p3。
 - 执行单元：`subprocess:hotfix-scope-spec-baseline`。
 
 ### p3 fast-test-preparation
 
 - 执行角色：`qa`
-- 阶段目的：本阶段围绕以下业务动作推进：准备面向 P0 风险的 hotfix 测试。
-- 输入语义：本阶段主要消费以下输入：spec_ref。
-- 完成标准：完成判据：必须产出 test_plan_ref + preparation_bundle_ref，并满足“test_plan_ref 明确关联 spec_ref”。
-- 交接说明：交接要求：将 test_plan_ref + preparation_bundle_ref 交接给 p4。
+- 阶段目的：准备面向 P0 风险的 hotfix 测试。
+- 输入语义：spec_ref。
+- 完成标准：必须产出 test_plan_ref + preparation_bundle_ref，并满足“test_plan_ref 明确关联 spec_ref”。
+- 交接说明：将 test_plan_ref + preparation_bundle_ref 交接给 p4。
 - 执行单元：`subprocess:quality-gate-preparation`。
 
 ### p4 hotfix-implementation
 
 - 执行角色：`kernel-dev`
-- 阶段目的：本阶段围绕以下业务动作推进：实施修复候选方案。
-- 输入语义：本阶段主要消费以下输入：spec_ref + test_plan_ref。
-- 完成标准：完成判据：必须产出 implementation_ref + candidate_artifacts_ref，并满足“候选产物可追溯到实现输出”。
-- 交接说明：交接要求：将 implementation_ref + candidate_artifacts_ref 交接给 p5。
+- 阶段目的：实施修复候选方案。
+- 输入语义：spec_ref + test_plan_ref。
+- 完成标准：必须产出 implementation_ref + candidate_artifacts_ref，并满足“候选产物可追溯到实现输出”。
+- 交接说明：将 implementation_ref + candidate_artifacts_ref 交接给 p5。
 - 执行单元：`subprocess:implementation-execution-core`。
 
 ### p5 hotfix-gate-evaluation
 
 - 执行角色：`qa`
-- 阶段目的：本阶段围绕以下业务动作推进：评估目标门禁与回归门禁。
-- 输入语义：本阶段主要消费以下输入：candidate_artifacts_ref。
-- 完成标准：完成判据：必须产出 final_gate_verdict_ref，并满足“门禁结论为 pass/fail 且证据完整”。
-- 交接说明：交接要求：将 final_gate_verdict_ref 交接给 p6。
+- 阶段目的：评估目标门禁与回归门禁。
+- 输入语义：candidate_artifacts_ref。
+- 完成标准：必须产出 final_gate_verdict_ref，并满足“门禁结论为 pass/fail 且证据完整”。
+- 交接说明：将 final_gate_verdict_ref 交接给 p6。
 - 执行单元：`subprocess:quality-gate-evaluation`。
 
 ### p6 lifecycle-gate-sync
 
 - 执行角色：`admin`
-- 阶段目的：本阶段围绕以下业务动作推进：校验生命周期与 registry 交接包。
-- 输入语义：本阶段主要消费以下输入：final_gate_verdict_ref。
-- 完成标准：完成判据：必须产出 lifecycle_transition_ref + registry_sync_ref，并满足“生命周期与 registry 交接包完整”。
-- 交接说明：交接要求：将 lifecycle_transition_ref + registry_sync_ref 交接给 p7。
+- 阶段目的：校验生命周期与 registry 交接包。
+- 输入语义：final_gate_verdict_ref。
+- 完成标准：必须产出 lifecycle_transition_ref + registry_sync_ref，并满足“生命周期与 registry 交接包完整”。
+- 交接说明：将 lifecycle_transition_ref + registry_sync_ref 交接给 p7。
 - 执行单元：`subprocess:lifecycle-review`。
 
 ### p7 release-packaging
 
 - 执行角色：`admin`
-- 阶段目的：本阶段围绕以下业务动作推进：打包并发布 hotfix 版本。
-- 输入语义：本阶段主要消费以下输入：candidate_artifacts_ref, final_gate_verdict_ref, lifecycle_transition_ref, registry_sync_ref。
-- 完成标准：完成判据：必须产出 release_package_ref + rollback_bundle_ref，并满足“发布包包含回滚材料与门禁证据”。
-- 交接说明：交接要求：将 release_package_ref + rollback_bundle_ref 交接给 initiator。
+- 阶段目的：打包并发布 hotfix 版本。
+- 输入语义：candidate_artifacts_ref, final_gate_verdict_ref, lifecycle_transition_ref, registry_sync_ref。
+- 完成标准：必须产出 release_package_ref + rollback_bundle_ref，并满足“发布包包含回滚材料与门禁证据”。
+- 交接说明：将 release_package_ref + rollback_bundle_ref 交接给 initiator。
 - 执行单元：`subprocess:release-packaging-governed`。
 
 ## 控制流与回退
@@ -93,6 +93,13 @@
 - `p5` 在 `success` 条件下流转到 `p6`（条件：gate_decision == pass）。
 - `p6` 在 `success` 条件下流转到 `p7`。
 - `p7` 在 `success` 条件下流转到 `end`。
+
+## 协作策略（运行态）
+
+1. 协作模式：`phase-isolated-session`。
+2. 分发运行时：`openclaw-required`。
+3. 会话重置策略：`per-phase-reset`。
+4. phase 交接以自然语言任务说明 + 引用交接为主，不依赖隐式会话记忆。
 
 ## Fail-Closed 触发条件
 

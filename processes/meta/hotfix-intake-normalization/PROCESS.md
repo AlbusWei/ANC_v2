@@ -23,19 +23,19 @@
 ### p1 hotfix-objective-intake
 
 - 执行角色：`architect`
-- 阶段目的：本阶段围绕以下业务动作推进：从故障上下文中提炼 hotfix 目标。
-- 输入语义：本阶段主要消费以下输入：incident_context_ref。
-- 完成标准：完成判据：必须产出 hotfix_objective_ref，并满足“hotfix 目标明确且边界清晰”。
-- 交接说明：交接要求：将 hotfix_objective_ref 交接给 p2。
+- 阶段目的：从故障上下文中提炼 hotfix 目标。
+- 输入语义：incident_context_ref。
+- 完成标准：必须产出 hotfix_objective_ref，并满足“hotfix 目标明确且边界清晰”。
+- 交接说明：将 hotfix_objective_ref 交接给 p2。
 - 执行单元：`subprocess:inline-ap:hotfix-intake-normalization:p1`。该阶段采用临时 AP 语法，映射 skill 为 `meta.arch.objective-writer`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p2 impact-and-rollback-normalization
 
 - 执行角色：`architect`
-- 阶段目的：本阶段围绕以下业务动作推进：归一化影响范围与回滚方向。
-- 输入语义：本阶段主要消费以下输入：hotfix_objective_ref。
-- 完成标准：完成判据：必须产出 impact_scope_ref + rollback_direction_ref，并满足“影响范围与回滚方向可直接执行”。
-- 交接说明：交接要求：将 impact_scope_ref + rollback_direction_ref 交接给 initiator。
+- 阶段目的：归一化影响范围与回滚方向。
+- 输入语义：hotfix_objective_ref。
+- 完成标准：必须产出 impact_scope_ref + rollback_direction_ref，并满足“影响范围与回滚方向可直接执行”。
+- 交接说明：将 impact_scope_ref + rollback_direction_ref 交接给 initiator。
 - 执行单元：`subprocess:inline-ap:hotfix-intake-normalization:p2`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ## 控制流与回退

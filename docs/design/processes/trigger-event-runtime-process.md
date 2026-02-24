@@ -1,6 +1,6 @@
 # Trigger Event Runtime Process
 
-> 版本: v0.2.0 | 层级: P4 | 类型: 复合流程 | process_id: trigger-event-runtime
+> 版本: v0.3.0 | 层级: P4 | 类型: 复合流程 | process_id: trigger-event-runtime
 
 ## 目标
 
@@ -65,6 +65,12 @@
    - `sys.bpm.catchup-scheduler` -> `skills/system/catchup-scheduler/scripts/catchup_scheduler_runner.py`
    - `sys.bpm.escalation-handler` -> `skills/system/escalation-handler/scripts/escalation_handler_runner.py`
 3. 回归入口：`tests/m2-bpm-runtime/run_tc_tg.py`（覆盖 `TG-EVT-001~003`）。
+
+## 协作策略（M3 对齐）
+
+1. 流程 manifest 启用 `collaboration_policy`：`mode=phase-isolated-session`。
+2. 分发运行时固定 `dispatch_runtime=openclaw-required`。
+3. 同 actor 跨 phase 采用 `session_reset=per-phase-reset`，避免会话上下文污染。
 
 ## 去重策略
 
