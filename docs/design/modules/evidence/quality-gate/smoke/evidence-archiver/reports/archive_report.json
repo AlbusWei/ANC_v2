@@ -1,6 +1,0 @@
-{
-  "status": "pass",
-  "evidence_index_ref": "docs/design/modules/evidence/quality-gate/smoke/evidence-archiver/index.json",
-  "unified_verdict_ref": "docs/design/modules/evidence/quality-gate/smoke/evidence-archiver/unified_verdict.json",
-  "archive_report_ref": "docs/design/modules/evidence/quality-gate/smoke/evidence-archiver/reports/archive_report.json"
-}

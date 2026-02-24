@@ -1,6 +1,0 @@
-{
-  "release_package_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m3-runtime/TC-RELEASE-HP/release_package.json",
-  "changelog_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m3-runtime/TC-RELEASE-HP/release_changelog.json",
-  "release_decision": "approved",
-  "rollback_bundle_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m3-runtime/fixtures/rollback_bundle.json"
-}

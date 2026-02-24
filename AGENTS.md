@@ -17,6 +17,7 @@ ANC v2 是一个可反身自开发、可自进化的 Agentic 系统。
 7. OpenClaw 接口：`docs/architecture/openclaw_interface.md`
 8. registry 契约：`docs/architecture/registry_contracts.md`
 9. 详细设计索引：`docs/design/README.md`
+10. 发布隔离策略：`docs/architecture/release_isolation_policy.md`
 
 ## 3. 执行原则
 
@@ -75,11 +76,14 @@ ANC v2 是一个可反身自开发、可自进化的 Agentic 系统。
 > 目标：在主仓与各个 worktree 之间切换时，确保 OpenClaw 的 `agents` 与可加载 skill/process 源目录同步切换。
 
 1. 进入任意运行时开发/测试前，必须先执行：
-   - `python3 tools/openclaw/switch_workspace.py --repo-root <目标仓库或worktree根目录>`
+   - 开发模式：`python3 tools/openclaw/switch_workspace.py --repo-root <目标仓库或worktree根目录> --scope dev`
+   - 发布校验模式：`python3 tools/openclaw/switch_workspace.py --repo-root <目标仓库或worktree根目录> --scope public`
 2. 脚本职责（Fail-Closed）：
-   - 从 `config/openclaw.phase05.with-entry.fragment.json` 解析目标 `agents.list`。
+   - 根据 `--scope` 选择投影 profile（`public=phase05-base`、`dev=phase05-with-entry`）。
+   - 从所选 fragment 解析目标 `agents.list`。
    - 同步 `agents.defaults.workspace`、`agents.defaults.repoRoot`、`agents.list`、`tools.agentToAgent.allow`。
    - 将片段中的 `skills.entries.*.source` 投影为 `skills.load.extraDirs`（兼容 OpenClaw 2026.2 配置模型）。
+   - 可选合并私有资产 overlay：`--enable-private-assets --private-overlay runtime_data/private-assets/openclaw.overlay.json`。
 3. 切换后最小校验（必须通过）：
    - `openclaw config get agents.defaults.repoRoot --json`
    - `openclaw config get skills.load.extraDirs --json`
@@ -144,3 +148,26 @@ ANC v2 是一个可反身自开发、可自进化的 Agentic 系统。
    - `rg -n "<asset-id>" docs/design shared/registry`
 5. Fail-Closed：
    - 任一联动项缺失（设计文档、inventory、registry、施工平面）即判定任务未完成，不得宣告 Done 或合入。
+
+## 9. 发布隔离与默认落盘策略（新增，强制）
+
+> 目标：确保 ANC v2 公开发布时仅包含通用资产，不夹带私有数据、测试噪声和非标准资产。
+
+1. 默认运行数据落盘目录（强制）：
+   - 流程执行证据、业务数据、Agent 工作记忆默认写入 `runtime_data/`。
+   - 禁止将运行产物默认写入 `docs/design/modules/evidence/`、`agents/*/memory/` 等版本控制目录。
+2. 白名单发布原则（强制）：
+   - `docs/design/modules/evidence/` 仅允许保留“已脱敏、可公开”的案例/模板。
+   - 未经过脱敏与审批的运行数据不得入库。
+3. 资产隔离原则（强制）：
+   - 标准发布资产仅允许位于 `agents/`、`skills/`、`processes/` 并进入 registry。
+   - 私有/实验/验证资产默认放在 `runtime_data/private-assets/{agents,skills,processes}/`，禁止进入 registry 与 OpenClaw 片段配置。
+4. 提交前最小校验（强制）：
+   - `git status --short`
+   - `python3 tools/release/generate_release_whitelist.py --strict`
+   - `python3 shared/registry/registry_contract_tool.py verify`
+   - `rg -n "runtime_data/private-assets" shared/registry config/openclaw.phase05*.fragment.json`
+   - `python3 tools/release/release_isolation_gate.py`
+   - 发布前追加：`python3 tools/release/release_isolation_gate.py --verify-openclaw`
+5. Fail-Closed：
+   - 若发现私有数据或非标准资产进入可发布路径，必须先隔离/回退，再继续开发或宣告 Done。

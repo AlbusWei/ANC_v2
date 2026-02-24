@@ -79,9 +79,9 @@
 
 ## W3-B 运行级证据
 
-1. HOLD 路由 case：`docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/`
-2. 子流程输出：`docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance_output.json`
-3. 治理闭环输出：`docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance/p5_hold_resolution.json`
+1. HOLD 路由 case：`runtime_data/execution/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/`
+2. 子流程输出：`runtime_data/execution/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance_output.json`
+3. 治理闭环输出：`runtime_data/execution/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance/p5_hold_resolution.json`
 
 <!-- phase-semantics-v2:start -->
 ## 阶段协作语义补充（v2）

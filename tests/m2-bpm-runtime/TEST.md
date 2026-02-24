@@ -19,10 +19,10 @@ W5 收口要求执行真实 live regression，并以 Fail-Closed 规则判定是
 
 ## Evidence Inputs
 
-- Preconditions evidence: `docs/design/modules/evidence/bpm-runtime/precheck_apply_ready_evidence.md`
-- Round map: `docs/design/modules/evidence/bpm-runtime/checkpoint_commit_map.jsonl`
-- Commit range: `docs/design/modules/evidence/bpm-runtime/git_range.txt`
-- Live plan: `docs/design/modules/evidence/bpm-runtime/m6_live_regression_plan.md`
+- Preconditions evidence: `runtime_data/execution/evidence/bpm-runtime/precheck_apply_ready_evidence.md`
+- Round map: `runtime_data/execution/evidence/bpm-runtime/checkpoint_commit_map.jsonl`
+- Commit range: `runtime_data/execution/evidence/bpm-runtime/git_range.txt`
+- Live plan: `runtime_data/execution/evidence/bpm-runtime/m6_live_regression_plan.md`
 
 ## Fail-Closed Policy
 
@@ -92,7 +92,7 @@ Each JSONL record in `checkpoint_commit_map.jsonl` must include:
 
 ## Minimal Execution Contract
 
-1. Ensure evidence directory exists: `docs/design/modules/evidence/bpm-runtime/`.
+1. Ensure evidence directory exists: `runtime_data/execution/evidence/bpm-runtime/`.
 2. Collect git range and write `git_range.txt` before live run.
 3. Execute online suite + W1/W2/W3/W3-B/W3-D/W5 suites via post-dev regression and persist output evidence.
 4. Reconcile checkpoint/commit mapping before declaring done.

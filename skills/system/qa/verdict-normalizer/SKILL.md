@@ -87,10 +87,10 @@ references:
 
 ```bash
 python3 skills/system/qa/verdict-normalizer/scripts/normalize_verdict.py \
-  --objective-eval docs/design/modules/evidence/quality-gate/smoke/objective_eval.json \
-  --regression-eval docs/design/modules/evidence/quality-gate/smoke/regression_eval.json \
-  --aggregation-rules docs/design/modules/evidence/quality-gate/smoke/aggregation_rules.json \
-  --output-dir docs/design/modules/evidence/quality-gate/smoke/verdict-normalizer
+  --objective-eval runtime_data/execution/evidence/quality-gate/smoke/objective_eval.json \
+  --regression-eval runtime_data/execution/evidence/quality-gate/smoke/regression_eval.json \
+  --aggregation-rules runtime_data/execution/evidence/quality-gate/smoke/aggregation_rules.json \
+  --output-dir runtime_data/execution/evidence/quality-gate/smoke/verdict-normalizer
 ```
 
 ## Fail-Closed Rules

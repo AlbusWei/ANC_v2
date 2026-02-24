@@ -193,7 +193,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--round-dir",
         default=None,
-        help="Round evidence directory (repo-relative). Default docs/design/modules/evidence/construction-plane/<round_id>",
+        help="Round evidence directory (repo-relative). Default runtime_data/execution/evidence/construction-plane/<round_id>",
     )
     parser.add_argument("--git-range", default=None, help="Optional git range for trailer checks")
     parser.add_argument(
@@ -235,7 +235,7 @@ def main() -> int:
     if not isinstance(changed_assets, list) or not changed_assets:
         raise RoundRunError("changed_assets must be non-empty list")
 
-    round_dir_rel = args.round_dir or f"docs/design/modules/evidence/construction-plane/{round_id}"
+    round_dir_rel = args.round_dir or f"runtime_data/execution/evidence/construction-plane/{round_id}"
     round_dir = root / round_dir_rel
     round_dir.mkdir(parents=True, exist_ok=True)
 

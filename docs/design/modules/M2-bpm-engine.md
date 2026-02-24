@@ -81,9 +81,9 @@
 2. Event runner：`processes/control/trigger-event-runtime/scripts/trigger_event_runtime_runner.py`
 3. 回归入口：`tests/m2-bpm-runtime/run_tc_tg.py`
 4. 证据汇总：
-   - `docs/design/modules/evidence/bpm-runtime/w3_tc_tg_report.json`
-   - `docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/`
-   - `docs/design/modules/evidence/bpm-runtime/w3_execution_summary.md`
+   - `runtime_data/execution/evidence/bpm-runtime/w3_tc_tg_report.json`
+   - `runtime_data/execution/evidence/bpm-runtime/w3_trigger_runtime_cases/`
+   - `runtime_data/execution/evidence/bpm-runtime/w3_execution_summary.md`
 
 ## W4 一致性收口（流程标准对齐）
 

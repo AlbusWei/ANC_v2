@@ -248,12 +248,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--report",
-        default="docs/design/modules/evidence/bpm-runtime/w3_tc_tg_report.json",
+        default="runtime_data/execution/evidence/bpm-runtime/w3_tc_tg_report.json",
         help="repo-relative report output path",
     )
     parser.add_argument(
         "--evidence-root",
-        default="docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases",
+        default="runtime_data/execution/evidence/bpm-runtime/w3_trigger_runtime_cases",
         help="repo-relative evidence root",
     )
     parser.add_argument(

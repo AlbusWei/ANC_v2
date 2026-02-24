@@ -1,9 +1,0 @@
-[prep] rc=0
-cmd: /Library/Developer/CommandLineTools/usr/bin/python3 processes/meta/quality-gate-preparation/scripts/quality_gate_preparation_runner.py --input docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-004/prep_input.json --output docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-004/prep_output.json --evidence-dir docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-004/preparation --run-id TC-M1-CHAIN-004-prep --profile-set quality-gate.baseline@1.0.0
-stdout: docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-004/prep.stdout.txt
-stderr: docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-004/prep.stderr.txt
-
-[eval] rc=0
-cmd: /Library/Developer/CommandLineTools/usr/bin/python3 processes/meta/quality-gate-evaluation/scripts/quality_gate_evaluation_runner.py --input docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-004/eval_input.json --output docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-004/eval_output.json --evidence-dir docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-004/evaluation --run-id TC-M1-CHAIN-004-eval
-stdout: docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-004/eval.stdout.txt
-stderr: docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-004/eval.stderr.txt

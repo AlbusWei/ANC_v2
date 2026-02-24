@@ -95,7 +95,7 @@ python3 skills/system/qa/evidence-archiver/scripts/archive_evidence.py \
   --gate-decision pass \
   --actor qa \
   --reason smoke_pass \
-  --output-dir docs/design/modules/evidence/quality-gate/smoke/evidence-archiver
+  --output-dir runtime_data/execution/evidence/quality-gate/smoke/evidence-archiver
 ```
 
 ## Fail-Closed Rules

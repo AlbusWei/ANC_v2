@@ -140,12 +140,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--report",
-        default="docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_report.json",
+        default="runtime_data/execution/evidence/bpm-runtime/w2_tc_gcc_report.json",
         help="Repo-relative report output path",
     )
     parser.add_argument(
         "--evidence-root",
-        default="docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases",
+        default="runtime_data/execution/evidence/bpm-runtime/w2_tc_gcc_cases",
         help="Repo-relative evidence root for case artifacts",
     )
     parser.add_argument(

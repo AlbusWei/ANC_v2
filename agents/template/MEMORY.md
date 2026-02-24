@@ -9,5 +9,5 @@
 ## Update Rules
 
 1. 只记录跨会话稳定信息。
-2. 不记录临时执行细节（放到 `memory/YYYY-MM-DD.md`）。
+2. 不记录临时执行细节（放到 `runtime_data/agent-memory/<agent-id>/YYYY-MM-DD.md`）。
 3. 每次重大决策后同步更新。

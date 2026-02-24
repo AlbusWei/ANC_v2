@@ -174,10 +174,10 @@
    - `python3 shared/registry/registry_contract_tool.py verify`：pass
    - `openspec validate m3-meta-asset-quality-hardening --json`：pass
 4. 证据索引：
-   - `docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase6_execution_rounds.json`
-   - `docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase6_defect_closure.json`
-   - `docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase6_defect_closure.md`
-   - `docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase6_final_conclusion.md`
+   - `runtime_data/execution/evidence/self-development/runtime-validation-round-meta-assets/latest/phase6_execution_rounds.json`
+   - `runtime_data/execution/evidence/self-development/runtime-validation-round-meta-assets/latest/phase6_defect_closure.json`
+   - `runtime_data/execution/evidence/self-development/runtime-validation-round-meta-assets/latest/phase6_defect_closure.md`
+   - `runtime_data/execution/evidence/self-development/runtime-validation-round-meta-assets/latest/phase6_final_conclusion.md`
 
 ## 7. Phase7（收口与状态推进到 review）
 
@@ -209,7 +209,7 @@
 1. 最终门禁：
    - `python3 shared/registry/registry_contract_tool.py verify`：pass
    - `openspec validate m3-meta-asset-quality-hardening --json`：pass
-   - `python3 tests/m3-self-development/run_meta_qa_online.py --suite final-regression`：pass（`112/112`，`run_root=docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260224T114948Z`）
+   - `python3 tests/m3-self-development/run_meta_qa_online.py --suite final-regression`：pass（`112/112`，`run_root=runtime_data/execution/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260224T114948Z`）
 2. bundle 运行面排查：
    - `rg -n "ap-[0-9].*-bundle" processes/meta shared/registry docs/design`：0 命中（exit=1，符合零匹配预期）。
 3. 生命周期收敛（Meta 资产）：
@@ -217,9 +217,9 @@
    - Meta Processes（20）统一收敛到 `review`，`draft=0`，`active=0`。
    - 本回合推进：`escalation`、`governed-config-change`、`registry-sync`（`draft -> review`）。
 4. 四向对账证据：
-   - `docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase7_four_way_reconciliation.json`
-   - `docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase7_four_way_reconciliation.md`
-   - `docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase7_lifecycle_summary.json`
+   - `runtime_data/execution/evidence/self-development/runtime-validation-round-meta-assets/latest/phase7_four_way_reconciliation.json`
+   - `runtime_data/execution/evidence/self-development/runtime-validation-round-meta-assets/latest/phase7_four_way_reconciliation.md`
+   - `runtime_data/execution/evidence/self-development/runtime-validation-round-meta-assets/latest/phase7_lifecycle_summary.json`
 
 ## 8. Phase8（流程协作骨架 v1 + QA 试点，新增）
 
@@ -317,7 +317,7 @@
 1. `python3 tests/m2-bpm-runtime/run_tc_hotfix_refactor_proc.py`：`2/2 pass`。
 2. `TC-HOTFIX-PROC-001`：`phase_count=7`，`dispatch_checks` 全通过，`actor_isolation_ok=true`。
 3. `TC-REFACTOR-PROC-001`：`phase_count=6`，`dispatch_checks` 全通过，`actor_isolation_ok=true`。
-4. 证据索引：`docs/design/modules/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json`。
+4. 证据索引：`runtime_data/execution/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json`。
 
 ## 10. Phase10（全量 AP 语义统一 + inline_ap 语法糖，新增）
 

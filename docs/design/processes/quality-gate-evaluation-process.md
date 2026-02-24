@@ -96,9 +96,9 @@
 
 ## W3-B 运行级证据
 
-1. 套件报告：`docs/design/modules/evidence/bpm-runtime/w3b_tc_qa_proc_report.json`
-2. 主链路证据：`docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-001/`
-3. HOLD 路由证据：`docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/`
+1. 套件报告：`runtime_data/execution/evidence/bpm-runtime/w3b_tc_qa_proc_report.json`
+2. 主链路证据：`runtime_data/execution/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-001/`
+3. HOLD 路由证据：`runtime_data/execution/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/`
 
 <!-- phase-semantics-v2:start -->
 ## 阶段协作语义补充（v2）

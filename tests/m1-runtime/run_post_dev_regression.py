@@ -443,7 +443,7 @@ def run_tc_002(
         {
             "objective_ref": "obj-m1-unified-quality-gate",
             "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
-            "test_doc_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md",
+            "test_doc_ref": "runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md",
         },
     )
     dump_json(
@@ -1000,27 +1000,27 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--test-doc-ref",
-        default="docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md",
+        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md",
         help="Repo-relative TEST doc fixture",
     )
     parser.add_argument(
         "--actual-output-ref",
-        default="docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_pass.txt",
+        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_pass.txt",
         help="Repo-relative actual output fixture",
     )
     parser.add_argument(
         "--hold-case-ref",
-        default="docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/hold_case.json",
+        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/hold_case.json",
         help="Repo-relative hold case fixture",
     )
     parser.add_argument(
         "--execution-state-ref",
-        default="docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/execution_state.json",
+        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/execution_state.json",
         help="Repo-relative execution state fixture",
     )
     parser.add_argument(
         "--triage-policy-ref",
-        default="docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/triage_policy.json",
+        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/triage_policy.json",
         help="Repo-relative triage policy fixture",
     )
     parser.add_argument(
@@ -1030,17 +1030,17 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--evidence-root",
-        default="docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure",
+        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure",
         help="Repo-relative evidence root directory",
     )
     parser.add_argument(
         "--report",
-        default="docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/runtime_summary.json",
+        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/runtime_summary.json",
         help="Repo-relative summary json output path",
     )
     parser.add_argument(
         "--markdown-report",
-        default="docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/runtime_summary.md",
+        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/runtime_summary.md",
         help="Repo-relative summary markdown output path",
     )
     return parser.parse_args()

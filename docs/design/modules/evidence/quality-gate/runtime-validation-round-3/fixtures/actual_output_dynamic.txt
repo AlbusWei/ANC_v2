@@ -1,2 +1,0 @@
-gate_decision=pass
-evidence_ref=docs/design/modules/evidence/quality-gate/runtime-validation-round-3easons=["all checks passed"]

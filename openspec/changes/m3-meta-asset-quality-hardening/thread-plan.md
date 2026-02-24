@@ -205,9 +205,9 @@
    - `python3 shared/registry/registry_contract_tool.py verify`：pass
    - `openspec validate m3-meta-asset-quality-hardening --json`：pass
 6. 证据入口：
-   - `docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase6_execution_rounds.json`
-   - `docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase6_defect_closure.json`
-   - `docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase6_final_conclusion.md`
+   - `runtime_data/execution/evidence/self-development/runtime-validation-round-meta-assets/latest/phase6_execution_rounds.json`
+   - `runtime_data/execution/evidence/self-development/runtime-validation-round-meta-assets/latest/phase6_defect_closure.json`
+   - `runtime_data/execution/evidence/self-development/runtime-validation-round-meta-assets/latest/phase6_final_conclusion.md`
 
 ## P7 收口
 
@@ -246,12 +246,12 @@
 3. 最终门禁通过：
    - `python3 shared/registry/registry_contract_tool.py verify`
    - `openspec validate m3-meta-asset-quality-hardening --json`
-   - `python3 tests/m3-self-development/run_meta_qa_online.py --suite final-regression`（`112/112`，`run_root=docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260224T114948Z`）
+   - `python3 tests/m3-self-development/run_meta_qa_online.py --suite final-regression`（`112/112`，`run_root=runtime_data/execution/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260224T114948Z`）
 4. bundle 运行面检查通过：
    - `rg -n "ap-[0-9].*-bundle" processes/meta shared/registry docs/design` 无命中。
 5. 证据入口：
-   - `docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase7_four_way_reconciliation.json`
-   - `docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase7_lifecycle_summary.json`
+   - `runtime_data/execution/evidence/self-development/runtime-validation-round-meta-assets/latest/phase7_four_way_reconciliation.json`
+   - `runtime_data/execution/evidence/self-development/runtime-validation-round-meta-assets/latest/phase7_lifecycle_summary.json`
 
 ## P8 流程协作骨架 v1（QA 试点，新增）
 

@@ -1,6 +1,0 @@
-{
-  "status": "ok",
-  "trigger_id": "trg-f4645121047cf4b4faa1",
-  "canonical_trigger_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-004/p1_canonical.json",
-  "normalization_report_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-004/p1_report.json"
-}

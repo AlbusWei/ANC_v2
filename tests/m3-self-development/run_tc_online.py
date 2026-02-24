@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Set
 
 
-DEFAULT_EVIDENCE_ROOT = Path("docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest")
+DEFAULT_EVIDENCE_ROOT = Path("runtime_data/execution/evidence/self-development/e2e-online/session4-foundation/latest")
 DEFAULT_REPORT_NAME = "session4_tc_online_report.json"
 DEFAULT_MARKDOWN_NAME = "session4_tc_online_summary.md"
 

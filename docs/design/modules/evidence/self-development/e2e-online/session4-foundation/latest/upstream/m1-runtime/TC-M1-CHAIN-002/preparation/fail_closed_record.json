@@ -1,6 +1,0 @@
-{
-  "timestamp": "2026-02-23T13:01:11Z",
-  "status": "failed",
-  "reason": "missing required input fields: risk_focus",
-  "fail_closed": true
-}

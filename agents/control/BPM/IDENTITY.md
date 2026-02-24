@@ -9,5 +9,5 @@
 
 ## Runtime Paths
 
-- process_instances: agents/control/BPM/memory/process_instances
-- archive: agents/control/BPM/memory/process_instances/archive
+- process_instances: runtime_data/process-instances/
+- archive: runtime_data/process-instances/archive/

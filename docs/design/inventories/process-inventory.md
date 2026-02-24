@@ -156,7 +156,7 @@ Session3 已落地治理流程设计文档与运行资产：
    - `processes/meta/quality-gate-evaluation/scripts/quality_gate_evaluation_runner.py`
    - `processes/meta/hold-governance/scripts/hold_governance_runner.py`
 3. 运行级测试入口：`tests/m2-bpm-runtime/run_tc_qa_proc.py`，覆盖 `TC-QA-PROC-001~002`。
-4. 证据落盘：`docs/design/modules/evidence/bpm-runtime/w3b_tc_qa_proc_report.json` 与 `docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/`。
+4. 证据落盘：`runtime_data/execution/evidence/bpm-runtime/w3b_tc_qa_proc_report.json` 与 `runtime_data/execution/evidence/bpm-runtime/w3b_qa_process_cases/`。
 
 ## W5 联动备注（M2 BPM Runtime Hardening）
 
@@ -172,7 +172,7 @@ Session3 已落地治理流程设计文档与运行资产：
 
 ## Thread-4 联动备注（M1 Quality Gate Runtime Closure）
 
-1. `lifecycle-review` 生命周期由 `draft` 推进到 `review`（证据：`docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle_output.json` 状态 `succeeded`）。
+1. `lifecycle-review` 生命周期由 `draft` 推进到 `review`（证据：`runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle_output.json` 状态 `succeeded`）。
 2. 本轮仅推进到 `review`，不推进 `active`；`review->active` 仍需观测窗口与回滚演练证据。
 
 ## W8 联动备注（M3 协作骨架扩展：full-development）
@@ -201,8 +201,8 @@ Session3 已落地治理流程设计文档与运行资产：
    - `tests/m2-bpm-runtime/run_tc_hotfix_refactor_proc.py`
    - 覆盖 `TC-HOTFIX-PROC-001`、`TC-REFACTOR-PROC-001`
 5. 证据索引：
-   - `docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/`
-   - `docs/design/modules/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json`
+   - `runtime_data/execution/evidence/bpm-runtime/w3d_hotfix_refactor_cases/`
+   - `runtime_data/execution/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json`
 
 ## W11 联动备注（M3 协作骨架扩展：development-process）
 

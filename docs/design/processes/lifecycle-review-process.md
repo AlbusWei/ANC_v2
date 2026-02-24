@@ -74,9 +74,9 @@
 
 ## Thread-4 运行证据（状态推进依据）
 
-1. `docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle_output.json`：流程执行状态 `succeeded`。
-2. `docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle/lifecycle_review_report.json`：phase trace `p1~p5` 全部 pass。
-3. `docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle/p5_registry_sync.json`：registry verify return_code=0。
+1. `runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle_output.json`：流程执行状态 `succeeded`。
+2. `runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle/lifecycle_review_report.json`：phase trace `p1~p5` 全部 pass。
+3. `runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle/p5_registry_sync.json`：registry verify return_code=0。
 4. 基于上述证据，本轮仅将流程生命周期推进到 `review`，不推进 `active`。
 
 <!-- phase-semantics-v2:start -->

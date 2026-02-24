@@ -1,1 +1,0 @@
-{"gate_decision": "pass", "reasons": ["all_evals_pass"], "evidence_ref": "docs/design/modules/evidence/quality-gate/smoke/verdict-normalizer", "final_gate_verdict_ref": "docs/design/modules/evidence/quality-gate/smoke/verdict-normalizer/final_gate_verdict.json", "aggregation_trace_ref": "docs/design/modules/evidence/quality-gate/smoke/verdict-normalizer/aggregation_trace.json"}

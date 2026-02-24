@@ -106,7 +106,7 @@ def main() -> int:
                     "methodology_ref": "docs/architecture/test_methodology.md",
                 },
             },
-            "review_evidence_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/",
+            "review_evidence_ref": "runtime_data/execution/evidence/self-development/e2e-online/session4-foundation/latest/",
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "exit_code": EXIT_SUCCESS,
         }

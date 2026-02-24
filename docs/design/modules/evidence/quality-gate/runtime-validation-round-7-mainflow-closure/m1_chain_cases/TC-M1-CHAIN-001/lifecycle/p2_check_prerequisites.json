@@ -1,8 +1,0 @@
-{
-  "timestamp": "2026-02-22T19:01:45Z",
-  "phase": "check-prerequisites",
-  "status": "pass",
-  "current_status": "review",
-  "requested_to_status": "active",
-  "target_asset_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m1_chain_cases/TC-M1-CHAIN-001/target_asset_snapshot.json"
-}

@@ -1,1 +1,0 @@
-docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/TC-M1-SERVICE-001/prep_output.json

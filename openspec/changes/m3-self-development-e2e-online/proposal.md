@@ -26,7 +26,7 @@
   - `openspec/changes/m3-self-development-e2e-online/*`
   - `openspec/changes/m3-self-development-e2e-online/specs/**/spec.md`
   - `docs/architecture/construction_plane.md`
-  - `docs/design/modules/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/*`
+  - `runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/*`
 - Affected governance:
   - Session1 仅建立“设计闭合 + 资产落地”执行契约，不触发功能实现。
 - Affected lifecycle:

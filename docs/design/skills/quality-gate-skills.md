@@ -105,12 +105,12 @@
 1. 本轮完成 `sys.qa.*` 七个技能资产标准化与最小脚本化实现。
 2. 同步完成目录迁移到 `skills/system/qa/*`，并完成 registry 路径闭合。
 3. review/active 证据：
-   - `docs/design/modules/evidence/quality-gate/review-round-1.md`
-   - `docs/design/modules/evidence/quality-gate/active-pilot-round-1.md`
-   - `docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/runtime_summary.json`
-   - `docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/runtime_summary.json`
-   - `docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/runtime_summary.json`
-   - `docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/runtime_summary.json`
+   - `runtime_data/execution/evidence/quality-gate/review-round-1.md`
+   - `runtime_data/execution/evidence/quality-gate/active-pilot-round-1.md`
+   - `runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/outputs/runtime_summary.json`
+   - `runtime_data/execution/evidence/quality-gate/runtime-validation-round-3/outputs/runtime_summary.json`
+   - `runtime_data/execution/evidence/quality-gate/runtime-validation-round-4/outputs/runtime_summary.json`
+   - `runtime_data/execution/evidence/quality-gate/runtime-validation-round-5/outputs/runtime_summary.json`
 4. runtime-validation-round-2 关键结论：
    - objective/regression 链路通过 OpenJudge 真执行产出 `pass`
    - subjective A/B 在平局时产出 `hold`（`review`）

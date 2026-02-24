@@ -62,9 +62,9 @@
 Quality Gate 技能包设计文档：
 
 - `docs/design/skills/quality-gate-skills.md`
-- 运行级验证证据：`docs/design/modules/evidence/quality-gate/runtime-validation-round-2.md`
-- 严格模型配置验证证据：`docs/design/modules/evidence/quality-gate/runtime-validation-round-3.md`
-- LLM-as-Judge 跑通验证证据：`docs/design/modules/evidence/quality-gate/runtime-validation-round-4.md`
+- 运行级验证证据：`runtime_data/execution/evidence/quality-gate/runtime-validation-round-2.md`
+- 严格模型配置验证证据：`runtime_data/execution/evidence/quality-gate/runtime-validation-round-3.md`
+- LLM-as-Judge 跑通验证证据：`runtime_data/execution/evidence/quality-gate/runtime-validation-round-4.md`
 
 BPM Runtime 技能包设计文档：
 

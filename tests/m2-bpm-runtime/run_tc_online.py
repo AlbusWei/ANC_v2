@@ -67,7 +67,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run TC-ONLINE-001~004")
     parser.add_argument(
         "--report",
-        default="docs/design/modules/evidence/bpm-runtime/w5_tc_online_report.json",
+        default="runtime_data/execution/evidence/bpm-runtime/w5_tc_online_report.json",
         help="Repo-relative report output path",
     )
     parser.add_argument(

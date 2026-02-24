@@ -1,8 +1,0 @@
-{
-  "release_package_ref": "",
-  "changelog_ref": "",
-  "release_decision": "blocked",
-  "rollback_bundle_ref": "",
-  "reason_code": "registry_sync_failed",
-  "generated_at": "2026-02-23T13:01:14Z"
-}

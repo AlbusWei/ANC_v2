@@ -1,4 +1,0 @@
-{
-  "precedence": ["fail", "hold", "test_invalid", "pass"],
-  "notes": "P0 fail precedence is enforced by verdict-normalizer logic"
-}

@@ -1,1 +1,0 @@
-python3 tests/m3-runtime/run_skill_contract_validation.py --evidence-root docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m3-runtime --report skill_contract_validation_report.json

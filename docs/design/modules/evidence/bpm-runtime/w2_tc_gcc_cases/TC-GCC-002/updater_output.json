@@ -1,8 +1,0 @@
-{
-  "hash_before": "29063f39b97da3245fe50449c833afcdffc2c3aed76311f995803fbf19dfa733",
-  "hash_after": "29063f39b97da3245fe50449c833afcdffc2c3aed76311f995803fbf19dfa733",
-  "execution_status": "failed",
-  "reason": "base_hash mismatch",
-  "failure_code": "base_hash_mismatch",
-  "receipt_ref": "docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-002/change_receipt.json"
-}

@@ -1,7 +1,0 @@
-{
-  "command": "python3 skills/meta/agent-creator/scripts/agent_creator_runner.py --input docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260224T114948Z/cases/MS-AGENT-CREATOR-HP/input.json --output docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260224T114948Z/cases/MS-AGENT-CREATOR-HP/output.json --report docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260224T114948Z/cases/MS-AGENT-CREATOR-HP/runner_report.json",
-  "return_code": 0,
-  "generated_at": "2026-02-24T11:59:10Z",
-  "stdout_ref": "stdout.txt",
-  "stderr_ref": "stderr.txt"
-}

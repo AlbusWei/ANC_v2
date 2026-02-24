@@ -1,9 +1,0 @@
-{
-  "event_id": "sch-002",
-  "canonical_event": "internal.schedule.tick",
-  "entity_type": "module",
-  "entity_id": "M2",
-  "from_status": "active",
-  "to_status": "active",
-  "emitted_by": "scheduler"
-}

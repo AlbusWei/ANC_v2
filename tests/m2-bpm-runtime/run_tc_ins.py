@@ -53,7 +53,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--report",
-        default="docs/design/modules/evidence/bpm-runtime/w1_tc_ins_report.json",
+        default="runtime_data/execution/evidence/bpm-runtime/w1_tc_ins_report.json",
         help="repo-relative report output path",
     )
     parser.add_argument(
@@ -68,12 +68,12 @@ def main() -> int:
     )
     parser.add_argument(
         "--migration-report",
-        default="docs/design/modules/evidence/bpm-runtime/w1_migration_report.json",
+        default="runtime_data/execution/evidence/bpm-runtime/w1_migration_report.json",
         help="repo-relative migration report path",
     )
     parser.add_argument(
         "--replay-report",
-        default="docs/design/modules/evidence/bpm-runtime/w1_replay_report.json",
+        default="runtime_data/execution/evidence/bpm-runtime/w1_replay_report.json",
         help="repo-relative replay report path",
     )
     parser.add_argument(

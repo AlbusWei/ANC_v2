@@ -97,7 +97,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--evidence-dir",
         default="",
-        help="Evidence directory path (repo-relative). Default docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/<run_id>/quality-gate-preparation",
+        help="Evidence directory path (repo-relative). Default runtime_data/execution/evidence/bpm-runtime/w3b_qa_process_cases/<run_id>/quality-gate-preparation",
     )
     parser.add_argument(
         "--run-id",
@@ -124,7 +124,7 @@ def main() -> int:
     evidence_dir = resolve_path(
         root,
         args.evidence_dir.strip()
-        or f"docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/{run_id}/quality-gate-preparation",
+        or f"runtime_data/execution/evidence/bpm-runtime/w3b_qa_process_cases/{run_id}/quality-gate-preparation",
     )
     evidence_dir.mkdir(parents=True, exist_ok=True)
 

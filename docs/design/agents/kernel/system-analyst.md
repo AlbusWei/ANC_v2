@@ -158,15 +158,15 @@
 ## 10. 上下文与记忆策略
 
 - 持久记忆目录：`agents/kernel/system-analyst/memory/`
-- 运行证据目录：`docs/design/modules/evidence/bpm-runtime/`
+- 运行证据目录：`runtime_data/execution/evidence/bpm-runtime/`
 - 跨会话传递：仅通过 digest/reject 与流程 evidence 引用，不依赖隐式会话记忆。
 
 ## 11. 测试挂载（生产）
 
 - 用例文档: `tests/m2-bpm-runtime/TC-ANL.md`
 - 执行入口: `tests/m2-bpm-runtime/run_tc_anl.py`
-- 证据目录: `docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/`
-- 汇总报告: `docs/design/modules/evidence/bpm-runtime/w5_tc_anl_report.json`
+- 证据目录: `runtime_data/execution/evidence/bpm-runtime/w5_system_analyst_prod_cases/`
+- 汇总报告: `runtime_data/execution/evidence/bpm-runtime/w5_tc_anl_report.json`
 
 ## 12. DoD（生产）
 

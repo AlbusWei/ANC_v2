@@ -1,7 +1,0 @@
-{
-  "proposal_id": "m5-min-entry-001",
-  "source_module": "M5",
-  "target_gate_module": "M1",
-  "goal": "验证 M5 调用 M1 门禁入口可执行",
-  "requested_by": "analyst"
-}

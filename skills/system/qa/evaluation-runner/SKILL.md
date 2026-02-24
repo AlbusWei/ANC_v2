@@ -97,23 +97,23 @@ references:
 
 ```bash
 skills/system/qa/evaluation-runner/scripts/quality_eval_runner run \
-  --preparation-bundle docs/design/modules/evidence/quality-gate/smoke/preparation_bundle.index.json \
+  --preparation-bundle runtime_data/execution/evidence/quality-gate/smoke/preparation_bundle.index.json \
   --mode objective \
-  --actual-output docs/design/modules/evidence/quality-gate/smoke/actual_output.pass.txt \
+  --actual-output runtime_data/execution/evidence/quality-gate/smoke/actual_output.pass.txt \
   --module M3 \
-  --output-dir docs/design/modules/evidence/quality-gate/smoke/evaluation-runner
+  --output-dir runtime_data/execution/evidence/quality-gate/smoke/evaluation-runner
 ```
 
 LLM-as-Judge（需要环境变量 `OPENAI_API_KEY`）：
 
 ```bash
 skills/system/qa/evaluation-runner/scripts/quality_eval_runner run \
-  --preparation-bundle docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/preparation_bundle_llm.index.json \
+  --preparation-bundle runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/outputs/preparation_bundle_llm.index.json \
   --mode objective \
-  --actual-output docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_pass.txt \
+  --actual-output runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_pass.txt \
   --judge-model gpt-5.3-codex \
   --module M3 \
-  --output-dir docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/evaluation-runner-llm
+  --output-dir runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/outputs/evaluation-runner-llm
 ```
 
 跨分支/worktree 共享凭据（无需每次手工 export）：

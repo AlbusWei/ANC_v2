@@ -1,9 +1,0 @@
-{
-  "timestamp": "2026-02-22T15:50:45Z",
-  "trigger_id": "trg-4bdb3484123e0c957801",
-  "instance_id": "run-development-process-20260222155045-c3b2",
-  "decision": "hit",
-  "actor": "bpm",
-  "evidence_payload_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-001/p4_evidence_payload.json",
-  "session_id": "sess-42d8fba643aa43c4"
-}

@@ -1,4 +1,0 @@
-{
-  "trigger_type": "event",
-  "delivery_policy": "event-driven"
-}

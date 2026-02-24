@@ -58,12 +58,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--report",
-        default="docs/design/modules/evidence/bpm-runtime/w3c_tc_full_dev_proc_report.json",
+        default="runtime_data/execution/evidence/bpm-runtime/w3c_tc_full_dev_proc_report.json",
         help="Repo-relative report output path",
     )
     parser.add_argument(
         "--evidence-root",
-        default="docs/design/modules/evidence/bpm-runtime/w3c_full_development_cases",
+        default="runtime_data/execution/evidence/bpm-runtime/w3c_full_development_cases",
         help="Repo-relative evidence root",
     )
     return parser.parse_args()

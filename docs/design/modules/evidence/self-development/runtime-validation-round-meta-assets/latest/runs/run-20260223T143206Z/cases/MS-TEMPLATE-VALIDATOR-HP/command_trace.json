@@ -1,7 +1,0 @@
-{
-  "command": "python3 skills/meta/template-validator/scripts/template_validator_runner.py --input docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260223T143206Z/cases/MS-TEMPLATE-VALIDATOR-HP/input.json --output docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260223T143206Z/cases/MS-TEMPLATE-VALIDATOR-HP/output.json --report docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260223T143206Z/cases/MS-TEMPLATE-VALIDATOR-HP/runner_report.json",
-  "return_code": 0,
-  "generated_at": "2026-02-23T14:53:06Z",
-  "stdout_ref": "stdout.txt",
-  "stderr_ref": "stderr.txt"
-}

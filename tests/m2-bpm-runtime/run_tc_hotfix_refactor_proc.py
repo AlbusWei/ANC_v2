@@ -108,12 +108,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--report",
-        default="docs/design/modules/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json",
+        default="runtime_data/execution/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json",
         help="Repo-relative report output path",
     )
     parser.add_argument(
         "--evidence-root",
-        default="docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases",
+        default="runtime_data/execution/evidence/bpm-runtime/w3d_hotfix_refactor_cases",
         help="Repo-relative evidence root",
     )
     return parser.parse_args()

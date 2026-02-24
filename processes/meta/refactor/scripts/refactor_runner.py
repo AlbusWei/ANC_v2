@@ -300,7 +300,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--evidence-dir",
         default="",
-        help="Evidence directory path (repo-relative). Default docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/<run_id>/refactor/execution",
+        help="Evidence directory path (repo-relative). Default runtime_data/execution/evidence/bpm-runtime/w3d_hotfix_refactor_cases/<run_id>/refactor/execution",
     )
     parser.add_argument("--run-id", default="", help="Optional run id")
     parser.add_argument("--enable-phase-dispatch", action="store_true", help="Enable phase dispatch")
@@ -382,7 +382,7 @@ def main() -> int:
     run_id = args.run_id.strip() or datetime.now(timezone.utc).strftime("refactor-%Y%m%dT%H%M%SZ")
     evidence_dir = resolve_path(
         root,
-        args.evidence_dir.strip() or f"docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/{run_id}/refactor/execution",
+        args.evidence_dir.strip() or f"runtime_data/execution/evidence/bpm-runtime/w3d_hotfix_refactor_cases/{run_id}/refactor/execution",
     )
     evidence_dir.mkdir(parents=True, exist_ok=True)
 

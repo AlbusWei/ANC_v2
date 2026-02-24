@@ -8,5 +8,5 @@
 
 ## Storage
 
-- Working memory: `agents/kernel/system-analyst/memory/`
-- Evidence linkouts: `docs/design/modules/evidence/bpm-runtime/`
+- Working memory: `runtime_data/agent-memory/system-analyst/`
+- Evidence linkouts: `runtime_data/execution/evidence/bpm-runtime/`

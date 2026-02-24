@@ -10,9 +10,9 @@
 ## 输入证据
 
 1. `openspec/changes/m1-quality-gate-runtime-closure/thread-plan.md`
-2. `docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/round-evidence.jsonl`
-3. `docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/round_close_summary.md`
-4. `docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/thread_handoff.md`
+2. `runtime_data/execution/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/round-evidence.jsonl`
+3. `runtime_data/execution/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/round_close_summary.md`
+4. `runtime_data/execution/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/thread_handoff.md`
 5. `docs/architecture/construction_plane.md`
 
 ## 差距清单（主链路/异常链路/Fail-Closed/回退链路）

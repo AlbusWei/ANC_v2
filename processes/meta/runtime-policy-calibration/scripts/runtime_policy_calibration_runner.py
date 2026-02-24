@@ -131,7 +131,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--evidence-dir",
         default="",
-        help="Evidence directory path (repo-relative). Default docs/design/modules/evidence/bpm-runtime/w5_runtime_policy_cases/<run_id>",
+        help="Evidence directory path (repo-relative). Default runtime_data/execution/evidence/bpm-runtime/w5_runtime_policy_cases/<run_id>",
     )
     parser.add_argument("--run-id", default="", help="Optional run id for evidence directory naming")
     parser.add_argument(
@@ -153,7 +153,7 @@ def main() -> int:
     run_id = args.run_id.strip() or datetime.now(timezone.utc).strftime("rpc-%Y%m%dT%H%M%SZ")
     evidence_dir = resolve_path(
         root,
-        args.evidence_dir.strip() or f"docs/design/modules/evidence/bpm-runtime/w5_runtime_policy_cases/{run_id}",
+        args.evidence_dir.strip() or f"runtime_data/execution/evidence/bpm-runtime/w5_runtime_policy_cases/{run_id}",
     )
     evidence_dir.mkdir(parents=True, exist_ok=True)
 

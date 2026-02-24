@@ -22,7 +22,7 @@ metadata:
    - `config/openclaw.phase05.with-entry.fragment.json`
    - `shared/registry/registry_contract_tool.py`
 2. 执行切换：
-   - `python3 tools/openclaw/switch_workspace.py --repo-root <目标仓库或worktree根目录>`
+   - `python3 tools/openclaw/switch_workspace.py --repo-root <目标仓库或worktree根目录> --scope dev`
 3. 执行最小校验：
    - `openclaw config get agents.defaults.repoRoot --json`
    - `openclaw config get agents.list --json`
@@ -35,11 +35,24 @@ metadata:
 
 ```bash
 # 切到主仓
-python3 tools/openclaw/switch_workspace.py --repo-root /Users/albus/MyProjects/ANC_v2
+python3 tools/openclaw/switch_workspace.py --repo-root /Users/albus/MyProjects/ANC_v2 --scope dev
 
 # 切到示例 worktree
 python3 tools/openclaw/switch_workspace.py \
-  --repo-root /Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules
+  --repo-root /Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules \
+  --scope dev
+
+# 切到公开发布模式（最小 agent 集）
+python3 tools/openclaw/switch_workspace.py \
+  --repo-root /Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules \
+  --scope public
+
+# dev 模式加载私有资产 overlay（若存在）
+python3 tools/openclaw/switch_workspace.py \
+  --repo-root /Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules \
+  --scope dev \
+  --enable-private-assets \
+  --private-overlay runtime_data/private-assets/openclaw.overlay.json
 
 # 只预览 patch
 python3 tools/openclaw/switch_workspace.py \

@@ -1,1 +1,0 @@
-{"evidence_ref": "docs/design/modules/evidence/quality-gate/smoke/evidence-archiver", "evidence_index_ref": "docs/design/modules/evidence/quality-gate/smoke/evidence-archiver/index.json", "archive_report_ref": "docs/design/modules/evidence/quality-gate/smoke/evidence-archiver/reports/archive_report.json", "gate_decision": "pass", "reasons": ["smoke_pass"]}

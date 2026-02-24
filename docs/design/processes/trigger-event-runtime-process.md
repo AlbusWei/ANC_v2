@@ -88,9 +88,9 @@
 
 ## 运行证据落盘（W3-A）
 
-1. 用例证据目录：`docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-*`
-2. 汇总报告：`docs/design/modules/evidence/bpm-runtime/w3_tc_tg_report.json`
-3. 执行总结：`docs/design/modules/evidence/bpm-runtime/w3_execution_summary.md`
+1. 用例证据目录：`runtime_data/execution/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-EVT-*`
+2. 汇总报告：`runtime_data/execution/evidence/bpm-runtime/w3_tc_tg_report.json`
+3. 执行总结：`runtime_data/execution/evidence/bpm-runtime/w3_execution_summary.md`
 
 ## 依赖流程
 

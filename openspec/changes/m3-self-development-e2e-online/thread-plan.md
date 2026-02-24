@@ -24,7 +24,7 @@
 - 输出:
   - `openspec/changes/m3-self-development-e2e-online/{proposal.md,design.md,tasks.md,thread-plan.md,m3-gap-baseline.md}`
   - `openspec/changes/m3-self-development-e2e-online/specs/**/spec.md`
-  - `docs/design/modules/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/{scope_baseline.md,open_questions.md,thread_handoff.md,round-evidence.jsonl}`
+  - `runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/{scope_baseline.md,open_questions.md,thread_handoff.md,round-evidence.jsonl}`
   - `docs/architecture/construction_plane.md`（Session2~Session7 DoD 专节）
 - DoD:
   - `openspec validate m3-self-development-e2e-online --json` pass。

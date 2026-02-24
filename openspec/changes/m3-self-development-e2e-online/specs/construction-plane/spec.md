@@ -14,6 +14,6 @@ Session1 MUST initialize a new M6 evidence directory and persist a valid `round_
 
 #### Scenario: Session1 writes baseline evidence files
 - **WHEN** Session1 creates the M6 evidence baseline
-- **THEN** directory `docs/design/modules/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/` exists
+- **THEN** directory `runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/` exists
 - **AND** it contains `scope_baseline.md`、`open_questions.md`、`thread_handoff.md`、`round-evidence.jsonl`
 - **AND** the first JSONL record has `event=round_open` with matching `round_id` and `openspec_ref`

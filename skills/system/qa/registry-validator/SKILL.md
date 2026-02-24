@@ -85,7 +85,7 @@ references:
 python3 skills/system/qa/registry-validator/scripts/validate_registry.py \
   --registry-tool shared/registry/registry_contract_tool.py \
   --verify-scope skill_registry \
-  --output-dir docs/design/modules/evidence/quality-gate/smoke/registry-validator
+  --output-dir runtime_data/execution/evidence/quality-gate/smoke/registry-validator
 ```
 
 ## Fail-Closed Rules

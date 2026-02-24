@@ -94,11 +94,11 @@ references:
 
 ```bash
 python3 skills/system/qa/hold-triage/scripts/hold_triage.py \
-  --hold-case docs/design/modules/evidence/quality-gate/smoke/hold_case.json \
-  --runtime-log docs/design/modules/evidence/quality-gate/smoke/runtime.log \
-  --execution-state docs/design/modules/evidence/quality-gate/smoke/execution_state.json \
-  --triage-policy docs/design/modules/evidence/quality-gate/smoke/triage_policy.json \
-  --output-dir docs/design/modules/evidence/quality-gate/smoke/hold-triage
+  --hold-case runtime_data/execution/evidence/quality-gate/smoke/hold_case.json \
+  --runtime-log runtime_data/execution/evidence/quality-gate/smoke/runtime.log \
+  --execution-state runtime_data/execution/evidence/quality-gate/smoke/execution_state.json \
+  --triage-policy runtime_data/execution/evidence/quality-gate/smoke/triage_policy.json \
+  --output-dir runtime_data/execution/evidence/quality-gate/smoke/hold-triage
 ```
 
 ## Fail-Closed Rules

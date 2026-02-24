@@ -111,22 +111,22 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--report",
-        default="docs/design/modules/evidence/bpm-runtime/w3b_tc_qa_proc_report.json",
+        default="runtime_data/execution/evidence/bpm-runtime/w3b_tc_qa_proc_report.json",
         help="Repo-relative report output path",
     )
     parser.add_argument(
         "--evidence-root",
-        default="docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases",
+        default="runtime_data/execution/evidence/bpm-runtime/w3b_qa_process_cases",
         help="Repo-relative evidence root",
     )
     parser.add_argument(
         "--test-doc-ref",
-        default="docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md",
+        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md",
         help="Repo-relative TEST.md fixture",
     )
     parser.add_argument(
         "--actual-output-ref",
-        default="docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_pass.txt",
+        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_pass.txt",
         help="Repo-relative actual output fixture",
     )
     parser.add_argument(

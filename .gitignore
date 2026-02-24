@@ -16,6 +16,8 @@ Thumbs.db
 logs/
 tmp/
 temp/
+runtime_data/**
+!runtime_data/README.md
 
 # Node.js (Common, even if not used yet)
 node_modules/
@@ -50,3 +52,4 @@ process_instances/
 .entire/metadata/
 .entire/tmp/
 .entire/settings.local.json
+.entire/codex-bridge/

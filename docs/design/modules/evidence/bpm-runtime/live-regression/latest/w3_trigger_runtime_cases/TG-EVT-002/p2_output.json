@@ -1,6 +1,0 @@
-{
-  "match_result": "hit",
-  "dedupe_decision": "reject",
-  "dedupe_key_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-EVT-002/p2_dedupe_key.json",
-  "matcher_evidence_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-EVT-002/p2_matcher_evidence.json"
-}

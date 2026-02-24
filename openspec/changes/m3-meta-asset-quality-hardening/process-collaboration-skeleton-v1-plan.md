@@ -142,7 +142,7 @@
 3. 运行结果：
    - `TC-HOTFIX-PROC-001` 通过（`phase_count=7`，`actor_isolation_ok=true`）。
    - `TC-REFACTOR-PROC-001` 通过（`phase_count=6`，`actor_isolation_ok=true`）。
-4. 证据索引：`docs/design/modules/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json`。
+4. 证据索引：`runtime_data/execution/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json`。
 
 ### R3（后续回合）AP 迁移收敛
 

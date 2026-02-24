@@ -258,7 +258,7 @@ def main() -> int:
     repo_root = Path(__file__).resolve().parents[2]
     evidence_root = (
         repo_root
-        / "docs/design/modules/evidence/construction-plane/runtime-validation-round-6"
+        / "runtime_data/execution/evidence/construction-plane/runtime-validation-round-6"
     )
     fixtures_dir = evidence_root / "fixtures"
     outputs_dir = evidence_root / "outputs"
@@ -286,9 +286,9 @@ def main() -> int:
     )
 
     scenario_inputs = {
-        "A": "docs/design/modules/evidence/construction-plane/scenario-A-input.json",
-        "B": "docs/design/modules/evidence/construction-plane/scenario-B-input.json",
-        "C": "docs/design/modules/evidence/construction-plane/scenario-C-input.json",
+        "A": "runtime_data/execution/evidence/construction-plane/scenario-A-input.json",
+        "B": "runtime_data/execution/evidence/construction-plane/scenario-B-input.json",
+        "C": "runtime_data/execution/evidence/construction-plane/scenario-C-input.json",
     }
     for scenario, tc_id, expected_rc, expected_phase in [
         ("A", "TC-002", 0, None),

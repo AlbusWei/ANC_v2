@@ -1,1 +1,0 @@
-{"report_ref": "docs/design/modules/evidence/self-development/e2e-online/session4-foundation/latest/upstream/m3-runtime/skill_contract_validation_report.json", "passed": 5, "failed": 0}

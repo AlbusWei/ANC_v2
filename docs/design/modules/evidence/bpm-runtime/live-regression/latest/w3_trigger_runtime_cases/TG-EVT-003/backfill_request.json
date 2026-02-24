@@ -1,6 +1,0 @@
-{
-  "timestamp": "2026-02-22T17:18:08Z",
-  "status": "requested",
-  "request_type": "backfill",
-  "reason": "missing_transition_evidence_ref"
-}

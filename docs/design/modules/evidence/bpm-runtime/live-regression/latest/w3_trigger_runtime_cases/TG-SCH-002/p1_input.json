@@ -1,7 +1,0 @@
-{
-  "trigger_type": "schedule",
-  "trigger_source": "scheduler-main",
-  "payload_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-002/payload.json",
-  "received_at": "2026-02-22T17:18:07Z",
-  "canonical_event": "internal.schedule.tick"
-}

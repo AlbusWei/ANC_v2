@@ -220,7 +220,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--evidence-dir",
         default="",
-        help="Evidence directory path (repo-relative). Default docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/<run_id>/quality-gate-evaluation",
+        help="Evidence directory path (repo-relative). Default runtime_data/execution/evidence/bpm-runtime/w3b_qa_process_cases/<run_id>/quality-gate-evaluation",
     )
     parser.add_argument(
         "--run-id",
@@ -308,7 +308,7 @@ def main() -> int:
     evidence_dir = resolve_path(
         root,
         args.evidence_dir.strip()
-        or f"docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/{run_id}/quality-gate-evaluation",
+        or f"runtime_data/execution/evidence/bpm-runtime/w3b_qa_process_cases/{run_id}/quality-gate-evaluation",
     )
     evidence_dir.mkdir(parents=True, exist_ok=True)
 
@@ -531,7 +531,7 @@ def main() -> int:
         p4_dir.mkdir(parents=True, exist_ok=True)
         aggregation_rules_ref = str(
             request.get("aggregation_rules_ref")
-            or "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/aggregation_rules.json"
+            or "runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/aggregation_rules.json"
         )
         if not resolve_path(root, aggregation_rules_ref).exists():
             raise QualityGateEvaluationError("aggregation_rules_ref_unreachable")

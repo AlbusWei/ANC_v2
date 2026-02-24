@@ -1,9 +1,0 @@
-{
-  "status": "fail_closed",
-  "reason_code": "scope_unreachable",
-  "reason_detail": "affected scope evidence unreachable: docs/design/modules/evidence/self-development/does-not-exist.json",
-  "risk_level": "high",
-  "gating_recommendation": "hold",
-  "rollback_requirements": [],
-  "generated_at": "2026-02-23T09:24:30Z"
-}

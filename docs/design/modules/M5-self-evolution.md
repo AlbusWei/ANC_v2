@@ -38,8 +38,8 @@
 1. 最小接入目标：验证 `M5` 可调用 `M1` 门禁入口（`quality-gate-preparation` + `quality-gate-evaluation`）。
 2. 运行级用例：`TC-M1-CHAIN-004`。
 3. 用例证据：
-   - `docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-004/evidence_index.json`
-   - `docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-004/eval_output.json`
+   - `runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-004/evidence_index.json`
+   - `runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-004/eval_output.json`
 4. 结论口径：`M5` 当前已具备接入统一门禁入口的最小执行能力；后续线程再扩展提案编排与状态联动。
 
 ## Fail-Closed 规则

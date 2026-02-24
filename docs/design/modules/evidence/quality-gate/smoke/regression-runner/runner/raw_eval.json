@@ -1,9 +1,0 @@
-{
-  "mode": "regression",
-  "module": "M1",
-  "decision": "pass",
-  "reasons": [
-    "all_checks_passed"
-  ],
-  "timestamp": "2026-02-21T21:36:06.709826+00:00"
-}

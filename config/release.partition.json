@@ -1,0 +1,49 @@
+{
+  "version": "0.1.0",
+  "policy_name": "anc-v2-open-source-isolation",
+  "runtime_data_root": "runtime_data",
+  "public_asset_roots": [
+    "agents",
+    "skills",
+    "processes"
+  ],
+  "private_asset_roots": [
+    "runtime_data/private-assets/agents",
+    "runtime_data/private-assets/skills",
+    "runtime_data/private-assets/processes"
+  ],
+  "runtime_output_roots": [
+    "runtime_data/execution/evidence",
+    "runtime_data/business",
+    "runtime_data/agent-memory",
+    "runtime_data/process-instances",
+    "runtime_data/exports"
+  ],
+  "publishable_evidence_roots": [
+    "docs/design/modules/evidence"
+  ],
+  "release_whitelist": {
+    "output_dir": "runtime_data/exports/release-whitelist/latest",
+    "exclude_prefixes": [
+      "runtime_data/execution/",
+      "runtime_data/business/",
+      "runtime_data/agent-memory/",
+      "runtime_data/process-instances/",
+      "runtime_data/private-assets/",
+      "runtime_data/exports/",
+      ".entire/codex-bridge/",
+      ".entire/logs/",
+      ".entire/metadata/",
+      ".entire/tmp/",
+      ".entire/settings.local.json"
+    ],
+    "exclude_exact": [
+      ".DS_Store"
+    ]
+  },
+  "guards": {
+    "default_runner_evidence_root": "runtime_data/execution/evidence",
+    "block_private_assets_in_registry": true,
+    "block_runtime_data_commit": true
+  }
+}

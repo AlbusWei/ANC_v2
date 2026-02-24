@@ -1,9 +1,0 @@
-{
-  "agent_id": "demo-agent",
-  "role_scope": {
-    "responsibilities": [
-      "缺边界触发 FC"
-    ]
-  },
-  "interfaces": []
-}

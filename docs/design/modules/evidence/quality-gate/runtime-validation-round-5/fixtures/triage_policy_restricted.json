@@ -1,7 +1,0 @@
-{
-  "allowed_actions": [
-    "fail"
-  ],
-  "heartbeat_max_age_seconds": 1,
-  "on_no_progress": "continue"
-}

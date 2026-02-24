@@ -65,7 +65,7 @@
 
 1. 用例文档：`tests/m2-bpm-runtime/TC-ANL.md`
 2. 回归入口：`tests/m2-bpm-runtime/run_tc_anl.py`
-3. 生产证据：`docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/`
+3. 生产证据：`runtime_data/execution/evidence/bpm-runtime/w5_system_analyst_prod_cases/`
 
 ## 证据要求
 

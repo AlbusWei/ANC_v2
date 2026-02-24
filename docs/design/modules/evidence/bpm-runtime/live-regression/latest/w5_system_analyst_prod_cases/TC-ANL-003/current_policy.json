@@ -1,8 +1,0 @@
-{
-  "policy_id": "catchup-policy-v3",
-  "window_minutes": {
-    "high": 5,
-    "medium": 15,
-    "low": 30
-  }
-}

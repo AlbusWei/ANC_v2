@@ -224,7 +224,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--evidence-dir",
         default=None,
-        help="Evidence directory (repo-relative). Default docs/design/modules/evidence/bpm-runtime/<run_id>",
+        help="Evidence directory (repo-relative). Default runtime_data/execution/evidence/bpm-runtime/<run_id>",
     )
     parser.add_argument(
         "--openclaw-profile",
@@ -259,7 +259,7 @@ def main() -> int:
         )
 
     run_id = run_id_now()
-    evidence_dir_rel = args.evidence_dir or f"docs/design/modules/evidence/bpm-runtime/{run_id}"
+    evidence_dir_rel = args.evidence_dir or f"runtime_data/execution/evidence/bpm-runtime/{run_id}"
     evidence_dir = root / evidence_dir_rel
     evidence_dir.mkdir(parents=True, exist_ok=True)
 
