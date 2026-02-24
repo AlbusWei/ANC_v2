@@ -1,6 +1,6 @@
 # escalation 流程设计
 
-> 版本: v0.1.0 | 分类: Governance Process | 层级: P5 | 类型: 可复用治理子流程 | process_id: escalation | owner: bpm | 生命周期: draft
+> 版本: v0.1.0 | 分类: Governance Process | 层级: P5 | 类型: 可复用治理子流程 | process_id: escalation | owner: bpm | 生命周期: review
 
 ## 目标
 
@@ -79,9 +79,9 @@
 
 ## 生命周期与推进规则
 
-1. 本文档阶段：运行资产已落地，生命周期保持 `draft`。
+1. 本文档阶段：运行资产已落地，生命周期已推进到 `review`。
 2. Session3 已新增 `processes/meta/escalation/` 运行资产与 registry 实条目。
-3. 未完成更大规模运行级回归前，禁止推进到 `review/active`。
+3. 当前策略保持“仅到 `review`，不推进 `active`”。
 
 <!-- phase-semantics-v2:start -->
 ## 阶段协作语义补充（v2）

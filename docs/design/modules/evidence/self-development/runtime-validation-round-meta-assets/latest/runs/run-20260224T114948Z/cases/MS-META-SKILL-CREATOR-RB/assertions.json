@@ -1,0 +1,59 @@
+{
+  "assertions": [
+    {
+      "name": "openclaw_online_response_contract",
+      "passed": true,
+      "details": {
+        "return_code": 0,
+        "has_payload": true,
+        "aborted": false,
+        "attempts": 1
+      }
+    },
+    {
+      "name": "required_output_fields",
+      "passed": true,
+      "details": "ok"
+    },
+    {
+      "name": "asset_id_match",
+      "passed": true,
+      "details": "meta.arch.skill-creator"
+    },
+    {
+      "name": "scenario_match",
+      "passed": true,
+      "details": "RB"
+    },
+    {
+      "name": "gate_decision_match",
+      "passed": true,
+      "details": "fail_closed"
+    },
+    {
+      "name": "expected_exit_code_match",
+      "passed": true,
+      "details": 2
+    },
+    {
+      "name": "traceability_refs_non_empty",
+      "passed": true,
+      "details": [
+        "skills/skill-creator/SKILL.md",
+        "shared/registry/skill_registry.json"
+      ]
+    },
+    {
+      "name": "recovery_or_rollback_non_empty",
+      "passed": true,
+      "details": "freeze_execution_and_rollback_to_last_verified_state_then_resubmit_with_hp_scenario_if_applicable"
+    },
+    {
+      "name": "rollback_or_recovery_semantics_complete",
+      "passed": true,
+      "details": {
+        "reason_code": "ok"
+      }
+    }
+  ]
+}

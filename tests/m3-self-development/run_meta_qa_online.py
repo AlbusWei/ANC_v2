@@ -251,31 +251,78 @@ def build_runner_input(asset: AssetDef, scenario: str) -> Dict[str, Any]:
     if asset.asset_id == "meta.arch.process-creator":
         if scenario == "HP":
             return {
-                "process_id": "demo-meta-process",
+                "process_id": "demo-meta-process-p5",
+                "version": "1.0.0",
                 "process_level": "p5",
                 "phases": [
                     {
                         "phase_id": "p1",
-                        "target_type": "skill",
-                        "target_id": "meta.arch.spec-writer",
+                        "name": "需求契约澄清",
+                        "actor": "qa",
+                        "target_type": "subprocess",
+                        "target_id": "spec-authoring-contract",
                         "requires_spec": True,
-                        "spec_ref": "docs/design/processes/atomic/AP-004-spec-authoring.md",
-                        "sequence": 1,
+                        "spec_ref": "docs/design/processes/atomic/AP-004-spec-authoring.md#ap-004-spec-authoring",
+                        "sipoc": {
+                            "suppliers": ["meta.arch.objective-writer"],
+                            "inputs": ["objective_delta"],
+                            "process": ["spec_contract_check"],
+                            "outputs": ["spec_contract"],
+                            "customers": ["meta.arch.process-creator"],
+                        },
+                        "acceptance_criteria": ["spec_contract 非空", "契约锚点可追溯"],
+                        "phase_purpose": "将目标转译为可执行 spec 契约。",
+                        "input_context_ref": "docs/design/README.md#spec-context",
+                        "done_definition": "输出 spec_contract 并完成锚点绑定。",
+                        "handoff_note": "交付下一阶段进行质量门禁准备。",
                     },
                     {
                         "phase_id": "p2",
-                        "target_type": "skill",
-                        "target_id": "meta.qa.test-designer",
+                        "name": "质量门禁准备",
+                        "actor": "qa",
+                        "target_type": "subprocess",
+                        "target_id": "quality-gate-preparation",
                         "requires_spec": False,
-                        "sequence": 2,
+                        "sipoc": {
+                            "suppliers": ["meta.arch.process-creator"],
+                            "inputs": ["spec_contract"],
+                            "process": ["prepare_quality_gate"],
+                            "outputs": ["gate_bundle"],
+                            "customers": ["quality-gate-evaluation"],
+                        },
+                        "acceptance_criteria": ["gate_bundle 字段完整", "失败路径具备 fail_closed 语义"],
+                        "phase_purpose": "生成质量门禁输入与追溯证据。",
+                        "input_context_ref": "docs/architecture/process_architecture.md#quality-gate",
+                        "done_definition": "完成 gate_bundle 并记录证据字段。",
+                        "handoff_note": "进入门禁评估子流程。",
                     },
                 ],
-                "control_flow": {
-                    "start": "p1",
-                    "terminal": ["end"],
-                },
+                "control_flow": [
+                    {"from": "p1", "to": "p2", "on": "success"},
+                    {"from": "p1", "to": "end", "on": "failure"},
+                    {"from": "p2", "to": "end", "on": "success"},
+                    {"from": "p2", "to": "end", "on": "failure"},
+                ],
                 "fail_policy": {
-                    "on_fail": "fail_closed",
+                    "mode": "fail_closed",
+                    "retry": {"max_iterations": 1},
+                    "escalation_chain": ["qa", "governance-board"],
+                },
+                "evidence_policy": {
+                    "required_fields": [
+                        "timestamp",
+                        "phase_id",
+                        "actor",
+                        "input_ref",
+                        "output_ref",
+                        "decision",
+                        "reason",
+                    ]
+                },
+                "lineage_policy": {
+                    "stack_depth_limit": 4,
+                    "context_isolation": "strict",
+                    "output_handoff_mode": "artifact_ref",
                 },
             }
         return {

@@ -158,7 +158,7 @@
       "objective_ref": "obj-m3-escalation-runtime",
       "owner": "bpm",
       "version": "0.1.0",
-      "status": "draft",
+      "status": "review",
       "phase_count": 4,
       "openclaw": {
         "projection_mode": "bundle",
@@ -215,7 +215,7 @@
       "objective_ref": "obj-governed-openclaw-config-change",
       "owner": "bpm",
       "version": "0.1.0",
-      "status": "draft",
+      "status": "review",
       "phase_count": 5,
       "openclaw": {
         "projection_mode": "bundle",
@@ -424,7 +424,7 @@
       "objective_ref": "obj-m3-registry-sync-runtime",
       "owner": "hr",
       "version": "0.1.0",
-      "status": "draft",
+      "status": "review",
       "phase_count": 1,
       "openclaw": {
         "projection_mode": "bundle",

@@ -1,0 +1,17 @@
+{
+  "status": "pass",
+  "qa_payload": {
+    "gate_decision": "pass",
+    "asset_id": "refactor",
+    "scenario": "HP",
+    "reason_code": "hp_payload_contract_satisfied_semantic_pass",
+    "expected_exit_code": 0,
+    "traceability_refs": [
+      "processes/meta/refactor/SKILL.md",
+      "processes/meta/refactor/process.json",
+      "shared/registry/process_registry.json"
+    ],
+    "recovery_or_rollback": "none"
+  },
+  "generated_at": "2026-02-24T11:57:26Z"
+}

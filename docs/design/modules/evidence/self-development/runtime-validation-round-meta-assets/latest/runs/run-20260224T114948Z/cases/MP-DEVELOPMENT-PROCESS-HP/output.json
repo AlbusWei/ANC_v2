@@ -1,0 +1,17 @@
+{
+  "status": "pass",
+  "qa_payload": {
+    "gate_decision": "pass",
+    "asset_id": "development-process",
+    "scenario": "HP",
+    "reason_code": "hp_payload_contract_satisfied_semantic_pass",
+    "expected_exit_code": 0,
+    "traceability_refs": [
+      "processes/meta/development-process/SKILL.md",
+      "processes/meta/development-process/process.json",
+      "shared/registry/process_registry.json"
+    ],
+    "recovery_or_rollback": "none"
+  },
+  "generated_at": "2026-02-24T11:50:35Z"
+}

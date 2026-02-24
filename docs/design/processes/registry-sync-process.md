@@ -1,6 +1,6 @@
 # registry-sync 流程设计
 
-> 版本: v0.1.0 | 分类: Governance Process | 层级: P6 | 类型: 治理原子流程（AP-011 包装语义） | process_id: registry-sync | owner: hr | 生命周期: draft
+> 版本: v0.1.0 | 分类: Governance Process | 层级: P6 | 类型: 治理原子流程（AP-011 包装语义） | process_id: registry-sync | owner: hr | 生命周期: review
 
 ## 目标
 
@@ -68,9 +68,9 @@
 
 ## 生命周期与推进规则
 
-1. 本文档阶段：运行资产已落地，生命周期保持 `draft`。
+1. 本文档阶段：运行资产已落地，生命周期已推进到 `review`。
 2. 本回合已新增运行目录与 registry 实条目，并通过 contract 校验。
-3. 在完成更大规模运行级回归前，禁止将流程状态声明为 `review/active`。
+3. 当前策略保持“仅到 `review`，不推进 `active`”。
 
 <!-- phase-semantics-v2:start -->
 ## 阶段协作语义补充（v2）

@@ -1,0 +1,17 @@
+{
+  "status": "pass",
+  "qa_payload": {
+    "gate_decision": "fail_closed",
+    "asset_id": "release-packaging-governed",
+    "scenario": "RB",
+    "reason_code": "non_hp_scenario_requires_blocking_semantics",
+    "expected_exit_code": 2,
+    "traceability_refs": [
+      "processes/meta/release-packaging-governed/SKILL.md",
+      "processes/meta/release-packaging-governed/process.json",
+      "shared/registry/process_registry.json"
+    ],
+    "recovery_or_rollback": "freeze_execution_and_rollback_to_last_verified_state_then_resubmit_with_hp_scenario_if_applicable"
+  },
+  "generated_at": "2026-02-24T12:07:55Z"
+}

@@ -1,0 +1,15 @@
+{
+  "runner": "process_creator_runner",
+  "decision": "success",
+  "checked_fields": [
+    "process_id",
+    "version",
+    "process_level",
+    "phases",
+    "control_flow",
+    "fail_policy",
+    "evidence_policy",
+    "lineage_policy"
+  ],
+  "phase_count": 2
+}

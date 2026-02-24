@@ -61,6 +61,7 @@
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase2 流程资产重构：7 个历史包装流程全部退役，`full-development/hotfix/refactor/development-process` 全量替换为现行 P5 子流程链，并完成 process registry、process inventory、施工平面同步
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase3 元技能执行级升级：8 个目标元技能统一推进到 `review`，4 个 creator/validator runner 统一为 `--input/--output/[--report]` 契约，并落地 `meta-skill-creator` 运行名治理（`skill-creator` 仓库内软禁用）
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase4 联动闭合：design + inventory + registry + OpenSpec + 施工平面对齐，11 个流程生命周期统一收敛到 `review`，并明确本轮不推进 `active`
+- [x] 完成 `m3-meta-asset-quality-hardening` Phase7 最终收口：OpenSpec/registry/design docs/runtime evidence 四向对账一致；Meta Skills（8）与 Meta Processes（20）生命周期统一收敛到 `review`（`draft=0`、`active=0`）；最终门禁（`registry verify` + `openspec validate` + `final-regression`）全部通过
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase9 `full-development` 首轮运行级真实分发 dry-run：`TC-FULL-DEV-PROC-001` 在 8 phase 下通过，真实 openclaw 分发 + 同 actor 跨 phase 会话隔离校验通过
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase10 AP 语义统一：18 份流程 manifest 去除 `target_type=skill`，统一为 `target_type=subprocess` + `inline_ap` 临时 AP 语法，并启用“同 Actor 可穿透执行”规则
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase11 `hotfix/refactor` 首轮运行级真实分发 dry-run：`TC-HOTFIX-PROC-001` 与 `TC-REFACTOR-PROC-001` 均通过，phase 全量分发、session 严格匹配、同 actor 跨 phase 隔离全部通过（证据：`docs/design/modules/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json`）

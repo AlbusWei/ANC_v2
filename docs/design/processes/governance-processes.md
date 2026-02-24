@@ -59,6 +59,10 @@ Fail-Closed：
 1. AP-011 的治理包装流程，负责 registry 同步与校验证据输出。
 2. 固定保持 P6 原子口径，不升级为 P5/P4 复合流程。
 
+当前生命周期：
+
+1. `review`（Phase7 收口后统一保持 `review`，不推进 `active`）。
+
 ## escalation（P5 模式，可执行资产）
 
 设计文档：`docs/design/processes/escalation-process.md`
@@ -66,6 +70,10 @@ Fail-Closed：
 运行入口：`processes/meta/escalation/scripts/escalation_runner.py`
 
 固定升级链：`actor -> owner -> bpm -> admin -> human`
+
+当前生命周期：
+
+1. `review`（Phase7 收口后统一保持 `review`，不推进 `active`）。
 
 ## M3 P5 子流程族（Session3/Phase2）
 
@@ -81,7 +89,7 @@ Fail-Closed：
 
 约束：
 
-1. 上述流程为 P5 可复用子流程，生命周期在本回合保持 `draft`。
+1. 上述流程为 P5 可复用子流程，生命周期以 registry 当前状态为准；Phase7 收口后统一保持 `review`（不推进 `active`）。
 2. 历史包装流程已退役，不得作为目标态运行单元回流。
 3. 主流程 phase 仅允许依赖已注册子流程并保持 I/O 闭合。
 

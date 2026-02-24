@@ -1,0 +1,7 @@
+{
+  "command": "python3 skills/skill-creator/scripts/meta_skill_creator_runner.py --input docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260224T114948Z/cases/MS-META-SKILL-CREATOR-HP/input.json --output docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260224T114948Z/cases/MS-META-SKILL-CREATOR-HP/output.json --report docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260224T114948Z/cases/MS-META-SKILL-CREATOR-HP/runner_report.json",
+  "return_code": 0,
+  "generated_at": "2026-02-24T11:59:30Z",
+  "stdout_ref": "stdout.txt",
+  "stderr_ref": "stderr.txt"
+}

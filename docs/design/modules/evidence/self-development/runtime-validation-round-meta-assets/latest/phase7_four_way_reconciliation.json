@@ -1,0 +1,85 @@
+{
+  "ts": "2026-02-24T12:11:50Z",
+  "change_id": "m3-meta-asset-quality-hardening",
+  "gate_results": {
+    "registry_verify": {
+      "command": "python3 shared/registry/registry_contract_tool.py verify",
+      "status": "pass"
+    },
+    "openspec_validate": {
+      "command": "openspec validate m3-meta-asset-quality-hardening --json",
+      "status": "pass"
+    },
+    "runtime_final_regression": {
+      "command": "python3 tests/m3-self-development/run_meta_qa_online.py --suite final-regression",
+      "status": "pass",
+      "total": 112,
+      "passed": 112,
+      "failed": 0,
+      "run_root": "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260224T114948Z"
+    },
+    "bundle_surface_check": {
+      "command": "rg -n \"ap-[0-9].*-bundle\" processes/meta shared/registry docs/design",
+      "status": "pass",
+      "rg_exit_code": 1,
+      "matches": 0
+    }
+  },
+  "four_way_reconciliation": {
+    "openspec": {
+      "status": "consistent",
+      "refs": [
+        "openspec/changes/m3-meta-asset-quality-hardening/tasks.md",
+        "openspec/changes/m3-meta-asset-quality-hardening/thread-plan.md"
+      ]
+    },
+    "registry": {
+      "status": "consistent",
+      "refs": [
+        "shared/registry/process_registry.json",
+        "shared/registry/skill_registry.json"
+      ],
+      "meta_skills": {
+        "total": 8,
+        "review": 8,
+        "draft": 0,
+        "active": 0
+      },
+      "meta_processes": {
+        "total": 20,
+        "review": 20,
+        "draft": 0,
+        "active": 0
+      }
+    },
+    "design_docs": {
+      "status": "consistent",
+      "refs": [
+        "docs/design/inventories/process-inventory.md",
+        "docs/design/processes/registry-sync-process.md",
+        "docs/design/processes/escalation-process.md",
+        "docs/design/processes/governance-processes.md",
+        "docs/architecture/construction_plane.md"
+      ]
+    },
+    "runtime_evidence": {
+      "status": "consistent",
+      "refs": [
+        "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/meta_qa_online_report.json",
+        "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/meta_qa_online_summary.md"
+      ],
+      "latest_run_root": "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260224T114948Z"
+    }
+  },
+  "lifecycle_transition_refs": [
+    "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase7_lifecycle_summary.json"
+  ],
+  "residual_risks": [
+    {
+      "level": "low",
+      "description": "本轮 final-regression 已通过，但线上网关抖动属于外部依赖风险，后续建议持续保持在线回归节奏。"
+    }
+  ],
+  "gate_decision": "pass",
+  "natural_language_conclusion": "四向对账已完成且一致：OpenSpec、registry、design docs、runtime evidence 无冲突。Meta Skills（8）与 Meta Processes（20）均收敛到 review，draft=0、active=0。最终门禁（registry verify + openspec validate + final-regression + bundle 运行面检查）全部通过，满足 Phase7 收口准入。"
+}

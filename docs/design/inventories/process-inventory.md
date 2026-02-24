@@ -42,7 +42,7 @@
 | implementation-execution-core | implementation-execution-core | 复合 | bpm | 1 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/implementation-execution-core/` |
 | release-packaging-governed | release-packaging-governed | 复合 | bpm | 1 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/release-packaging-governed/` |
 | evolution-feedback-planning | evolution-feedback-planning | 复合 | bpm | 4 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/evolution-feedback-planning/` |
-| governed-config-change | governed-config-change | 复合 | bpm | 5 | draft | `/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change/` |
+| governed-config-change | governed-config-change | 复合 | bpm | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change/` |
 | quality-gate-preparation | quality-gate-preparation | 复合 | bpm | 3 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/quality-gate-preparation/` |
 | quality-gate-evaluation | quality-gate-evaluation | 复合 | bpm | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/quality-gate-evaluation/` |
 | hold-governance | hold-governance | 复合 | bpm | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/hold-governance/` |
@@ -62,16 +62,16 @@
 
 | process_id | 类型 | 规划阶段 | 用途 |
 |---|---|---|---|
-| registry-sync | 原子（P6/AP-011） | Session3 已实现（运行资产 + registry） | 注册表同步（生命周期 `draft`） |
-| escalation | P5 子流程模式 | Session3 已实现（运行资产 + registry） | 异常升级复用流程（生命周期 `draft`） |
+| registry-sync | 原子（P6/AP-011） | Session3 已实现（运行资产 + registry） | 注册表同步（生命周期 `review`） |
+| escalation | P5 子流程模式 | Session3 已实现（运行资产 + registry） | 异常升级复用流程（生命周期 `review`） |
 | trigger-runtime-supervisor | 模式（P5） | Phase 1 | 触发运行时上级路由（可选） |
 
 ## Session3/Phase2 新增已注册流程（实现）
 
 | process_id | 类型 | 状态 | 路径 |
 |---|---|---|---|
-| registry-sync | P6 原子治理流程 | draft | `processes/meta/registry-sync/` |
-| escalation | P5 可复用治理子流程 | draft | `processes/meta/escalation/` |
+| registry-sync | P6 原子治理流程 | review | `processes/meta/registry-sync/` |
+| escalation | P5 可复用治理子流程 | review | `processes/meta/escalation/` |
 | objective-scope-baseline | P5 可复用子流程 | review | `processes/meta/objective-scope-baseline/` |
 | hotfix-intake-normalization | P5 可复用子流程 | review | `processes/meta/hotfix-intake-normalization/` |
 | hotfix-scope-spec-baseline | P5 可复用子流程 | review | `processes/meta/hotfix-scope-spec-baseline/` |
@@ -85,6 +85,7 @@
 1. 以下 7 个历史包装流程已在迁移回合退役，仅保留追溯说明，不作为运行态能力单元（具体映射见 `openspec/changes/m3-meta-asset-quality-hardening/meta-gap-baseline.md` 的历史矩阵）。
 2. 目标态能力单元统一以现行 P5 子流程表达（`objective-scope-baseline`、`hotfix-intake-normalization`、`hotfix-scope-spec-baseline`、`spec-authoring-contract`、`implementation-execution-core`、`release-packaging-governed`、`evolution-feedback-planning`）。
 3. 本轮生命周期收敛上限为 `review`，不推进 `active`。
+4. Phase7 收口后，Meta Processes 现态已收敛为 `draft=0`、`active=0`（含 `registry-sync`、`escalation`、`governed-config-change` 均为 `review`）。
 
 ## 规划中 Process — 演化流程
 
@@ -137,14 +138,14 @@ Session3 已落地治理流程设计文档与运行资产：
 ## W2 联动备注（M2 BPM Runtime Hardening）
 
 1. `governed-config-change` 新增可执行 runner：`processes/meta/governed-config-change/scripts/governed_config_change_runner.py`。
-2. `governed-config-change` registry 版本由 `0.1.0` 升级到 `0.2.0`，生命周期保持 `draft`。
+2. `governed-config-change` registry 版本由 `0.1.0` 升级到 `0.2.0`，当时生命周期保持 `draft`（Phase7 已推进到 `review`）。
 3. 运行级测试入口：`tests/m2-bpm-runtime/run_tc_gcc.py`，覆盖 `TC-GCC-001~003`。
 
 ## W3 联动备注（M2 BPM Runtime Hardening）
 
 1. `trigger-schedule-runtime` 新增可执行 runner：`processes/control/trigger-schedule-runtime/scripts/trigger_schedule_runtime_runner.py`。
 2. `trigger-event-runtime` 新增可执行 runner：`processes/control/trigger-event-runtime/scripts/trigger_event_runtime_runner.py`。
-3. 两项流程 registry 版本由 `0.1.0` 升级到 `0.2.0`，生命周期保持 `draft`。
+3. 两项流程 registry 版本由 `0.1.0` 升级到 `0.2.0`，当时生命周期保持 `draft`（Phase7 已推进到 `review`）。
 4. 运行级测试入口：`tests/m2-bpm-runtime/run_tc_tg.py`，覆盖 `TG-SCH-001~004`、`TG-EVT-001~003`。
 
 ## W3-B 联动备注（M2 BPM Runtime Hardening）

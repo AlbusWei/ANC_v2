@@ -236,6 +236,23 @@
 
 1. 任一门禁失败，禁止宣告完成。
 
+### 执行记录（2026-02-24）
+
+1. 四向对账完成：OpenSpec、registry、design docs、runtime evidence 一致。
+2. 生命周期收敛：
+   - Meta Skills（8）保持 `review`，`active=0`。
+   - Meta Processes（20）统一为 `review`，`draft=0`，`active=0`。
+   - `escalation`、`governed-config-change`、`registry-sync` 已由 `draft` 推进到 `review`。
+3. 最终门禁通过：
+   - `python3 shared/registry/registry_contract_tool.py verify`
+   - `openspec validate m3-meta-asset-quality-hardening --json`
+   - `python3 tests/m3-self-development/run_meta_qa_online.py --suite final-regression`（`112/112`，`run_root=docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/runs/run-20260224T114948Z`）
+4. bundle 运行面检查通过：
+   - `rg -n "ap-[0-9].*-bundle" processes/meta shared/registry docs/design` 无命中。
+5. 证据入口：
+   - `docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase7_four_way_reconciliation.json`
+   - `docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/phase7_lifecycle_summary.json`
+
 ## P8 流程协作骨架 v1（QA 试点，新增）
 
 ### 目标

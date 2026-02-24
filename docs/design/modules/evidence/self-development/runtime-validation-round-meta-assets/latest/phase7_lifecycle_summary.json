@@ -1,0 +1,131 @@
+{
+  "ts": "2026-02-24T12:11:50Z",
+  "change_id": "m3-meta-asset-quality-hardening",
+  "meta_skills_total": 8,
+  "meta_processes_total": 20,
+  "transitions": [
+    {
+      "asset_id": "escalation",
+      "before_status": "draft",
+      "after_status": "review",
+      "evidence_ref": "shared/registry/process_registry.json"
+    },
+    {
+      "asset_id": "governed-config-change",
+      "before_status": "draft",
+      "after_status": "review",
+      "evidence_ref": "shared/registry/process_registry.json"
+    },
+    {
+      "asset_id": "registry-sync",
+      "before_status": "draft",
+      "after_status": "review",
+      "evidence_ref": "shared/registry/process_registry.json"
+    }
+  ],
+  "unchanged": [
+    {
+      "asset_id": "meta.arch.agent-creator",
+      "status": "review"
+    },
+    {
+      "asset_id": "meta.arch.objective-writer",
+      "status": "review"
+    },
+    {
+      "asset_id": "meta.arch.process-creator",
+      "status": "review"
+    },
+    {
+      "asset_id": "meta.arch.skill-creator",
+      "status": "review"
+    },
+    {
+      "asset_id": "meta.arch.spec-writer",
+      "status": "review"
+    },
+    {
+      "asset_id": "meta.arch.template-validator",
+      "status": "review"
+    },
+    {
+      "asset_id": "meta.qa.llm-judge",
+      "status": "review"
+    },
+    {
+      "asset_id": "meta.qa.test-designer",
+      "status": "review"
+    },
+    {
+      "asset_id": "construction-plane-governance",
+      "status": "review"
+    },
+    {
+      "asset_id": "development-process",
+      "status": "review"
+    },
+    {
+      "asset_id": "evolution-feedback-planning",
+      "status": "review"
+    },
+    {
+      "asset_id": "full-development",
+      "status": "review"
+    },
+    {
+      "asset_id": "hold-governance",
+      "status": "review"
+    },
+    {
+      "asset_id": "hotfix",
+      "status": "review"
+    },
+    {
+      "asset_id": "hotfix-intake-normalization",
+      "status": "review"
+    },
+    {
+      "asset_id": "hotfix-scope-spec-baseline",
+      "status": "review"
+    },
+    {
+      "asset_id": "implementation-execution-core",
+      "status": "review"
+    },
+    {
+      "asset_id": "lifecycle-review",
+      "status": "review"
+    },
+    {
+      "asset_id": "objective-scope-baseline",
+      "status": "review"
+    },
+    {
+      "asset_id": "quality-gate-evaluation",
+      "status": "review"
+    },
+    {
+      "asset_id": "quality-gate-preparation",
+      "status": "review"
+    },
+    {
+      "asset_id": "refactor",
+      "status": "review"
+    },
+    {
+      "asset_id": "release-packaging-governed",
+      "status": "review"
+    },
+    {
+      "asset_id": "runtime-policy-calibration",
+      "status": "review"
+    },
+    {
+      "asset_id": "spec-authoring-contract",
+      "status": "review"
+    }
+  ],
+  "active_count": 0,
+  "draft_count": 0,
+  "gate_decision": "pass"
+}
