@@ -322,6 +322,13 @@
       "context": "/ea/21d7ffce36/25/context.md",
       "content_hash": "/ea/21d7ffce36/25/content_hash.txt",
       "prompt": "/ea/21d7ffce36/25/prompt.txt"
+    },
+    {
+      "metadata": "/ea/21d7ffce36/26/metadata.json",
+      "transcript": "/ea/21d7ffce36/26/full.jsonl",
+      "context": "/ea/21d7ffce36/26/context.md",
+      "content_hash": "/ea/21d7ffce36/26/content_hash.txt",
+      "prompt": "/ea/21d7ffce36/26/prompt.txt"
     }
   ],
   "token_usage": {
