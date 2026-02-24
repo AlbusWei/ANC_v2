@@ -1,9 +1,11 @@
 {
   "cli_version": "0.4.5",
   "checkpoint_id": "7018c91f9971",
+  "session_id": "codex-345cd0325428",
   "strategy": "manual-commit",
+  "created_at": "2026-02-24T11:17:56.359503Z",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 2,
+  "checkpoints_count": 1,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/architecture/process_architecture.md",
@@ -75,55 +77,24 @@
     "skills/system/process-instance-manager/scripts/process_instance_runner.py",
     "tests/m2-bpm-runtime/run_tc_ins.py"
   ],
-  "sessions": [
-    {
-      "metadata": "/70/18c91f9971/0/metadata.json",
-      "transcript": "/70/18c91f9971/0/full.jsonl",
-      "context": "/70/18c91f9971/0/context.md",
-      "content_hash": "/70/18c91f9971/0/content_hash.txt",
-      "prompt": "/70/18c91f9971/0/prompt.txt"
-    },
-    {
-      "metadata": "/70/18c91f9971/1/metadata.json",
-      "transcript": "/70/18c91f9971/1/full.jsonl",
-      "context": "/70/18c91f9971/1/context.md",
-      "content_hash": "/70/18c91f9971/1/content_hash.txt",
-      "prompt": "/70/18c91f9971/1/prompt.txt"
-    },
-    {
-      "metadata": "/70/18c91f9971/2/metadata.json",
-      "transcript": "/70/18c91f9971/2/full.jsonl",
-      "context": "/70/18c91f9971/2/context.md",
-      "content_hash": "/70/18c91f9971/2/content_hash.txt",
-      "prompt": "/70/18c91f9971/2/prompt.txt"
-    },
-    {
-      "metadata": "/70/18c91f9971/3/metadata.json",
-      "transcript": "/70/18c91f9971/3/full.jsonl",
-      "context": "/70/18c91f9971/3/context.md",
-      "content_hash": "/70/18c91f9971/3/content_hash.txt",
-      "prompt": "/70/18c91f9971/3/prompt.txt"
-    },
-    {
-      "metadata": "/70/18c91f9971/4/metadata.json",
-      "transcript": "/70/18c91f9971/4/full.jsonl",
-      "context": "/70/18c91f9971/4/context.md",
-      "content_hash": "/70/18c91f9971/4/content_hash.txt",
-      "prompt": "/70/18c91f9971/4/prompt.txt"
-    },
-    {
-      "metadata": "/70/18c91f9971/5/metadata.json",
-      "transcript": "/70/18c91f9971/5/full.jsonl",
-      "context": "/70/18c91f9971/5/context.md",
-      "content_hash": "/70/18c91f9971/5/content_hash.txt",
-      "prompt": "/70/18c91f9971/5/prompt.txt"
-    }
-  ],
+  "agent": "Gemini CLI",
+  "turn_id": "fa44fd0d8bc9",
+  "transcript_identifier_at_start": "gemini-7356908b62",
   "token_usage": {
     "input_tokens": 0,
     "cache_creation_tokens": 0,
     "cache_read_tokens": 0,
     "output_tokens": 0,
     "api_call_count": 0
-  }
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-24T11:17:55.899343Z",
+    "agent_lines": 0,
+    "human_added": 397,
+    "human_modified": 902,
+    "human_removed": 0,
+    "total_committed": 1230,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
 }
