@@ -802,6 +802,13 @@
       "context": "/59/41bd672fa8/13/context.md",
       "content_hash": "/59/41bd672fa8/13/content_hash.txt",
       "prompt": "/59/41bd672fa8/13/prompt.txt"
+    },
+    {
+      "metadata": "/59/41bd672fa8/14/metadata.json",
+      "transcript": "/59/41bd672fa8/14/full.jsonl",
+      "context": "/59/41bd672fa8/14/context.md",
+      "content_hash": "/59/41bd672fa8/14/content_hash.txt",
+      "prompt": "/59/41bd672fa8/14/prompt.txt"
     }
   ],
   "token_usage": {
