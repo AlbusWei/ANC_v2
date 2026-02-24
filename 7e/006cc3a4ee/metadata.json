@@ -8268,6 +8268,13 @@
       "context": "/7e/006cc3a4ee/25/context.md",
       "content_hash": "/7e/006cc3a4ee/25/content_hash.txt",
       "prompt": "/7e/006cc3a4ee/25/prompt.txt"
+    },
+    {
+      "metadata": "/7e/006cc3a4ee/26/metadata.json",
+      "transcript": "/7e/006cc3a4ee/26/full.jsonl",
+      "context": "/7e/006cc3a4ee/26/context.md",
+      "content_hash": "/7e/006cc3a4ee/26/content_hash.txt",
+      "prompt": "/7e/006cc3a4ee/26/prompt.txt"
     }
   ],
   "token_usage": {
