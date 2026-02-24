@@ -12,9 +12,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
+import selectors
 import subprocess
 import sys
+import time
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
@@ -23,6 +26,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 REPO_REL_RE = re.compile(r"^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+")
 ISO_Z_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
+MIN_STALL_THRESHOLD_SECONDS = 15 * 60
 
 
 class RunnerError(RuntimeError):
@@ -223,7 +227,6 @@ def build_dispatch_command(
     actor: str,
     session_id: str,
     message: str,
-    timeout_seconds: int,
 ) -> List[str]:
     if not session_id:
         raise RunnerError("session_id is required for dispatch command")
@@ -234,20 +237,258 @@ def build_dispatch_command(
         actor,
         "--session-id",
         session_id,
-        "--timeout",
-        str(timeout_seconds),
         "--message",
         message,
         "--json",
     ]
 
 
-def run_dispatch(command: List[str]) -> Dict[str, Any]:
-    proc = subprocess.run(command, capture_output=True, text=True, check=False)
+def to_iso_from_epoch_ms(raw: Optional[int]) -> str:
+    if raw is None or raw <= 0:
+        return ""
+    return datetime.fromtimestamp(raw / 1000.0, tz=timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
+def probe_openclaw_session(openclaw_bin: str, session_id: str) -> Dict[str, Any]:
+    proc = subprocess.run(
+        [openclaw_bin, "sessions", "--json"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if proc.returncode != 0:
+        return {
+            "ok": False,
+            "found": False,
+            "updated_at_ms": None,
+            "error": f"openclaw_sessions_failed:rc={proc.returncode}:stderr={proc.stderr.strip()}",
+        }
+    try:
+        payload = parse_first_json_object(proc.stdout)
+    except RunnerError as exc:
+        return {
+            "ok": False,
+            "found": False,
+            "updated_at_ms": None,
+            "error": f"openclaw_sessions_invalid_json:{exc}",
+        }
+    sessions = payload.get("sessions")
+    if not isinstance(sessions, list):
+        return {
+            "ok": False,
+            "found": False,
+            "updated_at_ms": None,
+            "error": "openclaw_sessions_invalid_payload",
+        }
+    updated_candidates: List[int] = []
+    for item in sessions:
+        if not isinstance(item, dict):
+            continue
+        if str(item.get("sessionId") or "").strip() != session_id:
+            continue
+        raw_updated = item.get("updatedAt")
+        try:
+            updated_candidates.append(int(raw_updated))
+        except (TypeError, ValueError):
+            continue
+    if not updated_candidates:
+        return {"ok": True, "found": False, "updated_at_ms": None, "error": ""}
     return {
-        "return_code": proc.returncode,
-        "stdout": proc.stdout,
-        "stderr": proc.stderr,
+        "ok": True,
+        "found": True,
+        "updated_at_ms": max(updated_candidates),
+        "error": "",
+    }
+
+
+def run_dispatch(
+    command: List[str],
+    *,
+    openclaw_bin: str,
+    session_id: str,
+    stall_threshold_seconds: int,
+    session_probe_interval_seconds: int,
+) -> Dict[str, Any]:
+    proc = subprocess.Popen(
+        command,
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=False,
+    )
+    if proc.stdout is None or proc.stderr is None:
+        raise RunnerError("dispatch process missing stdout/stderr pipe")
+
+    stall_threshold_seconds = max(MIN_STALL_THRESHOLD_SECONDS, int(stall_threshold_seconds))
+    probe_interval = max(5, int(session_probe_interval_seconds))
+    start_mono = time.monotonic()
+    last_progress_mono = start_mono
+    last_output_mono = start_mono
+    last_session_progress_mono: Optional[float] = None
+    last_probe_mono = start_mono - probe_interval
+
+    last_session_updated_at_ms: Optional[int] = None
+    session_seen = False
+    probe_count = 0
+    probe_errors: List[str] = []
+    stalled = False
+    stall_reason = ""
+    stall_idle_seconds = 0
+
+    out_chunks = bytearray()
+    err_chunks = bytearray()
+
+    selector = selectors.DefaultSelector()
+    os.set_blocking(proc.stdout.fileno(), False)
+    os.set_blocking(proc.stderr.fileno(), False)
+    selector.register(proc.stdout, selectors.EVENT_READ, data="stdout")
+    selector.register(proc.stderr, selectors.EVENT_READ, data="stderr")
+
+    try:
+        while True:
+            now_mono = time.monotonic()
+            if proc.poll() is not None:
+                # 进程退出后仍可能有剩余缓冲，继续 drain 到 EOF。
+                if not selector.get_map():
+                    break
+
+            events = selector.select(timeout=1.0)
+            for key, _ in events:
+                stream_name = str(key.data)
+                stream = key.fileobj
+                try:
+                    chunk = os.read(stream.fileno(), 65536)
+                except BlockingIOError:
+                    continue
+                if chunk:
+                    if stream_name == "stdout":
+                        out_chunks.extend(chunk)
+                    else:
+                        err_chunks.extend(chunk)
+                    last_progress_mono = time.monotonic()
+                    last_output_mono = last_progress_mono
+                    continue
+                selector.unregister(stream)
+                try:
+                    stream.close()
+                except OSError:
+                    pass
+
+            now_mono = time.monotonic()
+            if now_mono - last_probe_mono >= probe_interval:
+                probe_count += 1
+                last_probe_mono = now_mono
+                probe = probe_openclaw_session(openclaw_bin, session_id)
+                if probe["ok"]:
+                    if bool(probe["found"]):
+                        session_seen = True
+                        updated = probe.get("updated_at_ms")
+                        updated_int = int(updated) if isinstance(updated, int) else None
+                        if updated_int is not None and (
+                            last_session_updated_at_ms is None or updated_int > last_session_updated_at_ms
+                        ):
+                            last_session_updated_at_ms = updated_int
+                            last_session_progress_mono = now_mono
+                            last_progress_mono = now_mono
+                else:
+                    error = str(probe.get("error") or "").strip()
+                    if error:
+                        probe_errors.append(error)
+                        if len(probe_errors) > 8:
+                            probe_errors = probe_errors[-8:]
+
+            idle_seconds = int(max(0.0, now_mono - last_progress_mono))
+            if idle_seconds < stall_threshold_seconds:
+                continue
+
+            # 达到阈值后再次即时探活，避免竞态误判。
+            probe_count += 1
+            confirm = probe_openclaw_session(openclaw_bin, session_id)
+            if confirm["ok"] and bool(confirm["found"]):
+                updated = confirm.get("updated_at_ms")
+                updated_int = int(updated) if isinstance(updated, int) else None
+                if updated_int is not None and (
+                    last_session_updated_at_ms is None or updated_int > last_session_updated_at_ms
+                ):
+                    last_session_updated_at_ms = updated_int
+                    now_again = time.monotonic()
+                    last_session_progress_mono = now_again
+                    last_progress_mono = now_again
+                    continue
+            elif not confirm["ok"]:
+                error = str(confirm.get("error") or "").strip()
+                if error:
+                    probe_errors.append(error)
+                    if len(probe_errors) > 8:
+                        probe_errors = probe_errors[-8:]
+
+            if proc.poll() is None:
+                stalled = True
+                stall_idle_seconds = idle_seconds
+                stall_reason = (
+                    "no_progress_signals:"
+                    f"idle_seconds={idle_seconds}:"
+                    f"threshold_seconds={stall_threshold_seconds}:"
+                    f"session_seen={session_seen}"
+                )
+                proc.terminate()
+                try:
+                    proc.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    proc.kill()
+                    proc.wait()
+                continue
+
+        # 兜底 drain，确保 EOF 后剩余字节被收集。
+        for stream_name, stream_obj in (("stdout", proc.stdout), ("stderr", proc.stderr)):
+            while True:
+                try:
+                    chunk = os.read(stream_obj.fileno(), 65536)
+                except (BlockingIOError, OSError):
+                    break
+                if not chunk:
+                    break
+                if stream_name == "stdout":
+                    out_chunks.extend(chunk)
+                else:
+                    err_chunks.extend(chunk)
+    finally:
+        selector.close()
+        for stream_obj in (proc.stdout, proc.stderr):
+            try:
+                stream_obj.close()
+            except OSError:
+                pass
+
+    end_mono = time.monotonic()
+    out_text = out_chunks.decode("utf-8", errors="replace")
+    err_text = err_chunks.decode("utf-8", errors="replace")
+    raw_return_code = proc.returncode
+    return_code = 124 if stalled else (raw_return_code if raw_return_code is not None else 1)
+    session_idle = None
+    if last_session_progress_mono is not None:
+        session_idle = int(max(0.0, end_mono - last_session_progress_mono))
+
+    return {
+        "return_code": return_code,
+        "raw_return_code": raw_return_code,
+        "stdout": out_text,
+        "stderr": err_text,
+        "timed_out": False,
+        "stalled": stalled,
+        "stall_reason": stall_reason,
+        "liveness": {
+            "stall_threshold_seconds": stall_threshold_seconds,
+            "session_probe_interval_seconds": probe_interval,
+            "probe_count": probe_count,
+            "session_seen": session_seen,
+            "last_session_updated_at": to_iso_from_epoch_ms(last_session_updated_at_ms),
+            "idle_since_output_seconds": int(max(0.0, end_mono - last_output_mono)),
+            "idle_since_session_progress_seconds": session_idle,
+            "stall_idle_seconds": stall_idle_seconds if stalled else 0,
+            "probe_errors": probe_errors,
+            "duration_seconds": int(max(0.0, end_mono - start_mono)),
+        },
     }
 
 
@@ -591,7 +832,6 @@ def start_command(args: argparse.Namespace) -> int:
         actor,
         session_id,
         args.dispatch_message,
-        args.openclaw_timeout_seconds,
     )
     dispatch_result: Dict[str, Any] = {
         "executed": False,
@@ -599,22 +839,43 @@ def start_command(args: argparse.Namespace) -> int:
         "return_code": None,
         "stdout": "",
         "stderr": "",
+        "timed_out": False,
+        "stalled": False,
+        "stall_reason": "",
         "actual_session_id": "",
+        "liveness": {},
         "session_reset": session_reset,
     }
 
     if args.execute_openclaw:
-        proc_result = run_dispatch(command)
+        stall_threshold_seconds = max(MIN_STALL_THRESHOLD_SECONDS, int(args.openclaw_stall_threshold_seconds))
+        proc_result = run_dispatch(
+            command,
+            openclaw_bin=args.openclaw_bin,
+            session_id=session_id,
+            stall_threshold_seconds=stall_threshold_seconds,
+            session_probe_interval_seconds=args.openclaw_probe_interval_seconds,
+        )
         actual_session_id = extract_actual_session_id(proc_result["stdout"])
         dispatch_result.update(
             {
                 "executed": True,
                 "return_code": proc_result["return_code"],
+                "raw_return_code": proc_result.get("raw_return_code"),
                 "stdout": proc_result["stdout"],
                 "stderr": proc_result["stderr"],
+                "timed_out": bool(proc_result.get("timed_out")),
+                "stalled": bool(proc_result.get("stalled")),
+                "stall_reason": str(proc_result.get("stall_reason") or ""),
                 "actual_session_id": actual_session_id,
+                "liveness": proc_result.get("liveness", {}),
             }
         )
+        if dispatch_result["stalled"]:
+            raise RunnerError(
+                "openclaw_dispatch_stalled:"
+                f"actor={actor}:reason={dispatch_result['stall_reason']}"
+            )
         if args.strict_session_match and actual_session_id and actual_session_id != session_id:
             raise RunnerError(
                 "openclaw_session_mismatch:"
@@ -970,10 +1231,25 @@ def build_parser() -> argparse.ArgumentParser:
     p_start.add_argument("--dispatch-message", default="execute assigned phase by process-instance-manager contract")
     p_start.add_argument("--openclaw-bin", default="openclaw")
     p_start.add_argument(
-        "--openclaw-timeout-seconds",
+        "--openclaw-stall-threshold-seconds",
         type=int,
-        default=120,
-        help="Timeout seconds passed to `openclaw agent --timeout`",
+        default=MIN_STALL_THRESHOLD_SECONDS,
+        help=(
+            "Dispatch stall threshold. Only when stdout/stderr and session activity have no progress "
+            "for >= threshold will the dispatch be treated as stalled and terminated (minimum 900s)."
+        ),
+    )
+    p_start.add_argument(
+        "--openclaw-timeout-seconds",
+        dest="openclaw_stall_threshold_seconds",
+        type=int,
+        help=argparse.SUPPRESS,
+    )
+    p_start.add_argument(
+        "--openclaw-probe-interval-seconds",
+        type=int,
+        default=60,
+        help="Liveness probe interval for `openclaw sessions --json` (minimum 5s).",
     )
     p_start.add_argument("--execute-openclaw", action="store_true")
     p_start.add_argument(

@@ -72,7 +72,10 @@ test_mount:
 
 `skills/system/process-instance-manager/scripts/process_instance_runner.py`
 
-新增会话治理参数（v0.2.0）：
+新增会话治理参数（v0.2.1）：
 
 1. `--reset-openclaw-session`：分发前执行 `sessions.reset`，为同 actor 新建会话上下文。
 2. `--strict-session-match`：校验实际 OpenClaw 会话 ID 与上下文会话 ID 一致。
+3. `--openclaw-stall-threshold-seconds`：停滞判定阈值（最小 900 秒），仅在“输出增量 + 会话活性”均长期无进展时触发停滞终止。
+4. `--openclaw-probe-interval-seconds`：活性探测轮询间隔（默认 60 秒）。
+5. `--openclaw-timeout-seconds`：保留兼容别名，语义已切换为停滞阈值，不再作为硬超时。

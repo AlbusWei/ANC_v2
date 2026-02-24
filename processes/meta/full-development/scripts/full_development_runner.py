@@ -162,7 +162,7 @@ def dispatch_phase(
     dispatch_openclaw: bool,
     dispatch_instance_root: str,
     dispatch_openclaw_bin: str,
-    dispatch_openclaw_timeout_seconds: int,
+    dispatch_openclaw_stall_threshold_seconds: int,
     reset_openclaw_session: bool,
     strict_session_match: bool,
 ) -> Dict[str, Any]:
@@ -231,8 +231,8 @@ def dispatch_phase(
         dispatch_message,
         "--openclaw-bin",
         dispatch_openclaw_bin,
-        "--openclaw-timeout-seconds",
-        str(dispatch_openclaw_timeout_seconds),
+        "--openclaw-stall-threshold-seconds",
+        str(dispatch_openclaw_stall_threshold_seconds),
         "--output",
         to_rel(dispatch_output_path, root),
     ]
@@ -332,10 +332,19 @@ def parse_args() -> argparse.Namespace:
         help="OpenClaw binary used by phase dispatch",
     )
     parser.add_argument(
-        "--dispatch-openclaw-timeout-seconds",
+        "--dispatch-openclaw-stall-threshold-seconds",
         type=int,
-        default=45,
-        help="Timeout seconds for each `openclaw agent` phase dispatch",
+        default=900,
+        help=(
+            "Per-phase stall threshold. Dispatch is considered stalled only when stdout/stderr "
+            "and OpenClaw session signals remain unchanged for >= threshold (minimum 900s)."
+        ),
+    )
+    parser.add_argument(
+        "--dispatch-openclaw-timeout-seconds",
+        dest="dispatch_openclaw_stall_threshold_seconds",
+        type=int,
+        help=argparse.SUPPRESS,
     )
     parser.set_defaults(reset_openclaw_session=True)
     parser.add_argument(
@@ -415,7 +424,7 @@ def main() -> int:
                 dispatch_openclaw=args.dispatch_openclaw,
                 dispatch_instance_root=args.dispatch_instance_root,
                 dispatch_openclaw_bin=args.dispatch_openclaw_bin,
-                dispatch_openclaw_timeout_seconds=args.dispatch_openclaw_timeout_seconds,
+                dispatch_openclaw_stall_threshold_seconds=args.dispatch_openclaw_stall_threshold_seconds,
                 reset_openclaw_session=args.reset_openclaw_session,
                 strict_session_match=args.strict_session_match,
             )

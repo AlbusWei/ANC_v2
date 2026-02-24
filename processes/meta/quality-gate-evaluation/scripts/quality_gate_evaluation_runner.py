@@ -108,7 +108,7 @@ def dispatch_phase(
     handoff_note: str,
     instance_root: str,
     openclaw_bin: str,
-    openclaw_timeout_seconds: int,
+    openclaw_stall_threshold_seconds: int,
 ) -> Dict[str, Any]:
     if not enabled:
         return {
@@ -160,8 +160,8 @@ def dispatch_phase(
         dispatch_message,
         "--openclaw-bin",
         openclaw_bin,
-        "--openclaw-timeout-seconds",
-        str(openclaw_timeout_seconds),
+        "--openclaw-stall-threshold-seconds",
+        str(openclaw_stall_threshold_seconds),
         "--output",
         to_rel(dispatch_output_path, root),
     ]
@@ -279,10 +279,19 @@ def parse_args() -> argparse.Namespace:
         help="OpenClaw binary used by phase dispatch",
     )
     parser.add_argument(
-        "--dispatch-openclaw-timeout-seconds",
+        "--dispatch-openclaw-stall-threshold-seconds",
         type=int,
-        default=45,
-        help="Timeout seconds passed to `openclaw agent` in phase dispatch",
+        default=900,
+        help=(
+            "Per-phase stall threshold. Dispatch is considered stalled only when stdout/stderr "
+            "and OpenClaw session signals remain unchanged for >= threshold (minimum 900s)."
+        ),
+    )
+    parser.add_argument(
+        "--dispatch-openclaw-timeout-seconds",
+        dest="dispatch_openclaw_stall_threshold_seconds",
+        type=int,
+        help=argparse.SUPPRESS,
     )
     return parser.parse_args()
 
@@ -353,7 +362,7 @@ def main() -> int:
             handoff_note="将 objective_eval_ref 交给 p2 主观评测阶段",
             instance_root=args.dispatch_instance_root,
             openclaw_bin=args.dispatch_openclaw_bin,
-            openclaw_timeout_seconds=args.dispatch_openclaw_timeout_seconds,
+            openclaw_stall_threshold_seconds=args.dispatch_openclaw_stall_threshold_seconds,
         )
         p1_dir = evidence_dir / "p1_objective_eval"
         p1_dir.mkdir(parents=True, exist_ok=True)
@@ -409,7 +418,7 @@ def main() -> int:
             handoff_note="将 subjective_eval_ref 交给 p3 回归评测阶段",
             instance_root=args.dispatch_instance_root,
             openclaw_bin=args.dispatch_openclaw_bin,
-            openclaw_timeout_seconds=args.dispatch_openclaw_timeout_seconds,
+            openclaw_stall_threshold_seconds=args.dispatch_openclaw_stall_threshold_seconds,
         )
         p2_dir = evidence_dir / "p2_subjective_eval"
         p2_dir.mkdir(parents=True, exist_ok=True)
@@ -459,7 +468,7 @@ def main() -> int:
             handoff_note="将三类评测引用交给 p4 聚合判定",
             instance_root=args.dispatch_instance_root,
             openclaw_bin=args.dispatch_openclaw_bin,
-            openclaw_timeout_seconds=args.dispatch_openclaw_timeout_seconds,
+            openclaw_stall_threshold_seconds=args.dispatch_openclaw_stall_threshold_seconds,
         )
         p3_dir = evidence_dir / "p3_regression_eval"
         p3_dir.mkdir(parents=True, exist_ok=True)
@@ -516,7 +525,7 @@ def main() -> int:
             handoff_note="若 gate_decision=hold，则交给 p5 处理 hold 治理路由",
             instance_root=args.dispatch_instance_root,
             openclaw_bin=args.dispatch_openclaw_bin,
-            openclaw_timeout_seconds=args.dispatch_openclaw_timeout_seconds,
+            openclaw_stall_threshold_seconds=args.dispatch_openclaw_stall_threshold_seconds,
         )
         p4_dir = evidence_dir / "p4_aggregate_verdict"
         p4_dir.mkdir(parents=True, exist_ok=True)
@@ -587,7 +596,7 @@ def main() -> int:
                 handoff_note="将 hold 处理结论回填主流程并结束本次门禁流程",
                 instance_root=args.dispatch_instance_root,
                 openclaw_bin=args.dispatch_openclaw_bin,
-                openclaw_timeout_seconds=args.dispatch_openclaw_timeout_seconds,
+                openclaw_stall_threshold_seconds=args.dispatch_openclaw_stall_threshold_seconds,
             )
             hold_case_path = resolve_path(root, str(request.get("hold_case_ref") or to_rel(evidence_dir / "p5_hold_case.json", root)))
             runtime_log_path = resolve_path(root, str(request.get("runtime_log_ref") or to_rel(evidence_dir / "p5_runtime.log", root)))
