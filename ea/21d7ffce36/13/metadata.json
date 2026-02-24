@@ -1,9 +1,11 @@
 {
   "cli_version": "0.4.5",
   "checkpoint_id": "ea21d7ffce36",
+  "session_id": "codex-9f29c0209fd0",
   "strategy": "manual-commit",
+  "created_at": "2026-02-24T04:35:34.552067Z",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 6,
+  "checkpoints_count": 1,
   "files_touched": [
     "AGENTS.md",
     "docs/architecture/construction_plane.md",
@@ -67,8 +69,6 @@
     "docs/design/modules/evidence/bpm-runtime/w3c_full_development_cases/TC-FULL-DEV-PROC-001/execution/p4_phase_output.json",
     "docs/design/modules/evidence/bpm-runtime/w3c_full_development_cases/TC-FULL-DEV-PROC-001/execution/p5_dispatch_output.json",
     "docs/design/modules/evidence/bpm-runtime/w3c_tc_full_dev_proc_report.json",
-    "docs/design/modules/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json",
-    "docs/design/processes/construction-plane-governance-process.md",
     "docs/design/processes/escalation-process.md",
     "docs/design/processes/full-development-process.md",
     "docs/design/processes/hold-governance-process.md",
@@ -88,14 +88,9 @@
     "openspec/changes/m3-meta-asset-quality-hardening/process-collaboration-skeleton-v1-plan.md",
     "openspec/changes/m3-meta-asset-quality-hardening/tasks.md",
     "openspec/changes/m3-meta-asset-quality-hardening/thread-plan.md",
-    "processes/control/trigger-event-runtime/PROCESS.md",
     "processes/control/trigger-event-runtime/process.json",
-    "processes/control/trigger-schedule-runtime/PROCESS.md",
     "processes/control/trigger-schedule-runtime/process.json",
-    "processes/development-process/PROCESS.md",
-    "processes/meta/construction-plane-governance/PROCESS.md",
     "processes/meta/construction-plane-governance/process.json",
-    "processes/meta/development-process/PROCESS.md",
     "processes/meta/escalation/PROCESS.md",
     "processes/meta/escalation/process.json",
     "processes/meta/evolution-feedback-planning/PROCESS.md",
@@ -103,7 +98,6 @@
     "processes/meta/full-development/PROCESS.md",
     "processes/meta/governed-config-change/PROCESS.md",
     "processes/meta/governed-config-change/process.json",
-    "processes/meta/hold-governance/PROCESS.md",
     "processes/meta/hold-governance/process.json",
     "processes/meta/hotfix-intake-normalization/PROCESS.md",
     "processes/meta/hotfix-intake-normalization/process.json",
@@ -111,7 +105,6 @@
     "processes/meta/hotfix-scope-spec-baseline/process.json",
     "processes/meta/hotfix/PROCESS.md",
     "processes/meta/hotfix/process.json",
-    "processes/meta/hotfix/scripts/hotfix_runner.py",
     "processes/meta/implementation-execution-core/PROCESS.md",
     "processes/meta/implementation-execution-core/process.json",
     "processes/meta/lifecycle-review/PROCESS.md",
@@ -120,11 +113,9 @@
     "processes/meta/objective-scope-baseline/process.json",
     "processes/meta/quality-gate-evaluation/PROCESS.md",
     "processes/meta/quality-gate-evaluation/process.json",
-    "processes/meta/quality-gate-preparation/PROCESS.md",
     "processes/meta/quality-gate-preparation/process.json",
     "processes/meta/refactor/PROCESS.md",
     "processes/meta/refactor/process.json",
-    "processes/meta/refactor/scripts/refactor_runner.py",
     "processes/meta/registry-sync/PROCESS.md",
     "processes/meta/registry-sync/process.json",
     "processes/meta/release-packaging-governed/PROCESS.md",
@@ -133,118 +124,28 @@
     "processes/meta/runtime-policy-calibration/process.json",
     "processes/meta/spec-authoring-contract/PROCESS.md",
     "processes/meta/spec-authoring-contract/process.json",
-    "processes/template/PROCESS.md",
     "shared/registry/registry_contract_tool.py",
     "skills/system/process-instance-manager/scripts/process_instance_runner.py",
-    "tests/m2-bpm-runtime/TC-HOTFIX-REFACTOR-PROC.md",
-    "tests/m2-bpm-runtime/TEST.md",
-    "tests/m2-bpm-runtime/run_tc_hotfix_refactor_proc.py"
+    "tests/m2-bpm-runtime/TEST.md"
   ],
-  "sessions": [
-    {
-      "metadata": "/ea/21d7ffce36/0/metadata.json",
-      "transcript": "/ea/21d7ffce36/0/full.jsonl",
-      "context": "/ea/21d7ffce36/0/context.md",
-      "content_hash": "/ea/21d7ffce36/0/content_hash.txt",
-      "prompt": "/ea/21d7ffce36/0/prompt.txt"
-    },
-    {
-      "metadata": "/ea/21d7ffce36/1/metadata.json",
-      "transcript": "/ea/21d7ffce36/1/full.jsonl",
-      "context": "/ea/21d7ffce36/1/context.md",
-      "content_hash": "/ea/21d7ffce36/1/content_hash.txt",
-      "prompt": "/ea/21d7ffce36/1/prompt.txt"
-    },
-    {
-      "metadata": "/ea/21d7ffce36/2/metadata.json",
-      "transcript": "/ea/21d7ffce36/2/full.jsonl",
-      "context": "/ea/21d7ffce36/2/context.md",
-      "content_hash": "/ea/21d7ffce36/2/content_hash.txt",
-      "prompt": "/ea/21d7ffce36/2/prompt.txt"
-    },
-    {
-      "metadata": "/ea/21d7ffce36/3/metadata.json",
-      "transcript": "/ea/21d7ffce36/3/full.jsonl",
-      "context": "/ea/21d7ffce36/3/context.md",
-      "content_hash": "/ea/21d7ffce36/3/content_hash.txt",
-      "prompt": "/ea/21d7ffce36/3/prompt.txt"
-    },
-    {
-      "metadata": "/ea/21d7ffce36/4/metadata.json",
-      "transcript": "/ea/21d7ffce36/4/full.jsonl",
-      "context": "/ea/21d7ffce36/4/context.md",
-      "content_hash": "/ea/21d7ffce36/4/content_hash.txt",
-      "prompt": "/ea/21d7ffce36/4/prompt.txt"
-    },
-    {
-      "metadata": "/ea/21d7ffce36/5/metadata.json",
-      "transcript": "/ea/21d7ffce36/5/full.jsonl",
-      "context": "/ea/21d7ffce36/5/context.md",
-      "content_hash": "/ea/21d7ffce36/5/content_hash.txt",
-      "prompt": "/ea/21d7ffce36/5/prompt.txt"
-    },
-    {
-      "metadata": "/ea/21d7ffce36/6/metadata.json",
-      "transcript": "/ea/21d7ffce36/6/full.jsonl",
-      "context": "/ea/21d7ffce36/6/context.md",
-      "content_hash": "/ea/21d7ffce36/6/content_hash.txt",
-      "prompt": "/ea/21d7ffce36/6/prompt.txt"
-    },
-    {
-      "metadata": "/ea/21d7ffce36/7/metadata.json",
-      "transcript": "/ea/21d7ffce36/7/full.jsonl",
-      "context": "/ea/21d7ffce36/7/context.md",
-      "content_hash": "/ea/21d7ffce36/7/content_hash.txt",
-      "prompt": "/ea/21d7ffce36/7/prompt.txt"
-    },
-    {
-      "metadata": "/ea/21d7ffce36/8/metadata.json",
-      "transcript": "/ea/21d7ffce36/8/full.jsonl",
-      "context": "/ea/21d7ffce36/8/context.md",
-      "content_hash": "/ea/21d7ffce36/8/content_hash.txt",
-      "prompt": "/ea/21d7ffce36/8/prompt.txt"
-    },
-    {
-      "metadata": "/ea/21d7ffce36/9/metadata.json",
-      "transcript": "/ea/21d7ffce36/9/full.jsonl",
-      "context": "/ea/21d7ffce36/9/context.md",
-      "content_hash": "/ea/21d7ffce36/9/content_hash.txt",
-      "prompt": "/ea/21d7ffce36/9/prompt.txt"
-    },
-    {
-      "metadata": "/ea/21d7ffce36/10/metadata.json",
-      "transcript": "/ea/21d7ffce36/10/full.jsonl",
-      "context": "/ea/21d7ffce36/10/context.md",
-      "content_hash": "/ea/21d7ffce36/10/content_hash.txt",
-      "prompt": "/ea/21d7ffce36/10/prompt.txt"
-    },
-    {
-      "metadata": "/ea/21d7ffce36/11/metadata.json",
-      "transcript": "/ea/21d7ffce36/11/full.jsonl",
-      "context": "/ea/21d7ffce36/11/context.md",
-      "content_hash": "/ea/21d7ffce36/11/content_hash.txt",
-      "prompt": "/ea/21d7ffce36/11/prompt.txt"
-    },
-    {
-      "metadata": "/ea/21d7ffce36/12/metadata.json",
-      "transcript": "/ea/21d7ffce36/12/full.jsonl",
-      "context": "/ea/21d7ffce36/12/context.md",
-      "content_hash": "/ea/21d7ffce36/12/content_hash.txt",
-      "prompt": "/ea/21d7ffce36/12/prompt.txt"
-    },
-    {
-      "metadata": "/ea/21d7ffce36/13/metadata.json",
-      "transcript": "/ea/21d7ffce36/13/full.jsonl",
-      "context": "/ea/21d7ffce36/13/context.md",
-      "content_hash": "/ea/21d7ffce36/13/content_hash.txt",
-      "prompt": "/ea/21d7ffce36/13/prompt.txt"
-    }
-  ],
+  "agent": "Gemini CLI",
+  "turn_id": "c0817eb31305",
+  "transcript_identifier_at_start": "gemini-7ddef14776",
   "token_usage": {
     "input_tokens": 0,
     "cache_creation_tokens": 0,
     "cache_read_tokens": 0,
     "output_tokens": 0,
     "api_call_count": 0
-  }
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-24T04:35:34.180024Z",
+    "agent_lines": 740,
+    "human_added": 3167,
+    "human_modified": 483,
+    "human_removed": 0,
+    "total_committed": 4390,
+    "agent_percentage": 16.856492027334852
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
 }
