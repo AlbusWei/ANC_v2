@@ -760,6 +760,13 @@
       "context": "/59/41bd672fa8/7/context.md",
       "content_hash": "/59/41bd672fa8/7/content_hash.txt",
       "prompt": "/59/41bd672fa8/7/prompt.txt"
+    },
+    {
+      "metadata": "/59/41bd672fa8/8/metadata.json",
+      "transcript": "/59/41bd672fa8/8/full.jsonl",
+      "context": "/59/41bd672fa8/8/context.md",
+      "content_hash": "/59/41bd672fa8/8/content_hash.txt",
+      "prompt": "/59/41bd672fa8/8/prompt.txt"
     }
   ],
   "token_usage": {
