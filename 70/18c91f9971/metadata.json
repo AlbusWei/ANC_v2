@@ -222,6 +222,13 @@
       "context": "/70/18c91f9971/20/context.md",
       "content_hash": "/70/18c91f9971/20/content_hash.txt",
       "prompt": "/70/18c91f9971/20/prompt.txt"
+    },
+    {
+      "metadata": "/70/18c91f9971/21/metadata.json",
+      "transcript": "/70/18c91f9971/21/full.jsonl",
+      "context": "/70/18c91f9971/21/context.md",
+      "content_hash": "/70/18c91f9971/21/content_hash.txt",
+      "prompt": "/70/18c91f9971/21/prompt.txt"
     }
   ],
   "token_usage": {
