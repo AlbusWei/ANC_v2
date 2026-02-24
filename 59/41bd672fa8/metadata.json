@@ -3,7 +3,7 @@
   "checkpoint_id": "5941bd672fa8",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 2,
+  "checkpoints_count": 3,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/design/inventories/process-inventory.md",
@@ -746,6 +746,13 @@
       "context": "/59/41bd672fa8/5/context.md",
       "content_hash": "/59/41bd672fa8/5/content_hash.txt",
       "prompt": "/59/41bd672fa8/5/prompt.txt"
+    },
+    {
+      "metadata": "/59/41bd672fa8/6/metadata.json",
+      "transcript": "/59/41bd672fa8/6/full.jsonl",
+      "context": "/59/41bd672fa8/6/context.md",
+      "content_hash": "/59/41bd672fa8/6/content_hash.txt",
+      "prompt": "/59/41bd672fa8/6/prompt.txt"
     }
   ],
   "token_usage": {
