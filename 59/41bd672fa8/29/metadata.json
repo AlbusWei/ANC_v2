@@ -1,0 +1,39 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "5941bd672fa8",
+  "session_id": "codex-eeda54ad1da6",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-24T12:16:57.82011Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/defects.json",
+    "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/meta_qa_online_report.json",
+    "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/meta_qa_online_summary.md",
+    "docs/design/modules/evidence/self-development/runtime-validation-round-meta-assets/latest/regression_plan.json",
+    "docs/design/processes/governance-processes.md",
+    "tests/m3-self-development/run_meta_qa_online.py"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "2b08fc2c9297",
+  "transcript_identifier_at_start": "gemini-45fae041cd",
+  "checkpoint_transcript_start": 128,
+  "transcript_lines_at_start": 128,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-24T12:16:57.430756Z",
+    "agent_lines": 9111,
+    "human_added": 80066,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 89177,
+    "agent_percentage": 10.216759926886978
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
