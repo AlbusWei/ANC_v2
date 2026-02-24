@@ -20,6 +20,7 @@
 7. `docs/architecture/construction_plane.md`
 8. `docs/architecture/glossary.md`
 9. `docs/architecture/release_isolation_policy.md`
+10. `docs/architecture/release_packaging_sop.md`
 
 ## 变更规则
 

@@ -52,12 +52,24 @@ ANC v2 将作为公开项目发布，必须保证仓库默认仅包含“可公�
 5. 发布白名单（严格）：`python3 tools/release/generate_release_whitelist.py --strict`。
 6. 统一门禁：`python3 tools/release/release_isolation_gate.py`。
 7. 发布前附加 OpenClaw 校验：`python3 tools/release/release_isolation_gate.py --verify-openclaw`。
+8. 标准打包：`python3 tools/release/build_release_bundle.py --verify-openclaw`。
 
 ## 5.1 OpenClaw 切换口径
 
 1. 公开发布模式：`python3 tools/openclaw/switch_workspace.py --repo-root <repo> --scope public`
 2. 开发模式：`python3 tools/openclaw/switch_workspace.py --repo-root <repo> --scope dev`
 3. 开发模式加载私有资产：增加 `--enable-private-assets --private-overlay runtime_data/private-assets/openclaw.overlay.json`
+
+## 5.2 发布打包口径
+
+1. 发布打包唯一标准入口：`tools/release/build_release_bundle.py`。
+2. 脚本默认 Fail-Closed：门禁失败、白名单失败、归档失败任一触发即返回失败。
+3. 输出目录固定落在 `runtime_data/exports/release-bundles/<bundle-id>/`，并生成：
+   - `<bundle-id>.tar.gz`
+   - `<bundle-id>.tar.gz.sha256`
+   - `bundle_manifest.json`
+   - `whitelist/release_whitelist.{json,txt}`
+4. 详细步骤见：`docs/architecture/release_packaging_sop.md`
 
 ## 6. 与其他协议关系
 

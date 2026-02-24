@@ -42,6 +42,12 @@ profile 定义文件：
 python3 tools/release/generate_release_whitelist.py --strict
 ```
 
+标准发布打包（门禁 + 白名单 + 归档）：
+
+```bash
+python3 tools/release/build_release_bundle.py --verify-openclaw
+```
+
 ## 生成与校验命令
 
 ```bash

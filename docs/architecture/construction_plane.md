@@ -68,6 +68,7 @@
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase12 `development-process` 协作语义补齐：明确“最小开发内核”定位，补齐 phase 语义字段与 `collaboration_policy`，并退役移除 `processes/development-process/` legacy 路径
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase13 流程标准一致性收口：升级 `process-template` 到 canonical schema，`meta.arch.process-creator` 校验逻辑与 `sys.bpm.process-instance-manager` manifest 校验对齐 `subprocess + inline_ap` 规则，并补齐 `trigger-*` manifest 协作语义字段
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase14 流程执行语义补全：全量流程文档去模板化、`P4` 协作策略强制与 `P5/P6` 多 Actor 条件强制落地、`sys.bpm.process-instance-manager` 增加 `task_dispatch/dispatch_context/dispatch_prompt` 证据链、`system.ops.manual-task` 改为 Actor 通用执行入口并输出 `task_completion` 留档
+- [x] 完成发布打包标准化链路：新增 `tools/release/build_release_bundle.py`，统一执行“隔离门禁 -> 白名单冻结 -> 归档打包 -> SHA256/manifest 产出”，并落盘 `docs/architecture/release_packaging_sop.md`
 
 ## 进行中（In Progress）
 

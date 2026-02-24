@@ -18,6 +18,7 @@ ANC v2 是一个可反身自开发、可自进化的 Agentic 系统。
 8. registry 契约：`docs/architecture/registry_contracts.md`
 9. 详细设计索引：`docs/design/README.md`
 10. 发布隔离策略：`docs/architecture/release_isolation_policy.md`
+11. 发布打包 SOP：`docs/architecture/release_packaging_sop.md`
 
 ## 3. 执行原则
 
@@ -169,5 +170,8 @@ ANC v2 是一个可反身自开发、可自进化的 Agentic 系统。
    - `rg -n "runtime_data/private-assets" shared/registry config/openclaw.phase05*.fragment.json`
    - `python3 tools/release/release_isolation_gate.py`
    - 发布前追加：`python3 tools/release/release_isolation_gate.py --verify-openclaw`
-5. Fail-Closed：
+5. 标准打包命令（强制）：
+   - `python3 tools/release/build_release_bundle.py --verify-openclaw`
+   - 产物目录：`runtime_data/exports/release-bundles/<bundle-id>/`
+6. Fail-Closed：
    - 若发现私有数据或非标准资产进入可发布路径，必须先隔离/回退，再继续开发或宣告 Done。
