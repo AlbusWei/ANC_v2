@@ -8233,6 +8233,13 @@
       "context": "/7e/006cc3a4ee/20/context.md",
       "content_hash": "/7e/006cc3a4ee/20/content_hash.txt",
       "prompt": "/7e/006cc3a4ee/20/prompt.txt"
+    },
+    {
+      "metadata": "/7e/006cc3a4ee/21/metadata.json",
+      "transcript": "/7e/006cc3a4ee/21/full.jsonl",
+      "context": "/7e/006cc3a4ee/21/context.md",
+      "content_hash": "/7e/006cc3a4ee/21/content_hash.txt",
+      "prompt": "/7e/006cc3a4ee/21/prompt.txt"
     }
   ],
   "token_usage": {
