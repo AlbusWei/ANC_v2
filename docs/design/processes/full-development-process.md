@@ -91,3 +91,20 @@
    - `done_definition`
    - `handoff_note`
 5. 当前边界：本轮以协作可运行为优先目标；各子流程真实执行在后续回合逐步接线。
+
+<!-- phase-semantics-v2:start -->
+## 阶段协作语义补充（v2）
+
+> 说明：本节用于说明每个 phase 在系统主线中的职责与协作价值，要求可直接回答“为什么由该 Actor 在该阶段执行该动作”。
+
+| phase_id | Actor | 阶段目的 | 输入语义 | 完成标准 | 交接语义 |
+|---|---|---|---|---|---|
+| `p1` | `architect` | 澄清目标并形成范围基线，为后续规格编写提供稳定输入。 | objective_context_ref,input_payload | 必须产出 objective_ref 与 scope_baseline_ref。 | 将 objective_ref 与 scope_baseline_ref 交接给 p2。 |
+| `p2` | `architect` | 将目标与范围基线收敛为可执行规格。 | objective_ref,scope_baseline_ref | 必须产出 spec_ref，并可追溯到 p1 输入。 | 将 spec_ref 交接给 p3。 |
+| `p3` | `qa` | 围绕规格构建测试准备包，明确后续验证基线。 | spec_ref | 必须产出 test_plan_ref 与 preparation_bundle_ref。 | 将 test_plan_ref 与 preparation_bundle_ref 交接给 p4。 |
+| `p4` | `kernel-dev` | 在规格与测试基线约束下完成实现与候选产物。 | spec_ref,test_plan_ref | 必须产出 implementation_ref 与 candidate_artifacts_ref。 | 将 candidate_artifacts_ref 交接给 p5。 |
+| `p5` | `qa` | 执行质量门禁评测并形成统一门禁结论。 | candidate_artifacts_ref,preparation_bundle_ref | 必须产出 final_gate_verdict_ref，且门禁结论可解释。 | 若门禁通过，则将 final_gate_verdict_ref 交接给 p6。 |
+| `p6` | `admin` | 完成生命周期治理与 registry 同步前置校验。 | final_gate_verdict_ref,lifecycle_target | 必须产出 lifecycle_transition_ref 与 registry_sync_ref。 | 将 lifecycle_transition_ref 与 registry_sync_ref 交接给 p7。 |
+| `p7` | `admin` | 完成发布打包与回滚包准备。 | candidate_artifacts_ref,final_gate_verdict_ref,lifecycle_transition_ref,registry_sync_ref | 必须产出 release_package_ref 与 rollback_bundle_ref。 | 将发布产物与反馈证据交接给 p8。 |
+| `p8` | `architect` | 基于发布与运行反馈形成下一轮演化计划。 | release_package_ref,final_gate_verdict_ref,lifecycle_transition_ref,runtime_feedback_ref | 必须产出 improvement_plan_ref 与 retro_report_ref。 | 将演化计划回填给发起方作为下一轮输入。 |
+<!-- phase-semantics-v2:end -->

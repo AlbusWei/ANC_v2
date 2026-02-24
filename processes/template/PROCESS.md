@@ -1,38 +1,59 @@
-# process-template - Human Guide
+# process-template - 流程说明
 
-## Objective
+## 流程定位
 
-该模板用于初始化可执行、可审计的流程资产，并确保与 BPM/Agent Skills 双侧兼容。
+- 流程级别：`P4`
+- 负责人：`bpm`
+- 版本：`0.1.0`
+- Objective 引用：`obj-template`
 
-## Assets
+## 流程目标（自然语言）
 
-- Runtime skill entry: `SKILL.md`
-- Structured manifest: `process.json`
+该流程是流程建模模板，用于演示最小 phase 协作骨架与文档写法，不承载实际业务治理职责。其目标是为新增流程提供一致的起步结构，降低定义偏差。
 
-## SIPOC Overview
+## 协作编排原则
 
-| Element | Description |
-|---|---|
-| Supplier | Initiator / upstream process |
-| Input | objective_ref + input_payload |
-| Process | structured phase execution |
-| Output | final_output + evidence_refs + verdict |
-| Client | Initiator / downstream process |
+1. 模板的目标是提供可复用骨架，不预置具体业务结论。
+2. 示例文本应强调如何表达意图与边界，而非填充格式占位语句。
+3. 引用模板创建新流程时，必须替换为流程特异化语义后才可进入评审。
+4. 模板不承担治理豁免：连续性、phase 闭合与可执行性约束仍然生效。
 
-## Roles
+## 阶段语义定义
 
-- Initiator: request owner
-- Owner: bpm
-- Actors: architect / kernel-dev / qa
-- Stakeholders: objective owner
+### p1 clarify-objective
 
-## Control Structures
+- 执行角色：`architect`
+- 阶段目的：本阶段围绕以下业务动作推进：澄清目标与约束。
+- 输入语义：本阶段主要消费以下输入：input_payload。
+- 完成标准：完成判据：必须产出 normalized_requirement，并满足“目标与约束明确”。
+- 交接说明：交接要求：将 normalized_requirement 交接给 p2。
+- 执行单元：`subprocess:`。
 
-默认使用 `sequence`，按需扩展 `condition`, `loop`, `fork_join`, `merge`。
+### p2 execute-main
 
-## Copy Checklist
+- 执行角色：`kernel-dev`
+- 阶段目的：本阶段围绕以下业务动作推进：执行实现工作流。
+- 输入语义：本阶段主要消费以下输入：normalized_requirement。
+- 完成标准：完成判据：必须产出 deliverable，并满足“产物已按约定生成”。
+- 交接说明：交接要求：将 deliverable 交接给 p3。
+- 执行单元：`subprocess:`。
 
-1. 复制 `template` 到 `processes/<process-name>`。
-2. 修改 `SKILL.md` frontmatter `name`。
-3. 修改 `process.json.process_id`。
-4. 根据目标补全 phases 与验收条件。
+### p3 verify-objective
+
+- 执行角色：`qa`
+- 阶段目的：本阶段围绕以下业务动作推进：执行目标对齐验证。
+- 输入语义：本阶段主要消费以下输入：deliverable。
+- 完成标准：完成判据：必须产出 verdict_and_feedback，并满足“结论与改进行动已生成”。
+- 交接说明：交接要求：将 verdict_and_feedback 交接给 initiator。
+- 执行单元：`subprocess:`。
+
+## 控制流与回退
+
+- 未声明控制流，默认按阶段顺序执行。
+
+## Fail-Closed 触发条件
+
+1. 阶段输入不可解析、缺失或与目标语义不一致。
+2. 阶段输出不可追溯，或无法支撑下一阶段继续执行。
+3. 交接语义不完整，导致跨角色协作中断。
+4. 回退/重试策略由上级流程或运行配置决定。

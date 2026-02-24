@@ -5,7 +5,7 @@
     "compile_success"
   ],
   "compile_meta": {
-    "compiled_at": "2026-02-23T16:32:01.509318+00:00",
+    "compiled_at": "2026-02-23T22:01:29.523989+00:00",
     "test_doc_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md",
     "objective_ref": "obj-m1-unified-quality-gate",
     "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",

@@ -37,8 +37,8 @@
       "phase_id": "p1",
       "name": "incident-intake",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:escalation:p1",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-013-incident-triage.md#ap-013-incident-triage",
       "sipoc": {
@@ -48,14 +48,22 @@
         "output": "incident_snapshot_ref",
         "client": "p2"
       },
-      "acceptance_criteria": "incident fields and evidence references are complete"
+      "acceptance_criteria": "incident fields and evidence references are complete",
+      "inline_ap": {
+        "ap_id": "inline-ap:escalation:p1",
+        "skill_id": "system.ops.manual-task",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p2",
       "name": "policy-check",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:escalation:p2",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-031-trigger-escalation-handling.md#ap-031-trigger-escalation-handling",
       "sipoc": {
@@ -65,14 +73,22 @@
         "output": "policy_check_ref",
         "client": "p3"
       },
-      "acceptance_criteria": "policy is parseable and chain is valid"
+      "acceptance_criteria": "policy is parseable and chain is valid",
+      "inline_ap": {
+        "ap_id": "inline-ap:escalation:p2",
+        "skill_id": "system.ops.manual-task",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p3",
       "name": "chain-routing",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "sys.bpm.escalation-handler",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:escalation:p3",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-031-trigger-escalation-handling.md#ap-031-trigger-escalation-handling",
       "sipoc": {
@@ -82,14 +98,22 @@
         "output": "escalation_trace",
         "client": "p4"
       },
-      "acceptance_criteria": "trace is auditable and final owner is in chain"
+      "acceptance_criteria": "trace is auditable and final owner is in chain",
+      "inline_ap": {
+        "ap_id": "inline-ap:escalation:p3",
+        "skill_id": "sys.bpm.escalation-handler",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p4",
       "name": "resolution-or-human",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "sys.bpm.escalation-handler",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:escalation:p4",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-025-hold-resolution-and-escalation.md#ap-025-hold-resolution-and-escalation",
       "sipoc": {
@@ -99,7 +123,15 @@
         "output": "escalation_output_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "decision is explicit and reasons are complete"
+      "acceptance_criteria": "decision is explicit and reasons are complete",
+      "inline_ap": {
+        "ap_id": "inline-ap:escalation:p4",
+        "skill_id": "sys.bpm.escalation-handler",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     }
   ],
   "control_flow": [

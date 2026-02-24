@@ -609,6 +609,48 @@ def _is_relative_anchor(value: str) -> bool:
     return _is_repo_relative_path(ref_path)
 
 
+def _validate_inline_ap_phase(
+    *,
+    phase: Dict[str, Any],
+    prefix: str,
+    target_id: Any,
+    skill_ids: set[str],
+    errors: List[str],
+) -> None:
+    inline_ap = phase.get("inline_ap")
+    if not isinstance(inline_ap, dict):
+        errors.append(f"{prefix}: subprocess target not found in process_registry requires inline_ap object")
+        return
+
+    for field in ["ap_id", "skill_id", "actor", "pierce_allowed"]:
+        if field not in inline_ap:
+            errors.append(f"{prefix}: inline_ap missing required field {field!r}")
+
+    ap_id = inline_ap.get("ap_id")
+    if not isinstance(ap_id, str) or not ap_id.strip():
+        errors.append(f"{prefix}: inline_ap.ap_id must be non-empty string")
+    elif ap_id != target_id:
+        errors.append(f"{prefix}: inline_ap.ap_id must equal target_id")
+
+    skill_id = inline_ap.get("skill_id")
+    if not isinstance(skill_id, str) or not skill_id.strip():
+        errors.append(f"{prefix}: inline_ap.skill_id must be non-empty string")
+    elif skill_id not in skill_ids:
+        errors.append(f"{prefix}: inline_ap.skill_id {skill_id!r} not found in skill_registry.skill_id")
+
+    ap_actor = inline_ap.get("actor")
+    if not isinstance(ap_actor, str) or not ap_actor.strip():
+        errors.append(f"{prefix}: inline_ap.actor must be non-empty string")
+
+    pierce_allowed = inline_ap.get("pierce_allowed")
+    if not isinstance(pierce_allowed, bool):
+        errors.append(f"{prefix}: inline_ap.pierce_allowed must be boolean")
+    elif pierce_allowed and ap_actor != phase.get("actor"):
+        errors.append(
+            f"{prefix}: inline_ap.pierce_allowed=true requires inline_ap.actor equals phase.actor"
+        )
+
+
 def check_protocol_consistency(
     skills_payload: Dict[str, Any],
     processes_payload: Dict[str, Any],
@@ -785,14 +827,21 @@ def check_protocol_consistency(
 
             target_type = phase.get("target_type")
             target_id = phase.get("target_id")
-            if target_type == "skill":
-                if target_id not in skill_ids:
-                    errors.append(f"{prefix}: target_id {target_id!r} not found in skill_registry.skill_id")
-            elif target_type == "subprocess":
+            if target_type == "subprocess":
                 if target_id not in process_ids:
-                    errors.append(f"{prefix}: target_id {target_id!r} not found in process_registry.process_id")
+                    _validate_inline_ap_phase(
+                        phase=phase,
+                        prefix=prefix,
+                        target_id=target_id,
+                        skill_ids=skill_ids,
+                        errors=errors,
+                    )
+                elif "inline_ap" in phase:
+                    errors.append(
+                        f"{prefix}: registered subprocess target must not declare inline_ap"
+                    )
             else:
-                errors.append(f"{prefix}: target_type must be 'skill' or 'subprocess'")
+                errors.append(f"{prefix}: target_type must be 'subprocess'")
 
             requires_spec = phase.get("requires_spec")
             if not isinstance(requires_spec, bool):
@@ -943,15 +992,18 @@ def check_openspec_collaboration_consistency(
             errors.append(f"{M6_MANIFEST_PATH}: output_contract.required must include 'round_close_summary_ref'")
 
         phases = m6_manifest.get("phases", [])
-        has_openspec_phase = any(
-            isinstance(phase, dict)
-            and phase.get("target_type") == "skill"
-            and phase.get("target_id") == "system.integration.openspec-sync"
-            for phase in phases
-        )
+        has_openspec_phase = False
+        for phase in phases:
+            if not isinstance(phase, dict):
+                continue
+            inline_ap = phase.get("inline_ap")
+            inline_skill_id = inline_ap.get("skill_id") if isinstance(inline_ap, dict) else None
+            if inline_skill_id == "system.integration.openspec-sync":
+                has_openspec_phase = True
+                break
         if not has_openspec_phase:
             errors.append(
-                f"{M6_MANIFEST_PATH}: phases must include a skill phase targeting "
+                f"{M6_MANIFEST_PATH}: phases must include a phase using inline_ap.skill_id "
                 "'system.integration.openspec-sync'"
             )
 

@@ -99,3 +99,17 @@
 1. 套件报告：`docs/design/modules/evidence/bpm-runtime/w3b_tc_qa_proc_report.json`
 2. 主链路证据：`docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-001/`
 3. HOLD 路由证据：`docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/`
+
+<!-- phase-semantics-v2:start -->
+## 阶段协作语义补充（v2）
+
+> 说明：本节用于说明每个 phase 在系统主线中的职责与协作价值，要求可直接回答“为什么由该 Actor 在该阶段执行该动作”。
+
+| phase_id | Actor | 阶段目的 | 输入语义 | 完成标准 | 交接语义 |
+|---|---|---|---|---|---|
+| `p1` | `qa` | 执行客观评测 profile。 | preparation_bundle_ref + actual_output_refs | 产出 objective_eval_ref，并满足：目标评测结论可解析且可追溯 | 将 objective_eval_ref 交接给 p2 |
+| `p2` | `qa` | 默认执行盲评主观评测。 | preparation_bundle_ref + actual_output_refs + subjective_plan | 产出 subjective_eval_ref，并满足：主观评测记录包含 seed 轮次与结论 | 将 subjective_eval_ref 交接给 p3 |
+| `p3` | `qa` | 执行跨模块回归评测。 | preparation_bundle_ref + profile_set + actual_output_refs | 产出 regression_eval_ref，并满足：回归报告包含模块级结论 | 将 regression_eval_ref 交接给 p4 |
+| `p4` | `qa` | 汇总形成统一门禁结论。 | objective_eval_ref + subjective_eval_ref + regression_eval_ref | 产出 gate_decision，并满足：门禁决策遵循统一 verdict 枚举与 P0 优先规则 | 将 gate_decision 交接给 initiator |
+| `p5` | `bpm` | 将 hold 案例路由至 hold 治理子流程。 | hold_case_ref | 产出 hold_resolution_ref，并满足：hold 案例在证据支撑下被解决或升级 | 将 hold_resolution_ref 交接给 initiator |
+<!-- phase-semantics-v2:end -->

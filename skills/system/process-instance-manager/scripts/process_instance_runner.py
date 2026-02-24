@@ -348,9 +348,8 @@ def run_dispatch(
         while True:
             now_mono = time.monotonic()
             if proc.poll() is not None:
-                # 进程退出后仍可能有剩余缓冲，继续 drain 到 EOF。
-                if not selector.get_map():
-                    break
+                # 子进程退出后交由统一兜底 drain 收集剩余缓冲，避免在 selector 上假阻塞。
+                break
 
             events = selector.select(timeout=1.0)
             for key, _ in events:
@@ -444,7 +443,7 @@ def run_dispatch(
             while True:
                 try:
                     chunk = os.read(stream_obj.fileno(), 65536)
-                except (BlockingIOError, OSError):
+                except (BlockingIOError, OSError, ValueError):
                     break
                 if not chunk:
                     break

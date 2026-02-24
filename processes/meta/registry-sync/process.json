@@ -36,8 +36,8 @@
       "phase_id": "p1",
       "name": "verify-registry-and-sync",
       "actor": "hr",
-      "target_type": "skill",
-      "target_id": "sys.qa.registry-validator",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:registry-sync:p1",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-011-registry-sync.md#ap-011-registry-sync",
       "sipoc": {
@@ -47,7 +47,15 @@
         "output": "registry_sync_ref + registry_verify_report_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "registry verify result is explicit and auditable"
+      "acceptance_criteria": "registry verify result is explicit and auditable",
+      "inline_ap": {
+        "ap_id": "inline-ap:registry-sync:p1",
+        "skill_id": "sys.qa.registry-validator",
+        "actor": "hr",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     }
   ],
   "control_flow": [

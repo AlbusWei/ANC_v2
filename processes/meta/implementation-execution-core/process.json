@@ -30,8 +30,8 @@
       "phase_id": "p1",
       "name": "implementation-execution",
       "actor": "kernel-dev",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:implementation-execution-core:p1",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-006-implementation-execution.md#ap-006-implementation-execution",
       "sipoc": {
@@ -41,7 +41,15 @@
         "output": "implementation_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "implementation keeps traceability to spec and tests"
+      "acceptance_criteria": "implementation keeps traceability to spec and tests",
+      "inline_ap": {
+        "ap_id": "inline-ap:implementation-execution-core:p1",
+        "skill_id": "system.ops.manual-task",
+        "actor": "kernel-dev",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     }
   ],
   "control_flow": [

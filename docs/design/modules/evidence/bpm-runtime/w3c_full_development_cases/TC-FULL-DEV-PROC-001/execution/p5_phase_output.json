@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-02-23T22:11:06Z",
+  "phase_id": "p5",
+  "actor": "qa",
+  "inputs": [
+    "docs/design/modules/evidence/bpm-runtime/w3c_full_development_cases/TC-FULL-DEV-PROC-001/execution/p4_outputs/candidate_artifacts_ref.json",
+    "docs/design/modules/evidence/bpm-runtime/w3c_full_development_cases/TC-FULL-DEV-PROC-001/execution/p3_outputs/preparation_bundle_ref.json"
+  ],
+  "outputs": {
+    "final_gate_verdict_ref": "docs/design/modules/evidence/bpm-runtime/w3c_full_development_cases/TC-FULL-DEV-PROC-001/execution/p5_outputs/final_gate_verdict_ref.json"
+  },
+  "collaboration_mode": "phase-isolated-session"
+}

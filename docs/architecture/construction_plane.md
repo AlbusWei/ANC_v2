@@ -1,6 +1,6 @@
 # ANC v2 施工平面（Construction Plane）
 
-最后更新：2026-02-23
+最后更新：2026-02-24
 
 > 本文档是 ANC v2 的活施工板，记录当前进展、下一步计划、边界和风险。
 
@@ -62,6 +62,8 @@
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase3 元技能执行级升级：8 个目标元技能统一推进到 `review`，4 个 creator/validator runner 统一为 `--input/--output/[--report]` 契约，并落地 `meta-skill-creator` 运行名治理（`skill-creator` 仓库内软禁用）
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase4 联动闭合：design + inventory + registry + OpenSpec + 施工平面对齐，11 个流程生命周期统一收敛到 `review`，并明确本轮不推进 `active`
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase9 `full-development` 首轮运行级真实分发 dry-run：`TC-FULL-DEV-PROC-001` 在 8 phase 下通过，真实 openclaw 分发 + 同 actor 跨 phase 会话隔离校验通过
+- [x] 完成 `m3-meta-asset-quality-hardening` Phase10 AP 语义统一：18 份流程 manifest 去除 `target_type=skill`，统一为 `target_type=subprocess` + `inline_ap` 临时 AP 语法，并启用“同 Actor 可穿透执行”规则
+- [x] 完成 `m3-meta-asset-quality-hardening` Phase11 `hotfix/refactor` 首轮运行级真实分发 dry-run：`TC-HOTFIX-PROC-001` 与 `TC-REFACTOR-PROC-001` 均通过，phase 全量分发、session 严格匹配、同 actor 跨 phase 隔离全部通过（证据：`docs/design/modules/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json`）
 
 ## 进行中（In Progress）
 
@@ -71,7 +73,6 @@
 - [ ] 将 trigger governance 最小 dry-run 从文档级证据升级到运行级证据
 - [ ] 完成 trigger runtime 动态策略实证校准并形成参数回写节奏
 - [ ] 建立 `runtime-policy-calibration` 治理节奏并纳入 M1/M2 首批后验议题
-- [ ] 触发 M3 `hotfix/refactor` 首轮运行级 dry-run 并沉淀证据（`full-development` 已完成）
 - [ ] 基于首轮证据推进 M6 第二轮运行级回归（含 git-range + trailer 实盘对账）
 - [ ] 推进 `m3-self-development-e2e-online`：完成 Session5~Session7 运行级测试与双主线 E2E 收口（Session4 测试基座已落地）
 
@@ -111,7 +112,7 @@
 | M1 | 统一测试门禁可用 | 门禁生效 + M3/M4/M5 复用接入 + 证据审计可追溯 | 进行中（`sys.qa.*` 七技能 active pilot 已落盘） |
 | M1.5 | 架构细化完成 | L0-L5 + P1-P6 + 双主线 + 原子流程文档齐套 | 已完成 |
 | M2 | 第一次 TDD 闭环 | 一个 Skill 从 Test 先行到复测通过 | 进行中（BPM runtime 骨架已落盘） |
-| M3 | 第一次流程编排 | BPM 成功调度 3+ Phase 流程 | 进行中（M3 资产已落盘，待运行级 dry-run） |
+| M3 | 第一次流程编排 | BPM 成功调度 3+ Phase 流程 | 已完成（`full-development/hotfix/refactor` 运行级真实分发 dry-run 通过） |
 | M4 | 第一次自开发 | 系统用自身流程开发并上线新 Skill | 待开始 |
 
 ## 开放问题

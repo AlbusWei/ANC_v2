@@ -13,6 +13,13 @@
 2. `Objective -> Spec -> Test -> Development` 被流程化为硬门禁。
 3. 多 Agent 协作在失败场景仍可回退与审计。
 
+### 1.1 设计表达准则（质胜于形）
+
+1. 流程文档首先回答“该流程在系统中为何存在”，再描述字段与协议细节。
+2. `流程目标` 必须体现系统定位、问题定义、上下游价值，不得使用模板化口号替代设计意图。
+3. `协作编排原则` 必须是流程特异化规则，能够解释该流程如何保障主线目标达成。
+4. 若文档仅满足格式/契约但无法指导真实协作执行，按设计无效处理并返工。
+
 ## 2. 递归流程模型（P1-P6）
 
 P1-P6 是流程设计抽象层，支持 top-down 建模：
@@ -42,6 +49,20 @@ P1-P6 是流程设计抽象层，支持 top-down 建模：
 1. 一个原子流程只允许一个 Actor 调用一个 Skill。
 2. 原子流程内部不允许嵌套子流程。
 3. 任何 Skill 调用必须包装为原子流程进入 BPM。
+
+### 3.1.1 临时 AP 语法糖（inline_ap）
+
+> 目标：在不破坏 AP 语义的前提下，支持“流程内临时定义 AP”，减少同 Actor 场景的递归栈开销。
+
+1. `phase.target_type` 统一使用 `subprocess`。
+2. 当 `phase.target_id` 命中 `process_registry.process_id` 时，按普通子流程调度。
+3. 当 `phase.target_id` 未命中 `process_registry` 时，必须声明 `phase.inline_ap`：
+   - `ap_id`（必须等于 `target_id`）
+   - `skill_id`（必须命中 `skill_registry.skill_id`）
+   - `actor`
+   - `pierce_allowed`（布尔）
+4. 当 `inline_ap.pierce_allowed=true` 且 `inline_ap.actor == phase.actor` 时，允许“同 Actor 穿透执行”（不新增递归栈帧）。
+5. 当 Actor 不同或不满足穿透条件时，BPM 必须回退到标准子实例调度路径。
 
 ### 3.2 复合流程（Composite Process）
 
@@ -97,10 +118,14 @@ task_dispatch:
     - spec_ref
     - constraints
   constraints:
-    target_type_enum: [skill, subprocess]
+    target_type_enum: [subprocess]
     target_id_registry_binding:
-      skill: shared/registry/skill_registry.json#entries[].skill_id
       subprocess: shared/registry/process_registry.json#entries[].process_id
+      inline_ap: phases[].inline_ap.ap_id
+    inline_ap_required_when: phase.target_type == subprocess && target_id not in process_registry
+    inline_ap_required_fields: [ap_id, skill_id, actor, pierce_allowed]
+    inline_ap_skill_binding: shared/registry/skill_registry.json#entries[].skill_id
+    inline_ap_pierce_rule: inline_ap.pierce_allowed=true -> inline_ap.actor == phase.actor
     output_contract_format: contract_ref
     spec_ref_required_when: phase.requires_spec == true
     legacy_aliases_forbidden:
@@ -139,11 +164,12 @@ lineage:
 
 ### 任务分发（Dispatch）
 
-1. `target_type` 只允许 `skill|subprocess`。
-2. `target_id` 必须命中对应 registry 稳定 ID。
-3. `output_contract` 使用 `contract_ref`（稳定 ID 或 `repo_relative_path#anchor`）。
-4. 当 `phase.requires_spec=true` 时，`spec_ref` 必填。
-5. `session_binding.session_id` 必须随调度显式映射到 OpenClaw `--session-id`。
+1. `target_type` 只允许 `subprocess`。
+2. `target_id` 必须满足二选一：命中 `process_registry.process_id`，或命中 `inline_ap.ap_id`。
+3. 采用 `inline_ap` 时，`inline_ap.skill_id` 必须命中 `skill_registry.skill_id`。
+4. `output_contract` 使用 `contract_ref`（稳定 ID 或 `repo_relative_path#anchor`）。
+5. 当 `phase.requires_spec=true` 时，`spec_ref` 必填。
+6. `session_binding.session_id` 必须随调度显式映射到 OpenClaw `--session-id`。
 
 ### 完成应答（Completion）
 

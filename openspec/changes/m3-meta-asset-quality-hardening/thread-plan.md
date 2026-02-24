@@ -300,3 +300,39 @@
 2. `process-instance-manager` 增加 `--reset-openclaw-session` 与 `--strict-session-match`。
 3. 首次执行遇到 gateway 会话锁冲突，重启 gateway 后复跑通过（Fail-Closed 生效）。
 4. 最终结果：`python3 tests/m2-bpm-runtime/run_tc_full_dev_proc.py` => `1/1 pass`。
+
+### 执行记录补充（2026-02-24）
+
+1. 新增 `hotfix_runner.py`、`refactor_runner.py`，两条主流程均接入真实 openclaw phase 分发。
+2. 新增运行级用例：`python3 tests/m2-bpm-runtime/run_tc_hotfix_refactor_proc.py`。
+3. 结果：`TC-HOTFIX-PROC-001` 与 `TC-REFACTOR-PROC-001` 全通过（会话严格匹配 + 同 actor 跨 phase 隔离通过）。
+
+## P10 全量 AP 语义统一（含 control，新增）
+
+### 目标
+
+按用户决策完成“全量去 `target_type=skill`”，统一流程 phase 到 AP 语义入口，并引入 `inline_ap` 语法糖支持同 Actor 穿透执行。
+
+### 输入
+
+1. `processes/**/process.json`
+2. `docs/architecture/process_architecture.md`
+3. `shared/registry/registry_contract_tool.py`
+
+### 输出
+
+1. 18 份流程 manifest 从 `skill` phase 迁移到 `subprocess + inline_ap`。
+2. 协议与标准文档同步 `inline_ap` 规则。
+3. 门禁与回归通过记录。
+
+### DoD
+
+1. `rg -n "\"target_type\"\\s*:\\s*\"skill\"" processes/**/process.json` 返回空。
+2. `python3 shared/registry/registry_contract_tool.py verify` 通过。
+3. `openspec validate m3-meta-asset-quality-hardening --json` 通过。
+
+### 执行记录（2026-02-23）
+
+1. 18 份流程 manifest 已完成迁移，包含 `processes/control/*` 与 `processes/meta/*`。
+2. `registry_contract_tool.py` 已支持 `inline_ap` 校验（`ap_id/skill_id/actor/pierce_allowed`）与 M6 特例同步检查。
+3. `process_architecture`、`process-definition-standard`、`process-instance-schemas`、`bpm-actor-protocol`、`context-schemas` 已同步新语义。

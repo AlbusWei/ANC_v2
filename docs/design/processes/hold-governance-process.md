@@ -82,3 +82,17 @@
 1. HOLD 路由 case：`docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/`
 2. 子流程输出：`docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance_output.json`
 3. 治理闭环输出：`docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/evaluation/p5_hold_governance/p5_hold_resolution.json`
+
+<!-- phase-semantics-v2:start -->
+## 阶段协作语义补充（v2）
+
+> 说明：本节用于说明每个 phase 在系统主线中的职责与协作价值，要求可直接回答“为什么由该 Actor 在该阶段执行该动作”。
+
+| phase_id | Actor | 阶段目的 | 输入语义 | 完成标准 | 交接语义 |
+|---|---|---|---|---|---|
+| `p1` | `qa` | 收集最小进展信号集。 | hold_case_ref + runtime_log_ref + execution_state_ref | 产出 progress_signals_ref，并满足：三类进展信号已收集或已明确记录失败原因 | 将 progress_signals_ref 交接给 p2 |
+| `p2` | `qa` | 对 hold 场景进行处置分级。 | progress_signals_ref + triage_policy_ref | 产出 triage_action，并满足：分诊动作明确且符合策略 | 将 triage_action 交接给 p3 |
+| `p3` | `qa` | 执行选定的分诊动作。 | triage_action + triage_report_ref | 产出 action_execution_ref，并满足：动作执行与分诊决策一致 | 将 action_execution_ref 交接给 p4 |
+| `p4` | `bpm` | 维护运行时健康与恢复状态。 | action_execution_ref + runtime_health_policy_ref | 产出 health_maintenance_ref，并满足：健康结果可追溯且可恢复性明确 | 将 health_maintenance_ref 交接给 p5 |
+| `p5` | `bpm` | 收敛 hold 案例或继续升级。 | triage_action + health_maintenance_ref | 产出 hold_resolution_ref，并满足：hold 案例按治理链路收敛或升级 | 将 hold_resolution_ref 交接给 initiator |
+<!-- phase-semantics-v2:end -->

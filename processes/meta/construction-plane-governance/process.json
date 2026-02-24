@@ -42,8 +42,8 @@
       "phase_id": "p1",
       "name": "scope-intake-and-baseline",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:construction-plane-governance:p1",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-032-construction-round-intake-baseline.md#ap-032-construction-round-intake-baseline",
       "sipoc": {
@@ -53,14 +53,22 @@
         "output": "scope_baseline_ref",
         "client": "p2"
       },
-      "acceptance_criteria": "scope baseline includes module boundary and linkage targets"
+      "acceptance_criteria": "scope baseline includes module boundary and linkage targets",
+      "inline_ap": {
+        "ap_id": "inline-ap:construction-plane-governance:p1",
+        "skill_id": "system.ops.manual-task",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p2",
       "name": "run-construction-audit",
       "actor": "architect",
-      "target_type": "skill",
-      "target_id": "sys.arch.construction-audit",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:construction-plane-governance:p2",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-033-construction-linkage-audit.md#ap-033-construction-linkage-audit",
       "sipoc": {
@@ -70,14 +78,22 @@
         "output": "linkage_report_ref",
         "client": "p3"
       },
-      "acceptance_criteria": "linkage report contains missing items and blocking risks"
+      "acceptance_criteria": "linkage report contains missing items and blocking risks",
+      "inline_ap": {
+        "ap_id": "inline-ap:construction-plane-governance:p2",
+        "skill_id": "sys.arch.construction-audit",
+        "actor": "architect",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p3",
       "name": "execute-linked-updates",
       "actor": "architect",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:construction-plane-governance:p3",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-034-linked-artifacts-update.md#ap-034-linked-artifacts-update",
       "sipoc": {
@@ -87,14 +103,22 @@
         "output": "m6_update_bundle_ref + construction_plane_delta_ref + open_questions_ref",
         "client": "p4"
       },
-      "acceptance_criteria": "all required linked artifacts are updated in the same round"
+      "acceptance_criteria": "all required linked artifacts are updated in the same round",
+      "inline_ap": {
+        "ap_id": "inline-ap:construction-plane-governance:p3",
+        "skill_id": "system.ops.manual-task",
+        "actor": "architect",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p4",
       "name": "sync-openspec-state",
       "actor": "architect",
-      "target_type": "skill",
-      "target_id": "system.integration.openspec-sync",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:construction-plane-governance:p4",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-035-openspec-round-sync.md#ap-035-openspec-round-sync",
       "sipoc": {
@@ -104,14 +128,22 @@
         "output": "openspec_sync_ref",
         "client": "p5"
       },
-      "acceptance_criteria": "openspec sync record is generated and schema-compliant"
+      "acceptance_criteria": "openspec sync record is generated and schema-compliant",
+      "inline_ap": {
+        "ap_id": "inline-ap:construction-plane-governance:p4",
+        "skill_id": "system.integration.openspec-sync",
+        "actor": "architect",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p5",
       "name": "verify-and-close",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:construction-plane-governance:p5",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-036-construction-round-close-verification.md#ap-036-construction-round-close-verification",
       "sipoc": {
@@ -121,7 +153,15 @@
         "output": "registry_verify_report_ref + round_close_summary_ref + construction_plane_delta_ref + open_questions_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "registry verification passed and open questions are owned"
+      "acceptance_criteria": "registry verification passed and open questions are owned",
+      "inline_ap": {
+        "ap_id": "inline-ap:construction-plane-governance:p5",
+        "skill_id": "system.ops.manual-task",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     }
   ],
   "control_flow": [

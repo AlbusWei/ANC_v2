@@ -79,3 +79,15 @@
 
 1. 套件报告：`docs/design/modules/evidence/bpm-runtime/w3b_tc_qa_proc_report.json`
 2. Case 目录：`docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-001/`
+
+<!-- phase-semantics-v2:start -->
+## 阶段协作语义补充（v2）
+
+> 说明：本节用于说明每个 phase 在系统主线中的职责与协作价值，要求可直接回答“为什么由该 Actor 在该阶段执行该动作”。
+
+| phase_id | Actor | 阶段目的 | 输入语义 | 完成标准 | 交接语义 |
+|---|---|---|---|---|---|
+| `p1` | `qa` | 设计与目标对齐且覆盖 P0 风险的测试。 | objective_ref + spec_ref + test_doc_ref | 产出 test_plan_ref，并满足：P0 风险覆盖显式且可追溯 | 将 test_plan_ref 交接给 p2 |
+| `p2` | `qa` | 将 TEST.md 编译为可执行数据点。 | test_plan_ref + test_doc_ref | 产出 test_datapoints_ref + compile_report_ref，并满足：编译报告完整且数据点可执行 | 将 test_datapoints_ref + compile_report_ref 交接给 p3 |
+| `p3` | `qa` | 绑定 tc_id 与 profile_id 并打包准备集。 | test_datapoints_ref + compile_report_ref + profile_set | 产出 preparation_bundle_ref，并满足：tc_id 与 profile_id 映射一一对应且可追溯 | 将 preparation_bundle_ref 交接给 initiator |
+<!-- phase-semantics-v2:end -->

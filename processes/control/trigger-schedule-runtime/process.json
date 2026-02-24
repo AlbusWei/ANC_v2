@@ -36,8 +36,8 @@
       "phase_id": "p1",
       "name": "normalize-trigger-ingress",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "sys.bpm.trigger-ingress-normalizer",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:trigger-schedule-runtime:p1",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-026-trigger-ingress-normalization.md#ap-026-trigger-ingress-normalization",
       "sipoc": {
@@ -47,14 +47,22 @@
         "output": "canonical_trigger_ref",
         "client": "p2"
       },
-      "acceptance_criteria": "canonical trigger envelope contains required fields"
+      "acceptance_criteria": "canonical trigger envelope contains required fields",
+      "inline_ap": {
+        "ap_id": "inline-ap:trigger-schedule-runtime:p1",
+        "skill_id": "sys.bpm.trigger-ingress-normalizer",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p2",
       "name": "match-and-dedupe",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "sys.bpm.trigger-matcher-dedupe",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:trigger-schedule-runtime:p2",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-027-trigger-match-and-dedupe.md#ap-027-trigger-match-and-dedupe",
       "sipoc": {
@@ -64,14 +72,22 @@
         "output": "match_result",
         "client": "p3"
       },
-      "acceptance_criteria": "dedupe decision is explicit allow or reject"
+      "acceptance_criteria": "dedupe decision is explicit allow or reject",
+      "inline_ap": {
+        "ap_id": "inline-ap:trigger-schedule-runtime:p2",
+        "skill_id": "sys.bpm.trigger-matcher-dedupe",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p3",
       "name": "dispatch-instance",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "sys.bpm.process-instance-manager",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:trigger-schedule-runtime:p3",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-028-trigger-dispatch-and-instance-start.md#ap-028-trigger-dispatch-and-instance-start",
       "sipoc": {
@@ -81,14 +97,22 @@
         "output": "instance_id",
         "client": "p4"
       },
-      "acceptance_criteria": "matched trigger has instance_id and state transition record"
+      "acceptance_criteria": "matched trigger has instance_id and state transition record",
+      "inline_ap": {
+        "ap_id": "inline-ap:trigger-schedule-runtime:p3",
+        "skill_id": "sys.bpm.process-instance-manager",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p4",
       "name": "record-trigger-evidence",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "sys.bpm.evidence-recorder",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:trigger-schedule-runtime:p4",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-029-trigger-evidence-recording.md#ap-029-trigger-evidence-recording",
       "sipoc": {
@@ -98,14 +122,22 @@
         "output": "trigger_receipt_ref",
         "client": "p5"
       },
-      "acceptance_criteria": "trigger and instance can be traced bidirectionally"
+      "acceptance_criteria": "trigger and instance can be traced bidirectionally",
+      "inline_ap": {
+        "ap_id": "inline-ap:trigger-schedule-runtime:p4",
+        "skill_id": "sys.bpm.evidence-recorder",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p5",
       "name": "schedule-catchup",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "sys.bpm.catchup-scheduler",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:trigger-schedule-runtime:p5",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-030-trigger-catchup-scheduling.md#ap-030-trigger-catchup-scheduling",
       "sipoc": {
@@ -115,14 +147,22 @@
         "output": "catchup_decision",
         "client": "p6"
       },
-      "acceptance_criteria": "catchup decision is deterministic"
+      "acceptance_criteria": "catchup decision is deterministic",
+      "inline_ap": {
+        "ap_id": "inline-ap:trigger-schedule-runtime:p5",
+        "skill_id": "sys.bpm.catchup-scheduler",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p6",
       "name": "escalate-runtime-anomaly",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "sys.bpm.escalation-handler",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:trigger-schedule-runtime:p6",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-031-trigger-escalation-handling.md#ap-031-trigger-escalation-handling",
       "sipoc": {
@@ -132,7 +172,15 @@
         "output": "escalation_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "escalation chain follows actor-owner-bpm-admin-human"
+      "acceptance_criteria": "escalation chain follows actor-owner-bpm-admin-human",
+      "inline_ap": {
+        "ap_id": "inline-ap:trigger-schedule-runtime:p6",
+        "skill_id": "sys.bpm.escalation-handler",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     }
   ],
   "control_flow": [

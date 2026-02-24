@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-02-24T04:10:00Z",
+  "phase_id": "p3",
+  "actor": "qa",
+  "inputs": [
+    "docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/TC-HOTFIX-PROC-001/execution/p2_outputs/spec_ref.json",
+    "docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/TC-HOTFIX-PROC-001/execution/p2_outputs/hotfix_scope_baseline_ref.json"
+  ],
+  "outputs": {
+    "test_plan_ref": "docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/TC-HOTFIX-PROC-001/execution/p3_outputs/test_plan_ref.json",
+    "preparation_bundle_ref": "docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/TC-HOTFIX-PROC-001/execution/p3_outputs/preparation_bundle_ref.json"
+  },
+  "risk_coverage": {
+    "priority": "P0",
+    "focus": "online-risk-links",
+    "status": "covered"
+  },
+  "handoff": {
+    "target_phase": "p4",
+    "artifacts": [
+      "test_plan_ref",
+      "preparation_bundle_ref"
+    ]
+  },
+  "collaboration_mode": "phase-isolated-session"
+}

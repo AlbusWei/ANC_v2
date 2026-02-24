@@ -33,8 +33,8 @@
       "phase_id": "p1",
       "name": "validate-request",
       "actor": "hr",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:lifecycle-review:p1",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/lifecycle-review-process.md#阶段定义",
       "sipoc": {
@@ -44,14 +44,22 @@
         "output": "validated_request_ref",
         "client": "p2"
       },
-      "acceptance_criteria": "required fields are complete and references are reachable"
+      "acceptance_criteria": "required fields are complete and references are reachable",
+      "inline_ap": {
+        "ap_id": "inline-ap:lifecycle-review:p1",
+        "skill_id": "system.ops.manual-task",
+        "actor": "hr",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p2",
       "name": "check-prerequisites",
       "actor": "hr",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:lifecycle-review:p2",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/lifecycle-review-process.md#阶段定义",
       "sipoc": {
@@ -61,14 +69,22 @@
         "output": "prerequisites_check_ref",
         "client": "p3"
       },
-      "acceptance_criteria": "transition path is legal under five-state lifecycle rule"
+      "acceptance_criteria": "transition path is legal under five-state lifecycle rule",
+      "inline_ap": {
+        "ap_id": "inline-ap:lifecycle-review:p2",
+        "skill_id": "system.ops.manual-task",
+        "actor": "hr",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p3",
       "name": "quality-gate",
       "actor": "hr",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:lifecycle-review:p3",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/quality-gate-evaluation-process.md#输出契约",
       "sipoc": {
@@ -78,14 +94,22 @@
         "output": "quality_gate_check_ref",
         "client": "p4"
       },
-      "acceptance_criteria": "quality gate verdict equals pass and evidence is traceable"
+      "acceptance_criteria": "quality gate verdict equals pass and evidence is traceable",
+      "inline_ap": {
+        "ap_id": "inline-ap:lifecycle-review:p3",
+        "skill_id": "system.ops.manual-task",
+        "actor": "hr",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p4",
       "name": "execute-transition",
       "actor": "hr",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:lifecycle-review:p4",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-010-lifecycle-transition.md#ap-010-lifecycle-transition",
       "sipoc": {
@@ -95,14 +119,22 @@
         "output": "lifecycle_transition_ref",
         "client": "p5"
       },
-      "acceptance_criteria": "transition record includes from/to status, actor and evidence references"
+      "acceptance_criteria": "transition record includes from/to status, actor and evidence references",
+      "inline_ap": {
+        "ap_id": "inline-ap:lifecycle-review:p4",
+        "skill_id": "system.ops.manual-task",
+        "actor": "hr",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p5",
       "name": "sync-registry",
       "actor": "hr",
-      "target_type": "skill",
-      "target_id": "sys.qa.registry-validator",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:lifecycle-review:p5",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-011-registry-sync.md#ap-011-registry-sync",
       "sipoc": {
@@ -112,7 +144,15 @@
         "output": "registry_sync_ref + lifecycle_review_report_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "registry verification passes and sync evidence is persisted"
+      "acceptance_criteria": "registry verification passes and sync evidence is persisted",
+      "inline_ap": {
+        "ap_id": "inline-ap:lifecycle-review:p5",
+        "skill_id": "sys.qa.registry-validator",
+        "actor": "hr",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     }
   ],
   "control_flow": [

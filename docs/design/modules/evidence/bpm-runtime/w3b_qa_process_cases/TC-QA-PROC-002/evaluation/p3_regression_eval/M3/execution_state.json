@@ -2,13 +2,13 @@
   "state": "completed",
   "mode": "regression",
   "module": "M3",
-  "started_at": "2026-02-23T16:32:04.088959+00:00",
+  "started_at": "2026-02-23T22:01:33.586701+00:00",
   "progress_signals": {
     "log_delta": true,
     "phase_progress": "bundle_loaded",
     "output_heartbeat": true
   },
-  "completed_at": "2026-02-23T16:32:04.090713+00:00",
+  "completed_at": "2026-02-23T22:01:33.589233+00:00",
   "decision": "pass",
   "case_count": 3
 }

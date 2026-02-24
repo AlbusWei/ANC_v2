@@ -71,3 +71,13 @@
 1. 本文档阶段：运行资产已落地，生命周期保持 `draft`。
 2. 本回合已新增运行目录与 registry 实条目，并通过 contract 校验。
 3. 在完成更大规模运行级回归前，禁止将流程状态声明为 `review/active`。
+
+<!-- phase-semantics-v2:start -->
+## 阶段协作语义补充（v2）
+
+> 说明：本节用于说明每个 phase 在系统主线中的职责与协作价值，要求可直接回答“为什么由该 Actor 在该阶段执行该动作”。
+
+| phase_id | Actor | 阶段目的 | 输入语义 | 完成标准 | 交接语义 |
+|---|---|---|---|---|---|
+| `p1` | `hr` | 执行 registry 校验并落盘同步记录。 | registry_patch 与 transition_request | 产出 registry_sync_ref + registry_verify_report_ref，并满足：registry 校验结果明确且可审计 | 将 registry_sync_ref + registry_verify_report_ref 交接给 initiator |
+<!-- phase-semantics-v2:end -->

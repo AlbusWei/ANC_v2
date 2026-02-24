@@ -16,7 +16,7 @@
 
 ## 2. 本回合已确认决策
 
-1. AP 穿透策略：采用 **1B**。允许“同 Actor、低风险、临时旁路 AP”的直调，但必须标注 `ap_bypass_reason`，并限定在迁移窗口。
+1. AP 穿透策略：全面取消 `target_type=skill`，统一改为 AP 语义入口；允许 `inline_ap` 临时 AP 语法糖，并在 `inline_ap.actor == phase.actor` 时开启穿透执行以节约递归栈。
 2. 会话粒度：采用 **2A**。每个 phase 使用隔离会话（isolated session），禁止把 phase 堆积进同一主会话。
 3. 迭代策略：采用“先跑后补”。先把协作主链跑通，运行中暴露问题后再补强契约与规则。
 4. 试点范围：先做 QA 主线试点，即 `quality-gate-evaluation`。
@@ -40,14 +40,12 @@
 2. BPM 以 `openclaw agent --session-id <phase-session-id>` 分发任务给 phase actor。
 3. phase 完成后落盘自然语言完成摘要与输出引用，再进入下一 phase。
 
-### 3.3 AP 迁移过渡规则（与 1B 一致）
+### 3.3 AP 运行语法（统一目标态）
 
-1. 优先走 P6 AP。
-2. 暂时无法走 AP 的 phase，可保留直调 skill，但必须显式记录：
-   - `ap_bypass=true`
-   - `ap_bypass_reason`
-   - `planned_ap_id`
-   - `planned_migration_round`
+1. phase 统一使用 `target_type=subprocess`。
+2. 若 `target_id` 命中 `process_registry`，按普通子流程执行。
+3. 若 `target_id` 未命中 `process_registry`，必须提供 `inline_ap`（`ap_id/skill_id/actor/pierce_allowed`）。
+4. 当 `inline_ap.pierce_allowed=true` 且 `inline_ap.actor == phase.actor` 时，允许同 Actor 穿透执行（不新增递归栈帧）。
 
 ## 4. QA 试点改造范围
 
@@ -64,7 +62,7 @@
 ### P8.1 语义骨架落盘
 
 1. 更新试点流程设计文档，补全每个 phase 的目的、输入上下文、交接语义。
-2. 更新 `process.json`，增加过渡字段（如 `ap_bypass_reason`）。
+2. 更新 `process.json`，将 phase 统一收敛到 AP 语义入口（必要时使用 `inline_ap`）。
 
 ### P8.2 运行路径接线
 
@@ -102,20 +100,20 @@
 ### 8.2 AP 映射偏差（P6 原子流程运行层未成形）
 
 1. 当前 `processes/` 下尚无 AP 运行资产目录（仅有文档层 AP 定义）。
-2. 20 个元流程中，16 个流程存在 `target_type=skill` 直调 phase（共 51 个 skill phase），AP 包装主要停留在文档语义层。
-3. 按既定决策 `1B`，可在迁移窗口临时保留直调，但必须带迁移标记并有退出路径。
+2. 历史扫描显示存在大量 `target_type=skill` 直调 phase，AP 包装主要停留在文档语义层。
+3. 最新决策已收敛为“全量去 skill target + 统一 AP 语义入口 + inline_ap 过渡语法”。
 
 ### 8.3 运行架构偏差（BPM 分发能力尚未普及）
 
-1. 当前仅 `quality-gate-evaluation` runner 接入了 phase 级分发与 isolated session。
-2. 其它主流程（`full-development/hotfix/refactor`）尚未接线 BPM phase 分发，仍以本地串行执行为主。
-3. 因此“流程价值 = 协作编排”目前只在 QA 试点局部成立。
+1. `quality-gate-evaluation`、`full-development`、`hotfix`、`refactor` 已接入 phase 级分发与 isolated session。
+2. 三条主流程均已完成真实 openclaw 分发 dry-run，不再是“本地串行占主导”状态。
+3. 当前主要缺口转为“子流程深度执行接线与 AP 迁移收敛节奏”，而非协作骨架可运行性本身。
 
 ### 8.4 标准口径偏差（规范间存在冲突）
 
-1. `docs/architecture/process_architecture.md` 的 canonical schema 允许 `target_type=skill`，但 `docs/design/processes/development-loop-core-standard.md` 明确“不允许 skill 作为 phase 直接执行单元”。
+1. 旧规范曾存在“是否允许 `target_type=skill`”冲突；当前已统一为 `target_type=subprocess` + `inline_ap` 语法。
 2. 运行层已需要 `hold/escalate/skip` 语义，而部分规范描述仍以二值完成态为主，造成设计与实现口径不一致。
-3. 这会直接导致团队在“是否允许临时直调 skill”与“状态机应该如何表达”上频繁争论。
+3. 这会直接导致团队在“临时 AP 是否可穿透执行”与“状态机应该如何表达”上频繁争论。
 
 ## 9. 修正计划（骨架优先，先跑后补）
 
@@ -125,7 +123,7 @@
 2. 验证 happy path 与 hold 路由均可在协作模式跑通。
 3. 结论：协作主目标可运行，具备向主流程扩展的基础。
 
-### R2（下一回合）主流程骨架扩展
+### R2（已完成）主流程骨架扩展
 
 1. 目标范围：`full-development`、`hotfix`、`refactor`。
 2. 每个 phase 至少补齐：目的、输入上下文、完成定义、交接语义（自然语言优先）。
@@ -137,9 +135,18 @@
 2. 会话隔离策略：同 actor 跨 phase 通过 `sessions.reset` 强制新会话。
 3. 运行结果：`TC-FULL-DEV-PROC-001` 通过，`phase_count=8`，`actor_isolation_ok=true`。
 
+### R2.2（已完成）hotfix/refactor 主流程扩展
+
+1. 真实分发策略：`hotfix`、`refactor` runner 已切换为真实 openclaw phase 分发。
+2. 会话隔离策略：两条流程均启用 `reset-openclaw-session` + `strict-session-match`。
+3. 运行结果：
+   - `TC-HOTFIX-PROC-001` 通过（`phase_count=7`，`actor_isolation_ok=true`）。
+   - `TC-REFACTOR-PROC-001` 通过（`phase_count=6`，`actor_isolation_ok=true`）。
+4. 证据索引：`docs/design/modules/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json`。
+
 ### R3（后续回合）AP 迁移收敛
 
-1. 对临时直调点建立迁移台账：`ap_bypass_reason/planned_ap_id/planned_migration_round`。
+1. 对 `inline_ap` phase 建立迁移台账（从临时 AP 收敛到显式注册 AP/P5 子流程）。
 2. 迁移顺序按流程顺序推进，不做风险分层（用户决策）。
 3. 当主流程协作稳定后，再逐步收紧契约门禁，避免先规范后瘫痪。
 
@@ -154,3 +161,5 @@
 1. 最小判据已确认：必须含真实 openclaw 分发回执，不接受仅本地模拟分发。
 2. 扩展顺序已确认：先做 `full-development`，再推进 `hotfix/refactor`。
 3. AP 迁移已确认：按顺序推进，不做风险分层。
+4. `target_type=skill` 路线已确认退役：包括 control 流程在内全量切换到 AP 语义入口。
+5. 允许临时 AP（`inline_ap`）语法糖；同 Actor 场景允许穿透执行。

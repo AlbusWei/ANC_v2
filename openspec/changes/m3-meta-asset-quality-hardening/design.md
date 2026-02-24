@@ -88,7 +88,7 @@
 
 ### Decision G: 流程协作骨架修正策略（新增）
 
-1. AP 穿透策略采用 `1B`：允许“同 Actor + 低风险 + 迁移窗口”场景临时直调 skill，但必须标注 `ap_bypass_reason` 与迁移计划。
+1. AP 穿透策略收敛为“全量 AP 语义入口 + `inline_ap` 语法糖”：不再保留 `target_type=skill`；当 `inline_ap.actor == phase.actor` 时允许穿透执行。
 2. 会话粒度采用 `2A`：phase 级 isolated session，避免多 phase 累积在主会话导致上下文污染。
 3. 迭代策略采用“先跑后补”：优先验证协作主目标可运行，再按运行暴露问题补充契约细节。
 4. 首个试点固定为 QA 主线：`quality-gate-evaluation`。
@@ -179,5 +179,5 @@
 
 ## Open Questions
 
-1. AP 旁路的迁移窗口按“回合”还是“日期”收敛，待 full-development 试点运行数据后固化。
+1. `inline_ap` 到显式注册 AP 的收敛窗口按“回合”还是“日期”收敛，待 `hotfix/refactor` 试点运行数据后固化。
 2. phase 自然语言上下文包是否统一模板，待 `full-development/hotfix/refactor` 三条主流程首轮运行后决定。

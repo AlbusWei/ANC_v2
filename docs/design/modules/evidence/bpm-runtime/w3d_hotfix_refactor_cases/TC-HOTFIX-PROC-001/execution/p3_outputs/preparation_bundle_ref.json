@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-02-24T04:10:00Z",
+  "phase_id": "p3",
+  "actor": "qa",
+  "field": "preparation_bundle_ref",
+  "mode": "collaboration-skeleton",
+  "bundle_contract": {
+    "includes": [
+      "test_plan_ref",
+      "risk_coverage_assertion",
+      "tc_profile_bindings"
+    ],
+    "risk_coverage_assertion": "high-risk regression points are included with P0-first priority",
+    "handoff_target": "p4"
+  },
+  "inputs": [
+    "docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/TC-HOTFIX-PROC-001/execution/p2_outputs/spec_ref.json",
+    "docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/TC-HOTFIX-PROC-001/execution/p2_outputs/hotfix_scope_baseline_ref.json"
+  ],
+  "note": "本轮为协作骨架验证产物，后续可替换为真实子流程输出。"
+}

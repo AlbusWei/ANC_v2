@@ -1,6 +1,6 @@
 # 上下文传递 Schema
 
-> 版本: v0.4.0 | SSOT 上游: `docs/architecture/context_protocol.md`
+> 版本: v0.5.0 | SSOT 上游: `docs/architecture/context_protocol.md`
 
 ## 概述
 
@@ -40,8 +40,8 @@
   "instance_id": "string (required)",
   "phase_id": "string (required)",
   "actor": "string (required)",
-  "target_type": "string (skill|subprocess, required)",
-  "target_id": "string (registry stable id, required)",
+  "target_type": "string (subprocess, required)",
+  "target_id": "string (process_id 或 inline_ap.ap_id, required)",
   "input_ref": "string (required)",
   "objective_ref": "string (required)",
   "output_contract": "string (contract_ref, required)",
@@ -64,6 +64,13 @@
   }
 }
 ```
+
+Dispatch 约束：
+
+1. `target_type` 固定为 `subprocess`。
+2. `target_id` 命中 `process_registry` 时视为常规子流程。
+3. `target_id` 未命中 `process_registry` 时，phase 必须声明 `inline_ap`，且 `inline_ap.skill_id` 命中 `skill_registry`。
+4. `inline_ap.pierce_allowed=true` 时，要求 `inline_ap.actor == phase.actor`。
 
 ## BPM 任务完成 Schema (Task Completion)
 

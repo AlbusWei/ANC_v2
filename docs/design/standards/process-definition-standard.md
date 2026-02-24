@@ -1,10 +1,17 @@
 # Process Definition Standard
 
-> 版本: v0.5.0 | 适用范围: 原子/复合/业务流程
+> 版本: v0.6.0 | 适用范围: 原子/复合/业务流程
 
 ## 1. 目标
 
 统一流程定义，使 BPM 可调度、可回放、可恢复，并确保流程拆分可解释、可复用、可审计。
+
+## 1.1 表达质量约束（质胜于形）
+
+1. 流程文档中的 `流程目标` 必须回答：系统定位、问题定义、上下游价值。
+2. 禁止使用跨流程复用的空泛模板语句替代设计主旨。
+3. `协作编排原则` 必须体现流程特异化治理逻辑，而非通用口号。
+4. 若文档仅满足字段完整但无法指导真实执行，评审结论应为不通过并返工。
 
 ## 2. 最小必填字段（process.json）
 
@@ -53,6 +60,18 @@
 1. 每个 phase 必须映射到已定义原子流程（P6）或已定义复合子流程（P4/P5）。
 2. phase 名称、子流程 ID、I/O 契约必须一一对应。
 3. 未定义映射的 phase 视为流程不可执行，默认 Fail-Closed。
+
+## 7.1 临时 AP 语法糖（inline_ap）
+
+1. 所有 phase 统一使用 `target_type: subprocess`，禁止直接使用 `target_type: skill`。
+2. 当 `target_id` 命中 `process_registry.process_id` 时，表示常规子流程映射。
+3. 当 `target_id` 不在 `process_registry` 时，必须通过 `inline_ap` 声明临时 AP：
+   1. `inline_ap.ap_id`（必须等于 `target_id`）
+   2. `inline_ap.skill_id`（必须命中 `skill_registry.skill_id`）
+   3. `inline_ap.actor`
+   4. `inline_ap.pierce_allowed`（布尔）
+4. 当 `inline_ap.pierce_allowed=true` 且 `inline_ap.actor == phase.actor` 时，允许同 Actor 穿透执行（不新增递归栈帧）。
+5. 不满足穿透条件时，BPM 必须按标准子实例路径执行。
 
 ## 8. 流程拆分方法论接入（新增）
 

@@ -33,8 +33,8 @@
       "phase_id": "p1",
       "name": "hotfix-scope-baseline",
       "actor": "architect",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:hotfix-scope-spec-baseline:p1",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-003-scope-baseline.md#ap-003-scope-baseline",
       "sipoc": {
@@ -44,7 +44,15 @@
         "output": "hotfix_scope_baseline_ref",
         "client": "p2"
       },
-      "acceptance_criteria": "scope baseline contains rollback boundaries"
+      "acceptance_criteria": "scope baseline contains rollback boundaries",
+      "inline_ap": {
+        "ap_id": "inline-ap:hotfix-scope-spec-baseline:p1",
+        "skill_id": "system.ops.manual-task",
+        "actor": "architect",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p2",

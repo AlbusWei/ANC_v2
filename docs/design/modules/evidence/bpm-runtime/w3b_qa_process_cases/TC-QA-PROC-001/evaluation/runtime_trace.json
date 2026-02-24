@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-23T16:32:03Z",
+  "timestamp": "2026-02-23T22:01:32Z",
   "process_id": "quality-gate-evaluation",
   "status": "ok",
   "phase_trace": [
@@ -17,7 +17,7 @@
         "dispatch_output_ref": "",
         "dispatch_context_ref": ""
       },
-      "ts": "2026-02-23T16:32:02Z"
+      "ts": "2026-02-23T22:01:32Z"
     },
     {
       "phase": "p2-run-subjective-evaluation",
@@ -34,7 +34,7 @@
         "dispatch_output_ref": "",
         "dispatch_context_ref": ""
       },
-      "ts": "2026-02-23T16:32:02Z"
+      "ts": "2026-02-23T22:01:32Z"
     },
     {
       "phase": "p3-run-regression-evaluation",
@@ -50,7 +50,7 @@
         "dispatch_output_ref": "",
         "dispatch_context_ref": ""
       },
-      "ts": "2026-02-23T16:32:03Z"
+      "ts": "2026-02-23T22:01:32Z"
     },
     {
       "phase": "p4-aggregate-gate-decision",
@@ -67,7 +67,7 @@
         "dispatch_output_ref": "",
         "dispatch_context_ref": ""
       },
-      "ts": "2026-02-23T16:32:03Z"
+      "ts": "2026-02-23T22:01:32Z"
     }
   ],
   "input_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-001/evaluation_input.json",

@@ -34,8 +34,8 @@
       "phase_id": "p1",
       "name": "design-tests",
       "actor": "qa",
-      "target_type": "skill",
-      "target_id": "meta.qa.test-designer",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:quality-gate-preparation:p1",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/quality-gate-preparation-process.md#阶段定义",
       "sipoc": {
@@ -45,14 +45,22 @@
         "output": "test_plan_ref",
         "client": "p2"
       },
-      "acceptance_criteria": "P0 risk coverage is explicit and traceable"
+      "acceptance_criteria": "P0 risk coverage is explicit and traceable",
+      "inline_ap": {
+        "ap_id": "inline-ap:quality-gate-preparation:p1",
+        "skill_id": "meta.qa.test-designer",
+        "actor": "qa",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p2",
       "name": "compile-test-datapoints",
       "actor": "qa",
-      "target_type": "skill",
-      "target_id": "sys.qa.test-compiler",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:quality-gate-preparation:p2",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-018-test-datapoint-compilation.md#AP-018-Test-Datapoint-Compilation",
       "sipoc": {
@@ -62,14 +70,22 @@
         "output": "test_datapoints_ref + compile_report_ref",
         "client": "p3"
       },
-      "acceptance_criteria": "compile report is complete and datapoints are executable"
+      "acceptance_criteria": "compile report is complete and datapoints are executable",
+      "inline_ap": {
+        "ap_id": "inline-ap:quality-gate-preparation:p2",
+        "skill_id": "sys.qa.test-compiler",
+        "actor": "qa",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p3",
       "name": "bind-test-profiles",
       "actor": "qa",
-      "target_type": "skill",
-      "target_id": "sys.qa.test-compiler",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:quality-gate-preparation:p3",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-019-test-profile-binding.md#AP-019-Test-Profile-Binding",
       "sipoc": {
@@ -79,7 +95,15 @@
         "output": "preparation_bundle_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "tc_id profile_id mapping is one-to-one and traceable"
+      "acceptance_criteria": "tc_id profile_id mapping is one-to-one and traceable",
+      "inline_ap": {
+        "ap_id": "inline-ap:quality-gate-preparation:p3",
+        "skill_id": "sys.qa.test-compiler",
+        "actor": "qa",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     }
   ],
   "control_flow": [

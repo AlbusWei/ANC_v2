@@ -82,3 +82,16 @@
 1. 本文档阶段：运行资产已落地，生命周期保持 `draft`。
 2. Session3 已新增 `processes/meta/escalation/` 运行资产与 registry 实条目。
 3. 未完成更大规模运行级回归前，禁止推进到 `review/active`。
+
+<!-- phase-semantics-v2:start -->
+## 阶段协作语义补充（v2）
+
+> 说明：本节用于说明每个 phase 在系统主线中的职责与协作价值，要求可直接回答“为什么由该 Actor 在该阶段执行该动作”。
+
+| phase_id | Actor | 阶段目的 | 输入语义 | 完成标准 | 交接语义 |
+|---|---|---|---|---|---|
+| `p1` | `bpm` | 归一化故障事件上下文。 | incident 与 severity | 产出 incident_snapshot_ref，并满足：事件字段与证据引用完整 | 将 incident_snapshot_ref 交接给 p2 |
+| `p2` | `bpm` | 校验策略与治理边界。 | incident_snapshot 与 escalation_policy | 产出 policy_check_ref，并满足：策略可解析且链路有效 | 将 policy_check_ref 交接给 p3 |
+| `p3` | `bpm` | 按治理升级链路进行分发。 | policy_check_ref | 产出 escalation_trace，并满足：升级轨迹可审计且最终负责人在链路内 | 将 escalation_trace 交接给 p4 |
+| `p4` | `bpm` | 以 resolved/escalated/human-required 结论收口升级。 | escalation_trace | 产出 escalation_output_ref，并满足：决策结论明确且原因完整 | 将 escalation_output_ref 交接给 initiator |
+<!-- phase-semantics-v2:end -->

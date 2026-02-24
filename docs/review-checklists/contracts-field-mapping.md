@@ -8,7 +8,7 @@
 
 | 旧字段 | 新字段/策略 | 裁决 |
 |---|---|---|
-| `skill` | `target_type=skill` + `target_id=<skill_registry.skill_id>` | 移除旧字段 |
+| `skill` | `target_type=subprocess` + `target_id=<inline_ap.ap_id>` + `inline_ap.skill_id=<skill_registry.skill_id>` | 移除旧字段 |
 | `skill_or_process` | `target_type + target_id` | 移除旧字段 |
 | `skill_or_subprocess` | `target_type + target_id` | 移除旧字段 |
 | `input.objective_ref` | `objective_ref`（扁平化） | 扁平化 |

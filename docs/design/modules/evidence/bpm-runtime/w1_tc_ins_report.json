@@ -1,5 +1,5 @@
 {
-  "ts": "2026-02-22T15:47:35Z",
+  "ts": "2026-02-23T23:37:38Z",
   "suite": "TC-INS-001~005",
   "total": 5,
   "passed": 5,
@@ -49,10 +49,6 @@
       "details": {
         "migration_report": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/evidence/bpm-runtime/w1_migration_report.json",
         "replay_report": "/Users/albus/MyProjects/ANC_v2_worktrees/review-layers-modules/docs/design/modules/evidence/bpm-runtime/w1_replay_report.json",
-        "migration_return_code": 0,
-        "migration_stderr": "",
-        "replay_return_code": 0,
-        "replay_stderr": "",
         "migration_total": 1,
         "migration_failed": 0,
         "replay_total": 1,

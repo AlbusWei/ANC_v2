@@ -51,7 +51,11 @@
         "output": "hotfix_objective_ref, impact_scope_ref, rollback_direction_ref",
         "client": "p2"
       },
-      "acceptance_criteria": "hotfix intake outputs are explicit and executable"
+      "acceptance_criteria": "hotfix intake outputs are explicit and executable",
+      "phase_purpose": "在应急场景先把问题定义收敛为可执行修复目标，避免团队直接在模糊告警上动手。",
+      "input_context_ref": "incident_context_ref,target_asset_ref",
+      "done_definition": "必须产出 hotfix_objective_ref、impact_scope_ref、rollback_direction_ref，并明确爆炸半径。",
+      "handoff_note": "将 hotfix_objective_ref、impact_scope_ref、rollback_direction_ref 交接给 p2，作为快速规格输入。"
     },
     {
       "phase_id": "p2",
@@ -68,7 +72,11 @@
         "output": "hotfix_scope_baseline_ref and spec_ref",
         "client": "p3"
       },
-      "acceptance_criteria": "scope and spec baseline include rollback and blast radius constraints"
+      "acceptance_criteria": "scope and spec baseline include rollback and blast radius constraints",
+      "phase_purpose": "把应急目标压缩为可执行范围与规格，明确不做什么，控制修复面。",
+      "input_context_ref": "hotfix_objective_ref,impact_scope_ref,rollback_direction_ref",
+      "done_definition": "必须产出 hotfix_scope_baseline_ref 与 spec_ref，且规格包含回滚约束。",
+      "handoff_note": "将 hotfix_scope_baseline_ref 与 spec_ref 交接给 p3。"
     },
     {
       "phase_id": "p3",
@@ -85,7 +93,11 @@
         "output": "test_plan_ref and preparation_bundle_ref",
         "client": "p4"
       },
-      "acceptance_criteria": "test_plan_ref is explicitly linked to spec_ref"
+      "acceptance_criteria": "test_plan_ref is explicitly linked to spec_ref",
+      "phase_purpose": "围绕 hotfix 规格快速建立验证准备，优先覆盖线上风险链路。",
+      "input_context_ref": "spec_ref,hotfix_scope_baseline_ref",
+      "done_definition": "必须产出 test_plan_ref 与 preparation_bundle_ref，并覆盖高风险回归点。",
+      "handoff_note": "将 test_plan_ref 与 preparation_bundle_ref 交接给 p4。"
     },
     {
       "phase_id": "p4",
@@ -102,7 +114,11 @@
         "output": "implementation_ref and candidate_artifacts_ref",
         "client": "p5"
       },
-      "acceptance_criteria": "candidate artifacts are traceable to implementation output"
+      "acceptance_criteria": "candidate artifacts are traceable to implementation output",
+      "phase_purpose": "在受控范围内完成修复实现，输出可评测候选产物。",
+      "input_context_ref": "spec_ref,test_plan_ref,preparation_bundle_ref",
+      "done_definition": "必须产出 implementation_ref 与 candidate_artifacts_ref，并可追溯到规格。",
+      "handoff_note": "将 implementation_ref 与 candidate_artifacts_ref 交接给 p5。"
     },
     {
       "phase_id": "p5",
@@ -119,7 +135,11 @@
         "output": "final_gate_verdict_ref",
         "client": "p6"
       },
-      "acceptance_criteria": "gate decision is pass/fail and evidence complete"
+      "acceptance_criteria": "gate decision is pass/fail and evidence complete",
+      "phase_purpose": "给出 hotfix 是否可放行的门禁结论，避免带病发布。",
+      "input_context_ref": "candidate_artifacts_ref,implementation_ref,preparation_bundle_ref",
+      "done_definition": "必须产出 final_gate_verdict_ref，结论可解释且证据完整。",
+      "handoff_note": "门禁通过后将 final_gate_verdict_ref 交接给 p6；失败回流 p4。"
     },
     {
       "phase_id": "p6",
@@ -136,7 +156,11 @@
         "output": "lifecycle_transition_ref and registry_sync_ref",
         "client": "p7"
       },
-      "acceptance_criteria": "lifecycle and registry handoff package is complete"
+      "acceptance_criteria": "lifecycle and registry handoff package is complete",
+      "phase_purpose": "在发布前完成生命周期与 registry 治理收口，确保状态迁移可审计。",
+      "input_context_ref": "final_gate_verdict_ref,target_asset_ref,lifecycle_target",
+      "done_definition": "必须产出 lifecycle_transition_ref 与 registry_sync_ref。",
+      "handoff_note": "将 lifecycle_transition_ref 与 registry_sync_ref 交接给 p7。"
     },
     {
       "phase_id": "p7",
@@ -153,7 +177,11 @@
         "output": "release_package_ref and rollback_bundle_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "release package includes rollback and gate evidence"
+      "acceptance_criteria": "release package includes rollback and gate evidence",
+      "phase_purpose": "形成可回滚的 hotfix 发布包并完成交付。",
+      "input_context_ref": "candidate_artifacts_ref,final_gate_verdict_ref,lifecycle_transition_ref,registry_sync_ref",
+      "done_definition": "必须产出 release_package_ref 与 rollback_bundle_ref。",
+      "handoff_note": "将 release_package_ref 与 rollback_bundle_ref 交接给 initiator。"
     }
   ],
   "control_flow": [
@@ -234,5 +262,13 @@
     "obligation_ref": "docs/design/processes/development-loop-core-standard.md",
     "risk_policy_ref": "docs/design/processes/governance-processes.md",
     "checklist_ref": "docs/design/modules/M3-self-development.md"
+  },
+  "collaboration_policy": {
+    "mode": "phase-isolated-session",
+    "dispatch_runtime": "openclaw-required",
+    "session_reset": "per-phase-reset",
+    "pilot_scope": "expanded-from-full-development",
+    "natural_context_first": true,
+    "ap_migration_strategy": "sequential"
   }
 }

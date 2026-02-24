@@ -37,8 +37,8 @@
       "phase_id": "p1",
       "name": "issue-intake-and-scope-lock",
       "actor": "system-analyst",
-      "target_type": "skill",
-      "target_id": "sys.arch.system-feedback-digest",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:runtime-policy-calibration:p1",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/runtime-policy-calibration-process.md#阶段定义",
       "sipoc": {
@@ -48,14 +48,22 @@
         "output": "scope_lock_ref",
         "client": "p2"
       },
-      "acceptance_criteria": "scope, objective and handoff contract are all locked"
+      "acceptance_criteria": "scope, objective and handoff contract are all locked",
+      "inline_ap": {
+        "ap_id": "inline-ap:runtime-policy-calibration:p1",
+        "skill_id": "sys.arch.system-feedback-digest",
+        "actor": "system-analyst",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p2",
       "name": "evidence-collection-and-baseline",
       "actor": "system-analyst",
-      "target_type": "skill",
-      "target_id": "sys.arch.system-feedback-digest",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:runtime-policy-calibration:p2",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/runtime-policy-calibration-process.md#输入契约",
       "sipoc": {
@@ -65,14 +73,22 @@
         "output": "evidence_index_ref + baseline_ref",
         "client": "p3"
       },
-      "acceptance_criteria": "evidence index is reachable and sample coverage is explicit"
+      "acceptance_criteria": "evidence index is reachable and sample coverage is explicit",
+      "inline_ap": {
+        "ap_id": "inline-ap:runtime-policy-calibration:p2",
+        "skill_id": "sys.arch.system-feedback-digest",
+        "actor": "system-analyst",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p3",
       "name": "posterior-analysis-and-hypothesis",
       "actor": "system-analyst",
-      "target_type": "skill",
-      "target_id": "sys.arch.system-feedback-digest",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:runtime-policy-calibration:p3",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/runtime-policy-calibration-process.md#输出契约",
       "sipoc": {
@@ -82,14 +98,22 @@
         "output": "architecture_feedback_digest_ref",
         "client": "p4"
       },
-      "acceptance_criteria": "digest includes risk level, findings and decision-ready recommendations"
+      "acceptance_criteria": "digest includes risk level, findings and decision-ready recommendations",
+      "inline_ap": {
+        "ap_id": "inline-ap:runtime-policy-calibration:p3",
+        "skill_id": "sys.arch.system-feedback-digest",
+        "actor": "system-analyst",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p4",
       "name": "governance-sync",
       "actor": "architect",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:runtime-policy-calibration:p4",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/runtime-policy-calibration-process.md#角色分工",
       "sipoc": {
@@ -99,14 +123,22 @@
         "output": "governance_sync_minutes_ref",
         "client": "p5"
       },
-      "acceptance_criteria": "governance sync participants and conclusions are auditable"
+      "acceptance_criteria": "governance sync participants and conclusions are auditable",
+      "inline_ap": {
+        "ap_id": "inline-ap:runtime-policy-calibration:p4",
+        "skill_id": "system.ops.manual-task",
+        "actor": "architect",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p5",
       "name": "decision-and-rollout-plan",
       "actor": "admin",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:runtime-policy-calibration:p5",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/runtime-policy-calibration-process.md#Fail-Closed",
       "sipoc": {
@@ -116,14 +148,22 @@
         "output": "policy_change_proposal_ref + decision_record_ref",
         "client": "p6"
       },
-      "acceptance_criteria": "high-risk change has explicit admin decision"
+      "acceptance_criteria": "high-risk change has explicit admin decision",
+      "inline_ap": {
+        "ap_id": "inline-ap:runtime-policy-calibration:p5",
+        "skill_id": "system.ops.manual-task",
+        "actor": "admin",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p6",
       "name": "post-rollout-observation",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "sys.arch.system-feedback-digest",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:runtime-policy-calibration:p6",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/runtime-policy-calibration-process.md#证据要求",
       "sipoc": {
@@ -133,7 +173,15 @@
         "output": "rollout_observation_ref + calibration_report_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "observation result is linked to decision and proposal refs"
+      "acceptance_criteria": "observation result is linked to decision and proposal refs",
+      "inline_ap": {
+        "ap_id": "inline-ap:runtime-policy-calibration:p6",
+        "skill_id": "sys.arch.system-feedback-digest",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     }
   ],
   "control_flow": [

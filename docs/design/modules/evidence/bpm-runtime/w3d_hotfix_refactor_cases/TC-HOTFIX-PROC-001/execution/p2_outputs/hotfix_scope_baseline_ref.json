@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-02-24T04:09:59Z",
+  "phase_id": "p2",
+  "actor": "architect",
+  "field": "hotfix_scope_baseline_ref",
+  "mode": "collaboration-skeleton",
+  "note": "本轮为协作骨架验证产物，后续可替换为真实子流程输出。"
+}

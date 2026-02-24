@@ -71,3 +71,26 @@
 2. hotfix 回归验证失败时禁止发布。
 3. lifecycle/registry 校验失败时禁止状态迁移。
 4. 关键证据缺失时升级 `actor -> owner -> bpm -> admin -> human`。
+
+## 协作骨架 v1（运行级）
+
+1. 分发策略：每个 phase 由 BPM 通过 `process-instance-manager` 执行真实 `openclaw` 分发。
+2. 会话策略：启用 `reset-openclaw-session`，同一 Actor 跨 phase 强制新会话，避免应急链路被主会话上下文污染。
+3. 交接策略：每个 phase 都沉淀 `dispatch_context` + `phase_output`，下一阶段仅消费可追溯引用。
+4. 运行边界：本轮目标是验证“多角色接力 + 会话隔离 + 输出可追溯”可跑通，子流程深度执行后续继续接线。
+
+<!-- phase-semantics-v2:start -->
+## 阶段协作语义补充（v2）
+
+> 说明：本节用于说明每个 phase 在系统主线中的职责与协作价值，要求可直接回答“为什么由该 Actor 在该阶段执行该动作”。
+
+| phase_id | Actor | 阶段目的 | 输入语义 | 完成标准 | 交接语义 |
+|---|---|---|---|---|---|
+| `p1` | `architect` | 归一化 hotfix 目标、影响范围与回滚方向。 | incident_context_ref | 产出 hotfix_objective_ref, impact_scope_ref, rollback_direction_ref，并满足：hotfix 入口产出明确且可执行 | 将 hotfix_objective_ref, impact_scope_ref, rollback_direction_ref 交接给 p2 |
+| `p2` | `architect` | 为 hotfix 形成范围基线与规格基线。 | hotfix_objective_ref + impact_scope_ref | 产出 hotfix_scope_baseline_ref + spec_ref，并满足：范围与规格基线包含回滚及爆炸半径约束 | 将 hotfix_scope_baseline_ref + spec_ref 交接给 p3 |
+| `p3` | `qa` | 准备面向 P0 风险的 hotfix 测试。 | spec_ref | 产出 test_plan_ref + preparation_bundle_ref，并满足：test_plan_ref 明确关联 spec_ref | 将 test_plan_ref + preparation_bundle_ref 交接给 p4 |
+| `p4` | `kernel-dev` | 实施修复候选方案。 | spec_ref + test_plan_ref | 产出 implementation_ref + candidate_artifacts_ref，并满足：候选产物可追溯到实现输出 | 将 implementation_ref + candidate_artifacts_ref 交接给 p5 |
+| `p5` | `qa` | 评估目标门禁与回归门禁。 | candidate_artifacts_ref | 产出 final_gate_verdict_ref，并满足：门禁结论为 pass/fail 且证据完整 | 将 final_gate_verdict_ref 交接给 p6 |
+| `p6` | `admin` | 校验生命周期与 registry 交接包。 | final_gate_verdict_ref | 产出 lifecycle_transition_ref + registry_sync_ref，并满足：生命周期与 registry 交接包完整 | 将 lifecycle_transition_ref + registry_sync_ref 交接给 p7 |
+| `p7` | `admin` | 打包并发布 hotfix 版本。 | candidate_artifacts_ref, final_gate_verdict_ref, lifecycle_transition_ref, registry_sync_ref | 产出 release_package_ref + rollback_bundle_ref，并满足：发布包包含回滚材料与门禁证据 | 将 release_package_ref + rollback_bundle_ref 交接给 initiator |
+<!-- phase-semantics-v2:end -->

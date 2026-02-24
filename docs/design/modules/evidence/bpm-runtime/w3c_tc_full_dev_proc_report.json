@@ -1,5 +1,5 @@
 {
-  "ts": "2026-02-23T16:51:01Z",
+  "ts": "2026-02-23T21:08:20Z",
   "suite": "TC-FULL-DEV-PROC-001",
   "total": 1,
   "passed": 1,
@@ -19,42 +19,42 @@
           {
             "phase": "p1",
             "ok": true,
-            "session_id": "f50fd3d0-1d8f-4ef0-9f93-b4a7852fa1a1"
+            "session_id": "b2f58cb5-db3d-4434-806b-cf8852cb865f"
           },
           {
             "phase": "p2",
             "ok": true,
-            "session_id": "993f5d04-7f9f-4331-8b7d-e804c82dcfad"
+            "session_id": "6268f978-5d54-4b58-996e-74003fdc5d48"
           },
           {
             "phase": "p3",
             "ok": true,
-            "session_id": "a877fafb-9ee4-4c09-b913-959a09d4b58d"
+            "session_id": "c7c024d8-0384-43d5-8701-ac95be30ef32"
           },
           {
             "phase": "p4",
             "ok": true,
-            "session_id": "ab576a78-8b9d-4e58-bfb7-fea269cfd521"
+            "session_id": "0557b662-94e1-4a01-8773-d71d3acd7ca9"
           },
           {
             "phase": "p5",
             "ok": true,
-            "session_id": "6b9dda1c-aaf0-4edf-be14-16931997af30"
+            "session_id": "4b6c1e99-05a5-4e57-99f8-886c1e6d84c0"
           },
           {
             "phase": "p6",
             "ok": true,
-            "session_id": "8bd09907-d26c-4870-b20d-210c326094cc"
+            "session_id": "badc6a24-749a-4192-be32-228cf98e7be1"
           },
           {
             "phase": "p7",
             "ok": true,
-            "session_id": "62daf011-911e-4254-b2e9-adb0fba20e11"
+            "session_id": "c7afa607-b271-44ad-b3c0-4b6745c45ce0"
           },
           {
             "phase": "p8",
             "ok": true,
-            "session_id": "689756b8-458e-4ddf-9872-6d8701724949"
+            "session_id": "aee67027-e0db-4a0d-b843-67923dd5aad5"
           }
         ],
         "actor_isolation_ok": true,

@@ -1,22 +1,61 @@
-# objective-scope-baseline - Process Guide
+# objective-scope-baseline - 流程说明
 
-## Purpose
+## 流程定位
 
-把 AP-001/AP-002/AP-003 的目标与范围语义拆分为连续、可追溯的 P5 编排子流程。
+- 流程级别：`P5`
+- 负责人：`bpm`
+- 版本：`0.1.0`
+- Objective 引用：`obj-m3-objective-scope-baseline`
 
-## Execution Phases
+## 流程目标（自然语言）
 
-1. objective-intake
-2. scope-normalization
-3. scope-baseline-finalization
+该流程用于在开发前固化 Objective 与 Scope 基线，明确边界、非目标与成功判据。它的架构作用是为后续 Spec/Test/Development 提供稳定起点，减少需求漂移导致的返工。
 
-## Fail-Closed Rules
+## 协作编排原则
 
-1. `objective_context_ref` 缺失或不可解析。
-2. 目标与范围语义冲突且无法裁决。
-3. 任一阶段无法产出可追溯证据。
+1. 该流程只负责定义“做什么/不做什么”，不提前进入实现细节。
+2. 目标表达必须可衡量、可验证，不能停留在抽象愿景。
+3. 范围基线需显式包含边界与非目标，作为后续规格约束锚点。
+4. 完成态应支持下游直接编写 spec，而无需再次解释目标语义。
 
-## Runner Policy
+## 阶段语义定义
 
-1. 本流程是编排包装层，默认不新增 runner。
-2. 执行动作下沉到 skill 或下级子流程，保持 DIP/LoD 约束。
+### p1 objective-intake
+
+- 执行角色：`architect`
+- 阶段目的：本阶段围绕以下业务动作推进：提炼目标与成功判据基线。
+- 输入语义：本阶段主要消费以下输入：objective_context_ref。
+- 完成标准：完成判据：必须产出 objective_ref，并满足“目标具备可衡量范围且约束明确”。
+- 交接说明：交接要求：将 objective_ref 交接给 p2。
+- 执行单元：`subprocess:inline-ap:objective-scope-baseline:p1`。该阶段采用临时 AP 语法，映射 skill 为 `meta.arch.objective-writer`，穿透执行策略：允许（同 Actor 场景）。
+
+### p2 scope-normalization
+
+- 执行角色：`architect`
+- 阶段目的：本阶段围绕以下业务动作推进：归一化范围边界与非目标。
+- 输入语义：本阶段主要消费以下输入：objective_ref。
+- 完成标准：完成判据：必须产出 scope_draft_ref，并满足“范围草案包含边界与排除域”。
+- 交接说明：交接要求：将 scope_draft_ref 交接给 p3。
+- 执行单元：`subprocess:inline-ap:objective-scope-baseline:p2`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
+
+### p3 scope-baseline-finalization
+
+- 执行角色：`architect`
+- 阶段目的：本阶段围绕以下业务动作推进：固化治理化范围基线。
+- 输入语义：本阶段主要消费以下输入：scope_draft_ref。
+- 完成标准：完成判据：必须产出 scope_baseline_ref，并满足“范围基线可追溯且无冲突”。
+- 交接说明：交接要求：将 scope_baseline_ref 交接给 initiator。
+- 执行单元：`subprocess:inline-ap:objective-scope-baseline:p3`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
+
+## 控制流与回退
+
+- `p1` 在 `success` 条件下流转到 `p2`。
+- `p2` 在 `success` 条件下流转到 `p3`。
+- `p3` 在 `success` 条件下流转到 `end`。
+
+## Fail-Closed 触发条件
+
+1. 阶段输入不可解析、缺失或与目标语义不一致。
+2. 阶段输出不可追溯，或无法支撑下一阶段继续执行。
+3. 交接语义不完整，导致跨角色协作中断。
+4. 回退/重试按策略执行：max_attempts=1。

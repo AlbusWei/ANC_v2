@@ -185,3 +185,26 @@ Session3 已落地治理流程设计文档与运行资产：
 1. `full-development` 新增可执行 runner：`processes/meta/full-development/scripts/full_development_runner.py`。
 2. `full-development` 协作策略升级为“真实 OpenClaw 分发 + phase 会话 reset 隔离”。
 3. `full-development` registry 版本由 `0.2.0` 升级到 `0.3.0`，生命周期保持 `review`。
+
+## W9 联动备注（M3 AP 语义统一）
+
+1. 全量流程 phase 已完成 `target_type=skill -> target_type=subprocess` 收敛（含 control 流程）。
+2. 对应 phase 统一补充 `inline_ap` 临时 AP 语义（`ap_id/skill_id/actor/pierce_allowed`），支持同 Actor 穿透执行。
+3. 本轮迁移覆盖 18 份流程 manifest，历史 `skill phase` 数量已收敛为 0。
+
+## W10 联动备注（M3 协作骨架扩展：hotfix/refactor）
+
+1. 新增可执行 runner：
+   - `processes/meta/hotfix/scripts/hotfix_runner.py`
+   - `processes/meta/refactor/scripts/refactor_runner.py`
+2. `hotfix`、`refactor` 两条主流程补齐 phase 协作语义字段：`phase_purpose/input_context_ref/done_definition/handoff_note`。
+3. 两条流程统一启用 `collaboration_policy`：
+   - `mode=phase-isolated-session`
+   - `dispatch_runtime=openclaw-required`
+   - `session_reset=per-phase-reset`
+4. 运行级测试入口：
+   - `tests/m2-bpm-runtime/run_tc_hotfix_refactor_proc.py`
+   - 覆盖 `TC-HOTFIX-PROC-001`、`TC-REFACTOR-PROC-001`
+5. 证据索引：
+   - `docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/`
+   - `docs/design/modules/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json`

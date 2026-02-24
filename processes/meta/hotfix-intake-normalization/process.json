@@ -31,8 +31,8 @@
       "phase_id": "p1",
       "name": "hotfix-objective-intake",
       "actor": "architect",
-      "target_type": "skill",
-      "target_id": "meta.arch.objective-writer",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:hotfix-intake-normalization:p1",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-001-objective-intake.md#ap-001-objective-intake",
       "sipoc": {
@@ -42,14 +42,22 @@
         "output": "hotfix_objective_ref",
         "client": "p2"
       },
-      "acceptance_criteria": "hotfix objective is explicit and bounded"
+      "acceptance_criteria": "hotfix objective is explicit and bounded",
+      "inline_ap": {
+        "ap_id": "inline-ap:hotfix-intake-normalization:p1",
+        "skill_id": "meta.arch.objective-writer",
+        "actor": "architect",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     },
     {
       "phase_id": "p2",
       "name": "impact-and-rollback-normalization",
       "actor": "architect",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:hotfix-intake-normalization:p2",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-002-objective-scope-normalization.md#ap-002-objective-scope-normalization",
       "sipoc": {
@@ -59,7 +67,15 @@
         "output": "impact_scope_ref and rollback_direction_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "impact and rollback directions are actionable"
+      "acceptance_criteria": "impact and rollback directions are actionable",
+      "inline_ap": {
+        "ap_id": "inline-ap:hotfix-intake-normalization:p2",
+        "skill_id": "system.ops.manual-task",
+        "actor": "architect",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      }
     }
   ],
   "control_flow": [

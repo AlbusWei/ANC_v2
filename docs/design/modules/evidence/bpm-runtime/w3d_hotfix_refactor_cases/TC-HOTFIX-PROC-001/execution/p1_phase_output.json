@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-02-24T04:09:10Z",
+  "phase_id": "p1",
+  "actor": "architect",
+  "inputs": [
+    "docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/TC-HOTFIX-PROC-001/incident_context.md",
+    "docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/TC-HOTFIX-PROC-001/target_asset.md"
+  ],
+  "outputs": {
+    "hotfix_objective_ref": "docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/TC-HOTFIX-PROC-001/execution/p1_outputs/hotfix_objective_ref.json",
+    "impact_scope_ref": "docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/TC-HOTFIX-PROC-001/execution/p1_outputs/impact_scope_ref.json",
+    "rollback_direction_ref": "docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/TC-HOTFIX-PROC-001/execution/p1_outputs/rollback_direction_ref.json"
+  },
+  "collaboration_mode": "phase-isolated-session"
+}

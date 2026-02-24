@@ -103,3 +103,17 @@
 - `construction_plane_delta.md`
 - `round-evidence.jsonl`
 - `round-close-summary.md`
+
+<!-- phase-semantics-v2:start -->
+## 阶段协作语义补充（v2）
+
+> 说明：本节用于说明每个 phase 在系统主线中的职责与协作价值，要求可直接回答“为什么由该 Actor 在该阶段执行该动作”。
+
+| phase_id | Actor | 阶段目的 | 输入语义 | 完成标准 | 交接语义 |
+|---|---|---|---|---|---|
+| `p1` | `bpm` | 设定本轮治理的范围与边界基线。 | round_id + round_goal + change_scope_ref + changed_assets + linkage_targets + openspec_ref | 产出 scope_baseline_ref，并满足：范围基线包含模块边界与联动目标 | 将 scope_baseline_ref 交接给 p2 |
+| `p2` | `architect` | 审计联动项完整性并识别阻塞缺口。 | round_id + scope_baseline_ref + linkage_targets + changed_assets + openspec_ref | 产出 linkage_report_ref，并满足：联动报告包含缺项与阻塞风险 | 将 linkage_report_ref 交接给 p3 |
+| `p3` | `architect` | 在设计文档、清单与注册表中同步落盘联动更新。 | round_id + linkage_report_ref + changed_assets | 产出 m6_update_bundle_ref + construction_plane_delta_ref + open_questions_ref，并满足：所有必需联动资产在同一轮次完成更新 | 将 m6_update_bundle_ref + construction_plane_delta_ref + open_questions_ref 交接给 p4 |
+| `p4` | `architect` | 执行 OpenSpec 同步并生成机器可读记录。 | round_id + round_goal + openspec_ref + anc_design_refs + decision_snapshot_ref + sync_actor + trigger_mode + risk_level + checkpoint_count + commit_count + round_evidence_log_ref + output_ref | 产出 openspec_sync_ref，并满足：OpenSpec 同步记录已生成且符合 schema | 将 openspec_sync_ref 交接给 p5 |
+| `p5` | `bpm` | 执行 registry 校验并完成 checkpoint 与开放问题对账后收口本轮。 | round_id + m6_update_bundle_ref + openspec_sync_ref + round_evidence_log_ref + open_questions_ref | 产出 registry_verify_report_ref + round_close_summary_ref + construction_plane_delta_ref + open_questions_ref，并满足：registry 校验通过且开放问题已落实负责人 | 将 registry_verify_report_ref + round_close_summary_ref + construction_plane_delta_ref + open_questions_ref 交接给 initiator |
+<!-- phase-semantics-v2:end -->

@@ -1,0 +1,120 @@
+{
+  "ts": "2026-02-24T02:51:13Z",
+  "suite": "TC-HOTFIX-REFACTOR-PROC",
+  "total": 2,
+  "passed": 2,
+  "failed": 0,
+  "evidence_root": "docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases",
+  "cases": [
+    {
+      "id": "TC-HOTFIX-PROC-001",
+      "status": "pass",
+      "details": {
+        "return_code": 0,
+        "stdout": "docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/TC-HOTFIX-PROC-001/runner_output.json",
+        "stderr": "",
+        "runtime_trace_ref": "docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/TC-HOTFIX-PROC-001/execution/runtime_trace.json",
+        "phase_count": 7,
+        "dispatch_checks": [
+          {
+            "phase": "p1",
+            "ok": true,
+            "session_id": "6979b8e4-794b-4319-a4ed-a5fb49507f8b",
+            "actual_session_id": "6979b8e4-794b-4319-a4ed-a5fb49507f8b"
+          },
+          {
+            "phase": "p2",
+            "ok": true,
+            "session_id": "2088b997-b542-43e8-9491-7a3a185702b9",
+            "actual_session_id": "2088b997-b542-43e8-9491-7a3a185702b9"
+          },
+          {
+            "phase": "p3",
+            "ok": true,
+            "session_id": "8e53cb28-3d77-4036-a91d-e47d36062459",
+            "actual_session_id": "8e53cb28-3d77-4036-a91d-e47d36062459"
+          },
+          {
+            "phase": "p4",
+            "ok": true,
+            "session_id": "66559a46-1621-44a0-a06d-248a787677bc",
+            "actual_session_id": "66559a46-1621-44a0-a06d-248a787677bc"
+          },
+          {
+            "phase": "p5",
+            "ok": true,
+            "session_id": "0fbd44f7-ab9e-4350-9cc5-e9f7c1e851a6",
+            "actual_session_id": "0fbd44f7-ab9e-4350-9cc5-e9f7c1e851a6"
+          },
+          {
+            "phase": "p6",
+            "ok": true,
+            "session_id": "27212079-5369-4a30-b083-57f33c2bc698",
+            "actual_session_id": "27212079-5369-4a30-b083-57f33c2bc698"
+          },
+          {
+            "phase": "p7",
+            "ok": true,
+            "session_id": "101f0b26-4000-4627-8312-94f0f6974009",
+            "actual_session_id": "101f0b26-4000-4627-8312-94f0f6974009"
+          }
+        ],
+        "actor_isolation_ok": true,
+        "output_refs_ok": true,
+        "collaboration_mode": "phase-isolated-session"
+      }
+    },
+    {
+      "id": "TC-REFACTOR-PROC-001",
+      "status": "pass",
+      "details": {
+        "return_code": 0,
+        "stdout": "docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/TC-REFACTOR-PROC-001/runner_output.json",
+        "stderr": "",
+        "runtime_trace_ref": "docs/design/modules/evidence/bpm-runtime/w3d_hotfix_refactor_cases/TC-REFACTOR-PROC-001/execution/runtime_trace.json",
+        "phase_count": 6,
+        "dispatch_checks": [
+          {
+            "phase": "p1",
+            "ok": true,
+            "session_id": "fafc7814-f6d7-4080-8466-0549e348fa29",
+            "actual_session_id": "fafc7814-f6d7-4080-8466-0549e348fa29"
+          },
+          {
+            "phase": "p2",
+            "ok": true,
+            "session_id": "1220d486-7d34-4e9b-bab6-9d84e470acd1",
+            "actual_session_id": "1220d486-7d34-4e9b-bab6-9d84e470acd1"
+          },
+          {
+            "phase": "p3",
+            "ok": true,
+            "session_id": "884ec1e9-2ad4-4722-bb75-5e5e5abea805",
+            "actual_session_id": "884ec1e9-2ad4-4722-bb75-5e5e5abea805"
+          },
+          {
+            "phase": "p4",
+            "ok": true,
+            "session_id": "29fda928-6f4a-4cc5-b5a0-559955a733ba",
+            "actual_session_id": "29fda928-6f4a-4cc5-b5a0-559955a733ba"
+          },
+          {
+            "phase": "p5",
+            "ok": true,
+            "session_id": "ee4000c8-3b57-4615-92f2-370ae1eec020",
+            "actual_session_id": "ee4000c8-3b57-4615-92f2-370ae1eec020"
+          },
+          {
+            "phase": "p6",
+            "ok": true,
+            "session_id": "c0fe4e13-3c69-44a3-a9f0-a105899d2b29",
+            "actual_session_id": "c0fe4e13-3c69-44a3-a9f0-a105899d2b29"
+          }
+        ],
+        "actor_isolation_ok": true,
+        "output_refs_ok": true,
+        "collaboration_mode": "phase-isolated-session"
+      }
+    }
+  ]
+}

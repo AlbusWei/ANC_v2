@@ -280,8 +280,9 @@
 
 1. `python3 tests/m2-bpm-runtime/run_tc_full_dev_proc.py`
 2. `python3 tests/m2-bpm-runtime/run_tc_qa_proc.py`
-3. `python3 shared/registry/registry_contract_tool.py verify`
-4. `openspec validate m3-meta-asset-quality-hardening --json`
+3. `python3 tests/m2-bpm-runtime/run_tc_hotfix_refactor_proc.py`
+4. `python3 shared/registry/registry_contract_tool.py verify`
+5. `openspec validate m3-meta-asset-quality-hardening --json`
 
 ### 执行结果（2026-02-23）
 
@@ -293,3 +294,39 @@
    - 8 个 phase 全部真实执行 openclaw 分发；
    - 同 actor 跨 phase 会话隔离校验通过（`actor_isolation_ok=true`）；
    - 协作主目标已从 QA 试点扩展到 `full-development` 主流程。
+
+### 执行结果补充（2026-02-24）
+
+1. `python3 tests/m2-bpm-runtime/run_tc_hotfix_refactor_proc.py`：`2/2 pass`。
+2. `TC-HOTFIX-PROC-001`：`phase_count=7`，`dispatch_checks` 全通过，`actor_isolation_ok=true`。
+3. `TC-REFACTOR-PROC-001`：`phase_count=6`，`dispatch_checks` 全通过，`actor_isolation_ok=true`。
+4. 证据索引：`docs/design/modules/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json`。
+
+## 10. Phase10（全量 AP 语义统一 + inline_ap 语法糖，新增）
+
+### 目标
+
+按用户最终决策完成“全量去 `target_type=skill`（含 control 流程）”，并引入临时 AP 语法糖以支持同 Actor 穿透执行。
+
+### 输入
+
+1. `processes/**/process.json`
+2. `docs/architecture/process_architecture.md`
+3. `docs/design/standards/process-definition-standard.md`
+4. `docs/design/{interfaces,data-models}/**`
+5. `shared/registry/registry_contract_tool.py`
+
+### 输出
+
+1. 全量流程 manifest：`target_type` 统一为 `subprocess`。
+2. 对原 skill phase 增补 `inline_ap`（`ap_id/skill_id/actor/pierce_allowed`）。
+3. 协议与标准文档同步到 `inline_ap` 语义。
+4. registry/openspec 门禁通过。
+
+### 子任务
+
+- [x] 10.1 批量迁移 18 份 process manifest 的 skill phase 到 `subprocess + inline_ap`。
+- [x] 10.2 更新协议与标准文档（process architecture / process definition / context schema / BPM actor protocol）。
+- [x] 10.3 更新 `registry_contract_tool.py`，支持 `inline_ap` 校验与 M6 特殊门禁兼容。
+- [x] 10.4 更新 inventory 与 construction plane 联动记录。
+- [x] 10.5 执行 `registry verify + openspec validate + 关键运行回归`。

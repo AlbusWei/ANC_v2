@@ -1,34 +1,91 @@
-# runtime-policy-calibration - Process Guide
+# runtime-policy-calibration - 流程说明
 
-## Purpose
+## 流程定位
 
-为 M1/M2 等运行参数问题提供统一后验分析与治理同步流程，避免在模块文档硬编码策略值。
+- 流程级别：`P5`
+- 负责人：`bpm`
+- 版本：`0.1.0`
+- Objective 引用：`obj-runtime-policy-calibration`
 
-## Entry Conditions
+## 流程目标（自然语言）
 
-1. `issue_ref`、`current_policy_ref`、`risk_constraints_ref` 可达。
-2. `runtime_evidence_refs` 非空且每项可追溯。
-3. handoff 契约满足 `role-handoff-protocol` 最小字段。
+该流程负责基于运行证据进行后验分析与策略校准，形成可决策的策略变更提案与上线观测闭环。它的意义是让触发/补跑/去重策略持续学习，而不是在文档中静态硬编码。
 
-## Execution Phases
+## 协作编排原则
 
-1. `p1 issue-intake-and-scope-lock`（system-analyst / `sys.arch.system-feedback-digest`）
-2. `p2 evidence-collection-and-baseline`（system-analyst / `sys.arch.system-feedback-digest`）
-3. `p3 posterior-analysis-and-hypothesis`（system-analyst / `sys.arch.system-feedback-digest`）
-4. `p4 governance-sync`（architect / `system.ops.manual-task`）
-5. `p5 decision-and-rollout-plan`（admin / `system.ops.manual-task`）
-6. `p6 post-rollout-observation`（bpm / `sys.arch.system-feedback-digest`）
+1. 该流程是运行策略后验学习机制，目标是持续校准触发/去重/补跑策略。
+2. 分析必须基于运行证据与基线指标，不以主观经验直接改策略。
+3. 策略提案需经过治理同步与审批，保证风险可控后再进入上线观察。
+4. 收口必须回填观测结果，形成“分析-决策-验证”闭环。
 
-## Rejection Rules (Fail-Closed)
+## 阶段语义定义
 
-1. 证据索引不可达或样本不足。
-2. handoff 字段缺失或 `to_role` 不匹配。
-3. 高风险策略变更缺少 admin 审批。
+### p1 issue-intake-and-scope-lock
 
-## Primary Evidence Bundle
+- 执行角色：`system-analyst`
+- 阶段目的：本阶段围绕以下业务动作推进：校验议题范围与契约完整性。
+- 输入语义：本阶段主要消费以下输入：issue_ref + handoff_ref。
+- 完成标准：完成判据：必须产出 scope_lock_ref，并满足“范围、目标与交接契约均已锁定”。
+- 交接说明：交接要求：将 scope_lock_ref 交接给 p2。
+- 执行单元：`subprocess:inline-ap:runtime-policy-calibration:p1`。该阶段采用临时 AP 语法，映射 skill 为 `sys.arch.system-feedback-digest`，穿透执行策略：允许（同 Actor 场景）。
 
-- `calibration_report_ref`
-- `policy_change_proposal_ref`
-- `governance_sync_minutes_ref`
-- `decision_record_ref`
-- `rollout_observation_ref`
+### p2 evidence-collection-and-baseline
+
+- 执行角色：`system-analyst`
+- 阶段目的：本阶段围绕以下业务动作推进：构建证据索引与基线指标。
+- 输入语义：本阶段主要消费以下输入：runtime_evidence_refs + risk_constraints_ref。
+- 完成标准：完成判据：必须产出 evidence_index_ref + baseline_ref，并满足“证据索引可访问且样本覆盖范围明确”。
+- 交接说明：交接要求：将 evidence_index_ref + baseline_ref 交接给 p3。
+- 执行单元：`subprocess:inline-ap:runtime-policy-calibration:p2`。该阶段采用临时 AP 语法，映射 skill 为 `sys.arch.system-feedback-digest`，穿透执行策略：允许（同 Actor 场景）。
+
+### p3 posterior-analysis-and-hypothesis
+
+- 执行角色：`system-analyst`
+- 阶段目的：本阶段围绕以下业务动作推进：生成后验摘要与策略假设。
+- 输入语义：本阶段主要消费以下输入：handoff_ref + evidence_index_ref。
+- 完成标准：完成判据：必须产出 architecture_feedback_digest_ref，并满足“摘要包含风险等级、发现项与可决策建议”。
+- 交接说明：交接要求：将 architecture_feedback_digest_ref 交接给 p4。
+- 执行单元：`subprocess:inline-ap:runtime-policy-calibration:p3`。该阶段采用临时 AP 语法，映射 skill 为 `sys.arch.system-feedback-digest`，穿透执行策略：允许（同 Actor 场景）。
+
+### p4 governance-sync
+
+- 执行角色：`architect`
+- 阶段目的：本阶段围绕以下业务动作推进：与 architect/admin/bpm 同步评审并记录纪要。
+- 输入语义：本阶段主要消费以下输入：architecture_feedback_digest_ref。
+- 完成标准：完成判据：必须产出 governance_sync_minutes_ref，并满足“治理同步参与方与结论可审计”。
+- 交接说明：交接要求：将 governance_sync_minutes_ref 交接给 p5。
+- 执行单元：`subprocess:inline-ap:runtime-policy-calibration:p4`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
+
+### p5 decision-and-rollout-plan
+
+- 执行角色：`admin`
+- 阶段目的：本阶段围绕以下业务动作推进：对策略提案做批准或驳回并确定上线方案。
+- 输入语义：本阶段主要消费以下输入：governance_sync_minutes_ref + risk_constraints_ref。
+- 完成标准：完成判据：必须产出 policy_change_proposal_ref + decision_record_ref，并满足“高风险变更具备明确的 admin 决策”。
+- 交接说明：交接要求：将 policy_change_proposal_ref + decision_record_ref 交接给 p6。
+- 执行单元：`subprocess:inline-ap:runtime-policy-calibration:p5`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
+
+### p6 post-rollout-observation
+
+- 执行角色：`bpm`
+- 阶段目的：本阶段围绕以下业务动作推进：记录上线观测并关闭本轮校准。
+- 输入语义：本阶段主要消费以下输入：decision_record_ref + current_policy_ref。
+- 完成标准：完成判据：必须产出 rollout_observation_ref + calibration_report_ref，并满足“观测结果已关联决策与提案引用”。
+- 交接说明：交接要求：将 rollout_observation_ref + calibration_report_ref 交接给 initiator。
+- 执行单元：`subprocess:inline-ap:runtime-policy-calibration:p6`。该阶段采用临时 AP 语法，映射 skill 为 `sys.arch.system-feedback-digest`，穿透执行策略：允许（同 Actor 场景）。
+
+## 控制流与回退
+
+- `p1` 在 `success` 条件下流转到 `p2`。
+- `p2` 在 `success` 条件下流转到 `p3`。
+- `p3` 在 `success` 条件下流转到 `p4`。
+- `p4` 在 `success` 条件下流转到 `p5`。
+- `p5` 在 `success` 条件下流转到 `p6`。
+- `p6` 在 `success` 条件下流转到 `end`。
+
+## Fail-Closed 触发条件
+
+1. 阶段输入不可解析、缺失或与目标语义不一致。
+2. 阶段输出不可追溯，或无法支撑下一阶段继续执行。
+3. 交接语义不完整，导致跨角色协作中断。
+4. 回退/重试按策略执行：max_attempts=1。

@@ -1,6 +1,6 @@
 # 元流程清单与设计
 
-> 版本: v0.8.0 | 分类: Meta Processes | 最后更新: 2026-02-23
+> 版本: v0.9.0 | 分类: Meta Processes | 最后更新: 2026-02-24
 
 ## 已有元流程
 
@@ -44,6 +44,7 @@
 - design_doc: `docs/design/processes/hotfix-process.md`
 - level: P4
 - phases: hotfix-intake -> scope-and-spec-fast-baseline -> fast-test-preparation -> hotfix-implementation -> hotfix-gate-evaluation -> lifecycle-gate-sync -> release-packaging
+- collaboration pilot: 真实 OpenClaw 分发 + phase 级会话 reset 隔离（W10）
 
 ### refactor
 
@@ -52,6 +53,7 @@
 - design_doc: `docs/design/processes/refactor-process.md`
 - level: P4
 - phases: refactor-objective-and-scope -> refactor-spec-authoring -> refactor-test-preparation -> refactor-implementation -> refactor-gate-evaluation -> lifecycle-gate-sync
+- collaboration pilot: 真实 OpenClaw 分发 + phase 级会话 reset 隔离（W10）
 
 ### construction-plane-governance
 
@@ -72,6 +74,13 @@
 | `implementation-execution-core` | 实施执行核心 | `full-development.p4`, `hotfix.p4`, `refactor.p4`, `development-process.p4` |
 | `release-packaging-governed` | 治理化发布打包 | `full-development.p7`, `hotfix.p7` |
 | `evolution-feedback-planning` | 演化反馈规划 | `full-development.p8` |
+
+## AP 入口语义（M3 Phase10）
+
+1. 元流程 phase 统一使用 `target_type=subprocess`。
+2. 当 phase 需要直接承载 AP 语义且暂无显式注册流程时，使用 `inline_ap`（临时 AP）承载 skill 映射。
+3. 当 `inline_ap.actor == phase.actor` 且 `inline_ap.pierce_allowed=true` 时，允许运行时穿透执行（不新增递归栈帧）。
+4. 长期目标为“临时 AP -> 显式注册 AP/P5 子流程”收敛，不在目标态长期保留 `inline_ap`。
 
 ## 递归组合规则
 

@@ -49,7 +49,11 @@
         "output": "objective_ref and scope_baseline_ref",
         "client": "p2"
       },
-      "acceptance_criteria": "objective and non-goals are explicit"
+      "acceptance_criteria": "objective and non-goals are explicit",
+      "phase_purpose": "先把重构目标与边界说清楚，防止技术债治理扩散成无界改造。",
+      "input_context_ref": "objective_context_ref,tech_debt_ref,target_asset_ref",
+      "done_definition": "必须产出 objective_ref 与 scope_baseline_ref，并明确非目标范围。",
+      "handoff_note": "将 objective_ref 与 scope_baseline_ref 交接给 p2。"
     },
     {
       "phase_id": "p2",
@@ -66,7 +70,11 @@
         "output": "spec_ref",
         "client": "p3"
       },
-      "acceptance_criteria": "spec documents invariant boundaries and rollback plan"
+      "acceptance_criteria": "spec documents invariant boundaries and rollback plan",
+      "phase_purpose": "把重构边界收敛为可执行规格，明确不变量与回滚路径。",
+      "input_context_ref": "objective_ref,scope_baseline_ref",
+      "done_definition": "必须产出 spec_ref，且规格可直接指导实现与测试。",
+      "handoff_note": "将 spec_ref 交接给 p3。"
     },
     {
       "phase_id": "p3",
@@ -83,7 +91,11 @@
         "output": "test_plan_ref and preparation_bundle_ref",
         "client": "p4"
       },
-      "acceptance_criteria": "test_plan_ref is explicitly linked to refactor spec"
+      "acceptance_criteria": "test_plan_ref is explicitly linked to refactor spec",
+      "phase_purpose": "围绕重构规格构建回归测试准备，确保后续验证有共同基线。",
+      "input_context_ref": "spec_ref",
+      "done_definition": "必须产出 test_plan_ref 与 preparation_bundle_ref。",
+      "handoff_note": "将 test_plan_ref 与 preparation_bundle_ref 交接给 p4。"
     },
     {
       "phase_id": "p4",
@@ -100,7 +112,11 @@
         "output": "implementation_ref and candidate_artifacts_ref",
         "client": "p5"
       },
-      "acceptance_criteria": "implementation is linked to spec and constraints"
+      "acceptance_criteria": "implementation is linked to spec and constraints",
+      "phase_purpose": "实施结构性改造并输出可评测候选产物，验证重构价值是否兑现。",
+      "input_context_ref": "spec_ref,test_plan_ref,preparation_bundle_ref",
+      "done_definition": "必须产出 implementation_ref 与 candidate_artifacts_ref，并可追溯到规格。",
+      "handoff_note": "将 implementation_ref 与 candidate_artifacts_ref 交接给 p5。"
     },
     {
       "phase_id": "p5",
@@ -117,7 +133,11 @@
         "output": "final_gate_verdict_ref",
         "client": "p6"
       },
-      "acceptance_criteria": "regression result is explicit and evidence-complete"
+      "acceptance_criteria": "regression result is explicit and evidence-complete",
+      "phase_purpose": "给出重构是否可放行的质量结论，守住行为不回归底线。",
+      "input_context_ref": "candidate_artifacts_ref,implementation_ref,preparation_bundle_ref",
+      "done_definition": "必须产出 final_gate_verdict_ref，且门禁依据可解释。",
+      "handoff_note": "门禁通过后将 final_gate_verdict_ref 交接给 p6；失败回流 p4。"
     },
     {
       "phase_id": "p6",
@@ -134,7 +154,11 @@
         "output": "lifecycle_transition_ref and registry_sync_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "registry sync payload and lifecycle evidence are complete"
+      "acceptance_criteria": "registry sync payload and lifecycle evidence are complete",
+      "phase_purpose": "完成生命周期与 registry 治理收口，让重构结果可被系统接纳。",
+      "input_context_ref": "final_gate_verdict_ref,target_asset_ref,lifecycle_target",
+      "done_definition": "必须产出 lifecycle_transition_ref 与 registry_sync_ref。",
+      "handoff_note": "将 lifecycle_transition_ref 与 registry_sync_ref 交接给 initiator。"
     }
   ],
   "control_flow": [
@@ -209,5 +233,13 @@
     "obligation_ref": "docs/design/processes/development-loop-core-standard.md",
     "risk_policy_ref": "docs/design/processes/governance-processes.md",
     "checklist_ref": "docs/design/modules/M3-self-development.md"
+  },
+  "collaboration_policy": {
+    "mode": "phase-isolated-session",
+    "dispatch_runtime": "openclaw-required",
+    "session_reset": "per-phase-reset",
+    "pilot_scope": "expanded-from-full-development",
+    "natural_context_first": true,
+    "ap_migration_strategy": "sequential"
   }
 }
