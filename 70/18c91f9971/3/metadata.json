@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "7018c91f9971",
+  "session_id": "codex-2052c64a13ef",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-24T11:17:50.322502Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "docs/design/modules/M2-bpm-engine.md",
+    "processes/control/trigger-event-runtime/SKILL.md",
+    "processes/control/trigger-schedule-runtime/SKILL.md",
+    "skills/system/process-instance-manager/TEST.md",
+    "tests/m2-bpm-runtime/run_tc_ins.py"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "811e77852360",
+  "transcript_identifier_at_start": "gemini-80a37b13d3",
+  "checkpoint_transcript_start": 124,
+  "transcript_lines_at_start": 124,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-24T11:17:49.836838Z",
+    "agent_lines": 47,
+    "human_added": 2085,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 2132,
+    "agent_percentage": 2.204502814258912
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
