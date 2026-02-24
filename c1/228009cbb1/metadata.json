@@ -153,6 +153,13 @@
       "context": "/c1/228009cbb1/18/context.md",
       "content_hash": "/c1/228009cbb1/18/content_hash.txt",
       "prompt": "/c1/228009cbb1/18/prompt.txt"
+    },
+    {
+      "metadata": "/c1/228009cbb1/19/metadata.json",
+      "transcript": "/c1/228009cbb1/19/full.jsonl",
+      "context": "/c1/228009cbb1/19/context.md",
+      "content_hash": "/c1/228009cbb1/19/content_hash.txt",
+      "prompt": "/c1/228009cbb1/19/prompt.txt"
     }
   ],
   "token_usage": {
