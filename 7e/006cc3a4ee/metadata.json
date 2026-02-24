@@ -8310,6 +8310,13 @@
       "context": "/7e/006cc3a4ee/31/context.md",
       "content_hash": "/7e/006cc3a4ee/31/content_hash.txt",
       "prompt": "/7e/006cc3a4ee/31/prompt.txt"
+    },
+    {
+      "metadata": "/7e/006cc3a4ee/32/metadata.json",
+      "transcript": "/7e/006cc3a4ee/32/full.jsonl",
+      "context": "/7e/006cc3a4ee/32/context.md",
+      "content_hash": "/7e/006cc3a4ee/32/content_hash.txt",
+      "prompt": "/7e/006cc3a4ee/32/prompt.txt"
     }
   ],
   "token_usage": {
