@@ -61,3 +61,29 @@
 - Judge Perspectives: [architect, system-analyst]
 - Timeout Seconds: 600
 - Retry Policy: max 1
+
+## Runner 执行与返回码约定
+
+### Happy Path 示例
+
+```bash
+python3 skills/meta/objective-writer/scripts/objective_writer_runner.py \
+  --input tmp/session5/objective_writer_input.json \
+  --output tmp/session5/objective_writer_output.json \
+  --evidence-dir tmp/session5/objective_writer_evidence
+```
+
+### Fail-Closed 示例（缺失 `constraints.non_goals`）
+
+```bash
+python3 skills/meta/objective-writer/scripts/objective_writer_runner.py \
+  --input tmp/session5/objective_writer_input_missing_non_goals.json \
+  --output tmp/session5/objective_writer_output_missing_non_goals.json \
+  --evidence-dir tmp/session5/objective_writer_evidence_missing_non_goals
+```
+
+### 返回码语义
+
+1. `0`：通过，输出 `objective_ref/objective_statement/success_criteria/scope_baseline/non_goals`。
+2. `2`：Fail-Closed，输入缺字段或成功标准不可测。
+3. `1`：运行异常。

@@ -27,5 +27,5 @@
 | `release-manager-agent` 运行资产（实现） | `agents/app/delivery/release-manager-agent/` + `agent_directory.json` 条目 | 已落地运行目录与 registry 条目 | S1 | Session3 | closed（implementation） | 目录存在，`agent_directory.json` 新增条目，`registry verify` 通过 |
 | Session3 技能契约验证入口 | `tests/m3-runtime/`（TEST + runner + evidence） | 已创建并覆盖两技能 happy/fail-closed 核心路径 | S1 | Session3 | closed（implementation） | `python3 tests/m3-runtime/run_skill_contract_validation.py` 可执行且报告写入 evidence 目录 |
 | Session4 M3 专项测试基座（可复用 runner + 用例体系） | `tests/m3-self-development/{TEST.md,live_cases.md,run_tc_online.py}` + `runtime_data/execution/evidence/self-development/e2e-online/session4-foundation/latest/` | 已落地单 runner（`--suite/--case`），默认覆盖主链路/异常链路/Fail-Closed/回退返工四类；已预留 `M3-INT-*`/`M3-EXT-*`/`M3-FC-*` 供 Session5/6 复用 | S1 | Session4 | closed（implementation） | `python3 tests/m3-self-development/run_tc_online.py --help` 通过；默认执行产生四类断言证据；预留 case 在 Session4 强制执行时 Fail-Closed |
-| 内部主线 E2E 尚未执行 | 内部主线 E2E 证据包（M3 canonical） | 尚未形成证据 | S2 | Session5 | open | 内部主线关键场景通过并可回退 |
+| 内部主线 E2E 尚未执行 | 内部主线 E2E 证据包（M3 canonical） | 已形成 Session5 运行级证据：`tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session5/` | S2 | Session5 | closed（implementation） | 内部主线关键场景通过并可回退 |
 | 外部主线 E2E 尚未执行 | 外部主线 E2E 证据包（复用 M3 canonical） | 尚未形成证据 | S2 | Session6 | open | 外部主线关键场景通过且无旁路 |

@@ -32,10 +32,10 @@
 
 ## 5. Session5（内部主线 E2E）
 
-- [ ] 5.0 前置依赖：`m3-meta-asset-quality-hardening` Phase4 三门禁通过（`registry verify` + `openspec validate` + `bundle grep` 分类通过），且生命周期边界已锁定“仅到 review，不进入 active”。
-- [ ] 5.1 基于 M3 canonical 流程执行内部主线 E2E。
-- [ ] 5.2 形成关键异常可回退证据。
-- [ ] 5.3 复核 `M3 -> M1 -> M4` 门禁链路无旁路。
+- [x] 5.0 前置依赖：`m3-meta-asset-quality-hardening` Phase4 三门禁通过（`registry verify` + `openspec validate` + `bundle grep` 分类通过），且生命周期边界已锁定“仅到 review，不进入 active”。
+- [x] 5.1 基于 M3 canonical 流程执行内部主线 E2E。
+- [x] 5.2 形成关键异常可回退证据。
+- [x] 5.3 复核 `M3 -> M1 -> M4` 门禁链路无旁路。
 
 ## 6. Session6（外部主线 E2E）
 

@@ -44,13 +44,14 @@ input_contract:
     - constraints must include explicit non-goals
     - success_criteria must be measurable and observable
 output_contract:
-  format: markdown
+  format: json
   required:
     - objective_ref
     - objective_statement
     - success_criteria
     - scope_baseline
     - non_goals
+    - objective_doc_ref
   machine_judgement:
     - all required sections are present
     - success criteria are testable
@@ -94,10 +95,27 @@ test_mount:
 ## 运行命令
 
 ```bash
-# objective-writer 为文档化技能，无独立 runner。
-# 建议在产出后执行以下门禁：
+# Happy path
+python3 skills/meta/objective-writer/scripts/objective_writer_runner.py \
+  --input tmp/session5/objective_writer_input.json \
+  --output tmp/session5/objective_writer_output.json \
+  --evidence-dir tmp/session5/objective_writer_evidence
+
+# Fail-Closed path（缺字段）
+python3 skills/meta/objective-writer/scripts/objective_writer_runner.py \
+  --input tmp/session5/objective_writer_input_missing_non_goals.json \
+  --output tmp/session5/objective_writer_output_missing_non_goals.json \
+  --evidence-dir tmp/session5/objective_writer_evidence_missing_non_goals
+
+# 产出后建议执行 registry 合约门禁
 python3 shared/registry/registry_contract_tool.py verify
 ```
+
+## 返回码语义
+
+1. `0`：执行成功，输出契约完整，可进入下游 Spec/Test。
+2. `2`：Fail-Closed，输入契约缺失或不可验证（如 `success_criteria` 不可测、`non_goals` 缺失）。
+3. `1`：运行异常（非业务 Fail-Closed）。
 
 ## References
 

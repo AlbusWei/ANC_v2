@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Session4 M3 专项测试基座统一入口。
+"""M3 自开发在线测试统一入口（Session4/Session5）。
 
 设计原则：
 1. 单 runner + --suite/--case 选择执行范围。
 2. 复用上游 runner（M3 runtime / M1 runtime），不重复实现评测引擎。
-3. Session5/6 预留 case 仅注册不执行；若强制执行则 Fail-Closed。
+3. Session6 预留 case 仅注册不执行；若强制执行则 Fail-Closed。
 """
 
 from __future__ import annotations
@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Set
 
 
-DEFAULT_EVIDENCE_ROOT = Path("runtime_data/execution/evidence/self-development/e2e-online/session4-foundation/latest")
+DEFAULT_EVIDENCE_ROOT = Path("tmp/runtime_data/execution/evidence/self-development/e2e-online/session4-foundation/latest")
 DEFAULT_REPORT_NAME = "session4_tc_online_report.json"
 DEFAULT_MARKDOWN_NAME = "session4_tc_online_summary.md"
 
@@ -78,27 +78,27 @@ CASES: List[CaseDef] = [
         case_id="M3-INT-001",
         suite="session5-internal",
         category="internal",
-        status="reserved",
-        description="Session5 内部主线 E2E 场景 1（预留）。",
-        upstream="reserved",
+        status="executable",
+        description="Session5 内部主线 E2E 场景 1（主链 Happy）。",
+        upstream="session5-runtime",
         session="session5",
     ),
     CaseDef(
         case_id="M3-INT-002",
         suite="session5-internal",
         category="internal",
-        status="reserved",
-        description="Session5 内部主线 E2E 场景 2（预留）。",
-        upstream="reserved",
+        status="executable",
+        description="Session5 内部主线 E2E 场景 2（Fail-Closed -> Debug -> 修复 -> 重跑）。",
+        upstream="session5-runtime",
         session="session5",
     ),
     CaseDef(
         case_id="M3-INT-003",
         suite="session5-internal",
         category="internal",
-        status="reserved",
-        description="Session5 内部主线 E2E 场景 3（预留）。",
-        upstream="reserved",
+        status="executable",
+        description="Session5 内部主线 E2E 场景 3（release-manager-agent 双分支）。",
+        upstream="session5-runtime",
         session="session5",
     ),
     CaseDef(
@@ -397,6 +397,47 @@ def run_upstream_m1(root: Path, evidence_root: Path) -> Dict[str, Any]:
     }
 
 
+def run_upstream_session5(root: Path) -> Dict[str, Any]:
+    """运行 Session5 内部主线执行器（证据固定落在 tmp 路径）。"""
+    evidence_root = (
+        root
+        / "tmp/runtime_data/execution/evidence/construction-plane/"
+        "R-20260222-M6-m3-self-development-e2e-online-01/session5"
+    ).resolve()
+    evidence_root.mkdir(parents=True, exist_ok=True)
+
+    cmd = [
+        "python3",
+        "tests/m3-self-development/session5_internal_runner.py",
+        "--evidence-root",
+        to_rel(evidence_root, root),
+        "--report",
+        "session5_report.json",
+    ]
+    proc = run_cmd(cmd, root)
+    command_trace = write_command_evidence(
+        root=root,
+        cmd_dir=evidence_root,
+        command_id="run_session5_internal",
+        cmd=cmd,
+        proc=proc,
+    )
+    summary = parse_json_from_mixed_output(proc.stdout)
+    summary_obj = summary if isinstance(summary, dict) else {}
+    report_ref_raw = str(summary_obj.get("report_ref") or "")
+    report_path = (root / report_ref_raw).resolve() if report_ref_raw else (evidence_root / "session5_report.json").resolve()
+    report_exists = report_path.exists()
+    report_payload = load_json(report_path) if report_exists else {}
+    return {
+        "status": "ok" if (proc.returncode == 0 and report_exists) else "failed",
+        "return_code": proc.returncode,
+        "summary": summary_obj,
+        "report_ref": to_rel(report_path, root) if report_exists else "",
+        "report_payload": report_payload,
+        "command_trace": command_trace,
+    }
+
+
 def case_status_map(payload: Dict[str, Any]) -> Dict[str, str]:
     result: Dict[str, str] = {}
     for item in payload.get("cases", []):
@@ -469,10 +510,41 @@ def evaluate_case(case_def: CaseDef, upstream_results: Dict[str, Dict[str, Any]]
             status_map.get("TC-RELEASE-FC-RB") == "pass",
             "TC-RELEASE-FC-RB 必须通过以证明回退包缺失阻断链路。",
         )
+    elif case_def.case_id in {"M3-INT-001", "M3-INT-002", "M3-INT-003"}:
+        upstream = upstream_results["session5-runtime"]
+        upstream_refs["session5_report_ref"] = upstream.get("report_ref", "")
+        report_payload = upstream.get("report_payload", {})
+        cases_raw = report_payload.get("cases", []) if isinstance(report_payload, dict) else []
+        case_map: Dict[str, Dict[str, Any]] = {}
+        for item in cases_raw:
+            if isinstance(item, dict):
+                cid = item.get("id")
+                if isinstance(cid, str):
+                    case_map[cid] = item
+
+        case_payload = case_map.get(case_def.case_id, {})
+        case_status = str(case_payload.get("status") or "")
+        passed &= assert_true(assertions, "upstream_session5_return_code", upstream.get("return_code") == 0, "session5 runner 返回码必须为 0。")
+        passed &= assert_true(assertions, "session5_case_pass", case_status == "pass", f"{case_def.case_id} 必须为 pass。")
+
+        if case_def.case_id == "M3-INT-001":
+            gate_refs = case_payload.get("gate_chain_refs") if isinstance(case_payload.get("gate_chain_refs"), list) else []
+            passed &= assert_true(assertions, "gate_chain_refs_present", bool(gate_refs), "M3-INT-001 必须包含门禁链路引用。")
+        elif case_def.case_id == "M3-INT-002":
+            debug_rounds = int(case_payload.get("debug_rounds") or 0)
+            rework_actions = case_payload.get("rework_actions") if isinstance(case_payload.get("rework_actions"), list) else []
+            passed &= assert_true(assertions, "debug_rounds_ge_1", debug_rounds >= 1, "M3-INT-002 必须至少包含一轮 debug。")
+            passed &= assert_true(assertions, "rework_actions_present", bool(rework_actions), "M3-INT-002 必须落盘返工动作。")
+        elif case_def.case_id == "M3-INT-003":
+            details = case_payload.get("details") if isinstance(case_payload.get("details"), dict) else {}
+            success_seen = bool(details.get("release_manager_success_seen"))
+            reject_seen = bool(details.get("release_manager_reject_seen"))
+            passed &= assert_true(assertions, "release_manager_success_seen", success_seen, "M3-INT-003 必须触发 release-manager-agent 成功分支。")
+            passed &= assert_true(assertions, "release_manager_reject_seen", reject_seen, "M3-INT-003 必须触发 release-manager-agent 拒绝分支。")
     else:
-        # 预留 case 不在 Session4 执行，进入此分支即视为策略漏洞。
+        # 未定义 case 进入此分支即视为策略漏洞。
         passed = False
-        notes.append("reserved case should not be evaluated in Session4")
+        notes.append("unknown case branch")
 
     return {
         "status": "pass" if passed else "fail",
@@ -492,6 +564,7 @@ def build_markdown_summary(summary: Dict[str, Any]) -> str:
     lines.append(f"- total: {summary.get('total', 0)}")
     lines.append(f"- passed: {summary.get('passed', 0)}")
     lines.append(f"- failed: {summary.get('failed', 0)}")
+    lines.append(f"- debug_rounds: {summary.get('debug_rounds', 0)}")
     lines.append("")
     lines.append("## Case Results")
     for case in summary.get("cases", []):
@@ -505,6 +578,14 @@ def build_markdown_summary(summary: Dict[str, Any]) -> str:
         if isinstance(evidence_ref, str) and evidence_ref:
             lines.append(f"  - evidence: {evidence_ref}")
     lines.append("")
+    readiness = summary.get("session6_readiness", {})
+    if isinstance(readiness, dict) and readiness:
+        lines.append("## Session6 Readiness")
+        lines.append(f"- ready: {readiness.get('ready', False)}")
+        lines.append(f"- decision: {readiness.get('decision', '')}")
+        for risk in readiness.get("risks", []) if isinstance(readiness.get("risks"), list) else []:
+            lines.append(f"- risk: {risk}")
+        lines.append("")
     lines.append("## Conclusion")
     lines.append(summary.get("natural_language_conclusion", ""))
     lines.append("")
@@ -515,7 +596,7 @@ def select_upstreams(selected_case_ids: Iterable[str]) -> Set[str]:
     upstreams: Set[str] = set()
     for case_id in selected_case_ids:
         case_def = CASE_BY_ID[case_id]
-        if case_def.upstream in {"m3-runtime", "m1-runtime"}:
+        if case_def.upstream in {"m3-runtime", "m1-runtime", "session5-runtime"}:
             upstreams.add(case_def.upstream)
     return upstreams
 
@@ -553,6 +634,7 @@ def main() -> int:
     (evidence_root / "cases").mkdir(parents=True, exist_ok=True)
     (evidence_root / "upstream" / "m3-runtime").mkdir(parents=True, exist_ok=True)
     (evidence_root / "upstream" / "m1-runtime").mkdir(parents=True, exist_ok=True)
+    (evidence_root / "upstream" / "session5-runtime").mkdir(parents=True, exist_ok=True)
 
     selected_suite_label = "session4-foundation-default" if default_mode else ",".join(suite_inputs) if suite_inputs else "custom-case-selection"
 
@@ -573,7 +655,7 @@ def main() -> int:
         global_errors.append(
             "reserved_case_selected:"
             + ",".join(reserved_selected)
-            + " (Session5/Session6 才可执行)"
+            + " (当前会话不可执行)"
         )
 
     upstream_results: Dict[str, Dict[str, Any]] = {}
@@ -583,6 +665,8 @@ def main() -> int:
                 upstream_results[upstream] = run_upstream_m1(root, evidence_root)
             elif upstream == "m3-runtime":
                 upstream_results[upstream] = run_upstream_m3(root, evidence_root)
+            elif upstream == "session5-runtime":
+                upstream_results[upstream] = run_upstream_session5(root)
 
     for case_id in selected_case_ids:
         case_def = CASE_BY_ID[case_id]
@@ -595,8 +679,8 @@ def main() -> int:
                 "suite": case_def.suite,
                 "category": case_def.category,
                 "status": "fail",
-                "details": "reserved case is not executable in Session4",
-                "natural_language_conclusion": "该用例属于 Session5/Session6 预留项，Session4 强制执行触发 Fail-Closed。",
+                "details": "reserved case is not executable in current session",
+                "natural_language_conclusion": "该用例属于预留项，当前会话强制执行触发 Fail-Closed。",
                 "generated_at": now_iso(),
             }
             case_path = case_dir / "case_result.json"
@@ -649,10 +733,21 @@ def main() -> int:
     failed = total - passed
     status = "pass" if (failed == 0 and not global_errors) else "fail"
 
-    if status == "pass":
-        natural_language_conclusion = "Session4 基座已通过：主链路、异常链路、Fail-Closed、回退/返工四类判定均可复用，具备进入 Session5 内部主线 E2E 的准入条件。"
+    session5_upstream = upstream_results.get("session5-runtime", {})
+    session5_payload = session5_upstream.get("report_payload", {}) if isinstance(session5_upstream, dict) else {}
+    selected_sessions = {CASE_BY_ID[item].session for item in selected_case_ids}
+    session5_mode = "session5" in selected_sessions and selected_sessions.issubset({"session5"})
+
+    if session5_mode:
+        if status == "pass":
+            natural_language_conclusion = "Session5 内部主线 E2E 已通过：主链路、Fail-Closed 后返工、release-manager-agent 双分支均满足。"
+        else:
+            natural_language_conclusion = "Session5 内部主线 E2E 未通过：仍存在失败用例或闭环证据缺口。"
     else:
-        natural_language_conclusion = "Session4 基座未通过：存在失败用例或覆盖/策略缺口，暂不具备 Session5 内部主线 E2E 准入条件。"
+        if status == "pass":
+            natural_language_conclusion = "Session4 基座已通过：主链路、异常链路、Fail-Closed、回退/返工四类判定均可复用，具备进入 Session5 内部主线 E2E 的准入条件。"
+        else:
+            natural_language_conclusion = "Session4 基座未通过：存在失败用例或覆盖/策略缺口，暂不具备 Session5 内部主线 E2E 准入条件。"
 
     summary = {
         "ts": now_iso(),
@@ -677,6 +772,11 @@ def main() -> int:
             }
             for key, value in upstream_results.items()
         },
+        "debug_rounds": int(session5_payload.get("debug_rounds") or 0),
+        "rework_actions": session5_payload.get("rework_actions", []) if isinstance(session5_payload.get("rework_actions"), list) else [],
+        "liveness_probes": session5_payload.get("liveness_probes", []) if isinstance(session5_payload.get("liveness_probes"), list) else [],
+        "gate_chain_refs": session5_payload.get("gate_chain_refs", []) if isinstance(session5_payload.get("gate_chain_refs"), list) else [],
+        "session6_readiness": session5_payload.get("session6_readiness", {}) if isinstance(session5_payload.get("session6_readiness"), dict) else {},
     }
 
     report_path = evidence_root / args.report
