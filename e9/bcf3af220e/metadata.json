@@ -5,13 +5,22 @@
   "branch": "codex/review-layers-modules",
   "checkpoints_count": 1,
   "files_touched": [
+    "agents/app/delivery/release-manager-agent/HEARTBEAT.md",
+    "agents/app/delivery/release-manager-agent/TEST.md",
     "agents/app/delivery/release-manager-agent/TOOLS.md",
     "agents/app/delivery/release-manager-agent/USER.md",
+    "agents/app/delivery/release-manager-agent/scripts/release_manager_agent_runner.py",
+    "docs/architecture/construction_plane.md",
+    "openspec/changes/m3-self-development-e2e-online/m3-gap-baseline.md",
     "openspec/changes/m3-self-development-e2e-online/tasks.md",
     "processes/meta/objective-scope-baseline/SKILL.md",
     "processes/meta/objective-scope-baseline/TEST.md",
+    "processes/meta/objective-scope-baseline/scripts/objective_scope_baseline_runner.py",
     "skills/meta/objective-writer/SKILL.md",
-    "skills/meta/objective-writer/TEST.md"
+    "skills/meta/objective-writer/TEST.md",
+    "skills/meta/objective-writer/scripts/objective_writer_runner.py",
+    "tests/m3-self-development/run_tc_online.py",
+    "tests/m3-self-development/session5_internal_runner.py"
   ],
   "sessions": [
     {
@@ -27,6 +36,13 @@
       "context": "/e9/bcf3af220e/1/context.md",
       "content_hash": "/e9/bcf3af220e/1/content_hash.txt",
       "prompt": "/e9/bcf3af220e/1/prompt.txt"
+    },
+    {
+      "metadata": "/e9/bcf3af220e/2/metadata.json",
+      "transcript": "/e9/bcf3af220e/2/full.jsonl",
+      "context": "/e9/bcf3af220e/2/context.md",
+      "content_hash": "/e9/bcf3af220e/2/content_hash.txt",
+      "prompt": "/e9/bcf3af220e/2/prompt.txt"
     }
   ],
   "token_usage": {
