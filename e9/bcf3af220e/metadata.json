@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "e9bcf3af220e",
+  "strategy": "manual-commit",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "agents/app/delivery/release-manager-agent/TOOLS.md",
+    "agents/app/delivery/release-manager-agent/USER.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/e9/bcf3af220e/0/metadata.json",
+      "transcript": "/e9/bcf3af220e/0/full.jsonl",
+      "context": "/e9/bcf3af220e/0/context.md",
+      "content_hash": "/e9/bcf3af220e/0/content_hash.txt",
+      "prompt": "/e9/bcf3af220e/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
