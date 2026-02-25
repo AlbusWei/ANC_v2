@@ -121,6 +121,19 @@ def build_required_actions(reason_code: str) -> List[str]:
     return ["排查策略冲突并补齐前置证据", "经 owner/bpm 复核后重试"]
 
 
+def validate_delivery_artifacts(root: Path, release_package_ref: str, changelog_ref: str) -> List[str]:
+    issues: List[str] = []
+    if not release_package_ref.strip():
+        issues.append("release_package_ref_missing")
+    if not changelog_ref.strip():
+        issues.append("changelog_ref_missing")
+    if release_package_ref.strip() and not resolve_path(root, release_package_ref).exists():
+        issues.append(f"release_package_ref_unreachable:{release_package_ref}")
+    if changelog_ref.strip() and not resolve_path(root, changelog_ref).exists():
+        issues.append(f"changelog_ref_unreachable:{changelog_ref}")
+    return issues
+
+
 def write_reject(
     *,
     root: Path,
@@ -214,23 +227,26 @@ def main() -> int:
         runtime_evidence_ref = to_rel(skill_output, root)
 
         if proc.returncode == 0 and decision == "approved":
+            release_package_ref = str(skill_payload.get("release_package_ref") or "")
+            changelog_ref = str(skill_payload.get("changelog_ref") or "")
             delivery = {
                 "status": "delivered",
                 "request_id": parsed["request_id"],
-                "release_package_ref": str(skill_payload.get("release_package_ref") or ""),
-                "changelog_ref": str(skill_payload.get("changelog_ref") or ""),
+                "release_package_ref": release_package_ref,
+                "changelog_ref": changelog_ref,
                 "release_decision": "approved",
                 "published_at": now_iso(),
                 "evidence_ref": runtime_evidence_ref,
             }
-            if not delivery["release_package_ref"] or not delivery["changelog_ref"]:
+            delivery_issues = validate_delivery_artifacts(root, release_package_ref, changelog_ref)
+            if delivery_issues:
                 return write_reject(
                     root=root,
                     output_path=output_path,
                     request_id=parsed["request_id"],
                     reason_code="policy_conflict",
                     evidence_ref=runtime_evidence_ref,
-                    blocking_items=["release_delivery_fields_incomplete"],
+                    blocking_items=delivery_issues,
                 )
 
             dump_json(

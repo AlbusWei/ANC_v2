@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -35,6 +36,7 @@ DEFAULT_REPORT_NAME = "session5_report.json"
 DEFAULT_SUMMARY_NAME = "session5_summary.md"
 DEFAULT_FAIL_REWORK_NAME = "session5_fail_rework_case.md"
 DEFAULT_RISK_NAME = "session5_risk_for_session6.md"
+SESSION5_CASE_IDS = ("M3-INT-001", "M3-INT-002", "M3-INT-003")
 
 
 class Session5Error(RuntimeError):
@@ -313,20 +315,23 @@ def run_objective_scope(
     root: Path,
     case_dir: Path,
     missing_context_ref: bool,
+    objective_context_variant: str = "",
 ) -> Dict[str, Any]:
     stage_dir = case_dir / "objective-scope-baseline"
     stage_dir.mkdir(parents=True, exist_ok=True)
 
     objective_context = stage_dir / "objective_context.md"
-    write_text(
-        objective_context,
-        """# Session5 Objective Context
-
-- 目标：验证 M3 内部主线 E2E 在在线分发下可运行。
-- 范围：以 skill/process/agent 三类样本完成闭环。
-- 约束：生命周期上限保持 review，不推进 active。
-""",
-    )
+    context_lines = [
+        "# Session5 Objective Context",
+        "",
+        "- 目标：验证 M3 内部主线 E2E 在在线分发下可运行。",
+        "- 范围：以 skill/process/agent 三类样本完成闭环。",
+        "- 约束：生命周期上限保持 review，不推进 active。",
+    ]
+    if objective_context_variant.strip():
+        # 追加场景标签，确保不同用例/轮次的 objective 可追溯且不复用。
+        context_lines.append(f"- 场景标签：{objective_context_variant.strip()}")
+    write_text(objective_context, "\n".join(context_lines))
 
     runner_input = stage_dir / "input.json"
     runner_output = stage_dir / "output.json"
@@ -835,6 +840,7 @@ def run_canonical_chain(
     root: Path,
     case_dir: Path,
     objective_missing_context: bool,
+    objective_context_variant: str = "",
     dispatch_openclaw: bool = True,
 ) -> Dict[str, Any]:
     """执行 canonical 主链。若 objective_missing_context=True，将在首阶段触发 Fail-Closed。"""
@@ -854,7 +860,12 @@ def run_canonical_chain(
         liveness_probes.append(probe)
 
     _dispatch("objective-scope-baseline", [to_rel(case_dir, root)])
-    objective_scope = run_objective_scope(root=root, case_dir=case_dir, missing_context_ref=objective_missing_context)
+    objective_scope = run_objective_scope(
+        root=root,
+        case_dir=case_dir,
+        missing_context_ref=objective_missing_context,
+        objective_context_variant=objective_context_variant,
+    )
     if objective_scope["return_code"] != 0:
         return {
             "status": "failed",
@@ -1131,6 +1142,7 @@ def run_case_001(root: Path, evidence_root: Path) -> Dict[str, Any]:
         root=root,
         case_dir=case_dir,
         objective_missing_context=False,
+        objective_context_variant="M3-INT-001-happy",
         dispatch_openclaw=True,
     )
     if pipeline.get("status") != "ok":
@@ -1222,7 +1234,7 @@ def run_case_001(root: Path, evidence_root: Path) -> Dict[str, Any]:
     return case_payload
 
 
-def run_case_002(root: Path, evidence_root: Path, base_chain: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+def run_case_002(root: Path, evidence_root: Path) -> Dict[str, Any]:
     case_id = "M3-INT-002"
     case_dir = evidence_root / "cases" / case_id
     case_dir.mkdir(parents=True, exist_ok=True)
@@ -1235,6 +1247,7 @@ def run_case_002(root: Path, evidence_root: Path, base_chain: Optional[Dict[str,
         root=root,
         case_dir=case_dir / "round1_fail",
         objective_missing_context=True,
+        objective_context_variant="M3-INT-002-round1-fail",
         dispatch_openclaw=True,
     )
     probes = list(first_round.get("liveness_probes", []))
@@ -1257,65 +1270,15 @@ def run_case_002(root: Path, evidence_root: Path, base_chain: Optional[Dict[str,
     rework_actions.append("定位 root cause：objective_context_ref 缺失导致 objective-scope-baseline Fail-Closed。")
     rework_actions.append("修复输入：补齐 objective_context_ref，并在在线分发下验证恢复。")
 
-    # Round 2: 修复后重跑（优先复用 M3-INT-001 下游产物，避免重复全链长耗时）
-    required_keys = {
-        "candidate_artifacts_ref",
-        "final_gate_verdict_ref",
-        "lifecycle_transition_ref",
-        "registry_sync_ref",
-        "rollback_bundle_ref",
-        "gate_chain_refs",
-    }
-    use_base = isinstance(base_chain, dict) and required_keys.issubset(set(base_chain.keys()))
     round2_dir = case_dir / "round2_rework"
-    if use_base:
-        spec_p1 = next(item for item in CANONICAL_CHAIN if item.stage_id == "objective-scope-baseline")
-        dispatch_trace, probe_rework = dispatch_stage(
-            root=root,
-            case_dir=round2_dir,
-            stage_spec=spec_p1,
-            input_refs=[to_rel(round2_dir, root)],
-            execute_openclaw=True,
-        )
-        round2_scope = run_objective_scope(
-            root=root,
-            case_dir=round2_dir,
-            missing_context_ref=False,
-        )
-        round2_objective_ref = str(round2_scope.get("output", {}).get("objective_ref") or "")
-        if round2_scope["return_code"] != 0 or not round2_objective_ref:
-            second_round = {
-                "status": "failed",
-                "failed_stage": "objective-scope-baseline",
-                "failure_reason": "rework_objective_scope_failed",
-                "stage_traces": [dispatch_trace],
-                "liveness_probes": [probe_rework],
-                "objective_scope": round2_scope,
-            }
-        else:
-            second_round = {
-                "status": "ok",
-                "recovery_mode": "reuse_case1_downstream_chain",
-                "stage_traces": [dispatch_trace],
-                "liveness_probes": [probe_rework],
-                "objective_ref": round2_objective_ref,
-                "candidate_artifacts_ref": str(base_chain.get("candidate_artifacts_ref") or ""),
-                "final_gate_verdict_ref": str(base_chain.get("final_gate_verdict_ref") or ""),
-                "lifecycle_transition_ref": str(base_chain.get("lifecycle_transition_ref") or ""),
-                "registry_sync_ref": str(base_chain.get("registry_sync_ref") or ""),
-                "rollback_bundle_ref": str(base_chain.get("rollback_bundle_ref") or ""),
-                "gate_chain_refs": [str(item) for item in base_chain.get("gate_chain_refs", []) if str(item).strip()],
-                "objective_scope": round2_scope,
-            }
-            rework_actions.append("修复验证：objective-scope-baseline 在线重跑通过，复用 M3-INT-001 下游产物完成闭环。")
-    else:
-        second_round = run_canonical_chain(
-            root=root,
-            case_dir=round2_dir,
-            objective_missing_context=False,
-            dispatch_openclaw=True,
-        )
-        rework_actions.append("修复验证：重跑完整 canonical 主链并确认门禁链路恢复。")
+    second_round = run_canonical_chain(
+        root=root,
+        case_dir=round2_dir,
+        objective_missing_context=False,
+        objective_context_variant="M3-INT-002-round2-rework-full-rerun",
+        dispatch_openclaw=True,
+    )
+    rework_actions.append("修复验证：修复后执行全链 OpenClaw 在线重跑（p1~p8），确认门禁链路恢复。")
     probes.extend(second_round.get("liveness_probes", []))
 
     if second_round.get("status") != "ok":
@@ -1384,7 +1347,7 @@ def run_case_002(root: Path, evidence_root: Path, base_chain: Optional[Dict[str,
         {
             "round1_failed_stage": failed_stage,
             "round1_reason": first_round.get("failure_reason", "missing_objective_context_ref"),
-            "round2_mode": second_round.get("recovery_mode", "rerun_full_chain"),
+            "round2_mode": "full_chain_openclaw_rerun",
             "release_manager_agent_output_ref": release_agent.get("output_ref", ""),
         }
     )
@@ -1422,6 +1385,7 @@ def run_case_003(root: Path, evidence_root: Path, base_chain: Optional[Dict[str,
             root=root,
             case_dir=case_dir,
             objective_missing_context=False,
+            objective_context_variant="M3-INT-003-branch-validation",
             dispatch_openclaw=True,
         )
     probes = list(pipeline.get("liveness_probes", []))
@@ -1599,7 +1563,56 @@ def parse_args() -> argparse.Namespace:
         default=DEFAULT_REPORT_NAME,
         help="Report filename under evidence root",
     )
+    parser.add_argument(
+        "--cases",
+        default=",".join(SESSION5_CASE_IDS),
+        help="Comma-separated case ids. Supported: M3-INT-001,M3-INT-002,M3-INT-003",
+    )
     return parser.parse_args()
+
+
+def parse_selected_cases(raw: str) -> List[str]:
+    selected_raw = [item.strip() for item in raw.split(",") if item.strip()]
+    if not selected_raw:
+        raise Session5Error("empty_cases_selection")
+    invalid = [item for item in selected_raw if item not in SESSION5_CASE_IDS]
+    if invalid:
+        raise Session5Error("invalid_case_selection:" + ",".join(invalid))
+    # 按固定顺序去重，保证报告可比较。
+    selected_set = set(selected_raw)
+    return [case_id for case_id in SESSION5_CASE_IDS if case_id in selected_set]
+
+
+def acquire_run_lock(root: Path, evidence_root: Path) -> Path:
+    """获取 session5 运行锁，避免并发 runner 互相清空证据目录。"""
+    lock_dir = evidence_root / ".session5_runner.lock"
+    lock_info = lock_dir / "owner.json"
+    try:
+        lock_dir.mkdir(parents=True, exist_ok=False)
+    except FileExistsError as exc:
+        owner_info = {}
+        if lock_info.exists():
+            try:
+                owner_info = load_json(lock_info)
+            except Exception:  # noqa: BLE001
+                owner_info = {}
+        owner_pid = owner_info.get("pid", "unknown")
+        owner_started = owner_info.get("started_at", "unknown")
+        raise Session5Error(f"concurrent_session5_runner_detected:pid={owner_pid}:started_at={owner_started}") from exc
+
+    dump_json(
+        lock_info,
+        {
+            "pid": int(os.getpid()),
+            "started_at": now_iso(),
+            "evidence_root": to_rel(evidence_root, root),
+        },
+    )
+    return lock_dir
+
+
+def release_run_lock(lock_dir: Path) -> None:
+    shutil.rmtree(lock_dir, ignore_errors=True)
 
 
 def main() -> int:
@@ -1608,109 +1621,138 @@ def main() -> int:
 
     evidence_root = (root / args.evidence_root).resolve()
     evidence_root.mkdir(parents=True, exist_ok=True)
-    shutil.rmtree(evidence_root / "cases", ignore_errors=True)
-    (evidence_root / "cases").mkdir(parents=True, exist_ok=True)
+    try:
+        lock_dir = acquire_run_lock(root, evidence_root)
+    except Session5Error as exc:
+        print(json.dumps({"status": "fail_closed", "reason": str(exc)}, ensure_ascii=False))
+        return 2
 
-    case_001 = run_case_001(root, evidence_root)
-    base_chain = build_case1_base_chain(case_001)
-    case_002 = run_case_002(root, evidence_root, base_chain=base_chain)
-    case_003 = run_case_003(root, evidence_root, base_chain=base_chain)
-    cases = [case_001, case_002, case_003]
+    try:
+        shutil.rmtree(evidence_root / "cases", ignore_errors=True)
+        (evidence_root / "cases").mkdir(parents=True, exist_ok=True)
 
-    passed = sum(1 for item in cases if item.get("status") == "pass")
-    failed = len(cases) - passed
+        selected_case_ids = parse_selected_cases(args.cases)
+        case_map: Dict[str, Dict[str, Any]] = {}
+        if "M3-INT-001" in selected_case_ids:
+            case_map["M3-INT-001"] = run_case_001(root, evidence_root)
+        if "M3-INT-002" in selected_case_ids:
+            case_map["M3-INT-002"] = run_case_002(root, evidence_root)
+        if "M3-INT-003" in selected_case_ids:
+            base_chain = build_case1_base_chain(case_map["M3-INT-001"]) if "M3-INT-001" in case_map else None
+            case_map["M3-INT-003"] = run_case_003(root, evidence_root, base_chain=base_chain)
+        cases = [case_map[case_id] for case_id in selected_case_ids]
 
-    all_probes: List[Dict[str, Any]] = []
-    all_rework: List[str] = []
-    all_gate_refs: List[str] = []
-    debug_rounds = 0
-    success_seen = False
-    reject_seen = False
-    for case in cases:
-        if isinstance(case.get("liveness_probes"), list):
-            all_probes.extend(case["liveness_probes"])
-        if isinstance(case.get("rework_actions"), list):
-            all_rework.extend(case["rework_actions"])
-        if isinstance(case.get("gate_chain_refs"), list):
-            all_gate_refs.extend([str(item) for item in case["gate_chain_refs"] if str(item).strip()])
-        debug_rounds += int(case.get("debug_rounds") or 0)
+        passed = sum(1 for item in cases if item.get("status") == "pass")
+        failed = len(cases) - passed
 
-        details = case.get("details") if isinstance(case.get("details"), dict) else {}
-        success_seen = success_seen or bool(details.get("release_manager_success_seen"))
-        reject_seen = reject_seen or bool(details.get("release_manager_reject_seen"))
+        all_probes: List[Dict[str, Any]] = []
+        all_rework: List[str] = []
+        all_gate_refs: List[str] = []
+        debug_rounds = 0
+        success_seen = False
+        reject_seen = False
+        for case in cases:
+            if isinstance(case.get("liveness_probes"), list):
+                all_probes.extend(case["liveness_probes"])
+            if isinstance(case.get("rework_actions"), list):
+                all_rework.extend(case["rework_actions"])
+            if isinstance(case.get("gate_chain_refs"), list):
+                all_gate_refs.extend([str(item) for item in case["gate_chain_refs"] if str(item).strip()])
+            debug_rounds += int(case.get("debug_rounds") or 0)
 
-    readiness_risks: List[str] = []
-    trigger_conditions: List[str] = []
-    if failed > 0:
-        readiness_risks.append("仍存在失败用例，外部主线复用风险高。")
-        trigger_conditions.append("失败用例必须先修复并重跑通过后，才可进入 Session6。")
-    if not success_seen or not reject_seen:
-        readiness_risks.append("release-manager-agent 双分支覆盖不完整。")
-        trigger_conditions.append("必须补齐 release-manager-agent 成功/拒绝双分支证据。")
-    if debug_rounds == 0:
-        readiness_risks.append("未形成 Fail-Closed 后返工通过的闭环证据。")
-        trigger_conditions.append("必须补充至少一条 Fail->Debug->Rework->Pass 闭环。")
+            details = case.get("details") if isinstance(case.get("details"), dict) else {}
+            success_seen = success_seen or bool(details.get("release_manager_success_seen"))
+            reject_seen = reject_seen or bool(details.get("release_manager_reject_seen"))
 
-    ready = failed == 0 and success_seen and reject_seen and debug_rounds > 0
-    readiness = {
-        "ready": ready,
-        "decision": "可进入 Session6 外部主线复用验证" if ready else "暂不可进入 Session6 外部主线复用验证",
-        "risks": readiness_risks,
-        "trigger_conditions": trigger_conditions,
-    }
+        readiness_risks: List[str] = []
+        trigger_conditions: List[str] = []
+        if failed > 0:
+            readiness_risks.append("仍存在失败用例，外部主线复用风险高。")
+            trigger_conditions.append("失败用例必须先修复并重跑通过后，才可进入 Session6。")
+        if not success_seen or not reject_seen:
+            readiness_risks.append("release-manager-agent 双分支覆盖不完整。")
+            trigger_conditions.append("必须补齐 release-manager-agent 成功/拒绝双分支证据。")
+        if debug_rounds == 0:
+            readiness_risks.append("未形成 Fail-Closed 后返工通过的闭环证据。")
+            trigger_conditions.append("必须补充至少一条 Fail->Debug->Rework->Pass 闭环。")
 
-    status = "pass" if failed == 0 else "fail"
-    if status == "pass":
-        natural_conclusion = (
-            "Session5 内部主线 E2E 通过：主链 Happy、Fail-Closed 后返工、"
-            "release-manager-agent 双分支均已验证，且生命周期保持在 review 上限。"
+        ready = failed == 0 and success_seen and reject_seen and debug_rounds > 0
+        readiness = {
+            "ready": ready,
+            "decision": "可进入 Session6 外部主线复用验证" if ready else "暂不可进入 Session6 外部主线复用验证",
+            "risks": readiness_risks,
+            "trigger_conditions": trigger_conditions,
+        }
+
+        status = "pass" if failed == 0 else "fail"
+        if status == "pass" and ready:
+            natural_conclusion = (
+                "Session5 内部主线 E2E 通过：主链 Happy、Fail-Closed 后返工、"
+                "release-manager-agent 双分支均已验证，且生命周期保持在 review 上限。"
+            )
+        elif status == "pass":
+            selected_label = ",".join(selected_case_ids)
+            natural_conclusion = (
+                "Session5 内部主线 E2E 已完成所选用例（"
+                + selected_label
+                + "）并通过；但 release-manager-agent 双分支覆盖尚不完整，"
+                "暂不满足 Session6 准入。"
+            )
+        else:
+            natural_conclusion = (
+                "Session5 内部主线 E2E 未通过：存在失败用例或闭环证据缺失，"
+                "暂不满足 Session6 准入。"
+            )
+
+        report = {
+            "ts": now_iso(),
+            "suite": "session5-internal",
+            "selected_cases": selected_case_ids,
+            "status": status,
+            "total": len(cases),
+            "passed": passed,
+            "failed": failed,
+            "cases": cases,
+            "evidence_root": to_rel(evidence_root, root),
+            "debug_rounds": debug_rounds,
+            "rework_actions": all_rework,
+            "liveness_probes": all_probes,
+            "gate_chain_refs": sorted(set(all_gate_refs)),
+            "session6_readiness": readiness,
+            "natural_language_conclusion": natural_conclusion,
+        }
+
+        report_path = evidence_root / args.report
+        summary_path = evidence_root / DEFAULT_SUMMARY_NAME
+        fail_rework_path = evidence_root / DEFAULT_FAIL_REWORK_NAME
+        risk_path = evidence_root / DEFAULT_RISK_NAME
+
+        dump_json(report_path, report)
+        write_text(summary_path, build_summary_markdown(report))
+        if "M3-INT-002" in case_map:
+            write_text(fail_rework_path, build_fail_rework_markdown(case_map["M3-INT-002"]))
+        else:
+            write_text(
+                fail_rework_path,
+                "# Session5 Fail-Rework 闭环说明\n\n- 未执行 M3-INT-002（本次为聚焦子集运行）。\n",
+            )
+        write_text(risk_path, build_risk_markdown(readiness))
+
+        print(
+            json.dumps(
+                {
+                    "report_ref": to_rel(report_path, root),
+                    "summary_ref": to_rel(summary_path, root),
+                    "status": status,
+                    "passed": passed,
+                    "failed": failed,
+                },
+                ensure_ascii=False,
+            )
         )
-    else:
-        natural_conclusion = (
-            "Session5 内部主线 E2E 未通过：存在失败用例或闭环证据缺失，"
-            "暂不满足 Session6 准入。"
-        )
-
-    report = {
-        "ts": now_iso(),
-        "suite": "session5-internal",
-        "status": status,
-        "total": len(cases),
-        "passed": passed,
-        "failed": failed,
-        "cases": cases,
-        "evidence_root": to_rel(evidence_root, root),
-        "debug_rounds": debug_rounds,
-        "rework_actions": all_rework,
-        "liveness_probes": all_probes,
-        "gate_chain_refs": sorted(set(all_gate_refs)),
-        "session6_readiness": readiness,
-        "natural_language_conclusion": natural_conclusion,
-    }
-
-    report_path = evidence_root / args.report
-    summary_path = evidence_root / DEFAULT_SUMMARY_NAME
-    fail_rework_path = evidence_root / DEFAULT_FAIL_REWORK_NAME
-    risk_path = evidence_root / DEFAULT_RISK_NAME
-
-    dump_json(report_path, report)
-    write_text(summary_path, build_summary_markdown(report))
-    write_text(fail_rework_path, build_fail_rework_markdown(case_002))
-    write_text(risk_path, build_risk_markdown(readiness))
-
-    print(
-        json.dumps(
-            {
-                "report_ref": to_rel(report_path, root),
-                "summary_ref": to_rel(summary_path, root),
-                "status": status,
-                "passed": passed,
-                "failed": failed,
-            },
-            ensure_ascii=False,
-        )
-    )
-    return 0 if status == "pass" else 2
+        return 0 if status == "pass" else 2
+    finally:
+        release_run_lock(lock_dir)
 
 
 if __name__ == "__main__":
