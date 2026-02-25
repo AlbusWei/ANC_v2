@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "e9bcf3af220e",
+  "session_id": "codex-fe7fe7249a8d",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-25T02:42:05.299939Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "agents/app/delivery/release-manager-agent/TOOLS.md",
+    "agents/app/delivery/release-manager-agent/USER.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "a8c56cdbfb66",
+  "transcript_identifier_at_start": "gemini-600518cbbb",
+  "checkpoint_transcript_start": 138,
+  "transcript_lines_at_start": 138,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-25T02:42:04.929526Z",
+    "agent_lines": 37,
+    "human_added": 2889,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 2926,
+    "agent_percentage": 1.264524948735475
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
