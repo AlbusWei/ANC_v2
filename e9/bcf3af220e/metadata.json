@@ -3,7 +3,7 @@
   "checkpoint_id": "e9bcf3af220e",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 2,
+  "checkpoints_count": 3,
   "files_touched": [
     "agents/app/delivery/release-manager-agent/HEARTBEAT.md",
     "agents/app/delivery/release-manager-agent/TEST.md",
@@ -260,6 +260,13 @@
       "context": "/e9/bcf3af220e/33/context.md",
       "content_hash": "/e9/bcf3af220e/33/content_hash.txt",
       "prompt": "/e9/bcf3af220e/33/prompt.txt"
+    },
+    {
+      "metadata": "/e9/bcf3af220e/34/metadata.json",
+      "transcript": "/e9/bcf3af220e/34/full.jsonl",
+      "context": "/e9/bcf3af220e/34/context.md",
+      "content_hash": "/e9/bcf3af220e/34/content_hash.txt",
+      "prompt": "/e9/bcf3af220e/34/prompt.txt"
     }
   ],
   "token_usage": {
