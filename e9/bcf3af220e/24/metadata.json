@@ -1,0 +1,47 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "e9bcf3af220e",
+  "session_id": "codex-bf4159263c57",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-25T02:41:51.052081Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "agents/app/delivery/release-manager-agent/HEARTBEAT.md",
+    "agents/app/delivery/release-manager-agent/TEST.md",
+    "agents/app/delivery/release-manager-agent/TOOLS.md",
+    "agents/app/delivery/release-manager-agent/USER.md",
+    "agents/app/delivery/release-manager-agent/scripts/release_manager_agent_runner.py",
+    "docs/architecture/construction_plane.md",
+    "openspec/changes/m3-self-development-e2e-online/m3-gap-baseline.md",
+    "openspec/changes/m3-self-development-e2e-online/tasks.md",
+    "processes/meta/objective-scope-baseline/SKILL.md",
+    "processes/meta/objective-scope-baseline/TEST.md",
+    "processes/meta/objective-scope-baseline/scripts/objective_scope_baseline_runner.py",
+    "skills/meta/objective-writer/SKILL.md",
+    "skills/meta/objective-writer/TEST.md",
+    "skills/meta/objective-writer/scripts/objective_writer_runner.py",
+    "tests/m3-self-development/run_tc_online.py",
+    "tests/m3-self-development/session5_internal_runner.py"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "7696e86621e4",
+  "transcript_identifier_at_start": "gemini-c9057fac79",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-25T02:41:50.683134Z",
+    "agent_lines": 0,
+    "human_added": 2893,
+    "human_modified": 33,
+    "human_removed": 0,
+    "total_committed": 2893,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
