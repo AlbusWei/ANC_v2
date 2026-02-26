@@ -219,6 +219,13 @@
       "context": "/34/c7f494a287/28/context.md",
       "content_hash": "/34/c7f494a287/28/content_hash.txt",
       "prompt": "/34/c7f494a287/28/prompt.txt"
+    },
+    {
+      "metadata": "/34/c7f494a287/29/metadata.json",
+      "transcript": "/34/c7f494a287/29/full.jsonl",
+      "context": "/34/c7f494a287/29/context.md",
+      "content_hash": "/34/c7f494a287/29/content_hash.txt",
+      "prompt": "/34/c7f494a287/29/prompt.txt"
     }
   ],
   "token_usage": {
