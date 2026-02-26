@@ -180,6 +180,13 @@
       "context": "/d0/186dfee848/22/context.md",
       "content_hash": "/d0/186dfee848/22/content_hash.txt",
       "prompt": "/d0/186dfee848/22/prompt.txt"
+    },
+    {
+      "metadata": "/d0/186dfee848/23/metadata.json",
+      "transcript": "/d0/186dfee848/23/full.jsonl",
+      "context": "/d0/186dfee848/23/context.md",
+      "content_hash": "/d0/186dfee848/23/content_hash.txt",
+      "prompt": "/d0/186dfee848/23/prompt.txt"
     }
   ],
   "token_usage": {
