@@ -118,6 +118,9 @@ def main() -> int:
             "execution_state_ref",
             "triage_policy_ref",
             "runtime_health_policy_ref",
+            "liveness_policy_ref",
+            "no_progress_window_ref",
+            "termination_rule_ref",
         ]
         missing = [key for key in required if key not in request]
         if missing:
@@ -128,10 +131,27 @@ def main() -> int:
         execution_state_ref = to_rel(resolve_path(root, str(request["execution_state_ref"])), root)
         triage_policy_ref = to_rel(resolve_path(root, str(request["triage_policy_ref"])), root)
         runtime_health_policy_ref = to_rel(resolve_path(root, str(request["runtime_health_policy_ref"])), root)
+        liveness_policy_ref = to_rel(resolve_path(root, str(request["liveness_policy_ref"])), root)
+        no_progress_window_ref = to_rel(resolve_path(root, str(request["no_progress_window_ref"])), root)
+        termination_rule_ref = to_rel(resolve_path(root, str(request["termination_rule_ref"])), root)
 
-        for ref in [hold_case_ref, runtime_log_ref, execution_state_ref, triage_policy_ref, runtime_health_policy_ref]:
+        for ref in [
+            hold_case_ref,
+            runtime_log_ref,
+            execution_state_ref,
+            triage_policy_ref,
+            runtime_health_policy_ref,
+            liveness_policy_ref,
+            no_progress_window_ref,
+            termination_rule_ref,
+        ]:
             if not resolve_path(root, ref).exists():
                 raise HoldGovernanceError(f"required_ref_unreachable:{ref}")
+
+        no_progress_window_payload = load_json(resolve_path(root, no_progress_window_ref))
+        no_progress_window_seconds = int(no_progress_window_payload.get("window_seconds", 0) or 0)
+        if no_progress_window_seconds < 900:
+            raise HoldGovernanceError("no_progress_window_seconds_must_be_gte_900")
 
         # p1+p2+p3: hold-triage chain
         p123_dir = evidence_dir / "p1_p3_hold_triage"
@@ -207,6 +227,9 @@ def main() -> int:
             "health_status": health_status,
             "maintenance_action": maintenance_action,
             "runtime_health_policy_ref": runtime_health_policy_ref,
+            "liveness_policy_ref": liveness_policy_ref,
+            "no_progress_window_ref": no_progress_window_ref,
+            "termination_rule_ref": termination_rule_ref,
             "runtime_window_minutes": hold_minutes,
             "max_retries": max_retries,
         }
@@ -225,7 +248,8 @@ def main() -> int:
         escalation_ref = ""
         final_owner = str(request.get("current_owner") or "qa")
         resolution_decision = "close"
-        gate_decision = "pass"
+        gate_decision_internal = "pass"
+        external_gate_decision = "fail"
 
         if maintenance_action == "escalate":
             p5_incident = evidence_dir / "p5_incident.json"
@@ -276,7 +300,7 @@ def main() -> int:
             escalation_ref = str(escalation_payload.get("escalation_ref") or "")
             final_owner = str(escalation_payload.get("final_owner") or final_owner)
             resolution_decision = "escalate"
-            gate_decision = "fail"
+            gate_decision_internal = "fail"
 
         resolution_payload = {
             "timestamp": now_iso(),
@@ -284,7 +308,8 @@ def main() -> int:
             "resolution_decision": resolution_decision,
             "final_owner": final_owner,
             "escalation_ref": escalation_ref,
-            "gate_decision": gate_decision,
+            "gate_decision_internal": gate_decision_internal,
+            "external_gate_decision": external_gate_decision,
         }
         dump_json(p5_resolution_path, resolution_payload)
 
@@ -303,14 +328,14 @@ def main() -> int:
             {
                 "timestamp": now_iso(),
                 "process_id": "hold-governance",
-                "status": "ok" if gate_decision == "pass" else "failed",
+                "status": "ok",
                 "phase_trace": phase_trace,
                 "input_ref": to_rel(input_path, root),
             },
         )
 
         output = {
-            "status": "ok" if gate_decision == "pass" else "failed",
+            "status": "ok",
             "process_id": "hold-governance",
             "triage_action": triage_action,
             "triage_report_ref": to_rel(resolve_path(root, triage_report_ref), root) if triage_report_ref else "",
@@ -319,14 +344,15 @@ def main() -> int:
             "health_maintenance_ref": to_rel(p4_health_path, root),
             "hold_resolution_ref": to_rel(p5_resolution_path, root),
             "escalation_ref": escalation_ref,
-            "gate_decision": gate_decision,
+            "gate_decision_internal": gate_decision_internal,
+            "external_gate_decision": external_gate_decision,
             "evidence_ref": to_rel(evidence_dir, root),
             "runtime_trace_ref": to_rel(runtime_trace_path, root),
             "reasons": [f"triage_action={triage_action}", f"resolution={resolution_decision}"],
         }
         dump_json(output_path, output)
         print(to_rel(output_path, root))
-        return 0 if gate_decision == "pass" else 2
+        return 0
 
     except Exception as exc:
         failure_reason = str(exc)
@@ -358,7 +384,8 @@ def main() -> int:
             "health_maintenance_ref": "",
             "hold_resolution_ref": "",
             "escalation_ref": "",
-            "gate_decision": "fail",
+            "gate_decision_internal": "fail",
+            "external_gate_decision": "fail",
             "evidence_ref": to_rel(evidence_dir, root),
             "runtime_trace_ref": to_rel(runtime_trace_path, root),
             "fail_closed_record_ref": to_rel(fail_closed_path, root),

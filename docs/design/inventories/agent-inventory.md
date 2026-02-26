@@ -42,7 +42,7 @@ Session3 运行资产联动：
 2. `app/evolution/analyst` 负责 App/业务层演化分析，不承担系统级架构治理洞察。
 3. 所有“需后验运营分析才能形成参数结论”的议题（如 M1 测试时长估计、M2 动态策略校准）由 `system-analyst` 牵头进入 `runtime-policy-calibration` 治理流程，再同步 architect/admin/bpm 决策。
 4. `architect` 是 M6 模块 owner，负责 `sys.arch.construction-audit` 与 `system.integration.openspec-sync` 语义，以及 `construction-plane-governance` 流程治理约束；`bpm` 负责流程实例编排与关闭门禁执行。
-5. `system-analyst` 只提供分析输入与风险摘要，不承担 lifecycle owner 职责；生命周期迁移 owner 固定为 `hr`，最终高权限审批链为 `hr -> admin`。
+5. `system-analyst` 只提供分析输入与风险摘要，不承担 lifecycle owner 职责；生命周期迁移 owner 与执行 actor 固定为 `hr`，最终高权限审批链为 `hr -> admin`。
 
 ## 规则
 
@@ -84,3 +84,8 @@ Session3 运行资产联动：
 4. `architect` 生命周期 `draft -> review`（证据：`runtime_data/execution/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/round-result.json` 为 passed，`.../decision_snapshot.md` owner=architect）。
 5. `hr` 生命周期 `draft -> review`（证据：`runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle/p4_lifecycle_transition.json`，actor=hr）。
 6. `system-analyst` 生命周期保持 `review`，仅作为 `runtime-policy-calibration` 分析输入节点，不迁移为 lifecycle owner（边界不变）。
+
+## W16 联动备注（生命周期执行权口径统一）
+
+1. `full-development`、`hotfix`、`refactor` 三流程的 `lifecycle-gate-sync(p6)` actor 已统一为 `hr`，不再使用 `admin` 作为生命周期迁移执行者。
+2. 生命周期迁移常规路径固定为 `hr` 执行，`admin` 仅保留高风险权限审批位，不作为常规迁移执行位。

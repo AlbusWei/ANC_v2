@@ -148,7 +148,7 @@
     {
       "phase_id": "p6",
       "name": "lifecycle-gate-sync",
-      "actor": "admin",
+      "actor": "hr",
       "target_type": "subprocess",
       "target_id": "lifecycle-review",
       "requires_spec": true,

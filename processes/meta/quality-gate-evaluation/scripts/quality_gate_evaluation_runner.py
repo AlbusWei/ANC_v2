@@ -522,7 +522,7 @@ def main() -> int:
             input_ref=regression_eval_ref,
             purpose="聚合门禁判定（AP-020）并产出 final_gate_verdict_ref",
             done_definition="必须产出 gate_decision 与 final_gate_verdict_ref",
-            handoff_note="若 gate_decision=hold，则交给 p5 处理 hold 治理路由",
+            handoff_note="若 runtime_gate_state=hold，则交给 p5 处理 hold 治理路由",
             instance_root=args.dispatch_instance_root,
             openclaw_bin=args.dispatch_openclaw_bin,
             openclaw_stall_threshold_seconds=args.dispatch_openclaw_stall_threshold_seconds,
@@ -554,12 +554,16 @@ def main() -> int:
         (p4_dir / "stdout.txt").write_text(p4_proc.stdout, encoding="utf-8")
         (p4_dir / "stderr.txt").write_text(p4_proc.stderr, encoding="utf-8")
         p4_payload = parse_last_json(p4_proc.stdout)
-        gate_decision = str(p4_payload.get("gate_decision") or "fail").strip()
+        raw_gate_decision = str(p4_payload.get("gate_decision") or "fail").strip()
+        runtime_gate_state = raw_gate_decision
+        gate_decision = "fail" if runtime_gate_state == "hold" else runtime_gate_state
         final_gate_verdict_ref = str(p4_payload.get("final_gate_verdict_ref") or to_rel(p4_dir / "final_gate_verdict.json", root))
 
         if p4_proc.returncode not in (0, 20, 30, 40):
             raise QualityGateEvaluationError(f"verdict_normalizer_unexpected_rc:{p4_proc.returncode}")
-        if gate_decision not in {"pass", "fail", "hold", "test_invalid"}:
+        if runtime_gate_state not in {"pass", "fail", "hold", "test_invalid"}:
+            raise QualityGateEvaluationError(f"invalid_runtime_gate_state:{runtime_gate_state}")
+        if gate_decision not in {"pass", "fail", "test_invalid"}:
             raise QualityGateEvaluationError(f"invalid_gate_decision:{gate_decision}")
         if not resolve_path(root, final_gate_verdict_ref).exists():
             raise QualityGateEvaluationError("final_gate_verdict_ref_missing")
@@ -567,8 +571,9 @@ def main() -> int:
         phase_trace.append(
             {
                 "phase": "p4-aggregate-gate-decision",
-                "status": "pass" if gate_decision in {"pass", "hold"} else "failed",
+                "status": "pass" if runtime_gate_state in {"pass", "hold"} else "failed",
                 "gate_decision": gate_decision,
+                "runtime_gate_state": runtime_gate_state,
                 "return_code": p4_proc.returncode,
                 "final_gate_verdict_ref": final_gate_verdict_ref,
                 "dispatch": p4_dispatch,
@@ -577,7 +582,7 @@ def main() -> int:
         )
 
         # p5: govern-hold (subprocess)
-        hold_routed = gate_decision == "hold"
+        hold_routed = runtime_gate_state == "hold"
         hold_governance_output_ref = ""
         hold_resolution_ref = ""
         if hold_routed:
@@ -606,6 +611,18 @@ def main() -> int:
                 root,
                 str(request.get("runtime_health_policy_ref") or to_rel(evidence_dir / "p5_runtime_health_policy.json", root)),
             )
+            liveness_policy_path = resolve_path(
+                root,
+                str(request.get("liveness_policy_ref") or to_rel(evidence_dir / "p5_liveness_policy.json", root)),
+            )
+            no_progress_window_path = resolve_path(
+                root,
+                str(request.get("no_progress_window_ref") or to_rel(evidence_dir / "p5_no_progress_window.json", root)),
+            )
+            termination_rule_path = resolve_path(
+                root,
+                str(request.get("termination_rule_ref") or to_rel(evidence_dir / "p5_termination_rule.json", root)),
+            )
 
             if not hold_case_path.exists():
                 dump_json(
@@ -630,6 +647,28 @@ def main() -> int:
                 )
             if not runtime_health_policy_path.exists():
                 dump_json(runtime_health_policy_path, {"max_hold_minutes": 45, "max_retries": 2})
+            if not liveness_policy_path.exists():
+                dump_json(
+                    liveness_policy_path,
+                    {
+                        "required_signals": [
+                            "stdout_stderr_increment",
+                            "openclaw_session_activity",
+                            "phase_state_progress",
+                        ],
+                        "default_no_progress_window_seconds": 900,
+                    },
+                )
+            if not no_progress_window_path.exists():
+                dump_json(no_progress_window_path, {"window_seconds": 900})
+            if not termination_rule_path.exists():
+                dump_json(
+                    termination_rule_path,
+                    {
+                        "trigger": "continuous_no_progress_gte_900s",
+                        "requires_evidence": True,
+                    },
+                )
 
             hold_input_path = evidence_dir / "p5_hold_governance_input.json"
             hold_output_path = evidence_dir / "p5_hold_governance_output.json"
@@ -642,6 +681,9 @@ def main() -> int:
                     "execution_state_ref": to_rel(execution_state_path, root),
                     "triage_policy_ref": to_rel(triage_policy_path, root),
                     "runtime_health_policy_ref": to_rel(runtime_health_policy_path, root),
+                    "liveness_policy_ref": to_rel(liveness_policy_path, root),
+                    "no_progress_window_ref": to_rel(no_progress_window_path, root),
+                    "termination_rule_ref": to_rel(termination_rule_path, root),
                     "current_owner": str(request.get("current_owner") or "qa"),
                 },
             )
@@ -688,7 +730,7 @@ def main() -> int:
             {
                 "timestamp": now_iso(),
                 "process_id": "quality-gate-evaluation",
-                "status": "ok" if gate_decision in {"pass", "hold"} else "failed",
+                "status": "ok" if gate_decision == "pass" else "failed",
                 "phase_trace": phase_trace,
                 "input_ref": to_rel(input_path, root),
                 "collaboration_mode": "phase-isolated-session" if phase_dispatch_enabled else "local-only",
@@ -699,9 +741,10 @@ def main() -> int:
         )
 
         output = {
-            "status": "ok" if gate_decision in {"pass", "hold"} else "failed",
+            "status": "ok" if gate_decision == "pass" else "failed",
             "process_id": "quality-gate-evaluation",
             "gate_decision": gate_decision,
+            "runtime_gate_state": runtime_gate_state,
             "objective_eval_ref": objective_eval_ref,
             "subjective_eval_ref": to_rel(subjective_eval_path, root),
             "regression_eval_ref": regression_eval_ref,
@@ -716,11 +759,11 @@ def main() -> int:
             "dispatch_openclaw": phase_dispatch_openclaw,
             "dispatch_reset_openclaw_session": phase_dispatch_reset_session,
             "dispatch_strict_session_match": phase_dispatch_strict_match,
-            "reasons": ["gate_aggregated", f"gate_decision={gate_decision}"],
+            "reasons": ["gate_aggregated", f"gate_decision={gate_decision}", f"runtime_gate_state={runtime_gate_state}"],
         }
         dump_json(output_path, output)
         print(to_rel(output_path, root))
-        return 0 if gate_decision in {"pass", "hold"} else 2
+        return 0 if gate_decision == "pass" else 2
 
     except Exception as exc:
         failure_reason = str(exc)
@@ -748,6 +791,7 @@ def main() -> int:
             "status": "failed",
             "process_id": "quality-gate-evaluation",
             "gate_decision": "fail",
+            "runtime_gate_state": "fail",
             "objective_eval_ref": "",
             "subjective_eval_ref": "",
             "regression_eval_ref": "",

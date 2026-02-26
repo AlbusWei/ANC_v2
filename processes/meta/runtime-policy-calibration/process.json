@@ -1,6 +1,6 @@
 {
   "process_id": "runtime-policy-calibration",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "process_level": "P5",
   "parent_process_id": null,
   "composed_processes": [],
@@ -29,7 +29,10 @@
       "policy_change_proposal_ref",
       "governance_sync_minutes_ref",
       "decision_record_ref",
-      "rollout_observation_ref"
+      "rollout_observation_ref",
+      "liveness_policy_ref",
+      "no_progress_window_ref",
+      "termination_rule_ref"
     ]
   },
   "phases": [
@@ -161,7 +164,7 @@
         "supplier": "p4",
         "input": "governance_sync_minutes_ref + risk_constraints_ref",
         "process": "approve or reject policy proposal and define rollout plan",
-        "output": "policy_change_proposal_ref + decision_record_ref",
+        "output": "policy_change_proposal_ref + decision_record_ref + liveness_policy_ref + no_progress_window_ref + termination_rule_ref",
         "client": "p6"
       },
       "acceptance_criteria": "high-risk change has explicit admin decision",
@@ -175,8 +178,8 @@
       },
       "phase_purpose": "对策略提案做批准或驳回并确定上线方案",
       "input_context_ref": "governance_sync_minutes_ref + risk_constraints_ref",
-      "done_definition": "必须产出 policy_change_proposal_ref + decision_record_ref，并满足“高风险变更具备明确的 admin 决策”",
-      "handoff_note": "将 policy_change_proposal_ref + decision_record_ref 交接给 p6"
+      "done_definition": "必须产出 policy_change_proposal_ref + decision_record_ref + liveness_policy_ref + no_progress_window_ref + termination_rule_ref，并满足“高风险变更具备明确的 admin 决策”",
+      "handoff_note": "将 policy_change_proposal_ref + decision_record_ref + liveness_policy_ref + no_progress_window_ref + termination_rule_ref 交接给 p6"
     },
     {
       "phase_id": "p6",
@@ -188,7 +191,7 @@
       "spec_ref": "docs/design/processes/runtime-policy-calibration-process.md#证据要求",
       "sipoc": {
         "supplier": "p5",
-        "input": "decision_record_ref + current_policy_ref",
+        "input": "decision_record_ref + current_policy_ref + liveness_policy_ref + no_progress_window_ref + termination_rule_ref",
         "process": "record rollout observation and close the calibration round",
         "output": "rollout_observation_ref + calibration_report_ref",
         "client": "initiator"
@@ -203,7 +206,7 @@
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
       },
       "phase_purpose": "记录上线观测并关闭本轮校准",
-      "input_context_ref": "decision_record_ref + current_policy_ref",
+      "input_context_ref": "decision_record_ref + current_policy_ref + liveness_policy_ref + no_progress_window_ref + termination_rule_ref",
       "done_definition": "必须产出 rollout_observation_ref + calibration_report_ref，并满足“观测结果已关联决策与提案引用”",
       "handoff_note": "将 rollout_observation_ref + calibration_report_ref 交接给 initiator"
     }

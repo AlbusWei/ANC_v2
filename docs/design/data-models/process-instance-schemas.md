@@ -1,6 +1,6 @@
 # 流程实例 Schema
 
-> 版本: v0.5.0 | SSOT 上游: `docs/architecture/process_architecture.md`
+> 版本: v0.6.0 | SSOT 上游: `docs/architecture/process_architecture.md`
 
 ## 流程定义 Schema (process.json)
 
@@ -87,13 +87,17 @@
   "objective_ref": "string (required)",
   "initiated_by": "string (agent_id, required)",
   "status": "string (created|running|waiting|completed|failed|cancelled|archived)",
+  "waiting_reason": "string (hold|manual-approval|dependency, optional)",
   "created_at": "string (ISO8601)",
   "updated_at": "string (ISO8601)",
   "current_phase": "string (phase_id)",
+  "runtime_gate_state": "string (pass|fail|hold|test_invalid, optional)",
+  "liveness_snapshot_ref": "string (optional)",
   "phase_results": [
     {
       "phase_id": "string",
       "status": "string (running|completed|failed|skipped)",
+      "runtime_state": "string (running|hold|retry|debug|failed|completed, optional)",
       "actor": "string",
       "session_id": "string (required)",
       "input_ref": "string",

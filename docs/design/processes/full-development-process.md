@@ -104,7 +104,7 @@
 | `p3` | `qa` | 围绕规格构建测试准备包，明确后续验证基线。 | spec_ref | 必须产出 test_plan_ref 与 preparation_bundle_ref。 | 将 test_plan_ref 与 preparation_bundle_ref 交接给 p4。 |
 | `p4` | `kernel-dev` | 在规格与测试基线约束下完成实现与候选产物。 | spec_ref,test_plan_ref | 必须产出 implementation_ref 与 candidate_artifacts_ref。 | 将 candidate_artifacts_ref 交接给 p5。 |
 | `p5` | `qa` | 执行质量门禁评测并形成统一门禁结论。 | candidate_artifacts_ref,preparation_bundle_ref | 必须产出 final_gate_verdict_ref，且门禁结论可解释。 | 若门禁通过，则将 final_gate_verdict_ref 交接给 p6。 |
-| `p6` | `admin` | 完成生命周期治理与 registry 同步前置校验。 | final_gate_verdict_ref,lifecycle_target | 必须产出 lifecycle_transition_ref 与 registry_sync_ref。 | 将 lifecycle_transition_ref 与 registry_sync_ref 交接给 p7。 |
+| `p6` | `hr` | 完成生命周期治理与 registry 同步前置校验。 | final_gate_verdict_ref,lifecycle_target | 必须产出 lifecycle_transition_ref 与 registry_sync_ref。 | 将 lifecycle_transition_ref 与 registry_sync_ref 交接给 p7。 |
 | `p7` | `admin` | 完成发布打包与回滚包准备。 | candidate_artifacts_ref,final_gate_verdict_ref,lifecycle_transition_ref,registry_sync_ref | 必须产出 release_package_ref 与 rollback_bundle_ref。 | 将发布产物与反馈证据交接给 p8。 |
 | `p8` | `architect` | 基于发布与运行反馈形成下一轮演化计划。 | release_package_ref,final_gate_verdict_ref,lifecycle_transition_ref,runtime_feedback_ref | 必须产出 improvement_plan_ref 与 retro_report_ref。 | 将演化计划回填给发起方作为下一轮输入。 |
 <!-- phase-semantics-v2:end -->

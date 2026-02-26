@@ -1,7 +1,7 @@
 # ANC v2 测试方法论
 
-最后更新：2026-02-21  
-版本：2.1.0-alpha
+最后更新：2026-02-26  
+版本：2.2.0-alpha
 
 > 本文档定义 ANC 中测试的定位、执行方式、评估协议、门禁规则与证据规范。
 
@@ -59,7 +59,8 @@
 
 ```json
 {
-  "gate_decision": "pass|fail|hold|test_invalid",
+  "gate_decision": "pass|fail|test_invalid",
+  "runtime_gate_state": "pass|fail|hold|test_invalid",
   "evidence_ref": "path/to/evidence/package",
   "reasons": ["..."],
   "raw_eval_ref": "optional",
@@ -128,7 +129,8 @@
 2. 用例结果：每个 TC 的 gate_decision、reasons、evidence_ref。
 3. 汇总分析：共性问题与风险。
 4. 改进行动：可执行的下一步修复建议。
-5. 发布建议：pass/fail/hold/test_invalid。
+5. 发布建议：pass/fail/test_invalid。
+6. `hold` 仅作为运行时治理状态（`runtime_gate_state`），不作为对外发布门禁结论枚举。
 
 测试模板基线：
 
@@ -152,8 +154,9 @@
    - 日志增量
    - 阶段状态推进
    - 输出流心跳
-4. `hold` 由 `qa` 负责 triage，必要时升级 `bpm -> admin`。
+4. `hold` 由 `qa` 负责 triage，必要时升级 `bpm -> admin`；`hold` 不得直接作为对外放行结论。
 5. triage 决策：`continue/retry/debug/fail`。
+6. 默认无进展观察窗口不得低于 `900s`，并要求基于 `liveness_policy_ref` 记录终止判据。
 
 ### 6.3 分级测试
 
@@ -177,3 +180,4 @@
 1. 编译期/运行前契约错误返回 `test_invalid` 并阻断。
 2. `hold -> fail` 仅在确认异常或无进展证据时触发。
 3. 长时运行本身不构成失败。
+4. 若 `runtime_gate_state=hold`，对外 `gate_decision` 必须为 `fail`，直到补测链路重新产出 `pass`。

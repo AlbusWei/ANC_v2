@@ -21,5 +21,5 @@
 - Input: 运行级议题输入（`issue_ref/runtime_evidence_refs/current_policy_ref/risk_constraints_ref/handoff_ref`）齐全，且高风险审批已显式通过。
 - Expect:
   - `runtime-policy-calibration` 执行成功（`status=ok`）。
-  - 输出 `calibration_report_ref/policy_change_proposal_ref/governance_sync_minutes_ref/decision_record_ref/rollout_observation_ref`。
+  - 输出 `calibration_report_ref/policy_change_proposal_ref/governance_sync_minutes_ref/decision_record_ref/rollout_observation_ref/liveness_policy_ref/no_progress_window_ref/termination_rule_ref`。
   - 过程 `runtime_trace_ref` 可回放 6 phase，且包含 `architecture_feedback_digest_ref`。

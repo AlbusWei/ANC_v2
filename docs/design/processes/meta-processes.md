@@ -9,8 +9,9 @@
 - process_id: development-process
 - canonical_path: `processes/meta/development-process/`
 - level: P4
-- process_role: 下游业务流程可复用的最小开发内核（仅覆盖 Objective->Spec->Test->Implement->Gate）
-- phases: objective-scope-baseline -> spec-authoring-contract -> quality-gate-preparation -> implementation-execution-core -> quality-gate-evaluation
+- design_doc: `docs/design/processes/development-process.md`
+- process_role: 下游业务流程可复用的最小开发闭环（覆盖 Objective->Spec->Test->Implement->Gate->Lifecycle）
+- phases: objective-scope-baseline -> spec-authoring-contract -> quality-gate-preparation -> implementation-execution-core -> quality-gate-evaluation -> lifecycle-review
 - loop: p5 fail 回到 p4，max 2
 - collaboration pilot: 真实 OpenClaw 分发 + phase 级会话 reset 隔离（W11）
 

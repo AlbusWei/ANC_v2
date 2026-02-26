@@ -103,7 +103,7 @@
 
 1. Objective/Spec/Test 任一断链，拒绝进入实现阶段。
 2. phase 映射不闭合或引用流程不可达，拒绝流程实例启动。
-3. `gate_decision` 为 `fail|hold|test_invalid` 且未完成治理回填，拒绝进入 lifecycle 阶段。
+3. `gate_decision` 为 `fail|test_invalid`，或 `runtime_gate_state=hold` 且未完成治理回填，拒绝进入 lifecycle 阶段。
 4. lifecycle 证据缺失，拒绝状态迁移并升级 `actor -> owner -> bpm -> admin -> human`。
 5. 外部交付流程绕过 `M3` canonical 流程时直接阻断。
 

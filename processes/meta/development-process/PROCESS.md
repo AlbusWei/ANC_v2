@@ -4,18 +4,18 @@
 
 - 流程级别：`P4`
 - 负责人：`bpm`
-- 版本：`0.4.0`
+- 版本：`0.5.0`
 - Objective 引用：`obj-phase1-min-loop`
 - 流程角色：业务开发流程的“最小开发内核”
 
 ## 流程目标（自然语言）
 
 `development-process` 的存在意义不是替代 `full-development/hotfix/refactor`，而是提供一条最小但可执行的开发主干：
-先把目标与范围澄清，再形成规格与测试准备，随后实现并给出门禁结论。它在架构中的位置是“下游流程可复用的标准开发段”，让不同业务场景在不引入发布与生命周期治理成本的情况下，先跑通可验证实现闭环。
+先把目标与范围澄清，再形成规格与测试准备，随后实现并给出门禁结论，最后完成最小生命周期治理收口。它在架构中的位置是“下游流程可复用的标准开发段”，让不同业务场景在不引入 release/evolution 成本的情况下，先跑通可验证、可治理的实现闭环。
 
 ## 协作编排原则
 
-1. 本流程只负责“开发内核”五段，不承载 release、lifecycle、evolution 等扩展治理职责。
+1. 本流程负责“开发内核 + 最小生命周期治理”六段，不承载 release、evolution 等扩展治理职责。
 2. 多角色协作以阶段交接为中心：architect 负责目标与规格语义，qa 负责验证基线与门禁裁决，kernel-dev 负责实现候选物。
 3. 每个 phase 必须给下一 phase 提供可直接消费的输入引用，避免“同会话口头传达”导致语义漂移。
 4. 默认采用 phase 级 isolated session，保证同 actor 跨阶段不复用污染上下文。
@@ -68,6 +68,15 @@
 - 交接说明：成功回交发起方；失败按回路回流 `p4`。
 - 执行单元：`subprocess:quality-gate-evaluation`
 
+### p6 lifecycle-gate-sync
+
+- 执行角色：`hr`
+- 阶段目的：在门禁通过后执行生命周期评审与 registry 同步，保证资产状态迁移可审计。
+- 输入语义：`final_gate_verdict_ref` + `target_asset_ref` + `requested_transition`
+- 完成标准：必须产出 `lifecycle_transition_ref` + `registry_sync_ref`，并可追溯生命周期评审报告。
+- 交接说明：将 `lifecycle_transition_ref` + `registry_sync_ref` 交接给发起方。
+- 执行单元：`subprocess:lifecycle-review`
+
 ## 控制流与回退
 
 - `p1` 在 `success` 条件下流转到 `p2`。
@@ -75,7 +84,8 @@
 - `p3` 在 `success` 条件下流转到 `p4`。
 - `p4` 在 `success` 条件下流转到 `p5`。
 - `p5` 在 `failure` 条件下流转到 `p4`（条件：`iterations < max_iterations`， max_iterations视上游输入决定，默认值为5）。
-- `p5` 在 `success` 条件下流转到 `end`。
+- `p5` 在 `success` 条件下流转到 `p6`（条件：`gate_decision == pass`）。
+- `p6` 在 `success` 条件下流转到 `end`。
 
 ## 协作策略（运行态）
 

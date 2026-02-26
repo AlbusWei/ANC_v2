@@ -45,18 +45,6 @@ M2_PROCESS_INVENTORY_PATH = ROOT / "docs" / "design" / "inventories" / "process-
 M2_SKILL_INVENTORY_PATH = ROOT / "docs" / "design" / "inventories" / "skill-inventory.md"
 M2_AGENT_INVENTORY_PATH = ROOT / "docs" / "design" / "inventories" / "agent-inventory.md"
 M6_MANIFEST_PATH = ROOT / "processes" / "meta" / "construction-plane-governance" / "process.json"
-PROCESS_MANIFESTS = [
-    ROOT / "processes" / "meta" / "development-process" / "process.json",
-    ROOT / "processes" / "meta" / "full-development" / "process.json",
-    ROOT / "processes" / "meta" / "hotfix" / "process.json",
-    ROOT / "processes" / "meta" / "refactor" / "process.json",
-    ROOT / "processes" / "meta" / "governed-config-change" / "process.json",
-    ROOT / "processes" / "meta" / "runtime-policy-calibration" / "process.json",
-    ROOT / "processes" / "meta" / "construction-plane-governance" / "process.json",
-    ROOT / "processes" / "control" / "trigger-schedule-runtime" / "process.json",
-    ROOT / "processes" / "control" / "trigger-event-runtime" / "process.json",
-]
-
 AGENT_REGISTRY = REGISTRY_DIR / "agent_directory.json"
 SKILL_REGISTRY = REGISTRY_DIR / "skill_registry.json"
 PROCESS_REGISTRY = REGISTRY_DIR / "process_registry.json"
@@ -651,6 +639,38 @@ def _validate_inline_ap_phase(
         )
 
 
+def _collect_manifest_paths_from_registry(
+    processes_payload: Dict[str, Any],
+    errors: List[str],
+) -> List[Tuple[str, Path]]:
+    entries = processes_payload.get("entries", [])
+    if not isinstance(entries, list) or not entries:
+        errors.append(f"{PROCESS_REGISTRY}: entries must be non-empty array")
+        return []
+
+    manifest_refs: List[Tuple[str, Path]] = []
+    seen: set[str] = set()
+    for idx, entry in enumerate(entries):
+        if not isinstance(entry, dict):
+            errors.append(f"{PROCESS_REGISTRY}: entries[{idx}] must be object")
+            continue
+        process_id = str(entry.get("process_id") or f"entries[{idx}]")
+        manifest_path = entry.get("manifest_path")
+        if not isinstance(manifest_path, str) or not manifest_path.strip():
+            errors.append(f"{PROCESS_REGISTRY}:{process_id}: manifest_path must be non-empty string")
+            continue
+        if not REPO_REL_PATH_RE.match(manifest_path):
+            errors.append(
+                f"{PROCESS_REGISTRY}:{process_id}: manifest_path must be canonical repo-relative path"
+            )
+            continue
+        if manifest_path in seen:
+            continue
+        seen.add(manifest_path)
+        manifest_refs.append((process_id, ROOT / manifest_path))
+    return manifest_refs
+
+
 def check_protocol_consistency(
     skills_payload: Dict[str, Any],
     processes_payload: Dict[str, Any],
@@ -796,7 +816,7 @@ def check_protocol_consistency(
 
     skill_ids = {entry["skill_id"] for entry in skills_payload.get("entries", [])}
     process_ids = {entry["process_id"] for entry in processes_payload.get("entries", [])}
-    for manifest_path in PROCESS_MANIFESTS:
+    for process_id, manifest_path in _collect_manifest_paths_from_registry(processes_payload, errors):
         if not manifest_path.exists():
             errors.append(f"{manifest_path}: missing process manifest")
             continue
@@ -815,6 +835,21 @@ def check_protocol_consistency(
         if not isinstance(phases, list) or not phases:
             errors.append(f"{manifest_path}: phases must be non-empty array")
             continue
+
+        process_level = payload.get("process_level")
+        if process_level == "P4":
+            collaboration_policy = payload.get("collaboration_policy")
+            cp_prefix = f"{manifest_path}:collaboration_policy"
+            if not isinstance(collaboration_policy, dict):
+                errors.append(
+                    f"{cp_prefix}: P4 process {process_id!r} must declare collaboration_policy object"
+                )
+            else:
+                for field in ["mode", "dispatch_runtime", "session_reset"]:
+                    if field not in collaboration_policy:
+                        errors.append(
+                            f"{cp_prefix}: P4 process {process_id!r} missing required field {field!r}"
+                        )
 
         for idx, phase in enumerate(phases):
             prefix = f"{manifest_path}:phases[{idx}]"

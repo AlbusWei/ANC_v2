@@ -82,7 +82,8 @@ quality_eval_runner run \
 
 ```json
 {
-  "gate_decision": "pass|fail|hold|test_invalid",
+  "gate_decision": "pass|fail|test_invalid",
+  "runtime_gate_state": "pass|fail|hold|test_invalid",
   "evidence_ref": "path/to/evidence/package",
   "reasons": ["..."]
 }
@@ -104,21 +105,22 @@ quality_eval_runner run \
 1. AP-007：客观评测，输出 `objective_eval_ref`。
 2. AP-008：主观评测，输出 `subjective_eval_ref`（可选）。
 3. AP-009：回归评测，输出 `regression_eval_ref`。
-4. AP-020：汇总分项评测结果，输出最终 `gate_decision`。
+4. AP-020：汇总分项评测结果，输出最终 `gate_decision + runtime_gate_state`。
 
 聚合规则：
 
 1. 任一 P0 `fail` -> 总体 `fail`
-2. 无 `fail` 且存在 `hold` -> 总体 `hold`
+2. 无 `fail` 且存在 `hold` -> `runtime_gate_state=hold`，对外 `gate_decision=fail`
 3. 其他 -> 总体 `pass`
 
 ## 7. HOLD 治理规则（无硬超时）
 
 1. 长时运行不直接触发失败。
-2. `hold` 状态必须进入 `hold-governance`。
+2. `runtime_gate_state=hold` 必须进入 `hold-governance`。
 3. triage 基于三类进展信号：日志增量、阶段状态推进、输出流心跳。
 4. triage 决策限定：`continue/retry/debug/fail`。
 5. `hold -> fail` 仅在确认异常或无进展证据时触发。
+6. 对外发布路径不消费 `hold`，只消费 `gate_decision=pass|fail|test_invalid`。
 
 ## 8. 证据包规范
 

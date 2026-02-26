@@ -1,6 +1,6 @@
 {
   "process_id": "hold-governance",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [],
@@ -19,7 +19,10 @@
       "runtime_log_ref",
       "execution_state_ref",
       "triage_policy_ref",
-      "runtime_health_policy_ref"
+      "runtime_health_policy_ref",
+      "liveness_policy_ref",
+      "no_progress_window_ref",
+      "termination_rule_ref"
     ]
   },
   "output_contract": {
@@ -27,7 +30,8 @@
     "required": [
       "triage_report_ref",
       "health_maintenance_ref",
-      "hold_resolution_ref"
+      "hold_resolution_ref",
+      "external_gate_decision"
     ]
   },
   "phases": [
@@ -41,7 +45,7 @@
       "spec_ref": "docs/design/processes/atomic/AP-021-hold-progress-evidence-collection.md#AP-021-Hold-Progress-Evidence-Collection",
       "sipoc": {
         "supplier": "initiator",
-        "input": "hold_case_ref + runtime_log_ref + execution_state_ref",
+        "input": "hold_case_ref + runtime_log_ref + execution_state_ref + liveness_policy_ref + no_progress_window_ref",
         "process": "collect minimum progress signals",
         "output": "progress_signals_ref",
         "client": "p2"
@@ -56,7 +60,7 @@
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
       },
       "phase_purpose": "收集最小进展信号集",
-      "input_context_ref": "hold_case_ref + runtime_log_ref + execution_state_ref",
+      "input_context_ref": "hold_case_ref + runtime_log_ref + execution_state_ref + liveness_policy_ref + no_progress_window_ref",
       "done_definition": "必须产出 progress_signals_ref，并满足“三类进展信号已收集或已明确记录失败原因”",
       "handoff_note": "将 progress_signals_ref 交接给 p2"
     },
@@ -128,7 +132,7 @@
       "spec_ref": "docs/design/processes/atomic/AP-024-runtime-health-maintenance.md#AP-024-Runtime-Health-Maintenance",
       "sipoc": {
         "supplier": "p3",
-        "input": "action_execution_ref + runtime_health_policy_ref",
+        "input": "action_execution_ref + runtime_health_policy_ref + no_progress_window_ref + termination_rule_ref",
         "process": "maintain runtime health and recovery state",
         "output": "health_maintenance_ref",
         "client": "p5"
@@ -143,7 +147,7 @@
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
       },
       "phase_purpose": "维护运行时健康与恢复状态",
-      "input_context_ref": "action_execution_ref + runtime_health_policy_ref",
+      "input_context_ref": "action_execution_ref + runtime_health_policy_ref + no_progress_window_ref + termination_rule_ref",
       "done_definition": "必须产出 health_maintenance_ref，并满足“健康结果可追溯且可恢复性明确”",
       "handoff_note": "将 health_maintenance_ref 交接给 p5"
     },
@@ -157,9 +161,9 @@
       "spec_ref": "docs/design/processes/atomic/AP-025-hold-resolution-and-escalation.md#AP-025-Hold-Resolution-and-Escalation",
       "sipoc": {
         "supplier": "p4",
-        "input": "triage_action + health_maintenance_ref",
-        "process": "close hold case or escalate",
-        "output": "hold_resolution_ref",
+        "input": "triage_action + health_maintenance_ref + termination_rule_ref",
+        "process": "close hold case or escalate with external fail-closed gate",
+        "output": "hold_resolution_ref + external_gate_decision",
         "client": "initiator"
       },
       "acceptance_criteria": "hold case closes or escalates along governed chain",
@@ -172,9 +176,9 @@
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
       },
       "phase_purpose": "收敛 hold 案例或继续升级",
-      "input_context_ref": "triage_action + health_maintenance_ref",
-      "done_definition": "必须产出 hold_resolution_ref，并满足“hold 案例按治理链路收敛或升级”",
-      "handoff_note": "将 hold_resolution_ref 交接给 initiator"
+      "input_context_ref": "triage_action + health_maintenance_ref + termination_rule_ref",
+      "done_definition": "必须产出 hold_resolution_ref + external_gate_decision，并满足“hold 案例按治理链路收敛或升级且对外门禁保持 fail-closed”",
+      "handoff_note": "将 hold_resolution_ref + external_gate_decision 交接给 initiator"
     }
   ],
   "control_flow": [

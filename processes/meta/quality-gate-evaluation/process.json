@@ -1,6 +1,6 @@
 {
   "process_id": "quality-gate-evaluation",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [
@@ -16,6 +16,8 @@
   "priority": "P0",
   "collaboration_policy": {
     "mode": "phase-isolated-session",
+    "dispatch_runtime": "openclaw-required",
+    "session_reset": "per-phase-reset",
     "pilot_scope": "qa-first",
     "natural_context_first": true
   },
@@ -31,6 +33,7 @@
     "format": "json",
     "required": [
       "gate_decision",
+      "runtime_gate_state",
       "evidence_ref",
       "final_gate_verdict_ref"
     ]
@@ -135,10 +138,10 @@
         "supplier": "p3",
         "input": "objective_eval_ref + subjective_eval_ref + regression_eval_ref",
         "process": "aggregate unified gate decision",
-        "output": "gate_decision",
+        "output": "gate_decision + runtime_gate_state",
         "client": "initiator"
       },
-      "acceptance_criteria": "gate decision follows unified verdict enum and P0 precedence",
+      "acceptance_criteria": "gate decision follows unified verdict enum and P0 precedence with runtime hold isolation",
       "inline_ap": {
         "ap_id": "inline-ap:quality-gate-evaluation:p4",
         "skill_id": "sys.qa.verdict-normalizer",
@@ -149,8 +152,8 @@
       },
       "phase_purpose": "汇总形成统一门禁结论",
       "input_context_ref": "objective_eval_ref + subjective_eval_ref + regression_eval_ref",
-      "done_definition": "必须产出 gate_decision，并满足“门禁决策遵循统一 verdict 枚举与 P0 优先规则”",
-      "handoff_note": "将 gate_decision 交接给 initiator"
+      "done_definition": "必须产出 gate_decision + runtime_gate_state，并满足“门禁决策遵循统一 verdict 枚举与 P0 优先规则”",
+      "handoff_note": "将 gate_decision + runtime_gate_state 交接给 initiator"
     },
     {
       "phase_id": "p5",
@@ -162,14 +165,14 @@
       "spec_ref": "docs/design/processes/hold-governance-process.md#目标",
       "sipoc": {
         "supplier": "p4",
-        "input": "hold_case_ref",
+        "input": "hold_case_ref + final_gate_verdict_ref",
         "process": "route hold case into hold governance subprocess",
         "output": "hold_resolution_ref",
         "client": "initiator"
       },
       "acceptance_criteria": "hold cases are resolved or escalated with evidence",
       "phase_purpose": "将 hold 案例路由至 hold 治理子流程",
-      "input_context_ref": "hold_case_ref",
+      "input_context_ref": "hold_case_ref + final_gate_verdict_ref",
       "done_definition": "必须产出 hold_resolution_ref，并满足“hold 案例在证据支撑下被解决或升级”",
       "handoff_note": "将 hold_resolution_ref 交接给 initiator"
     }
@@ -193,12 +196,14 @@
     {
       "from": "p4",
       "to": "p5",
-      "on": "hold"
+      "on": "success",
+      "condition": "runtime_gate_state == hold"
     },
     {
       "from": "p4",
       "to": "end",
-      "on": "success"
+      "on": "success",
+      "condition": "runtime_gate_state != hold"
     },
     {
       "from": "p5",

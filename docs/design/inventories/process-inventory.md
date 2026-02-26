@@ -1,6 +1,6 @@
 # Process 全量清单
 
-> 版本: v1.9.0 | SSOT 上游: `shared/registry/process_registry.json`
+> 版本: v1.10.0 | SSOT 上游: `shared/registry/process_registry.json`
 
 ## Canonical Process Paths
 
@@ -31,7 +31,7 @@
 
 | process_id | 名称 | 类型 | owner | 阶段数 | 状态 | 路径 |
 |---|---|---|---|---|---|---|
-| development-process | development-process | 复合 | bpm | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/` |
+| development-process | development-process | 复合 | bpm | 6 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/` |
 | full-development | full-development | 复合 | bpm | 8 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/full-development/` |
 | hotfix | hotfix | 复合 | bpm | 7 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/hotfix/` |
 | refactor | refactor | 复合 | bpm | 6 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/refactor/` |
@@ -108,12 +108,13 @@
 5. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/trigger-event-runtime-process.md`
 6. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/trigger-runtime-supervisor-pattern.md`
 7. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/runtime-policy-calibration-process.md`
-8. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/full-development-process.md`
-9. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/hotfix-process.md`
-10. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/refactor-process.md`
-11. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/construction-plane-governance-process.md`
-12. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/construction-plane-governance-runtime-contract-baseline.md`
-13. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/lifecycle-review-process.md`
+8. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/development-process.md`
+9. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/full-development-process.md`
+10. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/hotfix-process.md`
+11. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/refactor-process.md`
+12. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/construction-plane-governance-process.md`
+13. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/construction-plane-governance-runtime-contract-baseline.md`
+14. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/lifecycle-review-process.md`
 
 Session3 已落地治理流程设计文档与运行资产：
 
@@ -230,3 +231,20 @@ Session3 已落地治理流程设计文档与运行资产：
 1. 全量 `PROCESS.md` 阶段语义去模板化：移除“本阶段围绕以下业务动作推进”等通用套话，改为直接业务语义描述。
 2. `P5` 多 Actor 协作流程补齐 `collaboration_policy`：`evolution-feedback-planning`、`runtime-policy-calibration`。
 3. 两流程版本同步升级：`0.1.0 -> 0.2.0`（manifest + process_registry 对齐）。
+
+## W15 联动备注（M3 development-process 义务闭合）
+
+1. `development-process` 从“Objective->Spec->Test->Implement->Gate”扩展为“Objective->Spec->Test->Implement->Gate->Lifecycle”六阶段最小闭环。
+2. `development-process.process_type` 收敛为标准枚举 `dev.prototype`，移除非标准类型。
+3. `development-process` 版本由 `0.4.0` 升级到 `0.5.0`，`phase_count` 由 `5` 升级为 `6`（manifest + SKILL + process_registry 对齐）。
+
+## W16 联动备注（生命周期执行权口径统一）
+
+1. `full-development`、`hotfix`、`refactor` 的 `lifecycle-gate-sync` 执行 actor 统一为 `hr`，不再由 `admin` 执行常规生命周期迁移。
+2. 生命周期治理链路明确为“`hr` 执行迁移 + 必要时 `admin` 高风险审批”。
+
+## W17 联动备注（HOLD 外部失败化与活性策略收敛）
+
+1. `quality-gate-evaluation` 版本升级 `0.1.0 -> 0.2.0`：门禁输出拆分为 `gate_decision`（外部）与 `runtime_gate_state`（内部）。
+2. `hold-governance` 版本升级 `0.1.0 -> 0.2.0`：补齐 `liveness_policy_ref/no_progress_window_ref/termination_rule_ref` 输入与 `external_gate_decision` 输出。
+3. `runtime-policy-calibration` 版本升级 `0.2.0 -> 0.3.0`：新增活性策略三件套输出（`liveness_policy_ref/no_progress_window_ref/termination_rule_ref`）。
