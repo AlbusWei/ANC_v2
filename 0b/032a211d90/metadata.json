@@ -3,12 +3,25 @@
   "checkpoint_id": "0b032a211d90",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     "config/openclaw.phase05.fragment.json",
     "config/openclaw.phase05.with-entry.fragment.json",
+    "docs/architecture/construction_plane.md",
+    "docs/design/business/software-vendor-e2e-flow.md",
     "docs/design/data-models/registry-schemas.md",
-    "shared/registry/process_registry.json"
+    "docs/design/inventories/process-inventory.md",
+    "docs/design/processes/business-processes.md",
+    "docs/design/processes/software-vendor-e2e-flow-process.md",
+    "openspec/changes/m3-self-development-e2e-online/m3-gap-baseline.md",
+    "openspec/changes/m3-self-development-e2e-online/tasks.md",
+    "processes/business/software-vendor-e2e-flow/PROCESS.md",
+    "processes/business/software-vendor-e2e-flow/SKILL.md",
+    "processes/business/software-vendor-e2e-flow/TEST.md",
+    "processes/business/software-vendor-e2e-flow/process.json",
+    "shared/registry/process_registry.json",
+    "tests/m3-self-development/run_tc_online.py",
+    "tests/m3-self-development/session6_external_runner.py"
   ],
   "sessions": [
     {
@@ -80,6 +93,13 @@
       "context": "/0b/032a211d90/9/context.md",
       "content_hash": "/0b/032a211d90/9/content_hash.txt",
       "prompt": "/0b/032a211d90/9/prompt.txt"
+    },
+    {
+      "metadata": "/0b/032a211d90/10/metadata.json",
+      "transcript": "/0b/032a211d90/10/full.jsonl",
+      "context": "/0b/032a211d90/10/context.md",
+      "content_hash": "/0b/032a211d90/10/content_hash.txt",
+      "prompt": "/0b/032a211d90/10/prompt.txt"
     }
   ],
   "token_usage": {
