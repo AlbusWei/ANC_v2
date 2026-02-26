@@ -100,6 +100,13 @@
       "context": "/34/c7f494a287/11/context.md",
       "content_hash": "/34/c7f494a287/11/content_hash.txt",
       "prompt": "/34/c7f494a287/11/prompt.txt"
+    },
+    {
+      "metadata": "/34/c7f494a287/12/metadata.json",
+      "transcript": "/34/c7f494a287/12/full.jsonl",
+      "context": "/34/c7f494a287/12/context.md",
+      "content_hash": "/34/c7f494a287/12/content_hash.txt",
+      "prompt": "/34/c7f494a287/12/prompt.txt"
     }
   ],
   "token_usage": {
