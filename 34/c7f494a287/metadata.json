@@ -177,6 +177,13 @@
       "context": "/34/c7f494a287/22/context.md",
       "content_hash": "/34/c7f494a287/22/content_hash.txt",
       "prompt": "/34/c7f494a287/22/prompt.txt"
+    },
+    {
+      "metadata": "/34/c7f494a287/23/metadata.json",
+      "transcript": "/34/c7f494a287/23/full.jsonl",
+      "context": "/34/c7f494a287/23/context.md",
+      "content_hash": "/34/c7f494a287/23/content_hash.txt",
+      "prompt": "/34/c7f494a287/23/prompt.txt"
     }
   ],
   "token_usage": {
