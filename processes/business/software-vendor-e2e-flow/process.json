@@ -1,0 +1,301 @@
+{
+  "process_id": "software-vendor-e2e-flow",
+  "version": "0.1.0",
+  "process_level": "P4",
+  "parent_process_id": null,
+  "composed_processes": [
+    "objective-scope-baseline",
+    "spec-authoring-contract",
+    "full-development",
+    "quality-gate-evaluation",
+    "release-packaging-governed",
+    "evolution-feedback-planning"
+  ],
+  "lineage_policy": {
+    "stack_depth_limit": 8,
+    "context_isolation": "strict",
+    "output_handoff_mode": "contract_only"
+  },
+  "objective_ref": "obj-business-software-vendor-e2e-flow",
+  "owner": "bpm",
+  "priority": "P1",
+  "input_contract": {
+    "format": "json",
+    "required": [
+      "lead_context_ref",
+      "customer_constraints_ref",
+      "lifecycle_target"
+    ]
+  },
+  "output_contract": {
+    "format": "json",
+    "required": [
+      "final_gate_verdict_ref",
+      "lifecycle_transition_ref",
+      "registry_sync_ref",
+      "release_package_ref",
+      "customer_acceptance_ref",
+      "support_feedback_ref"
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1",
+      "name": "lead-intake",
+      "actor": "architect",
+      "target_type": "subprocess",
+      "target_id": "objective-scope-baseline",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-001-objective-intake.md#ap-001-objective-intake",
+      "sipoc": {
+        "supplier": "initiator",
+        "input": "lead_context_ref",
+        "process": "normalize lead context and confirm business objective boundary",
+        "output": "objective_ref and scope_baseline_ref",
+        "client": "p2"
+      },
+      "acceptance_criteria": "lead intake output is traceable to customer context",
+      "phase_purpose": "将商机输入收敛为可执行目标上下文，避免带着模糊线索进入后续阶段。",
+      "input_context_ref": "lead_context_ref,customer_constraints_ref",
+      "done_definition": "必须产出可追溯 objective/scope 基线引用。",
+      "handoff_note": "将 objective 与 scope 基线引用交接给 p2。"
+    },
+    {
+      "phase_id": "p2",
+      "name": "discovery-analysis",
+      "actor": "architect",
+      "target_type": "subprocess",
+      "target_id": "objective-scope-baseline",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-002-requirement-analysis.md#ap-002-requirement-analysis",
+      "sipoc": {
+        "supplier": "p1",
+        "input": "objective_ref and scope_baseline_ref",
+        "process": "discover requirements and confirm boundaries",
+        "output": "discovery_baseline_ref",
+        "client": "p3"
+      },
+      "acceptance_criteria": "discovery baseline captures constraints and non-goals",
+      "phase_purpose": "完成需求发现与约束澄清，保证后续方案评估有明确边界。",
+      "input_context_ref": "objective_ref,scope_baseline_ref,customer_constraints_ref",
+      "done_definition": "必须形成可复核的 discovery 基线。",
+      "handoff_note": "将 discovery 基线交接给 p3。"
+    },
+    {
+      "phase_id": "p3",
+      "name": "solutioning-and-estimation",
+      "actor": "architect",
+      "target_type": "subprocess",
+      "target_id": "spec-authoring-contract",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-004-spec-authoring.md#ap-004-spec-authoring",
+      "sipoc": {
+        "supplier": "p2",
+        "input": "discovery_baseline_ref",
+        "process": "produce solution baseline and estimation contract",
+        "output": "spec_ref",
+        "client": "p4"
+      },
+      "acceptance_criteria": "spec baseline includes objective, constraints and acceptance criteria",
+      "phase_purpose": "把发现结论转为可执行方案与估算基线，形成合同前技术承诺。",
+      "input_context_ref": "discovery_baseline_ref,customer_constraints_ref",
+      "done_definition": "必须产出 spec_ref，且可追溯到 discovery 输入。",
+      "handoff_note": "将 spec_ref 交接给 p4。"
+    },
+    {
+      "phase_id": "p4",
+      "name": "contract-baseline",
+      "actor": "architect",
+      "target_type": "subprocess",
+      "target_id": "spec-authoring-contract",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-003-scope-baseline.md#ap-003-scope-baseline",
+      "sipoc": {
+        "supplier": "p3",
+        "input": "spec_ref",
+        "process": "freeze contract baseline for delivery iteration",
+        "output": "contract_baseline_ref",
+        "client": "p5"
+      },
+      "acceptance_criteria": "contract baseline has explicit scope and rollback boundaries",
+      "phase_purpose": "固化合同边界与交付约束，为交付迭代建立不可绕过的基线。",
+      "input_context_ref": "spec_ref,customer_constraints_ref",
+      "done_definition": "必须产出 contract_baseline_ref，且包含范围与回退约束。",
+      "handoff_note": "将 contract_baseline_ref 交接给 p5。"
+    },
+    {
+      "phase_id": "p5",
+      "name": "delivery-iterations",
+      "actor": "bpm",
+      "target_type": "subprocess",
+      "target_id": "full-development",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/full-development-process.md#full-development-process",
+      "sipoc": {
+        "supplier": "p4",
+        "input": "contract_baseline_ref",
+        "process": "execute canonical full-development loop for external delivery",
+        "output": "final_gate_verdict_ref and release_package_ref",
+        "client": "p6"
+      },
+      "acceptance_criteria": "delivery iteration must reuse canonical full-development chain",
+      "phase_purpose": "交付迭代阶段必须复用内部 canonical `full-development`，禁止旁路直接交付。",
+      "input_context_ref": "contract_baseline_ref,objective_ref,lifecycle_target",
+      "done_definition": "必须产出 final_gate_verdict_ref/lifecycle_transition_ref/registry_sync_ref/release_package_ref。",
+      "handoff_note": "将门禁结论与发布产物交接给 p6。"
+    },
+    {
+      "phase_id": "p6",
+      "name": "customer-acceptance",
+      "actor": "qa",
+      "target_type": "subprocess",
+      "target_id": "quality-gate-evaluation",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-016-delivery-acceptance.md#ap-016-delivery-acceptance",
+      "sipoc": {
+        "supplier": "p5",
+        "input": "release_package_ref and final_gate_verdict_ref",
+        "process": "validate customer acceptance package",
+        "output": "customer_acceptance_ref",
+        "client": "p7"
+      },
+      "acceptance_criteria": "acceptance output is traceable and signed",
+      "phase_purpose": "在客户侧完成交付验收确认，保障交付可追溯且可回放。",
+      "input_context_ref": "release_package_ref,final_gate_verdict_ref",
+      "done_definition": "必须产出 customer_acceptance_ref。",
+      "handoff_note": "将 customer_acceptance_ref 交接给 p7。"
+    },
+    {
+      "phase_id": "p7",
+      "name": "deployment-and-handover",
+      "actor": "admin",
+      "target_type": "subprocess",
+      "target_id": "release-packaging-governed",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-012-release-packaging.md#ap-012-release-packaging",
+      "sipoc": {
+        "supplier": "p6",
+        "input": "customer_acceptance_ref",
+        "process": "complete deployment handover with governed release package",
+        "output": "deployment_handover_ref",
+        "client": "p8"
+      },
+      "acceptance_criteria": "handover package includes release and rollback evidence",
+      "phase_purpose": "完成部署与交接，确保客户侧可操作、可回退、可审计。",
+      "input_context_ref": "customer_acceptance_ref,release_package_ref,rollback_bundle_ref",
+      "done_definition": "必须产出 deployment_handover_ref。",
+      "handoff_note": "将 deployment_handover_ref 交接给 p8。"
+    },
+    {
+      "phase_id": "p8",
+      "name": "support-and-feedback",
+      "actor": "architect",
+      "target_type": "subprocess",
+      "target_id": "evolution-feedback-planning",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-017-post-delivery-retro.md#ap-017-post-delivery-retro",
+      "sipoc": {
+        "supplier": "p7",
+        "input": "deployment_handover_ref",
+        "process": "capture support issues and generate improvement feedback",
+        "output": "support_feedback_ref",
+        "client": "initiator"
+      },
+      "acceptance_criteria": "feedback output can be reused by next delivery iteration",
+      "phase_purpose": "沉淀交付后支持与反馈，回灌下一轮交付迭代。",
+      "input_context_ref": "deployment_handover_ref,runtime_feedback_ref",
+      "done_definition": "必须产出 support_feedback_ref 与改进建议。",
+      "handoff_note": "将 support_feedback_ref 回填给发起方。"
+    }
+  ],
+  "control_flow": [
+    {
+      "from": "p1",
+      "to": "p2",
+      "on": "success"
+    },
+    {
+      "from": "p2",
+      "to": "p3",
+      "on": "success"
+    },
+    {
+      "from": "p3",
+      "to": "p4",
+      "on": "success"
+    },
+    {
+      "from": "p4",
+      "to": "p5",
+      "on": "success"
+    },
+    {
+      "from": "p5",
+      "to": "p3",
+      "on": "failure",
+      "condition": "iteration_count < 2"
+    },
+    {
+      "from": "p5",
+      "to": "p6",
+      "on": "success"
+    },
+    {
+      "from": "p6",
+      "to": "p7",
+      "on": "success"
+    },
+    {
+      "from": "p7",
+      "to": "p8",
+      "on": "success"
+    },
+    {
+      "from": "p8",
+      "to": "end",
+      "on": "success"
+    }
+  ],
+  "fail_policy": {
+    "mode": "fail_closed",
+    "retry": {
+      "max_iterations": 1,
+      "from_phase": "p5",
+      "to_phase": "p3"
+    },
+    "escalation_chain": [
+      "actor",
+      "owner",
+      "bpm",
+      "admin",
+      "human"
+    ]
+  },
+  "evidence_policy": {
+    "required_fields": [
+      "timestamp",
+      "phase_id",
+      "actor",
+      "input_ref",
+      "output_ref",
+      "decision",
+      "reason",
+      "evidence_ref"
+    ]
+  },
+  "process_type": "dev.external-delivery-iteration",
+  "governance_bundle": {
+    "syntax_ref": "docs/design/processes/development-loop-core-standard.md",
+    "obligation_ref": "docs/design/processes/p4-p6-obligation-traceability-matrix.md",
+    "risk_policy_ref": "docs/design/processes/governance-processes.md",
+    "checklist_ref": "docs/design/business/software-vendor-e2e-flow.md"
+  },
+  "collaboration_policy": {
+    "mode": "phase-isolated-session",
+    "dispatch_runtime": "openclaw-required",
+    "session_reset": "per-phase-reset",
+    "external_context_first": true,
+    "canonical_delivery_enforced": true,
+    "bypass_guard": "reject-when-delivery-iterations-missing"
+  }
+}

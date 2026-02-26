@@ -115,7 +115,7 @@
 ## process_registry.json
 
 - schema_version: `1.1.0`
-- updated_at: `2026-02-24T10:41:02Z`
+- updated_at: `2026-02-26T00:00:00Z`
 - strict mode: `true`
 
 | 字段 | 类型 | 必填 | 约束 | 说明 |

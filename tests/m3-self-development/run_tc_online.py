@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""M3 自开发在线测试统一入口（Session4/Session5）。
+"""M3 自开发在线测试统一入口（Session4/Session5/Session6）。
 
 设计原则：
 1. 单 runner + --suite/--case 选择执行范围。
 2. 复用上游 runner（M3 runtime / M1 runtime），不重复实现评测引擎。
-3. Session6 预留 case 仅注册不执行；若强制执行则 Fail-Closed。
+3. Session6 采用专用 upstream runner（session6_external_runner）在线执行全链断言。
 """
 
 from __future__ import annotations
@@ -105,54 +105,54 @@ CASES: List[CaseDef] = [
         case_id="M3-EXT-001",
         suite="session6-external",
         category="external",
-        status="reserved",
-        description="Session6 外部主线 E2E 场景 1（预留）。",
-        upstream="reserved",
+        status="executable",
+        description="Session6 外部主线 E2E 场景 1（主链 Happy + canonical 复用）。",
+        upstream="session6-runtime",
         session="session6",
     ),
     CaseDef(
         case_id="M3-EXT-002",
         suite="session6-external",
         category="external",
-        status="reserved",
-        description="Session6 外部主线 E2E 场景 2（预留）。",
-        upstream="reserved",
+        status="executable",
+        description="Session6 外部主线 E2E 场景 2（Fail-Closed -> Debug -> 修复 -> 重跑）。",
+        upstream="session6-runtime",
         session="session6",
     ),
     CaseDef(
         case_id="M3-EXT-003",
         suite="session6-external",
         category="external",
-        status="reserved",
-        description="Session6 外部主线 E2E 场景 3（预留）。",
-        upstream="reserved",
+        status="executable",
+        description="Session6 外部主线 E2E 场景 3（内外主线复用对照）。",
+        upstream="session6-runtime",
         session="session6",
     ),
     CaseDef(
         case_id="M3-FC-101",
         suite="session6-external",
         category="cross-fc",
-        status="reserved",
-        description="跨主线 Fail-Closed/旁路阻断场景 101（预留）。",
-        upstream="reserved",
+        status="executable",
+        description="跨主线 Fail-Closed 场景 101（缺失 final_gate_verdict_ref 阻断）。",
+        upstream="session6-runtime",
         session="session6",
     ),
     CaseDef(
         case_id="M3-FC-102",
         suite="session6-external",
         category="cross-fc",
-        status="reserved",
-        description="跨主线 Fail-Closed/旁路阻断场景 102（预留）。",
-        upstream="reserved",
+        status="executable",
+        description="跨主线 Fail-Closed 场景 102（delivery-iterations 旁路阻断）。",
+        upstream="session6-runtime",
         session="session6",
     ),
     CaseDef(
         case_id="M3-FC-103",
         suite="session6-external",
         category="cross-fc",
-        status="reserved",
-        description="跨主线 Fail-Closed/旁路阻断场景 103（预留）。",
-        upstream="reserved",
+        status="executable",
+        description="跨主线 Fail-Closed 场景 103（生命周期越级阻断）。",
+        upstream="session6-runtime",
         session="session6",
     ),
 ]
@@ -251,7 +251,7 @@ def write_text(path: Path, content: str) -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run Session4 M3 self-development online suites")
+    parser = argparse.ArgumentParser(description="Run Session4/Session5/Session6 M3 self-development online suites")
     parser.add_argument(
         "--suite",
         default="",
@@ -438,6 +438,84 @@ def run_upstream_session5(root: Path) -> Dict[str, Any]:
     }
 
 
+def run_upstream_session6(root: Path, evidence_root: Path, selected_case_ids: List[str]) -> Dict[str, Any]:
+    """运行 Session6 外部主线执行器，并将报告写入当前 evidence_root。"""
+    upstream_root = evidence_root / "upstream" / "session6-runtime"
+    upstream_root.mkdir(parents=True, exist_ok=True)
+    session5_report = (
+        root
+        / "tmp/runtime_data/execution/evidence/construction-plane/"
+        "R-20260222-M6-m3-self-development-e2e-online-01/session5/session5_report.json"
+    ).resolve()
+    session6_case_ids = [item for item in selected_case_ids if CASE_BY_ID[item].session == "session6"]
+    report_path = (evidence_root / "session6_report.json").resolve()
+    if report_path.exists():
+        report_payload = load_json(report_path)
+        cases_raw = report_payload.get("cases", []) if isinstance(report_payload, dict) else []
+        case_map: Dict[str, Dict[str, Any]] = {}
+        for item in cases_raw:
+            if isinstance(item, dict):
+                cid = item.get("id")
+                if isinstance(cid, str):
+                    case_map[cid] = item
+        can_reuse = bool(session6_case_ids) and all(
+            str(case_map.get(case_id, {}).get("status") or "") == "pass"
+            for case_id in session6_case_ids
+        )
+        if can_reuse:
+            return {
+                "status": "ok",
+                "return_code": 0,
+                "summary": {"report_ref": to_rel(report_path, root), "reused_existing_report": True},
+                "report_ref": to_rel(report_path, root),
+                "report_payload": report_payload,
+                "command_trace": {
+                    "command_id": "reuse_session6_external_report",
+                    "command": "reuse_existing_session6_report",
+                    "return_code": 0,
+                    "stdout_ref": "",
+                    "stderr_ref": "",
+                    "command_ref": "",
+                },
+            }
+
+    cmd = [
+        "python3",
+        "tests/m3-self-development/session6_external_runner.py",
+        "--evidence-root",
+        to_rel(evidence_root, root),
+        "--report",
+        "session6_report.json",
+        "--session5-report",
+        to_rel(session5_report, root),
+    ]
+    if session6_case_ids:
+        cmd.extend(["--cases", ",".join(session6_case_ids)])
+
+    proc = run_cmd(cmd, root)
+    command_trace = write_command_evidence(
+        root=root,
+        cmd_dir=upstream_root,
+        command_id="run_session6_external",
+        cmd=cmd,
+        proc=proc,
+    )
+    summary = parse_json_from_mixed_output(proc.stdout)
+    summary_obj = summary if isinstance(summary, dict) else {}
+    report_ref_raw = str(summary_obj.get("report_ref") or "")
+    report_path = (root / report_ref_raw).resolve() if report_ref_raw else (evidence_root / "session6_report.json").resolve()
+    report_exists = report_path.exists()
+    report_payload = load_json(report_path) if report_exists else {}
+    return {
+        "status": "ok" if (proc.returncode == 0 and report_exists) else "failed",
+        "return_code": proc.returncode,
+        "summary": summary_obj,
+        "report_ref": to_rel(report_path, root) if report_exists else "",
+        "report_payload": report_payload,
+        "command_trace": command_trace,
+    }
+
+
 def case_status_map(payload: Dict[str, Any]) -> Dict[str, str]:
     result: Dict[str, str] = {}
     for item in payload.get("cases", []):
@@ -541,6 +619,53 @@ def evaluate_case(case_def: CaseDef, upstream_results: Dict[str, Dict[str, Any]]
             reject_seen = bool(details.get("release_manager_reject_seen"))
             passed &= assert_true(assertions, "release_manager_success_seen", success_seen, "M3-INT-003 必须触发 release-manager-agent 成功分支。")
             passed &= assert_true(assertions, "release_manager_reject_seen", reject_seen, "M3-INT-003 必须触发 release-manager-agent 拒绝分支。")
+    elif case_def.case_id in {"M3-EXT-001", "M3-EXT-002", "M3-EXT-003", "M3-FC-101", "M3-FC-102", "M3-FC-103"}:
+        upstream = upstream_results["session6-runtime"]
+        upstream_refs["session6_report_ref"] = upstream.get("report_ref", "")
+        report_payload = upstream.get("report_payload", {})
+        cases_raw = report_payload.get("cases", []) if isinstance(report_payload, dict) else []
+        case_map: Dict[str, Dict[str, Any]] = {}
+        for item in cases_raw:
+            if isinstance(item, dict):
+                cid = item.get("id")
+                if isinstance(cid, str):
+                    case_map[cid] = item
+
+        case_payload = case_map.get(case_def.case_id, {})
+        case_status = str(case_payload.get("status") or "")
+        passed &= assert_true(assertions, "upstream_session6_return_code", upstream.get("return_code") == 0, "session6 runner 返回码必须为 0。")
+        passed &= assert_true(assertions, "session6_case_pass", case_status == "pass", f"{case_def.case_id} 必须为 pass。")
+
+        details = case_payload.get("details") if isinstance(case_payload.get("details"), dict) else {}
+        if case_def.case_id == "M3-EXT-001":
+            gate_refs = case_payload.get("gate_chain_refs") if isinstance(case_payload.get("gate_chain_refs"), list) else []
+            keywords = ["quality-gate-preparation", "quality-gate-evaluation", "lifecycle-review", "registry-sync"]
+            gate_chain_hit = all(any(keyword in str(ref) for ref in gate_refs) for keyword in keywords)
+            lifecycle_to_status = str(details.get("lifecycle_to_status") or "")
+            passed &= assert_true(assertions, "session6_gate_chain_complete", gate_chain_hit, "M3-EXT-001 必须包含 canonical 门禁链路四段引用。")
+            passed &= assert_true(assertions, "session6_lifecycle_within_review", lifecycle_to_status in {"draft", "review"}, "M3-EXT-001 生命周期结论不得超过 review。")
+        elif case_def.case_id == "M3-EXT-002":
+            debug_rounds = int(case_payload.get("debug_rounds") or 0)
+            rework_actions = case_payload.get("rework_actions") if isinstance(case_payload.get("rework_actions"), list) else []
+            passed &= assert_true(assertions, "session6_debug_rounds_ge_1", debug_rounds >= 1, "M3-EXT-002 必须至少包含一轮 debug。")
+            passed &= assert_true(assertions, "session6_rework_actions_present", bool(rework_actions), "M3-EXT-002 必须落盘返工动作。")
+        elif case_def.case_id == "M3-EXT-003":
+            reuse_ok = bool(details.get("reuse_ok"))
+            delivery_reused = bool(details.get("delivery_iterations_reused"))
+            passed &= assert_true(assertions, "session6_reuse_ok", reuse_ok, "M3-EXT-003 必须证明内外主线复用一致。")
+            passed &= assert_true(assertions, "session6_delivery_iterations_reused", delivery_reused, "M3-EXT-003 必须证明 delivery-iterations 复用 canonical。")
+        elif case_def.case_id == "M3-FC-101":
+            release_status = str(details.get("release_manager_status") or "")
+            passed &= assert_true(assertions, "session6_fc101_rejected", release_status == "rejected", "M3-FC-101 必须触发 release-manager-agent 拒绝输出。")
+        elif case_def.case_id == "M3-FC-102":
+            bypass = details.get("bypass_detection") if isinstance(details.get("bypass_detection"), dict) else {}
+            blocked = int(bypass.get("blocked") or 0)
+            escaped = int(bypass.get("escaped") or 0)
+            passed &= assert_true(assertions, "session6_fc102_blocked", blocked >= 1, "M3-FC-102 必须触发旁路阻断。")
+            passed &= assert_true(assertions, "session6_fc102_escaped_zero", escaped == 0, "M3-FC-102 旁路逃逸必须为 0。")
+        elif case_def.case_id == "M3-FC-103":
+            guard_blocked = bool(details.get("lifecycle_guard_blocked"))
+            passed &= assert_true(assertions, "session6_fc103_lifecycle_guard_blocked", guard_blocked, "M3-FC-103 必须阻断生命周期越级。")
     else:
         # 未定义 case 进入此分支即视为策略漏洞。
         passed = False
@@ -556,7 +681,7 @@ def evaluate_case(case_def: CaseDef, upstream_results: Dict[str, Dict[str, Any]]
 
 def build_markdown_summary(summary: Dict[str, Any]) -> str:
     lines: List[str] = []
-    lines.append("# Session4 TC Online Summary")
+    lines.append("# M3 Self-Development TC Online Summary")
     lines.append("")
     lines.append(f"- ts: {summary.get('ts', '')}")
     lines.append(f"- suite: {summary.get('suite', '')}")
@@ -586,6 +711,21 @@ def build_markdown_summary(summary: Dict[str, Any]) -> str:
         for risk in readiness.get("risks", []) if isinstance(readiness.get("risks"), list) else []:
             lines.append(f"- risk: {risk}")
         lines.append("")
+    session7 = summary.get("session7_readiness", {})
+    if isinstance(session7, dict) and session7:
+        lines.append("## Session7 Readiness")
+        lines.append(f"- ready: {session7.get('ready', False)}")
+        lines.append(f"- decision: {session7.get('decision', '')}")
+        for risk in session7.get("risks", []) if isinstance(session7.get("risks"), list) else []:
+            lines.append(f"- risk: {risk}")
+        lines.append("")
+    bypass = summary.get("bypass_detection", {})
+    if isinstance(bypass, dict) and bypass:
+        lines.append("## Bypass Detection")
+        lines.append(f"- attempted: {bypass.get('attempted', 0)}")
+        lines.append(f"- blocked: {bypass.get('blocked', 0)}")
+        lines.append(f"- escaped: {bypass.get('escaped', 0)}")
+        lines.append("")
     lines.append("## Conclusion")
     lines.append(summary.get("natural_language_conclusion", ""))
     lines.append("")
@@ -596,7 +736,7 @@ def select_upstreams(selected_case_ids: Iterable[str]) -> Set[str]:
     upstreams: Set[str] = set()
     for case_id in selected_case_ids:
         case_def = CASE_BY_ID[case_id]
-        if case_def.upstream in {"m3-runtime", "m1-runtime", "session5-runtime"}:
+        if case_def.upstream in {"m3-runtime", "m1-runtime", "session5-runtime", "session6-runtime"}:
             upstreams.add(case_def.upstream)
     return upstreams
 
@@ -635,28 +775,18 @@ def main() -> int:
     (evidence_root / "upstream" / "m3-runtime").mkdir(parents=True, exist_ok=True)
     (evidence_root / "upstream" / "m1-runtime").mkdir(parents=True, exist_ok=True)
     (evidence_root / "upstream" / "session5-runtime").mkdir(parents=True, exist_ok=True)
+    (evidence_root / "upstream" / "session6-runtime").mkdir(parents=True, exist_ok=True)
 
     selected_suite_label = "session4-foundation-default" if default_mode else ",".join(suite_inputs) if suite_inputs else "custom-case-selection"
 
     cases_result: List[Dict[str, Any]] = []
     global_errors: List[str] = []
-    reserved_selected: List[str] = []
 
     if not selected_case_ids:
         global_errors.append("empty_selection:no_case_selected")
 
     if selection_errors:
         global_errors.extend(selection_errors)
-
-    for case_id in selected_case_ids:
-        if CASE_BY_ID[case_id].status == "reserved":
-            reserved_selected.append(case_id)
-    if reserved_selected:
-        global_errors.append(
-            "reserved_case_selected:"
-            + ",".join(reserved_selected)
-            + " (当前会话不可执行)"
-        )
 
     upstream_results: Dict[str, Dict[str, Any]] = {}
     if not global_errors:
@@ -667,35 +797,13 @@ def main() -> int:
                 upstream_results[upstream] = run_upstream_m3(root, evidence_root)
             elif upstream == "session5-runtime":
                 upstream_results[upstream] = run_upstream_session5(root)
+            elif upstream == "session6-runtime":
+                upstream_results[upstream] = run_upstream_session6(root, evidence_root, selected_case_ids)
 
     for case_id in selected_case_ids:
         case_def = CASE_BY_ID[case_id]
         case_dir = evidence_root / "cases" / case_id
         case_dir.mkdir(parents=True, exist_ok=True)
-
-        if case_def.status == "reserved":
-            case_payload = {
-                "id": case_id,
-                "suite": case_def.suite,
-                "category": case_def.category,
-                "status": "fail",
-                "details": "reserved case is not executable in current session",
-                "natural_language_conclusion": "该用例属于预留项，当前会话强制执行触发 Fail-Closed。",
-                "generated_at": now_iso(),
-            }
-            case_path = case_dir / "case_result.json"
-            dump_json(case_path, case_payload)
-            cases_result.append(
-                {
-                    "id": case_id,
-                    "suite": case_def.suite,
-                    "category": case_def.category,
-                    "status": "fail",
-                    "details": case_payload["details"],
-                    "evidence_index_ref": to_rel(case_path, root),
-                }
-            )
-            continue
 
         eval_result = evaluate_case(case_def, upstream_results)
         case_payload = {
@@ -735,10 +843,21 @@ def main() -> int:
 
     session5_upstream = upstream_results.get("session5-runtime", {})
     session5_payload = session5_upstream.get("report_payload", {}) if isinstance(session5_upstream, dict) else {}
+    session6_upstream = upstream_results.get("session6-runtime", {})
+    session6_payload = session6_upstream.get("report_payload", {}) if isinstance(session6_upstream, dict) else {}
     selected_sessions = {CASE_BY_ID[item].session for item in selected_case_ids}
     session5_mode = "session5" in selected_sessions and selected_sessions.issubset({"session5"})
+    session6_mode = "session6" in selected_sessions and selected_sessions.issubset({"session6"})
 
-    if session5_mode:
+    if session6_mode:
+        if status == "pass":
+            natural_language_conclusion = (
+                "Session6 外部主线 E2E 已通过：外部主线复用了 canonical 链路，"
+                "Fail-Closed/旁路阻断/生命周期上限校验满足，具备进入 Session7 的条件。"
+            )
+        else:
+            natural_language_conclusion = "Session6 外部主线 E2E 未通过：存在失败用例或关键治理约束缺口。"
+    elif session5_mode:
         if status == "pass":
             natural_language_conclusion = "Session5 内部主线 E2E 已通过：主链路、Fail-Closed 后返工、release-manager-agent 双分支均满足。"
         else:
@@ -748,6 +867,23 @@ def main() -> int:
             natural_language_conclusion = "Session4 基座已通过：主链路、异常链路、Fail-Closed、回退/返工四类判定均可复用，具备进入 Session5 内部主线 E2E 的准入条件。"
         else:
             natural_language_conclusion = "Session4 基座未通过：存在失败用例或覆盖/策略缺口，暂不具备 Session5 内部主线 E2E 准入条件。"
+
+    debug_rounds = int(session6_payload.get("debug_rounds") or session5_payload.get("debug_rounds") or 0)
+    rework_actions = (
+        session6_payload.get("rework_actions", [])
+        if isinstance(session6_payload.get("rework_actions"), list) and session6_payload.get("rework_actions")
+        else session5_payload.get("rework_actions", []) if isinstance(session5_payload.get("rework_actions"), list) else []
+    )
+    liveness_probes = (
+        session6_payload.get("liveness_probes", [])
+        if isinstance(session6_payload.get("liveness_probes"), list) and session6_payload.get("liveness_probes")
+        else session5_payload.get("liveness_probes", []) if isinstance(session5_payload.get("liveness_probes"), list) else []
+    )
+    gate_chain_refs = (
+        session6_payload.get("gate_chain_refs", [])
+        if isinstance(session6_payload.get("gate_chain_refs"), list) and session6_payload.get("gate_chain_refs")
+        else session5_payload.get("gate_chain_refs", []) if isinstance(session5_payload.get("gate_chain_refs"), list) else []
+    )
 
     summary = {
         "ts": now_iso(),
@@ -760,7 +896,7 @@ def main() -> int:
         "evidence_root": to_rel(evidence_root, root),
         "natural_language_conclusion": natural_language_conclusion,
         "selected_case_ids": selected_case_ids,
-        "reserved_case_ids": reserved_selected,
+        "reserved_case_ids": [],
         "errors": global_errors,
         "missing_coverage": missing_coverage,
         "upstream": {
@@ -772,11 +908,14 @@ def main() -> int:
             }
             for key, value in upstream_results.items()
         },
-        "debug_rounds": int(session5_payload.get("debug_rounds") or 0),
-        "rework_actions": session5_payload.get("rework_actions", []) if isinstance(session5_payload.get("rework_actions"), list) else [],
-        "liveness_probes": session5_payload.get("liveness_probes", []) if isinstance(session5_payload.get("liveness_probes"), list) else [],
-        "gate_chain_refs": session5_payload.get("gate_chain_refs", []) if isinstance(session5_payload.get("gate_chain_refs"), list) else [],
+        "debug_rounds": debug_rounds,
+        "rework_actions": rework_actions,
+        "liveness_probes": liveness_probes,
+        "gate_chain_refs": gate_chain_refs,
         "session6_readiness": session5_payload.get("session6_readiness", {}) if isinstance(session5_payload.get("session6_readiness"), dict) else {},
+        "session7_readiness": session6_payload.get("session7_readiness", {}) if isinstance(session6_payload.get("session7_readiness"), dict) else {},
+        "external_reuse_summary": session6_payload.get("external_reuse_summary", {}) if isinstance(session6_payload.get("external_reuse_summary"), dict) else {},
+        "bypass_detection": session6_payload.get("bypass_detection", {}) if isinstance(session6_payload.get("bypass_detection"), dict) else {},
     }
 
     report_path = evidence_root / args.report

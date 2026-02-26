@@ -26,6 +26,7 @@
 | lifecycle-review | `/Users/albus/MyProjects/ANC_v2/processes/meta/lifecycle-review/` | canonical |
 | trigger-schedule-runtime | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-schedule-runtime/` | canonical |
 | trigger-event-runtime | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-event-runtime/` | canonical |
+| software-vendor-e2e-flow | `/Users/albus/MyProjects/ANC_v2/processes/business/software-vendor-e2e-flow/` | canonical |
 
 ## 已注册 Process
 
@@ -51,6 +52,7 @@
 | lifecycle-review | lifecycle-review | 复合 | hr | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/lifecycle-review/` |
 | trigger-schedule-runtime | trigger-schedule-runtime | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-schedule-runtime/` |
 | trigger-event-runtime | trigger-event-runtime | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-event-runtime/` |
+| software-vendor-e2e-flow | software-vendor-e2e-flow | 复合 | bpm | 8 | draft | `/Users/albus/MyProjects/ANC_v2/processes/business/software-vendor-e2e-flow/` |
 
 ## 规划中 Process — 元流程
 
@@ -114,6 +116,7 @@
 11. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/construction-plane-governance-process.md`
 12. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/construction-plane-governance-runtime-contract-baseline.md`
 13. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/lifecycle-review-process.md`
+14. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/software-vendor-e2e-flow-process.md`
 
 Session3 已落地治理流程设计文档与运行资产：
 

@@ -1,6 +1,6 @@
 # 业务流程设计
 
-> 版本: v0.2.0 | 分类: Business Processes | 层级: L5
+> 版本: v0.3.0 | 分类: Business Processes | 层级: L5
 
 ## 双主线
 
@@ -10,6 +10,12 @@
 ## 复用约束
 
 外部交付主线的 `delivery-iterations` 必须复用内部孵化主线的开发闭环。
+
+## 运行资产映射
+
+1. 外部主线流程资产：`processes/business/software-vendor-e2e-flow/process.json`
+2. 运行说明：`processes/business/software-vendor-e2e-flow/PROCESS.md`
+3. 生命周期目标：`draft`（Session6 仅做运行验证，不推进到 `active`）
 
 ## P1-P6 映射
 

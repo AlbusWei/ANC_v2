@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "process_registry",
-  "updated_at": "2026-02-24T10:41:02Z",
+  "updated_at": "2026-02-26T00:00:00Z",
   "entry_contract": {
     "required": [
       "process_id",
@@ -489,6 +489,25 @@
         "bundle_source": "processes/meta",
         "entry_key": "spec-authoring-contract",
         "source": "processes/meta/spec-authoring-contract",
+        "allow_draft_projection": true
+      }
+    },
+    {
+      "process_id": "software-vendor-e2e-flow",
+      "skill_name": "software-vendor-e2e-flow",
+      "skill_path": "processes/business/software-vendor-e2e-flow/SKILL.md",
+      "manifest_path": "processes/business/software-vendor-e2e-flow/process.json",
+      "objective_ref": "obj-business-software-vendor-e2e-flow",
+      "owner": "bpm",
+      "version": "0.1.0",
+      "status": "draft",
+      "phase_count": 8,
+      "openclaw": {
+        "projection_mode": "bundle",
+        "bundle_key": "anc-v2-business-processes",
+        "bundle_source": "processes/business",
+        "entry_key": "software-vendor-e2e-flow",
+        "source": "processes/business/software-vendor-e2e-flow",
         "allow_draft_projection": true
       }
     },
