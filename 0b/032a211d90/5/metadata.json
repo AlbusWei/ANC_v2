@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "0b032a211d90",
+  "session_id": "codex-2052c64a13ef",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-26T03:18:56.65594Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "config/openclaw.phase05.fragment.json",
+    "config/openclaw.phase05.with-entry.fragment.json"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "811e77852360",
+  "transcript_identifier_at_start": "gemini-80a37b13d3",
+  "checkpoint_transcript_start": 146,
+  "transcript_lines_at_start": 146,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-26T03:18:56.270945Z",
+    "agent_lines": 6,
+    "human_added": 1991,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 1997,
+    "agent_percentage": 0.30045067601402103
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}
