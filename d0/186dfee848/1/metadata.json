@@ -1,45 +1,44 @@
 {
   "cli_version": "0.4.5",
   "checkpoint_id": "d0186dfee848",
+  "session_id": "codex-126f7cb52bdb",
   "strategy": "manual-commit",
+  "created_at": "2026-02-26T01:54:03.592401Z",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 2,
+  "checkpoints_count": 1,
   "files_touched": [
     "openspec/changes/archive/2026-02-24-m3-meta-asset-quality-hardening/.openspec.yaml",
     "openspec/changes/archive/2026-02-24-m3-meta-asset-quality-hardening/design.md",
+    "openspec/changes/archive/2026-02-24-m3-meta-asset-quality-hardening/proposal.md",
+    "openspec/changes/archive/2026-02-24-m3-meta-asset-quality-hardening/thread-plan.md",
+    "openspec/specs/qa-online-validation/spec.md",
     "openspec/changes/archive/2026-02-24-m3-meta-asset-quality-hardening/meta-gap-baseline.md",
     "openspec/changes/archive/2026-02-24-m3-meta-asset-quality-hardening/process-collaboration-skeleton-v1-plan.md",
-    "openspec/changes/archive/2026-02-24-m3-meta-asset-quality-hardening/proposal.md",
     "openspec/changes/archive/2026-02-24-m3-meta-asset-quality-hardening/specs/meta-asset-quality/spec.md",
     "openspec/changes/archive/2026-02-24-m3-meta-asset-quality-hardening/specs/process-architecture-refactor/spec.md",
     "openspec/changes/archive/2026-02-24-m3-meta-asset-quality-hardening/specs/qa-online-validation/spec.md",
     "openspec/changes/archive/2026-02-24-m3-meta-asset-quality-hardening/tasks.md",
-    "openspec/changes/archive/2026-02-24-m3-meta-asset-quality-hardening/thread-plan.md",
     "openspec/specs/meta-asset-quality/spec.md",
-    "openspec/specs/process-architecture-refactor/spec.md",
-    "openspec/specs/qa-online-validation/spec.md"
+    "openspec/specs/process-architecture-refactor/spec.md"
   ],
-  "sessions": [
-    {
-      "metadata": "/d0/186dfee848/0/metadata.json",
-      "transcript": "/d0/186dfee848/0/full.jsonl",
-      "context": "/d0/186dfee848/0/context.md",
-      "content_hash": "/d0/186dfee848/0/content_hash.txt",
-      "prompt": "/d0/186dfee848/0/prompt.txt"
-    },
-    {
-      "metadata": "/d0/186dfee848/1/metadata.json",
-      "transcript": "/d0/186dfee848/1/full.jsonl",
-      "context": "/d0/186dfee848/1/context.md",
-      "content_hash": "/d0/186dfee848/1/content_hash.txt",
-      "prompt": "/d0/186dfee848/1/prompt.txt"
-    }
-  ],
+  "agent": "Gemini CLI",
+  "turn_id": "eb2fac6bac89",
+  "transcript_identifier_at_start": "gemini-f1bcb2974e",
   "token_usage": {
     "input_tokens": 0,
     "cache_creation_tokens": 0,
     "cache_read_tokens": 0,
     "output_tokens": 0,
     "api_call_count": 0
-  }
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-26T01:54:03.194608Z",
+    "agent_lines": 1405,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 1405,
+    "agent_percentage": 100
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
 }
