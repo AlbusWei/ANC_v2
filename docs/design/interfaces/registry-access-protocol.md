@@ -55,6 +55,8 @@
 6. pin 模式下 `openclaw.entry_key` 必须分别等于 `skill_id` / `process_id`。
 7. `skills/**/SKILL.md` 必须包含 `Capability Contract (Machine-Readable)` YAML 块。
 8. 对已注册 skill，`SKILL.md` 中 `test_mount` 必须与 registry `tests` 一致。
+9. 协议一致性校验必须按 `process_registry.entries[].manifest_path` 全量扫描 process manifest。
+10. 对所有 `process_level=P4` 流程，`collaboration_policy` 必须包含 `mode/dispatch_runtime/session_reset`。
 
 ## 投影协议（Registry -> OpenClaw）
 
@@ -91,3 +93,4 @@
 
 1. pre-commit：`registry_contract_tool.py verify`。
 2. CI：调用 `shared/registry/run_contract_checks.sh` 或直接执行 `verify`。
+3. 任一已注册 P4 流程缺少 `collaboration_policy` 最小字段，必须触发 Fail-Closed。

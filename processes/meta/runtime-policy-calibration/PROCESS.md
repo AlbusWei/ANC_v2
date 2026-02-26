@@ -4,7 +4,7 @@
 
 - 流程级别：`P5`
 - 负责人：`bpm`
-- 版本：`0.2.0`
+- 版本：`0.3.0`
 - Objective 引用：`obj-runtime-policy-calibration`
 
 ## 流程目标（自然语言）
@@ -61,15 +61,15 @@
 - 执行角色：`admin`
 - 阶段目的：对策略提案做批准或驳回并确定上线方案。
 - 输入语义：governance_sync_minutes_ref + risk_constraints_ref。
-- 完成标准：必须产出 policy_change_proposal_ref + decision_record_ref，并满足“高风险变更具备明确的 admin 决策”。
-- 交接说明：将 policy_change_proposal_ref + decision_record_ref 交接给 p6。
+- 完成标准：必须产出 policy_change_proposal_ref + decision_record_ref + liveness_policy_ref + no_progress_window_ref + termination_rule_ref，并满足“高风险变更具备明确的 admin 决策”。
+- 交接说明：将 policy_change_proposal_ref + decision_record_ref + liveness_policy_ref + no_progress_window_ref + termination_rule_ref 交接给 p6。
 - 执行单元：`subprocess:inline-ap:runtime-policy-calibration:p5`。该阶段采用临时 AP 语法，映射 skill 为 `system.ops.manual-task`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p6 post-rollout-observation
 
 - 执行角色：`bpm`
 - 阶段目的：记录上线观测并关闭本轮校准。
-- 输入语义：decision_record_ref + current_policy_ref。
+- 输入语义：decision_record_ref + current_policy_ref + liveness_policy_ref + no_progress_window_ref + termination_rule_ref。
 - 完成标准：必须产出 rollout_observation_ref + calibration_report_ref，并满足“观测结果已关联决策与提案引用”。
 - 交接说明：将 rollout_observation_ref + calibration_report_ref 交接给 initiator。
 - 执行单元：`subprocess:inline-ap:runtime-policy-calibration:p6`。该阶段采用临时 AP 语法，映射 skill 为 `sys.arch.system-feedback-digest`，穿透执行策略：允许（同 Actor 场景）。
@@ -96,3 +96,4 @@
 2. 阶段输出不可追溯，或无法支撑下一阶段继续执行。
 3. 交接语义不完整，导致跨角色协作中断。
 4. 回退/重试按策略执行：max_attempts=1。
+5. 未显式给出 no_progress_window 或窗口阈值小于 900 秒时，禁止下发终止判据并 Fail-Closed。

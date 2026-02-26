@@ -1,10 +1,10 @@
 # HOLD Governance Process
 
-> 版本: v0.2.0 | 层级: P4 | 类型: 复合流程 | process_id: hold-governance
+> 版本: v0.3.0 | 层级: P4 | 类型: 复合流程 | process_id: hold-governance
 
 ## 目标
 
-将 `hold` 状态治理沉淀为标准化复合流程，统一处理进展证据、triage 决策、动作执行、运行健康维护与关闭升级。
+将 `hold` 运行时状态治理沉淀为标准化复合流程，统一处理进展证据、triage 决策、动作执行、运行健康维护与关闭升级，并保证对外门禁保持 Fail-Closed。
 
 ## 触发条件
 
@@ -43,6 +43,9 @@
 3. `execution_state_ref`
 4. `triage_policy_ref`
 5. `runtime_health_policy_ref`
+6. `liveness_policy_ref`（可由 `runtime-policy-calibration` 提供）
+7. `no_progress_window_ref`（最小观察窗口策略）
+8. `termination_rule_ref`（终止判据）
 
 ## 输出契约
 
@@ -50,6 +53,7 @@
 2. `health_maintenance_ref`
 3. `hold_resolution_ref`
 4. `escalation_ref`（可选）
+5. `external_gate_decision`（固定 `fail`，直到补测流程重新给出 `pass`）
 
 ## 决策枚举
 
@@ -68,6 +72,7 @@
 2. triage 无明确决策 -> `fail`
 3. 证据链缺失或不可追溯 -> `fail`
 4. 禁止以固定超时阈值直接判定失败
+5. 无进展观察窗口小于 `900s` 的策略输入视为协议违规并 Fail-Closed
 
 ## 依赖流程
 
@@ -93,6 +98,6 @@
 | `p1` | `qa` | 收集最小进展信号集。 | hold_case_ref + runtime_log_ref + execution_state_ref | 产出 progress_signals_ref，并满足：三类进展信号已收集或已明确记录失败原因 | 将 progress_signals_ref 交接给 p2 |
 | `p2` | `qa` | 对 hold 场景进行处置分级。 | progress_signals_ref + triage_policy_ref | 产出 triage_action，并满足：分诊动作明确且符合策略 | 将 triage_action 交接给 p3 |
 | `p3` | `qa` | 执行选定的分诊动作。 | triage_action + triage_report_ref | 产出 action_execution_ref，并满足：动作执行与分诊决策一致 | 将 action_execution_ref 交接给 p4 |
-| `p4` | `bpm` | 维护运行时健康与恢复状态。 | action_execution_ref + runtime_health_policy_ref | 产出 health_maintenance_ref，并满足：健康结果可追溯且可恢复性明确 | 将 health_maintenance_ref 交接给 p5 |
-| `p5` | `bpm` | 收敛 hold 案例或继续升级。 | triage_action + health_maintenance_ref | 产出 hold_resolution_ref，并满足：hold 案例按治理链路收敛或升级 | 将 hold_resolution_ref 交接给 initiator |
+| `p4` | `bpm` | 维护运行时健康与恢复状态。 | action_execution_ref + runtime_health_policy_ref + no_progress_window_ref | 产出 health_maintenance_ref，并满足：健康结果可追溯且可恢复性明确 | 将 health_maintenance_ref 交接给 p5 |
+| `p5` | `bpm` | 收敛 hold 案例或继续升级。 | triage_action + health_maintenance_ref + termination_rule_ref | 产出 hold_resolution_ref，并满足：hold 案例按治理链路收敛或升级 | 将 hold_resolution_ref 交接给 initiator |
 <!-- phase-semantics-v2:end -->

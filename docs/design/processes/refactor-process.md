@@ -87,5 +87,5 @@
 | `p3` | `qa` | 准备以回归验证为核心的测试。 | spec_ref | 产出 test_plan_ref + preparation_bundle_ref，并满足：test_plan_ref 明确关联 refactor spec | 将 test_plan_ref + preparation_bundle_ref 交接给 p4 |
 | `p4` | `kernel-dev` | 执行结构性重构改动。 | spec_ref + test_plan_ref | 产出 implementation_ref + candidate_artifacts_ref，并满足：实现与规格及约束保持关联 | 将 implementation_ref + candidate_artifacts_ref 交接给 p5 |
 | `p5` | `qa` | 执行目标与回归门禁检查。 | candidate_artifacts_ref | 产出 final_gate_verdict_ref，并满足：回归结果明确且证据完整 | 将 final_gate_verdict_ref 交接给 p6 |
-| `p6` | `admin` | 校验生命周期与 registry 同步包。 | final_gate_verdict_ref | 产出 lifecycle_transition_ref + registry_sync_ref，并满足：registry 同步载荷与生命周期证据完整 | 将 lifecycle_transition_ref + registry_sync_ref 交接给 initiator |
+| `p6` | `hr` | 校验生命周期与 registry 同步包。 | final_gate_verdict_ref | 产出 lifecycle_transition_ref + registry_sync_ref，并满足：registry 同步载荷与生命周期证据完整 | 将 lifecycle_transition_ref + registry_sync_ref 交接给 initiator |
 <!-- phase-semantics-v2:end -->

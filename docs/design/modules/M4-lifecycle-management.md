@@ -1,6 +1,6 @@
 # M4 — 生命周期管理模块详细设计
 
-> 版本: v0.3.1 | 建设优先级: P1
+> 版本: v0.3.2 | 建设优先级: P1
 
 ## 模块定位
 
@@ -22,7 +22,7 @@
 ## lifecycle-review 最小可执行接点（M1 -> M4）
 
 1. owner 固定为 `hr`（`system-analyst` 仅提供分析输入，不作为 owner）。
-2. 生命周期状态：`draft`（后续线程基于运行证据推进到 `review/active`）。
+2. 生命周期状态：`review`（后续线程基于运行证据推进到 `active`）。
 3. 流程资产：`processes/meta/lifecycle-review/process.json`
 4. 运行入口：`processes/meta/lifecycle-review/scripts/lifecycle_review_runner.py`
 5. 输入契约最小集：`final_gate_verdict_ref`、`target_asset_ref`、`requested_transition`
@@ -42,6 +42,8 @@
 4. owner 的取消/延期动作必须留痕且可审计。
 5. 高风险策略必须声明 checkpoint 与回滚要求。
 6. 策略治理与执行分离：M4 管策略，M2 管执行。
+7. 常规生命周期迁移由 `hr` 作为执行者并签署迁移记录，`admin` 不替代 `hr` 执行常规迁移动作。
+8. 仅当涉及系统级权限模型或高风险例外审批时才引入 `admin`，且必须保留 `hr_review_ref + admin_approval_ref` 双证据。
 
 ## 验收
 

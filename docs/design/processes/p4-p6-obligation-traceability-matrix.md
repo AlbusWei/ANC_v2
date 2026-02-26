@@ -19,6 +19,12 @@
 
 | P4 流程 | 阶段 | Obligation | P6 原子流程 | 关键证据（示例） | Fail-Closed 动作 |
 |---|---|---|---|---|---|
+| development-process | objective-scope-baseline | O1 Objective | AP-001, AP-002, AP-003 | `objective_ref`, `scope_baseline_ref` | 目标或范围不完整则阻断进入 spec |
+| development-process | spec-authoring-contract | O2 Spec | AP-004 | `spec_ref` | Spec 不可验证则阻断进入 test |
+| development-process | quality-gate-preparation | O3 Test | AP-005, AP-018, AP-019 | `test_plan_ref`, `preparation_bundle_ref` | 测试准备不完整则阻断实现 |
+| development-process | implementation-execution-core | O4 Implement | AP-006 | `implementation_ref` | 实现不可追溯则退回 |
+| development-process | quality-gate-evaluation | O5 Verify | AP-007, AP-008, AP-009, AP-020 | `final_gate_verdict_ref` | 门禁不通过则阻断 lifecycle |
+| development-process | lifecycle-gate-sync | O6 Lifecycle | AP-010, AP-011 | `lifecycle_transition_ref`, `registry_sync_ref` | 状态迁移或 registry 校验失败则拒绝推进 |
 | internal-productization-e2e-flow | objective-intake | O1 Objective | AP-001, AP-002, AP-003 | `objective_ref`, `requirement_report_ref`, `scope_baseline_ref` | 目标/范围不完整则阻断进入 spec |
 | internal-productization-e2e-flow | spec-authoring | O2 Spec | AP-004 | `spec_ref` | Spec 不可验证则阻断进入 test |
 | internal-productization-e2e-flow | test-design | O3 Test | AP-005 | `test_plan_ref` | P0 用例缺失则阻断实现 |

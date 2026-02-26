@@ -1,6 +1,6 @@
 # Runtime Policy Calibration Process
 
-> 版本: v1.0.0 | 层级: P5 | 类型: 治理复合流程 | process_id: runtime-policy-calibration | 生命周期: review
+> 版本: v1.1.0 | 层级: P5 | 类型: 治理复合流程 | process_id: runtime-policy-calibration | 生命周期: review
 
 ## 目标
 
@@ -8,7 +8,7 @@
 
 典型议题：
 
-1. M1 测试执行时长估计与门禁参数校准。
+1. M1 测试执行时长估计、`no_progress_window` 与门禁参数校准。
 2. M2 `catchup_policy_ref` 动态窗口校准与 `time_bucket_strategy` 调参。
 3. 其它依赖运营分析才能确定的阈值、窗口、采样策略。
 
@@ -48,12 +48,16 @@
 3. `governance_sync_minutes_ref`
 4. `decision_record_ref`
 5. `rollout_observation_ref`
+6. `liveness_policy_ref`
+7. `no_progress_window_ref`
+8. `termination_rule_ref`
 
 ## Fail-Closed
 
 1. 证据样本不足且无法补证，不得输出参数更新结论。
 2. 未完成 `system-analyst -> architect/admin/bpm` 同步，不得推进策略更新。
 3. 高风险策略变更未经 admin 确认，不得下发执行。
+4. 未显式给出 `no_progress_window_ref` 或其窗口阈值小于 `900s`，不得下发执行。
 
 ## 运行入口
 
@@ -72,6 +76,7 @@
 1. 必须保留采样区间、样本量、分位统计、异常样本说明。
 2. 必须保留“旧策略 -> 新策略”差异与回滚条件。
 3. 必须保留 post-rollout 观测结果用于下一轮校准。
+4. 必须保留 `liveness_policy_ref/no_progress_window_ref/termination_rule_ref` 的版本化引用与生效时间。
 
 <!-- phase-semantics-v2:start -->
 ## 阶段协作语义补充（v2）
@@ -84,6 +89,6 @@
 | `p2` | `system-analyst` | 构建证据索引与基线指标。 | runtime_evidence_refs + risk_constraints_ref | 产出 evidence_index_ref + baseline_ref，并满足：证据索引可访问且样本覆盖范围明确 | 将 evidence_index_ref + baseline_ref 交接给 p3 |
 | `p3` | `system-analyst` | 生成后验摘要与策略假设。 | handoff_ref + evidence_index_ref | 产出 architecture_feedback_digest_ref，并满足：摘要包含风险等级、发现项与可决策建议 | 将 architecture_feedback_digest_ref 交接给 p4 |
 | `p4` | `architect` | 与 architect/admin/bpm 同步评审并记录纪要。 | architecture_feedback_digest_ref | 产出 governance_sync_minutes_ref，并满足：治理同步参与方与结论可审计 | 将 governance_sync_minutes_ref 交接给 p5 |
-| `p5` | `admin` | 对策略提案做批准或驳回并确定上线方案。 | governance_sync_minutes_ref + risk_constraints_ref | 产出 policy_change_proposal_ref + decision_record_ref，并满足：高风险变更具备明确的 admin 决策 | 将 policy_change_proposal_ref + decision_record_ref 交接给 p6 |
-| `p6` | `bpm` | 记录上线观测并关闭本轮校准。 | decision_record_ref + current_policy_ref | 产出 rollout_observation_ref + calibration_report_ref，并满足：观测结果已关联决策与提案引用 | 将 rollout_observation_ref + calibration_report_ref 交接给 initiator |
+| `p5` | `admin` | 对策略提案做批准或驳回并确定上线方案。 | governance_sync_minutes_ref + risk_constraints_ref | 产出 policy_change_proposal_ref + decision_record_ref + liveness_policy_ref + no_progress_window_ref + termination_rule_ref，并满足：高风险变更具备明确的 admin 决策 | 将 policy_change_proposal_ref + decision_record_ref + liveness_policy_ref + no_progress_window_ref + termination_rule_ref 交接给 p6 |
+| `p6` | `bpm` | 记录上线观测并关闭本轮校准。 | decision_record_ref + current_policy_ref + liveness_policy_ref + no_progress_window_ref + termination_rule_ref | 产出 rollout_observation_ref + calibration_report_ref，并满足：观测结果已关联决策与提案引用 | 将 rollout_observation_ref + calibration_report_ref 交接给 initiator |
 <!-- phase-semantics-v2:end -->

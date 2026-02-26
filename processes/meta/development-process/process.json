@@ -1,6 +1,6 @@
 {
   "process_id": "development-process",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [
@@ -8,7 +8,8 @@
     "spec-authoring-contract",
     "quality-gate-preparation",
     "implementation-execution-core",
-    "quality-gate-evaluation"
+    "quality-gate-evaluation",
+    "lifecycle-review"
   ],
   "lineage_policy": {
     "stack_depth_limit": 8,
@@ -21,7 +22,9 @@
   "input_contract": {
     "format": "json",
     "required": [
-      "objective_context_ref"
+      "objective_context_ref",
+      "target_asset_ref",
+      "requested_transition"
     ]
   },
   "output_contract": {
@@ -32,7 +35,9 @@
       "spec_ref",
       "test_plan_ref",
       "implementation_ref",
-      "final_gate_verdict_ref"
+      "final_gate_verdict_ref",
+      "lifecycle_transition_ref",
+      "registry_sync_ref"
     ]
   },
   "phases": [
@@ -138,7 +143,28 @@
       "phase_purpose": "输出可执行的放行结论，让上层业务流程决定是否继续生命周期、发布或回退。",
       "input_context_ref": "implementation_ref,test_plan_ref,objective_ref",
       "done_definition": "必须产出 final_gate_verdict_ref，包含 pass/fail 与关键证据。",
-      "handoff_note": "门禁通过则交回发起方；失败按回路回流 p4 迭代修复。"
+      "handoff_note": "门禁通过则交接给 p6 进入生命周期治理；失败按回路回流 p4 迭代修复。"
+    },
+    {
+      "phase_id": "p6",
+      "name": "lifecycle-gate-sync",
+      "actor": "hr",
+      "target_type": "subprocess",
+      "target_id": "lifecycle-review",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/lifecycle-review-process.md#目标",
+      "sipoc": {
+        "supplier": "p5",
+        "input": "final_gate_verdict_ref + target_asset_ref + requested_transition",
+        "process": "execute lifecycle review and registry sync",
+        "output": "lifecycle_transition_ref and registry_sync_ref",
+        "client": "initiator"
+      },
+      "acceptance_criteria": "lifecycle transition and registry sync records are both complete and traceable",
+      "phase_purpose": "在开发闭环内完成最小生命周期治理收口，确保通过门禁的资产具备可审计状态迁移记录。",
+      "input_context_ref": "final_gate_verdict_ref,target_asset_ref,requested_transition",
+      "done_definition": "必须产出 lifecycle_transition_ref 与 registry_sync_ref，并满足生命周期评审报告可追溯。",
+      "handoff_note": "将 lifecycle_transition_ref 与 registry_sync_ref 交接给 initiator。"
     }
   ],
   "control_flow": [
@@ -170,6 +196,12 @@
     },
     {
       "from": "p5",
+      "to": "p6",
+      "on": "success",
+      "condition": "gate_decision == pass"
+    },
+    {
+      "from": "p6",
       "to": "end",
       "on": "success"
     }
@@ -200,7 +232,7 @@
       "reason"
     ]
   },
-  "process_type": "dev.meta-min-loop",
+  "process_type": "dev.prototype",
   "governance_bundle": {
     "syntax_ref": "docs/design/processes/development-loop-core-standard.md",
     "obligation_ref": "docs/design/processes/development-loop-core-standard.md",

@@ -138,9 +138,9 @@
       "manifest_path": "processes/meta/development-process/process.json",
       "objective_ref": "obj-phase1-min-loop",
       "owner": "bpm",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "status": "review",
-      "phase_count": 5,
+      "phase_count": 6,
       "openclaw": {
         "projection_mode": "bundle",
         "bundle_key": "anc-v2-meta-processes",
@@ -233,7 +233,7 @@
       "manifest_path": "processes/meta/hold-governance/process.json",
       "objective_ref": "obj-m1-unified-quality-gate",
       "owner": "bpm",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "review",
       "phase_count": 5,
       "openclaw": {
@@ -366,7 +366,7 @@
       "manifest_path": "processes/meta/quality-gate-evaluation/process.json",
       "objective_ref": "obj-m1-unified-quality-gate",
       "owner": "bpm",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "review",
       "phase_count": 5,
       "openclaw": {
@@ -461,7 +461,7 @@
       "manifest_path": "processes/meta/runtime-policy-calibration/process.json",
       "objective_ref": "obj-runtime-policy-calibration",
       "owner": "bpm",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "status": "review",
       "phase_count": 6,
       "openclaw": {

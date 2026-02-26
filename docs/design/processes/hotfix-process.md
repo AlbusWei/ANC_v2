@@ -91,6 +91,6 @@
 | `p3` | `qa` | 准备面向 P0 风险的 hotfix 测试。 | spec_ref | 产出 test_plan_ref + preparation_bundle_ref，并满足：test_plan_ref 明确关联 spec_ref | 将 test_plan_ref + preparation_bundle_ref 交接给 p4 |
 | `p4` | `kernel-dev` | 实施修复候选方案。 | spec_ref + test_plan_ref | 产出 implementation_ref + candidate_artifacts_ref，并满足：候选产物可追溯到实现输出 | 将 implementation_ref + candidate_artifacts_ref 交接给 p5 |
 | `p5` | `qa` | 评估目标门禁与回归门禁。 | candidate_artifacts_ref | 产出 final_gate_verdict_ref，并满足：门禁结论为 pass/fail 且证据完整 | 将 final_gate_verdict_ref 交接给 p6 |
-| `p6` | `admin` | 校验生命周期与 registry 交接包。 | final_gate_verdict_ref | 产出 lifecycle_transition_ref + registry_sync_ref，并满足：生命周期与 registry 交接包完整 | 将 lifecycle_transition_ref + registry_sync_ref 交接给 p7 |
+| `p6` | `hr` | 校验生命周期与 registry 交接包。 | final_gate_verdict_ref | 产出 lifecycle_transition_ref + registry_sync_ref，并满足：生命周期与 registry 交接包完整 | 将 lifecycle_transition_ref + registry_sync_ref 交接给 p7 |
 | `p7` | `admin` | 打包并发布 hotfix 版本。 | candidate_artifacts_ref, final_gate_verdict_ref, lifecycle_transition_ref, registry_sync_ref | 产出 release_package_ref + rollback_bundle_ref，并满足：发布包包含回滚材料与门禁证据 | 将 release_package_ref + rollback_bundle_ref 交接给 initiator |
 <!-- phase-semantics-v2:end -->

@@ -1,6 +1,6 @@
 # Quality Gate Skills 设计包
 
-> 版本: v0.4.0 | 分类: System Skills | 最后更新: 2026-02-22
+> 版本: v0.4.1 | 分类: System Skills | 最后更新: 2026-02-26
 
 ## 目标
 
@@ -47,10 +47,11 @@
 
 - 定位：把分项评测结果归一并输出最终 `gate_decision`。
 - 输入契约：`objective_eval_ref`, `subjective_eval_ref`, `regression_eval_ref`, `aggregation_rules_ref`
-- 输出契约：`gate_decision`, `reasons`, `evidence_ref`, `final_gate_verdict_ref`
+- 输出契约：`gate_decision`, `runtime_gate_state`, `reasons`, `evidence_ref`, `final_gate_verdict_ref`
 - Fail-Closed：
   - 任一关键评测包缺失 -> `fail`
   - 结果不可解析 -> `fail`
+  - 输出 `runtime_gate_state=hold` 但 `gate_decision!=fail` -> `fail`
 - test_mount：`skills/system/qa/verdict-normalizer/TEST.md`
 - 状态：`active`（Phase 1 pilot）
 
@@ -92,10 +93,11 @@
 ### 7. sys.qa.evidence-archiver
 
 - 定位：把评测结果归档为标准证据包并维护 traceability 索引。
-- 输入契约：`run_id`, `profile_id`, `gate_decision`, `actor`, `output_dir`
+- 输入契约：`run_id`, `profile_id`, `gate_decision`, `runtime_gate_state`, `actor`, `output_dir`
 - 输出契约：`evidence_ref`, `evidence_index_ref`, `archive_report_ref`
 - Fail-Closed：
   - gate_decision 枚举非法 -> `fail`
+  - runtime_gate_state 枚举非法 -> `fail`
   - 必要元数据缺失 -> `fail`
 - test_mount：`skills/system/qa/evidence-archiver/TEST.md`
 - 状态：`active`（Phase 1 pilot）
@@ -113,7 +115,7 @@
    - `runtime_data/execution/evidence/quality-gate/runtime-validation-round-5/outputs/runtime_summary.json`
 4. runtime-validation-round-2 关键结论：
    - objective/regression 链路通过 OpenJudge 真执行产出 `pass`
-   - subjective A/B 在平局时产出 `hold`（`review`）
+  - subjective A/B 在平局时产出 `runtime_gate_state=hold`（对外门禁保持 `fail`，进入 hold 治理）
    - LLM-Judge 缺密钥时 Fail-Closed：`test_invalid`
 5. runtime-validation-round-5 关键结论：
    - 七个 `sys.qa.*` 技能新增边界用例已落盘并可编译执行

@@ -107,7 +107,7 @@
 ### A. 门禁控制有效性
 
 1. `gate_decision` 能真实阻断发布路径。
-2. `pass|fail|hold|test_invalid` 均可追溯到证据包。
+2. `gate_decision(pass|fail|test_invalid)` 与 `runtime_gate_state(pass|fail|hold|test_invalid)` 均可追溯到证据包。
 
 ### B. 角色边界有效性
 

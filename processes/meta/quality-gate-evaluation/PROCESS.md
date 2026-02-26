@@ -4,12 +4,12 @@
 
 - 流程级别：`P4`
 - 负责人：`bpm`
-- 版本：`0.1.0`
+- 版本：`0.2.0`
 - Objective 引用：`obj-m1-unified-quality-gate`
 
 ## 流程目标（自然语言）
 
-该流程负责汇总 objective/subjective/regression 三类评测，形成统一门禁结论并分流 hold 治理。它在架构中的角色是质量决策中枢，决定变更是否可进入生命周期迁移。
+该流程负责汇总 objective/subjective/regression 三类评测，形成统一门禁结论并分流 hold 治理。它在架构中的角色是质量决策中枢，决定变更是否可进入生命周期迁移。对外结论使用 `gate_decision`，运行时治理状态使用 `runtime_gate_state`。
 
 ## 协作编排原则
 
@@ -52,15 +52,15 @@
 - 执行角色：`qa`
 - 阶段目的：汇总形成统一门禁结论。
 - 输入语义：objective_eval_ref + subjective_eval_ref + regression_eval_ref。
-- 完成标准：必须产出 gate_decision，并满足“门禁决策遵循统一 verdict 枚举与 P0 优先规则”。
-- 交接说明：将 gate_decision 交接给 initiator。
+- 完成标准：必须产出 gate_decision + runtime_gate_state，并满足“门禁决策遵循统一 verdict 枚举与 P0 优先规则”。
+- 交接说明：将 gate_decision + runtime_gate_state 交接给 initiator。
 - 执行单元：`subprocess:inline-ap:quality-gate-evaluation:p4`。该阶段采用临时 AP 语法，映射 skill 为 `sys.qa.verdict-normalizer`，穿透执行策略：允许（同 Actor 场景）。
 
 ### p5 govern-hold
 
 - 执行角色：`bpm`
 - 阶段目的：将 hold 案例路由至 hold 治理子流程。
-- 输入语义：hold_case_ref。
+- 输入语义：hold_case_ref + final_gate_verdict_ref。
 - 完成标准：必须产出 hold_resolution_ref，并满足“hold 案例在证据支撑下被解决或升级”。
 - 交接说明：将 hold_resolution_ref 交接给 initiator。
 - 执行单元：`subprocess:hold-governance`。
@@ -70,8 +70,8 @@
 - `p1` 在 `success` 条件下流转到 `p2`。
 - `p2` 在 `success` 条件下流转到 `p3`。
 - `p3` 在 `success` 条件下流转到 `p4`。
-- `p4` 在 `hold` 条件下流转到 `p5`。
-- `p4` 在 `success` 条件下流转到 `end`。
+- `p4` 在 `success && runtime_gate_state == hold` 条件下流转到 `p5`。
+- `p4` 在 `success && runtime_gate_state != hold` 条件下流转到 `end`。
 - `p5` 在 `success` 条件下流转到 `end`。
 
 ## 协作策略（运行态）
