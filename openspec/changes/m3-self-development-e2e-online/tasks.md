@@ -46,7 +46,7 @@
 
 ## 7. Session7（全链路收口到 review）
 
-- [ ] 7.1 执行 OpenSpec + registry + construction plane + evidence 四向对账。
-- [ ] 7.2 完成 `entire_codex_bridge.py sync` + 单提交 + trailer 校验。
-- [ ] 7.3 生命周期仅收敛至 `review`（禁止推进 `active`）。
-- [ ] 7.4 结束 bridge：`entire_codex_bridge.py end`。
+- [x] 7.1 执行 OpenSpec + registry + construction plane + evidence 四向对账。
+- [x] 7.2 完成 `entire_codex_bridge.py sync` + 单提交 + trailer 校验。
+- [x] 7.3 生命周期仅收敛至 `review`（禁止推进 `active`）。
+- [x] 7.4 结束 bridge：`entire_codex_bridge.py end`。

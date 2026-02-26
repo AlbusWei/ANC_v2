@@ -1,6 +1,6 @@
 # ANC v2 施工平面（Construction Plane）
 
-最后更新：2026-02-25
+最后更新：2026-02-26
 
 > 本文档是 ANC v2 的活施工板，记录当前进展、下一步计划、边界和风险。
 
@@ -60,6 +60,7 @@
 - [x] 完成 `m3-self-development-e2e-online` Session4 测试基座：新增 `tests/m3-self-development/{TEST.md,live_cases.md,run_tc_online.py}`，复用 `m3-runtime + m1-runtime` runner 形成四类断言并预留 Session5/6 case 体系
 - [x] 完成 `m3-self-development-e2e-online` Session5 内部主线 E2E（2026-02-25）：`M3-INT-001/002/003` 在线套件通过，形成 `tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session5/` 证据包，`session6_readiness=ready`
 - [x] 完成 `m3-self-development-e2e-online` Session6 外部主线 E2E（2026-02-26）：`M3-EXT-001/002/003 + M3-FC-101/102/103` 在线套件通过，形成 `tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session6/` 证据包，`session7_readiness=ready`
+- [x] 完成 `m3-self-development-e2e-online` Session7 全链路收口（2026-02-26）：OpenSpec/registry/construction plane/evidence 四向对账通过，形成 `tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session7/` 证据包，生命周期结论维持 `draft/review`
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase2 流程资产重构：7 个历史包装流程全部退役，`full-development/hotfix/refactor/development-process` 全量替换为现行 P5 子流程链，并完成 process registry、process inventory、施工平面同步
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase3 元技能执行级升级：8 个目标元技能统一推进到 `review`，4 个 creator/validator runner 统一为 `--input/--output/[--report]` 契约，并落地 `meta-skill-creator` 运行名治理（`skill-creator` 仓库内软禁用）
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase4 联动闭合：design + inventory + registry + OpenSpec + 施工平面对齐，11 个流程生命周期统一收敛到 `review`，并明确本轮不推进 `active`
@@ -81,13 +82,12 @@
 - [ ] 完成 trigger runtime 动态策略实证校准并形成参数回写节奏
 - [ ] 建立 `runtime-policy-calibration` 治理节奏并纳入 M1/M2 首批后验议题
 - [ ] 基于首轮证据推进 M6 第二轮运行级回归（含 git-range + trailer 实盘对账）
-- [ ] 推进 `m3-self-development-e2e-online`：完成 Session7 全链路对账与回合收口
 
 ## 下一步（Next）
 
 1. 为 P6 原子流程补充 process.json 样板定义。
 2. 完成 `review-processes-business` 未闭环项：`governance_bundle` 落地、legacy 语义收敛、canonical 路径策略定稿。
-3. 基于 Session6 报告推进 Session7 四向对账（OpenSpec/registry/construction plane/evidence）。
+3. 基于 Session7 收口结果推进 `m3-self-development-e2e-online` 归档准备与复盘沉淀。
 4. 触发一次双主线 dry-run（运行级）并沉淀证据目录。
 5. 执行一次 governed-config-change 运行级 dry-run，补齐标准证据包模板。
 6. 在后续线程补齐 `lifecycle-review` 与 M3 接线并扩展多场景运行证据。
@@ -108,7 +108,7 @@
 | Session4 | Session3 | 建立 M3 专项运行级测试扩展基座（已完成 2026-02-23） | Session3 资产 + `tests/m3-runtime/run_skill_contract_validation.py` + M3 三流程 manifest | 新增 `tests/m3-self-development/{TEST.md,live_cases.md,run_tc_online.py}`，并在 `runtime_data/execution/evidence/self-development/e2e-online/session4-foundation/latest/` 输出四类断言证据与汇总报告 | `python3 tests/m3-self-development/run_tc_online.py --help` pass；默认执行覆盖主链路/异常链路/Fail-Closed/回退返工四类；预留 case 在 Session4 强制执行时 Fail-Closed |
 | Session5 | Session4 | 完成内部主线 E2E（已完成 2026-02-25） | Session4 测试基座（`tests/m3-self-development/run_tc_online.py` + `tests/m3-self-development/live_cases.md`）+ M3 canonical 流程资产 | 内部主线 E2E 证据目录与摘要（包含关键异常可回退记录，见 `tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session5/`） | 内部主线关键场景通过；失败场景可恢复/可回退；`M3 -> M1 -> M4` 门禁链路有证据且无旁路 |
 | Session6 | Session5 | 完成外部主线 E2E（已完成 2026-02-26） | Session5 内部主线基线 + 外部交付主线上下文 | 外部主线 E2E 证据目录、内外复用对照结论（`tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session6/`） | 外部主线关键场景通过；复用路径不绕过 M3 canonical；旁路检测为 0；生命周期结论上限 `review` |
-| Session7 | Session6 | 执行全链路对账并收敛到 review | Session1~Session6 全量证据 + OpenSpec/registry/施工平面改动 | 收口记录、对账报告、回合关闭证据 | `openspec validate m3-self-development-e2e-online --json` pass；`python3 shared/registry/registry_contract_tool.py verify` pass；提交后 `git log -1 --pretty=raw` 含 `Entire-Checkpoint`；生命周期仅收敛到 `review` |
+| Session7 | Session6 | 执行全链路对账并收敛到 review（已完成 2026-02-26） | Session1~Session6 全量证据 + OpenSpec/registry/施工平面改动 | 收口记录、对账报告、回合关闭证据（`tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session7/`） | `openspec validate m3-self-development-e2e-online --json` pass；`python3 shared/registry/registry_contract_tool.py verify` pass；提交后 `git log -1 --pretty=raw` 含 `Entire-Checkpoint`；生命周期仅收敛到 `review` |
 
 ## 里程碑
 
