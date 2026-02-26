@@ -3,7 +3,7 @@
   "checkpoint_id": "3a7d69e91461",
   "strategy": "manual-commit",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "openspec/changes/m3-self-development-e2e-online/tasks.md"
@@ -127,6 +127,13 @@
       "context": "/3a/7d69e91461/16/context.md",
       "content_hash": "/3a/7d69e91461/16/content_hash.txt",
       "prompt": "/3a/7d69e91461/16/prompt.txt"
+    },
+    {
+      "metadata": "/3a/7d69e91461/17/metadata.json",
+      "transcript": "/3a/7d69e91461/17/full.jsonl",
+      "context": "/3a/7d69e91461/17/context.md",
+      "content_hash": "/3a/7d69e91461/17/content_hash.txt",
+      "prompt": "/3a/7d69e91461/17/prompt.txt"
     }
   ],
   "token_usage": {
