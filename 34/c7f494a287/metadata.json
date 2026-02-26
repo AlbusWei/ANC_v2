@@ -5,8 +5,14 @@
   "branch": "codex/review-layers-modules",
   "checkpoints_count": 2,
   "files_touched": [
+    "openspec/changes/archive/2026-02-26-m3-self-development-e2e-online/.openspec.yaml",
+    "openspec/changes/archive/2026-02-26-m3-self-development-e2e-online/design.md",
+    "openspec/changes/archive/2026-02-26-m3-self-development-e2e-online/m3-gap-baseline.md",
+    "openspec/changes/archive/2026-02-26-m3-self-development-e2e-online/proposal.md",
     "openspec/changes/archive/2026-02-26-m3-self-development-e2e-online/specs/construction-plane/spec.md",
     "openspec/changes/archive/2026-02-26-m3-self-development-e2e-online/specs/m3-self-development-e2e-online-foundation/spec.md",
+    "openspec/changes/archive/2026-02-26-m3-self-development-e2e-online/tasks.md",
+    "openspec/changes/archive/2026-02-26-m3-self-development-e2e-online/thread-plan.md",
     "openspec/specs/construction-plane/spec.md",
     "openspec/specs/m3-self-development-e2e-online-foundation/spec.md"
   ],
@@ -31,6 +37,13 @@
       "context": "/34/c7f494a287/2/context.md",
       "content_hash": "/34/c7f494a287/2/content_hash.txt",
       "prompt": "/34/c7f494a287/2/prompt.txt"
+    },
+    {
+      "metadata": "/34/c7f494a287/3/metadata.json",
+      "transcript": "/34/c7f494a287/3/full.jsonl",
+      "context": "/34/c7f494a287/3/context.md",
+      "content_hash": "/34/c7f494a287/3/content_hash.txt",
+      "prompt": "/34/c7f494a287/3/prompt.txt"
     }
   ],
   "token_usage": {
