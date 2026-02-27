@@ -176,7 +176,7 @@
       "manifest_path": "processes/meta/evolution-feedback-planning/process.json",
       "objective_ref": "obj-m3-evolution-feedback-planning",
       "owner": "bpm",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "status": "review",
       "phase_count": 4,
       "openclaw": {
@@ -233,7 +233,7 @@
       "manifest_path": "processes/meta/hold-governance/process.json",
       "objective_ref": "obj-m1-unified-quality-gate",
       "owner": "bpm",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "status": "review",
       "phase_count": 5,
       "openclaw": {
@@ -366,7 +366,7 @@
       "manifest_path": "processes/meta/quality-gate-evaluation/process.json",
       "objective_ref": "obj-m1-unified-quality-gate",
       "owner": "bpm",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "status": "review",
       "phase_count": 5,
       "openclaw": {

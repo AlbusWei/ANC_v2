@@ -188,6 +188,8 @@ def main() -> int:
         triage_report_ref = str(triage_payload.get("triage_report_ref") or "")
         action_execution_ref = str(triage_payload.get("action_execution_ref") or "")
         progress_signals_ref = str(triage_payload.get("progress_signals_ref") or "")
+        if triage_action not in {"continue", "retry", "debug", "fail"}:
+            raise HoldGovernanceError(f"invalid_triage_action:{triage_action}")
 
         if triage_proc.returncode not in (0, 40):
             raise HoldGovernanceError(f"hold_triage_unexpected_rc:{triage_proc.returncode}")
@@ -250,6 +252,7 @@ def main() -> int:
         resolution_decision = "close"
         gate_decision_internal = "pass"
         external_gate_decision = "fail"
+        retest_recommendation = "auto-retest" if triage_action in {"continue", "retry", "debug"} else "stop"
 
         if maintenance_action == "escalate":
             p5_incident = evidence_dir / "p5_incident.json"
@@ -310,6 +313,7 @@ def main() -> int:
             "escalation_ref": escalation_ref,
             "gate_decision_internal": gate_decision_internal,
             "external_gate_decision": external_gate_decision,
+            "retest_recommendation": retest_recommendation,
         }
         dump_json(p5_resolution_path, resolution_payload)
 
@@ -343,6 +347,7 @@ def main() -> int:
             "action_execution_ref": to_rel(resolve_path(root, action_execution_ref), root) if action_execution_ref else "",
             "health_maintenance_ref": to_rel(p4_health_path, root),
             "hold_resolution_ref": to_rel(p5_resolution_path, root),
+            "retest_recommendation": retest_recommendation,
             "escalation_ref": escalation_ref,
             "gate_decision_internal": gate_decision_internal,
             "external_gate_decision": external_gate_decision,

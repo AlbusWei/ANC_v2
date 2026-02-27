@@ -1,0 +1,4 @@
+module=M3
+gate_decision=pass
+reasons=baseline_ok
+evidence_ref=fixtures/evidence_baseline

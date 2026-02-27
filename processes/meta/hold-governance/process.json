@@ -1,6 +1,6 @@
 {
   "process_id": "hold-governance",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [],
@@ -28,9 +28,11 @@
   "output_contract": {
     "format": "json",
     "required": [
+      "triage_action",
       "triage_report_ref",
       "health_maintenance_ref",
       "hold_resolution_ref",
+      "retest_recommendation",
       "external_gate_decision"
     ]
   },
@@ -163,7 +165,7 @@
         "supplier": "p4",
         "input": "triage_action + health_maintenance_ref + termination_rule_ref",
         "process": "close hold case or escalate with external fail-closed gate",
-        "output": "hold_resolution_ref + external_gate_decision",
+        "output": "hold_resolution_ref + retest_recommendation + external_gate_decision",
         "client": "initiator"
       },
       "acceptance_criteria": "hold case closes or escalates along governed chain",
@@ -177,8 +179,8 @@
       },
       "phase_purpose": "收敛 hold 案例或继续升级",
       "input_context_ref": "triage_action + health_maintenance_ref + termination_rule_ref",
-      "done_definition": "必须产出 hold_resolution_ref + external_gate_decision，并满足“hold 案例按治理链路收敛或升级且对外门禁保持 fail-closed”",
-      "handoff_note": "将 hold_resolution_ref + external_gate_decision 交接给 initiator"
+      "done_definition": "必须产出 hold_resolution_ref + retest_recommendation + external_gate_decision，并满足“hold 案例按治理链路收敛或升级且对外门禁保持 fail-closed”",
+      "handoff_note": "将 hold_resolution_ref + retest_recommendation + external_gate_decision 交接给 initiator"
     }
   ],
   "control_flow": [

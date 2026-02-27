@@ -8,7 +8,8 @@
 2. fail-closed / test-invalid 阻断链路
 3. hold 路由链路
 4. `M5` 最小接入 `M1` 门禁入口
-5. 真实用户服务语义评审链路（`LLM-as-Judge` + `QA agent` 缺陷发现与 debug 建议）
+5. hold 自动回测闭环（`hold -> auto-retest -> pass`）
+6. 真实用户服务语义评审链路（`LLM-as-Judge` + `QA agent` 缺陷发现与 debug 建议）
 
 ## Entrypoint
 
@@ -45,7 +46,8 @@
 - Input:
   - `quality-gate-evaluation` 设置 `force_hold=true`
 - Expect:
-  - `gate_decision=hold`
+  - `gate_decision=fail`
+  - `runtime_gate_state=hold`
   - `hold_routed=true`
   - `hold_resolution_ref` 非空且可追溯
 
@@ -56,6 +58,17 @@
 - Expect:
   - `M5` 调用 `M1` 门禁入口可执行
   - `gate_decision=pass`
+
+### TC-M1-CHAIN-005 hold 自动回测闭环
+
+- Input:
+  - `quality-gate-evaluation` 设置 `force_hold=true`
+  - 设置 `max_auto_retest_cycles=1`
+- Expect:
+  - 首轮出现 `runtime_gate_state=hold` 并路由 `hold-governance`
+  - `hold_retest_recommendation=auto-retest`
+  - 回测后 `gate_decision=pass`、`runtime_gate_state=pass`
+  - `auto_retest_count=1`
 
 ### TC-M1-SERVICE-001 真实服务语义评审（第一优先级主流程）
 

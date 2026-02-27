@@ -1,6 +1,6 @@
 # HOLD Governance Process
 
-> 版本: v0.3.0 | 层级: P4 | 类型: 复合流程 | process_id: hold-governance
+> 版本: v0.4.0 | 层级: P4 | 类型: 复合流程 | process_id: hold-governance
 
 ## 目标
 
@@ -52,8 +52,10 @@
 1. `triage_report_ref`
 2. `health_maintenance_ref`
 3. `hold_resolution_ref`
-4. `escalation_ref`（可选）
-5. `external_gate_decision`（固定 `fail`，直到补测流程重新给出 `pass`）
+4. `triage_action`
+5. `retest_recommendation`（`auto-retest|stop`）
+6. `escalation_ref`（可选）
+7. `external_gate_decision`（固定 `fail`，直到补测流程重新给出 `pass`）
 
 ## 决策枚举
 
@@ -99,5 +101,5 @@
 | `p2` | `qa` | 对 hold 场景进行处置分级。 | progress_signals_ref + triage_policy_ref | 产出 triage_action，并满足：分诊动作明确且符合策略 | 将 triage_action 交接给 p3 |
 | `p3` | `qa` | 执行选定的分诊动作。 | triage_action + triage_report_ref | 产出 action_execution_ref，并满足：动作执行与分诊决策一致 | 将 action_execution_ref 交接给 p4 |
 | `p4` | `bpm` | 维护运行时健康与恢复状态。 | action_execution_ref + runtime_health_policy_ref + no_progress_window_ref | 产出 health_maintenance_ref，并满足：健康结果可追溯且可恢复性明确 | 将 health_maintenance_ref 交接给 p5 |
-| `p5` | `bpm` | 收敛 hold 案例或继续升级。 | triage_action + health_maintenance_ref + termination_rule_ref | 产出 hold_resolution_ref，并满足：hold 案例按治理链路收敛或升级 | 将 hold_resolution_ref 交接给 initiator |
+| `p5` | `bpm` | 收敛 hold 案例并给出回测建议。 | triage_action + health_maintenance_ref + termination_rule_ref | 产出 hold_resolution_ref + retest_recommendation，并满足：hold 案例按治理链路收敛或升级且回测建议可机器消费 | 将 hold_resolution_ref + retest_recommendation 交接给 initiator |
 <!-- phase-semantics-v2:end -->

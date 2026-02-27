@@ -1,6 +1,6 @@
 # Quality Gate Evaluation Process
 
-> 版本: v0.3.0 | 层级: P4 | 类型: 复合流程 | process_id: quality-gate-evaluation
+> 版本: v0.4.0 | 层级: P4 | 类型: 复合流程 | process_id: quality-gate-evaluation
 
 ## 目标
 
@@ -19,7 +19,8 @@
 2. Runtime 入口：`processes/meta/quality-gate-evaluation/scripts/quality_gate_evaluation_runner.py`。
 3. 调度样例用例：
    - `TC-QA-PROC-001`（主链路 `pass`）。
-   - `TC-QA-PROC-002`（`hold` 路由到 `hold-governance`）。
+   - `TC-QA-PROC-002`（`runtime_gate_state=hold` 路由到 `hold-governance`，对外 `gate_decision=fail`）。
+   - `TC-QA-PROC-003`（`max_auto_retest_cycles=1` 时，`hold -> auto-retest -> pass` 自动回测闭环）。
 
 ## 协作骨架 v1（QA 试点）
 
@@ -42,6 +43,7 @@
 2. `run-subjective-evaluation`（AP-008，默认启用）
 3. `run-regression-evaluation`（AP-009）
 4. `aggregate-gate-decision`（AP-020）
+5. `govern-hold`（子流程 `hold-governance`，按预算决定自动回测或收口）
 
 ## 阶段到原子流程映射
 
@@ -57,6 +59,7 @@
 1. `preparation_bundle_ref`
 2. `actual_output_refs`
 3. `profile_set`（可选覆盖）
+4. `max_auto_retest_cycles`（可选，默认 `0`；`>0` 时允许按预算自动回路）
 
 ## 输出契约
 
@@ -72,6 +75,7 @@
 1. 任一分项评测导致 `runtime_gate_state=hold` 时，转入 `docs/design/processes/hold-governance-process.md`。
 2. 对外 `gate_decision` 在 hold 场景固定为 `fail`，HOLD 治理结束后仅允许回填 `continue|retry|debug|fail` 处置决策。
 3. 仅在补测链路重新产出 `runtime_gate_state=pass` 时，对外 `gate_decision` 才允许恢复为 `pass`。
+4. 当 `hold-governance` 输出 `retest_recommendation=auto-retest` 且 `max_auto_retest_cycles` 预算未耗尽时，自动回路到 `p2` 重跑评测链路。
 
 ## Fail-Closed 规则
 
@@ -113,5 +117,5 @@
 | `p2` | `qa` | 默认执行盲评主观评测。 | preparation_bundle_ref + actual_output_refs + subjective_plan | 产出 subjective_eval_ref，并满足：主观评测记录包含 seed 轮次与结论 | 将 subjective_eval_ref 交接给 p3 |
 | `p3` | `qa` | 执行跨模块回归评测。 | preparation_bundle_ref + profile_set + actual_output_refs | 产出 regression_eval_ref，并满足：回归报告包含模块级结论 | 将 regression_eval_ref 交接给 p4 |
 | `p4` | `qa` | 汇总形成统一门禁结论。 | objective_eval_ref + subjective_eval_ref + regression_eval_ref | 产出 gate_decision + runtime_gate_state，并满足：门禁决策遵循统一 verdict 枚举与 P0 优先规则 | 将 gate_decision + runtime_gate_state 交接给 initiator |
-| `p5` | `bpm` | 将 hold 案例路由至 hold 治理子流程。 | hold_case_ref + final_gate_verdict_ref | 产出 hold_resolution_ref，并满足：hold 案例在证据支撑下被解决或升级 | 将 hold_resolution_ref 交接给 initiator |
+| `p5` | `bpm` | 将 hold 案例路由至 hold 治理子流程并判定是否自动回测。 | hold_case_ref + final_gate_verdict_ref | 产出 hold_resolution_ref + retest_recommendation，并满足：hold 案例在证据支撑下被解决或升级且回测路由明确 | 若 `retest_recommendation=auto-retest` 且预算未耗尽则回路到 p2，否则交接给 initiator |
 <!-- phase-semantics-v2:end -->

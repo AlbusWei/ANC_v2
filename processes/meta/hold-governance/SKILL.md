@@ -9,7 +9,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
-version: "0.2.0"
+version: "0.3.0"
 ---
 
 # hold-governance
@@ -32,7 +32,7 @@ version: "0.2.0"
 ## Output Contract
 
 - Format: json
-- Required fields: triage_report_ref, health_maintenance_ref, hold_resolution_ref, external_gate_decision
+- Required fields: triage_action, triage_report_ref, health_maintenance_ref, hold_resolution_ref, retest_recommendation, external_gate_decision
 
 ## Runtime Rules
 

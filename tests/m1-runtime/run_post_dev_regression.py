@@ -443,7 +443,7 @@ def run_tc_002(
         {
             "objective_ref": "obj-m1-unified-quality-gate",
             "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
-            "test_doc_ref": "runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md",
+            "test_doc_ref": "tests/fixtures/quality-gate/TEST_rule.md",
         },
     )
     dump_json(
@@ -682,7 +682,8 @@ def run_tc_003(
     logs.extend([case_dir / "eval.stdout.txt", case_dir / "eval.stderr.txt"])
     outputs.append(eval_output)
 
-    if eval_proc.returncode != 0 or not eval_output.exists():
+    # hold 对外门禁固定为 fail，评测返回码预期为 2。
+    if eval_proc.returncode != 2 or not eval_output.exists():
         notes.append("evaluation 未形成 hold 结果。")
         return finalize_case(
             root=root,
@@ -701,11 +702,13 @@ def run_tc_003(
 
     eval_payload = load_json(eval_output)
     gate_decision = str(eval_payload.get("gate_decision") or "")
+    runtime_gate_state = str(eval_payload.get("runtime_gate_state") or "")
     hold_routed = bool(eval_payload.get("hold_routed"))
     hold_governance_output_ref = str(eval_payload.get("hold_governance_output_ref") or "")
     hold_resolution_ref = str(eval_payload.get("hold_resolution_ref") or "")
     ok = (
-        gate_decision == "hold"
+        gate_decision == "fail"
+        and runtime_gate_state == "hold"
         and hold_routed
         and path_exists_for_ref(root, hold_governance_output_ref)
         and path_exists_for_ref(root, hold_resolution_ref)
@@ -730,7 +733,7 @@ def run_tc_003(
             "hold_governance_output_ref": hold_governance_output_ref,
             "hold_resolution_ref": hold_resolution_ref,
         },
-        notes=notes or ["evaluation hold 已成功路由 hold-governance 并产出 hold_resolution_ref。"],
+        notes=notes or ["evaluation 在 runtime_gate_state=hold 时已对外 fail，并成功路由 hold-governance 产出 hold_resolution_ref。"],
     )
 
 
@@ -916,6 +919,201 @@ def run_tc_004(
     )
 
 
+def run_tc_005(
+    *,
+    root: Path,
+    evidence_root: Path,
+    prep_runner: Path,
+    eval_runner: Path,
+    test_doc_ref: str,
+    actual_output_ref: str,
+    profile_set: str,
+    hold_case_ref: str,
+    execution_state_ref: str,
+    triage_policy_ref: str,
+) -> Dict[str, Any]:
+    case_id = "TC-M1-CHAIN-005"
+    case_dir = evidence_root / case_id
+    case_dir.mkdir(parents=True, exist_ok=True)
+
+    commands: List[Dict[str, Any]] = []
+    inputs: List[Path] = []
+    outputs: List[Path] = []
+    logs: List[Path] = []
+    notes: List[str] = []
+
+    prep_input = case_dir / "prep_input.json"
+    prep_output = case_dir / "prep_output.json"
+    eval_input = case_dir / "eval_input_auto_retest.json"
+    eval_output = case_dir / "eval_output.json"
+    runtime_log_ref = case_dir / "hold_runtime.log"
+    runtime_health_policy_ref = case_dir / "runtime_health_policy.json"
+
+    dump_json(
+        prep_input,
+        {
+            "objective_ref": "obj-m1-unified-quality-gate",
+            "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
+            "test_doc_ref": test_doc_ref,
+            "risk_focus": ["P0", "P1"],
+        },
+    )
+    runtime_log_ref.write_text("subjective_check_pending_auto_retest\n", encoding="utf-8")
+    dump_json(runtime_health_policy_ref, {"max_hold_minutes": 45, "max_retries": 2})
+    inputs.extend([prep_input, runtime_log_ref, runtime_health_policy_ref])
+
+    prep_cmd = [
+        sys.executable,
+        to_rel(prep_runner, root),
+        "--input",
+        to_rel(prep_input, root),
+        "--output",
+        to_rel(prep_output, root),
+        "--evidence-dir",
+        to_rel(case_dir / "preparation", root),
+        "--run-id",
+        "TC-M1-CHAIN-005-prep",
+        "--profile-set",
+        profile_set,
+    ]
+    prep_proc = exec_step(root=root, case_dir=case_dir, step="prep", cmd=prep_cmd, commands=commands)
+    logs.extend([case_dir / "prep.stdout.txt", case_dir / "prep.stderr.txt"])
+    outputs.append(prep_output)
+
+    if prep_proc.returncode != 0 or not prep_output.exists():
+        notes.append("preparation 未通过，无法进入自动回测链路验证。")
+        return finalize_case(
+            root=root,
+            case_dir=case_dir,
+            case_id=case_id,
+            status="fail",
+            gate_decision="unknown",
+            decision_class="pass",
+            commands=commands,
+            inputs=inputs,
+            outputs=outputs,
+            logs=logs,
+            critical_refs={},
+            notes=notes,
+        )
+
+    prep_payload = load_json(prep_output)
+    preparation_bundle_ref = str(prep_payload.get("preparation_bundle_ref") or "")
+    if str(prep_payload.get("verdict") or "") != "pass" or not preparation_bundle_ref:
+        notes.append("preparation 未产出可用 bundle。")
+        return finalize_case(
+            root=root,
+            case_dir=case_dir,
+            case_id=case_id,
+            status="fail",
+            gate_decision=str(prep_payload.get("verdict") or "unknown"),
+            decision_class="pass",
+            commands=commands,
+            inputs=inputs,
+            outputs=outputs,
+            logs=logs,
+            critical_refs={"prep_output_ref": to_rel(prep_output, root)},
+            notes=notes,
+        )
+
+    dump_json(
+        eval_input,
+        {
+            "preparation_bundle_ref": preparation_bundle_ref,
+            "actual_output_refs": [actual_output_ref],
+            "profile_set": parse_profile_set(profile_set),
+            "force_hold": True,
+            "max_auto_retest_cycles": 1,
+            "hold_case_ref": hold_case_ref,
+            "runtime_log_ref": to_rel(runtime_log_ref, root),
+            "execution_state_ref": execution_state_ref,
+            "triage_policy_ref": triage_policy_ref,
+            "runtime_health_policy_ref": to_rel(runtime_health_policy_ref, root),
+            "current_owner": "qa",
+        },
+    )
+    inputs.append(eval_input)
+
+    eval_cmd = [
+        sys.executable,
+        to_rel(eval_runner, root),
+        "--input",
+        to_rel(eval_input, root),
+        "--output",
+        to_rel(eval_output, root),
+        "--evidence-dir",
+        to_rel(case_dir / "evaluation", root),
+        "--run-id",
+        "TC-M1-CHAIN-005-eval",
+    ]
+    eval_proc = exec_step(root=root, case_dir=case_dir, step="eval", cmd=eval_cmd, commands=commands)
+    logs.extend([case_dir / "eval.stdout.txt", case_dir / "eval.stderr.txt"])
+    outputs.append(eval_output)
+
+    if eval_proc.returncode != 0 or not eval_output.exists():
+        notes.append("evaluation 未形成自动回测 pass 结果。")
+        return finalize_case(
+            root=root,
+            case_dir=case_dir,
+            case_id=case_id,
+            status="fail",
+            gate_decision="fail",
+            decision_class="pass",
+            commands=commands,
+            inputs=inputs,
+            outputs=outputs,
+            logs=logs,
+            critical_refs={"eval_output_ref": to_rel(eval_output, root)},
+            notes=notes,
+        )
+
+    eval_payload = load_json(eval_output)
+    gate_decision = str(eval_payload.get("gate_decision") or "")
+    runtime_gate_state = str(eval_payload.get("runtime_gate_state") or "")
+    hold_routed = bool(eval_payload.get("hold_routed"))
+    hold_governance_output_ref = str(eval_payload.get("hold_governance_output_ref") or "")
+    hold_resolution_ref = str(eval_payload.get("hold_resolution_ref") or "")
+    hold_retest_recommendation = str(eval_payload.get("hold_retest_recommendation") or "")
+    auto_retest_count = int(eval_payload.get("auto_retest_count") or 0)
+    max_auto_retest_cycles = int(eval_payload.get("max_auto_retest_cycles") or 0)
+    ok = (
+        gate_decision == "pass"
+        and runtime_gate_state == "pass"
+        and (not hold_routed)
+        and hold_retest_recommendation == "auto-retest"
+        and auto_retest_count == 1
+        and max_auto_retest_cycles == 1
+        and path_exists_for_ref(root, hold_governance_output_ref)
+        and path_exists_for_ref(root, hold_resolution_ref)
+    )
+    if not ok:
+        notes.append("自动回测闭环未满足预期（hold->auto-retest->pass）。")
+
+    return finalize_case(
+        root=root,
+        case_dir=case_dir,
+        case_id=case_id,
+        status="pass" if ok else "fail",
+        gate_decision=gate_decision,
+        decision_class="pass",
+        commands=commands,
+        inputs=inputs,
+        outputs=outputs,
+        logs=logs,
+        critical_refs={
+            "prep_output_ref": to_rel(prep_output, root),
+            "eval_output_ref": to_rel(eval_output, root),
+            "hold_governance_output_ref": hold_governance_output_ref,
+            "hold_resolution_ref": hold_resolution_ref,
+            "hold_retest_recommendation": hold_retest_recommendation,
+            "auto_retest_count": str(auto_retest_count),
+            "max_auto_retest_cycles": str(max_auto_retest_cycles),
+        },
+        notes=notes
+        or ["hold 案例在预算=1 下完成自动回测回路，并恢复到 gate_decision=pass。"],
+    )
+
+
 def build_markdown_summary(summary: Dict[str, Any]) -> str:
     coverage = summary["decision_coverage"]
     lines: List[str] = [
@@ -1000,27 +1198,27 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--test-doc-ref",
-        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md",
+        default="tests/fixtures/quality-gate/TEST_rule.md",
         help="Repo-relative TEST doc fixture",
     )
     parser.add_argument(
         "--actual-output-ref",
-        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_pass.txt",
+        default="tests/fixtures/quality-gate/actual_output_pass.txt",
         help="Repo-relative actual output fixture",
     )
     parser.add_argument(
         "--hold-case-ref",
-        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/hold_case.json",
+        default="tests/fixtures/quality-gate/hold_case.json",
         help="Repo-relative hold case fixture",
     )
     parser.add_argument(
         "--execution-state-ref",
-        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/execution_state.json",
+        default="tests/fixtures/quality-gate/execution_state.json",
         help="Repo-relative execution state fixture",
     )
     parser.add_argument(
         "--triage-policy-ref",
-        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/triage_policy.json",
+        default="tests/fixtures/quality-gate/triage_policy.json",
         help="Repo-relative triage policy fixture",
     )
     parser.add_argument(
@@ -1130,6 +1328,20 @@ def main() -> int:
             profile_set=args.profile_set,
         )
     )
+    cases.append(
+        run_tc_005(
+            root=root,
+            evidence_root=evidence_root,
+            prep_runner=prep_runner,
+            eval_runner=eval_runner,
+            test_doc_ref=to_rel(test_doc_path, root),
+            actual_output_ref=to_rel(actual_output_path, root),
+            profile_set=args.profile_set,
+            hold_case_ref=to_rel(hold_case_path, root),
+            execution_state_ref=to_rel(execution_state_path, root),
+            triage_policy_ref=to_rel(triage_policy_path, root),
+        )
+    )
 
     total = len(cases)
     failed_cases = [case for case in cases if case["status"] != "pass"]
@@ -1167,11 +1379,18 @@ def main() -> int:
             "eval_output_ref": cases[3]["critical_refs"].get("eval_output_ref", ""),
             "final_gate_verdict_ref": cases[3]["critical_refs"].get("final_gate_verdict_ref", ""),
         },
+        "tc_m1_chain_005_auto_retest": {
+            "evidence_index_ref": cases[4]["evidence_index_ref"],
+            "eval_output_ref": cases[4]["critical_refs"].get("eval_output_ref", ""),
+            "hold_governance_output_ref": cases[4]["critical_refs"].get("hold_governance_output_ref", ""),
+            "hold_resolution_ref": cases[4]["critical_refs"].get("hold_resolution_ref", ""),
+            "auto_retest_count": cases[4]["critical_refs"].get("auto_retest_count", ""),
+        },
     }
 
     summary = {
         "ts": now_iso(),
-        "suite": "TC-M1-CHAIN-001~004",
+        "suite": "TC-M1-CHAIN-001~005",
         "status": status,
         "total": total,
         "passed": passed,
@@ -1183,7 +1402,7 @@ def main() -> int:
         "cases": cases,
         "thread4_refs": thread4_refs,
         "natural_language_conclusion": (
-            "本轮已覆盖 pass、fail-closed 与 hold 三类判定证据，并验证 M5 最小接入 M1 门禁入口可执行。"
+            "本轮已覆盖 pass、fail-closed 与 hold 三类判定证据，验证 M5 最小接入可执行，并补测通过 hold->auto-retest->pass 自动回测闭环。"
             if status == "pass"
             else "本轮未满足 Thread-3 收口门禁，请先修复失败用例或判定覆盖缺口。"
         ),

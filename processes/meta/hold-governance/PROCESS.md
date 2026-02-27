@@ -4,7 +4,7 @@
 
 - 流程级别：`P4`
 - 负责人：`bpm`
-- 版本：`0.2.0`
+- 版本：`0.3.0`
 - Objective 引用：`obj-m1-unified-quality-gate`
 
 ## 流程目标（自然语言）
@@ -60,10 +60,10 @@
 ### p5 close-or-escalate
 
 - 执行角色：`bpm`
-- 阶段目的：收敛 hold 案例或继续升级。
+- 阶段目的：收敛 hold 案例并给出回测建议。
 - 输入语义：triage_action + health_maintenance_ref + termination_rule_ref。
-- 完成标准：必须产出 hold_resolution_ref + external_gate_decision，并满足“hold 案例按治理链路收敛或升级且对外门禁保持 fail-closed”。
-- 交接说明：将 hold_resolution_ref + external_gate_decision 交接给 initiator。
+- 完成标准：必须产出 hold_resolution_ref + retest_recommendation + external_gate_decision，并满足“hold 案例按治理链路收敛或升级且对外门禁保持 fail-closed”。
+- 交接说明：将 hold_resolution_ref + retest_recommendation + external_gate_decision 交接给 initiator。
 - 执行单元：`subprocess:inline-ap:hold-governance:p5`。该阶段采用临时 AP 语法，映射 skill 为 `sys.bpm.escalation-handler`，穿透执行策略：允许（同 Actor 场景）。
 
 ## 控制流与回退

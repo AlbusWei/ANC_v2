@@ -1,6 +1,6 @@
 # AP-020 Gate Decision Aggregation
 
-> 版本: v0.2.0 | 层级: P6 | 类型: 原子流程
+> 版本: v0.3.0 | 层级: P6 | 类型: 原子流程
 
 - Actor: qa / qa-engineer
 - Skill: sys.qa.verdict-normalizer
@@ -25,6 +25,7 @@
 - Governance:
   - 当 `runtime_gate_state=hold` 时必须路由 `hold-governance`，并记录 `hold_case_ref`
   - `hold` 不得作为对外门禁结论返回发布链路
+  - 当 `hold-governance.retest_recommendation=auto-retest` 且回测预算未耗尽时，允许自动回路重跑评测链路
 - Evidence:
   - final_gate_verdict_ref
   - aggregation_trace_ref

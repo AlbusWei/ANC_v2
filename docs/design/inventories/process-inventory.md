@@ -1,58 +1,58 @@
 # Process 全量清单
 
-> 版本: v1.10.0 | SSOT 上游: `shared/registry/process_registry.json`
+> 版本: v1.11.0 | SSOT 上游: `shared/registry/process_registry.json`
 
 ## Canonical Process Paths
 
 | process_id | canonical_path | status |
 |---|---|---|
-| development-process | `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/` | canonical |
-| full-development | `/Users/albus/MyProjects/ANC_v2/processes/meta/full-development/` | canonical |
-| hotfix | `/Users/albus/MyProjects/ANC_v2/processes/meta/hotfix/` | canonical |
-| refactor | `/Users/albus/MyProjects/ANC_v2/processes/meta/refactor/` | canonical |
-| objective-scope-baseline | `/Users/albus/MyProjects/ANC_v2/processes/meta/objective-scope-baseline/` | canonical |
-| hotfix-intake-normalization | `/Users/albus/MyProjects/ANC_v2/processes/meta/hotfix-intake-normalization/` | canonical |
-| hotfix-scope-spec-baseline | `/Users/albus/MyProjects/ANC_v2/processes/meta/hotfix-scope-spec-baseline/` | canonical |
-| spec-authoring-contract | `/Users/albus/MyProjects/ANC_v2/processes/meta/spec-authoring-contract/` | canonical |
-| implementation-execution-core | `/Users/albus/MyProjects/ANC_v2/processes/meta/implementation-execution-core/` | canonical |
-| release-packaging-governed | `/Users/albus/MyProjects/ANC_v2/processes/meta/release-packaging-governed/` | canonical |
-| evolution-feedback-planning | `/Users/albus/MyProjects/ANC_v2/processes/meta/evolution-feedback-planning/` | canonical |
-| governed-config-change | `/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change/` | canonical |
-| quality-gate-preparation | `/Users/albus/MyProjects/ANC_v2/processes/meta/quality-gate-preparation/` | canonical |
-| quality-gate-evaluation | `/Users/albus/MyProjects/ANC_v2/processes/meta/quality-gate-evaluation/` | canonical |
-| hold-governance | `/Users/albus/MyProjects/ANC_v2/processes/meta/hold-governance/` | canonical |
-| runtime-policy-calibration | `/Users/albus/MyProjects/ANC_v2/processes/meta/runtime-policy-calibration/` | canonical |
-| construction-plane-governance | `/Users/albus/MyProjects/ANC_v2/processes/meta/construction-plane-governance/` | canonical |
-| lifecycle-review | `/Users/albus/MyProjects/ANC_v2/processes/meta/lifecycle-review/` | canonical |
-| trigger-schedule-runtime | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-schedule-runtime/` | canonical |
-| trigger-event-runtime | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-event-runtime/` | canonical |
-| software-vendor-e2e-flow | `/Users/albus/MyProjects/ANC_v2/processes/business/software-vendor-e2e-flow/` | canonical |
+| development-process | `processes/meta/development-process/` | canonical |
+| full-development | `processes/meta/full-development/` | canonical |
+| hotfix | `processes/meta/hotfix/` | canonical |
+| refactor | `processes/meta/refactor/` | canonical |
+| objective-scope-baseline | `processes/meta/objective-scope-baseline/` | canonical |
+| hotfix-intake-normalization | `processes/meta/hotfix-intake-normalization/` | canonical |
+| hotfix-scope-spec-baseline | `processes/meta/hotfix-scope-spec-baseline/` | canonical |
+| spec-authoring-contract | `processes/meta/spec-authoring-contract/` | canonical |
+| implementation-execution-core | `processes/meta/implementation-execution-core/` | canonical |
+| release-packaging-governed | `processes/meta/release-packaging-governed/` | canonical |
+| evolution-feedback-planning | `processes/meta/evolution-feedback-planning/` | canonical |
+| governed-config-change | `processes/meta/governed-config-change/` | canonical |
+| quality-gate-preparation | `processes/meta/quality-gate-preparation/` | canonical |
+| quality-gate-evaluation | `processes/meta/quality-gate-evaluation/` | canonical |
+| hold-governance | `processes/meta/hold-governance/` | canonical |
+| runtime-policy-calibration | `processes/meta/runtime-policy-calibration/` | canonical |
+| construction-plane-governance | `processes/meta/construction-plane-governance/` | canonical |
+| lifecycle-review | `processes/meta/lifecycle-review/` | canonical |
+| trigger-schedule-runtime | `processes/control/trigger-schedule-runtime/` | canonical |
+| trigger-event-runtime | `processes/control/trigger-event-runtime/` | canonical |
+| software-vendor-e2e-flow | `processes/business/software-vendor-e2e-flow/` | canonical |
 
 ## 已注册 Process
 
 | process_id | 名称 | 类型 | owner | 阶段数 | 状态 | 路径 |
 |---|---|---|---|---|---|---|
-| development-process | development-process | 复合 | bpm | 6 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/development-process/` |
-| full-development | full-development | 复合 | bpm | 8 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/full-development/` |
-| hotfix | hotfix | 复合 | bpm | 7 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/hotfix/` |
-| refactor | refactor | 复合 | bpm | 6 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/refactor/` |
-| objective-scope-baseline | objective-scope-baseline | 复合 | bpm | 3 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/objective-scope-baseline/` |
-| hotfix-intake-normalization | hotfix-intake-normalization | 复合 | bpm | 2 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/hotfix-intake-normalization/` |
-| hotfix-scope-spec-baseline | hotfix-scope-spec-baseline | 复合 | bpm | 2 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/hotfix-scope-spec-baseline/` |
-| spec-authoring-contract | spec-authoring-contract | 复合 | bpm | 1 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/spec-authoring-contract/` |
-| implementation-execution-core | implementation-execution-core | 复合 | bpm | 1 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/implementation-execution-core/` |
-| release-packaging-governed | release-packaging-governed | 复合 | bpm | 1 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/release-packaging-governed/` |
-| evolution-feedback-planning | evolution-feedback-planning | 复合 | bpm | 4 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/evolution-feedback-planning/` |
-| governed-config-change | governed-config-change | 复合 | bpm | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/governed-config-change/` |
-| quality-gate-preparation | quality-gate-preparation | 复合 | bpm | 3 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/quality-gate-preparation/` |
-| quality-gate-evaluation | quality-gate-evaluation | 复合 | bpm | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/quality-gate-evaluation/` |
-| hold-governance | hold-governance | 复合 | bpm | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/hold-governance/` |
-| runtime-policy-calibration | runtime-policy-calibration | 复合 | bpm | 6 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/runtime-policy-calibration/` |
-| construction-plane-governance | construction-plane-governance | 复合 | architect | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/construction-plane-governance/` |
-| lifecycle-review | lifecycle-review | 复合 | hr | 5 | review | `/Users/albus/MyProjects/ANC_v2/processes/meta/lifecycle-review/` |
-| trigger-schedule-runtime | trigger-schedule-runtime | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-schedule-runtime/` |
-| trigger-event-runtime | trigger-event-runtime | 复合 | bpm | 6 | draft | `/Users/albus/MyProjects/ANC_v2/processes/control/trigger-event-runtime/` |
-| software-vendor-e2e-flow | software-vendor-e2e-flow | 复合 | bpm | 8 | draft | `/Users/albus/MyProjects/ANC_v2/processes/business/software-vendor-e2e-flow/` |
+| development-process | development-process | 复合 | bpm | 6 | review | `processes/meta/development-process/` |
+| full-development | full-development | 复合 | bpm | 8 | review | `processes/meta/full-development/` |
+| hotfix | hotfix | 复合 | bpm | 7 | review | `processes/meta/hotfix/` |
+| refactor | refactor | 复合 | bpm | 6 | review | `processes/meta/refactor/` |
+| objective-scope-baseline | objective-scope-baseline | 复合 | bpm | 3 | review | `processes/meta/objective-scope-baseline/` |
+| hotfix-intake-normalization | hotfix-intake-normalization | 复合 | bpm | 2 | review | `processes/meta/hotfix-intake-normalization/` |
+| hotfix-scope-spec-baseline | hotfix-scope-spec-baseline | 复合 | bpm | 2 | review | `processes/meta/hotfix-scope-spec-baseline/` |
+| spec-authoring-contract | spec-authoring-contract | 复合 | bpm | 1 | review | `processes/meta/spec-authoring-contract/` |
+| implementation-execution-core | implementation-execution-core | 复合 | bpm | 1 | review | `processes/meta/implementation-execution-core/` |
+| release-packaging-governed | release-packaging-governed | 复合 | bpm | 1 | review | `processes/meta/release-packaging-governed/` |
+| evolution-feedback-planning | evolution-feedback-planning | 复合 | bpm | 4 | review | `processes/meta/evolution-feedback-planning/` |
+| governed-config-change | governed-config-change | 复合 | bpm | 5 | review | `processes/meta/governed-config-change/` |
+| quality-gate-preparation | quality-gate-preparation | 复合 | bpm | 3 | review | `processes/meta/quality-gate-preparation/` |
+| quality-gate-evaluation | quality-gate-evaluation | 复合 | bpm | 5 | review | `processes/meta/quality-gate-evaluation/` |
+| hold-governance | hold-governance | 复合 | bpm | 5 | review | `processes/meta/hold-governance/` |
+| runtime-policy-calibration | runtime-policy-calibration | 复合 | bpm | 6 | review | `processes/meta/runtime-policy-calibration/` |
+| construction-plane-governance | construction-plane-governance | 复合 | architect | 5 | review | `processes/meta/construction-plane-governance/` |
+| lifecycle-review | lifecycle-review | 复合 | hr | 5 | review | `processes/meta/lifecycle-review/` |
+| trigger-schedule-runtime | trigger-schedule-runtime | 复合 | bpm | 6 | draft | `processes/control/trigger-schedule-runtime/` |
+| trigger-event-runtime | trigger-event-runtime | 复合 | bpm | 6 | draft | `processes/control/trigger-event-runtime/` |
+| software-vendor-e2e-flow | software-vendor-e2e-flow | 复合 | bpm | 8 | draft | `processes/business/software-vendor-e2e-flow/` |
 
 ## 规划中 Process — 元流程
 
@@ -99,25 +99,25 @@
 
 ## P6 原子流程目录
 
-详见 `/Users/albus/MyProjects/ANC_v2/docs/design/processes/p-levels/P6-atomic-process-catalog.md`。
+详见 `docs/design/processes/p-levels/P6-atomic-process-catalog.md`。
 
 新增复合流程设计文档：
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/quality-gate-preparation-process.md`
-2. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/quality-gate-evaluation-process.md`
-3. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/hold-governance-process.md`
-4. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/trigger-schedule-runtime-process.md`
-5. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/trigger-event-runtime-process.md`
-6. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/trigger-runtime-supervisor-pattern.md`
-7. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/runtime-policy-calibration-process.md`
-8. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/development-process.md`
-9. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/full-development-process.md`
-10. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/hotfix-process.md`
-11. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/refactor-process.md`
-12. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/construction-plane-governance-process.md`
-13. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/construction-plane-governance-runtime-contract-baseline.md`
-14. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/lifecycle-review-process.md`
-15. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/software-vendor-e2e-flow-process.md`
+1. `docs/design/processes/quality-gate-preparation-process.md`
+2. `docs/design/processes/quality-gate-evaluation-process.md`
+3. `docs/design/processes/hold-governance-process.md`
+4. `docs/design/processes/trigger-schedule-runtime-process.md`
+5. `docs/design/processes/trigger-event-runtime-process.md`
+6. `docs/design/processes/trigger-runtime-supervisor-pattern.md`
+7. `docs/design/processes/runtime-policy-calibration-process.md`
+8. `docs/design/processes/development-process.md`
+9. `docs/design/processes/full-development-process.md`
+10. `docs/design/processes/hotfix-process.md`
+11. `docs/design/processes/refactor-process.md`
+12. `docs/design/processes/construction-plane-governance-process.md`
+13. `docs/design/processes/construction-plane-governance-runtime-contract-baseline.md`
+14. `docs/design/processes/lifecycle-review-process.md`
+15. `docs/design/processes/software-vendor-e2e-flow-process.md`
 
 Session3 已落地治理流程设计文档与运行资产：
 
@@ -126,7 +126,7 @@ Session3 已落地治理流程设计文档与运行资产：
 
 新增策略参考文档：
 
-1. `/Users/albus/MyProjects/ANC_v2/docs/design/processes/trigger-runtime-policy-guidelines.md`
+1. `docs/design/processes/trigger-runtime-policy-guidelines.md`
 
 ## 校验规则
 
@@ -251,3 +251,10 @@ Session3 已落地治理流程设计文档与运行资产：
 1. `quality-gate-evaluation` 版本升级 `0.1.0 -> 0.2.0`：门禁输出拆分为 `gate_decision`（外部）与 `runtime_gate_state`（内部）。
 2. `hold-governance` 版本升级 `0.1.0 -> 0.2.0`：补齐 `liveness_policy_ref/no_progress_window_ref/termination_rule_ref` 输入与 `external_gate_decision` 输出。
 3. `runtime-policy-calibration` 版本升级 `0.2.0 -> 0.3.0`：新增活性策略三件套输出（`liveness_policy_ref/no_progress_window_ref/termination_rule_ref`）。
+
+## W18 联动备注（自动回测闭环与 fixture 基线固化）
+
+1. `quality-gate-evaluation` 版本升级 `0.2.0 -> 0.3.0`：新增 `max_auto_retest_cycles` 回测预算，`p5` 支持 `auto-retest` 回路到 `p2`。
+2. `hold-governance` 版本升级 `0.2.0 -> 0.3.0`：新增输出 `triage_action + retest_recommendation`，供上级流程机器消费。
+3. `TC-QA-PROC` 与 `M1 runtime` 用例统一到“对外 fail、运行态 hold”语义，移除 `gate_decision=hold` 旧断言。
+4. QA 回归 fixture 迁移到 `tests/fixtures/quality-gate/`，避免依赖未纳管的 `runtime_data` 路径。

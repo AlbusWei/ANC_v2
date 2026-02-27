@@ -1,6 +1,6 @@
 {
   "process_id": "quality-gate-evaluation",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [
@@ -167,14 +167,14 @@
         "supplier": "p4",
         "input": "hold_case_ref + final_gate_verdict_ref",
         "process": "route hold case into hold governance subprocess",
-        "output": "hold_resolution_ref",
-        "client": "initiator"
+        "output": "hold_resolution_ref + retest_recommendation",
+        "client": "p2 or initiator"
       },
       "acceptance_criteria": "hold cases are resolved or escalated with evidence",
       "phase_purpose": "将 hold 案例路由至 hold 治理子流程",
       "input_context_ref": "hold_case_ref + final_gate_verdict_ref",
-      "done_definition": "必须产出 hold_resolution_ref，并满足“hold 案例在证据支撑下被解决或升级”",
-      "handoff_note": "将 hold_resolution_ref 交接给 initiator"
+      "done_definition": "必须产出 hold_resolution_ref + retest_recommendation，并满足“hold 案例在证据支撑下被解决或升级，且自动回测路由可判定”",
+      "handoff_note": "若 retest_recommendation=auto-retest 且预算未耗尽则回路到 p2，否则交接给 initiator"
     }
   ],
   "control_flow": [
@@ -207,8 +207,15 @@
     },
     {
       "from": "p5",
+      "to": "p2",
+      "on": "success",
+      "condition": "retest_recommendation == auto-retest && auto_retest_cycles_remaining > 0"
+    },
+    {
+      "from": "p5",
       "to": "end",
-      "on": "success"
+      "on": "success",
+      "condition": "retest_recommendation == stop || auto_retest_cycles_remaining == 0"
     }
   ],
   "fail_policy": {

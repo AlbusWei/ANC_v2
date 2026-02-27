@@ -75,6 +75,7 @@
 - [x] 完成 `development-process` 规范收敛（`dev.prototype` + O6 Lifecycle）：升级为六阶段最小闭环（含 `lifecycle-review`），并同步 `process_registry`、`process-inventory` 与设计文档
 - [x] 完成 M3 生命周期执行权口径统一：`full-development/hotfix/refactor` 的 `lifecycle-gate-sync` 执行 actor 收敛为 `hr`（`admin` 保留高风险审批位）
 - [x] 完成 M1 HOLD 语义收敛：`gate_decision` 对外枚举固定 `pass|fail|test_invalid`，`hold` 下沉为 `runtime_gate_state`，并补齐活性策略三件套（`liveness_policy_ref/no_progress_window_ref/termination_rule_ref`）
+- [x] 完成 M1 HOLD 自动回测闭环最小落盘：`quality-gate-evaluation` 新增 `max_auto_retest_cycles` 回测预算与 `p5 -> p2` 回路语义，`hold-governance` 输出补齐 `triage_action + retest_recommendation`，并将 QA fixture 基线迁移到 `tests/fixtures/quality-gate/`
 
 ## 进行中（In Progress）
 

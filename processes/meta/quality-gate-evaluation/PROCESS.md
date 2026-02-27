@@ -4,7 +4,7 @@
 
 - 流程级别：`P4`
 - 负责人：`bpm`
-- 版本：`0.2.0`
+- 版本：`0.3.0`
 - Objective 引用：`obj-m1-unified-quality-gate`
 
 ## 流程目标（自然语言）
@@ -59,10 +59,10 @@
 ### p5 govern-hold
 
 - 执行角色：`bpm`
-- 阶段目的：将 hold 案例路由至 hold 治理子流程。
+- 阶段目的：将 hold 案例路由至 hold 治理子流程并判定是否自动回测。
 - 输入语义：hold_case_ref + final_gate_verdict_ref。
-- 完成标准：必须产出 hold_resolution_ref，并满足“hold 案例在证据支撑下被解决或升级”。
-- 交接说明：将 hold_resolution_ref 交接给 initiator。
+- 完成标准：必须产出 hold_resolution_ref + retest_recommendation，并满足“hold 案例在证据支撑下被解决或升级且自动回测路由可判定”。
+- 交接说明：若 retest_recommendation=auto-retest 且预算未耗尽则回路到 p2，否则将 hold_resolution_ref 交接给 initiator。
 - 执行单元：`subprocess:hold-governance`。
 
 ## 控制流与回退
@@ -72,7 +72,8 @@
 - `p3` 在 `success` 条件下流转到 `p4`。
 - `p4` 在 `success && runtime_gate_state == hold` 条件下流转到 `p5`。
 - `p4` 在 `success && runtime_gate_state != hold` 条件下流转到 `end`。
-- `p5` 在 `success` 条件下流转到 `end`。
+- `p5` 在 `success && retest_recommendation == auto-retest && auto_retest_cycles_remaining > 0` 条件下流转到 `p2`。
+- `p5` 在 `success && (retest_recommendation == stop || auto_retest_cycles_remaining == 0)` 条件下流转到 `end`。
 
 ## 协作策略（运行态）
 

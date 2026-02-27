@@ -341,6 +341,13 @@ def main() -> int:
             raise QualityGateEvaluationError("profile_set_empty")
 
         force_hold = parse_bool(request.get("force_hold"))
+        max_auto_retest_cycles_raw = request.get("max_auto_retest_cycles", 0)
+        try:
+            max_auto_retest_cycles = int(max_auto_retest_cycles_raw)
+        except (TypeError, ValueError) as exc:
+            raise QualityGateEvaluationError("max_auto_retest_cycles_must_be_integer") from exc
+        if max_auto_retest_cycles < 0:
+            raise QualityGateEvaluationError("max_auto_retest_cycles_must_be_gte_0")
         phase_dispatch_enabled = args.enable_phase_dispatch
         phase_dispatch_openclaw = args.dispatch_openclaw
         phase_dispatch_reset_session = args.dispatch_reset_openclaw_session
@@ -402,190 +409,209 @@ def main() -> int:
             }
         )
 
-        # p2: subjective evaluation (AP-008). For W3-B scheduling sample we keep deterministic outputs.
-        p2_dispatch = dispatch_phase(
-            enabled=phase_dispatch_enabled,
-            execute_openclaw=phase_dispatch_openclaw,
-            reset_openclaw_session=phase_dispatch_reset_session,
-            strict_session_match=phase_dispatch_strict_match,
-            root=root,
-            evidence_dir=evidence_dir,
-            phase_id="p2",
-            actor="qa",
-            input_ref=objective_eval_ref,
-            purpose="执行主观评测（AP-008）并产出 subjective_eval_ref",
-            done_definition="必须产出 subjective_eval_ref 且给出 hold/pass 判定",
-            handoff_note="将 subjective_eval_ref 交给 p3 回归评测阶段",
-            instance_root=args.dispatch_instance_root,
-            openclaw_bin=args.dispatch_openclaw_bin,
-            openclaw_stall_threshold_seconds=args.dispatch_openclaw_stall_threshold_seconds,
-        )
-        p2_dir = evidence_dir / "p2_subjective_eval"
-        p2_dir.mkdir(parents=True, exist_ok=True)
-        subjective_eval_path = p2_dir / "subjective_eval.json"
-        subjective_decision = "hold" if force_hold else "pass"
-        subjective_payload = {
-            "timestamp": now_iso(),
-            "mode": "subjective",
-            "gate_decision": subjective_decision,
-            "subjective_verdict": "review" if force_hold else "accept",
-            "reasons": ["simulated_subjective_result"],
-            "simulated": True,
-            "case_results": [
-                {
-                    "tc_id": "TC-SUBJECTIVE-001",
-                    "priority": "P1",
-                    "decision": subjective_decision,
-                }
-            ],
-        }
-        dump_json(subjective_eval_path, subjective_payload)
-        phase_trace.append(
-            {
-                "phase": "p2-run-subjective-evaluation",
-                "status": "pass",
-                "mode": "simulated",
-                "subjective_eval_ref": to_rel(subjective_eval_path, root),
-                "subjective_decision": subjective_decision,
-                "dispatch": p2_dispatch,
-                "ts": now_iso(),
-            }
-        )
-
-        # p3: regression evaluation (AP-009)
-        p3_dispatch = dispatch_phase(
-            enabled=phase_dispatch_enabled,
-            execute_openclaw=phase_dispatch_openclaw,
-            reset_openclaw_session=phase_dispatch_reset_session,
-            strict_session_match=phase_dispatch_strict_match,
-            root=root,
-            evidence_dir=evidence_dir,
-            phase_id="p3",
-            actor="qa",
-            input_ref=to_rel(subjective_eval_path, root),
-            purpose="执行回归评测（AP-009）并产出 regression_eval_ref",
-            done_definition="必须产出可追溯 regression_eval_ref",
-            handoff_note="将三类评测引用交给 p4 聚合判定",
-            instance_root=args.dispatch_instance_root,
-            openclaw_bin=args.dispatch_openclaw_bin,
-            openclaw_stall_threshold_seconds=args.dispatch_openclaw_stall_threshold_seconds,
-        )
-        p3_dir = evidence_dir / "p3_regression_eval"
-        p3_dir.mkdir(parents=True, exist_ok=True)
-        p3_cmd = [
-            sys.executable,
-            "skills/system/qa/regression-runner/scripts/run_regression.py",
-            "--regression-scope",
-            str(request.get("regression_scope") or "M3"),
-            "--profile-set",
-            profile_set_csv,
-            "--preparation-bundle",
-            to_rel(preparation_bundle_path, root),
-            "--output-dir",
-            to_rel(p3_dir, root),
-        ]
-        for ref in actual_output_refs:
-            p3_cmd.extend(["--actual-output", ref])
-
-        p3_proc = run_cmd(p3_cmd, root)
-        (p3_dir / "stdout.txt").write_text(p3_proc.stdout, encoding="utf-8")
-        (p3_dir / "stderr.txt").write_text(p3_proc.stderr, encoding="utf-8")
-        p3_payload = parse_last_json(p3_proc.stdout)
-        if p3_proc.returncode != 0:
-            raise QualityGateEvaluationError(f"regression_eval_failed:rc={p3_proc.returncode}")
-
-        regression_eval_ref = str(p3_payload.get("regression_eval_ref") or to_rel(p3_dir / "regression_eval.json", root))
-        if not resolve_path(root, regression_eval_ref).exists():
-            raise QualityGateEvaluationError("regression_eval_ref_missing")
-
-        phase_trace.append(
-            {
-                "phase": "p3-run-regression-evaluation",
-                "status": "pass",
-                "return_code": p3_proc.returncode,
-                "regression_eval_ref": regression_eval_ref,
-                "dispatch": p3_dispatch,
-                "ts": now_iso(),
-            }
-        )
-
-        # p4: aggregate-gate-decision (AP-020)
-        p4_dispatch = dispatch_phase(
-            enabled=phase_dispatch_enabled,
-            execute_openclaw=phase_dispatch_openclaw,
-            reset_openclaw_session=phase_dispatch_reset_session,
-            strict_session_match=phase_dispatch_strict_match,
-            root=root,
-            evidence_dir=evidence_dir,
-            phase_id="p4",
-            actor="qa",
-            input_ref=regression_eval_ref,
-            purpose="聚合门禁判定（AP-020）并产出 final_gate_verdict_ref",
-            done_definition="必须产出 gate_decision 与 final_gate_verdict_ref",
-            handoff_note="若 runtime_gate_state=hold，则交给 p5 处理 hold 治理路由",
-            instance_root=args.dispatch_instance_root,
-            openclaw_bin=args.dispatch_openclaw_bin,
-            openclaw_stall_threshold_seconds=args.dispatch_openclaw_stall_threshold_seconds,
-        )
-        p4_dir = evidence_dir / "p4_aggregate_verdict"
-        p4_dir.mkdir(parents=True, exist_ok=True)
-        aggregation_rules_ref = str(
-            request.get("aggregation_rules_ref")
-            or "runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/aggregation_rules.json"
-        )
-        if not resolve_path(root, aggregation_rules_ref).exists():
-            raise QualityGateEvaluationError("aggregation_rules_ref_unreachable")
-
-        p4_cmd = [
-            sys.executable,
-            "skills/system/qa/verdict-normalizer/scripts/normalize_verdict.py",
-            "--objective-eval",
-            objective_eval_ref,
-            "--subjective-eval",
-            to_rel(subjective_eval_path, root),
-            "--regression-eval",
-            regression_eval_ref,
-            "--aggregation-rules",
-            aggregation_rules_ref,
-            "--output-dir",
-            to_rel(p4_dir, root),
-        ]
-        p4_proc = run_cmd(p4_cmd, root)
-        (p4_dir / "stdout.txt").write_text(p4_proc.stdout, encoding="utf-8")
-        (p4_dir / "stderr.txt").write_text(p4_proc.stderr, encoding="utf-8")
-        p4_payload = parse_last_json(p4_proc.stdout)
-        raw_gate_decision = str(p4_payload.get("gate_decision") or "fail").strip()
-        runtime_gate_state = raw_gate_decision
-        gate_decision = "fail" if runtime_gate_state == "hold" else runtime_gate_state
-        final_gate_verdict_ref = str(p4_payload.get("final_gate_verdict_ref") or to_rel(p4_dir / "final_gate_verdict.json", root))
-
-        if p4_proc.returncode not in (0, 20, 30, 40):
-            raise QualityGateEvaluationError(f"verdict_normalizer_unexpected_rc:{p4_proc.returncode}")
-        if runtime_gate_state not in {"pass", "fail", "hold", "test_invalid"}:
-            raise QualityGateEvaluationError(f"invalid_runtime_gate_state:{runtime_gate_state}")
-        if gate_decision not in {"pass", "fail", "test_invalid"}:
-            raise QualityGateEvaluationError(f"invalid_gate_decision:{gate_decision}")
-        if not resolve_path(root, final_gate_verdict_ref).exists():
-            raise QualityGateEvaluationError("final_gate_verdict_ref_missing")
-
-        phase_trace.append(
-            {
-                "phase": "p4-aggregate-gate-decision",
-                "status": "pass" if runtime_gate_state in {"pass", "hold"} else "failed",
-                "gate_decision": gate_decision,
-                "runtime_gate_state": runtime_gate_state,
-                "return_code": p4_proc.returncode,
-                "final_gate_verdict_ref": final_gate_verdict_ref,
-                "dispatch": p4_dispatch,
-                "ts": now_iso(),
-            }
-        )
-
-        # p5: govern-hold (subprocess)
-        hold_routed = runtime_gate_state == "hold"
+        # p2~p5: evaluation + hold 治理，支持自动回测回路
+        gate_decision = "fail"
+        runtime_gate_state = "fail"
+        final_gate_verdict_ref = ""
+        hold_routed = False
         hold_governance_output_ref = ""
         hold_resolution_ref = ""
-        if hold_routed:
+        hold_triage_action = ""
+        hold_retest_recommendation = ""
+        auto_retest_count = 0
+        force_hold_current = force_hold
+
+        while True:
+            # p2: subjective evaluation (AP-008). For W3-B scheduling sample we keep deterministic outputs.
+            p2_dispatch = dispatch_phase(
+                enabled=phase_dispatch_enabled,
+                execute_openclaw=phase_dispatch_openclaw,
+                reset_openclaw_session=phase_dispatch_reset_session,
+                strict_session_match=phase_dispatch_strict_match,
+                root=root,
+                evidence_dir=evidence_dir,
+                phase_id="p2",
+                actor="qa",
+                input_ref=objective_eval_ref,
+                purpose="执行主观评测（AP-008）并产出 subjective_eval_ref",
+                done_definition="必须产出 subjective_eval_ref 且给出 hold/pass 判定",
+                handoff_note="将 subjective_eval_ref 交给 p3 回归评测阶段",
+                instance_root=args.dispatch_instance_root,
+                openclaw_bin=args.dispatch_openclaw_bin,
+                openclaw_stall_threshold_seconds=args.dispatch_openclaw_stall_threshold_seconds,
+            )
+            p2_dir = evidence_dir / "p2_subjective_eval"
+            p2_dir.mkdir(parents=True, exist_ok=True)
+            subjective_eval_path = p2_dir / "subjective_eval.json"
+            subjective_decision = "hold" if force_hold_current else "pass"
+            subjective_payload = {
+                "timestamp": now_iso(),
+                "mode": "subjective",
+                "gate_decision": subjective_decision,
+                "subjective_verdict": "review" if force_hold_current else "accept",
+                "reasons": ["simulated_subjective_result"],
+                "simulated": True,
+                "case_results": [
+                    {
+                        "tc_id": "TC-SUBJECTIVE-001",
+                        "priority": "P1",
+                        "decision": subjective_decision,
+                    }
+                ],
+            }
+            dump_json(subjective_eval_path, subjective_payload)
+            phase_trace.append(
+                {
+                    "phase": "p2-run-subjective-evaluation",
+                    "status": "pass",
+                    "mode": "simulated",
+                    "subjective_eval_ref": to_rel(subjective_eval_path, root),
+                    "subjective_decision": subjective_decision,
+                    "iteration": auto_retest_count,
+                    "dispatch": p2_dispatch,
+                    "ts": now_iso(),
+                }
+            )
+
+            # p3: regression evaluation (AP-009)
+            p3_dispatch = dispatch_phase(
+                enabled=phase_dispatch_enabled,
+                execute_openclaw=phase_dispatch_openclaw,
+                reset_openclaw_session=phase_dispatch_reset_session,
+                strict_session_match=phase_dispatch_strict_match,
+                root=root,
+                evidence_dir=evidence_dir,
+                phase_id="p3",
+                actor="qa",
+                input_ref=to_rel(subjective_eval_path, root),
+                purpose="执行回归评测（AP-009）并产出 regression_eval_ref",
+                done_definition="必须产出可追溯 regression_eval_ref",
+                handoff_note="将三类评测引用交给 p4 聚合判定",
+                instance_root=args.dispatch_instance_root,
+                openclaw_bin=args.dispatch_openclaw_bin,
+                openclaw_stall_threshold_seconds=args.dispatch_openclaw_stall_threshold_seconds,
+            )
+            p3_dir = evidence_dir / "p3_regression_eval"
+            p3_dir.mkdir(parents=True, exist_ok=True)
+            p3_cmd = [
+                sys.executable,
+                "skills/system/qa/regression-runner/scripts/run_regression.py",
+                "--regression-scope",
+                str(request.get("regression_scope") or "M3"),
+                "--profile-set",
+                profile_set_csv,
+                "--preparation-bundle",
+                to_rel(preparation_bundle_path, root),
+                "--output-dir",
+                to_rel(p3_dir, root),
+            ]
+            for ref in actual_output_refs:
+                p3_cmd.extend(["--actual-output", ref])
+
+            p3_proc = run_cmd(p3_cmd, root)
+            (p3_dir / "stdout.txt").write_text(p3_proc.stdout, encoding="utf-8")
+            (p3_dir / "stderr.txt").write_text(p3_proc.stderr, encoding="utf-8")
+            p3_payload = parse_last_json(p3_proc.stdout)
+            if p3_proc.returncode != 0:
+                raise QualityGateEvaluationError(f"regression_eval_failed:rc={p3_proc.returncode}")
+
+            regression_eval_ref = str(
+                p3_payload.get("regression_eval_ref") or to_rel(p3_dir / "regression_eval.json", root)
+            )
+            if not resolve_path(root, regression_eval_ref).exists():
+                raise QualityGateEvaluationError("regression_eval_ref_missing")
+
+            phase_trace.append(
+                {
+                    "phase": "p3-run-regression-evaluation",
+                    "status": "pass",
+                    "return_code": p3_proc.returncode,
+                    "regression_eval_ref": regression_eval_ref,
+                    "iteration": auto_retest_count,
+                    "dispatch": p3_dispatch,
+                    "ts": now_iso(),
+                }
+            )
+
+            # p4: aggregate-gate-decision (AP-020)
+            p4_dispatch = dispatch_phase(
+                enabled=phase_dispatch_enabled,
+                execute_openclaw=phase_dispatch_openclaw,
+                reset_openclaw_session=phase_dispatch_reset_session,
+                strict_session_match=phase_dispatch_strict_match,
+                root=root,
+                evidence_dir=evidence_dir,
+                phase_id="p4",
+                actor="qa",
+                input_ref=regression_eval_ref,
+                purpose="聚合门禁判定（AP-020）并产出 final_gate_verdict_ref",
+                done_definition="必须产出 gate_decision 与 final_gate_verdict_ref",
+                handoff_note="若 runtime_gate_state=hold，则交给 p5 处理 hold 治理路由",
+                instance_root=args.dispatch_instance_root,
+                openclaw_bin=args.dispatch_openclaw_bin,
+                openclaw_stall_threshold_seconds=args.dispatch_openclaw_stall_threshold_seconds,
+            )
+            p4_dir = evidence_dir / "p4_aggregate_verdict"
+            p4_dir.mkdir(parents=True, exist_ok=True)
+            aggregation_rules_ref = str(
+                request.get("aggregation_rules_ref") or "tests/fixtures/quality-gate/aggregation_rules.json"
+            )
+            if not resolve_path(root, aggregation_rules_ref).exists():
+                raise QualityGateEvaluationError("aggregation_rules_ref_unreachable")
+
+            p4_cmd = [
+                sys.executable,
+                "skills/system/qa/verdict-normalizer/scripts/normalize_verdict.py",
+                "--objective-eval",
+                objective_eval_ref,
+                "--subjective-eval",
+                to_rel(subjective_eval_path, root),
+                "--regression-eval",
+                regression_eval_ref,
+                "--aggregation-rules",
+                aggregation_rules_ref,
+                "--output-dir",
+                to_rel(p4_dir, root),
+            ]
+            p4_proc = run_cmd(p4_cmd, root)
+            (p4_dir / "stdout.txt").write_text(p4_proc.stdout, encoding="utf-8")
+            (p4_dir / "stderr.txt").write_text(p4_proc.stderr, encoding="utf-8")
+            p4_payload = parse_last_json(p4_proc.stdout)
+            raw_gate_decision = str(p4_payload.get("gate_decision") or "fail").strip()
+            runtime_gate_state = raw_gate_decision
+            gate_decision = "fail" if runtime_gate_state == "hold" else runtime_gate_state
+            final_gate_verdict_ref = str(
+                p4_payload.get("final_gate_verdict_ref") or to_rel(p4_dir / "final_gate_verdict.json", root)
+            )
+
+            if p4_proc.returncode not in (0, 20, 30, 40):
+                raise QualityGateEvaluationError(f"verdict_normalizer_unexpected_rc:{p4_proc.returncode}")
+            if runtime_gate_state not in {"pass", "fail", "hold", "test_invalid"}:
+                raise QualityGateEvaluationError(f"invalid_runtime_gate_state:{runtime_gate_state}")
+            if gate_decision not in {"pass", "fail", "test_invalid"}:
+                raise QualityGateEvaluationError(f"invalid_gate_decision:{gate_decision}")
+            if not resolve_path(root, final_gate_verdict_ref).exists():
+                raise QualityGateEvaluationError("final_gate_verdict_ref_missing")
+
+            phase_trace.append(
+                {
+                    "phase": "p4-aggregate-gate-decision",
+                    "status": "pass" if runtime_gate_state in {"pass", "hold"} else "failed",
+                    "gate_decision": gate_decision,
+                    "runtime_gate_state": runtime_gate_state,
+                    "return_code": p4_proc.returncode,
+                    "final_gate_verdict_ref": final_gate_verdict_ref,
+                    "iteration": auto_retest_count,
+                    "dispatch": p4_dispatch,
+                    "ts": now_iso(),
+                }
+            )
+
+            hold_routed = runtime_gate_state == "hold"
+            if not hold_routed:
+                break
+
+            # p5: govern-hold (subprocess)
             p5_dispatch = dispatch_phase(
                 enabled=phase_dispatch_enabled,
                 execute_openclaw=phase_dispatch_openclaw,
@@ -598,15 +624,23 @@ def main() -> int:
                 input_ref=final_gate_verdict_ref,
                 purpose="处理 hold 治理路由并输出 hold_resolution_ref",
                 done_definition="hold 场景必须产出 hold_resolution_ref 或 escalation_ref",
-                handoff_note="将 hold 处理结论回填主流程并结束本次门禁流程",
+                handoff_note="若 retest_recommendation=auto-retest 且预算未耗尽，则回路到 p2",
                 instance_root=args.dispatch_instance_root,
                 openclaw_bin=args.dispatch_openclaw_bin,
                 openclaw_stall_threshold_seconds=args.dispatch_openclaw_stall_threshold_seconds,
             )
-            hold_case_path = resolve_path(root, str(request.get("hold_case_ref") or to_rel(evidence_dir / "p5_hold_case.json", root)))
-            runtime_log_path = resolve_path(root, str(request.get("runtime_log_ref") or to_rel(evidence_dir / "p5_runtime.log", root)))
-            execution_state_path = resolve_path(root, str(request.get("execution_state_ref") or to_rel(evidence_dir / "p5_execution_state.json", root)))
-            triage_policy_path = resolve_path(root, str(request.get("triage_policy_ref") or to_rel(evidence_dir / "p5_triage_policy.json", root)))
+            hold_case_path = resolve_path(
+                root, str(request.get("hold_case_ref") or to_rel(evidence_dir / "p5_hold_case.json", root))
+            )
+            runtime_log_path = resolve_path(
+                root, str(request.get("runtime_log_ref") or to_rel(evidence_dir / "p5_runtime.log", root))
+            )
+            execution_state_path = resolve_path(
+                root, str(request.get("execution_state_ref") or to_rel(evidence_dir / "p5_execution_state.json", root))
+            )
+            triage_policy_path = resolve_path(
+                root, str(request.get("triage_policy_ref") or to_rel(evidence_dir / "p5_triage_policy.json", root))
+            )
             runtime_health_policy_path = resolve_path(
                 root,
                 str(request.get("runtime_health_policy_ref") or to_rel(evidence_dir / "p5_runtime_health_policy.json", root)),
@@ -711,6 +745,12 @@ def main() -> int:
             hold_payload = load_json(hold_output_path)
             hold_governance_output_ref = to_rel(hold_output_path, root)
             hold_resolution_ref = str(hold_payload.get("hold_resolution_ref") or "")
+            hold_triage_action = str(hold_payload.get("triage_action") or "")
+            hold_retest_recommendation = str(hold_payload.get("retest_recommendation") or "stop")
+            if hold_retest_recommendation not in {"auto-retest", "stop"}:
+                raise QualityGateEvaluationError(
+                    f"invalid_hold_retest_recommendation:{hold_retest_recommendation}"
+                )
             if hold_resolution_ref and not resolve_path(root, hold_resolution_ref).exists():
                 raise QualityGateEvaluationError("hold_resolution_ref_missing")
 
@@ -720,10 +760,31 @@ def main() -> int:
                     "status": "pass",
                     "hold_governance_output_ref": hold_governance_output_ref,
                     "hold_resolution_ref": hold_resolution_ref,
+                    "triage_action": hold_triage_action,
+                    "retest_recommendation": hold_retest_recommendation,
+                    "iteration": auto_retest_count,
                     "dispatch": p5_dispatch,
                     "ts": now_iso(),
                 }
             )
+
+            if hold_retest_recommendation == "auto-retest" and auto_retest_count < max_auto_retest_cycles:
+                auto_retest_count += 1
+                # 自动回测回路使用非 force_hold 输入，避免测试场景被固定 hold 卡死。
+                force_hold_current = False
+                phase_trace.append(
+                    {
+                        "phase": "p5-auto-retest-route",
+                        "status": "pass",
+                        "next_phase": "p2",
+                        "auto_retest_count": auto_retest_count,
+                        "max_auto_retest_cycles": max_auto_retest_cycles,
+                        "ts": now_iso(),
+                    }
+                )
+                continue
+
+            break
 
         dump_json(
             runtime_trace_path,
@@ -734,6 +795,8 @@ def main() -> int:
                 "phase_trace": phase_trace,
                 "input_ref": to_rel(input_path, root),
                 "collaboration_mode": "phase-isolated-session" if phase_dispatch_enabled else "local-only",
+                "auto_retest_count": auto_retest_count,
+                "max_auto_retest_cycles": max_auto_retest_cycles,
                 "dispatch_openclaw": phase_dispatch_openclaw,
                 "dispatch_reset_openclaw_session": phase_dispatch_reset_session,
                 "dispatch_strict_session_match": phase_dispatch_strict_match,
@@ -754,12 +817,21 @@ def main() -> int:
             "hold_routed": hold_routed,
             "hold_governance_output_ref": hold_governance_output_ref,
             "hold_resolution_ref": hold_resolution_ref,
+            "hold_triage_action": hold_triage_action,
+            "hold_retest_recommendation": hold_retest_recommendation,
+            "auto_retest_count": auto_retest_count,
+            "max_auto_retest_cycles": max_auto_retest_cycles,
             "collaboration_mode": "phase-isolated-session" if phase_dispatch_enabled else "local-only",
             "phase_dispatch_enabled": phase_dispatch_enabled,
             "dispatch_openclaw": phase_dispatch_openclaw,
             "dispatch_reset_openclaw_session": phase_dispatch_reset_session,
             "dispatch_strict_session_match": phase_dispatch_strict_match,
-            "reasons": ["gate_aggregated", f"gate_decision={gate_decision}", f"runtime_gate_state={runtime_gate_state}"],
+            "reasons": [
+                "gate_aggregated",
+                f"gate_decision={gate_decision}",
+                f"runtime_gate_state={runtime_gate_state}",
+                f"auto_retest_count={auto_retest_count}",
+            ],
         }
         dump_json(output_path, output)
         print(to_rel(output_path, root))

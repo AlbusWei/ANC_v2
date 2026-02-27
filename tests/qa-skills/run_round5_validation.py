@@ -155,10 +155,10 @@ def main() -> int:
     spec_ref = "docs/design/modules/M1-openjudge-adapter-spec.md"
     profile = "quality-gate.baseline@1.0.0"
 
-    rule_test_doc = "runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md"
-    actual_output_pass = "runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_pass.txt"
-    actual_output_baseline = "runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_baseline.txt"
-    actual_output_candidate = "runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_candidate.txt"
+    rule_test_doc = "tests/fixtures/quality-gate/TEST_rule.md"
+    actual_output_pass = "tests/fixtures/quality-gate/actual_output_pass.txt"
+    actual_output_baseline = "tests/fixtures/quality-gate/actual_output_baseline.txt"
+    actual_output_candidate = "tests/fixtures/quality-gate/actual_output_candidate.txt"
 
     results: List[CaseResult] = []
 
@@ -304,7 +304,7 @@ def main() -> int:
 
     objective_eval_ref = eval_objective_dir / "raw_eval.json"
     regression_eval_ref = eval_regression_dir / "raw_eval.json"
-    aggregation_rules_ref = repo_root / "runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/aggregation_rules.json"
+    aggregation_rules_ref = repo_root / "tests/fixtures/quality-gate/aggregation_rules.json"
 
     verdict_pass_dir = outputs_dir / "verdict-normalizer-pass"
     verdict_test_invalid_dir = outputs_dir / "verdict-normalizer-test-invalid"

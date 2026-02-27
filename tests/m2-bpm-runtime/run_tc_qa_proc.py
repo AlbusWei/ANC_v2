@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run TC-QA-PROC-001~002 for QA process orchestration in M2 W3-B."""
+"""Run TC-QA-PROC-001~003 for QA process orchestration in M2 W3-B."""
 
 from __future__ import annotations
 
@@ -98,7 +98,7 @@ def prepare_hold_inputs(case_dir: Path, root: Path) -> Dict[str, str]:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run TC-QA-PROC-001~002")
+    parser = argparse.ArgumentParser(description="Run TC-QA-PROC-001~003")
     parser.add_argument(
         "--preparation-runner",
         default="processes/meta/quality-gate-preparation/scripts/quality_gate_preparation_runner.py",
@@ -121,12 +121,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--test-doc-ref",
-        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md",
+        default="tests/fixtures/quality-gate/TEST_rule.md",
         help="Repo-relative TEST.md fixture",
     )
     parser.add_argument(
         "--actual-output-ref",
-        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_pass.txt",
+        default="tests/fixtures/quality-gate/actual_output_pass.txt",
         help="Repo-relative actual output fixture",
     )
     parser.add_argument(
@@ -348,17 +348,20 @@ def main() -> int:
             }
         )
 
-        tc2_ok = tc2_ok and tc2_eval_proc.returncode == 0 and tc2_eval_output.exists()
+        # hold 对外门禁语义固定为 fail，runner 预期返回码为 2。
+        tc2_ok = tc2_ok and tc2_eval_proc.returncode == 2 and tc2_eval_output.exists()
         if tc2_ok:
             tc2_eval_payload = load_json(tc2_eval_output)
             gate_decision = str(tc2_eval_payload.get("gate_decision") or "")
+            runtime_gate_state = str(tc2_eval_payload.get("runtime_gate_state") or "")
             hold_routed = bool(tc2_eval_payload.get("hold_routed"))
             hold_governance_output_ref = str(tc2_eval_payload.get("hold_governance_output_ref") or "")
             hold_resolution_ref = str(tc2_eval_payload.get("hold_resolution_ref") or "")
 
             tc2_ok = (
                 tc2_ok
-                and gate_decision == "hold"
+                and gate_decision == "fail"
+                and runtime_gate_state == "hold"
                 and hold_routed
                 and bool(hold_governance_output_ref)
                 and bool(hold_resolution_ref)
@@ -368,6 +371,7 @@ def main() -> int:
             tc2_details.update(
                 {
                     "gate_decision": gate_decision,
+                    "runtime_gate_state": runtime_gate_state,
                     "hold_routed": hold_routed,
                     "hold_governance_output_ref": hold_governance_output_ref,
                     "hold_resolution_ref": hold_resolution_ref,
@@ -376,11 +380,135 @@ def main() -> int:
 
     append_case(cases, "TC-QA-PROC-002", tc2_ok, tc2_details)
 
+    # TC-QA-PROC-003: hold branch auto-retest loop (budget=1)
+    tc3_dir = evidence_root / "TC-QA-PROC-003"
+    tc3_dir.mkdir(parents=True, exist_ok=True)
+
+    tc3_prep_input = tc3_dir / "prep_input.json"
+    tc3_prep_output = tc3_dir / "prep_output.json"
+    dump_json(
+        tc3_prep_input,
+        {
+            "objective_ref": "obj-m1-unified-quality-gate",
+            "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
+            "test_doc_ref": str(test_doc_path.relative_to(root)),
+            "risk_focus": ["P0", "P1"],
+        },
+    )
+
+    tc3_prep_cmd = [
+        sys.executable,
+        str(prep_runner),
+        "--input",
+        str(tc3_prep_input),
+        "--output",
+        str(tc3_prep_output),
+        "--evidence-dir",
+        str((tc3_dir / "preparation").relative_to(root)),
+        "--run-id",
+        "TC-QA-PROC-003-prep",
+        "--profile-set",
+        args.profile_set,
+    ]
+    tc3_prep_proc = run_cmd(tc3_prep_cmd, root)
+
+    tc3_details: Dict[str, Any] = {
+        "prep_return_code": tc3_prep_proc.returncode,
+        "prep_stdout": tc3_prep_proc.stdout.strip(),
+        "prep_stderr": tc3_prep_proc.stderr.strip(),
+    }
+
+    tc3_ok = tc3_prep_proc.returncode == 0 and tc3_prep_output.exists()
+    if tc3_ok:
+        tc3_prep_payload = load_json(tc3_prep_output)
+        prep_bundle_ref = str(tc3_prep_payload.get("preparation_bundle_ref") or "")
+        tc3_ok = tc3_ok and bool(prep_bundle_ref) and str(tc3_prep_payload.get("verdict") or "") == "pass"
+
+        hold_inputs = prepare_hold_inputs(tc3_dir, root)
+
+        tc3_eval_input = tc3_dir / "evaluation_input.json"
+        tc3_eval_output = tc3_dir / "evaluation_output.json"
+        dump_json(
+            tc3_eval_input,
+            {
+                "preparation_bundle_ref": prep_bundle_ref,
+                "actual_output_refs": [str(actual_output_path.relative_to(root))],
+                "profile_set": parse_refs(args.profile_set),
+                "force_hold": True,
+                "max_auto_retest_cycles": 1,
+                **hold_inputs,
+            },
+        )
+
+        tc3_eval_cmd = [
+            sys.executable,
+            str(eval_runner),
+            "--input",
+            str(tc3_eval_input),
+            "--output",
+            str(tc3_eval_output),
+            "--evidence-dir",
+            str((tc3_dir / "evaluation").relative_to(root)),
+            "--run-id",
+            "TC-QA-PROC-003-eval",
+        ]
+        tc3_eval_proc = run_cmd(tc3_eval_cmd, root)
+
+        tc3_details.update(
+            {
+                "eval_return_code": tc3_eval_proc.returncode,
+                "eval_stdout": tc3_eval_proc.stdout.strip(),
+                "eval_stderr": tc3_eval_proc.stderr.strip(),
+                "preparation_bundle_ref": prep_bundle_ref,
+            }
+        )
+
+        # 自动回测后应恢复为 pass，runner 返回码预期为 0。
+        tc3_ok = tc3_ok and tc3_eval_proc.returncode == 0 and tc3_eval_output.exists()
+        if tc3_ok:
+            tc3_eval_payload = load_json(tc3_eval_output)
+            gate_decision = str(tc3_eval_payload.get("gate_decision") or "")
+            runtime_gate_state = str(tc3_eval_payload.get("runtime_gate_state") or "")
+            hold_routed = bool(tc3_eval_payload.get("hold_routed"))
+            hold_governance_output_ref = str(tc3_eval_payload.get("hold_governance_output_ref") or "")
+            hold_resolution_ref = str(tc3_eval_payload.get("hold_resolution_ref") or "")
+            hold_retest_recommendation = str(tc3_eval_payload.get("hold_retest_recommendation") or "")
+            auto_retest_count = int(tc3_eval_payload.get("auto_retest_count") or 0)
+            max_auto_retest_cycles = int(tc3_eval_payload.get("max_auto_retest_cycles") or 0)
+
+            tc3_ok = (
+                tc3_ok
+                and gate_decision == "pass"
+                and runtime_gate_state == "pass"
+                and (not hold_routed)
+                and hold_retest_recommendation == "auto-retest"
+                and auto_retest_count == 1
+                and max_auto_retest_cycles == 1
+                and bool(hold_governance_output_ref)
+                and bool(hold_resolution_ref)
+                and (root / hold_governance_output_ref).exists()
+                and (root / hold_resolution_ref).exists()
+            )
+            tc3_details.update(
+                {
+                    "gate_decision": gate_decision,
+                    "runtime_gate_state": runtime_gate_state,
+                    "hold_routed": hold_routed,
+                    "hold_retest_recommendation": hold_retest_recommendation,
+                    "auto_retest_count": auto_retest_count,
+                    "max_auto_retest_cycles": max_auto_retest_cycles,
+                    "hold_governance_output_ref": hold_governance_output_ref,
+                    "hold_resolution_ref": hold_resolution_ref,
+                }
+            )
+
+    append_case(cases, "TC-QA-PROC-003", tc3_ok, tc3_details)
+
     passed = sum(1 for case in cases if case["status"] == "pass")
     failed = len(cases) - passed
     report = {
         "ts": now_iso(),
-        "suite": "TC-QA-PROC-001~002",
+        "suite": "TC-QA-PROC-001~003",
         "total": len(cases),
         "passed": passed,
         "failed": failed,
