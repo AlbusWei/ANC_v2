@@ -53,3 +53,6 @@ process_instances/
 .entire/tmp/
 .entire/settings.local.json
 .entire/codex-bridge/
+
+# Runtime agent memories
+**/agents/**/memory/
