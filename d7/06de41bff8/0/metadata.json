@@ -1,0 +1,49 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "d706de41bff8",
+  "session_id": "codex-4a6a20d265fd",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-27T13:24:54.915343Z",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/inventories/process-inventory.md",
+    "docs/design/processes/atomic/AP-020-gate-decision-aggregation.md",
+    "docs/design/processes/hold-governance-process.md",
+    "docs/design/processes/quality-gate-evaluation-process.md",
+    "processes/meta/hold-governance/PROCESS.md",
+    "processes/meta/hold-governance/SKILL.md",
+    "processes/meta/hold-governance/process.json",
+    "processes/meta/hold-governance/scripts/hold_governance_runner.py",
+    "processes/meta/quality-gate-evaluation/PROCESS.md",
+    "processes/meta/quality-gate-evaluation/SKILL.md",
+    "processes/meta/quality-gate-evaluation/process.json",
+    "processes/meta/quality-gate-evaluation/scripts/quality_gate_evaluation_runner.py",
+    "shared/registry/process_registry.json",
+    "tests/m1-runtime/TEST.md",
+    "tests/m1-runtime/run_post_dev_regression.py",
+    "tests/m2-bpm-runtime/TC-QA-PROC.md",
+    "tests/m2-bpm-runtime/run_tc_qa_proc.py"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "43572422159d",
+  "transcript_identifier_at_start": "gemini-9627485211",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-27T13:24:54.515091Z",
+    "agent_lines": 768,
+    "human_added": 80,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 848,
+    "agent_percentage": 90.56603773584906
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
+}

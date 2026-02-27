@@ -1,0 +1,43 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "d706de41bff8",
+  "strategy": "manual-commit",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/inventories/process-inventory.md",
+    "docs/design/processes/atomic/AP-020-gate-decision-aggregation.md",
+    "docs/design/processes/hold-governance-process.md",
+    "docs/design/processes/quality-gate-evaluation-process.md",
+    "processes/meta/hold-governance/PROCESS.md",
+    "processes/meta/hold-governance/SKILL.md",
+    "processes/meta/hold-governance/process.json",
+    "processes/meta/hold-governance/scripts/hold_governance_runner.py",
+    "processes/meta/quality-gate-evaluation/PROCESS.md",
+    "processes/meta/quality-gate-evaluation/SKILL.md",
+    "processes/meta/quality-gate-evaluation/process.json",
+    "processes/meta/quality-gate-evaluation/scripts/quality_gate_evaluation_runner.py",
+    "shared/registry/process_registry.json",
+    "tests/m1-runtime/TEST.md",
+    "tests/m1-runtime/run_post_dev_regression.py",
+    "tests/m2-bpm-runtime/TC-QA-PROC.md",
+    "tests/m2-bpm-runtime/run_tc_qa_proc.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/d7/06de41bff8/0/metadata.json",
+      "transcript": "/d7/06de41bff8/0/full.jsonl",
+      "context": "/d7/06de41bff8/0/context.md",
+      "content_hash": "/d7/06de41bff8/0/content_hash.txt",
+      "prompt": "/d7/06de41bff8/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
