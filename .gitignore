@@ -45,6 +45,7 @@ build/
 process_instances/
 
 # Local AI workspace state
+.worktrees/
 .claude/
 .gemini/
 .opencode/
