@@ -1,5 +1,9 @@
 # M1/M3 门禁真实性与证据隔离设计
 
+> Status: Superseded
+> Superseded-By: `docs/plans/SSOT-design.md`
+> Superseded-On: 2026-03-01
+
 > 日期：2026-02-27
 > 范围：M3 自开发 + M1 测试门禁
 

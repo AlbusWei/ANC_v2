@@ -318,7 +318,7 @@ def main() -> int:
     phase_trace: List[Dict[str, Any]] = []
 
     try:
-        required = ["preparation_bundle_ref", "actual_output_refs"]
+        required = ["preparation_bundle_ref", "actual_output_refs", "superpower_ref"]
         missing = [key for key in required if key not in request]
         if missing:
             raise QualityGateEvaluationError(f"missing required input fields: {','.join(missing)}")
@@ -327,6 +327,11 @@ def main() -> int:
         preparation_bundle_path = resolve_path(root, preparation_bundle_ref)
         if not preparation_bundle_path.exists():
             raise QualityGateEvaluationError("preparation_bundle_ref_unreachable")
+
+        superpower_ref = str(request["superpower_ref"])
+        superpower_path = resolve_path(root, superpower_ref)
+        if not superpower_path.exists():
+            raise QualityGateEvaluationError("superpower_ref_unreachable")
 
         actual_output_refs = parse_refs(request.get("actual_output_refs"))
         if not actual_output_refs:

@@ -21,7 +21,7 @@
 - 运行名：`objective-writer`
 - 定位：将原始需求归一为可执行 Objective 契约。
 - 输入契约：`objective_context`, `stakeholders`, `constraints`, `success_criteria`
-- 输出契约：`objective_ref`, `objective_statement`, `success_criteria`, `scope_baseline`, `non_goals`
+- 输出契约：`objective_ref`, `objective_statement`, `success_criteria`, `scope_baseline`, `superpower_ref`, `non_goals`
 - Fail-Closed：缺少可测成功标准、边界缺失、与 SSOT 冲突。
 - 运行方式：文档化技能（无独立 runner）
 - test_mount：`skills/meta/objective-writer/TEST.md`

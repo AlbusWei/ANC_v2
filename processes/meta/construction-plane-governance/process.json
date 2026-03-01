@@ -21,7 +21,7 @@
       "changed_assets",
       "linkage_targets",
       "owner",
-      "openspec_ref"
+      "superpower_ref"
     ]
   },
   "output_contract": {
@@ -29,7 +29,7 @@
     "required": [
       "m6_update_bundle_ref",
       "linkage_report_ref",
-      "openspec_sync_ref",
+      "superpower_sync_ref",
       "registry_verify_report_ref",
       "construction_plane_delta_ref",
       "open_questions_ref",
@@ -48,7 +48,7 @@
       "spec_ref": "docs/design/processes/atomic/AP-032-construction-round-intake-baseline.md#ap-032-construction-round-intake-baseline",
       "sipoc": {
         "supplier": "initiator",
-        "input": "round_id + round_goal + change_scope_ref + changed_assets + linkage_targets + openspec_ref",
+        "input": "round_id + round_goal + change_scope_ref + changed_assets + linkage_targets + superpower_ref",
         "process": "baseline the scope and boundary for this governance round",
         "output": "scope_baseline_ref",
         "client": "p2"
@@ -63,7 +63,7 @@
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
       },
       "phase_purpose": "设定本轮治理的范围与边界基线",
-      "input_context_ref": "round_id + round_goal + change_scope_ref + changed_assets + linkage_targets + openspec_ref",
+      "input_context_ref": "round_id + round_goal + change_scope_ref + changed_assets + linkage_targets + superpower_ref",
       "done_definition": "必须产出 scope_baseline_ref，并满足“范围基线包含模块边界与联动目标”",
       "handoff_note": "将 scope_baseline_ref 交接给 p2"
     },
@@ -77,7 +77,7 @@
       "spec_ref": "docs/design/processes/atomic/AP-033-construction-linkage-audit.md#ap-033-construction-linkage-audit",
       "sipoc": {
         "supplier": "p1",
-        "input": "round_id + scope_baseline_ref + linkage_targets + changed_assets + openspec_ref",
+        "input": "round_id + scope_baseline_ref + linkage_targets + changed_assets + superpower_ref",
         "process": "audit linkage completeness and identify blocking gaps",
         "output": "linkage_report_ref",
         "client": "p3"
@@ -92,7 +92,7 @@
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
       },
       "phase_purpose": "审计联动项完整性并识别阻塞缺口",
-      "input_context_ref": "round_id + scope_baseline_ref + linkage_targets + changed_assets + openspec_ref",
+      "input_context_ref": "round_id + scope_baseline_ref + linkage_targets + changed_assets + superpower_ref",
       "done_definition": "必须产出 linkage_report_ref，并满足“联动报告包含缺项与阻塞风险”",
       "handoff_note": "将 linkage_report_ref 交接给 p3"
     },
@@ -127,32 +127,32 @@
     },
     {
       "phase_id": "p4",
-      "name": "sync-openspec-state",
+      "name": "sync-superpower-state",
       "actor": "architect",
       "target_type": "subprocess",
       "target_id": "inline-ap:construction-plane-governance:p4",
       "requires_spec": true,
-      "spec_ref": "docs/design/processes/atomic/AP-035-openspec-round-sync.md#ap-035-openspec-round-sync",
+      "spec_ref": "docs/design/processes/atomic/AP-035-superpower-round-sync.md#ap-035-superpower-round-sync",
       "sipoc": {
         "supplier": "p3",
-        "input": "round_id + round_goal + openspec_ref + anc_design_refs + decision_snapshot_ref + sync_actor + trigger_mode + risk_level + checkpoint_count + commit_count + round_evidence_log_ref + output_ref",
-        "process": "execute openspec sync and generate machine-readable sync record",
-        "output": "openspec_sync_ref",
+        "input": "round_id + round_goal + superpower_ref + anc_design_refs + decision_snapshot_ref + sync_actor + trigger_mode + risk_level + checkpoint_count + commit_count + round_evidence_log_ref + output_ref",
+        "process": "execute superpower sync and generate machine-readable sync record",
+        "output": "superpower_sync_ref",
         "client": "p5"
       },
-      "acceptance_criteria": "openspec sync record is generated and schema-compliant",
+      "acceptance_criteria": "superpower sync record is generated and schema-compliant",
       "inline_ap": {
         "ap_id": "inline-ap:construction-plane-governance:p4",
-        "skill_id": "system.integration.openspec-sync",
+        "skill_id": "system.integration.superpower-sync",
         "actor": "architect",
         "lifecycle": "ephemeral",
         "pierce_allowed": true,
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
       },
-      "phase_purpose": "执行 OpenSpec 同步并生成机器可读记录",
-      "input_context_ref": "round_id + round_goal + openspec_ref + anc_design_refs + decision_snapshot_ref + sync_actor + trigger_mode + risk_level + checkpoint_count + commit_count + round_evidence_log_ref + output_ref",
-      "done_definition": "必须产出 openspec_sync_ref，并满足“OpenSpec 同步记录已生成且符合 schema”",
-      "handoff_note": "将 openspec_sync_ref 交接给 p5"
+      "phase_purpose": "执行 Superpower 同步并生成机器可读记录",
+      "input_context_ref": "round_id + round_goal + superpower_ref + anc_design_refs + decision_snapshot_ref + sync_actor + trigger_mode + risk_level + checkpoint_count + commit_count + round_evidence_log_ref + output_ref",
+      "done_definition": "必须产出 superpower_sync_ref，并满足“Superpower 同步记录已生成且符合 schema”",
+      "handoff_note": "将 superpower_sync_ref 交接给 p5"
     },
     {
       "phase_id": "p5",
@@ -164,7 +164,7 @@
       "spec_ref": "docs/design/processes/atomic/AP-036-construction-round-close-verification.md#ap-036-construction-round-close-verification",
       "sipoc": {
         "supplier": "p4",
-        "input": "round_id + m6_update_bundle_ref + openspec_sync_ref + round_evidence_log_ref + open_questions_ref",
+        "input": "round_id + m6_update_bundle_ref + superpower_sync_ref + round_evidence_log_ref + open_questions_ref",
         "process": "run registry verification and close round with checkpoint and open-question reconciliation",
         "output": "registry_verify_report_ref + round_close_summary_ref + construction_plane_delta_ref + open_questions_ref",
         "client": "initiator"
@@ -179,7 +179,7 @@
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
       },
       "phase_purpose": "执行 registry 校验并完成 checkpoint 与开放问题对账后收口本轮",
-      "input_context_ref": "round_id + m6_update_bundle_ref + openspec_sync_ref + round_evidence_log_ref + open_questions_ref",
+      "input_context_ref": "round_id + m6_update_bundle_ref + superpower_sync_ref + round_evidence_log_ref + open_questions_ref",
       "done_definition": "必须产出 registry_verify_report_ref + round_close_summary_ref + construction_plane_delta_ref + open_questions_ref，并满足“registry 校验通过且开放问题已落实负责人”",
       "handoff_note": "将 registry_verify_report_ref + round_close_summary_ref + construction_plane_delta_ref + open_questions_ref 交接给 initiator"
     }

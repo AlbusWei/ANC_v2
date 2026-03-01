@@ -23,7 +23,7 @@
 17. sys.bpm.catchup-scheduler
 18. sys.bpm.escalation-handler
 19. sys.arch.construction-audit
-20. system.integration.openspec-sync
+20. system.integration.superpower-sync
 21. system.ops.git-worktree-sync
 22. sys.qa.test-compiler
 23. sys.qa.evaluation-runner

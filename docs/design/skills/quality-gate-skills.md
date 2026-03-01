@@ -34,7 +34,7 @@
 - CLI：`quality_eval_runner`
 - 执行机制：OpenJudge `GradingRunner` + 动态 grader 组合（由测试计划 `grader_selection/grader_weights/min_score_per_grader/must_pass_graders` 驱动），支持 `SimpleRubricsGenerator` 自动 rubric grader
 - 主观评测：A/B 盲测使用 listwise 比较（`LLMGrader` 或自动 rubric listwise grader），记录 seed/rounds/blind assignment/judge_result
-- 输入契约：`preparation_bundle_ref`, `actual_output_refs`, `evaluation_mode`
+- 输入契约：`preparation_bundle_ref`, `superpower_ref`, `actual_output_refs`, `evaluation_mode`
 - 输出契约：`raw_eval_ref`, `runner_log_ref`, `execution_state_ref`, `evaluation_verdict`
 - Fail-Closed：
   - 执行协议无效 -> `fail|test_invalid`

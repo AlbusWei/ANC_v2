@@ -85,7 +85,7 @@ def parse_linkage_targets(value: Any) -> Set[str]:
 
 
 def validate_input(payload: Dict[str, Any], root: Path) -> None:
-    required = ["round_id", "scope_baseline_ref", "linkage_targets", "changed_assets", "openspec_ref"]
+    required = ["round_id", "scope_baseline_ref", "linkage_targets", "changed_assets", "superpower_ref"]
     for key in required:
         if key not in payload:
             raise AuditError(f"missing required field: {key}")
@@ -105,9 +105,9 @@ def validate_input(payload: Dict[str, Any], root: Path) -> None:
     for idx, path in enumerate(changed_assets):
         ensure_repo_rel_path(path, f"changed_assets[{idx}]")
 
-    openspec_ref = payload["openspec_ref"]
-    if not isinstance(openspec_ref, str) or not openspec_ref.strip():
-        raise AuditError("openspec_ref must be non-empty string")
+    superpower_ref = payload["superpower_ref"]
+    if not isinstance(superpower_ref, str) or not superpower_ref.strip():
+        raise AuditError("superpower_ref must be non-empty string")
 
 
 def run_audit(payload: Dict[str, Any], root: Path, report_rel: str) -> Dict[str, Any]:
@@ -133,7 +133,7 @@ def run_audit(payload: Dict[str, Any], root: Path, report_rel: str) -> Dict[str,
     scope_text = (root / payload["scope_baseline_ref"]).read_text(encoding="utf-8")
     conflict_marked = "semantic_conflict: true" in scope_text or bool(payload.get("semantic_conflict"))
     if conflict_marked and not payload.get("decision_snapshot_ref"):
-        blocking_risks.append("openspec semantic conflict unresolved without decision snapshot")
+        blocking_risks.append("superpower semantic conflict unresolved without decision snapshot")
         recommended_actions.append("attach architect decision_snapshot_ref before close")
 
     if not missing_items and not blocking_risks:
@@ -147,7 +147,7 @@ def run_audit(payload: Dict[str, Any], root: Path, report_rel: str) -> Dict[str,
         "",
         f"- timestamp: {now_iso()}",
         f"- round_id: {payload['round_id']}",
-        f"- openspec_ref: {payload['openspec_ref']}",
+        f"- superpower_ref: {payload['superpower_ref']}",
         f"- decision: {decision}",
         f"- reason: {reason}",
         "",

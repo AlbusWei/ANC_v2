@@ -163,6 +163,7 @@ def run_tc_001(
     test_doc_ref: str,
     actual_output_ref: str,
     profile_set: str,
+    superpower_ref: str,
 ) -> Dict[str, Any]:
     case_id = "TC-M1-CHAIN-001"
     case_dir = evidence_root / case_id
@@ -262,6 +263,7 @@ def run_tc_001(
         eval_input,
         {
             "preparation_bundle_ref": preparation_bundle_ref,
+            "superpower_ref": superpower_ref,
             "actual_output_refs": [actual_output_ref],
             "profile_set": parse_profile_set(profile_set),
             "force_hold": False,
@@ -564,6 +566,7 @@ def run_tc_003(
     hold_case_ref: str,
     execution_state_ref: str,
     triage_policy_ref: str,
+    superpower_ref: str,
 ) -> Dict[str, Any]:
     case_id = "TC-M1-CHAIN-003"
     case_dir = evidence_root / case_id
@@ -653,6 +656,7 @@ def run_tc_003(
         eval_input,
         {
             "preparation_bundle_ref": preparation_bundle_ref,
+            "superpower_ref": superpower_ref,
             "actual_output_refs": [actual_output_ref],
             "profile_set": parse_profile_set(profile_set),
             "force_hold": True,
@@ -746,6 +750,7 @@ def run_tc_004(
     test_doc_ref: str,
     actual_output_ref: str,
     profile_set: str,
+    superpower_ref: str,
 ) -> Dict[str, Any]:
     case_id = "TC-M1-CHAIN-004"
     case_dir = evidence_root / case_id
@@ -846,6 +851,7 @@ def run_tc_004(
         eval_input,
         {
             "preparation_bundle_ref": preparation_bundle_ref,
+            "superpower_ref": superpower_ref,
             "actual_output_refs": [actual_output_ref],
             "profile_set": parse_profile_set(profile_set),
             "force_hold": False,
@@ -931,6 +937,7 @@ def run_tc_005(
     hold_case_ref: str,
     execution_state_ref: str,
     triage_policy_ref: str,
+    superpower_ref: str,
 ) -> Dict[str, Any]:
     case_id = "TC-M1-CHAIN-005"
     case_dir = evidence_root / case_id
@@ -1020,6 +1027,7 @@ def run_tc_005(
         eval_input,
         {
             "preparation_bundle_ref": preparation_bundle_ref,
+            "superpower_ref": superpower_ref,
             "actual_output_refs": [actual_output_ref],
             "profile_set": parse_profile_set(profile_set),
             "force_hold": True,
@@ -1111,6 +1119,95 @@ def run_tc_005(
         },
         notes=notes
         or ["hold 案例在预算=1 下完成自动回测回路，并恢复到 gate_decision=pass。"],
+    )
+
+
+def run_tc_006(
+    *,
+    root: Path,
+    evidence_root: Path,
+    eval_runner: Path,
+    actual_output_ref: str,
+    profile_set: str,
+) -> Dict[str, Any]:
+    case_id = "TC-M1-CHAIN-006"
+    case_dir = evidence_root / case_id
+    case_dir.mkdir(parents=True, exist_ok=True)
+
+    commands: List[Dict[str, Any]] = []
+    inputs: List[Path] = []
+    outputs: List[Path] = []
+    logs: List[Path] = []
+    notes: List[str] = []
+
+    eval_input = case_dir / "eval_input_missing_superpower_ref.json"
+    eval_output = case_dir / "eval_output.json"
+
+    dump_json(
+        eval_input,
+        {
+            "preparation_bundle_ref": "tests/fixtures/quality-gate/TEST_rule.md",
+            "superpower_ref": "tests/fixtures/quality-gate/missing_superpower_ref.md",
+            "actual_output_refs": [actual_output_ref],
+            "profile_set": parse_profile_set(profile_set),
+            "force_hold": False,
+            "missing_superpower_ref": True,
+        },
+    )
+    inputs.append(eval_input)
+
+    eval_cmd = [
+        sys.executable,
+        to_rel(eval_runner, root),
+        "--input",
+        to_rel(eval_input, root),
+        "--output",
+        to_rel(eval_output, root),
+        "--evidence-dir",
+        to_rel(case_dir / "evaluation", root),
+        "--run-id",
+        "TC-M1-CHAIN-006-eval",
+    ]
+    eval_proc = exec_step(root=root, case_dir=case_dir, step="eval", cmd=eval_cmd, commands=commands)
+    logs.extend([case_dir / "eval.stdout.txt", case_dir / "eval.stderr.txt"])
+    outputs.append(eval_output)
+
+    gate_decision = "unknown"
+    fail_closed_record_ref = ""
+    reasons: List[str] = []
+    if eval_output.exists():
+        eval_payload = load_json(eval_output)
+        gate_decision = str(eval_payload.get("gate_decision") or "unknown")
+        fail_closed_record_ref = str(eval_payload.get("fail_closed_record_ref") or "")
+        reasons = [str(item) for item in eval_payload.get("reasons", []) if str(item).strip()]
+
+    ok = (
+        eval_proc.returncode != 0
+        and gate_decision == "fail"
+        and path_exists_for_ref(root, fail_closed_record_ref)
+        and any("superpower_ref_unreachable" in item for item in reasons)
+    )
+    if not ok:
+        notes.append("缺失 superpower_ref 未触发预期 fail-closed。")
+
+    return finalize_case(
+        root=root,
+        case_dir=case_dir,
+        case_id=case_id,
+        status="pass" if ok else "fail",
+        gate_decision=gate_decision,
+        decision_class="fail_closed",
+        commands=commands,
+        inputs=inputs,
+        outputs=outputs,
+        logs=logs,
+        critical_refs={
+            "eval_output_ref": to_rel(eval_output, root),
+            "fail_closed_record_ref": fail_closed_record_ref,
+            "reason": reasons[0] if reasons else "",
+        },
+        notes=notes
+        or ["evaluation 输入缺失 superpower_ref 时触发 superpower_ref_unreachable 并 fail-closed。"],
     )
 
 
@@ -1222,6 +1319,11 @@ def parse_args() -> argparse.Namespace:
         help="Repo-relative triage policy fixture",
     )
     parser.add_argument(
+        "--superpower-ref",
+        default="docs/plans/SuperPower.md",
+        help="Repo-relative superpower source of truth ref",
+    )
+    parser.add_argument(
         "--profile-set",
         default="quality-gate.baseline@1.0.0",
         help="Comma-separated profile ids",
@@ -1256,6 +1358,7 @@ def main() -> int:
     hold_case_path = resolve_path(root, args.hold_case_ref)
     execution_state_path = resolve_path(root, args.execution_state_ref)
     triage_policy_path = resolve_path(root, args.triage_policy_ref)
+    superpower_path = resolve_path(root, args.superpower_ref)
     evidence_root = resolve_path(root, args.evidence_root)
     report_path = resolve_path(root, args.report)
     markdown_report_path = resolve_path(root, args.markdown_report)
@@ -1269,6 +1372,7 @@ def main() -> int:
         hold_case_path,
         execution_state_path,
         triage_policy_path,
+        superpower_path,
     ]
     missing = [str(path) for path in required_paths if not path.exists()]
     if missing:
@@ -1293,6 +1397,7 @@ def main() -> int:
             test_doc_ref=to_rel(test_doc_path, root),
             actual_output_ref=to_rel(actual_output_path, root),
             profile_set=args.profile_set,
+            superpower_ref=to_rel(superpower_path, root),
         )
     )
     cases.append(
@@ -1315,6 +1420,7 @@ def main() -> int:
             hold_case_ref=to_rel(hold_case_path, root),
             execution_state_ref=to_rel(execution_state_path, root),
             triage_policy_ref=to_rel(triage_policy_path, root),
+            superpower_ref=to_rel(superpower_path, root),
         )
     )
     cases.append(
@@ -1326,6 +1432,7 @@ def main() -> int:
             test_doc_ref=to_rel(test_doc_path, root),
             actual_output_ref=to_rel(actual_output_path, root),
             profile_set=args.profile_set,
+            superpower_ref=to_rel(superpower_path, root),
         )
     )
     cases.append(
@@ -1340,6 +1447,16 @@ def main() -> int:
             hold_case_ref=to_rel(hold_case_path, root),
             execution_state_ref=to_rel(execution_state_path, root),
             triage_policy_ref=to_rel(triage_policy_path, root),
+            superpower_ref=to_rel(superpower_path, root),
+        )
+    )
+    cases.append(
+        run_tc_006(
+            root=root,
+            evidence_root=evidence_root,
+            eval_runner=eval_runner,
+            actual_output_ref=to_rel(actual_output_path, root),
+            profile_set=args.profile_set,
         )
     )
 
@@ -1386,11 +1503,17 @@ def main() -> int:
             "hold_resolution_ref": cases[4]["critical_refs"].get("hold_resolution_ref", ""),
             "auto_retest_count": cases[4]["critical_refs"].get("auto_retest_count", ""),
         },
+        "tc_m1_chain_006_missing_superpower": {
+            "evidence_index_ref": cases[5]["evidence_index_ref"],
+            "eval_output_ref": cases[5]["critical_refs"].get("eval_output_ref", ""),
+            "fail_closed_record_ref": cases[5]["critical_refs"].get("fail_closed_record_ref", ""),
+            "reason": cases[5]["critical_refs"].get("reason", ""),
+        },
     }
 
     summary = {
         "ts": now_iso(),
-        "suite": "TC-M1-CHAIN-001~005",
+        "suite": "TC-M1-CHAIN-001~006",
         "status": status,
         "total": total,
         "passed": passed,

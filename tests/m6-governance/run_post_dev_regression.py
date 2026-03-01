@@ -42,6 +42,7 @@ def write_json(path: Path, payload: Dict[str, object]) -> None:
 
 
 def write_text(path: Path, content: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
 
 
@@ -373,7 +374,7 @@ def main() -> int:
                 "docs/design/processes/construction-plane-governance-process.md",
                 "shared/registry/process_registry.json",
             ],
-            "openspec_ref": "m6-construction-round-sync",
+            "superpower_ref": "docs/plans/SuperPower.md",
         },
     )
     write_json(
@@ -387,7 +388,7 @@ def main() -> int:
                 "docs/design/processes/construction-plane-governance-process.md",
                 "shared/registry/process_registry.json",
             ],
-            "openspec_ref": "m6-construction-round-sync",
+            "superpower_ref": "docs/plans/SuperPower.md",
         },
     )
 
@@ -462,16 +463,16 @@ def main() -> int:
             repo_root=repo_root,
             outputs_root=outputs_dir,
             case_id="TC-010",
-            name="openspec-sync count mismatch fail closed",
+            name="superpower-sync count mismatch fail closed",
             command=[
                 "bash",
-                "skills/system/openspec-sync/scripts/openspec_sync.sh",
+                "skills/system/superpower-sync/scripts/superpower_sync.sh",
                 "--round-id",
                 "R-20260221-M6-m6-construction-round-sync-11",
                 "--round-goal",
                 "M6 runtime dry-run scenario A",
-                "--openspec-ref",
-                "m6-construction-round-sync",
+                "--superpower-ref",
+                "docs/plans/SuperPower.md",
                 "--decision-snapshot-ref",
                 f"{round_tmp_rel}/A/decision_resolved.md",
                 "--sync-actor",
@@ -487,7 +488,7 @@ def main() -> int:
                 "--round-evidence-log-ref",
                 f"{round_tmp_rel}/A/round-evidence-copy.jsonl",
                 "--output-ref",
-                f"{round_tmp_rel}/A/openspec-sync-count-mismatch.json",
+                f"{round_tmp_rel}/A/superpower-sync-count-mismatch.json",
                 "--anc-design-ref",
                 "docs/design/modules/M6-construction-plane.md",
             ],

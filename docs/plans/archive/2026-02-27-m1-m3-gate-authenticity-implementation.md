@@ -1,5 +1,9 @@
 # M1/M3 Gate Authenticity Implementation Plan
 
+> Status: Superseded
+> Superseded-By: `docs/plans/SSOT-implementation.md`
+> Superseded-On: 2026-03-01
+
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
 **Goal:** Build a strict admission gate that only accepts real online evidence (not simulated/skeleton outputs), while keeping runtime evidence under `tmp/runtime_data/...` to avoid repository pollution.

@@ -50,7 +50,7 @@ SSOT 基线顺序（保持与系统总览一致）：
 | M3 Self-Dev | `development-process` canonical 路径, `full-development/hotfix/refactor` 可执行流程, `objective-scope-baseline/hotfix-intake-normalization/hotfix-scope-spec-baseline/spec-authoring-contract/implementation-execution-core/release-packaging-governed/evolution-feedback-planning` 七个 P5 子流程, `self-development-skills` 设计包, `meta.arch.objective-writer/agent-creator/process-creator/template-validator/meta-skill-creator`（`skill-creator` 仅历史别名） | 运行级 dry-run 证据（内部主线 + 外部交付复用） | M4/M5/L5 |
 | M4 Lifecycle | 统一 5 态治理、registry contract、trigger policy 边界 | `lifecycle-review/registry-sync/escalation` 可执行流程, `trigger_registry` | M3/M5/L2 |
 | M5 Evolution | 演化闭环设计、外部反馈复用约束 | `evolution-loop/health-check/improvement-review` 可执行流程 | L3/L5 |
-| M6 Construction | `construction_plane.md`, `M6-construction-plane.md`, `construction-plane-governance`, `sys.arch.construction-audit`, `system.integration.openspec-sync`, `openspec-collaboration-protocol`, `openspec-collaboration-schema` | OpenSpec 双向同步样板 + 运行级 dry-run 证据 + 周期审查节奏定稿 | 全模块 |
+| M6 Construction | `construction_plane.md`, `M6-construction-plane.md`, `construction-plane-governance`, `sys.arch.construction-audit`, `system.integration.superpower-sync`, `superpower-collaboration-protocol`, `superpower-collaboration-schema` | Superpower 双向同步样板 + 运行级 dry-run 证据 + 周期审查节奏定稿 | 全模块 |
 
 ## 6. 阶段映射与进入条件
 

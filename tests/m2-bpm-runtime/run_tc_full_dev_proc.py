@@ -106,7 +106,7 @@ def main() -> int:
         input_payload,
         {
             "target_asset_id": "process:full-development",
-            "change_ref": "openspec/changes/m3-meta-asset-quality-hardening",
+            "change_ref": "docs/plans/SuperPower.md",
             "intent": "run-collaboration-skeleton",
         },
     )

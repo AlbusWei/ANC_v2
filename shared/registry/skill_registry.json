@@ -1038,16 +1038,16 @@
       }
     },
     {
-      "skill_id": "system.integration.openspec-sync",
-      "name": "openspec-sync",
-      "path": "skills/system/openspec-sync/SKILL.md",
+      "skill_id": "system.integration.superpower-sync",
+      "name": "superpower-sync",
+      "path": "skills/system/superpower-sync/SKILL.md",
       "layer": "system",
       "owner": "architect",
       "version": "0.2.0",
       "status": "review",
       "agentskills": {
-        "name": "openspec-sync",
-        "description": "Synchronize OpenSpec change context with ANC design decisions and emit a strict sync record",
+        "name": "superpower-sync",
+        "description": "Synchronize Superpower change context with ANC design decisions and emit a strict sync record",
         "license": "Apache-2.0",
         "compatibility": {
           "openclaw": ">=2026.2",
@@ -1058,13 +1058,13 @@
         "projection_mode": "bundle",
         "bundle_key": "anc-v2-system-skills",
         "bundle_source": "skills/system",
-        "entry_key": "system.integration.openspec-sync",
-        "source": "skills/system/openspec-sync",
+        "entry_key": "system.integration.superpower-sync",
+        "source": "skills/system/superpower-sync",
         "install_strategy": "lazy",
         "allow_draft_projection": true
       },
       "tests": {
-        "test_doc": "skills/system/openspec-sync/TEST.md",
+        "test_doc": "skills/system/superpower-sync/TEST.md",
         "methodology_ref": "docs/architecture/test_methodology.md"
       }
     },
