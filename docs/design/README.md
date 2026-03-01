@@ -17,7 +17,7 @@
 | `processes/` | 递归流程架构、P1-P6 设计与原子流程目录 |
 | `business/` | 双主线业务流程与复用映射 |
 | `data-models/` | process/context/evidence/role 等 schema |
-| `interfaces/` | BPM、registry、role handoff 等接口协议 |
+| `interfaces/` | BPM、registry、role handoff 等接口协议 + product lifecycle governance protocol |
 | `inventories/` | agent/skill/process/component 全量清单 |
 | `standards/` | Agent/Skill/Process/P1-P6 工程化标准 |
 
