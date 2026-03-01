@@ -20,9 +20,11 @@
     "config/openclaw.phase05.fragment.json\nconfig/openclaw.phase05.with-entry.fragment.json\ndocs/architecture/construction_plane.md\ndocs/design/agents/kernel/architect.md\ndocs/design/agents/kernel/kernel-dev.md\ndocs/design/data-models/registry-schemas.md\ndocs/design/inventories/process-inventory.md\ndocs/design/inventories/skill-inventory.md\ndocs/design/layers/L1-capability.md\ndocs/design/layers/L3-self-development.md\ndocs/design/modules/M3-self-development.md\ndocs/design/modules/module-dependency-matrix.md\ndocs/design/processes/meta-processes.md\ndocs/design/skills/meta-skills.md\nprocesses/README.md\nshared/registry/process_registry.json\nshared/registry/registry_contract_tool.py\nshared/registry/skill_registry.json\nskills/README.md\nskills/skill-creator/SKILL.md\ndocs/design/processes/full-development-process.md\ndocs/design/processes/hotfix-process.md\ndocs/design/processes/refactor-process.md\ndocs/design/skills/self-development-skills.md\nprocesses/meta/full-development/PROCESS.md\nprocesses/meta/full-development/SKILL.md\nprocesses/meta/full-development/process.json\nprocesses/meta/hotfix/PROCESS.md\nprocesses/meta/hotfix/SKILL.md\nprocesses/meta/hotfix/process.json\nprocesses/meta/refactor/PROCESS.md\nprocesses/meta/refactor/SKILL.md\nprocesses/meta/refactor/process.json\nskills/meta/agent-creator/SKILL.md\nskills/meta/agent-creator/TEST.md\nskills/meta/objective-writer/SKILL.md\nskills/meta/objective-writer/TEST.md\nskills/meta/process-creator/SKILL.md\nskills/meta/process-creator/TEST.md\nskills/meta/template-validator/SKILL.md\nskills/meta/template-validator/TEST.md",
     "config/openclaw.phase05.with-entry.fragment.json",
     "config/openclaw.projection.profiles.json",
+    "docs/architecture/construction_inventory_board.md",
     "docs/architecture/construction_plane.md",
     "docs/architecture/construction_plane.md\ndocs/design/inventories/process-inventory.md\ndocs/design/inventories/skill-inventory.md\ndocs/design/processes/meta-processes.md\nprocesses/README.md\nshared/registry/process_registry.json\nshared/registry/skill_registry.json\nskills/README.md",
     "docs/architecture/construction_plane.md docs/architecture/test_methodology.md docs/design/business/internal-productization-e2e-flow.md docs/design/business/software-vendor-e2e-flow.md docs/design/inventories/process-inventory.md docs/design/inventories/skill-inventory.md docs/design/modules/M1-test-system.md docs/design/modules/module-dependency-matrix.md docs/design/processes/atomic/AP-005-test-design.md docs/design/processes/atomic/AP-007-objective-evaluation.md docs/design/processes/atomic/AP-008-subjective-evaluation.md docs/design/processes/atomic/AP-009-regression-execution.md docs/design/processes/governance-processes.md docs/design/processes/meta-processes.md docs/design/processes/p-levels/P4-e2e-delivery-flows.md docs/design/skills/system-skills.md docs/design/modules/M1-openjudge-adapter-spec.md docs/design/processes/hold-governance-process.md docs/design/processes/m1-quality-gate-process.md docs/design/skills/m1-qa-skills.md ",
+    "docs/architecture/construction_plane.md docs/design/agents/kernel/architect.md docs/design/agents/kernel/system-analyst.md docs/design/data-models/openspec-collaboration-schema.json docs/design/interfaces/openspec-collaboration-protocol.md docs/design/inventories/agent-inventory.md docs/design/inventories/process-inventory.md docs/design/inventories/skill-inventory.md docs/design/modules/M6-construction-plane.md docs/design/modules/module-dependency-matrix.md docs/design/processes/construction-plane-governance-process.md docs/design/processes/governance-processes.md docs/design/processes/meta-processes.md docs/design/skills/construction-plane-skills.md docs/design/skills/system-skills.md processes/README.md processes/meta/construction-plane-governance/PROCESS.md processes/meta/construction-plane-governance/SKILL.md processes/meta/construction-plane-governance/process.json shared/registry/process_registry.json shared/registry/registry_contract_tool.py shared/registry/skill_registry.json skills/README.md skills/system/construction-audit/SKILL.md skills/system/construction-audit/TEST.md skills/system/openspec-sync/SKILL.md skills/system/openspec-sync/TEST.md skills/system/openspec-sync/scripts/openspec_sync.sh ",
     "docs/architecture/construction_plane.md docs/design/agents/kernel/architect.md docs/design/agents/kernel/system-analyst.md docs/design/inventories/agent-inventory.md docs/design/inventories/process-inventory.md docs/design/inventories/skill-inventory.md docs/design/modules/M6-construction-plane.md docs/design/modules/module-dependency-matrix.md docs/design/processes/governance-processes.md docs/design/processes/meta-processes.md docs/design/skills/system-skills.md processes/README.md shared/registry/process_registry.json shared/registry/registry_contract_tool.py shared/registry/skill_registry.json skills/README.md docs/design/data-models/openspec-collaboration-schema.json docs/design/interfaces/openspec-collaboration-protocol.md docs/design/processes/construction-plane-governance-process.md docs/design/skills/construction-plane-skills.md processes/meta/construction-plane-governance/ skills/system/construction-audit/ skills/system/openspec-sync/ ",
     "docs/architecture/construction_plane.md docs/design/data-models/openspec-collaboration-schema.json docs/design/interfaces/openspec-collaboration-protocol.md docs/design/modules/M6-construction-plane.md docs/design/processes/construction-plane-governance-process.md docs/design/processes/governance-processes.md docs/design/processes/p-levels/P6-atomic-process-catalog.md docs/design/skills/construction-plane-skills.md processes/meta/construction-plane-governance/PROCESS.md processes/meta/construction-plane-governance/SKILL.md processes/meta/construction-plane-governance/process.json shared/registry/process_registry.json shared/registry/registry_contract_tool.py skills/system/construction-audit/SKILL.md skills/system/construction-audit/TEST.md skills/system/openspec-sync/SKILL.md skills/system/openspec-sync/TEST.md docs/design/processes/atomic/AP-032-construction-round-intake-baseline.md docs/design/processes/atomic/AP-033-construction-linkage-audit.md docs/design/processes/atomic/AP-034-linked-artifacts-update.md docs/design/processes/atomic/AP-035-openspec-round-sync.md docs/design/processes/atomic/AP-036-construction-round-close-verification.md ",
     "docs/architecture/glossary.md",
@@ -830,6 +832,7 @@
     "docs/design/processes/trigger-schedule-runtime-process.md",
     "docs/design/skills/bpm-runtime-skills.md",
     "docs/design/skills/construction-plane-skills.md",
+    "docs/design/skills/git-operations-skills.md",
     "docs/design/skills/m1-qa-skills.md",
     "docs/design/skills/quality-gate-skills.md",
     "docs/design/skills/skill-lifecycle-protocol.md",
@@ -907,6 +910,10 @@
     "skills/system/escalation-handler/scripts/escalation_handler_runner.py",
     "skills/system/evidence-recorder/SKILL.md",
     "skills/system/evidence-recorder/scripts/evidence_recorder_runner.py",
+    "skills/system/git-worktree-sync/SKILL.md",
+    "skills/system/git-worktree-sync/TEST.md",
+    "skills/system/git-worktree-sync/references/git-merge-policy.md",
+    "skills/system/git-worktree-sync/scripts/worktree_sync.py",
     "skills/system/manual-task/scripts/manual_task_runner.py",
     "skills/system/openspec-sync/SKILL.md",
     "skills/system/openspec-sync/TEST.md",
@@ -981,6 +988,13 @@
       "transcript": "/1d/6482db3e4a/4/full.jsonl",
       "context": "",
       "content_hash": "/1d/6482db3e4a/4/content_hash.txt",
+      "prompt": ""
+    },
+    {
+      "metadata": "/1d/6482db3e4a/5/metadata.json",
+      "transcript": "/1d/6482db3e4a/5/full.jsonl",
+      "context": "",
+      "content_hash": "/1d/6482db3e4a/5/content_hash.txt",
       "prompt": ""
     }
   ]
