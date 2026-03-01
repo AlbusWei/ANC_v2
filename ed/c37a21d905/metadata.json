@@ -9,7 +9,15 @@
     "docs/design/modules/M1-test-system.md",
     "processes/meta/quality-gate-evaluation/scripts/quality_gate_evaluation_runner.py",
     "tests/m1-runtime/TEST.md",
-    "tests/m1-runtime/run_post_dev_regression.py"
+    "tests/m1-runtime/run_post_dev_regression.py",
+    "tests/m1-runtime/test_gate_evidence_verifier.py",
+    "tests/m3-self-development/TEST.md",
+    "tests/m3-self-development/run_meta_qa_online.py",
+    "tests/m3-self-development/run_tc_online.py",
+    "tests/m3-self-development/session5_internal_runner.py",
+    "tests/m3-self-development/session6_external_runner.py",
+    "tests/m3-self-development/test_session5_internal_runner.py",
+    "tests/m3-self-development/test_session6_external_runner.py"
   ],
   "sessions": [
     {
@@ -59,6 +67,13 @@
       "transcript": "/ed/c37a21d905/6/full.jsonl",
       "context": "",
       "content_hash": "/ed/c37a21d905/6/content_hash.txt",
+      "prompt": ""
+    },
+    {
+      "metadata": "/ed/c37a21d905/7/metadata.json",
+      "transcript": "/ed/c37a21d905/7/full.jsonl",
+      "context": "",
+      "content_hash": "/ed/c37a21d905/7/content_hash.txt",
       "prompt": ""
     }
   ],
