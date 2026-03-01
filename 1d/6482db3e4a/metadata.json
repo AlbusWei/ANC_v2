@@ -996,6 +996,13 @@
       "context": "",
       "content_hash": "/1d/6482db3e4a/5/content_hash.txt",
       "prompt": ""
+    },
+    {
+      "metadata": "/1d/6482db3e4a/6/metadata.json",
+      "transcript": "/1d/6482db3e4a/6/full.jsonl",
+      "context": "",
+      "content_hash": "/1d/6482db3e4a/6/content_hash.txt",
+      "prompt": ""
     }
   ]
 }
