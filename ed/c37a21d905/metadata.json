@@ -3,10 +3,13 @@
   "checkpoint_id": "edc37a21d905",
   "strategy": "manual-commit",
   "branch": "rebuild",
-  "checkpoints_count": 6,
+  "checkpoints_count": 7,
   "files_touched": [
     "docs/architecture/construction_plane.md",
-    "docs/design/modules/M1-test-system.md"
+    "docs/design/modules/M1-test-system.md",
+    "processes/meta/quality-gate-evaluation/scripts/quality_gate_evaluation_runner.py",
+    "tests/m1-runtime/TEST.md",
+    "tests/m1-runtime/run_post_dev_regression.py"
   ],
   "sessions": [
     {
@@ -29,6 +32,13 @@
       "context": "/ed/c37a21d905/2/context.md",
       "content_hash": "/ed/c37a21d905/2/content_hash.txt",
       "prompt": "/ed/c37a21d905/2/prompt.txt"
+    },
+    {
+      "metadata": "/ed/c37a21d905/3/metadata.json",
+      "transcript": "/ed/c37a21d905/3/full.jsonl",
+      "context": "/ed/c37a21d905/3/context.md",
+      "content_hash": "/ed/c37a21d905/3/content_hash.txt",
+      "prompt": "/ed/c37a21d905/3/prompt.txt"
     }
   ],
   "token_usage": {
