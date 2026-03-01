@@ -1,0 +1,37 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "1b383d4e0c5c",
+  "strategy": "manual-commit",
+  "branch": "codex/review-layers-modules",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/inventories/skill-inventory.md",
+    "docs/design/modules/M1-openjudge-adapter-spec.md",
+    "docs/design/modules/M1-test-system.md",
+    "docs/design/modules/module-dependency-matrix.md",
+    "docs/design/skills/quality-gate-skills.md",
+    "docs/design/skills/self-development-skills.md",
+    "processes/meta/construction-plane-governance/PROCESS.md",
+    "processes/meta/construction-plane-governance/process.json",
+    "processes/meta/construction-plane-governance/scripts/run_round.py",
+    "shared/registry/registry_contract_tool.py",
+    "shared/registry/skill_registry.json",
+    "tests/m2-bpm-runtime/run_tc_full_dev_proc.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/1b/383d4e0c5c/0/metadata.json",
+      "transcript": "/1b/383d4e0c5c/0/full.jsonl",
+      "context": "/1b/383d4e0c5c/0/context.md",
+      "content_hash": "/1b/383d4e0c5c/0/content_hash.txt",
+      "prompt": "/1b/383d4e0c5c/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
