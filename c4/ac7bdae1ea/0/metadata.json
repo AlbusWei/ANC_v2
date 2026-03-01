@@ -1,0 +1,29 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "c4ac7bdae1ea",
+  "session_id": "codex-05ca0b86f87b",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-01T13:41:05.422213Z",
+  "branch": "rebuild",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/modules/M1-openjudge-adapter-spec.md",
+    "docs/design/modules/M1-test-system.md",
+    "docs/design/modules/M3-self-development.md",
+    "docs/design/modules/M4-lifecycle-management.md",
+    "docs/design/modules/module-dependency-matrix.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "ff22a130620c",
+  "transcript_identifier_at_start": "gemini-05415d6f2c",
+  "initial_attribution": {
+    "calculated_at": "2026-03-01T13:41:05.394682Z",
+    "agent_lines": 0,
+    "human_added": 97,
+    "human_modified": 48,
+    "human_removed": 0,
+    "total_committed": 97,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2/.entire/codex-bridge/transcript.json"
+}
