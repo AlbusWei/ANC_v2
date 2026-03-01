@@ -8,7 +8,9 @@
     "docs/architecture/construction_plane.md",
     "docs/design/modules/M3-self-development.md",
     "docs/design/modules/M6-construction-plane.md",
-    "shared/registry/registry_contract_tool.py"
+    "processes/meta/quality-gate-evaluation/scripts/quality_gate_evaluation_runner.py",
+    "shared/registry/registry_contract_tool.py",
+    "tests/m1-runtime/run_semantic_service_validation.py"
   ],
   "sessions": [
     {
@@ -30,6 +32,13 @@
       "transcript": "/f0/a7d7e15c40/2/full.jsonl",
       "context": "",
       "content_hash": "/f0/a7d7e15c40/2/content_hash.txt",
+      "prompt": ""
+    },
+    {
+      "metadata": "/f0/a7d7e15c40/3/metadata.json",
+      "transcript": "/f0/a7d7e15c40/3/full.jsonl",
+      "context": "",
+      "content_hash": "/f0/a7d7e15c40/3/content_hash.txt",
       "prompt": ""
     }
   ]
