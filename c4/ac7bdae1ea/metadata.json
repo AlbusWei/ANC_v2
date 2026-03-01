@@ -9,7 +9,10 @@
     "docs/design/modules/M1-test-system.md",
     "docs/design/modules/M3-self-development.md",
     "docs/design/modules/M4-lifecycle-management.md",
-    "docs/design/modules/module-dependency-matrix.md"
+    "docs/design/modules/module-dependency-matrix.md",
+    "processes/meta/quality-gate-evaluation/scripts/quality_gate_evaluation_runner.py",
+    "processes/meta/quality-gate-preparation/scripts/quality_gate_preparation_runner.py",
+    "tests/m1-runtime/run_post_dev_regression.py"
   ],
   "sessions": [
     {
@@ -31,6 +34,13 @@
       "transcript": "/c4/ac7bdae1ea/2/full.jsonl",
       "context": "",
       "content_hash": "/c4/ac7bdae1ea/2/content_hash.txt",
+      "prompt": ""
+    },
+    {
+      "metadata": "/c4/ac7bdae1ea/3/metadata.json",
+      "transcript": "/c4/ac7bdae1ea/3/full.jsonl",
+      "context": "",
+      "content_hash": "/c4/ac7bdae1ea/3/content_hash.txt",
       "prompt": ""
     }
   ]
