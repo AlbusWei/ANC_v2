@@ -256,6 +256,34 @@ def build_markdown_summary(summary: Dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def build_semantic_eval_cmd(
+    *,
+    preparation_bundle_ref: str,
+    actual_output_ref: str,
+    judge_model: str,
+    output_dir_ref: str,
+    llm_threshold: float,
+) -> List[str]:
+    return [
+        "skills/system/qa/evaluation-runner/scripts/quality_eval_runner",
+        "run",
+        "--preparation-bundle",
+        preparation_bundle_ref,
+        "--mode",
+        "objective",
+        "--actual-output",
+        actual_output_ref,
+        "--judge-model",
+        judge_model,
+        "--module",
+        "M1",
+        "--output-dir",
+        output_dir_ref,
+        "--llm-threshold",
+        str(llm_threshold),
+    ]
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run M1 semantic service validation")
     parser.add_argument(
@@ -272,6 +300,12 @@ def parse_args() -> argparse.Namespace:
         "--profile-set",
         default="quality-gate.baseline@1.0.0",
         help="Comma-separated profile set",
+    )
+    parser.add_argument(
+        "--llm-threshold",
+        type=float,
+        default=4.0,
+        help="Minimum LLM judge score required to pass objective semantic checks",
     )
     return parser.parse_args()
 
@@ -541,22 +575,13 @@ HR 需要上线一个“员工请假审批”能力，覆盖提交、审批、�
     raw_eval_ref = ""
     gate_decision = "unknown"
     if preparation_bundle_ref:
-        eval_cmd = [
-            "skills/system/qa/evaluation-runner/scripts/quality_eval_runner",
-            "run",
-            "--preparation-bundle",
-            preparation_bundle_ref,
-            "--mode",
-            "objective",
-            "--actual-output",
-            to_rel(mock_delivery_path, root),
-            "--judge-model",
-            args.judge_model,
-            "--module",
-            "M1",
-            "--output-dir",
-            to_rel(eval_output_dir, root),
-        ]
+        eval_cmd = build_semantic_eval_cmd(
+            preparation_bundle_ref=preparation_bundle_ref,
+            actual_output_ref=to_rel(mock_delivery_path, root),
+            judge_model=args.judge_model,
+            output_dir_ref=to_rel(eval_output_dir, root),
+            llm_threshold=args.llm_threshold,
+        )
         eval_proc = exec_step(
             root=root,
             case_dir=case_dir,

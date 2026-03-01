@@ -391,6 +391,12 @@ def main() -> int:
             raise QualityGateEvaluationError("profile_set_empty")
 
         force_hold = parse_bool(request.get("force_hold"))
+        superpower_session_ref = str(request.get("superpower_session_ref") or "")
+        superpower_context_ref = str(request.get("superpower_context_ref") or "")
+        superpower_provenance = {
+            "superpower_session_ref": superpower_session_ref,
+            "superpower_context_ref": superpower_context_ref,
+        }
         max_auto_retest_cycles_raw = request.get("max_auto_retest_cycles", 0)
         try:
             max_auto_retest_cycles = int(max_auto_retest_cycles_raw)
@@ -894,6 +900,7 @@ def main() -> int:
                 "dispatch_openclaw": phase_dispatch_openclaw,
                 "dispatch_reset_openclaw_session": phase_dispatch_reset_session,
                 "dispatch_strict_session_match": phase_dispatch_strict_match,
+                "superpower_provenance": superpower_provenance,
             },
         )
 
@@ -920,6 +927,9 @@ def main() -> int:
             "dispatch_openclaw": phase_dispatch_openclaw,
             "dispatch_reset_openclaw_session": phase_dispatch_reset_session,
             "dispatch_strict_session_match": phase_dispatch_strict_match,
+            "superpower_session_ref": superpower_session_ref,
+            "superpower_context_ref": superpower_context_ref,
+            "superpower_provenance": superpower_provenance,
             "reasons": [
                 "gate_aggregated",
                 f"gate_decision={gate_decision}",
@@ -951,6 +961,10 @@ def main() -> int:
                 "phase_trace": phase_trace,
                 "reason": failure_reason,
                 "fail_closed_record_ref": to_rel(fail_closed_path, root),
+                "superpower_provenance": {
+                    "superpower_session_ref": str(request.get("superpower_session_ref") or ""),
+                    "superpower_context_ref": str(request.get("superpower_context_ref") or ""),
+                },
             },
         )
         output = {
@@ -967,6 +981,12 @@ def main() -> int:
             "hold_routed": False,
             "hold_governance_output_ref": "",
             "hold_resolution_ref": "",
+            "superpower_session_ref": str(request.get("superpower_session_ref") or ""),
+            "superpower_context_ref": str(request.get("superpower_context_ref") or ""),
+            "superpower_provenance": {
+                "superpower_session_ref": str(request.get("superpower_session_ref") or ""),
+                "superpower_context_ref": str(request.get("superpower_context_ref") or ""),
+            },
             "fail_closed_record_ref": to_rel(fail_closed_path, root),
             "reasons": [failure_reason],
         }
