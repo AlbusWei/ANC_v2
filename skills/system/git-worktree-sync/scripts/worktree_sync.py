@@ -281,6 +281,13 @@ def fetch_upstream_ref(path: Path, remote: str, branch: str) -> Optional[str]:
     return None
 
 
+def upstream_remote_name(upstream_ref: str) -> str:
+    remote_name, sep, _ = upstream_ref.partition("/")
+    if not sep or not remote_name.strip():
+        raise SyncError(f"invalid upstream ref: {upstream_ref!r}")
+    return remote_name.strip()
+
+
 def maybe_stash(path: Path, apply: bool, reason: str) -> bool:
     if not apply:
         print(f"[dry-run] ({path}) git stash push -u -m {shlex.quote(reason)}")
@@ -326,16 +333,37 @@ def sync_one_sibling(path: Path, branch: str, args: argparse.Namespace) -> Dict[
             details.append("dirty worktree and stash disabled")
             return result
         stashed = maybe_stash(path, args.apply, f"git-worktree-sync/{branch}")
-        details.append("stashed local changes")
+        if stashed:
+            details.append("stashed local changes")
 
     upstream = fetch_upstream_ref(path, args.remote, branch)
     if upstream:
+        upstream_remote = upstream_remote_name(upstream)
+        fetch_proc = git(path, "fetch", upstream_remote, check=False)
+        if fetch_proc.returncode != 0:
+            result["status"] = "manual_required"
+            details.append(f"cannot fetch upstream remote {upstream_remote}")
+            if stashed:
+                popped = maybe_pop_stash(path, args.apply)
+                if not popped:
+                    result["status"] = "manual_conflict"
+                    details.append("conflict while applying stashed changes")
+                    return result
+                details.append("reapplied stashed changes")
+            return result
+        details.append(f"fetched upstream remote {upstream_remote}")
+
         ff_proc = exec_mutating(path, args.apply, "merge", "--ff-only", upstream)
         if ff_proc.returncode != 0:
             result["status"] = "manual_required"
             details.append(f"cannot fast-forward from upstream {upstream}")
             if stashed:
-                maybe_pop_stash(path, args.apply)
+                popped = maybe_pop_stash(path, args.apply)
+                if not popped:
+                    result["status"] = "manual_conflict"
+                    details.append("conflict while applying stashed changes")
+                    return result
+                details.append("reapplied stashed changes")
             return result
         details.append(f"fast-forwarded from {upstream}")
 
@@ -345,7 +373,11 @@ def sync_one_sibling(path: Path, branch: str, args: argparse.Namespace) -> Dict[
         result["status"] = "manual_conflict"
         details.append(f"conflict while merging parent {args.parent}")
         if stashed:
-            maybe_pop_stash(path, args.apply)
+            popped = maybe_pop_stash(path, args.apply)
+            if not popped:
+                details.append("conflict while applying stashed changes")
+                return result
+            details.append("reapplied stashed changes")
         return result
     details.append(f"merged parent {args.parent}")
 
@@ -355,7 +387,12 @@ def sync_one_sibling(path: Path, branch: str, args: argparse.Namespace) -> Dict[
             result["status"] = "manual_required"
             details.append("push failed")
             if stashed:
-                maybe_pop_stash(path, args.apply)
+                popped = maybe_pop_stash(path, args.apply)
+                if not popped:
+                    result["status"] = "manual_conflict"
+                    details.append("conflict while applying stashed changes")
+                    return result
+                details.append("reapplied stashed changes")
             return result
         details.append("pushed branch")
 

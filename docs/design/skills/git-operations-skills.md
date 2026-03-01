@@ -1,6 +1,6 @@
 # Git Operations Skills 设计包
 
-> 版本: v0.1.0 | 分类: System Skills | 最后更新: 2026-02-22
+> 版本: v0.2.0 | 分类: System Skills | 最后更新: 2026-02-22
 
 ## 目标
 
@@ -23,6 +23,7 @@
 - 输出契约：`mode`, `dry_run`, `steps/results`, `summary(manual_required count)`
 - Fail-Closed：
   - branch 缺失或 parent 无法 `ff-only` 对齐远端 -> `fail`
+  - sibling upstream remote 拉取失败 -> `manual_required`
   - merge 冲突或 stash 回放冲突 -> `manual_conflict`
   - 兄弟分支 WIP 超阈值 -> `skip`
   - 禁止 `force push`、`hard reset` 作为自动路径
@@ -36,3 +37,5 @@
 2. 进入 `review` 前置：
    - 在真实多 worktree 仓库上完成至少一轮 `integrate + fanout` 运行级验证。
    - `registry_contract_tool.py verify` 持续通过。
+3. QA 运行级补测（Round 1）已覆盖 non-default upstream 场景并通过：
+   - `tests/git-worktree-sync/evidence/runtime-validation-round-1/run_summary.json`

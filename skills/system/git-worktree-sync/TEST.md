@@ -46,6 +46,14 @@
 - Expected: 分支状态 `manual_conflict`，脚本不自动覆盖冲突内容
 - Evaluation Method: Exact Match
 
+### TC-006: 非默认 upstream 远端新鲜度
+
+- Type: Objective
+- Priority: P0
+- Input: sibling 分支 upstream 指向非默认 remote，且该 remote 有新提交
+- Expected: `fanout --apply` 后 sibling HEAD 包含最新 upstream 提交
+- Evaluation Method: Exact Match
+
 ## Evaluation Configuration
 
 - Objective Eval Rounds: 1

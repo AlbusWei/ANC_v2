@@ -42,6 +42,7 @@
 - [x] 完成 M1 QA 动态评测补强：`evaluation-runner` 增加 listwise 主观盲测与 judge 错误分类（unsupported model -> `test_invalid`），并在 `runtime-validation-round-3` 落盘 strict config 证据
 - [x] 完成 LLM-as-Judge 跑通验证：模型切换 `gpt-5.3-codex` 后，objective + subjective(listwise) 均在 `runtime-validation-round-4` 真实通过
 - [x] 新增多 worktree 分支协同技能：`system.ops.git-worktree-sync`（`source -> parent -> siblings`，冲突/大规模 WIP 均 Fail-Closed）
+- [x] 完成 `system.ops.git-worktree-sync` QA 运行级补测 Round 1，并修复 non-default upstream remote 新鲜度缺陷
 - [x] 锁定回合追溯主键：`1 round = 1 OpenSpec change = N Entire checkpoints = N commits`
 - [x] 锁定证据写入策略：提交级证据进入 `round-evidence.jsonl`，施工平面主文档仅在回合关闭时汇总
 - [x] 锁定 `round_id` 规范：`R-YYYYMMDD-M6-<change_key>-NN`，`NN` 按同一 `change_key` 递增
