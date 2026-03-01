@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "edc37a21d905",
+  "session_id": "codex-cc8546e05158",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-01T13:38:45.554865Z",
+  "branch": "rebuild",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/modules/M1-test-system.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "90ce6b9b6475",
+  "transcript_identifier_at_start": "gemini-139fd9a35b",
+  "checkpoint_transcript_start": 110,
+  "transcript_lines_at_start": 110,
+  "initial_attribution": {
+    "calculated_at": "2026-03-01T13:38:45.540901Z",
+    "agent_lines": 0,
+    "human_added": 38856,
+    "human_modified": 25,
+    "human_removed": 0,
+    "total_committed": 38856,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2/.entire/codex-bridge/transcript.json"
+}
