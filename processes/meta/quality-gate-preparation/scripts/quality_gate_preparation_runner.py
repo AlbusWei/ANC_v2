@@ -134,7 +134,7 @@ def main() -> int:
     phase_trace: List[Dict[str, Any]] = []
 
     try:
-        required = ["objective_ref", "spec_ref", "test_doc_ref", "risk_focus"]
+        required = ["objective_ref", "spec_ref", "test_doc_ref", "risk_focus", "superpower_ref"]
         missing = [key for key in required if key not in request]
         if missing:
             raise QualityGatePreparationError(f"missing required input fields: {','.join(missing)}")
@@ -142,6 +142,11 @@ def main() -> int:
         test_doc_path = resolve_path(root, str(request["test_doc_ref"]))
         if not test_doc_path.exists():
             raise QualityGatePreparationError("test_doc_ref_unreachable")
+
+        superpower_ref = str(request["superpower_ref"])
+        superpower_path = resolve_path(root, superpower_ref)
+        if not superpower_path.exists():
+            raise QualityGatePreparationError("superpower_ref_unreachable")
 
         risk_focus = parse_risk_focus(request.get("risk_focus"))
         if "P0" not in set(risk_focus):
@@ -226,6 +231,7 @@ def main() -> int:
 
         bundle_path = evidence_dir / "preparation_bundle.index.json"
         bundle_payload = {
+            "superpower_ref": to_rel(superpower_path, root),
             "objective_ref": request["objective_ref"],
             "spec_ref": request["spec_ref"],
             "test_doc_ref": to_rel(test_doc_path, root),

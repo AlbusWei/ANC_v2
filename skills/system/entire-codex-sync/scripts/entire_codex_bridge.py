@@ -30,6 +30,26 @@ class BridgeError(RuntimeError):
     """Raised for fail-closed bridge errors."""
 
 
+def ensure_not_claude_code_runtime() -> None:
+    """Prevent accidental use from Claude Code runtime.
+
+    This bridge intentionally masquerades as Gemini hooks for Codex-only flows.
+    When running inside Claude Code, Entire has native `claude-code` hooks and
+    should not be routed through this bridge, otherwise provider attribution will
+    be mis-labeled as Gemini.
+    """
+
+    if os.getenv("ENTIRE_CODEX_BRIDGE_ALLOW_CLAUDE") == "1":
+        return
+
+    if os.getenv("CLAUDECODE") == "1" or os.getenv("CLAUDE_CODE_ENTRYPOINT"):
+        raise BridgeError(
+            "Detected Claude Code runtime. Do not use entire_codex_bridge.py here; "
+            "use native `entire hooks claude-code ...` lifecycle instead. "
+            "If you really need to bypass, set ENTIRE_CODEX_BRIDGE_ALLOW_CLAUDE=1."
+        )
+
+
 def now_iso() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
@@ -328,6 +348,7 @@ def main() -> int:
     parser = build_parser()
     args = parser.parse_args()
     try:
+        ensure_not_claude_code_runtime()
         root = repo_root()
         ensure_entire_enabled(root)
 

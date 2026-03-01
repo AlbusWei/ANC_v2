@@ -6,6 +6,7 @@
 
 1. 使用 Codex 进行实现，但需要 Entire 生成 checkpoint 与会话证据。
 2. 需要在每次开发变更后主动同步，而非仅在最终提交时补录。
+3. **仅限 Codex 运行时**：若在 Claude Code 运行时调用本桥接，会把会话错误标记为 Gemini；Claude Code 应走 `entire hooks claude-code ...` 原生路径。
 
 ## 2. 协议入口
 

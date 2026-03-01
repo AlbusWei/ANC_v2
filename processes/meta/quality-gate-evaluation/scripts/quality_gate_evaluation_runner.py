@@ -327,11 +327,21 @@ def main() -> int:
         preparation_bundle_path = resolve_path(root, preparation_bundle_ref)
         if not preparation_bundle_path.exists():
             raise QualityGateEvaluationError("preparation_bundle_ref_unreachable")
+        preparation_bundle = load_json(preparation_bundle_path)
 
         superpower_ref = str(request["superpower_ref"])
         superpower_path = resolve_path(root, superpower_ref)
         if not superpower_path.exists():
             raise QualityGateEvaluationError("superpower_ref_unreachable")
+
+        bundle_superpower_ref = str(preparation_bundle.get("superpower_ref") or "")
+        if not bundle_superpower_ref:
+            raise QualityGateEvaluationError("preparation_bundle_missing_superpower_ref")
+        bundle_superpower_path = resolve_path(root, bundle_superpower_ref)
+        if not bundle_superpower_path.exists():
+            raise QualityGateEvaluationError("preparation_bundle_superpower_ref_unreachable")
+        if bundle_superpower_path.resolve() != superpower_path.resolve():
+            raise QualityGateEvaluationError("superpower_ref_mismatch_with_preparation_bundle")
 
         actual_output_refs = parse_refs(request.get("actual_output_refs"))
         if not actual_output_refs:
