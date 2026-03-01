@@ -48,7 +48,7 @@
 - [x] 完成 M6 AP 化补齐：新增 AP-032~AP-036 并将 `construction-plane-governance` 全 phase 映射到专用 AP
 - [x] 完成 M6 执行闭环脚本：`manual_task_runner` + `construction_audit` + `round_evidence_tool` + `run_round`
 - [x] 完成 M6 专项门禁：`registry_contract_tool.py verify-m6`
-- [x] 完成 M6 首轮运行级 dry-run（A 通过，B/C Fail-Closed），并落盘证据索引 `runtime_data/execution/evidence/construction-plane/README.md`
+- [x] 完成 M6 首轮运行级 dry-run（A 通过，B/C Fail-Closed），并落盘证据索引 `tmp/runtime_data/execution/evidence/construction-plane/README.md`
 - [x] 将 `construction-plane-governance`、`sys.arch.construction-audit`、`system.integration.openspec-sync` 生命周期从 `draft` 提升到 `review`
 - [x] 完成 `m2-bpm-runtime-hardening` W2 配置治理闭环：`governed-config-change`/`config-change-gatekeeper`/`system-config-updater` 可执行，`TC-GCC-001~003` 运行级通过并落盘证据（`runtime_data/execution/evidence/bpm-runtime/w2_*`）
 - [x] 完成 `m2-bpm-runtime-hardening` W5（门禁收口与状态提升）：新增 `verify-m2` 专项校验，`verify/verify-m2/verify-m6` 与 post-dev regression 同回合通过，关闭 `Q-001`，并将 `system-analyst`、`sys.arch.system-feedback-digest`、`runtime-policy-calibration` 生命周期统一收敛到 `review`（不推进 `active`）
@@ -67,7 +67,7 @@
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase7 最终收口：OpenSpec/registry/design docs/runtime evidence 四向对账一致；Meta Skills（8）与 Meta Processes（20）生命周期统一收敛到 `review`（`draft=0`、`active=0`）；最终门禁（`registry verify` + `openspec validate` + `final-regression`）全部通过
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase9 `full-development` 首轮运行级真实分发 dry-run：`TC-FULL-DEV-PROC-001` 在 8 phase 下通过，真实 openclaw 分发 + 同 actor 跨 phase 会话隔离校验通过
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase10 AP 语义统一：18 份流程 manifest 去除 `target_type=skill`，统一为 `target_type=subprocess` + `inline_ap` 临时 AP 语法，并启用“同 Actor 可穿透执行”规则
-- [x] 完成 `m3-meta-asset-quality-hardening` Phase11 `hotfix/refactor` 首轮运行级真实分发 dry-run：`TC-HOTFIX-PROC-001` 与 `TC-REFACTOR-PROC-001` 均通过，phase 全量分发、session 严格匹配、同 actor 跨 phase 隔离全部通过（证据：`runtime_data/execution/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json`）
+- [x] 完成 `m3-meta-asset-quality-hardening` Phase11 `hotfix/refactor` 首轮运行级真实分发 dry-run：`TC-HOTFIX-PROC-001` 与 `TC-REFACTOR-PROC-001` 均通过，phase 全量分发、session 严格匹配、同 actor 跨 phase 隔离全部通过（证据：`tmp/runtime_data/execution/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json`）
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase12 `development-process` 协作语义补齐：明确“最小开发内核”定位，补齐 phase 语义字段与 `collaboration_policy`，并退役移除 `processes/development-process/` legacy 路径
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase13 流程标准一致性收口：升级 `process-template` 到 canonical schema，`meta.arch.process-creator` 校验逻辑与 `sys.bpm.process-instance-manager` manifest 校验对齐 `subprocess + inline_ap` 规则，并补齐 `trigger-*` manifest 协作语义字段
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase14 流程执行语义补全：全量流程文档去模板化、`P4` 协作策略强制与 `P5/P6` 多 Actor 条件强制落地、`sys.bpm.process-instance-manager` 增加 `task_dispatch/dispatch_context/dispatch_prompt` 证据链、`system.ops.manual-task` 改为 Actor 通用执行入口并输出 `task_completion` 留档

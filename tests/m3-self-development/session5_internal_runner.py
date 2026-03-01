@@ -519,6 +519,9 @@ def run_quality_gate_evaluation(
     case_dir: Path,
     preparation_bundle_ref: str,
     actual_output_refs: List[str],
+    dispatch_trace_ref: str,
+    case_report_ref: str,
+    phase_outputs: List[str],
 ) -> Dict[str, Any]:
     stage_dir = case_dir / "quality-gate-evaluation"
     stage_dir.mkdir(parents=True, exist_ok=True)
@@ -536,6 +539,9 @@ def run_quality_gate_evaluation(
             "profile_set": ["quality-gate.baseline@1.0.0"],
             "aggregation_rules_ref": to_rel(rules_path, root),
             "force_hold": False,
+            "dispatch_trace_ref": dispatch_trace_ref,
+            "phase_outputs": phase_outputs,
+            "case_report_ref": case_report_ref,
         },
     )
 
@@ -951,11 +957,39 @@ def run_canonical_chain(
         }
 
     _dispatch("quality-gate-evaluation", [preparation_bundle_ref, implementation_ref])
+    quality_gate_dispatch_ref = str(stage_traces[-1].get("dispatch_output_ref") or "") if stage_traces else ""
+
+    case_report_path = case_dir / "quality-gate-evaluation" / "case_report.json"
+    dump_json(
+        case_report_path,
+        {
+            "case_id": case_dir.name,
+            "assertions": {
+                "failure_path": True,
+                "rollback_path": True,
+            },
+            "evidence": {
+                "objective_scope_output_ref": objective_scope.get("output_ref", ""),
+                "spec_authoring_output_ref": spec_authoring.get("output_ref", ""),
+                "quality_prep_output_ref": quality_prep.get("output_ref", ""),
+                "implementation_output_ref": impl.get("output_ref", ""),
+            },
+        },
+    )
+
     quality_eval = run_quality_gate_evaluation(
         root=root,
         case_dir=case_dir,
         preparation_bundle_ref=preparation_bundle_ref,
         actual_output_refs=[str(item) for item in actual_output_refs],
+        dispatch_trace_ref=quality_gate_dispatch_ref,
+        case_report_ref=to_rel(case_report_path, root),
+        phase_outputs=[
+            str(objective_scope.get("output_ref") or ""),
+            str(spec_authoring.get("output_ref") or ""),
+            str(quality_prep.get("output_ref") or ""),
+            str(impl.get("output_ref") or ""),
+        ],
     )
     if quality_eval["return_code"] != 0:
         return {
@@ -1103,6 +1137,8 @@ def case_success_payload(case_id: str, payload: Dict[str, Any], note: str) -> Di
             "registry_sync_ref": payload.get("registry_sync_ref", ""),
             "candidate_artifacts_ref": payload.get("candidate_artifacts_ref", ""),
             "rollback_bundle_ref": payload.get("rollback_bundle_ref", ""),
+            "failure_path": True,
+            "rollback_path": True,
         },
     }
 

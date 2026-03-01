@@ -14,9 +14,9 @@
 ## Entrypoint
 
 - Regression runner: `tests/m1-runtime/run_post_dev_regression.py`
-- Evidence root: `runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/`
+- Evidence root: `tmp/runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/`
 - Semantic service runner: `tests/m1-runtime/run_semantic_service_validation.py`
-- Semantic evidence root: `runtime_data/execution/evidence/quality-gate/runtime-validation-round-8-semantic-service/`
+- Semantic evidence root: `tmp/runtime_data/execution/evidence/quality-gate/runtime-validation-round-8-semantic-service/`
 
 ## Test Cases
 

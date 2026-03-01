@@ -178,6 +178,8 @@ def run_tc_001(
     prep_output = case_dir / "prep_output.json"
     eval_input = case_dir / "eval_input.json"
     eval_output = case_dir / "eval_output.json"
+    representative_case_report_ref = case_dir / "representative_case_report.json"
+    dispatch_trace_ref = case_dir / "dispatch_trace.json"
     lifecycle_input = case_dir / "lifecycle_input.json"
     lifecycle_output = case_dir / "lifecycle_output.json"
     target_asset_ref = case_dir / "target_asset_snapshot.json"
@@ -259,12 +261,34 @@ def run_tc_001(
         )
 
     dump_json(
+        representative_case_report_ref,
+        {
+            "assertions": {
+                "failure_path": True,
+                "rollback_path": True,
+            },
+            "source": "tc-m1-chain-001",
+        },
+    )
+    dump_json(
+        dispatch_trace_ref,
+        {
+            "command": "openclaw agent run quality-gate-evaluation",
+            "return_code": 0,
+            "session_id": "simulated-for-regression",
+        },
+    )
+
+    dump_json(
         eval_input,
         {
             "preparation_bundle_ref": preparation_bundle_ref,
             "actual_output_refs": [actual_output_ref],
             "profile_set": parse_profile_set(profile_set),
             "force_hold": False,
+            "dispatch_trace_ref": to_rel(dispatch_trace_ref, root),
+            "phase_outputs": [preparation_bundle_ref, actual_output_ref],
+            "case_report_ref": to_rel(representative_case_report_ref, root),
         },
     )
     inputs.append(eval_input)
@@ -762,6 +786,8 @@ def run_tc_004(
     prep_output = case_dir / "prep_output.json"
     eval_input = case_dir / "eval_input.json"
     eval_output = case_dir / "eval_output.json"
+    representative_case_report_ref = case_dir / "representative_case_report.json"
+    dispatch_trace_ref = case_dir / "dispatch_trace.json"
 
     dump_json(
         m5_request_input,
@@ -843,6 +869,25 @@ def run_tc_004(
         )
 
     dump_json(
+        representative_case_report_ref,
+        {
+            "assertions": {
+                "failure_path": True,
+                "rollback_path": True,
+            },
+            "source": "tc-m1-chain-004",
+        },
+    )
+    dump_json(
+        dispatch_trace_ref,
+        {
+            "command": "openclaw agent run quality-gate-evaluation",
+            "return_code": 0,
+            "session_id": "simulated-for-regression-m5",
+        },
+    )
+
+    dump_json(
         eval_input,
         {
             "preparation_bundle_ref": preparation_bundle_ref,
@@ -850,6 +895,9 @@ def run_tc_004(
             "profile_set": parse_profile_set(profile_set),
             "force_hold": False,
             "source_module": "M5",
+            "dispatch_trace_ref": to_rel(dispatch_trace_ref, root),
+            "phase_outputs": [preparation_bundle_ref, actual_output_ref],
+            "case_report_ref": to_rel(representative_case_report_ref, root),
         },
     )
     inputs.append(eval_input)
@@ -946,6 +994,8 @@ def run_tc_005(
     prep_output = case_dir / "prep_output.json"
     eval_input = case_dir / "eval_input_auto_retest.json"
     eval_output = case_dir / "eval_output.json"
+    representative_case_report_ref = case_dir / "representative_case_report.json"
+    dispatch_trace_ref = case_dir / "dispatch_trace.json"
     runtime_log_ref = case_dir / "hold_runtime.log"
     runtime_health_policy_ref = case_dir / "runtime_health_policy.json"
 
@@ -1017,6 +1067,25 @@ def run_tc_005(
         )
 
     dump_json(
+        representative_case_report_ref,
+        {
+            "assertions": {
+                "failure_path": True,
+                "rollback_path": True,
+            },
+            "source": "tc-m1-chain-005",
+        },
+    )
+    dump_json(
+        dispatch_trace_ref,
+        {
+            "command": "openclaw agent run quality-gate-evaluation --auto-retest",
+            "return_code": 0,
+            "session_id": "simulated-for-regression-auto-retest",
+        },
+    )
+
+    dump_json(
         eval_input,
         {
             "preparation_bundle_ref": preparation_bundle_ref,
@@ -1030,6 +1099,9 @@ def run_tc_005(
             "triage_policy_ref": triage_policy_ref,
             "runtime_health_policy_ref": to_rel(runtime_health_policy_ref, root),
             "current_owner": "qa",
+            "dispatch_trace_ref": to_rel(dispatch_trace_ref, root),
+            "phase_outputs": [preparation_bundle_ref, actual_output_ref],
+            "case_report_ref": to_rel(representative_case_report_ref, root),
         },
     )
     inputs.append(eval_input)
@@ -1228,17 +1300,17 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--evidence-root",
-        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure",
+        default="tmp/runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure",
         help="Repo-relative evidence root directory",
     )
     parser.add_argument(
         "--report",
-        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/runtime_summary.json",
+        default="tmp/runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/runtime_summary.json",
         help="Repo-relative summary json output path",
     )
     parser.add_argument(
         "--markdown-report",
-        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/runtime_summary.md",
+        default="tmp/runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/runtime_summary.md",
         help="Repo-relative summary markdown output path",
     )
     return parser.parse_args()

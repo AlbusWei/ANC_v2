@@ -92,6 +92,51 @@ def parse_bool(value: Any) -> bool:
     return text in {"1", "true", "yes", "y", "on"}
 
 
+def verify_gate_evidence_chain(payload: Dict[str, Any], repo_root: Path) -> tuple[bool, str]:
+    dispatch_trace_ref = str(payload.get("dispatch_trace_ref") or "").strip()
+    if not dispatch_trace_ref:
+        return False, "missing_openclaw_trace"
+
+    dispatch_trace_path = resolve_path(repo_root, dispatch_trace_ref)
+    if not dispatch_trace_path.exists():
+        return False, "missing_openclaw_trace"
+
+    phase_outputs = payload.get("phase_outputs")
+    if not isinstance(phase_outputs, list) or not phase_outputs:
+        return False, "missing_phase_output"
+
+    for output_ref in phase_outputs:
+        ref = str(output_ref or "").strip()
+        if not ref:
+            return False, "missing_phase_output"
+        if not resolve_path(repo_root, ref).exists():
+            return False, "missing_phase_output"
+
+    case_report_ref = str(payload.get("case_report_ref") or "").strip()
+    if not case_report_ref:
+        return False, "missing_case_report"
+
+    case_report_path = resolve_path(repo_root, case_report_ref)
+    if not case_report_path.exists():
+        return False, "missing_case_report"
+
+    try:
+        report_payload = load_json(case_report_path)
+    except Exception:
+        return False, "case_report_not_representative"
+
+    assertions = report_payload.get("assertions")
+    if not isinstance(assertions, dict):
+        return False, "case_report_not_representative"
+
+    has_failure_path = bool(assertions.get("failure_path"))
+    has_rollback_path = bool(assertions.get("rollback_path"))
+    if not (has_failure_path and has_rollback_path):
+        return False, "case_report_not_representative"
+
+    return True, "ok"
+
+
 def dispatch_phase(
     *,
     enabled: bool,
@@ -785,6 +830,50 @@ def main() -> int:
                 continue
 
             break
+
+        # 对 admission 级 pass 判定执行真实性证据反查，缺证据必须 Fail-Closed。
+        if gate_decision == "pass":
+            dispatch_trace_ref = str(request.get("dispatch_trace_ref") or "").strip()
+            if not dispatch_trace_ref:
+                for item in reversed(phase_trace):
+                    if not isinstance(item, dict):
+                        continue
+                    dispatch = item.get("dispatch")
+                    if not isinstance(dispatch, dict):
+                        continue
+                    ref = str(dispatch.get("dispatch_output_ref") or "").strip()
+                    if ref:
+                        dispatch_trace_ref = ref
+                        break
+
+            phase_outputs = request.get("phase_outputs")
+            if not isinstance(phase_outputs, list) or not phase_outputs:
+                phase_outputs = [
+                    objective_eval_ref,
+                    to_rel(subjective_eval_path, root),
+                    regression_eval_ref,
+                    final_gate_verdict_ref,
+                ]
+
+            evidence_payload = {
+                "dispatch_trace_ref": dispatch_trace_ref,
+                "phase_outputs": phase_outputs,
+                "case_report_ref": str(request.get("case_report_ref") or "").strip(),
+            }
+            verified, verify_reason = verify_gate_evidence_chain(evidence_payload, repo_root=root)
+            phase_trace.append(
+                {
+                    "phase": "evidence-verification",
+                    "status": "pass" if verified else "failed",
+                    "reason": verify_reason,
+                    "dispatch_trace_ref": evidence_payload["dispatch_trace_ref"],
+                    "case_report_ref": evidence_payload["case_report_ref"],
+                    "ts": now_iso(),
+                }
+            )
+            if not verified:
+                gate_decision = "fail"
+                runtime_gate_state = "fail"
 
         dump_json(
             runtime_trace_path,
