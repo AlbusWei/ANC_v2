@@ -36,8 +36,8 @@
       "phase_id": "p1",
       "name": "intake-and-normalize",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:governed-config-change:p1",
       "requires_spec": false,
       "sipoc": {
         "supplier": "initiator",
@@ -46,14 +46,26 @@
         "output": "normalized_request",
         "client": "p2"
       },
-      "acceptance_criteria": "request includes target scope, expected impact and rollback plan"
+      "acceptance_criteria": "request includes target scope, expected impact and rollback plan",
+      "inline_ap": {
+        "ap_id": "inline-ap:governed-config-change:p1",
+        "skill_id": "system.ops.manual-task",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "将请求归一为结构化 config_change_request",
+      "input_context_ref": "change_request",
+      "done_definition": "必须产出 normalized_request，并满足“请求包含目标范围、预期影响与回滚方案”",
+      "handoff_note": "将 normalized_request 交接给 p2"
     },
     {
       "phase_id": "p2",
       "name": "gate-and-risk-classification",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "system.control.config-change-gatekeeper",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:governed-config-change:p2",
       "requires_spec": true,
       "spec_ref": "docs/architecture/registry_contracts.md#9-验证命令",
       "sipoc": {
@@ -63,48 +75,84 @@
         "output": "approved_request",
         "client": "p3"
       },
-      "acceptance_criteria": "objective/spec/test chain complete and risk level recorded"
+      "acceptance_criteria": "objective/spec/test chain complete and risk level recorded",
+      "inline_ap": {
+        "ap_id": "inline-ap:governed-config-change:p2",
+        "skill_id": "system.control.config-change-gatekeeper",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "校验必需证据并完成风险分级",
+      "input_context_ref": "normalized_request",
+      "done_definition": "必须产出 approved_request，并满足“objective/spec/test 链路完整且风险等级已记录”",
+      "handoff_note": "将 approved_request 交接给 p3"
     },
     {
       "phase_id": "p3",
       "name": "authorize-change",
       "actor": "admin",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:governed-config-change:p3",
       "requires_spec": true,
       "spec_ref": "docs/architecture/openclaw_interface.md#3-2-1-anc-治理约束配置写路径",
       "sipoc": {
         "supplier": "p2",
         "input": "approved_request",
-        "process": "approve or reject execution window and scope",
+        "process": "批准或驳回执行窗口与变更范围",
         "output": "authorization_decision",
         "client": "p4"
       },
-      "acceptance_criteria": "authorization decision includes approval, constraints and rollback trigger"
+      "acceptance_criteria": "authorization decision includes approval, constraints and rollback trigger",
+      "inline_ap": {
+        "ap_id": "inline-ap:governed-config-change:p3",
+        "skill_id": "system.ops.manual-task",
+        "actor": "admin",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "批准或驳回执行窗口与变更范围",
+      "input_context_ref": "approved_request",
+      "done_definition": "必须产出 authorization_decision，并满足“授权决策包含批准结果、约束条件与回滚触发条件”",
+      "handoff_note": "将 authorization_decision 交接给 p4"
     },
     {
       "phase_id": "p4",
       "name": "execute-config-change",
       "actor": "admin",
-      "target_type": "skill",
-      "target_id": "system.admin.system-config-updater",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:governed-config-change:p4",
       "requires_spec": true,
       "spec_ref": "docs/architecture/openclaw_interface.md#2-2-config-rpc经-openclaw-gateway-call",
       "sipoc": {
         "supplier": "p3",
         "input": "authorization_decision",
-        "process": "apply OpenClaw config change with baseHash and capture receipt",
+        "process": "基于 baseHash 执行 OpenClaw 配置变更并记录回执",
         "output": "change_receipt",
         "client": "p5"
       },
-      "acceptance_criteria": "change receipt contains hash_before/hash_after, patch summary and execution status"
+      "acceptance_criteria": "change receipt contains hash_before/hash_after, patch summary and execution status",
+      "inline_ap": {
+        "ap_id": "inline-ap:governed-config-change:p4",
+        "skill_id": "system.admin.system-config-updater",
+        "actor": "admin",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "基于 baseHash 执行 OpenClaw 配置变更并记录回执",
+      "input_context_ref": "authorization_decision",
+      "done_definition": "必须产出 change_receipt，并满足“变更回执包含 hash_before/hash_after、补丁摘要与执行状态”",
+      "handoff_note": "将 change_receipt 交接给 p5"
     },
     {
       "phase_id": "p5",
       "name": "verify-and-archive",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:governed-config-change:p5",
       "requires_spec": true,
       "spec_ref": "docs/architecture/registry_contracts.md#9-验证命令",
       "sipoc": {
@@ -114,7 +162,19 @@
         "output": "final_output",
         "client": "initiator"
       },
-      "acceptance_criteria": "health verification pass and evidence bundle is complete"
+      "acceptance_criteria": "health verification pass and evidence bundle is complete",
+      "inline_ap": {
+        "ap_id": "inline-ap:governed-config-change:p5",
+        "skill_id": "system.ops.manual-task",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "校验变更后健康状态、归档证据并通知请求方",
+      "input_context_ref": "change_receipt",
+      "done_definition": "必须产出 final_output，并满足“健康校验通过且证据包完整”",
+      "handoff_note": "将 final_output 交接给 initiator"
     }
   ],
   "control_flow": [
@@ -170,5 +230,12 @@
       "hash_after",
       "rollback_status"
     ]
+  },
+  "collaboration_policy": {
+    "mode": "phase-isolated-session",
+    "dispatch_runtime": "openclaw-required",
+    "session_reset": "per-phase-reset",
+    "natural_context_first": true,
+    "ap_migration_strategy": "sequential"
   }
 }

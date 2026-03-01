@@ -74,7 +74,21 @@
 
 ## Thread-4 运行证据（状态推进依据）
 
-1. `docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle_output.json`：流程执行状态 `succeeded`。
-2. `docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle/lifecycle_review_report.json`：phase trace `p1~p5` 全部 pass。
-3. `docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle/p5_registry_sync.json`：registry verify return_code=0。
+1. `runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle_output.json`：流程执行状态 `succeeded`。
+2. `runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle/lifecycle_review_report.json`：phase trace `p1~p5` 全部 pass。
+3. `runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle/p5_registry_sync.json`：registry verify return_code=0。
 4. 基于上述证据，本轮仅将流程生命周期推进到 `review`，不推进 `active`。
+
+<!-- phase-semantics-v2:start -->
+## 阶段协作语义补充（v2）
+
+> 说明：本节用于说明每个 phase 在系统主线中的职责与协作价值，要求可直接回答“为什么由该 Actor 在该阶段执行该动作”。
+
+| phase_id | Actor | 阶段目的 | 输入语义 | 完成标准 | 交接语义 |
+|---|---|---|---|---|---|
+| `p1` | `hr` | 校验生命周期评审请求结构与字段完整性。 | final_gate_verdict_ref + target_asset_ref + requested_transition | 产出 validated_request_ref，并满足：必填字段完整且引用可达 | 将 validated_request_ref 交接给 p2 |
+| `p2` | `hr` | 核查当前生命周期状态与迁移前置条件。 | validated_request_ref + target_asset_ref + requested_transition | 产出 prerequisites_check_ref，并满足：迁移路径符合五态生命周期规则 | 将 prerequisites_check_ref 交接给 p3 |
+| `p3` | `hr` | 在迁移前确认门禁结论为 pass。 | final_gate_verdict_ref | 产出 quality_gate_check_ref，并满足：质量门禁结论为 pass 且证据可追溯 | 将 quality_gate_check_ref 交接给 p4 |
+| `p4` | `hr` | 在门禁通过后记录生命周期迁移。 | target_asset_ref + from_status + requested_transition | 产出 lifecycle_transition_ref，并满足：迁移记录包含 from/to 状态、actor 与证据引用 | 将 lifecycle_transition_ref 交接给 p5 |
+| `p5` | `hr` | 校验 registry 一致性并落盘同步记录。 | lifecycle_transition_ref | 产出 registry_sync_ref + lifecycle_review_report_ref，并满足：registry 校验通过且同步证据已落盘 | 将 registry_sync_ref + lifecycle_review_report_ref 交接给 initiator |
+<!-- phase-semantics-v2:end -->

@@ -1,9 +1,0 @@
-{
-  "timestamp": "2026-02-22T15:51:17Z",
-  "triage_action": "continue",
-  "health_status": "stable",
-  "maintenance_action": "monitor",
-  "runtime_health_policy_ref": "docs/design/modules/evidence/bpm-runtime/w3b_qa_process_cases/TC-QA-PROC-002/runtime_health_policy.json",
-  "runtime_window_minutes": 45,
-  "max_retries": 2
-}

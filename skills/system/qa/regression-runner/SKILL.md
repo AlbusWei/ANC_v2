@@ -92,9 +92,9 @@ references:
 python3 skills/system/qa/regression-runner/scripts/run_regression.py \
   --regression-scope M3,M4,M5 \
   --profile-set quality-gate.baseline@1.0.0 \
-  --preparation-bundle docs/design/modules/evidence/quality-gate/smoke/preparation_bundle.index.json \
-  --actual-output docs/design/modules/evidence/quality-gate/smoke/actual_output.pass.txt \
-  --output-dir docs/design/modules/evidence/quality-gate/smoke/regression-runner
+  --preparation-bundle runtime_data/execution/evidence/quality-gate/smoke/preparation_bundle.index.json \
+  --actual-output runtime_data/execution/evidence/quality-gate/smoke/actual_output.pass.txt \
+  --output-dir runtime_data/execution/evidence/quality-gate/smoke/regression-runner
 ```
 
 ## Fail-Closed Rules

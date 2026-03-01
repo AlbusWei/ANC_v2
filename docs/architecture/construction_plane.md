@@ -1,6 +1,6 @@
 # ANC v2 施工平面（Construction Plane）
 
-最后更新：2026-02-23
+最后更新：2026-02-26
 
 > 本文档是 ANC v2 的活施工板，记录当前进展、下一步计划、边界和风险。
 
@@ -35,7 +35,7 @@
 - [x] 完成 M3 自开发骨架落盘：`full-development/hotfix/refactor` 流程资产 + `objective-writer/agent-creator/process-creator/template-validator/skill-creator` 技能注册
 - [x] 完成 M6 施工治理资产落盘：`construction-plane-governance` 流程 + `sys.arch.construction-audit` 技能 + M6 详细设计重构
 - [x] 建立 M6 × OpenSpec Hybrid 协同协议并明确 Architect 语义 owner 机制
-- [x] 完成 OpenSpec 协同完整 schema 与包装技能落盘：`openspec-collaboration-schema` + `system.integration.openspec-sync`
+- [x] 完成 M6 Superpower 协同完整 schema 与包装技能落盘：`superpower-collaboration-schema` + `system.integration.superpower-sync`
 - [x] 完成 M1 第一批技能开发：`sys.qa.*` 七个技能统一迁移到 `skills/system/qa/*`，补齐 Capability Contract、最小可执行脚本、P0 测试与 registry 联动
 - [x] 完成模板基座标准化：升级 `skills/template` 与 `skills/skill-creator`，形成本地化标准脚手架与 review/smoke 评审基线
 - [x] 完成 M1 QA 技能运行级复核：OpenJudge 真执行链路与 LLM-as-Judge Fail-Closed 在 `runtime-validation-round-2` 落盘（objective/regression pass，subjective hold，llm-missing-key test_invalid）
@@ -48,15 +48,34 @@
 - [x] 完成 M6 AP 化补齐：新增 AP-032~AP-036 并将 `construction-plane-governance` 全 phase 映射到专用 AP
 - [x] 完成 M6 执行闭环脚本：`manual_task_runner` + `construction_audit` + `round_evidence_tool` + `run_round`
 - [x] 完成 M6 专项门禁：`registry_contract_tool.py verify-m6`
-- [x] 完成 M6 首轮运行级 dry-run（A 通过，B/C Fail-Closed），并落盘证据索引 `docs/design/modules/evidence/construction-plane/README.md`
-- [x] 将 `construction-plane-governance`、`sys.arch.construction-audit`、`system.integration.openspec-sync` 生命周期从 `draft` 提升到 `review`
-- [x] 完成 `m2-bpm-runtime-hardening` W2 配置治理闭环：`governed-config-change`/`config-change-gatekeeper`/`system-config-updater` 可执行，`TC-GCC-001~003` 运行级通过并落盘证据（`docs/design/modules/evidence/bpm-runtime/w2_*`）
+- [x] 完成 M6 首轮运行级 dry-run（A 通过，B/C Fail-Closed），并落盘证据索引 `runtime_data/execution/evidence/construction-plane/README.md`
+- [x] 将 `construction-plane-governance`、`sys.arch.construction-audit`、`system.integration.superpower-sync` 生命周期从 `draft` 提升到 `review`
+- [x] 完成 `m2-bpm-runtime-hardening` W2 配置治理闭环：`governed-config-change`/`config-change-gatekeeper`/`system-config-updater` 可执行，`TC-GCC-001~003` 运行级通过并落盘证据（`runtime_data/execution/evidence/bpm-runtime/w2_*`）
 - [x] 完成 `m2-bpm-runtime-hardening` W5（门禁收口与状态提升）：新增 `verify-m2` 专项校验，`verify/verify-m2/verify-m6` 与 post-dev regression 同回合通过，关闭 `Q-001`，并将 `system-analyst`、`sys.arch.system-feedback-digest`、`runtime-policy-calibration` 生命周期统一收敛到 `review`（不推进 `active`）
 - [x] 新增 `lifecycle-review` 最小可执行流程资产（owner=`hr`，status=`draft`），并完成 design/inventory/registry/施工平面联动更新（Thread-2）
 - [x] 完成 Thread-4 状态联动收口：`qa/bpm/admin/architect/hr` 生命周期统一推进到 `review`；`lifecycle-review` 由 `draft` 推进到 `review`；`system-analyst` 保持“分析输入，不做 lifecycle owner”边界
 - [x] 完成 `R-20260222-M6-m1-quality-gate-runtime-closure-01` 回合关闭包：`round-output.json`、`round-evidence.jsonl`、`round_close_summary.md`、`openspec-sync-record.json`、`registry_verify.log`，并通过 `verify` 与 `verify-m6`
 - [x] 完成 `m1-quality-gate-runtime-closure` OpenSpec 归档：补齐 `specs/**` deltas 与 Scenario，`openspec validate` 通过并归档至 `openspec/changes/archive/2026-02-22-m1-quality-gate-runtime-closure/`
-- [x] 完成 `m3-self-development-e2e-online` Session3 运行资产落地：新增 `impact-analyzer/release-manager` 技能、`registry-sync/escalation` 流程、7 个 AP 包装流程、`release-manager-agent` 目录，并完成 registry/OpenSpec/施工平面联动
+- [x] 完成 `m3-self-development-e2e-online` Session3 运行资产落地：新增 `impact-analyzer/release-manager` 技能、`registry-sync/escalation` 流程、`release-manager-agent` 目录，并完成 registry/OpenSpec/施工平面联动
+- [x] 完成 `m3-self-development-e2e-online` Session4 测试基座：新增 `tests/m3-self-development/{TEST.md,live_cases.md,run_tc_online.py}`，复用 `m3-runtime + m1-runtime` runner 形成四类断言并预留 Session5/6 case 体系
+- [x] 完成 `m3-self-development-e2e-online` Session5 内部主线 E2E（2026-02-25）：`M3-INT-001/002/003` 在线套件通过，形成 `tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session5/` 证据包，`session6_readiness=ready`
+- [x] 完成 `m3-self-development-e2e-online` Session6 外部主线 E2E（2026-02-26）：`M3-EXT-001/002/003 + M3-FC-101/102/103` 在线套件通过，形成 `tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session6/` 证据包，`session7_readiness=ready`
+- [x] 完成 `m3-self-development-e2e-online` Session7 全链路收口（2026-02-26）：OpenSpec/registry/construction plane/evidence 四向对账通过，形成 `tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session7/` 证据包，生命周期结论维持 `draft/review`
+- [x] 完成 `m3-meta-asset-quality-hardening` Phase2 流程资产重构：7 个历史包装流程全部退役，`full-development/hotfix/refactor/development-process` 全量替换为现行 P5 子流程链，并完成 process registry、process inventory、施工平面同步
+- [x] 完成 `m3-meta-asset-quality-hardening` Phase3 元技能执行级升级：8 个目标元技能统一推进到 `review`，4 个 creator/validator runner 统一为 `--input/--output/[--report]` 契约，并落地 `meta-skill-creator` 运行名治理（`skill-creator` 仓库内软禁用）
+- [x] 完成 `m3-meta-asset-quality-hardening` Phase4 联动闭合：design + inventory + registry + OpenSpec + 施工平面对齐，11 个流程生命周期统一收敛到 `review`，并明确本轮不推进 `active`
+- [x] 完成 `m3-meta-asset-quality-hardening` Phase7 最终收口：OpenSpec/registry/design docs/runtime evidence 四向对账一致；Meta Skills（8）与 Meta Processes（20）生命周期统一收敛到 `review`（`draft=0`、`active=0`）；最终门禁（`registry verify` + `openspec validate` + `final-regression`）全部通过
+- [x] 完成 `m3-meta-asset-quality-hardening` Phase9 `full-development` 首轮运行级真实分发 dry-run：`TC-FULL-DEV-PROC-001` 在 8 phase 下通过，真实 openclaw 分发 + 同 actor 跨 phase 会话隔离校验通过
+- [x] 完成 `m3-meta-asset-quality-hardening` Phase10 AP 语义统一：18 份流程 manifest 去除 `target_type=skill`，统一为 `target_type=subprocess` + `inline_ap` 临时 AP 语法，并启用“同 Actor 可穿透执行”规则
+- [x] 完成 `m3-meta-asset-quality-hardening` Phase11 `hotfix/refactor` 首轮运行级真实分发 dry-run：`TC-HOTFIX-PROC-001` 与 `TC-REFACTOR-PROC-001` 均通过，phase 全量分发、session 严格匹配、同 actor 跨 phase 隔离全部通过（证据：`runtime_data/execution/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json`）
+- [x] 完成 `m3-meta-asset-quality-hardening` Phase12 `development-process` 协作语义补齐：明确“最小开发内核”定位，补齐 phase 语义字段与 `collaboration_policy`，并退役移除 `processes/development-process/` legacy 路径
+- [x] 完成 `m3-meta-asset-quality-hardening` Phase13 流程标准一致性收口：升级 `process-template` 到 canonical schema，`meta.arch.process-creator` 校验逻辑与 `sys.bpm.process-instance-manager` manifest 校验对齐 `subprocess + inline_ap` 规则，并补齐 `trigger-*` manifest 协作语义字段
+- [x] 完成 `m3-meta-asset-quality-hardening` Phase14 流程执行语义补全：全量流程文档去模板化、`P4` 协作策略强制与 `P5/P6` 多 Actor 条件强制落地、`sys.bpm.process-instance-manager` 增加 `task_dispatch/dispatch_context/dispatch_prompt` 证据链、`system.ops.manual-task` 改为 Actor 通用执行入口并输出 `task_completion` 留档
+- [x] 完成发布打包标准化链路：新增 `tools/release/build_release_bundle.py`，统一执行“隔离门禁 -> 白名单冻结 -> 归档打包 -> SHA256/manifest 产出”，并落盘 `docs/architecture/release_packaging_sop.md`
+- [x] 完成 `development-process` 规范收敛（`dev.prototype` + O6 Lifecycle）：升级为六阶段最小闭环（含 `lifecycle-review`），并同步 `process_registry`、`process-inventory` 与设计文档
+- [x] 完成 M3 生命周期执行权口径统一：`full-development/hotfix/refactor` 的 `lifecycle-gate-sync` 执行 actor 收敛为 `hr`（`admin` 保留高风险审批位）
+- [x] 完成 M1 HOLD 语义收敛：`gate_decision` 对外枚举固定 `pass|fail|test_invalid`，`hold` 下沉为 `runtime_gate_state`，并补齐活性策略三件套（`liveness_policy_ref/no_progress_window_ref/termination_rule_ref`）
+- [x] 完成 M1 HOLD 自动回测闭环最小落盘：`quality-gate-evaluation` 新增 `max_auto_retest_cycles` 回测预算与 `p5 -> p2` 回路语义，`hold-governance` 输出补齐 `triage_action + retest_recommendation`，并将 QA fixture 基线迁移到 `tests/fixtures/quality-gate/`
 
 ## 进行中（In Progress）
 
@@ -66,15 +85,13 @@
 - [ ] 将 trigger governance 最小 dry-run 从文档级证据升级到运行级证据
 - [ ] 完成 trigger runtime 动态策略实证校准并形成参数回写节奏
 - [ ] 建立 `runtime-policy-calibration` 治理节奏并纳入 M1/M2 首批后验议题
-- [ ] 触发 M3 `full-development/hotfix/refactor` 首轮运行级 dry-run 并沉淀证据
 - [ ] 基于首轮证据推进 M6 第二轮运行级回归（含 git-range + trailer 实盘对账）
-- [ ] 推进 `m3-self-development-e2e-online`：完成 Session4~Session7 运行级测试与双主线 E2E 收口（Session3 运行资产已落地）
 
 ## 下一步（Next）
 
 1. 为 P6 原子流程补充 process.json 样板定义。
 2. 完成 `review-processes-business` 未闭环项：`governance_bundle` 落地、legacy 语义收敛、canonical 路径策略定稿。
-3. 基于 `tests/m3-runtime` 入口扩展 Session4 契约与异常链路测试覆盖。
+3. 基于 Session7 收口结果推进 `m3-self-development-e2e-online` 归档准备与复盘沉淀。
 4. 触发一次双主线 dry-run（运行级）并沉淀证据目录。
 5. 执行一次 governed-config-change 运行级 dry-run，补齐标准证据包模板。
 6. 在后续线程补齐 `lifecycle-review` 与 M3 接线并扩展多场景运行证据。
@@ -91,11 +108,11 @@
 | 会话 | 依赖 | 会话目标 | 输入（必须具备） | 输出（必须落盘） | DoD（命令化门禁） |
 |---|---|---|---|---|---|
 | Session2 | Session1 | 完成 M3 设计闭合差距收敛（仅设计，不落运行资产） | `openspec/changes/m3-self-development-e2e-online/m3-gap-baseline.md`、`openspec/changes/m3-self-development-e2e-online/design.md`、`openspec/changes/m3-self-development-e2e-online/tasks.md`、`openspec/changes/m3-self-development-e2e-online/specs/**/spec.md` | 设计闭合产物清单：`docs/design/processes/{registry-sync-process.md,escalation-process.md}`、`docs/design/skills/{system-skills.md,self-development-skills.md}`、`docs/design/agents/app/delivery/release-manager-agent.md`、`docs/design/modules/M3-self-development.md`、inventory 联动文档 + 拆分状态后的 `m3-gap-baseline.md` | `openspec validate m3-self-development-e2e-online --json` pass；`python3 shared/registry/registry_contract_tool.py verify` pass；`m3-gap-baseline.md` 明确 `closed(design)` 与 `open(implementation)`；DoD 仅判设计文档闭合，不宣称运行可用 |
-| Session3 | Session2 | 落地五项缺失资产最小可执行骨架（已完成 2026-02-23） | Session2 闭合清单 + `docs/design/skills/system-skills.md` + `docs/design/processes/governance-processes.md` + `docs/design/agents/app/delivery/release-manager-agent.md` | `skills/system/{impact-analyzer,release-manager}/`、`processes/meta/{registry-sync,escalation,ap-*-bundle}/`、`agents/app/delivery/release-manager-agent/`、`tests/m3-runtime/run_skill_contract_validation.py`；对应 design/inventory/registry/施工平面联动更新 | `python3 tests/m3-runtime/run_skill_contract_validation.py` pass；`python3 shared/registry/registry_contract_tool.py verify` pass；`openspec validate m3-self-development-e2e-online --json` pass；状态仅到 `draft/review` |
-| Session4 | Session3 | 建立 M3 专项运行级测试扩展基座 | Session3 资产 + `tests/m3-runtime/run_skill_contract_validation.py` + M3 三流程 manifest | 在 `tests/m3-runtime/` 扩展更多主链路/异常链路/回退场景与 evidence 索引 | `python3 tests/m3-runtime/run_skill_contract_validation.py` 持续通过；新增用例可追溯并覆盖关键恢复路径 |
-| Session5 | Session4 | 完成内部主线 E2E | Session4 测试基座 + M3 canonical 流程资产 | 内部主线 E2E 证据目录与摘要（包含关键异常可回退记录） | 内部主线关键场景通过；失败场景可恢复/可回退；`M3 -> M1 -> M4` 门禁链路有证据且无旁路 |
-| Session6 | Session5 | 完成外部主线 E2E（复用 M3 canonical） | Session5 内部主线基线 + 外部交付主线上下文 | 外部主线 E2E 证据目录、内外复用对照结论 | 外部主线关键场景通过；复用路径不绕过 M3 canonical；旁路检测为 0 |
-| Session7 | Session6 | 执行全链路对账并收敛到 review | Session1~Session6 全量证据 + OpenSpec/registry/施工平面改动 | 收口记录、对账报告、回合关闭证据 | `openspec validate m3-self-development-e2e-online --json` pass；`python3 shared/registry/registry_contract_tool.py verify` pass；提交后 `git log -1 --pretty=raw` 含 `Entire-Checkpoint`；生命周期仅收敛到 `review` |
+| Session3 | Session2 | 落地五项缺失资产最小可执行骨架（已完成 2026-02-23） | Session2 闭合清单 + `docs/design/skills/system-skills.md` + `docs/design/processes/governance-processes.md` + `docs/design/agents/app/delivery/release-manager-agent.md` | `skills/system/{impact-analyzer,release-manager}/`、`processes/meta/{registry-sync,escalation}/`、`agents/app/delivery/release-manager-agent/`、`tests/m3-runtime/run_skill_contract_validation.py`；对应 design/inventory/registry/施工平面联动更新 | `python3 tests/m3-runtime/run_skill_contract_validation.py` pass；`python3 shared/registry/registry_contract_tool.py verify` pass；`openspec validate m3-self-development-e2e-online --json` pass；状态仅到 `draft/review` |
+| Session4 | Session3 | 建立 M3 专项运行级测试扩展基座（已完成 2026-02-23） | Session3 资产 + `tests/m3-runtime/run_skill_contract_validation.py` + M3 三流程 manifest | 新增 `tests/m3-self-development/{TEST.md,live_cases.md,run_tc_online.py}`，并在 `runtime_data/execution/evidence/self-development/e2e-online/session4-foundation/latest/` 输出四类断言证据与汇总报告 | `python3 tests/m3-self-development/run_tc_online.py --help` pass；默认执行覆盖主链路/异常链路/Fail-Closed/回退返工四类；预留 case 在 Session4 强制执行时 Fail-Closed |
+| Session5 | Session4 | 完成内部主线 E2E（已完成 2026-02-25） | Session4 测试基座（`tests/m3-self-development/run_tc_online.py` + `tests/m3-self-development/live_cases.md`）+ M3 canonical 流程资产 | 内部主线 E2E 证据目录与摘要（包含关键异常可回退记录，见 `tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session5/`） | 内部主线关键场景通过；失败场景可恢复/可回退；`M3 -> M1 -> M4` 门禁链路有证据且无旁路 |
+| Session6 | Session5 | 完成外部主线 E2E（已完成 2026-02-26） | Session5 内部主线基线 + 外部交付主线上下文 | 外部主线 E2E 证据目录、内外复用对照结论（`tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session6/`） | 外部主线关键场景通过；复用路径不绕过 M3 canonical；旁路检测为 0；生命周期结论上限 `review` |
+| Session7 | Session6 | 执行全链路对账并收敛到 review（已完成 2026-02-26） | Session1~Session6 全量证据 + OpenSpec/registry/施工平面改动 | 收口记录、对账报告、回合关闭证据（`tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session7/`） | `openspec validate m3-self-development-e2e-online --json` pass；`python3 shared/registry/registry_contract_tool.py verify` pass；提交后 `git log -1 --pretty=raw` 含 `Entire-Checkpoint`；生命周期仅收敛到 `review` |
 
 ## 里程碑
 
@@ -106,7 +123,7 @@
 | M1 | 统一测试门禁可用 | 门禁生效 + M3/M4/M5 复用接入 + 证据审计可追溯 | 进行中（`sys.qa.*` 七技能 active pilot 已落盘） |
 | M1.5 | 架构细化完成 | L0-L5 + P1-P6 + 双主线 + 原子流程文档齐套 | 已完成 |
 | M2 | 第一次 TDD 闭环 | 一个 Skill 从 Test 先行到复测通过 | 进行中（BPM runtime 骨架已落盘） |
-| M3 | 第一次流程编排 | BPM 成功调度 3+ Phase 流程 | 进行中（M3 资产已落盘，待运行级 dry-run） |
+| M3 | 第一次流程编排 | BPM 成功调度 3+ Phase 流程 | 已完成（`full-development/hotfix/refactor` 运行级真实分发 dry-run 通过） |
 | M4 | 第一次自开发 | 系统用自身流程开发并上线新 Skill | 待开始 |
 
 ## 开放问题

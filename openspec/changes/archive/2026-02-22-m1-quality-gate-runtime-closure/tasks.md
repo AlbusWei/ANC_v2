@@ -10,7 +10,7 @@
 - [x] 1.1 初始化/复用 change 目录：`openspec/changes/m1-quality-gate-runtime-closure/`。
 - [x] 1.2 新增 `thread-plan.md`，落盘 Thread-0~5 分拆执行总计划。
 - [x] 1.3 更新 `proposal.md`、`design.md`、`tasks.md` 三件套。
-- [x] 1.4 初始化证据目录 `docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/` 并至少包含：
+- [x] 1.4 初始化证据目录 `runtime_data/execution/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/` 并至少包含：
   - `scope_baseline.md`
   - `open_questions.md`
   - `round-evidence.jsonl`（含 `round_open`）

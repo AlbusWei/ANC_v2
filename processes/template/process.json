@@ -1,72 +1,164 @@
 {
   "process_id": "process-template",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "process_level": "P4",
+  "parent_process_id": null,
+  "composed_processes": [],
+  "lineage_policy": {
+    "stack_depth_limit": 8,
+    "context_isolation": "strict",
+    "output_handoff_mode": "contract_only"
+  },
   "objective_ref": "obj-template",
   "owner": "bpm",
   "priority": "P1",
   "input_contract": {
     "format": "json",
-    "required": ["objective_ref", "input_payload"]
+    "required": [
+      "objective_context_ref"
+    ]
   },
   "output_contract": {
     "format": "json",
-    "required": ["final_output", "evidence_refs", "verdict"]
+    "required": [
+      "phase_outputs_ref",
+      "final_verdict_ref"
+    ]
   },
   "phases": [
     {
       "phase_id": "p1",
       "name": "clarify-objective",
       "actor": "architect",
-      "skill_or_process": "manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:process-template:p1",
+      "requires_spec": false,
       "sipoc": {
         "supplier": "initiator",
-        "input": "input_payload",
+        "input": "objective_context_ref",
         "process": "clarify objective and constraints",
-        "output": "normalized_requirement",
+        "output": "normalized_requirement_ref",
         "client": "p2"
       },
-      "acceptance_criteria": "objective and constraints are explicit"
+      "acceptance_criteria": "objective and constraints are explicit",
+      "phase_purpose": "先把需求收敛为可执行目标，避免后续阶段在模糊输入上空转。",
+      "input_context_ref": "objective_context_ref",
+      "done_definition": "必须产出 normalized_requirement_ref，并明确约束与非目标。",
+      "handoff_note": "将 normalized_requirement_ref 交接给 p2。",
+      "inline_ap": {
+        "ap_id": "inline-ap:process-template:p1",
+        "skill_id": "system.ops.manual-task",
+        "actor": "architect",
+        "pierce_allowed": true
+      }
     },
     {
       "phase_id": "p2",
       "name": "execute-main",
       "actor": "kernel-dev",
-      "skill_or_process": "manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:process-template:p2",
+      "requires_spec": false,
       "sipoc": {
         "supplier": "p1",
-        "input": "normalized_requirement",
-        "process": "execute implementation workflow",
-        "output": "deliverable",
+        "input": "normalized_requirement_ref",
+        "process": "execute core task and produce deliverable",
+        "output": "deliverable_ref",
         "client": "p3"
       },
-      "acceptance_criteria": "deliverable is produced"
+      "acceptance_criteria": "deliverable is produced and traceable",
+      "phase_purpose": "在约束边界内完成核心实现动作并输出可验证产物。",
+      "input_context_ref": "normalized_requirement_ref",
+      "done_definition": "必须产出 deliverable_ref，且产物可追溯到输入目标。",
+      "handoff_note": "将 deliverable_ref 交接给 p3。",
+      "inline_ap": {
+        "ap_id": "inline-ap:process-template:p2",
+        "skill_id": "system.ops.manual-task",
+        "actor": "kernel-dev",
+        "pierce_allowed": true
+      }
     },
     {
       "phase_id": "p3",
       "name": "verify-objective",
       "actor": "qa",
-      "skill_or_process": "llm-judging",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:process-template:p3",
+      "requires_spec": false,
       "sipoc": {
         "supplier": "p2",
-        "input": "deliverable",
-        "process": "objective-aligned verification",
-        "output": "verdict_and_feedback",
+        "input": "deliverable_ref",
+        "process": "evaluate objective alignment",
+        "output": "final_verdict_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "verdict and improvement actions are generated"
+      "acceptance_criteria": "verdict and improvement actions are generated",
+      "phase_purpose": "给出是否达成目标的结论，并把改进方向回填给发起方。",
+      "input_context_ref": "deliverable_ref,normalized_requirement_ref",
+      "done_definition": "必须产出 final_verdict_ref，并包含结论原因。",
+      "handoff_note": "将 final_verdict_ref 交接给 initiator。",
+      "inline_ap": {
+        "ap_id": "inline-ap:process-template:p3",
+        "skill_id": "system.ops.manual-task",
+        "actor": "qa",
+        "pierce_allowed": true
+      }
     }
   ],
-  "control": {
-    "mode": "sequence",
-    "retries": {
-      "max_attempts": 2
+  "control_flow": [
+    {
+      "from": "p1",
+      "to": "p2",
+      "on": "success"
+    },
+    {
+      "from": "p2",
+      "to": "p3",
+      "on": "success"
+    },
+    {
+      "from": "p3",
+      "to": "p2",
+      "on": "failure",
+      "condition": "iterations < 1"
+    },
+    {
+      "from": "p3",
+      "to": "end",
+      "on": "success"
     }
-  },
-  "failure_policy": {
+  ],
+  "fail_policy": {
     "mode": "fail_closed",
-    "escalation_chain": ["actor", "owner", "bpm", "admin"]
+    "retry": {
+      "max_iterations": 1,
+      "from_phase": "p3",
+      "to_phase": "p2"
+    },
+    "escalation_chain": [
+      "actor",
+      "owner",
+      "bpm",
+      "admin",
+      "human"
+    ]
   },
   "evidence_policy": {
-    "required_fields": ["timestamp", "phase_id", "actor", "input_ref", "output_ref", "decision"]
+    "required_fields": [
+      "timestamp",
+      "phase_id",
+      "actor",
+      "input_ref",
+      "output_ref",
+      "decision",
+      "reason"
+    ]
+  },
+  "process_type": "template.process-blueprint",
+  "collaboration_policy": {
+    "mode": "phase-isolated-session",
+    "dispatch_runtime": "openclaw-required",
+    "session_reset": "per-phase-reset",
+    "natural_context_first": true
   }
 }

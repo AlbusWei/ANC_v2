@@ -1,8 +1,0 @@
-{
-  "round_id": "R-20260222-M6-m1-quality-gate-runtime-closure-01",
-  "openspec_ref": "m1-quality-gate-runtime-closure",
-  "event_count": 7,
-  "checkpoint_event_count": 5,
-  "ordering": "round_open -> checkpoint_synced* -> round_close",
-  "checkpoint_count_equals_commit_count": true
-}

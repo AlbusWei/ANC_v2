@@ -35,3 +35,18 @@
 4. `blocking_items`
 5. `required_actions`
 6. `evidence_ref`
+
+## Runner 调用
+
+```bash
+python3 agents/app/delivery/release-manager-agent/scripts/release_manager_agent_runner.py \
+  --input <release_request_in.json> \
+  --output <agent_output.json> \
+  --evidence-dir <evidence_dir>
+```
+
+返回码语义：
+
+1. `0`：成功输出 `release_delivery_out`。
+2. `2`：拒绝输出 `release_reject_out`（Fail-Closed 生效）。
+3. `1`：运行异常。

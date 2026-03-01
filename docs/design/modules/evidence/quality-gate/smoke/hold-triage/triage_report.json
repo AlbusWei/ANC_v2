@@ -1,8 +1,0 @@
-{
-  "triage_action": "continue",
-  "gate_decision": "pass",
-  "reasons": [
-    "triage_action=continue"
-  ],
-  "progress_signals_ref": "docs/design/modules/evidence/quality-gate/smoke/hold-triage/progress_signals.json"
-}

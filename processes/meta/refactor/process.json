@@ -1,10 +1,13 @@
 {
   "process_id": "refactor",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [
+    "objective-scope-baseline",
+    "spec-authoring-contract",
     "quality-gate-preparation",
+    "implementation-execution-core",
     "quality-gate-evaluation"
   ],
   "lineage_policy": {
@@ -18,8 +21,7 @@
   "input_contract": {
     "format": "json",
     "required": [
-      "objective_ref",
-      "scope_baseline_ref",
+      "objective_context_ref",
       "tech_debt_ref",
       "target_asset_ref"
     ]
@@ -27,7 +29,6 @@
   "output_contract": {
     "format": "json",
     "required": [
-      "refactor_delivery_bundle_ref",
       "final_gate_verdict_ref",
       "lifecycle_transition_ref",
       "registry_sync_ref"
@@ -39,33 +40,41 @@
       "name": "refactor-objective-and-scope",
       "actor": "architect",
       "target_type": "subprocess",
-      "target_id": "ap-001-002-003-bundle",
+      "target_id": "objective-scope-baseline",
       "requires_spec": false,
       "sipoc": {
         "supplier": "initiator",
-        "input": "objective and tech debt context",
+        "input": "objective_context_ref and tech_debt_ref",
         "process": "define refactor objective and scope baseline",
-        "output": "refactor_objective_ref",
+        "output": "objective_ref and scope_baseline_ref",
         "client": "p2"
       },
-      "acceptance_criteria": "objective and non-goals are explicit"
+      "acceptance_criteria": "objective and non-goals are explicit",
+      "phase_purpose": "先把重构目标与边界说清楚，防止技术债治理扩散成无界改造。",
+      "input_context_ref": "objective_context_ref,tech_debt_ref,target_asset_ref",
+      "done_definition": "必须产出 objective_ref 与 scope_baseline_ref，并明确非目标范围。",
+      "handoff_note": "将 objective_ref 与 scope_baseline_ref 交接给 p2。"
     },
     {
       "phase_id": "p2",
       "name": "refactor-spec-authoring",
       "actor": "architect",
       "target_type": "subprocess",
-      "target_id": "ap-004-bundle",
+      "target_id": "spec-authoring-contract",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-004-spec-authoring.md#ap-004-spec-authoring",
       "sipoc": {
         "supplier": "p1",
-        "input": "refactor objective",
+        "input": "objective_ref and scope_baseline_ref",
         "process": "author architecture-constrained refactor spec",
-        "output": "refactor_spec_ref",
+        "output": "spec_ref",
         "client": "p3"
       },
-      "acceptance_criteria": "spec documents invariant boundaries and rollback plan"
+      "acceptance_criteria": "spec documents invariant boundaries and rollback plan",
+      "phase_purpose": "把重构边界收敛为可执行规格，明确不变量与回滚路径。",
+      "input_context_ref": "objective_ref,scope_baseline_ref",
+      "done_definition": "必须产出 spec_ref，且规格可直接指导实现与测试。",
+      "handoff_note": "将 spec_ref 交接给 p3。"
     },
     {
       "phase_id": "p3",
@@ -77,29 +86,37 @@
       "spec_ref": "docs/design/processes/quality-gate-preparation-process.md#quality-gate-preparation-process",
       "sipoc": {
         "supplier": "p2",
-        "input": "refactor_spec_ref",
+        "input": "spec_ref",
         "process": "prepare regression-focused tests",
-        "output": "refactor_preparation_bundle_ref",
+        "output": "test_plan_ref and preparation_bundle_ref",
         "client": "p4"
       },
-      "acceptance_criteria": "p0 regression scope and traceability are complete"
+      "acceptance_criteria": "test_plan_ref is explicitly linked to refactor spec",
+      "phase_purpose": "围绕重构规格构建回归测试准备，确保后续验证有共同基线。",
+      "input_context_ref": "spec_ref",
+      "done_definition": "必须产出 test_plan_ref 与 preparation_bundle_ref。",
+      "handoff_note": "将 test_plan_ref 与 preparation_bundle_ref 交接给 p4。"
     },
     {
       "phase_id": "p4",
       "name": "refactor-implementation",
       "actor": "kernel-dev",
       "target_type": "subprocess",
-      "target_id": "ap-006-bundle",
+      "target_id": "implementation-execution-core",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-006-implementation-execution.md#ap-006-implementation-execution",
       "sipoc": {
         "supplier": "p3",
-        "input": "refactor_preparation_bundle_ref",
+        "input": "spec_ref and test_plan_ref",
         "process": "apply structural changes",
-        "output": "refactor_implementation_ref",
+        "output": "implementation_ref and candidate_artifacts_ref",
         "client": "p5"
       },
-      "acceptance_criteria": "implementation is linked to refactor spec and constraints"
+      "acceptance_criteria": "implementation is linked to spec and constraints",
+      "phase_purpose": "实施结构性改造并输出可评测候选产物，验证重构价值是否兑现。",
+      "input_context_ref": "spec_ref,test_plan_ref,preparation_bundle_ref",
+      "done_definition": "必须产出 implementation_ref 与 candidate_artifacts_ref，并可追溯到规格。",
+      "handoff_note": "将 implementation_ref 与 candidate_artifacts_ref 交接给 p5。"
     },
     {
       "phase_id": "p5",
@@ -111,17 +128,21 @@
       "spec_ref": "docs/design/processes/quality-gate-evaluation-process.md#quality-gate-evaluation-process",
       "sipoc": {
         "supplier": "p4",
-        "input": "refactor implementation",
+        "input": "candidate_artifacts_ref",
         "process": "execute objective and regression gate checks",
         "output": "final_gate_verdict_ref",
         "client": "p6"
       },
-      "acceptance_criteria": "regression result is explicit and evidence-complete"
+      "acceptance_criteria": "regression result is explicit and evidence-complete",
+      "phase_purpose": "给出重构是否可放行的质量结论，守住行为不回归底线。",
+      "input_context_ref": "candidate_artifacts_ref,implementation_ref,preparation_bundle_ref",
+      "done_definition": "必须产出 final_gate_verdict_ref，且门禁依据可解释。",
+      "handoff_note": "门禁通过后将 final_gate_verdict_ref 交接给 p6；失败回流 p4。"
     },
     {
       "phase_id": "p6",
       "name": "lifecycle-gate-sync",
-      "actor": "admin",
+      "actor": "hr",
       "target_type": "subprocess",
       "target_id": "lifecycle-review",
       "requires_spec": true,
@@ -130,10 +151,14 @@
         "supplier": "p5",
         "input": "final_gate_verdict_ref",
         "process": "validate lifecycle and registry sync package",
-        "output": "refactor_delivery_bundle_ref",
+        "output": "lifecycle_transition_ref and registry_sync_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "registry sync payload and lifecycle evidence are complete"
+      "acceptance_criteria": "registry sync payload and lifecycle evidence are complete",
+      "phase_purpose": "完成生命周期与 registry 治理收口，让重构结果可被系统接纳。",
+      "input_context_ref": "final_gate_verdict_ref,target_asset_ref,lifecycle_target",
+      "done_definition": "必须产出 lifecycle_transition_ref 与 registry_sync_ref。",
+      "handoff_note": "将 lifecycle_transition_ref 与 registry_sync_ref 交接给 initiator。"
     }
   ],
   "control_flow": [
@@ -208,5 +233,13 @@
     "obligation_ref": "docs/design/processes/development-loop-core-standard.md",
     "risk_policy_ref": "docs/design/processes/governance-processes.md",
     "checklist_ref": "docs/design/modules/M3-self-development.md"
+  },
+  "collaboration_policy": {
+    "mode": "phase-isolated-session",
+    "dispatch_runtime": "openclaw-required",
+    "session_reset": "per-phase-reset",
+    "pilot_scope": "expanded-from-full-development",
+    "natural_context_first": true,
+    "ap_migration_strategy": "sequential"
   }
 }

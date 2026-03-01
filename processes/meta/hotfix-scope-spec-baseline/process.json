@@ -1,0 +1,120 @@
+{
+  "process_id": "hotfix-scope-spec-baseline",
+  "version": "0.1.0",
+  "process_level": "P5",
+  "parent_process_id": null,
+  "composed_processes": [
+    "spec-authoring-contract"
+  ],
+  "lineage_policy": {
+    "stack_depth_limit": 8,
+    "context_isolation": "strict",
+    "output_handoff_mode": "contract_only"
+  },
+  "objective_ref": "obj-m3-hotfix-scope-spec-baseline",
+  "owner": "bpm",
+  "priority": "P0",
+  "input_contract": {
+    "format": "json",
+    "required": [
+      "hotfix_objective_ref",
+      "impact_scope_ref"
+    ]
+  },
+  "output_contract": {
+    "format": "json",
+    "required": [
+      "hotfix_scope_baseline_ref",
+      "hotfix_spec_ref"
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1",
+      "name": "hotfix-scope-baseline",
+      "actor": "architect",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:hotfix-scope-spec-baseline:p1",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-003-scope-baseline.md#ap-003-scope-baseline",
+      "sipoc": {
+        "supplier": "initiator",
+        "input": "hotfix_objective_ref and impact_scope_ref",
+        "process": "produce hotfix scope baseline with blast radius controls",
+        "output": "hotfix_scope_baseline_ref",
+        "client": "p2"
+      },
+      "acceptance_criteria": "scope baseline contains rollback boundaries",
+      "inline_ap": {
+        "ap_id": "inline-ap:hotfix-scope-spec-baseline:p1",
+        "skill_id": "system.ops.manual-task",
+        "actor": "architect",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "产出包含爆炸半径控制的 hotfix 范围基线",
+      "input_context_ref": "hotfix_objective_ref + impact_scope_ref",
+      "done_definition": "必须产出 hotfix_scope_baseline_ref，并满足“范围基线包含回滚边界”",
+      "handoff_note": "将 hotfix_scope_baseline_ref 交接给 p2"
+    },
+    {
+      "phase_id": "p2",
+      "name": "hotfix-spec-authoring",
+      "actor": "architect",
+      "target_type": "subprocess",
+      "target_id": "spec-authoring-contract",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-004-spec-authoring.md#ap-004-spec-authoring",
+      "sipoc": {
+        "supplier": "p1",
+        "input": "hotfix_scope_baseline_ref",
+        "process": "compose spec-authoring-contract and alias spec_ref to hotfix_spec_ref",
+        "output": "hotfix_spec_ref",
+        "client": "initiator"
+      },
+      "acceptance_criteria": "hotfix spec keeps AP-004 contract without duplication",
+      "phase_purpose": "组合规格编写契约并将 spec_ref 映射为 hotfix_spec_ref",
+      "input_context_ref": "hotfix_scope_baseline_ref",
+      "done_definition": "必须产出 hotfix_spec_ref，并满足“hotfix 规格保持 AP-004 契约且无重复定义”",
+      "handoff_note": "将 hotfix_spec_ref 交接给 initiator"
+    }
+  ],
+  "control_flow": [
+    {
+      "from": "p1",
+      "to": "p2",
+      "on": "success"
+    },
+    {
+      "from": "p2",
+      "to": "end",
+      "on": "success"
+    }
+  ],
+  "fail_policy": {
+    "mode": "fail_closed",
+    "retry": {
+      "max_attempts": 1
+    },
+    "escalation_chain": [
+      "actor",
+      "owner",
+      "bpm",
+      "admin",
+      "human"
+    ]
+  },
+  "evidence_policy": {
+    "required_fields": [
+      "timestamp",
+      "phase_id",
+      "actor",
+      "input_ref",
+      "output_ref",
+      "decision",
+      "reason",
+      "evidence_ref"
+    ]
+  }
+}

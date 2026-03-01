@@ -78,12 +78,12 @@
 | Item ID | Expected Evidence | Evidence Path | Result (PASS/FAIL/BLOCKED/N/A) | Notes |
 |---|---|---|---|---|
 | TG-SCH-001 | trigger log + instance + admin forward | N/A（本轮未执行） | N/A | 仅完成提案级审查；执行留到下一轮 |
-| TG-SCH-002 | trigger ledger heartbeat | `docs/design/modules/evidence/trigger-governance/TG-SCH-002-dry-run.md` | PASS | 文档级 dry-run，覆盖无异常仅记账 |
+| TG-SCH-002 | trigger ledger heartbeat | `runtime_data/execution/evidence/trigger-governance/TG-SCH-002-dry-run.md` | PASS | 文档级 dry-run，覆盖无异常仅记账 |
 | TG-SCH-003 | override decision record | N/A（本轮未执行） | N/A | 仅完成提案级审查；执行留到下一轮 |
 | TG-SCH-004 | catchup run record | N/A（本轮未执行） | N/A | 仅完成提案级审查；执行留到下一轮 |
 | TG-EVT-001 | event + instance record | N/A（本轮未执行） | N/A | 仅完成提案级审查；执行留到下一轮 |
 | TG-EVT-002 | dedupe reject log | N/A（本轮未执行） | N/A | 仅完成提案级审查；执行留到下一轮 |
-| TG-EVT-003 | fail-closed + backfill request | `docs/design/modules/evidence/trigger-governance/TG-EVT-003-dry-run.md` | PASS | 文档级 dry-run，覆盖缺证据 Fail-Closed |
+| TG-EVT-003 | fail-closed + backfill request | `runtime_data/execution/evidence/trigger-governance/TG-EVT-003-dry-run.md` | PASS | 文档级 dry-run，覆盖缺证据 Fail-Closed |
 
 ## 10. Findings Register (Fill-In)
 

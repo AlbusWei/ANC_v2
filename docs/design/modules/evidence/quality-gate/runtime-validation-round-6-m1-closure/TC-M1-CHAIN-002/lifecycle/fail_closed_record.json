@@ -1,6 +1,0 @@
-{
-  "timestamp": "2026-02-22T18:43:39Z",
-  "status": "failed",
-  "reason": "final_gate_verdict_ref_unreachable:docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-002/missing_final_gate_verdict.json",
-  "fail_closed": true
-}

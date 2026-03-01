@@ -1,6 +1,6 @@
 # ANC v2 架构文档索引
 
-最后更新：2026-02-18
+最后更新：2026-02-24
 
 ## 文档定位
 
@@ -19,6 +19,8 @@
 6. `docs/architecture/context_protocol.md`
 7. `docs/architecture/construction_plane.md`
 8. `docs/architecture/glossary.md`
+9. `docs/architecture/release_isolation_policy.md`
+10. `docs/architecture/release_packaging_sop.md`
 
 ## 变更规则
 

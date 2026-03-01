@@ -1,6 +1,6 @@
 # Quality Gate Skills 设计包
 
-> 版本: v0.4.0 | 分类: System Skills | 最后更新: 2026-02-22
+> 版本: v0.4.1 | 分类: System Skills | 最后更新: 2026-02-26
 
 ## 目标
 
@@ -34,7 +34,7 @@
 - CLI：`quality_eval_runner`
 - 执行机制：OpenJudge `GradingRunner` + 动态 grader 组合（由测试计划 `grader_selection/grader_weights/min_score_per_grader/must_pass_graders` 驱动），支持 `SimpleRubricsGenerator` 自动 rubric grader
 - 主观评测：A/B 盲测使用 listwise 比较（`LLMGrader` 或自动 rubric listwise grader），记录 seed/rounds/blind assignment/judge_result
-- 输入契约：`preparation_bundle_ref`, `actual_output_refs`, `evaluation_mode`
+- 输入契约：`preparation_bundle_ref`, `superpower_ref`, `actual_output_refs`, `evaluation_mode`
 - 输出契约：`raw_eval_ref`, `runner_log_ref`, `execution_state_ref`, `evaluation_verdict`
 - Fail-Closed：
   - 执行协议无效 -> `fail|test_invalid`
@@ -47,10 +47,11 @@
 
 - 定位：把分项评测结果归一并输出最终 `gate_decision`。
 - 输入契约：`objective_eval_ref`, `subjective_eval_ref`, `regression_eval_ref`, `aggregation_rules_ref`
-- 输出契约：`gate_decision`, `reasons`, `evidence_ref`, `final_gate_verdict_ref`
+- 输出契约：`gate_decision`, `runtime_gate_state`, `reasons`, `evidence_ref`, `final_gate_verdict_ref`
 - Fail-Closed：
   - 任一关键评测包缺失 -> `fail`
   - 结果不可解析 -> `fail`
+  - 输出 `runtime_gate_state=hold` 但 `gate_decision!=fail` -> `fail`
 - test_mount：`skills/system/qa/verdict-normalizer/TEST.md`
 - 状态：`active`（Phase 1 pilot）
 
@@ -92,10 +93,11 @@
 ### 7. sys.qa.evidence-archiver
 
 - 定位：把评测结果归档为标准证据包并维护 traceability 索引。
-- 输入契约：`run_id`, `profile_id`, `gate_decision`, `actor`, `output_dir`
+- 输入契约：`run_id`, `profile_id`, `gate_decision`, `runtime_gate_state`, `actor`, `output_dir`
 - 输出契约：`evidence_ref`, `evidence_index_ref`, `archive_report_ref`
 - Fail-Closed：
   - gate_decision 枚举非法 -> `fail`
+  - runtime_gate_state 枚举非法 -> `fail`
   - 必要元数据缺失 -> `fail`
 - test_mount：`skills/system/qa/evidence-archiver/TEST.md`
 - 状态：`active`（Phase 1 pilot）
@@ -105,15 +107,15 @@
 1. 本轮完成 `sys.qa.*` 七个技能资产标准化与最小脚本化实现。
 2. 同步完成目录迁移到 `skills/system/qa/*`，并完成 registry 路径闭合。
 3. review/active 证据：
-   - `docs/design/modules/evidence/quality-gate/review-round-1.md`
-   - `docs/design/modules/evidence/quality-gate/active-pilot-round-1.md`
-   - `docs/design/modules/evidence/quality-gate/runtime-validation-round-2/outputs/runtime_summary.json`
-   - `docs/design/modules/evidence/quality-gate/runtime-validation-round-3/outputs/runtime_summary.json`
-   - `docs/design/modules/evidence/quality-gate/runtime-validation-round-4/outputs/runtime_summary.json`
-   - `docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/runtime_summary.json`
+   - `runtime_data/execution/evidence/quality-gate/review-round-1.md`
+   - `runtime_data/execution/evidence/quality-gate/active-pilot-round-1.md`
+   - `runtime_data/execution/evidence/quality-gate/runtime-validation-round-2/outputs/runtime_summary.json`
+   - `runtime_data/execution/evidence/quality-gate/runtime-validation-round-3/outputs/runtime_summary.json`
+   - `runtime_data/execution/evidence/quality-gate/runtime-validation-round-4/outputs/runtime_summary.json`
+   - `runtime_data/execution/evidence/quality-gate/runtime-validation-round-5/outputs/runtime_summary.json`
 4. runtime-validation-round-2 关键结论：
    - objective/regression 链路通过 OpenJudge 真执行产出 `pass`
-   - subjective A/B 在平局时产出 `hold`（`review`）
+  - subjective A/B 在平局时产出 `runtime_gate_state=hold`（对外门禁保持 `fail`，进入 hold 治理）
    - LLM-Judge 缺密钥时 Fail-Closed：`test_invalid`
 5. runtime-validation-round-5 关键结论：
    - 七个 `sys.qa.*` 技能新增边界用例已落盘并可编译执行

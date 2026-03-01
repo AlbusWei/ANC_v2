@@ -52,7 +52,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run M3 runtime skill contract validation")
     parser.add_argument(
         "--evidence-root",
-        default="docs/design/modules/evidence/self-development/runtime-validation-round-session3",
+        default="runtime_data/execution/evidence/self-development/runtime-validation-round-session3",
         help="Repo-relative evidence root",
     )
     parser.add_argument(
@@ -155,7 +155,7 @@ def main() -> int:
         impact_fc_input,
         {
             "change_proposal_ref": to_rel(proposal_path, root),
-            "affected_scope_ref": "docs/design/modules/evidence/self-development/does-not-exist.json",
+            "affected_scope_ref": "runtime_data/execution/evidence/self-development/does-not-exist.json",
             "risk_constraints_ref": to_rel(risk_conflict_path, root),
         },
     )
@@ -291,7 +291,7 @@ def main() -> int:
         rb_candidate,
         {
             "artifacts": ["dist/release-v2.tar.gz"],
-            "rollback_bundle_ref": "docs/design/modules/evidence/self-development/missing-rollback.json",
+            "rollback_bundle_ref": "runtime_data/execution/evidence/self-development/missing-rollback.json",
         },
     )
     dump_json(

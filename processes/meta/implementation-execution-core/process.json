@@ -1,0 +1,91 @@
+{
+  "process_id": "implementation-execution-core",
+  "version": "0.1.0",
+  "process_level": "P5",
+  "parent_process_id": null,
+  "composed_processes": [],
+  "lineage_policy": {
+    "stack_depth_limit": 8,
+    "context_isolation": "strict",
+    "output_handoff_mode": "contract_only"
+  },
+  "objective_ref": "obj-m3-implementation-execution-core",
+  "owner": "bpm",
+  "priority": "P1",
+  "input_contract": {
+    "format": "json",
+    "required": [
+      "spec_ref",
+      "test_plan_ref"
+    ]
+  },
+  "output_contract": {
+    "format": "json",
+    "required": [
+      "implementation_ref"
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1",
+      "name": "implementation-execution",
+      "actor": "kernel-dev",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:implementation-execution-core:p1",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-006-implementation-execution.md#ap-006-implementation-execution",
+      "sipoc": {
+        "supplier": "initiator",
+        "input": "spec_ref and test_plan_ref",
+        "process": "implement candidate according to spec and tests",
+        "output": "implementation_ref",
+        "client": "initiator"
+      },
+      "acceptance_criteria": "implementation keeps traceability to spec and tests",
+      "inline_ap": {
+        "ap_id": "inline-ap:implementation-execution-core:p1",
+        "skill_id": "system.ops.manual-task",
+        "actor": "kernel-dev",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "按规格与测试执行候选实现",
+      "input_context_ref": "spec_ref + test_plan_ref",
+      "done_definition": "必须产出 implementation_ref，并满足“实现保持对规格与测试的可追溯性”",
+      "handoff_note": "将 implementation_ref 交接给 initiator"
+    }
+  ],
+  "control_flow": [
+    {
+      "from": "p1",
+      "to": "end",
+      "on": "success"
+    }
+  ],
+  "fail_policy": {
+    "mode": "fail_closed",
+    "retry": {
+      "max_attempts": 1
+    },
+    "escalation_chain": [
+      "actor",
+      "owner",
+      "bpm",
+      "admin",
+      "human"
+    ]
+  },
+  "evidence_policy": {
+    "required_fields": [
+      "timestamp",
+      "phase_id",
+      "actor",
+      "input_ref",
+      "output_ref",
+      "decision",
+      "reason",
+      "evidence_ref"
+    ]
+  }
+}

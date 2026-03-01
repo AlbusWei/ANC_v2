@@ -1,9 +1,0 @@
-{
-  "gate_decision": "test_invalid",
-  "reasons": [
-    "test_invalid_present"
-  ],
-  "evidence_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/verdict-normalizer-test-invalid",
-  "final_gate_verdict_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/verdict-normalizer-test-invalid/final_gate_verdict.json",
-  "aggregation_trace_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-5/outputs/verdict-normalizer-test-invalid/aggregation_trace.json"
-}

@@ -20,6 +20,6 @@ M2 的 BPM runtime hardening 需要先建立可审计、可按回合追溯的执
 
 ## Impact
 
-- Affected docs: `docs/architecture/construction_plane.md`, `docs/design/modules/evidence/bpm-runtime/*`.
+- Affected docs: `docs/architecture/construction_plane.md`, `runtime_data/execution/evidence/bpm-runtime/*`.
 - Affected test harness: `tests/m2-bpm-runtime/*`（新增 online test case 与 live regression 实执行）。
 - Affected process auditability: Entire checkpoint linkage and OpenSpec apply-readiness evidence.

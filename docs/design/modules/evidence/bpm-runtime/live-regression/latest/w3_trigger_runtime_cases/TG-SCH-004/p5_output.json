@@ -1,6 +1,0 @@
-{
-  "catchup_decision": "run",
-  "catchup_run_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-004/p5_catchup_run.json",
-  "catchup_reason_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w3_trigger_runtime_cases/TG-SCH-004/p5_reason.json",
-  "escalation_hint": ""
-}

@@ -1,6 +1,6 @@
 # 流程实例 Schema
 
-> 版本: v0.4.0 | SSOT 上游: `docs/architecture/process_architecture.md`
+> 版本: v0.6.0 | SSOT 上游: `docs/architecture/process_architecture.md`
 
 ## 流程定义 Schema (process.json)
 
@@ -22,10 +22,18 @@
       "phase_id": "string (p1, p2, ..., required)",
       "name": "string (kebab-case, required)",
       "actor": "string (agent_id, required)",
-      "target_type": "string (skill|subprocess, required)",
-      "target_id": "string (registry stable id, required)",
+      "target_type": "string (subprocess, required)",
+      "target_id": "string (process_id 或 inline_ap.ap_id, required)",
       "requires_spec": "boolean (required)",
       "spec_ref": "string (required when requires_spec=true)",
+      "inline_ap": {
+        "ap_id": "string (必须等于 target_id)",
+        "skill_id": "string (skill_registry.skill_id)",
+        "actor": "string (agent_id)",
+        "pierce_allowed": "boolean (true 时要求 actor==phase.actor)",
+        "lifecycle": "string (ephemeral|stable, optional)",
+        "pierce_rule": "string (optional)"
+      },
       "sipoc": {
         "supplier": "string (required)",
         "input": "string (required)",
@@ -79,13 +87,17 @@
   "objective_ref": "string (required)",
   "initiated_by": "string (agent_id, required)",
   "status": "string (created|running|waiting|completed|failed|cancelled|archived)",
+  "waiting_reason": "string (hold|manual-approval|dependency, optional)",
   "created_at": "string (ISO8601)",
   "updated_at": "string (ISO8601)",
   "current_phase": "string (phase_id)",
+  "runtime_gate_state": "string (pass|fail|hold|test_invalid, optional)",
+  "liveness_snapshot_ref": "string (optional)",
   "phase_results": [
     {
       "phase_id": "string",
       "status": "string (running|completed|failed|skipped)",
+      "runtime_state": "string (running|hold|retry|debug|failed|completed, optional)",
       "actor": "string",
       "session_id": "string (required)",
       "input_ref": "string",
@@ -133,3 +145,4 @@ Completed|Failed|Cancelled -> Archived
 4. 子流程必须创建独立实例，不得直接写父流程运行状态。
 5. 父流程只消费子流程契约输出。
 6. `stack_depth` 超过阈值必须 Fail-Closed。
+7. 若 phase 使用 `inline_ap` 且满足 `inline_ap.pierce_allowed=true && inline_ap.actor==phase.actor`，可穿透执行并复用父 phase 执行栈。

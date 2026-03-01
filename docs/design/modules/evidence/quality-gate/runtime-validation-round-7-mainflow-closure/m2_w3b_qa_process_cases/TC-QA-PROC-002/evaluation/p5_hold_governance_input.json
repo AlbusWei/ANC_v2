@@ -1,8 +1,0 @@
-{
-  "hold_case_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m2_w3b_qa_process_cases/TC-QA-PROC-002/hold_case.json",
-  "runtime_log_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m2_w3b_qa_process_cases/TC-QA-PROC-002/runtime.log",
-  "execution_state_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m2_w3b_qa_process_cases/TC-QA-PROC-002/execution_state.json",
-  "triage_policy_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m2_w3b_qa_process_cases/TC-QA-PROC-002/triage_policy.json",
-  "runtime_health_policy_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-7-mainflow-closure/m2_w3b_qa_process_cases/TC-QA-PROC-002/runtime_health_policy.json",
-  "current_owner": "qa"
-}

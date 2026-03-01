@@ -1,8 +1,0 @@
-{
-  "status": "completed",
-  "instance_id": "inst-anl-prod-001",
-  "lineage_ref": "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-001/lineage.json",
-  "stack_depth": 1,
-  "architecture_feedback_digest_ref": "docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases/TC-ANL-001/analysis_digest.json",
-  "generated_at": "2026-02-22T16:34:54Z"
-}

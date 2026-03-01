@@ -1,6 +1,0 @@
-{
-  "trigger_id": "trg-f4645121047cf4b4faa1",
-  "instance_id": "run-development-process-20260222155045-4cb2",
-  "decision": "hit",
-  "evidence_payload_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-004/p4_evidence_payload.json"
-}

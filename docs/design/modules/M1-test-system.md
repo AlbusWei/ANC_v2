@@ -1,6 +1,6 @@
 # M1 — 测试系统模块详细设计
 
-> 版本: v0.5.1 | 建设优先级: P0 | 最后更新: 2026-02-22
+> 版本: v0.5.2 | 建设优先级: P0 | 最后更新: 2026-02-26
 
 ## 模块定位
 
@@ -9,13 +9,13 @@ OpenJudge 在 `M1` 中定位为评测执行内核，不直接承担治理决策�
 
 相关文档：
 
-1. 适配接口：`/Users/albus/MyProjects/ANC_v2/docs/design/modules/M1-openjudge-adapter-spec.md`
-2. 技能设计：`/Users/albus/MyProjects/ANC_v2/docs/design/skills/quality-gate-skills.md`
-3. 准备流程：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/quality-gate-preparation-process.md`
-4. 评测流程：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/quality-gate-evaluation-process.md`
-5. HOLD 治理流程：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/hold-governance-process.md`
-6. Thread-3 运行级闭环证据：`docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/runtime_summary.json`
-7. 真实服务语义评审证据：`docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/runtime_summary.json`
+1. 适配接口：`docs/design/modules/M1-openjudge-adapter-spec.md`
+2. 技能设计：`docs/design/skills/quality-gate-skills.md`
+3. 准备流程：`docs/design/processes/quality-gate-preparation-process.md`
+4. 评测流程：`docs/design/processes/quality-gate-evaluation-process.md`
+5. HOLD 治理流程：`docs/design/processes/hold-governance-process.md`
+6. Thread-3 运行级闭环证据：`runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/runtime_summary.json`
+7. 真实服务语义评审证据：`runtime_data/execution/evidence/quality-gate/runtime-validation-round-8-semantic-service/runtime_summary.json`
 
 ## Phase 1 成功优先级
 
@@ -63,9 +63,9 @@ OpenJudge 在 `M1` 中定位为评测执行内核，不直接承担治理决策�
 ## 输入契约（统一源）
 
 1. `TEST.md` 是唯一测试定义源：
-   - 模板基线：`/Users/albus/MyProjects/ANC_v2/tests/template/TEST.md`
+   - 模板基线：`tests/template/TEST.md`
 2. 交接输入采用 `preparation_bundle_ref`。
-3. 评测流程的运行输入为 `preparation_bundle_ref + actual_output_refs`。
+3. 评测流程的运行输入为 `preparation_bundle_ref + superpower_ref + actual_output_refs`。
 4. `tc_id -> profile_id` 必须显式映射并纳入证据包。
 
 ## 输出契约（Unified Verdict）
@@ -74,7 +74,8 @@ OpenJudge 在 `M1` 中定位为评测执行内核，不直接承担治理决策�
 
 ```json
 {
-  "gate_decision": "pass|fail|hold|test_invalid",
+  "gate_decision": "pass|fail|test_invalid",
+  "runtime_gate_state": "pass|fail|hold|test_invalid",
   "evidence_ref": "path/to/evidence_package",
   "reasons": ["..."]
 }
@@ -97,7 +98,7 @@ OpenJudge 在 `M1` 中定位为评测执行内核，不直接承担治理决策�
 2. AP-020 负责总聚合并输出最终 `gate_decision`。
 3. P0 聚合：
    - 任一 P0 `fail` -> 总体 `fail`
-   - 无 `fail` 且存在 `hold` -> 总体 `hold`
+   - 无 `fail` 且存在 `hold` -> `runtime_gate_state=hold` 且对外 `gate_decision=fail`（进入 HOLD 治理）
    - 其余 -> 总体 `pass`
 
 ## Fail-Closed 规则（无硬超时）
@@ -113,6 +114,7 @@ OpenJudge 在 `M1` 中定位为评测执行内核，不直接承担治理决策�
 1. 长时运行不是失败条件。
 2. `hold -> fail` 仅在 HOLD 治理确认异常或无进展证据时触发。
 3. `test_invalid` 仅用于编译期和运行前契约错误。
+4. `hold` 只允许出现在 `runtime_gate_state`，不允许作为对外发布结论枚举。
 
 ## Profile 治理
 
@@ -121,6 +123,7 @@ OpenJudge 在 `M1` 中定位为评测执行内核，不直接承担治理决策�
 3. profile 仅允许调整：grader 组合、轮次、重试、证据附加项。
 4. 以下条款不可被 profile 覆盖：
    - `gate_decision` 枚举
+   - `runtime_gate_state` 枚举
    - Unified Verdict 必填字段
    - Fail-Closed 主规则
 5. profile 采用语义化版本并登记 registry。
@@ -145,7 +148,7 @@ OpenJudge 在 `M1` 中定位为评测执行内核，不直接承担治理决策�
    - `TC-M1-CHAIN-002`：关键输入缺失触发 `test_invalid/fail-closed`，并阻断 lifecycle transition。
    - `TC-M1-CHAIN-003`：`evaluation hold -> hold-governance` 路由并产出 `hold_resolution_ref`。
    - `TC-M1-CHAIN-004`：`M5` 最小接入 `M1` 门禁入口可执行。
-3. round 证据目录：`docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/`。
+3. round 证据目录：`runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/`。
 
 ## 真实服务语义补测（2026-02-22）
 
@@ -156,7 +159,7 @@ OpenJudge 在 `M1` 中定位为评测执行内核，不直接承担治理决策�
    - 评测方法必须为 `LLM-Judge`，禁止退化为字段匹配式 Rule Match。
    - 对 mock 交付必须产生阻断判定（`fail` 或 `hold`），禁止“形式通过”。
    - 缺陷与 debug 建议必须非空并可追溯证据路径。
-4. round 证据目录：`docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service/`。
+4. round 证据目录：`runtime_data/execution/evidence/quality-gate/runtime-validation-round-8-semantic-service/`。
 
 ## 验收清单
 

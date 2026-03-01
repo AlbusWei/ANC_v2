@@ -1,6 +1,6 @@
 ---
 name: "manual-task"
-description: "Execute controlled human-in-the-loop task with evidence output"
+description: "Execute BPM actor task from natural-language dispatch context and archive protocol evidence"
 license: "Apache-2.0"
 compatibility:
   openclaw: ">=2026.2"
@@ -9,13 +9,16 @@ allowed-tools:
   - Read
   - Write
   - Bash
+version: "0.2.0"
 ---
 
 # manual-task
 
 ## Objective
 
-在需要人工介入时，以可追溯、可审计方式执行最小任务并返回结构化证据。
+作为通用执行入口，让 Actor 按 BPM 分发的自然语言任务执行阶段工作，并按协议沉淀可追溯结果。
+
+该技能是“自然语言任务执行 + 协议留档”能力：适用于 inline_ap 场景下的通用阶段执行。
 
 ## Capability Contract (Machine-Readable)
 
@@ -26,13 +29,14 @@ input_contract:
   format: json
   required:
     - objective_ref
-    - task_ref
     - acceptance_criteria
     - expected_outputs
   validation:
-    - objective_ref must be provided
-    - task_ref must point to a reachable document
-    - acceptance_criteria must be explicit
+    - legacy mode requires objective_ref + task_ref + acceptance_criteria + expected_outputs
+    - dispatch mode allows objective_ref from task_dispatch.objective_ref
+    - dispatch mode requires task_dispatch.instance_id/phase_id/actor/session_binding/evidence_dir
+    - dispatch mode must include session_binding.session_id
+    - acceptance_criteria must be explicit (or use dispatch default)
     - expected_outputs must declare at least one artifact path
 output_contract:
   format: json
@@ -41,10 +45,12 @@ output_contract:
     - evidence_ref
     - decision
     - reason
+    - mode
   machine_judgement:
     - output_ref and evidence_ref are present
     - decision is pass or fail
     - reason is non-empty
+    - dispatch mode emits task_completion payload
 fail_closed_rules:
   - missing required input fields
   - missing evidence_ref

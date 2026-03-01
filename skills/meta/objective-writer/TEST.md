@@ -2,22 +2,88 @@
 
 ## Objective Alignment
 
-验证 objective 输出可被 Spec/Test 阶段直接复用，且边界清晰。
+验证 Objective 文档产出满足“可测、可追溯、边界清晰”的准入要求，且对关键输入缺失执行 Fail-Closed。
 
 ## Test Cases
 
-### TC-001: 产出可测目标
+### TC-001: Happy Path - 产出可测 Objective
 
 - Type: Objective
 - Priority: P0
-- Input: 完整 objective_context + success_criteria
-- Expected: 输出包含可测成功标准和非目标边界
+- Input: 完整 `objective_context/stakeholders/constraints/success_criteria`
+- Expected: 输出包含 `objective_ref/objective_statement/scope_baseline/non_goals`
 - Evaluation Method: Human Review
 
-### TC-002: 缺失成功标准时 Fail-Closed
+### TC-002: Fail-Closed - 缺失 success_criteria
 
 - Type: Objective
 - Priority: P0
-- Input: 缺失 success_criteria
-- Expected: 拒绝产出并返回缺失字段
-- Evaluation Method: Exact Match
+- Input: `success_criteria=[]`
+- Expected: 阻断产出并明确“成功标准不可测”
+- Evaluation Method: Rule Match
+
+### TC-003: Fail-Closed - 缺失 non_goals
+
+- Type: Objective
+- Priority: P0
+- Input: `constraints` 不含 `non_goals`
+- Expected: 阻断产出并返回缺失边界说明
+- Evaluation Method: Rule Match
+
+### TC-004: Traceability - 输出条款映射输入约束
+
+- Type: Objective
+- Priority: P1
+- Input: 含多条约束的完整输入
+- Expected: `scope_baseline` 与输入约束逐条可追溯
+- Evaluation Method: Human Review
+
+### TC-005: 冲突检查 - 目标与 SSOT 冲突
+
+- Type: Objective
+- Priority: P1
+- Input: 明确冲突的约束描述
+- Expected: 标记 `ssot_conflict` 并拒绝进入下一阶段
+- Evaluation Method: Rule Match
+
+### TC-006: 可用性检查 - 输出可直接进入 Spec 阶段
+
+- Type: Objective
+- Priority: P2
+- Input: 标准完整输入
+- Expected: Spec-writer 无需补充解释即可消费
+- Evaluation Method: Human Review
+
+## Evaluation Configuration
+
+- Objective Eval Rounds: 1
+- Subjective Eval Rounds: 1
+- Judge Perspectives: [architect, system-analyst]
+- Timeout Seconds: 600
+- Retry Policy: max 1
+
+## Runner 执行与返回码约定
+
+### Happy Path 示例
+
+```bash
+python3 skills/meta/objective-writer/scripts/objective_writer_runner.py \
+  --input tmp/session5/objective_writer_input.json \
+  --output tmp/session5/objective_writer_output.json \
+  --evidence-dir tmp/session5/objective_writer_evidence
+```
+
+### Fail-Closed 示例（缺失 `constraints.non_goals`）
+
+```bash
+python3 skills/meta/objective-writer/scripts/objective_writer_runner.py \
+  --input tmp/session5/objective_writer_input_missing_non_goals.json \
+  --output tmp/session5/objective_writer_output_missing_non_goals.json \
+  --evidence-dir tmp/session5/objective_writer_evidence_missing_non_goals
+```
+
+### 返回码语义
+
+1. `0`：通过，输出 `objective_ref/objective_statement/success_criteria/scope_baseline/non_goals`。
+2. `2`：Fail-Closed，输入缺字段或成功标准不可测。
+3. `1`：运行异常。

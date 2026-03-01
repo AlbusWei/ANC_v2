@@ -2,7 +2,7 @@
 """Switch OpenClaw runtime workspace/config to a target ANC_v2 repo or worktree.
 
 This script is fail-closed:
-1. Validates projection freshness for phase05-with-entry.
+1. Validates projection freshness for the selected scope profile.
 2. Expands repo-relative agents.list and skill/process source dirs to absolute paths.
 3. Applies hash-safe config.patch with baseHash.
 4. Verifies the key config fields after patch.
@@ -14,8 +14,16 @@ import argparse
 import json
 import subprocess
 import sys
+from copy import deepcopy
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
+
+
+SCOPE_TO_PROFILE = {
+    "public": "phase05-base",
+    "dev": "phase05-with-entry",
+}
+DEFAULT_PRIVATE_OVERLAY = "runtime_data/private-assets/openclaw.overlay.json"
 
 
 def _parse_json_from_mixed_output(text: str) -> Any:
@@ -79,6 +87,118 @@ def _require_ok(proc: subprocess.CompletedProcess[str], cmd: List[str], hint: st
 def _ensure_exists(path: Path, desc: str) -> None:
     if not path.exists():
         raise RuntimeError(f"Missing {desc}: {path}")
+
+
+def _load_json_file(path: Path, desc: str) -> Dict[str, Any]:
+    _ensure_exists(path, desc)
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise RuntimeError(f"Invalid JSON in {desc}: {path}: {exc}") from exc
+    if not isinstance(payload, dict):
+        raise RuntimeError(f"{desc} root must be object: {path}")
+    return payload
+
+
+def _resolve_fragment_from_scope(repo_root: Path, scope: str) -> Tuple[Path, str]:
+    profile_key = SCOPE_TO_PROFILE.get(scope)
+    if not profile_key:
+        raise RuntimeError(f"Unsupported scope: {scope}")
+
+    profiles_path = repo_root / "config/openclaw.projection.profiles.json"
+    profiles_payload = _load_json_file(profiles_path, "projection profiles")
+
+    profiles = profiles_payload.get("profiles")
+    if not isinstance(profiles, dict):
+        raise RuntimeError("Invalid projection profiles: missing object 'profiles'")
+
+    profile_cfg = profiles.get(profile_key)
+    if not isinstance(profile_cfg, dict):
+        raise RuntimeError(f"Profile not found in projection profiles: {profile_key}")
+
+    output_file = profile_cfg.get("output_file")
+    if not isinstance(output_file, str) or not output_file.strip():
+        raise RuntimeError(f"Profile {profile_key} missing output_file")
+
+    fragment_path = (repo_root / output_file).resolve()
+    return fragment_path, profile_key
+
+
+def _merge_fragment(base_fragment: Dict[str, Any], overlay_fragment: Dict[str, Any]) -> Dict[str, Any]:
+    """Merge overlay into base for agents.list and skills.entries only."""
+    merged = deepcopy(base_fragment)
+
+    base_agents = merged.setdefault("agents", {}).setdefault("list", [])
+    if not isinstance(base_agents, list):
+        raise RuntimeError("Invalid base fragment: agents.list must be array")
+
+    agents_by_id: Dict[str, Dict[str, str]] = {}
+    order: List[str] = []
+    for raw in base_agents:
+        if not isinstance(raw, dict):
+            raise RuntimeError(f"Invalid base fragment agent entry: {raw!r}")
+        agent_id = raw.get("id")
+        workspace = raw.get("workspace")
+        if not isinstance(agent_id, str) or not agent_id.strip() or not isinstance(workspace, str) or not workspace.strip():
+            raise RuntimeError(f"Invalid base fragment agent entry: {raw!r}")
+        agents_by_id[agent_id] = {"id": agent_id, "workspace": workspace}
+        order.append(agent_id)
+
+    overlay_agents = overlay_fragment.get("agents", {}).get("list", [])
+    if overlay_agents is None:
+        overlay_agents = []
+    if not isinstance(overlay_agents, list):
+        raise RuntimeError("Invalid private overlay: agents.list must be array")
+
+    for raw in overlay_agents:
+        if not isinstance(raw, dict):
+            raise RuntimeError(f"Invalid private overlay agent entry: {raw!r}")
+        agent_id = raw.get("id")
+        workspace = raw.get("workspace")
+        if not isinstance(agent_id, str) or not agent_id.strip() or not isinstance(workspace, str) or not workspace.strip():
+            raise RuntimeError(f"Invalid private overlay agent entry: {raw!r}")
+        agents_by_id[agent_id] = {"id": agent_id, "workspace": workspace}
+        if agent_id not in order:
+            order.append(agent_id)
+
+    merged["agents"]["list"] = [agents_by_id[agent_id] for agent_id in order]
+
+    base_entries = merged.setdefault("skills", {}).setdefault("entries", {})
+    if not isinstance(base_entries, dict):
+        raise RuntimeError("Invalid base fragment: skills.entries must be object")
+
+    overlay_entries = overlay_fragment.get("skills", {}).get("entries", {})
+    if overlay_entries is None:
+        overlay_entries = {}
+    if not isinstance(overlay_entries, dict):
+        raise RuntimeError("Invalid private overlay: skills.entries must be object")
+
+    for entry_key, entry_val in overlay_entries.items():
+        if not isinstance(entry_key, str) or not entry_key.strip() or not isinstance(entry_val, dict):
+            raise RuntimeError(f"Invalid private overlay skills entry: {entry_key!r}={entry_val!r}")
+        base_entries[entry_key] = entry_val
+
+    return merged
+
+
+def _inject_private_skill_entries(fragment: Dict[str, Any], repo_root: Path) -> List[str]:
+    """Inject default private skill/process dirs when they exist."""
+    injected: List[str] = []
+    entries = fragment.setdefault("skills", {}).setdefault("entries", {})
+    if not isinstance(entries, dict):
+        raise RuntimeError("Invalid fragment: skills.entries must be object")
+
+    defaults = [
+        ("private-anc-processes", "runtime_data/private-assets/processes"),
+        ("private-anc-skills", "runtime_data/private-assets/skills"),
+    ]
+    for entry_key, rel_source in defaults:
+        if entry_key in entries:
+            continue
+        if (repo_root / rel_source).exists():
+            entries[entry_key] = {"source": rel_source}
+            injected.append(rel_source)
+    return injected
 
 
 def _build_patch(repo_root: Path, fragment: Dict[str, Any], current_config: Dict[str, Any]) -> Dict[str, Any]:
@@ -204,8 +324,14 @@ def main() -> int:
         help="Target ANC_v2 repo/worktree root (default: current directory).",
     )
     parser.add_argument(
+        "--scope",
+        choices=["public", "dev"],
+        default="dev",
+        help="public=phase05-base; dev=phase05-with-entry (default: dev).",
+    )
+    parser.add_argument(
         "--fragment",
-        help="Path to projected fragment JSON (default: <repo-root>/config/openclaw.phase05.with-entry.fragment.json).",
+        help="Path to projected fragment JSON (default depends on --scope and config/openclaw.projection.profiles.json).",
     )
     parser.add_argument(
         "--openclaw-profile",
@@ -217,6 +343,24 @@ def main() -> int:
         action="store_true",
         help="Skip registry projection freshness check (not recommended).",
     )
+    parser.add_argument(
+        "--enable-private-assets",
+        action="store_true",
+        help="Merge runtime_data/private-assets overlay and private skill/process dirs when available.",
+    )
+    parser.add_argument(
+        "--private-overlay",
+        default="",
+        help=(
+            "Private overlay JSON path (repo-relative or absolute). "
+            "Default: runtime_data/private-assets/openclaw.overlay.json"
+        ),
+    )
+    parser.add_argument(
+        "--require-private-overlay",
+        action="store_true",
+        help="Fail when --enable-private-assets is set but private overlay file is missing.",
+    )
     parser.add_argument("--dry-run", action="store_true", help="Print patch without applying it.")
     parser.add_argument(
         "--receipt-file",
@@ -225,16 +369,17 @@ def main() -> int:
     args = parser.parse_args()
 
     repo_root = Path(args.repo_root).expanduser().resolve()
-    fragment_path = (
-        Path(args.fragment).expanduser().resolve()
-        if args.fragment
-        else (repo_root / "config/openclaw.phase05.with-entry.fragment.json")
-    )
     registry_tool = repo_root / "shared/registry/registry_contract_tool.py"
     profile = args.openclaw_profile.strip() or None
 
     _ensure_exists(repo_root, "repo root")
     _ensure_exists(registry_tool, "registry_contract_tool.py")
+
+    if args.fragment:
+        fragment_path = Path(args.fragment).expanduser().resolve()
+        projection_profile = SCOPE_TO_PROFILE[args.scope]
+    else:
+        fragment_path, projection_profile = _resolve_fragment_from_scope(repo_root, args.scope)
     _ensure_exists(fragment_path, "OpenClaw fragment")
 
     if not args.skip_projection_check:
@@ -243,7 +388,7 @@ def main() -> int:
             str(registry_tool),
             "project-openclaw",
             "--profile",
-            "phase05-with-entry",
+            projection_profile,
             "--check",
         ]
         check_proc = _run(check_cmd, repo_root)
@@ -252,11 +397,32 @@ def main() -> int:
             check_cmd,
             hint=(
                 "Projection is stale or invalid. Run:\n"
-                "python3 shared/registry/registry_contract_tool.py project-openclaw --profile phase05-with-entry"
+                f"python3 shared/registry/registry_contract_tool.py project-openclaw --profile {projection_profile}"
             ),
         )
 
-    fragment = json.loads(fragment_path.read_text(encoding="utf-8"))
+    fragment = _load_json_file(fragment_path, "OpenClaw fragment")
+
+    private_overlay_path = Path(args.private_overlay) if args.private_overlay else Path(DEFAULT_PRIVATE_OVERLAY)
+    private_overlay_path = (
+        private_overlay_path.expanduser().resolve()
+        if private_overlay_path.is_absolute()
+        else (repo_root / private_overlay_path).resolve()
+    )
+
+    private_overlay_applied = False
+    private_auto_skill_sources: List[str] = []
+    if args.enable_private_assets:
+        private_auto_skill_sources = _inject_private_skill_entries(fragment, repo_root)
+        if private_overlay_path.exists():
+            private_overlay = _load_json_file(private_overlay_path, "private overlay")
+            fragment = _merge_fragment(fragment, private_overlay)
+            private_overlay_applied = True
+        elif args.require_private_overlay:
+            raise RuntimeError(
+                "Private overlay required but missing: "
+                f"{private_overlay_path}. Provide --private-overlay or create the default overlay file."
+            )
 
     cfg_get_cmd = _openclaw_cmd(profile, "gateway", "call", "config.get", "--params", "{}", "--json")
     cfg_proc = _run(cfg_get_cmd, repo_root)
@@ -277,6 +443,13 @@ def main() -> int:
 
     receipt: Dict[str, Any] = {
         "repo_root": str(repo_root),
+        "scope": args.scope,
+        "projection_profile": projection_profile,
+        "fragment": str(fragment_path),
+        "private_assets_enabled": bool(args.enable_private_assets),
+        "private_overlay": str(private_overlay_path),
+        "private_overlay_applied": private_overlay_applied,
+        "private_auto_skill_sources": private_auto_skill_sources,
         "openclaw_profile": profile or "default",
         "base_hash": base_hash,
         "agent_count": len(patch["agents"]["list"]),

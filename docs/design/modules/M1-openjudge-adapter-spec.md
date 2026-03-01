@@ -7,9 +7,10 @@
 本规范定义 `M1` 与 OpenJudge 的适配契约，确保：
 
 1. `TEST.md` 作为唯一测试上游定义被稳定编译。
-2. OpenJudge 仅输出 `raw eval`。
-3. `M1 adapter` 统一输出 `unified verdict` 并提供 `gate_decision`。
-4. 证据链可被 `M2` 与 `M4` 审计消费。
+2. `superpower_ref` 作为 SDD→TDD 协同主键必须随 preparation/evaluation 输入传递且可追溯。
+3. OpenJudge 仅输出 `raw eval`。
+4. `M1 adapter` 统一输出 `unified verdict` 并提供 `gate_decision`。
+5. 证据链可被 `M2` 与 `M4` 审计消费。
 
 非目标：
 
@@ -82,7 +83,8 @@ quality_eval_runner run \
 
 ```json
 {
-  "gate_decision": "pass|fail|hold|test_invalid",
+  "gate_decision": "pass|fail|test_invalid",
+  "runtime_gate_state": "pass|fail|hold|test_invalid",
   "evidence_ref": "path/to/evidence/package",
   "reasons": ["..."]
 }
@@ -104,21 +106,22 @@ quality_eval_runner run \
 1. AP-007：客观评测，输出 `objective_eval_ref`。
 2. AP-008：主观评测，输出 `subjective_eval_ref`（可选）。
 3. AP-009：回归评测，输出 `regression_eval_ref`。
-4. AP-020：汇总分项评测结果，输出最终 `gate_decision`。
+4. AP-020：汇总分项评测结果，输出最终 `gate_decision + runtime_gate_state`。
 
 聚合规则：
 
 1. 任一 P0 `fail` -> 总体 `fail`
-2. 无 `fail` 且存在 `hold` -> 总体 `hold`
+2. 无 `fail` 且存在 `hold` -> `runtime_gate_state=hold`，对外 `gate_decision=fail`
 3. 其他 -> 总体 `pass`
 
 ## 7. HOLD 治理规则（无硬超时）
 
 1. 长时运行不直接触发失败。
-2. `hold` 状态必须进入 `hold-governance`。
+2. `runtime_gate_state=hold` 必须进入 `hold-governance`。
 3. triage 基于三类进展信号：日志增量、阶段状态推进、输出流心跳。
 4. triage 决策限定：`continue/retry/debug/fail`。
 5. `hold -> fail` 仅在确认异常或无进展证据时触发。
+6. 对外发布路径不消费 `hold`，只消费 `gate_decision=pass|fail|test_invalid`。
 
 ## 8. 证据包规范
 

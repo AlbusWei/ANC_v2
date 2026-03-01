@@ -1,9 +1,0 @@
-{
-  "status": "completed",
-  "instance_id": "inst-anl-001",
-  "architecture_feedback_digest_ref": "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-001/analysis_digest.json",
-  "lineage_ref": "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-001/lineage.json",
-  "stack_depth": 1,
-  "evidence_ref": "docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/TC-ANL-001/handoff_evidence_index.json",
-  "generated_at": "2026-02-22T16:08:45Z"
-}

@@ -17,9 +17,9 @@
 
 3. 最小 dry-run 证据路径落盘（TG-SCH-002 / TG-EVT-003）  
 引用：
-`docs/design/modules/evidence/trigger-governance/README.md`  
-`docs/design/modules/evidence/trigger-governance/TG-SCH-002-dry-run.md`  
-`docs/design/modules/evidence/trigger-governance/TG-EVT-003-dry-run.md`
+`runtime_data/execution/evidence/trigger-governance/README.md`  
+`runtime_data/execution/evidence/trigger-governance/TG-SCH-002-dry-run.md`  
+`runtime_data/execution/evidence/trigger-governance/TG-EVT-003-dry-run.md`
 
 4. trigger runtime 可执行资产已落盘（流程 + 技能 + AP）  
 引用：

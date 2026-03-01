@@ -53,3 +53,27 @@
 - Input: manifest 中存在未映射 phase 或非法 control_flow
 - Expected: Fail-Closed 并产出解析失败证据
 - Evaluation Method: Exact Match
+
+### TC-INS-006: inline_ap 映射违规拒绝
+
+- Type: Objective
+- Priority: P0
+- Input: manifest phase 使用未注册 `target_id` 且 `inline_ap` 缺失/`skill_id` 无效
+- Expected: Fail-Closed，并返回 `inline_ap` 映射错误
+- Evaluation Method: Exact Match
+
+### TC-INS-007: phase 分发上下文自动拼接
+
+- Type: Objective
+- Priority: P0
+- Input: 启动实例时提供 `input_ref` + `requires_spec=true` phase
+- Expected: 产出 `dispatch_context_ref/task_dispatch_ref/dispatch_prompt_ref`，且输入拼接顺序符合“显式输入 -> spec_ref”
+- Evaluation Method: Exact Match
+
+### TC-INS-008: 父子交接输入继承
+
+- Type: Objective
+- Priority: P1
+- Input: 子实例缺显式 `input_ref`，父实例存在可用 `output_ref`
+- Expected: 子实例 phase 输入自动继承父实例最近输出引用
+- Evaluation Method: Exact Match

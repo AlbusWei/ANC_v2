@@ -9,7 +9,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
-version: "0.1.0"
+version: "0.3.0"
 ---
 
 # runtime-policy-calibration
@@ -32,10 +32,11 @@ version: "0.1.0"
 ## Output Contract
 
 - Format: json
-- Required fields: calibration_report_ref, policy_change_proposal_ref, governance_sync_minutes_ref, decision_record_ref, rollout_observation_ref
+- Required fields: calibration_report_ref, policy_change_proposal_ref, governance_sync_minutes_ref, decision_record_ref, rollout_observation_ref, liveness_policy_ref, no_progress_window_ref, termination_rule_ref
 
 ## Runtime Rules
 
 1. 证据样本不足时必须 Fail-Closed，不得产出策略变更结论。
 2. 高风险策略变更必须经过 `admin` 审批。
 3. `system-analyst` 仅输出分析与建议，不直接执行配置变更。
+4. `no_progress_window_ref` 的默认最小阈值为 900 秒，低于该值必须拒绝下发。

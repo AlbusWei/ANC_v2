@@ -118,6 +118,9 @@ def fail_closed(
             "governance_sync_minutes_ref": "",
             "decision_record_ref": "",
             "rollout_observation_ref": "",
+            "liveness_policy_ref": "",
+            "no_progress_window_ref": "",
+            "termination_rule_ref": "",
         },
     )
     print(to_rel(output_path, root))
@@ -131,7 +134,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--evidence-dir",
         default="",
-        help="Evidence directory path (repo-relative). Default docs/design/modules/evidence/bpm-runtime/w5_runtime_policy_cases/<run_id>",
+        help="Evidence directory path (repo-relative). Default runtime_data/execution/evidence/bpm-runtime/w5_runtime_policy_cases/<run_id>",
     )
     parser.add_argument("--run-id", default="", help="Optional run id for evidence directory naming")
     parser.add_argument(
@@ -153,7 +156,7 @@ def main() -> int:
     run_id = args.run_id.strip() or datetime.now(timezone.utc).strftime("rpc-%Y%m%dT%H%M%SZ")
     evidence_dir = resolve_path(
         root,
-        args.evidence_dir.strip() or f"docs/design/modules/evidence/bpm-runtime/w5_runtime_policy_cases/{run_id}",
+        args.evidence_dir.strip() or f"runtime_data/execution/evidence/bpm-runtime/w5_runtime_policy_cases/{run_id}",
     )
     evidence_dir.mkdir(parents=True, exist_ok=True)
 
@@ -342,6 +345,9 @@ def main() -> int:
         require_admin = bool(constraints_payload.get("high_risk_requires_admin_approval", True))
         admin_approved = bool(request.get("admin_approved", False))
         risk_level = str(digest_payload.get("risk_level") or "medium")
+        no_progress_window_seconds = int(request.get("no_progress_window_seconds") or 900)
+        if no_progress_window_seconds < 900:
+            raise RuntimePolicyCalibrationError("no_progress_window_seconds_must_be_gte_900")
 
         if require_admin and risk_level == "high" and not admin_approved:
             return fail_closed(
@@ -378,12 +384,49 @@ def main() -> int:
                 "policy_change_proposal_ref": to_rel(p5_proposal, root),
             },
         )
+        p5_liveness_policy = evidence_dir / "p5_liveness_policy.json"
+        dump_json(
+            p5_liveness_policy,
+            {
+                "timestamp": now_iso(),
+                "policy_id": f"liveness-policy-{run_id}",
+                "required_signals": [
+                    "stdout_stderr_increment",
+                    "openclaw_session_activity",
+                    "phase_state_progress",
+                ],
+                "default_no_progress_window_seconds": no_progress_window_seconds,
+            },
+        )
+        p5_no_progress_window = evidence_dir / "p5_no_progress_window.json"
+        dump_json(
+            p5_no_progress_window,
+            {
+                "timestamp": now_iso(),
+                "window_seconds": no_progress_window_seconds,
+                "source": "runtime-policy-calibration",
+            },
+        )
+        p5_termination_rule = evidence_dir / "p5_termination_rule.json"
+        dump_json(
+            p5_termination_rule,
+            {
+                "timestamp": now_iso(),
+                "rule_id": f"termination-rule-{run_id}",
+                "trigger": f"continuous_no_progress_gte_{no_progress_window_seconds}s",
+                "requires_evidence": True,
+                "escalation_chain": ["qa", "bpm", "admin"],
+            },
+        )
         phase_trace.append(
             {
                 "phase": "p5-decision-and-rollout-plan",
                 "status": "pass",
                 "policy_change_proposal_ref": to_rel(p5_proposal, root),
                 "decision_record_ref": to_rel(p5_decision, root),
+                "liveness_policy_ref": to_rel(p5_liveness_policy, root),
+                "no_progress_window_ref": to_rel(p5_no_progress_window, root),
+                "termination_rule_ref": to_rel(p5_termination_rule, root),
                 "ts": now_iso(),
             }
         )
@@ -442,6 +485,9 @@ def main() -> int:
             "governance_sync_minutes_ref": to_rel(p4_minutes, root),
             "decision_record_ref": to_rel(p5_decision, root),
             "rollout_observation_ref": to_rel(p6_observation, root),
+            "liveness_policy_ref": to_rel(p5_liveness_policy, root),
+            "no_progress_window_ref": to_rel(p5_no_progress_window, root),
+            "termination_rule_ref": to_rel(p5_termination_rule, root),
             "architecture_feedback_digest_ref": digest_ref,
             "runtime_trace_ref": to_rel(runtime_trace_path, root),
         }

@@ -13,15 +13,16 @@ W5 收口要求执行真实 live regression，并以 Fail-Closed 规则判定是
 - W2 governed config suite runner: `tests/m2-bpm-runtime/run_tc_gcc.py`
 - W3 trigger runtime suite runner: `tests/m2-bpm-runtime/run_tc_tg.py`
 - W3-B QA process orchestration suite runner: `tests/m2-bpm-runtime/run_tc_qa_proc.py`
+- W3-D hotfix/refactor process orchestration suite runner: `tests/m2-bpm-runtime/run_tc_hotfix_refactor_proc.py`
 - W4 system-analyst P1 suite runner: `tests/m2-bpm-runtime/run_tc_anl.py`
 - Expected mode for Thread 6: live regression (non-simulated)
 
 ## Evidence Inputs
 
-- Preconditions evidence: `docs/design/modules/evidence/bpm-runtime/precheck_apply_ready_evidence.md`
-- Round map: `docs/design/modules/evidence/bpm-runtime/checkpoint_commit_map.jsonl`
-- Commit range: `docs/design/modules/evidence/bpm-runtime/git_range.txt`
-- Live plan: `docs/design/modules/evidence/bpm-runtime/m6_live_regression_plan.md`
+- Preconditions evidence: `runtime_data/execution/evidence/bpm-runtime/precheck_apply_ready_evidence.md`
+- Round map: `runtime_data/execution/evidence/bpm-runtime/checkpoint_commit_map.jsonl`
+- Commit range: `runtime_data/execution/evidence/bpm-runtime/git_range.txt`
+- Live plan: `runtime_data/execution/evidence/bpm-runtime/m6_live_regression_plan.md`
 
 ## Fail-Closed Policy
 
@@ -68,6 +69,13 @@ Each JSONL record in `checkpoint_commit_map.jsonl` must include:
 - Suggested command:
   - `python3 tests/m2-bpm-runtime/run_tc_qa_proc.py`
 
+## W3-D Hotfix/Refactor Process Core Cases
+
+- Case doc: `tests/m2-bpm-runtime/TC-HOTFIX-REFACTOR-PROC.md`
+- Required pass set: `TC-HOTFIX-PROC-001`, `TC-REFACTOR-PROC-001`
+- Suggested command:
+  - `python3 tests/m2-bpm-runtime/run_tc_hotfix_refactor_proc.py`
+
 ## W5 System Analyst Production Cases
 
 - Case doc: `tests/m2-bpm-runtime/TC-ANL.md`
@@ -84,7 +92,7 @@ Each JSONL record in `checkpoint_commit_map.jsonl` must include:
 
 ## Minimal Execution Contract
 
-1. Ensure evidence directory exists: `docs/design/modules/evidence/bpm-runtime/`.
+1. Ensure evidence directory exists: `runtime_data/execution/evidence/bpm-runtime/`.
 2. Collect git range and write `git_range.txt` before live run.
-3. Execute online suite + W1/W2/W3/W3-B/W5 suites via post-dev regression and persist output evidence.
+3. Execute online suite + W1/W2/W3/W3-B/W3-D/W5 suites via post-dev regression and persist output evidence.
 4. Reconcile checkpoint/commit mapping before declaring done.

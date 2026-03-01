@@ -9,7 +9,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
-version: "0.1.0"
+version: "0.3.0"
 ---
 
 # quality-gate-evaluation
@@ -28,14 +28,17 @@ version: "0.1.0"
 
 - Format: json
 - Required fields: preparation_bundle_ref, actual_output_refs, profile_set
+- Optional fields: max_auto_retest_cycles（默认 0，>0 时启用自动回测回路）
 
 ## Output Contract
 
 - Format: json
-- Required fields: gate_decision, evidence_ref, final_gate_verdict_ref
+- Required fields: gate_decision, runtime_gate_state, evidence_ref, final_gate_verdict_ref
 
 ## Runtime Rules
 
 1. AP-008 主观评测默认启用。
 2. 任一 P0 fail 必须阻断。
-3. 出现 hold 必须路由到 `hold-governance`。
+3. 出现 `runtime_gate_state=hold` 必须路由到 `hold-governance`。
+4. 对外 `gate_decision` 枚举固定为 `pass|fail|test_invalid`，`hold` 只允许出现在 `runtime_gate_state`。
+5. 当 `hold-governance` 返回 `retest_recommendation=auto-retest` 且预算未耗尽时，自动回路重跑评测链路。

@@ -37,8 +37,8 @@
       "phase_id": "p1",
       "name": "incident-intake",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:escalation:p1",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-013-incident-triage.md#ap-013-incident-triage",
       "sipoc": {
@@ -48,14 +48,26 @@
         "output": "incident_snapshot_ref",
         "client": "p2"
       },
-      "acceptance_criteria": "incident fields and evidence references are complete"
+      "acceptance_criteria": "incident fields and evidence references are complete",
+      "inline_ap": {
+        "ap_id": "inline-ap:escalation:p1",
+        "skill_id": "system.ops.manual-task",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "归一化故障事件上下文",
+      "input_context_ref": "incident 与 severity",
+      "done_definition": "必须产出 incident_snapshot_ref，并满足“事件字段与证据引用完整”",
+      "handoff_note": "将 incident_snapshot_ref 交接给 p2"
     },
     {
       "phase_id": "p2",
       "name": "policy-check",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "system.ops.manual-task",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:escalation:p2",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-031-trigger-escalation-handling.md#ap-031-trigger-escalation-handling",
       "sipoc": {
@@ -65,14 +77,26 @@
         "output": "policy_check_ref",
         "client": "p3"
       },
-      "acceptance_criteria": "policy is parseable and chain is valid"
+      "acceptance_criteria": "policy is parseable and chain is valid",
+      "inline_ap": {
+        "ap_id": "inline-ap:escalation:p2",
+        "skill_id": "system.ops.manual-task",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "校验策略与治理边界",
+      "input_context_ref": "incident_snapshot 与 escalation_policy",
+      "done_definition": "必须产出 policy_check_ref，并满足“策略可解析且链路有效”",
+      "handoff_note": "将 policy_check_ref 交接给 p3"
     },
     {
       "phase_id": "p3",
       "name": "chain-routing",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "sys.bpm.escalation-handler",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:escalation:p3",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-031-trigger-escalation-handling.md#ap-031-trigger-escalation-handling",
       "sipoc": {
@@ -82,14 +106,26 @@
         "output": "escalation_trace",
         "client": "p4"
       },
-      "acceptance_criteria": "trace is auditable and final owner is in chain"
+      "acceptance_criteria": "trace is auditable and final owner is in chain",
+      "inline_ap": {
+        "ap_id": "inline-ap:escalation:p3",
+        "skill_id": "sys.bpm.escalation-handler",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "按治理升级链路进行分发",
+      "input_context_ref": "policy_check_ref",
+      "done_definition": "必须产出 escalation_trace，并满足“升级轨迹可审计且最终负责人在链路内”",
+      "handoff_note": "将 escalation_trace 交接给 p4"
     },
     {
       "phase_id": "p4",
       "name": "resolution-or-human",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "sys.bpm.escalation-handler",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:escalation:p4",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-025-hold-resolution-and-escalation.md#ap-025-hold-resolution-and-escalation",
       "sipoc": {
@@ -99,7 +135,19 @@
         "output": "escalation_output_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "decision is explicit and reasons are complete"
+      "acceptance_criteria": "decision is explicit and reasons are complete",
+      "inline_ap": {
+        "ap_id": "inline-ap:escalation:p4",
+        "skill_id": "sys.bpm.escalation-handler",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "以 resolved/escalated/human-required 结论收口升级",
+      "input_context_ref": "escalation_trace",
+      "done_definition": "必须产出 escalation_output_ref，并满足“决策结论明确且原因完整”",
+      "handoff_note": "将 escalation_output_ref 交接给 initiator"
     }
   ],
   "control_flow": [

@@ -1,5 +1,0 @@
-{
-  "signal": "retry_pressure",
-  "severity": "medium",
-  "impact": "重试负载升高"
-}

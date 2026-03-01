@@ -1,6 +1,6 @@
 {
   "process_id": "quality-gate-evaluation",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [
@@ -14,6 +14,13 @@
   "objective_ref": "obj-m1-unified-quality-gate",
   "owner": "bpm",
   "priority": "P0",
+  "collaboration_policy": {
+    "mode": "phase-isolated-session",
+    "dispatch_runtime": "openclaw-required",
+    "session_reset": "per-phase-reset",
+    "pilot_scope": "qa-first",
+    "natural_context_first": true
+  },
   "input_contract": {
     "format": "json",
     "required": [
@@ -26,6 +33,7 @@
     "format": "json",
     "required": [
       "gate_decision",
+      "runtime_gate_state",
       "evidence_ref",
       "final_gate_verdict_ref"
     ]
@@ -35,8 +43,8 @@
       "phase_id": "p1",
       "name": "run-objective-evaluation",
       "actor": "qa",
-      "target_type": "skill",
-      "target_id": "sys.qa.evaluation-runner",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:quality-gate-evaluation:p1",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-007-objective-evaluation.md#AP-007-Objective-Evaluation",
       "sipoc": {
@@ -46,14 +54,26 @@
         "output": "objective_eval_ref",
         "client": "p2"
       },
-      "acceptance_criteria": "objective verdict is parseable and traceable"
+      "acceptance_criteria": "objective verdict is parseable and traceable",
+      "inline_ap": {
+        "ap_id": "inline-ap:quality-gate-evaluation:p1",
+        "skill_id": "sys.qa.evaluation-runner",
+        "actor": "qa",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "执行客观评测 profile",
+      "input_context_ref": "preparation_bundle_ref + actual_output_refs",
+      "done_definition": "必须产出 objective_eval_ref，并满足“目标评测结论可解析且可追溯”",
+      "handoff_note": "将 objective_eval_ref 交接给 p2"
     },
     {
       "phase_id": "p2",
       "name": "run-subjective-evaluation",
       "actor": "qa",
-      "target_type": "skill",
-      "target_id": "sys.qa.evaluation-runner",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:quality-gate-evaluation:p2",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-008-subjective-evaluation.md#AP-008-Subjective-Evaluation",
       "sipoc": {
@@ -63,14 +83,26 @@
         "output": "subjective_eval_ref",
         "client": "p3"
       },
-      "acceptance_criteria": "subjective run records seed rounds and verdict"
+      "acceptance_criteria": "subjective run records seed rounds and verdict",
+      "inline_ap": {
+        "ap_id": "inline-ap:quality-gate-evaluation:p2",
+        "skill_id": "sys.qa.evaluation-runner",
+        "actor": "qa",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "默认执行盲评主观评测",
+      "input_context_ref": "preparation_bundle_ref + actual_output_refs + subjective_plan",
+      "done_definition": "必须产出 subjective_eval_ref，并满足“主观评测记录包含 seed 轮次与结论”",
+      "handoff_note": "将 subjective_eval_ref 交接给 p3"
     },
     {
       "phase_id": "p3",
       "name": "run-regression-evaluation",
       "actor": "qa",
-      "target_type": "skill",
-      "target_id": "sys.qa.regression-runner",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:quality-gate-evaluation:p3",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-009-regression-execution.md#AP-009-Regression-Execution",
       "sipoc": {
@@ -80,24 +112,48 @@
         "output": "regression_eval_ref",
         "client": "p4"
       },
-      "acceptance_criteria": "regression report contains module level verdicts"
+      "acceptance_criteria": "regression report contains module level verdicts",
+      "inline_ap": {
+        "ap_id": "inline-ap:quality-gate-evaluation:p3",
+        "skill_id": "sys.qa.regression-runner",
+        "actor": "qa",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "执行跨模块回归评测",
+      "input_context_ref": "preparation_bundle_ref + profile_set + actual_output_refs",
+      "done_definition": "必须产出 regression_eval_ref，并满足“回归报告包含模块级结论”",
+      "handoff_note": "将 regression_eval_ref 交接给 p4"
     },
     {
       "phase_id": "p4",
       "name": "aggregate-gate-decision",
       "actor": "qa",
-      "target_type": "skill",
-      "target_id": "sys.qa.verdict-normalizer",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:quality-gate-evaluation:p4",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-020-gate-decision-aggregation.md#AP-020-Gate-Decision-Aggregation",
       "sipoc": {
         "supplier": "p3",
         "input": "objective_eval_ref + subjective_eval_ref + regression_eval_ref",
         "process": "aggregate unified gate decision",
-        "output": "gate_decision",
+        "output": "gate_decision + runtime_gate_state",
         "client": "initiator"
       },
-      "acceptance_criteria": "gate decision follows unified verdict enum and P0 precedence"
+      "acceptance_criteria": "gate decision follows unified verdict enum and P0 precedence with runtime hold isolation",
+      "inline_ap": {
+        "ap_id": "inline-ap:quality-gate-evaluation:p4",
+        "skill_id": "sys.qa.verdict-normalizer",
+        "actor": "qa",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "汇总形成统一门禁结论",
+      "input_context_ref": "objective_eval_ref + subjective_eval_ref + regression_eval_ref",
+      "done_definition": "必须产出 gate_decision + runtime_gate_state，并满足“门禁决策遵循统一 verdict 枚举与 P0 优先规则”",
+      "handoff_note": "将 gate_decision + runtime_gate_state 交接给 initiator"
     },
     {
       "phase_id": "p5",
@@ -109,12 +165,16 @@
       "spec_ref": "docs/design/processes/hold-governance-process.md#目标",
       "sipoc": {
         "supplier": "p4",
-        "input": "hold_case_ref",
+        "input": "hold_case_ref + final_gate_verdict_ref",
         "process": "route hold case into hold governance subprocess",
-        "output": "hold_resolution_ref",
-        "client": "initiator"
+        "output": "hold_resolution_ref + retest_recommendation",
+        "client": "p2 or initiator"
       },
-      "acceptance_criteria": "hold cases are resolved or escalated with evidence"
+      "acceptance_criteria": "hold cases are resolved or escalated with evidence",
+      "phase_purpose": "将 hold 案例路由至 hold 治理子流程",
+      "input_context_ref": "hold_case_ref + final_gate_verdict_ref",
+      "done_definition": "必须产出 hold_resolution_ref + retest_recommendation，并满足“hold 案例在证据支撑下被解决或升级，且自动回测路由可判定”",
+      "handoff_note": "若 retest_recommendation=auto-retest 且预算未耗尽则回路到 p2，否则交接给 initiator"
     }
   ],
   "control_flow": [
@@ -136,17 +196,26 @@
     {
       "from": "p4",
       "to": "p5",
-      "on": "hold"
+      "on": "success",
+      "condition": "runtime_gate_state == hold"
     },
     {
       "from": "p4",
       "to": "end",
-      "on": "success"
+      "on": "success",
+      "condition": "runtime_gate_state != hold"
+    },
+    {
+      "from": "p5",
+      "to": "p2",
+      "on": "success",
+      "condition": "retest_recommendation == auto-retest && auto_retest_cycles_remaining > 0"
     },
     {
       "from": "p5",
       "to": "end",
-      "on": "success"
+      "on": "success",
+      "condition": "retest_recommendation == stop || auto_retest_cycles_remaining == 0"
     }
   ],
   "fail_policy": {

@@ -1,6 +1,6 @@
 # L3 — 自开发层详细设计
 
-> 版本: v0.3.0 | 最后更新: 2026-02-21
+> 版本: v0.5.0 | 最后更新: 2026-02-24
 
 ## 层级定位
 
@@ -28,3 +28,5 @@
 1. 不允许跳过测试。
 2. 元层修改必须走 7 步门禁。
 3. 发布必须经过 lifecycle-review。
+4. 新建/重构流程必须通过 `process-creator` 的 canonical 校验（`subprocess + inline_ap + spec_ref anchor`）。
+5. `P4` 主流程 manifest 必须包含 phase 协作语义字段与 `collaboration_policy`；`P5/P6` 多 Actor 协作场景也必须声明。

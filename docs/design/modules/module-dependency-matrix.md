@@ -1,12 +1,13 @@
 # 模块依赖矩阵
 
-> 版本: v0.7.0 | 权威顺序来源: `/Users/albus/MyProjects/ANC_v2/docs/architecture/system_overview.md` §7
+> 版本: v0.8.0 | 权威顺序来源: `/Users/albus/MyProjects/ANC_v2/docs/architecture/system_overview.md` §7
 
 ## 1. 使用说明
 
 1. 模块建设顺序以 `system_overview.md` 为权威。
 2. 本矩阵给出当前阶段的可执行依赖与并行策略，允许随实现进展迭代。
 3. 依赖表达采用类型化边，区分运行时依赖与治理/门禁依赖。
+4. 生命周期策略：本轮所有新增/调整资产仅收敛到 `review`，不推进 `active`。
 
 ## 2. 依赖类型图例
 
@@ -46,10 +47,10 @@ SSOT 基线顺序（保持与系统总览一致）：
 |---|---|---|---|
 | M1 Test | `llm-judge`, `test-designer`, `TEST` 模板, `M1-openjudge-adapter-spec`, `quality-gate-preparation-process`, `quality-gate-evaluation-process`, `hold-governance-process`, `sys.qa.test-compiler/sys.qa.evaluation-runner/sys.qa.verdict-normalizer/sys.qa.hold-triage/sys.qa.regression-runner/sys.qa.registry-validator/sys.qa.evidence-archiver`（active pilot） | lifecycle-review 流程资产化 + 运行级大样本回放证据 | M2/M3/M4/M5 |
 | M2 BPM | `development-process`, `governed-config-change`, `trigger-schedule-runtime`, `trigger-event-runtime`, `bpm-runtime-skills`, AP-026~AP-031, `trigger-runtime-supervisor`(P5 模式) | 运行级 dry-run 证据补齐 + 动态策略参数实证校准 | M3/M4/M5 |
-| M3 Self-Dev | `development-process` canonical 路径, `full-development/hotfix/refactor` 可执行流程, `self-development-skills` 设计包, `meta.arch.objective-writer/agent-creator/process-creator/template-validator`, `skill-creator` 注册化 | 运行级 dry-run 证据（内部主线 + 外部交付复用） | M4/M5/L5 |
+| M3 Self-Dev | `development-process` canonical 路径, `full-development/hotfix/refactor` 可执行流程, `objective-scope-baseline/hotfix-intake-normalization/hotfix-scope-spec-baseline/spec-authoring-contract/implementation-execution-core/release-packaging-governed/evolution-feedback-planning` 七个 P5 子流程, `self-development-skills` 设计包, `meta.arch.objective-writer/agent-creator/process-creator/template-validator/meta-skill-creator`（`skill-creator` 仅历史别名） | 运行级 dry-run 证据（内部主线 + 外部交付复用） | M4/M5/L5 |
 | M4 Lifecycle | 统一 5 态治理、registry contract、trigger policy 边界 | `lifecycle-review/registry-sync/escalation` 可执行流程, `trigger_registry` | M3/M5/L2 |
 | M5 Evolution | 演化闭环设计、外部反馈复用约束 | `evolution-loop/health-check/improvement-review` 可执行流程 | L3/L5 |
-| M6 Construction | `construction_plane.md`, `M6-construction-plane.md`, `construction-plane-governance`, `sys.arch.construction-audit`, `system.integration.openspec-sync`, `openspec-collaboration-protocol`, `openspec-collaboration-schema` | OpenSpec 双向同步样板 + 运行级 dry-run 证据 + 周期审查节奏定稿 | 全模块 |
+| M6 Construction | `construction_plane.md`, `M6-construction-plane.md`, `construction-plane-governance`, `sys.arch.construction-audit`, `system.integration.superpower-sync`, `superpower-collaboration-protocol`, `superpower-collaboration-schema` | Superpower 双向同步样板 + 运行级 dry-run 证据 + 周期审查节奏定稿 | 全模块 |
 
 ## 6. 阶段映射与进入条件
 
@@ -71,7 +72,7 @@ SSOT 基线顺序（保持与系统总览一致）：
 当前主要风险与缓解：
 
 1. 风险：`M3/M4` 并行导致边界漂移。  
-缓解：以 `M3 draft 先行、review/active 受 M4 门禁` 作为硬规则。
+缓解：以 `M3 draft 先行、本轮仅到 review（不进 active）` 作为硬规则。
 2. 风险：测试能力被各模块重复建设。  
 缓解：明确 `M1` 作为统一测试与门禁平台，其他模块复用。
 3. 风险：流程标准字段与 manifest 漂移。  

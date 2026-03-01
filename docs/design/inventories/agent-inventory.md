@@ -42,7 +42,7 @@ Session3 运行资产联动：
 2. `app/evolution/analyst` 负责 App/业务层演化分析，不承担系统级架构治理洞察。
 3. 所有“需后验运营分析才能形成参数结论”的议题（如 M1 测试时长估计、M2 动态策略校准）由 `system-analyst` 牵头进入 `runtime-policy-calibration` 治理流程，再同步 architect/admin/bpm 决策。
 4. `architect` 是 M6 模块 owner，负责 `sys.arch.construction-audit` 与 `system.integration.openspec-sync` 语义，以及 `construction-plane-governance` 流程治理约束；`bpm` 负责流程实例编排与关闭门禁执行。
-5. `system-analyst` 只提供分析输入与风险摘要，不承担 lifecycle owner 职责；生命周期迁移 owner 固定为 `hr`，最终高权限审批链为 `hr -> admin`。
+5. `system-analyst` 只提供分析输入与风险摘要，不承担 lifecycle owner 职责；生命周期迁移 owner 与执行 actor 固定为 `hr`，最终高权限审批链为 `hr -> admin`。
 
 ## 规则
 
@@ -68,7 +68,7 @@ Session3 运行资产联动：
 
 1. 新增 `system-analyst` 最小可运行资产并完成注册，生命周期状态为 `review`。
 2. `system-analyst` 文档已补齐 handoff 输入契约、digest/reject 输出契约、Fail-Closed 条件与最小权限边界。
-3. 回归用例 `TC-ANL-001~002` 已纳入 `tests/m2-bpm-runtime/`，证据写入 `docs/design/modules/evidence/bpm-runtime/w4_system_analyst_cases/`。
+3. 回归用例 `TC-ANL-001~002` 已纳入 `tests/m2-bpm-runtime/`，证据写入 `runtime_data/execution/evidence/bpm-runtime/w4_system_analyst_cases/`。
 
 ## W5 联动备注（M2 BPM Runtime Hardening）
 
@@ -78,9 +78,14 @@ Session3 运行资产联动：
 
 ## Thread-4 联动备注（M1 Quality Gate Runtime Closure）
 
-1. `qa` 生命周期 `draft -> review`（证据：`docs/design/modules/evidence/bpm-runtime/w3b_tc_qa_proc_report.json`，2/2 pass；`shared/registry/skill_registry.json` 中 `sys.qa.*` 为 active）。
-2. `bpm` 生命周期 `draft -> review`（证据：`docs/design/modules/evidence/bpm-runtime/w1_tc_ins_report.json`，5/5 pass；`docs/design/modules/evidence/bpm-runtime/w3_tc_tg_report.json`，7/7 pass）。
-3. `admin` 生命周期 `draft -> review`（证据：`docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_report.json`，3/3 pass；`docs/design/modules/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/authorization.json` 显式 `approved_by_role=admin`）。
-4. `architect` 生命周期 `draft -> review`（证据：`docs/design/modules/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/round-result.json` 为 passed，`.../decision_snapshot.md` owner=architect）。
-5. `hr` 生命周期 `draft -> review`（证据：`docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle/p4_lifecycle_transition.json`，actor=hr）。
+1. `qa` 生命周期 `draft -> review`（证据：`runtime_data/execution/evidence/bpm-runtime/w3b_tc_qa_proc_report.json`，2/2 pass；`shared/registry/skill_registry.json` 中 `sys.qa.*` 为 active）。
+2. `bpm` 生命周期 `draft -> review`（证据：`runtime_data/execution/evidence/bpm-runtime/w1_tc_ins_report.json`，5/5 pass；`runtime_data/execution/evidence/bpm-runtime/w3_tc_tg_report.json`，7/7 pass）。
+3. `admin` 生命周期 `draft -> review`（证据：`runtime_data/execution/evidence/bpm-runtime/w2_tc_gcc_report.json`，3/3 pass；`runtime_data/execution/evidence/bpm-runtime/w2_tc_gcc_cases/TC-GCC-001/evidence/authorization.json` 显式 `approved_by_role=admin`）。
+4. `architect` 生命周期 `draft -> review`（证据：`runtime_data/execution/evidence/construction-plane/R-20260221-M6-m6-construction-round-sync-15/round-result.json` 为 passed，`.../decision_snapshot.md` owner=architect）。
+5. `hr` 生命周期 `draft -> review`（证据：`runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/lifecycle/p4_lifecycle_transition.json`，actor=hr）。
 6. `system-analyst` 生命周期保持 `review`，仅作为 `runtime-policy-calibration` 分析输入节点，不迁移为 lifecycle owner（边界不变）。
+
+## W16 联动备注（生命周期执行权口径统一）
+
+1. `full-development`、`hotfix`、`refactor` 三流程的 `lifecycle-gate-sync(p6)` actor 已统一为 `hr`，不再使用 `admin` 作为生命周期迁移执行者。
+2. 生命周期迁移常规路径固定为 `hr` 执行，`admin` 仅保留高风险权限审批位，不作为常规迁移执行位。

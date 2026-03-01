@@ -9,8 +9,9 @@
 1. `docs/design/standards/agent-definition-standard.md`
 2. `docs/design/standards/skill-definition-standard.md`
 3. `docs/design/standards/process-definition-standard.md`
-4. `docs/design/standards/recursive-process-standard-p1-p6.md`
-5. `docs/design/standards/reference-implementation-skill-creator.md`
+4. `docs/design/standards/process-decomposition-methodology.md`
+5. `docs/design/standards/recursive-process-standard-p1-p6.md`
+6. `docs/design/standards/reference-implementation-skill-creator.md`
 
 ## 使用顺序
 

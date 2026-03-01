@@ -67,12 +67,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--report",
-        default="docs/design/modules/evidence/bpm-runtime/w5_tc_anl_report.json",
+        default="runtime_data/execution/evidence/bpm-runtime/w5_tc_anl_report.json",
         help="Repo-relative report output path",
     )
     parser.add_argument(
         "--evidence-root",
-        default="docs/design/modules/evidence/bpm-runtime/w5_system_analyst_prod_cases",
+        default="runtime_data/execution/evidence/bpm-runtime/w5_system_analyst_prod_cases",
         help="Repo-relative evidence root",
     )
     parser.add_argument(

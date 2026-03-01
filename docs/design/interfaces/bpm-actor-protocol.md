@@ -1,6 +1,6 @@
 # BPM ↔ Actor 通信协议
 
-> 版本: v0.4.0 | SSOT 上游: `docs/architecture/process_architecture.md`
+> 版本: v0.5.0 | SSOT 上游: `docs/architecture/process_architecture.md`
 
 ## 概述
 
@@ -16,8 +16,8 @@
   "instance_id": "string (required)",
   "phase_id": "string (required)",
   "actor": "string (agent_id, required)",
-  "target_type": "string (skill|subprocess, required)",
-  "target_id": "string (registry stable id, required)",
+  "target_type": "string (subprocess, required)",
+  "target_id": "string (process_id 或 inline_ap.ap_id, required)",
   "input_ref": "string (required)",
   "objective_ref": "string (required)",
   "output_contract": "string (contract_ref, required)",
@@ -43,11 +43,13 @@
 
 约束：
 
-1. `target_type=skill` 时，`target_id` 必须命中 `shared/registry/skill_registry.json#entries[].skill_id`。
-2. `target_type=subprocess` 时，`target_id` 必须命中 `shared/registry/process_registry.json#entries[].process_id`。
-3. 禁止使用旧字段：`skill`、`skill_or_process`、`skill_or_subprocess`。
-4. BPM 调 OpenClaw 时必须显式传 `--session-id <session_binding.session_id>`，禁止隐式主会话执行。
-5. 子实例 `session_binding.session_id` 必须与 `parent_session_id` 不同。
+1. `target_type` 仅允许 `subprocess`。
+2. `target_id` 命中 `process_registry.process_id` 时，按常规子流程处理。
+3. `target_id` 未命中 `process_registry` 时，必须在 phase 中声明 `inline_ap`，且 `inline_ap.skill_id` 命中 `skill_registry.skill_id`。
+4. `inline_ap.pierce_allowed=true` 时，要求 `inline_ap.actor == phase.actor`，并允许同 Actor 穿透执行。
+5. 禁止使用旧字段：`skill`、`skill_or_process`、`skill_or_subprocess`。
+6. BPM 调 OpenClaw 时必须显式传 `--session-id <session_binding.session_id>`，禁止隐式主会话执行。
+7. 子实例 `session_binding.session_id` 必须与 `parent_session_id` 不同。
 
 ## 任务完成 (Actor → BPM)
 

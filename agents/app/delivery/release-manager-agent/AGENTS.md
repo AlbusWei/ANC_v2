@@ -7,7 +7,7 @@
 3. `TOOLS.md`
 4. `IDENTITY.md`
 5. `MEMORY.md`
-6. `memory/YYYY-MM-DD.md` (today and previous day)
+6. `runtime_data/agent-memory/release-manager-agent/YYYY-MM-DD.md` (today and previous day)
 
 ## Upstream
 
@@ -26,3 +26,4 @@
 2. 发布成功必须输出 `release_delivery_out`，失败必须输出 `release_reject_out`。
 3. 禁止直接修改 lifecycle 状态，状态迁移由 `lifecycle-review` 完成。
 4. registry 校验失败时必须升级 `owner -> bpm -> admin`。
+5. 发布执行日志与临时证据默认写入 `runtime_data/`，不得默认写入版本控制目录。

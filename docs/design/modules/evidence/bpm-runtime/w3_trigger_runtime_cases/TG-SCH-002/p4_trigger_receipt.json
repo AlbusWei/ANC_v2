@@ -1,9 +1,0 @@
-{
-  "timestamp": "2026-02-22T15:50:45Z",
-  "trigger_id": "trg-f99600d7c745ad7ee658",
-  "instance_id": "run-development-process-20260222155044-b05c",
-  "decision": "hit",
-  "actor": "bpm",
-  "evidence_payload_ref": "docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-002/p4_evidence_payload.json",
-  "session_id": "sess-c824e8a852994b93"
-}

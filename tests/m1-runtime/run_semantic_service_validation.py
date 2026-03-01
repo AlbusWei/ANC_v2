@@ -260,7 +260,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run M1 semantic service validation")
     parser.add_argument(
         "--evidence-root",
-        default="docs/design/modules/evidence/quality-gate/runtime-validation-round-8-semantic-service",
+        default="runtime_data/execution/evidence/quality-gate/runtime-validation-round-8-semantic-service",
         help="Repo-relative evidence root",
     )
     parser.add_argument(

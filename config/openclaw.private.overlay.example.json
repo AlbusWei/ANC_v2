@@ -1,0 +1,20 @@
+{
+  "agents": {
+    "list": [
+      {
+        "id": "private-agent-example",
+        "workspace": "runtime_data/private-assets/agents/private-agent-example"
+      }
+    ]
+  },
+  "skills": {
+    "entries": {
+      "private-anc-processes": {
+        "source": "runtime_data/private-assets/processes"
+      },
+      "private-anc-skills": {
+        "source": "runtime_data/private-assets/skills"
+      }
+    }
+  }
+}

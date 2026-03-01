@@ -1,6 +1,0 @@
-{
-  "signal": "latency_spike",
-  "severity": "high",
-  "impact": "请求响应抖动",
-  "observed_at": "2026-02-22T16:34:54Z"
-}

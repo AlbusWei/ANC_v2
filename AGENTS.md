@@ -17,6 +17,8 @@ ANC v2 是一个可反身自开发、可自进化的 Agentic 系统。
 7. OpenClaw 接口：`docs/architecture/openclaw_interface.md`
 8. registry 契约：`docs/architecture/registry_contracts.md`
 9. 详细设计索引：`docs/design/README.md`
+10. 发布隔离策略：`docs/architecture/release_isolation_policy.md`
+11. 发布打包 SOP：`docs/architecture/release_packaging_sop.md`
 
 ## 3. 执行原则
 
@@ -46,6 +48,14 @@ ANC v2 是一个可反身自开发、可自进化的 Agentic 系统。
 3. 测试汇报要求：所有测试/运行结果必须给出自然语言结论（测试目标、覆盖范围、关键现象、风险判断、是否满足准入），不得只贴原始日志、门禁截图或机械证据。
 4. TDD 可用性要求：TDD 不得停留在形式化“门禁通过”，必须证明复合业务目标与设计目标的可用性，包括关键链路可运行、异常路径可恢复/可回退、Fail-Closed 生效、核心场景可复现。
 
+### 3.3 质胜于形原则（强制）
+
+1. 设计表达以“讲清楚职责与价值”为第一目标，禁止使用跨流程复用的空泛套话充当目标描述。
+2. `流程目标` 必须写清三件事：在系统主线中的位置、解决的问题、对上下游的交付价值。
+3. `协作编排原则` 必须为流程特异化规则，禁止粘贴通用模板（如“统一语义稳定交接”类口号）。
+4. 若文档满足格式但无法回答“为何存在、解决什么、失败代价是什么”，视为未达标并需返工。
+5. 契约、门禁、边界是实现约束，不得替代设计主旨；表达顺序必须先主旨再约束。
+
 ## 4. 协作约束
 
 1. 工作空间内所有文件路径必须使用相对路径（相对仓库根目录）表达，禁止使用绝对路径作为协作输入或交付输出。
@@ -67,17 +77,33 @@ ANC v2 是一个可反身自开发、可自进化的 Agentic 系统。
 > 目标：在主仓与各个 worktree 之间切换时，确保 OpenClaw 的 `agents` 与可加载 skill/process 源目录同步切换。
 
 1. 进入任意运行时开发/测试前，必须先执行：
-   - `python3 tools/openclaw/switch_workspace.py --repo-root <目标仓库或worktree根目录>`
+   - 开发模式：`python3 tools/openclaw/switch_workspace.py --repo-root <目标仓库或worktree根目录> --scope dev`
+   - 发布校验模式：`python3 tools/openclaw/switch_workspace.py --repo-root <目标仓库或worktree根目录> --scope public`
 2. 脚本职责（Fail-Closed）：
-   - 从 `config/openclaw.phase05.with-entry.fragment.json` 解析目标 `agents.list`。
+   - 根据 `--scope` 选择投影 profile（`public=phase05-base`、`dev=phase05-with-entry`）。
+   - 从所选 fragment 解析目标 `agents.list`。
    - 同步 `agents.defaults.workspace`、`agents.defaults.repoRoot`、`agents.list`、`tools.agentToAgent.allow`。
    - 将片段中的 `skills.entries.*.source` 投影为 `skills.load.extraDirs`（兼容 OpenClaw 2026.2 配置模型）。
+   - 可选合并私有资产 overlay：`--enable-private-assets --private-overlay runtime_data/private-assets/openclaw.overlay.json`。
 3. 切换后最小校验（必须通过）：
    - `openclaw config get agents.defaults.repoRoot --json`
    - `openclaw config get skills.load.extraDirs --json`
    - `openclaw skills info config-change-gatekeeper --json`（或本回合目标技能）
 4. 禁止直接把 `skills.entries.<key>.source` 写入 OpenClaw 运行配置（会触发 `invalid config`）。
 5. 若脚本或校验任一步失败，禁止进入运行时测试或宣告 Done。
+
+### 5.2 长任务活性检测与反硬超时基线（强制）
+
+> 目标：避免多 Agent/多会话长任务被“固定时长超时”误杀，导致证据中断与问题误判。
+
+1. 禁止将“固定时长到点”作为 `openclaw agent` 或流程分发线程的直接失败/杀进程条件。
+2. 必须先做活性探测再判定卡死，最小信号至少包含：
+   - 输出流增量（stdout/stderr）
+   - OpenClaw 会话活性（如 `openclaw sessions --json` 中会话更新时间推进）
+   - 阶段状态推进或心跳证据
+3. 仅当“连续无进展”且探活证据支持疑似卡死时，才允许终止；默认观察窗口不得低于 15 分钟（900 秒）。
+4. 发生终止必须落盘诊断证据（探活轮询结果、最后进展时间、终止原因），并进入 HOLD/triage，而非草率宣告完成。
+5. 随运行经验收敛阈值：在有足够历史样本前，优先放宽阈值以避免误伤长任务。
 
 ## 6. 当前阶段边界
 
@@ -123,3 +149,29 @@ ANC v2 是一个可反身自开发、可自进化的 Agentic 系统。
    - `rg -n "<asset-id>" docs/design shared/registry`
 5. Fail-Closed：
    - 任一联动项缺失（设计文档、inventory、registry、施工平面）即判定任务未完成，不得宣告 Done 或合入。
+
+## 9. 发布隔离与默认落盘策略（新增，强制）
+
+> 目标：确保 ANC v2 公开发布时仅包含通用资产，不夹带私有数据、测试噪声和非标准资产。
+
+1. 默认运行数据落盘目录（强制）：
+   - 流程执行证据、业务数据、Agent 工作记忆默认写入 `runtime_data/`。
+   - 禁止将运行产物默认写入 `docs/design/modules/evidence/`、`agents/*/memory/` 等版本控制目录。
+2. 白名单发布原则（强制）：
+   - `docs/design/modules/evidence/` 仅允许保留“已脱敏、可公开”的案例/模板。
+   - 未经过脱敏与审批的运行数据不得入库。
+3. 资产隔离原则（强制）：
+   - 标准发布资产仅允许位于 `agents/`、`skills/`、`processes/` 并进入 registry。
+   - 私有/实验/验证资产默认放在 `runtime_data/private-assets/{agents,skills,processes}/`，禁止进入 registry 与 OpenClaw 片段配置。
+4. 提交前最小校验（强制）：
+   - `git status --short`
+   - `python3 tools/release/generate_release_whitelist.py --strict`
+   - `python3 shared/registry/registry_contract_tool.py verify`
+   - `rg -n "runtime_data/private-assets" shared/registry config/openclaw.phase05*.fragment.json`
+   - `python3 tools/release/release_isolation_gate.py`
+   - 发布前追加：`python3 tools/release/release_isolation_gate.py --verify-openclaw`
+5. 标准打包命令（强制）：
+   - `python3 tools/release/build_release_bundle.py --verify-openclaw`
+   - 产物目录：`runtime_data/exports/release-bundles/<bundle-id>/`
+6. Fail-Closed：
+   - 若发现私有数据或非标准资产进入可发布路径，必须先隔离/回退，再继续开发或宣告 Done。

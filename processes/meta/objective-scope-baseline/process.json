@@ -1,0 +1,159 @@
+{
+  "process_id": "objective-scope-baseline",
+  "version": "0.1.0",
+  "process_level": "P5",
+  "parent_process_id": null,
+  "composed_processes": [],
+  "lineage_policy": {
+    "stack_depth_limit": 8,
+    "context_isolation": "strict",
+    "output_handoff_mode": "contract_only"
+  },
+  "objective_ref": "obj-m3-objective-scope-baseline",
+  "owner": "bpm",
+  "priority": "P1",
+  "input_contract": {
+    "format": "json",
+    "required": [
+      "objective_context_ref"
+    ]
+  },
+  "output_contract": {
+    "format": "json",
+    "required": [
+      "objective_ref",
+      "scope_baseline_ref"
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1",
+      "name": "objective-intake",
+      "actor": "architect",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:objective-scope-baseline:p1",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-001-objective-intake.md#ap-001-objective-intake",
+      "sipoc": {
+        "supplier": "initiator",
+        "input": "objective_context_ref",
+        "process": "extract objective and success criteria baseline",
+        "output": "objective_ref",
+        "client": "p2"
+      },
+      "acceptance_criteria": "objective has measurable scope and explicit constraints",
+      "inline_ap": {
+        "ap_id": "inline-ap:objective-scope-baseline:p1",
+        "skill_id": "meta.arch.objective-writer",
+        "actor": "architect",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "提炼目标与成功判据基线",
+      "input_context_ref": "objective_context_ref",
+      "done_definition": "必须产出 objective_ref，并满足“目标具备可衡量范围且约束明确”",
+      "handoff_note": "将 objective_ref 交接给 p2"
+    },
+    {
+      "phase_id": "p2",
+      "name": "scope-normalization",
+      "actor": "architect",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:objective-scope-baseline:p2",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-002-objective-scope-normalization.md#ap-002-objective-scope-normalization",
+      "sipoc": {
+        "supplier": "p1",
+        "input": "objective_ref",
+        "process": "normalize scope boundaries and non-goals",
+        "output": "scope_draft_ref",
+        "client": "p3"
+      },
+      "acceptance_criteria": "scope draft includes boundaries and excluded domains",
+      "inline_ap": {
+        "ap_id": "inline-ap:objective-scope-baseline:p2",
+        "skill_id": "system.ops.manual-task",
+        "actor": "architect",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "归一化范围边界与非目标",
+      "input_context_ref": "objective_ref",
+      "done_definition": "必须产出 scope_draft_ref，并满足“范围草案包含边界与排除域”",
+      "handoff_note": "将 scope_draft_ref 交接给 p3"
+    },
+    {
+      "phase_id": "p3",
+      "name": "scope-baseline-finalization",
+      "actor": "architect",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:objective-scope-baseline:p3",
+      "requires_spec": true,
+      "spec_ref": "docs/design/processes/atomic/AP-003-scope-baseline.md#ap-003-scope-baseline",
+      "sipoc": {
+        "supplier": "p2",
+        "input": "scope_draft_ref",
+        "process": "finalize governed scope baseline",
+        "output": "scope_baseline_ref",
+        "client": "initiator"
+      },
+      "acceptance_criteria": "scope baseline is traceable and conflict-free",
+      "inline_ap": {
+        "ap_id": "inline-ap:objective-scope-baseline:p3",
+        "skill_id": "system.ops.manual-task",
+        "actor": "architect",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "固化治理化范围基线",
+      "input_context_ref": "scope_draft_ref",
+      "done_definition": "必须产出 scope_baseline_ref，并满足“范围基线可追溯且无冲突”",
+      "handoff_note": "将 scope_baseline_ref 交接给 initiator"
+    }
+  ],
+  "control_flow": [
+    {
+      "from": "p1",
+      "to": "p2",
+      "on": "success"
+    },
+    {
+      "from": "p2",
+      "to": "p3",
+      "on": "success"
+    },
+    {
+      "from": "p3",
+      "to": "end",
+      "on": "success"
+    }
+  ],
+  "fail_policy": {
+    "mode": "fail_closed",
+    "retry": {
+      "max_attempts": 1
+    },
+    "escalation_chain": [
+      "actor",
+      "owner",
+      "bpm",
+      "admin",
+      "human"
+    ]
+  },
+  "evidence_policy": {
+    "required_fields": [
+      "timestamp",
+      "phase_id",
+      "actor",
+      "input_ref",
+      "output_ref",
+      "decision",
+      "reason",
+      "evidence_ref"
+    ]
+  }
+}

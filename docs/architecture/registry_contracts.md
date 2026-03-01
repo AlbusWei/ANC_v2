@@ -149,8 +149,10 @@ profile 定义：
 1. 全部路径字段使用 canonical 根相对路径，禁止绝对路径与 `..` 路径穿越。
 2. `verify` 除了 registry/schema/projection 一致性外，还会校验 `skills/**/SKILL.md` 的 Capability Contract。
 3. `verify` 强制调用 `check-protocol-consistency`，校验 BPM/Context/Process/Role 协议字段一致性。
-2. Capability Contract 规则：固定标题 `## Capability Contract (Machine-Readable)` + `yaml` fenced block。
-4. 对已注册 skill，`test_mount` 必须与 registry `tests` 字段一致。
+4. `check-protocol-consistency` 必须按 `process_registry.entries[].manifest_path` 全量扫描已注册流程 manifest（禁止仅校验固定白名单）。
+5. 对所有 `process_level=P4` 流程，`collaboration_policy` 必须包含最小字段：`mode`、`dispatch_runtime`、`session_reset`；缺失即 Fail-Closed。
+6. Capability Contract 规则：固定标题 `## Capability Contract (Machine-Readable)` + `yaml` fenced block。
+7. 对已注册 skill，`test_mount` 必须与 registry `tests` 字段一致。
 
 ```bash
 python3 shared/registry/registry_contract_tool.py validate

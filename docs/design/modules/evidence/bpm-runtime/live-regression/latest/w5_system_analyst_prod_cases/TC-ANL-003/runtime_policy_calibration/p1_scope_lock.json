@@ -1,8 +1,0 @@
-{
-  "timestamp": "2026-02-22T17:18:13Z",
-  "issue_ref": "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases/TC-ANL-003/issue.json",
-  "issue_id": "rpc-issue-001",
-  "scope": "m2-catchup-window-calibration",
-  "objective_ref": "docs/design/processes/runtime-policy-calibration-process.md#目标",
-  "locked": true
-}

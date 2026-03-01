@@ -233,7 +233,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--output",
-        default="docs/design/modules/evidence/bpm-runtime/latest_live_regression_result.json",
+        default="runtime_data/execution/evidence/bpm-runtime/latest_live_regression_result.json",
         help="Output JSON path for regression result.",
     )
     return parser.parse_args()
@@ -243,15 +243,15 @@ def main() -> int:
     args = parse_args()
 
     repo_root = Path(__file__).resolve().parents[2]
-    map_file = repo_root / "docs/design/modules/evidence/bpm-runtime/checkpoint_commit_map.jsonl"
-    git_range_file = repo_root / "docs/design/modules/evidence/bpm-runtime/git_range.txt"
+    map_file = repo_root / "runtime_data/execution/evidence/bpm-runtime/checkpoint_commit_map.jsonl"
+    git_range_file = repo_root / "runtime_data/execution/evidence/bpm-runtime/git_range.txt"
     case_manifest = repo_root / "tests/m2-bpm-runtime/live_regression_cases.md"
     online_case_doc = repo_root / "tests/m2-bpm-runtime/TC-ONLINE.md"
-    live_root_rel = Path("docs/design/modules/evidence/bpm-runtime/live-regression/latest")
+    live_root_rel = Path("runtime_data/execution/evidence/bpm-runtime/live-regression/latest")
     live_root = (repo_root / live_root_rel).resolve()
 
     required = [
-        repo_root / "docs/design/modules/evidence/bpm-runtime/m6_live_regression_plan.md",
+        repo_root / "runtime_data/execution/evidence/bpm-runtime/m6_live_regression_plan.md",
         map_file,
         git_range_file,
         case_manifest,

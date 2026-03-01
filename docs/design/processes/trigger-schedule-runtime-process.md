@@ -1,6 +1,6 @@
 # Trigger Schedule Runtime Process
 
-> 版本: v0.2.0 | 层级: P4 | 类型: 复合流程 | process_id: trigger-schedule-runtime
+> 版本: v0.3.0 | 层级: P4 | 类型: 复合流程 | process_id: trigger-schedule-runtime
 
 ## 目标
 
@@ -62,6 +62,12 @@
    - `sys.bpm.escalation-handler` -> `skills/system/escalation-handler/scripts/escalation_handler_runner.py`
 3. 回归入口：`tests/m2-bpm-runtime/run_tc_tg.py`（覆盖 `TG-SCH-001~004`）。
 
+## 协作策略（M3 对齐）
+
+1. 流程 manifest 启用 `collaboration_policy`：`mode=phase-isolated-session`。
+2. 分发运行时固定 `dispatch_runtime=openclaw-required`。
+3. 同 actor 跨 phase 采用 `session_reset=per-phase-reset`，避免会话上下文污染。
+
 ## 去重策略
 
 1. 主键：`source + event_id`
@@ -78,9 +84,9 @@
 
 ## 运行证据落盘（W3-A）
 
-1. 用例证据目录：`docs/design/modules/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-*`
-2. 汇总报告：`docs/design/modules/evidence/bpm-runtime/w3_tc_tg_report.json`
-3. 执行总结：`docs/design/modules/evidence/bpm-runtime/w3_execution_summary.md`
+1. 用例证据目录：`runtime_data/execution/evidence/bpm-runtime/w3_trigger_runtime_cases/TG-SCH-*`
+2. 汇总报告：`runtime_data/execution/evidence/bpm-runtime/w3_tc_tg_report.json`
+3. 执行总结：`runtime_data/execution/evidence/bpm-runtime/w3_execution_summary.md`
 
 ## 依赖流程
 
@@ -90,3 +96,18 @@
 4. `docs/design/processes/atomic/AP-029-trigger-evidence-recording.md`
 5. `docs/design/processes/atomic/AP-030-trigger-catchup-scheduling.md`
 6. `docs/design/processes/atomic/AP-031-trigger-escalation-handling.md`
+
+<!-- phase-semantics-v2:start -->
+## 阶段协作语义补充（v2）
+
+> 说明：本节用于说明每个 phase 在系统主线中的职责与协作价值，要求可直接回答“为什么由该 Actor 在该阶段执行该动作”。
+
+| phase_id | Actor | 阶段目的 | 输入语义 | 完成标准 | 交接语义 |
+|---|---|---|---|---|---|
+| `p1` | `bpm` | 归一化外部触发包。 | trigger payload | 产出 canonical_trigger_ref，并满足：标准触发包包含必需字段 | 将 canonical_trigger_ref 交接给 p2 |
+| `p2` | `bpm` | 按匹配规则与去重策略做准入判定。 | canonical_trigger_ref | 产出 match_result，并满足：去重决策明确为 allow 或 reject | 将 match_result 交接给 p3 |
+| `p3` | `bpm` | 匹配命中时创建流程运行实例。 | match_result | 产出 instance_id，并满足：命中触发具备 instance_id 与状态迁移记录 | 将 instance_id 交接给 p4 |
+| `p4` | `bpm` | 持久化触发回执与可追溯链路。 | instance_id | 产出 trigger_receipt_ref，并满足：触发与实例可双向追溯 | 将 trigger_receipt_ref 交接给 p5 |
+| `p5` | `bpm` | 评估动态补跑策略与漏跑处置。 | trigger_receipt_ref | 产出 catchup_decision，并满足：补跑决策具备确定性 | 将 catchup_decision 交接给 p6 |
+| `p6` | `bpm` | 升级未解决的运行时异常。 | catchup_decision | 产出 escalation_ref，并满足：升级链遵循 actor-owner-bpm-admin-human | 将 escalation_ref 交接给 initiator |
+<!-- phase-semantics-v2:end -->

@@ -81,15 +81,15 @@ def validate_event_shape(events: List[Dict[str, Any]]) -> List[str]:
             errors.append(f"event[{idx}] invalid event type: {event_name!r}")
             continue
 
-        require_fields(event, ["event", "round_id", "openspec_ref", "ts"], idx, errors)
+        require_fields(event, ["event", "round_id", "superpower_ref", "ts"], idx, errors)
 
         round_id = event.get("round_id")
         if not isinstance(round_id, str) or ROUND_ID_RE.match(round_id) is None:
             errors.append(f"event[{idx}] invalid round_id: {round_id!r}")
 
-        openspec_ref = event.get("openspec_ref")
-        if not isinstance(openspec_ref, str) or not openspec_ref.strip():
-            errors.append(f"event[{idx}] openspec_ref must be non-empty string")
+        superpower_ref = event.get("superpower_ref")
+        if not isinstance(superpower_ref, str) or not superpower_ref.strip():
+            errors.append(f"event[{idx}] superpower_ref must be non-empty string")
 
         if event_name == "round_open":
             require_fields(event, ["round_goal", "owner"], idx, errors)
@@ -204,9 +204,9 @@ def validate_sequence(
     if len(round_ids) != 1:
         errors.append(f"single round_id required, found: {sorted(round_ids)}")
 
-    openspec_refs = {event.get("openspec_ref") for event in events}
-    if len(openspec_refs) != 1:
-        errors.append(f"single openspec_ref required, found: {sorted(openspec_refs)}")
+    superpower_refs = {event.get("superpower_ref") for event in events}
+    if len(superpower_refs) != 1:
+        errors.append(f"single superpower_ref required, found: {sorted(superpower_refs)}")
 
     checkpoint_events = [e for e in events if e.get("event") == "checkpoint_synced"]
     close_event = next((e for e in events if e.get("event") == "round_close"), None)
@@ -238,7 +238,7 @@ def validate_sequence(
 
     summary = {
         "round_id": next(iter(round_ids)) if round_ids else None,
-        "openspec_ref": next(iter(openspec_refs)) if openspec_refs else None,
+        "superpower_ref": next(iter(superpower_refs)) if superpower_refs else None,
         "event_count": len(events),
         "checkpoint_events": len(checkpoint_events),
         "git_commit_count": git_commit_count,
@@ -256,7 +256,7 @@ def cmd_open(args: argparse.Namespace, root: Path) -> int:
     event = {
         "event": "round_open",
         "round_id": args.round_id,
-        "openspec_ref": args.openspec_ref,
+        "superpower_ref": args.superpower_ref,
         "round_goal": args.round_goal,
         "owner": args.owner,
         "ts": args.ts or now_iso(),
@@ -271,7 +271,7 @@ def cmd_checkpoint(args: argparse.Namespace, root: Path) -> int:
     event = {
         "event": "checkpoint_synced",
         "round_id": args.round_id,
-        "openspec_ref": args.openspec_ref,
+        "superpower_ref": args.superpower_ref,
         "entire_checkpoint_id": args.checkpoint_id,
         "commit_sha": args.commit_sha,
         "changed_files": changed_files,
@@ -287,7 +287,7 @@ def cmd_close(args: argparse.Namespace, root: Path) -> int:
     event = {
         "event": "round_close",
         "round_id": args.round_id,
-        "openspec_ref": args.openspec_ref,
+        "superpower_ref": args.superpower_ref,
         "decision_snapshot_ref": args.decision_snapshot_ref,
         "final_sync_status": args.final_sync_status,
         "checkpoint_count": args.checkpoint_count,
@@ -323,7 +323,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_open = sub.add_parser("open", help="append round_open event")
     p_open.add_argument("--log", required=True)
     p_open.add_argument("--round-id", required=True)
-    p_open.add_argument("--openspec-ref", required=True)
+    p_open.add_argument("--superpower-ref", required=True)
     p_open.add_argument("--round-goal", required=True)
     p_open.add_argument("--owner", required=True)
     p_open.add_argument("--ts", default=None)
@@ -332,7 +332,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_checkpoint = sub.add_parser("checkpoint", help="append checkpoint_synced event")
     p_checkpoint.add_argument("--log", required=True)
     p_checkpoint.add_argument("--round-id", required=True)
-    p_checkpoint.add_argument("--openspec-ref", required=True)
+    p_checkpoint.add_argument("--superpower-ref", required=True)
     p_checkpoint.add_argument("--checkpoint-id", required=True)
     p_checkpoint.add_argument("--commit-sha", required=True)
     p_checkpoint.add_argument("--changed-file", action="append", default=[])
@@ -343,7 +343,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_close = sub.add_parser("close", help="append round_close event")
     p_close.add_argument("--log", required=True)
     p_close.add_argument("--round-id", required=True)
-    p_close.add_argument("--openspec-ref", required=True)
+    p_close.add_argument("--superpower-ref", required=True)
     p_close.add_argument("--decision-snapshot-ref", required=True)
     p_close.add_argument("--final-sync-status", required=True, choices=sorted(SYNC_STATUS))
     p_close.add_argument("--checkpoint-count", required=True, type=int)

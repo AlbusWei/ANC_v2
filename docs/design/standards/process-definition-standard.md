@@ -1,10 +1,17 @@
 # Process Definition Standard
 
-> 版本: v0.4.0 | 适用范围: 原子/复合/业务流程
+> 版本: v0.7.0 | 适用范围: 原子/复合/业务流程
 
 ## 1. 目标
 
-统一流程定义，使 BPM 可调度、可回放、可恢复。
+统一流程定义，使 BPM 可调度、可回放、可恢复，并确保流程拆分可解释、可复用、可审计。
+
+## 1.1 表达质量约束（质胜于形）
+
+1. 流程文档中的 `流程目标` 必须回答：系统定位、问题定义、上下游价值。
+2. 禁止使用跨流程复用的空泛模板语句替代设计主旨。
+3. `协作编排原则` 必须体现流程特异化治理逻辑，而非通用口号。
+4. 若文档仅满足字段完整但无法指导真实执行，评审结论应为不通过并返工。
 
 ## 2. 最小必填字段（process.json）
 
@@ -17,7 +24,13 @@
 7. `evidence_policy`
 8. `lineage_policy`
 
-## 2.1 P-Level 语义约束（新增）
+协作策略字段约束：
+
+1. `P4` 流程必须声明 `collaboration_policy`。
+2. `P5/P6` 在多 Actor 强协作场景必须声明 `collaboration_policy`。
+3. `collaboration_policy` 最小字段：`mode`、`dispatch_runtime`、`session_reset`。
+
+## 2.1 P-Level 语义约束
 
 1. `process_level` 是流程分类学标签（P1~P6），用于设计组织与治理检索。
 2. `process_level` 不直接决定运行时是否可执行；运行行为由 `process.json` 契约与 BPM 调度规则决定。
@@ -26,9 +39,9 @@
 
 ## 3. 递归字段
 
-1. `parent_process_id`：父流程 ID（无父级可空）
-2. `composed_processes[]`：被组合的子流程 ID 列表
-3. `lineage_policy`：父子实例隔离与回填规则
+1. `parent_process_id`：父流程 ID（无父级可空）。
+2. `composed_processes[]`：被组合的子流程 ID 列表。
+3. `lineage_policy`：父子实例隔离与回填规则。
 
 ## 4. 原子流程约束
 
@@ -42,23 +55,65 @@
 2. 必须有终止条件，禁止无界自循环。
 3. 失败处理必须声明重试次数和升级路径。
 
-## 6. 连续性约束（新增）
+## 6. 生命周期连续性约束
 
 1. 单个复合流程不得跨越非连续生命周期段。
 2. 出现断点（例如 `test-design` 与 `post-implementation-evaluation`）必须拆分为多个复合流程。
 3. 跨断点衔接必须由上级流程显式编排，不允许在同一顺序链硬拼。
 
-## 7. Phase 闭合约束（新增）
+## 7. Phase 闭合约束
 
 1. 每个 phase 必须映射到已定义原子流程（P6）或已定义复合子流程（P4/P5）。
 2. phase 名称、子流程 ID、I/O 契约必须一一对应。
 3. 未定义映射的 phase 视为流程不可执行，默认 Fail-Closed。
 
-## 8. 验收条目
+## 7.1 临时 AP 语法糖（inline_ap）
 
-- [ ] process.json 字段完整
+1. 所有 phase 统一使用 `target_type: subprocess`，禁止直接使用 `target_type: skill`。
+2. 当 `target_id` 命中 `process_registry.process_id` 时，表示常规子流程映射。
+3. 当 `target_id` 不在 `process_registry` 时，必须通过 `inline_ap` 声明临时 AP：
+   1. `inline_ap.ap_id`（必须等于 `target_id`）
+   2. `inline_ap.skill_id`（必须命中 `skill_registry.skill_id`）
+   3. `inline_ap.actor`
+   4. `inline_ap.pierce_allowed`（布尔）
+4. 当 `inline_ap.pierce_allowed=true` 且 `inline_ap.actor == phase.actor` 时，允许同 Actor 穿透执行（不新增递归栈帧）。
+5. 不满足穿透条件时，BPM 必须按标准子实例路径执行。
+
+## 8. 流程拆分方法论接入（新增）
+
+1. 流程设计与评审必须遵循 `docs/design/standards/process-decomposition-methodology.md`。
+2. 拆分方案必须同时满足以下检查项：
+   1. `MECE`：职责互斥且覆盖完整。
+   2. `金字塔`：结论先行、分组递进、证据回填。
+   3. `单一职责`：每个子流程仅对一类治理结果负责。
+   4. `DIP`：父流程依赖子流程契约，不依赖具体脚本细节。
+   5. `LoD`：仅与直接依赖交互，不跨层泄漏调用。
+   6. `组合复用`：通过 P5 组合复用，不复制半重叠 phase 链。
+   7. 生命周期连续性约束满足。
+   8. phase 闭合约束满足。
+
+## 9. AP 合并与组合解耦策略（新增）
+
+1. 采用“避免重叠优先”策略：优先保持 AP 语义边界稳定，不以合并为目标。
+2. 若合并导致职责重叠，则不合并 AP 语义，而在 P5 组合层进行解耦编排。
+3. AP 合并后若出现输入/输出契约冲突，必须回退到组合解耦方案。
+4. 禁止把 `ap-*-bundle` 作为目标态流程单元；bundle 仅允许在迁移窗口中用于兼容描述。
+
+## 10. Fail-Closed 判据（新增）
+
+1. 存在一对多或多对多责任重叠且未给出解释与解耦策略。
+2. phase 与已定义 P5/P6 映射不闭合，或 I/O 契约不闭合。
+3. 父流程绕过直接依赖，出现跨层依赖泄漏。
+4. 设计仍将 bundle 作为目标态流程单元。
+
+## 11. 验收条目
+
+- [ ] `process.json` 字段完整
 - [ ] 流程可映射到 P1-P6
 - [ ] 证据链字段完整
 - [ ] 失败策略可执行
-- [ ] 连续性约束满足
+- [ ] 生命周期连续性约束满足
 - [ ] phase 闭合约束满足
+- [ ] 协作策略约束满足（P4 强制；P5/P6 多 Actor 条件强制）
+- [ ] 方法论检查项（MECE/金字塔/SRP/DIP/LoD/组合复用）满足
+- [ ] bundle 非目标态约束满足

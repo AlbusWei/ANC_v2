@@ -53,9 +53,9 @@
 统一质量门禁技能设计见：
 
 - `docs/design/skills/quality-gate-skills.md`
-- `docs/design/modules/evidence/quality-gate/runtime-validation-round-2.md`
-- `docs/design/modules/evidence/quality-gate/runtime-validation-round-3.md`
-- `docs/design/modules/evidence/quality-gate/runtime-validation-round-4.md`
+- `runtime_data/execution/evidence/quality-gate/runtime-validation-round-2.md`
+- `runtime_data/execution/evidence/quality-gate/runtime-validation-round-3.md`
+- `runtime_data/execution/evidence/quality-gate/runtime-validation-round-4.md`
 
 ## Construction Plane 技能包
 

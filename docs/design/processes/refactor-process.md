@@ -1,6 +1,6 @@
 # Refactor Process
 
-> 版本: v0.2.0 | 层级: P4 | 类型: 复合流程 | process_id: refactor | process_type: dev.refactor
+> 版本: v0.3.0 | 层级: P4 | 类型: 复合流程 | process_id: refactor | process_type: dev.refactor
 
 ## 目标
 
@@ -8,77 +8,58 @@
 
 ## 连续性边界
 
-1. refactor 默认不触发 O7 Release 义务，除非产出包含版本化发布包。
-2. refactor 必须执行完整测试准备与回归验证，不得仅靠主观判断放行。
+1. refactor 默认不触发 Release 义务，除非产出包含版本化发布包。
+2. 必须执行完整测试准备与回归验证，不得仅靠主观判断放行。
 3. 生命周期治理与 registry 同步必须在验证通过后执行。
 
 ## 阶段定义
 
-1. `refactor-objective-and-scope`（AP-001/002/003）
-2. `refactor-spec-authoring`（AP-004）
-3. `refactor-test-preparation`（子流程 `quality-gate-preparation`，内部覆盖 AP-005/018/019）
-4. `refactor-implementation`（AP-006）
-5. `refactor-gate-evaluation`（子流程 `quality-gate-evaluation`，内部覆盖 AP-007/009/020）
-6. `lifecycle-gate-sync`（AP-010/011）
+1. `refactor-objective-and-scope`（子流程 `objective-scope-baseline`）
+2. `refactor-spec-authoring`（子流程 `spec-authoring-contract`）
+3. `refactor-test-preparation`（子流程 `quality-gate-preparation`）
+4. `refactor-implementation`（子流程 `implementation-execution-core`）
+5. `refactor-gate-evaluation`（子流程 `quality-gate-evaluation`）
+6. `lifecycle-gate-sync`（子流程 `lifecycle-review`）
 
 ## 阶段到流程映射
 
 | 阶段 | 流程映射 | 输出 |
 |---|---|---|
-| refactor-objective-and-scope | AP-001, AP-002, AP-003 | refactor_objective_ref + scope_baseline_ref |
-| refactor-spec-authoring | AP-004 | refactor_spec_ref |
-| refactor-test-preparation | 子流程 quality-gate-preparation（内部：AP-005, AP-018, AP-019） | refactor_preparation_bundle_ref |
-| refactor-implementation | AP-006 | refactor_implementation_ref |
-| refactor-gate-evaluation | 子流程 quality-gate-evaluation（内部：AP-007, AP-009, AP-020） | refactor_gate_decision |
-| lifecycle-gate-sync | AP-010, AP-011 | lifecycle_transition_ref + registry_sync_ref |
+| refactor-objective-and-scope | `objective-scope-baseline` | `objective_ref` + `scope_baseline_ref` |
+| refactor-spec-authoring | `spec-authoring-contract` | `spec_ref` |
+| refactor-test-preparation | `quality-gate-preparation` | `test_plan_ref` + `refactor_preparation_bundle_ref` |
+| refactor-implementation | `implementation-execution-core` | `implementation_ref` + `candidate_artifacts_ref` |
+| refactor-gate-evaluation | `quality-gate-evaluation` | `final_gate_verdict_ref` |
+| lifecycle-gate-sync | `lifecycle-review` | `lifecycle_transition_ref` + `registry_sync_ref` |
 
-## 治理绑定实施蓝图（Session2 设计闭合）
+## phase 目标态映射
 
-### process_type 固定值
+| phase_id | 阶段 | target_type | target_id |
+|---|---|---|---|
+| p1 | refactor-objective-and-scope | subprocess | objective-scope-baseline |
+| p2 | refactor-spec-authoring | subprocess | spec-authoring-contract |
+| p3 | refactor-test-preparation | subprocess | quality-gate-preparation |
+| p4 | refactor-implementation | subprocess | implementation-execution-core |
+| p5 | refactor-gate-evaluation | subprocess | quality-gate-evaluation |
+| p6 | lifecycle-gate-sync | subprocess | lifecycle-review |
 
-1. `process_type = dev.refactor`
+## I/O 闭合策略
 
-### governance_bundle 固定引用
-
-1. `syntax_ref`: `docs/design/processes/development-loop-core-standard.md`
-2. `obligation_ref`: `docs/design/processes/development-loop-core-standard.md`
-3. `risk_policy_ref`: `docs/design/processes/governance-processes.md`
-4. `checklist_ref`: `docs/design/modules/M3-self-development.md`
-
-说明：
-
-1. Session2 完成文档闭合，Session3 将治理字段写入 `processes/meta/refactor/process.json`。
-2. 任何治理引用缺失都视为流程不可执行，默认 Fail-Closed。
-
-## phase 目标态映射（用于 Session3 manifest 改造）
-
-| phase_id | 阶段 | 目标 target_type | 目标 target_id | AP/子流程映射 |
-|---|---|---|---|---|
-| p1 | refactor-objective-and-scope | atomic | AP-001/AP-002/AP-003 包装执行单元 | AP-001, AP-002, AP-003 |
-| p2 | refactor-spec-authoring | atomic | AP-004 包装执行单元 | AP-004 |
-| p3 | refactor-test-preparation | subprocess | quality-gate-preparation | AP-005, AP-018, AP-019 |
-| p4 | refactor-implementation | atomic | AP-006 包装执行单元 | AP-006 |
-| p5 | refactor-gate-evaluation | subprocess | quality-gate-evaluation | AP-007, AP-009, AP-020 |
-| p6 | lifecycle-gate-sync | subprocess | lifecycle-review | AP-010, AP-011 |
-
-约束：
-
-1. refactor 阶段必须维持“目标不变、结构可回退”语义，不允许直接改写生命周期策略。
-2. phase 必须通过 AP/子流程闭合，禁止出现 `target_type=skill`。
+1. `test_plan_ref`：在 `p3 -> p4` 链路中显式闭合。
+2. `candidate_artifacts_ref`：在 `p4` 明确由 `implementation_ref` 映射生成。
+3. `lifecycle_transition_ref/registry_sync_ref`：由 `p6` 成对产出并作为收口证据。
 
 ## 输入契约
 
-1. `objective_ref`
-2. `scope_baseline_ref`
-3. `tech_debt_ref`
-4. `target_asset_ref`
+1. `objective_context_ref`
+2. `tech_debt_ref`
+3. `target_asset_ref`
 
 ## 输出契约
 
-1. `refactor_delivery_bundle_ref`
-2. `final_gate_verdict_ref`
-3. `lifecycle_transition_ref`
-4. `registry_sync_ref`
+1. `final_gate_verdict_ref`
+2. `lifecycle_transition_ref`
+3. `registry_sync_ref`
 
 ## Fail-Closed 规则
 
@@ -87,7 +68,24 @@
 3. registry 校验失败时拒绝关闭 refactor 任务。
 4. 关键证据缺失时直接 Fail-Closed。
 
-## 依赖流程
+## 协作骨架 v1（运行级）
 
-1. `docs/design/processes/quality-gate-preparation-process.md`
-2. `docs/design/processes/quality-gate-evaluation-process.md`
+1. 分发策略：每个 phase 由 BPM 通过 `process-instance-manager` 执行真实 `openclaw` 分发。
+2. 会话策略：启用 `reset-openclaw-session`，同一 Actor 跨 phase 强制新会话，避免重构讨论被旧上下文污染。
+3. 交接策略：每个 phase 输出 `dispatch_context` 与 `phase_output` 引用，下一阶段基于引用继续协作。
+4. 运行边界：本轮优先验证“跨角色协作链条可运行”，深度子流程执行在后续回合逐步接线。
+
+<!-- phase-semantics-v2:start -->
+## 阶段协作语义补充（v2）
+
+> 说明：本节用于说明每个 phase 在系统主线中的职责与协作价值，要求可直接回答“为什么由该 Actor 在该阶段执行该动作”。
+
+| phase_id | Actor | 阶段目的 | 输入语义 | 完成标准 | 交接语义 |
+|---|---|---|---|---|---|
+| `p1` | `architect` | 明确重构目标与范围基线。 | objective_context_ref + tech_debt_ref | 产出 objective_ref + scope_baseline_ref，并满足：目标与非目标明确 | 将 objective_ref + scope_baseline_ref 交接给 p2 |
+| `p2` | `architect` | 编写受架构约束的重构规格。 | objective_ref + scope_baseline_ref | 产出 spec_ref，并满足：规格文档明确不变量边界与回滚方案 | 将 spec_ref 交接给 p3 |
+| `p3` | `qa` | 准备以回归验证为核心的测试。 | spec_ref | 产出 test_plan_ref + preparation_bundle_ref，并满足：test_plan_ref 明确关联 refactor spec | 将 test_plan_ref + preparation_bundle_ref 交接给 p4 |
+| `p4` | `kernel-dev` | 执行结构性重构改动。 | spec_ref + test_plan_ref | 产出 implementation_ref + candidate_artifacts_ref，并满足：实现与规格及约束保持关联 | 将 implementation_ref + candidate_artifacts_ref 交接给 p5 |
+| `p5` | `qa` | 执行目标与回归门禁检查。 | candidate_artifacts_ref | 产出 final_gate_verdict_ref，并满足：回归结果明确且证据完整 | 将 final_gate_verdict_ref 交接给 p6 |
+| `p6` | `hr` | 校验生命周期与 registry 同步包。 | final_gate_verdict_ref | 产出 lifecycle_transition_ref + registry_sync_ref，并满足：registry 同步载荷与生命周期证据完整 | 将 lifecycle_transition_ref + registry_sync_ref 交接给 initiator |
+<!-- phase-semantics-v2:end -->

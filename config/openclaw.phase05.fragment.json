@@ -33,6 +33,9 @@
   },
   "skills": {
     "entries": {
+      "anc-v2-business-processes": {
+        "source": "processes/business"
+      },
       "anc-v2-control-processes": {
         "source": "processes/control"
       },

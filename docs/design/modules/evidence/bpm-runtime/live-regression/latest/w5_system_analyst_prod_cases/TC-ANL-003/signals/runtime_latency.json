@@ -1,5 +1,0 @@
-{
-  "signal": "catchup_delay",
-  "severity": "high",
-  "impact": "高风险漏跑窗口超时"
-}

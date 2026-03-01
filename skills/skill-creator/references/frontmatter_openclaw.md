@@ -1,4 +1,4 @@
-# Frontmatter Compatibility Notes
+# Frontmatter 兼容说明（meta-skill-creator）
 
 ## 最小必填字段
 
@@ -9,17 +9,16 @@
 
 ## 建议字段
 
-- `metadata`（单行 JSON）
-- `allowed-tools`
-- `version`
+1. `allowed-tools`
+2. `version`
+
+## 运行名约束
+
+1. 仓库内运行名固定为 `meta-skill-creator`。
+2. `skill-creator` 为历史别名，不用于运行调用。
 
 ## 常见错误
 
-- frontmatter 缺失 `---` 结束分隔。
-- `name` 使用空格而非短横线。
-- `metadata` 不是合法 JSON。
-
-## 兼容建议
-
-- 使用稳定、可比较的版本字符串。
-- 不在 frontmatter 写多行复杂对象，复杂内容下沉到正文或 references。
+1. frontmatter 缺失结尾 `---`。
+2. `name` 非 kebab-case。
+3. `compatibility` 字段缺失或格式错误。

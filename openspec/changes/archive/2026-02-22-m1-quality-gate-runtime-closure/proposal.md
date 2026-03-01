@@ -39,7 +39,7 @@ M1 质量门禁运行收口需要一个线程化、可审计、可对账的执�
   - `openspec/changes/m1-quality-gate-runtime-closure/design.md`
   - `openspec/changes/m1-quality-gate-runtime-closure/tasks.md`
 - Affected M6 evidence assets:
-  - `docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/*`
+  - `runtime_data/execution/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/*`
 - Explicitly not included in Thread-0:
   - 不实施 Thread-1~5 的功能改造。
   - 不重复执行已由 M2 完成的注册、review 推进与 `verify-m2` 基础能力建设。

@@ -1,7 +1,0 @@
-{
-  "artifacts": [
-    "dist/release-v1.tar.gz",
-    "docs/changelog.md"
-  ],
-  "rollback_bundle_ref": "docs/design/modules/evidence/self-development/runtime-validation-round-session3/fixtures/rollback_bundle.json"
-}

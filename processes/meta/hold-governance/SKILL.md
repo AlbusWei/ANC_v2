@@ -9,7 +9,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
-version: "0.1.0"
+version: "0.3.0"
 ---
 
 # hold-governance
@@ -27,15 +27,17 @@ version: "0.1.0"
 ## Input Contract
 
 - Format: json
-- Required fields: hold_case_ref, runtime_log_ref, execution_state_ref, triage_policy_ref, runtime_health_policy_ref
+- Required fields: hold_case_ref, runtime_log_ref, execution_state_ref, triage_policy_ref, runtime_health_policy_ref, liveness_policy_ref, no_progress_window_ref, termination_rule_ref
 
 ## Output Contract
 
 - Format: json
-- Required fields: triage_report_ref, health_maintenance_ref, hold_resolution_ref
+- Required fields: triage_action, triage_report_ref, health_maintenance_ref, hold_resolution_ref, retest_recommendation, external_gate_decision
 
 ## Runtime Rules
 
 1. triage 决策只允许 `continue|retry|debug|fail`。
 2. 禁止固定超时直接判 fail。
 3. 升级链固定 `qa -> bpm -> admin`。
+4. 无进展窗口阈值必须 `>=900s`。
+5. hold 治理未完成前，对外门禁结论固定为 `fail`。

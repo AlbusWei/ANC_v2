@@ -1,3 +1,0 @@
-{
-  "allowed_actions": ["continue", "retry", "debug", "fail"]
-}

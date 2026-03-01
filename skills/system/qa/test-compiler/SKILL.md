@@ -95,7 +95,7 @@ python3 skills/system/qa/test-compiler/scripts/compile_test_doc.py \
   --objective-ref obj-m1-unified-quality-gate \
   --spec-ref docs/design/modules/M1-openjudge-adapter-spec.md \
   --profile-set quality-gate.baseline@1.0.0 \
-  --output-dir docs/design/modules/evidence/quality-gate/smoke/test-compiler
+  --output-dir runtime_data/execution/evidence/quality-gate/smoke/test-compiler
 ```
 
 ## Fail-Closed Rules

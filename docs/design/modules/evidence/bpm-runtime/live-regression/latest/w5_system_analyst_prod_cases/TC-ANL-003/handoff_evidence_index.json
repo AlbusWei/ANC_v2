@@ -1,6 +1,0 @@
-{
-  "refs": [
-    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases/TC-ANL-003/signals/runtime_latency.json",
-    "docs/design/modules/evidence/bpm-runtime/live-regression/latest/w5_system_analyst_prod_cases/TC-ANL-003/signals/runtime_error.json"
-  ]
-}

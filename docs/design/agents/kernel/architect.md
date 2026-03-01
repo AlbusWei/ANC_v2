@@ -1,6 +1,6 @@
 # Architect Agent 详细设计
 
-> 版本: v0.5.0 | agent_id: architect | 层级: kernel | 权限: architecture-governance | 生命周期: review（M6 运行审查证据已落盘，未推进 active）
+> 版本: v0.6.0 | agent_id: architect | 层级: kernel | 权限: architecture-governance | 生命周期: review（本轮仅收敛到 review，不推进 active）
 
 ## 1. 角色定位与权限
 
@@ -51,11 +51,11 @@ Architect 负责定义与维护目标树，不负责直接执行实现。
 
 | Skill | 用途 | 状态 |
 |---|---|---|
-| spec-writer | 产出架构/方案规格（采用 Hybrid OpenSpec 原则） | draft |
-| objective-writer | 维护分层 Objective 与成功标准 | draft |
-| agent-creator | 生成 Agent 资产定义与 registry patch 计划 | draft |
-| process-creator | 生成 Process 资产与 phase 闭合契约 | draft |
-| template-validator | 校验模板与协议的架构一致性 | draft |
+| spec-writer | 产出架构/方案规格（采用 Hybrid OpenSpec 原则） | review |
+| objective-writer | 维护分层 Objective 与成功标准 | review |
+| agent-creator | 生成 Agent 资产定义与 registry patch 计划 | review |
+| process-creator | 生成 Process 资产与 phase 闭合契约 | review |
+| template-validator | 校验模板与协议的架构一致性 | review |
 | impact-analyzer | 评估架构变更影响面与回滚需求 | 规划 |
 
 ## 5. 参与 Process 清单

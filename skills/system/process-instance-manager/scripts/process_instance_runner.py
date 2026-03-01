@@ -12,9 +12,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
+import selectors
 import subprocess
 import sys
+import time
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
@@ -22,7 +25,9 @@ from typing import Any, Dict, List, Optional, Tuple
 
 
 REPO_REL_RE = re.compile(r"^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+")
+REPO_REL_ANCHOR_RE = re.compile(r"^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+#[^#]+$")
 ISO_Z_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
+MIN_STALL_THRESHOLD_SECONDS = 15 * 60
 
 
 class RunnerError(RuntimeError):
@@ -68,6 +73,10 @@ def ensure_repo_rel(path: str, field: str) -> str:
     return path
 
 
+def is_repo_rel_anchor(value: Any) -> bool:
+    return isinstance(value, str) and REPO_REL_ANCHOR_RE.match(value) is not None
+
+
 def resolve_instance_root(root: Path, raw: Optional[str]) -> Path:
     if not raw:
         return root / "agents/control/BPM/memory/process_instances"
@@ -99,7 +108,11 @@ def normalize_phase_status(raw: Any) -> str:
         "running": "running",
         "completed": "completed",
         "failed": "failed",
+        "hold": "hold",
+        "escalated": "escalate",
+        "escalate": "escalate",
         "skipped": "skipped",
+        "skip": "skipped",
         "complete": "completed",
         "success": "completed",
         "pass": "completed",
@@ -129,6 +142,18 @@ def load_process_registry(root: Path) -> Dict[str, Dict[str, Any]]:
     return index
 
 
+def load_skill_registry_ids(root: Path) -> set[str]:
+    payload = load_json(root / "shared/registry/skill_registry.json")
+    entries = payload.get("entries", [])
+    if not isinstance(entries, list):
+        raise RunnerError("skill_registry.entries must be array")
+    skill_ids: set[str] = set()
+    for entry in entries:
+        if isinstance(entry, dict) and isinstance(entry.get("skill_id"), str):
+            skill_ids.add(entry["skill_id"])
+    return skill_ids
+
+
 def load_process_manifest(root: Path, process_id: str) -> Dict[str, Any]:
     registry = load_process_registry(root)
     entry = registry.get(process_id)
@@ -140,11 +165,21 @@ def load_process_manifest(root: Path, process_id: str) -> Dict[str, Any]:
         raise RunnerError(f"invalid manifest_path for process {process_id!r}: {manifest_rel!r}")
 
     manifest = load_json(root / manifest_rel)
-    validate_manifest(manifest)
+    manifest["__manifest_path"] = manifest_rel
+    validate_manifest(
+        manifest,
+        process_ids=set(registry.keys()),
+        skill_ids=load_skill_registry_ids(root),
+    )
     return manifest
 
 
-def validate_manifest(manifest: Dict[str, Any]) -> None:
+def validate_manifest(
+    manifest: Dict[str, Any],
+    *,
+    process_ids: set[str],
+    skill_ids: set[str],
+) -> None:
     required = ["process_id", "version", "process_level", "phases", "control_flow", "lineage_policy"]
     for key in required:
         if key not in manifest:
@@ -158,7 +193,7 @@ def validate_manifest(manifest: Dict[str, Any]) -> None:
     for idx, phase in enumerate(phases):
         if not isinstance(phase, dict):
             raise RunnerError(f"phases[{idx}] must be object")
-        for key in ["phase_id", "actor", "target_type", "target_id"]:
+        for key in ["phase_id", "actor", "target_type", "target_id", "requires_spec"]:
             if key not in phase:
                 raise RunnerError(f"phases[{idx}] missing field: {key}")
         phase_id = phase["phase_id"]
@@ -166,10 +201,55 @@ def validate_manifest(manifest: Dict[str, Any]) -> None:
             raise RunnerError(f"phases[{idx}].phase_id must be non-empty string")
         phase_ids.append(phase_id)
 
+        target_type = phase.get("target_type")
+        if target_type != "subprocess":
+            raise RunnerError(f"phases[{idx}].target_type must be 'subprocess'")
+
+        requires_spec = phase.get("requires_spec")
+        if not isinstance(requires_spec, bool):
+            raise RunnerError(f"phases[{idx}].requires_spec must be boolean")
+        if requires_spec and not is_repo_rel_anchor(phase.get("spec_ref")):
+            raise RunnerError(
+                f"phases[{idx}].spec_ref must be repo_relative_path#anchor when requires_spec=true"
+            )
+
+        target_id = phase.get("target_id")
+        if not isinstance(target_id, str) or not target_id.strip():
+            raise RunnerError(f"phases[{idx}].target_id must be non-empty string")
+
+        if target_id in process_ids:
+            if "inline_ap" in phase:
+                raise RunnerError(f"phases[{idx}] registered subprocess target must not define inline_ap")
+            continue
+
+        inline_ap = phase.get("inline_ap")
+        if not isinstance(inline_ap, dict):
+            raise RunnerError(
+                f"phases[{idx}] target_id not in process_registry requires inline_ap object"
+            )
+        for field in ["ap_id", "skill_id", "actor", "pierce_allowed"]:
+            if field not in inline_ap:
+                raise RunnerError(f"phases[{idx}].inline_ap missing field: {field}")
+        if inline_ap.get("ap_id") != target_id:
+            raise RunnerError(f"phases[{idx}].inline_ap.ap_id must equal target_id")
+
+        skill_id = inline_ap.get("skill_id")
+        if not isinstance(skill_id, str) or skill_id not in skill_ids:
+            raise RunnerError(f"phases[{idx}].inline_ap.skill_id not found in skill_registry: {skill_id!r}")
+
+        pierce_allowed = inline_ap.get("pierce_allowed")
+        if not isinstance(pierce_allowed, bool):
+            raise RunnerError(f"phases[{idx}].inline_ap.pierce_allowed must be boolean")
+        if pierce_allowed and inline_ap.get("actor") != phase.get("actor"):
+            raise RunnerError(
+                f"phases[{idx}].inline_ap.pierce_allowed=true requires inline_ap.actor == phase.actor"
+            )
+
     control_flow = manifest.get("control_flow")
     if not isinstance(control_flow, list) or not control_flow:
         raise RunnerError("process manifest control_flow must be non-empty array")
 
+    allowed_edge_on = {"success", "failure", "hold", "escalate", "skip"}
     linked_ids: set[str] = set()
     for idx, edge in enumerate(control_flow):
         if not isinstance(edge, dict):
@@ -181,8 +261,9 @@ def validate_manifest(manifest: Dict[str, Any]) -> None:
         edge_from = edge.get("from")
         edge_to = edge.get("to")
         edge_on = edge.get("on")
-        if edge_on not in {"success", "failure"}:
-            raise RunnerError(f"control_flow[{idx}].on must be success|failure")
+        if edge_on not in allowed_edge_on:
+            allowed_text = "|".join(sorted(allowed_edge_on))
+            raise RunnerError(f"control_flow[{idx}].on must be {allowed_text}")
 
         if edge_from not in phase_ids:
             raise RunnerError(f"control_flow[{idx}].from invalid phase_id: {edge_from!r}")
@@ -205,6 +286,67 @@ def phase_by_id(manifest: Dict[str, Any], phase_id: str) -> Dict[str, Any]:
     raise RunnerError(f"phase not found in manifest: {phase_id}")
 
 
+def to_repo_rel(path: Path, root: Path) -> str:
+    return path.resolve().relative_to(root).as_posix()
+
+
+def parse_ref_list(raw: str) -> List[str]:
+    if not raw.strip():
+        return []
+    refs: List[str] = []
+    seen: set[str] = set()
+    for token in re.split(r"[,;\n]+", raw):
+        value = token.strip()
+        if not value or value in seen:
+            continue
+        refs.append(value)
+        seen.add(value)
+    return refs
+
+
+def latest_output_ref(context: Dict[str, Any]) -> str:
+    phase_results = context.get("phase_results")
+    if not isinstance(phase_results, list):
+        return ""
+    for item in reversed(phase_results):
+        if not isinstance(item, dict):
+            continue
+        output_ref = str(item.get("output_ref") or "").strip()
+        if output_ref:
+            return output_ref
+    return ""
+
+
+def build_dispatch_prompt(
+    *,
+    process_id: str,
+    phase: Dict[str, Any],
+    input_refs: List[str],
+    task_dispatch_ref: str,
+    extra_instruction: str,
+) -> str:
+    phase_id = str(phase.get("phase_id") or "")
+    phase_name = str(phase.get("name") or phase_id)
+    phase_purpose = str(phase.get("phase_purpose") or f"完成 {phase_name} 阶段目标")
+    done_definition = str(phase.get("done_definition") or "产出可追溯输出引用")
+    handoff_note = str(phase.get("handoff_note") or "将阶段输出交接给下一阶段")
+    input_text = ", ".join(input_refs) if input_refs else "(无显式输入引用)"
+
+    lines = [
+        f"你是 {phase.get('actor')}，正在执行流程 {process_id} 的阶段 {phase_id}（{phase_name}）。",
+        f"阶段目标：{phase_purpose}",
+        f"输入引用：{input_text}",
+        f"完成标准：{done_definition}",
+        f"交接要求：{handoff_note}",
+        f"任务分发包：{task_dispatch_ref}",
+        "请基于以上上下文完成阶段任务，并输出：阶段摘要、output_ref、self_check(decision/reason/rule_refs)。",
+    ]
+    extra = extra_instruction.strip()
+    if extra:
+        lines.append(f"补充指令：{extra}")
+    return "\n".join(lines)
+
+
 def read_instance_record(instance_root: Path, instance_id: str) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     instance_dir = instance_root / instance_id
     context = load_json(instance_dir / "context.json")
@@ -212,7 +354,12 @@ def read_instance_record(instance_root: Path, instance_id: str) -> Tuple[Dict[st
     return context, binding
 
 
-def build_dispatch_command(openclaw_bin: str, actor: str, session_id: str, message: str) -> List[str]:
+def build_dispatch_command(
+    openclaw_bin: str,
+    actor: str,
+    session_id: str,
+    message: str,
+) -> List[str]:
     if not session_id:
         raise RunnerError("session_id is required for dispatch command")
     return [
@@ -228,13 +375,321 @@ def build_dispatch_command(openclaw_bin: str, actor: str, session_id: str, messa
     ]
 
 
-def run_dispatch(command: List[str]) -> Dict[str, Any]:
-    proc = subprocess.run(command, capture_output=True, text=True, check=False)
+def to_iso_from_epoch_ms(raw: Optional[int]) -> str:
+    if raw is None or raw <= 0:
+        return ""
+    return datetime.fromtimestamp(raw / 1000.0, tz=timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
+def probe_openclaw_session(openclaw_bin: str, session_id: str) -> Dict[str, Any]:
+    proc = subprocess.run(
+        [openclaw_bin, "sessions", "--json"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if proc.returncode != 0:
+        return {
+            "ok": False,
+            "found": False,
+            "updated_at_ms": None,
+            "error": f"openclaw_sessions_failed:rc={proc.returncode}:stderr={proc.stderr.strip()}",
+        }
+    try:
+        payload = parse_first_json_object(proc.stdout)
+    except RunnerError as exc:
+        return {
+            "ok": False,
+            "found": False,
+            "updated_at_ms": None,
+            "error": f"openclaw_sessions_invalid_json:{exc}",
+        }
+    sessions = payload.get("sessions")
+    if not isinstance(sessions, list):
+        return {
+            "ok": False,
+            "found": False,
+            "updated_at_ms": None,
+            "error": "openclaw_sessions_invalid_payload",
+        }
+    updated_candidates: List[int] = []
+    for item in sessions:
+        if not isinstance(item, dict):
+            continue
+        if str(item.get("sessionId") or "").strip() != session_id:
+            continue
+        raw_updated = item.get("updatedAt")
+        try:
+            updated_candidates.append(int(raw_updated))
+        except (TypeError, ValueError):
+            continue
+    if not updated_candidates:
+        return {"ok": True, "found": False, "updated_at_ms": None, "error": ""}
     return {
-        "return_code": proc.returncode,
-        "stdout": proc.stdout,
-        "stderr": proc.stderr,
+        "ok": True,
+        "found": True,
+        "updated_at_ms": max(updated_candidates),
+        "error": "",
     }
+
+
+def run_dispatch(
+    command: List[str],
+    *,
+    openclaw_bin: str,
+    session_id: str,
+    stall_threshold_seconds: int,
+    session_probe_interval_seconds: int,
+) -> Dict[str, Any]:
+    proc = subprocess.Popen(
+        command,
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=False,
+    )
+    if proc.stdout is None or proc.stderr is None:
+        raise RunnerError("dispatch process missing stdout/stderr pipe")
+
+    stall_threshold_seconds = max(MIN_STALL_THRESHOLD_SECONDS, int(stall_threshold_seconds))
+    probe_interval = max(5, int(session_probe_interval_seconds))
+    start_mono = time.monotonic()
+    last_progress_mono = start_mono
+    last_output_mono = start_mono
+    last_session_progress_mono: Optional[float] = None
+    last_probe_mono = start_mono - probe_interval
+
+    last_session_updated_at_ms: Optional[int] = None
+    session_seen = False
+    probe_count = 0
+    probe_errors: List[str] = []
+    stalled = False
+    stall_reason = ""
+    stall_idle_seconds = 0
+
+    out_chunks = bytearray()
+    err_chunks = bytearray()
+
+    selector = selectors.DefaultSelector()
+    os.set_blocking(proc.stdout.fileno(), False)
+    os.set_blocking(proc.stderr.fileno(), False)
+    selector.register(proc.stdout, selectors.EVENT_READ, data="stdout")
+    selector.register(proc.stderr, selectors.EVENT_READ, data="stderr")
+
+    try:
+        while True:
+            now_mono = time.monotonic()
+            if proc.poll() is not None:
+                # 子进程退出后交由统一兜底 drain 收集剩余缓冲，避免在 selector 上假阻塞。
+                break
+
+            events = selector.select(timeout=1.0)
+            for key, _ in events:
+                stream_name = str(key.data)
+                stream = key.fileobj
+                try:
+                    chunk = os.read(stream.fileno(), 65536)
+                except BlockingIOError:
+                    continue
+                if chunk:
+                    if stream_name == "stdout":
+                        out_chunks.extend(chunk)
+                    else:
+                        err_chunks.extend(chunk)
+                    last_progress_mono = time.monotonic()
+                    last_output_mono = last_progress_mono
+                    continue
+                selector.unregister(stream)
+                try:
+                    stream.close()
+                except OSError:
+                    pass
+
+            now_mono = time.monotonic()
+            if now_mono - last_probe_mono >= probe_interval:
+                probe_count += 1
+                last_probe_mono = now_mono
+                probe = probe_openclaw_session(openclaw_bin, session_id)
+                if probe["ok"]:
+                    if bool(probe["found"]):
+                        session_seen = True
+                        updated = probe.get("updated_at_ms")
+                        updated_int = int(updated) if isinstance(updated, int) else None
+                        if updated_int is not None and (
+                            last_session_updated_at_ms is None or updated_int > last_session_updated_at_ms
+                        ):
+                            last_session_updated_at_ms = updated_int
+                            last_session_progress_mono = now_mono
+                            last_progress_mono = now_mono
+                else:
+                    error = str(probe.get("error") or "").strip()
+                    if error:
+                        probe_errors.append(error)
+                        if len(probe_errors) > 8:
+                            probe_errors = probe_errors[-8:]
+
+            idle_seconds = int(max(0.0, now_mono - last_progress_mono))
+            if idle_seconds < stall_threshold_seconds:
+                continue
+
+            # 达到阈值后再次即时探活，避免竞态误判。
+            probe_count += 1
+            confirm = probe_openclaw_session(openclaw_bin, session_id)
+            if confirm["ok"] and bool(confirm["found"]):
+                updated = confirm.get("updated_at_ms")
+                updated_int = int(updated) if isinstance(updated, int) else None
+                if updated_int is not None and (
+                    last_session_updated_at_ms is None or updated_int > last_session_updated_at_ms
+                ):
+                    last_session_updated_at_ms = updated_int
+                    now_again = time.monotonic()
+                    last_session_progress_mono = now_again
+                    last_progress_mono = now_again
+                    continue
+            elif not confirm["ok"]:
+                error = str(confirm.get("error") or "").strip()
+                if error:
+                    probe_errors.append(error)
+                    if len(probe_errors) > 8:
+                        probe_errors = probe_errors[-8:]
+
+            if proc.poll() is None:
+                stalled = True
+                stall_idle_seconds = idle_seconds
+                stall_reason = (
+                    "no_progress_signals:"
+                    f"idle_seconds={idle_seconds}:"
+                    f"threshold_seconds={stall_threshold_seconds}:"
+                    f"session_seen={session_seen}"
+                )
+                proc.terminate()
+                try:
+                    proc.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    proc.kill()
+                    proc.wait()
+                continue
+
+        # 兜底 drain，确保 EOF 后剩余字节被收集。
+        for stream_name, stream_obj in (("stdout", proc.stdout), ("stderr", proc.stderr)):
+            while True:
+                try:
+                    chunk = os.read(stream_obj.fileno(), 65536)
+                except (BlockingIOError, OSError, ValueError):
+                    break
+                if not chunk:
+                    break
+                if stream_name == "stdout":
+                    out_chunks.extend(chunk)
+                else:
+                    err_chunks.extend(chunk)
+    finally:
+        selector.close()
+        for stream_obj in (proc.stdout, proc.stderr):
+            try:
+                stream_obj.close()
+            except OSError:
+                pass
+
+    end_mono = time.monotonic()
+    out_text = out_chunks.decode("utf-8", errors="replace")
+    err_text = err_chunks.decode("utf-8", errors="replace")
+    raw_return_code = proc.returncode
+    return_code = 124 if stalled else (raw_return_code if raw_return_code is not None else 1)
+    session_idle = None
+    if last_session_progress_mono is not None:
+        session_idle = int(max(0.0, end_mono - last_session_progress_mono))
+
+    return {
+        "return_code": return_code,
+        "raw_return_code": raw_return_code,
+        "stdout": out_text,
+        "stderr": err_text,
+        "timed_out": False,
+        "stalled": stalled,
+        "stall_reason": stall_reason,
+        "liveness": {
+            "stall_threshold_seconds": stall_threshold_seconds,
+            "session_probe_interval_seconds": probe_interval,
+            "probe_count": probe_count,
+            "session_seen": session_seen,
+            "last_session_updated_at": to_iso_from_epoch_ms(last_session_updated_at_ms),
+            "idle_since_output_seconds": int(max(0.0, end_mono - last_output_mono)),
+            "idle_since_session_progress_seconds": session_idle,
+            "stall_idle_seconds": stall_idle_seconds if stalled else 0,
+            "probe_errors": probe_errors,
+            "duration_seconds": int(max(0.0, end_mono - start_mono)),
+        },
+    }
+
+
+def parse_first_json_object(text: str) -> Dict[str, Any]:
+    decoder = json.JSONDecoder()
+    idx = 0
+    while idx < len(text):
+        ch = text[idx]
+        if ch != "{":
+            idx += 1
+            continue
+        try:
+            obj, _ = decoder.raw_decode(text, idx)
+            if isinstance(obj, dict):
+                return obj
+        except json.JSONDecodeError:
+            pass
+        idx += 1
+    raise RunnerError("unable to parse json object from command stdout")
+
+
+def reset_openclaw_session(openclaw_bin: str, actor: str) -> Dict[str, Any]:
+    session_key = f"agent:{actor}:main"
+    params = json.dumps({"key": session_key}, ensure_ascii=True)
+    cmd = [
+        openclaw_bin,
+        "gateway",
+        "call",
+        "sessions.reset",
+        "--params",
+        params,
+        "--json",
+    ]
+    proc = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    if proc.returncode != 0:
+        raise RunnerError(
+            "openclaw_session_reset_failed:"
+            f"actor={actor}:rc={proc.returncode}:stderr={proc.stderr.strip()}"
+        )
+    payload = parse_first_json_object(proc.stdout)
+    if not bool(payload.get("ok")):
+        raise RunnerError(f"openclaw_session_reset_rejected:actor={actor}")
+    entry = payload.get("entry")
+    if not isinstance(entry, dict):
+        raise RunnerError(f"openclaw_session_reset_missing_entry:actor={actor}")
+    session_id = str(entry.get("sessionId") or "").strip()
+    if not session_id:
+        raise RunnerError(f"openclaw_session_reset_missing_session_id:actor={actor}")
+    return {
+        "key": session_key,
+        "session_id": session_id,
+        "updated_at": entry.get("updatedAt"),
+    }
+
+
+def extract_actual_session_id(stdout: str) -> str:
+    try:
+        payload = parse_first_json_object(stdout)
+    except RunnerError:
+        return ""
+    result = payload.get("result")
+    if not isinstance(result, dict):
+        return ""
+    meta = result.get("meta")
+    if not isinstance(meta, dict):
+        return ""
+    agent_meta = meta.get("agentMeta")
+    if not isinstance(agent_meta, dict):
+        return ""
+    return str(agent_meta.get("sessionId") or "").strip()
 
 
 def parse_legacy_context_md(path: Path) -> Dict[str, str]:
@@ -288,7 +743,7 @@ def collect_required_field_errors(context: Dict[str, Any], binding: Dict[str, An
             if not isinstance(item, dict):
                 errors.append(f"phase_results[{idx}]_not_object")
                 continue
-            for key in ["phase_id", "status", "actor", "session_id"]:
+            for key in ["phase_id", "status", "actor", "session_id", "input_ref", "output_ref"]:
                 if key not in item:
                     errors.append(f"missing_phase_result_field:{idx}:{key}")
 
@@ -359,7 +814,19 @@ def replay_errors(context: Dict[str, Any], manifest: Dict[str, Any]) -> List[str
         from_phase = current.get("phase_id")
         to_phase = nxt.get("phase_id")
         current_status = normalize_phase_status(current.get("status"))
-        edge_on = "failure" if current_status == "failed" else "success"
+        transition_on = str(current.get("transition_on") or "").strip().lower()
+        if transition_on:
+            edge_on = transition_on
+        elif current_status == "failed":
+            edge_on = "failure"
+        elif current_status == "hold":
+            edge_on = "hold"
+        elif current_status == "escalate":
+            edge_on = "escalate"
+        elif current_status == "skipped":
+            edge_on = "skip"
+        else:
+            edge_on = "success"
         if (from_phase, to_phase, edge_on) not in allowed_edges:
             errors.append(f"illegal_transition:{from_phase}->{to_phase}:{edge_on}")
 
@@ -415,6 +882,10 @@ def start_command(args: argparse.Namespace) -> int:
     actor = str(phase.get("actor"))
     session_key = args.session_key or f"{args.process_id}:{args.phase_id}:{uuid.uuid4().hex[:8]}"
     session_id = args.session_id or generate_session_id()
+    session_reset: Optional[Dict[str, Any]] = None
+    if args.execute_openclaw and args.reset_openclaw_session:
+        session_reset = reset_openclaw_session(args.openclaw_bin, actor)
+        session_id = session_reset["session_id"]
     if parent_session_id and session_id == parent_session_id:
         raise RunnerError("session_reuses_parent")
 
@@ -424,6 +895,18 @@ def start_command(args: argparse.Namespace) -> int:
             lineage_ref = f"lineage/{instance_id}"
         else:
             lineage_ref = f"{parent_context.get('lineage_ref', 'lineage/unknown')}/{instance_id}"
+
+    explicit_input_refs = parse_ref_list(str(args.input_ref or ""))
+    inherited_input_ref = ""
+    spec_ref = str(phase.get("spec_ref") or "").strip()
+    input_refs: List[str] = list(explicit_input_refs)
+    if not input_refs and parent_context is not None:
+        inherited_input_ref = latest_output_ref(parent_context)
+        if inherited_input_ref:
+            input_refs.append(inherited_input_ref)
+    if bool(phase.get("requires_spec")) and spec_ref and spec_ref not in input_refs:
+        input_refs.append(spec_ref)
+    normalized_input_ref = ",".join(input_refs)
 
     ts = now_iso()
     binding = {
@@ -454,7 +937,7 @@ def start_command(args: argparse.Namespace) -> int:
                 "status": "running",
                 "actor": actor,
                 "session_id": session_id,
-                "input_ref": args.input_ref,
+                "input_ref": normalized_input_ref,
                 "output_ref": "",
                 "started_at": ts,
                 "completed_at": "",
@@ -469,10 +952,84 @@ def start_command(args: argparse.Namespace) -> int:
 
     context_ref = instance_dir / "context.json"
     binding_ref = instance_dir / "session_binding.json"
-    transition_ref = instance_dir / "evidence" / "state_transition_start.json"
+    evidence_dir = instance_dir / "evidence"
+    transition_ref = evidence_dir / "state_transition_start.json"
+    dispatch_context_ref = evidence_dir / "dispatch_context.json"
+    task_dispatch_ref = evidence_dir / "task_dispatch.json"
+    dispatch_prompt_ref = evidence_dir / "dispatch_prompt.md"
+
+    manifest_path = str(manifest.get("__manifest_path") or "").strip()
+    output_contract_ref = (
+        f"{manifest_path}#output_contract"
+        if manifest_path
+        else f"processes/meta/{manifest.get('process_id', args.process_id)}/process.json#output_contract"
+    )
+    retry = manifest.get("fail_policy", {}).get("retry", {})
+    max_retries = None
+    if isinstance(retry, dict):
+        raw_max = retry.get("max_attempts")
+        if isinstance(raw_max, int):
+            max_retries = raw_max
+        raw_loop = retry.get("max_iterations")
+        if max_retries is None and isinstance(raw_loop, int):
+            max_retries = raw_loop
+
+    task_dispatch_payload: Dict[str, Any] = {
+        "type": "task_dispatch",
+        "instance_id": instance_id,
+        "phase_id": args.phase_id,
+        "actor": actor,
+        "target_type": str(phase.get("target_type") or ""),
+        "target_id": str(phase.get("target_id") or ""),
+        "input_ref": normalized_input_ref,
+        "objective_ref": context.get("objective_ref"),
+        "output_contract": output_contract_ref,
+        "lineage_ref": lineage_ref,
+        "stack_depth": stack_depth,
+        "process_version": manifest.get("version"),
+        "process_level": manifest.get("process_level"),
+        "session_binding": binding,
+        "evidence_dir": to_repo_rel(evidence_dir, root),
+    }
+    if parent_instance_id:
+        task_dispatch_payload["parent_instance_id"] = parent_instance_id
+    if bool(phase.get("requires_spec")) and spec_ref:
+        task_dispatch_payload["spec_ref"] = spec_ref
+    if max_retries is not None:
+        task_dispatch_payload["constraints"] = {"max_retries": max_retries}
+
+    dispatch_context_payload: Dict[str, Any] = {
+        "generated_at": ts,
+        "process_id": manifest.get("process_id"),
+        "phase_id": args.phase_id,
+        "phase_name": phase.get("name"),
+        "phase_actor": actor,
+        "phase_purpose": phase.get("phase_purpose"),
+        "input_context_ref": phase.get("input_context_ref"),
+        "done_definition": phase.get("done_definition"),
+        "handoff_note": phase.get("handoff_note"),
+        "normalized_input_refs": input_refs,
+        "input_source": {
+            "explicit_refs": explicit_input_refs,
+            "inherited_parent_output_ref": inherited_input_ref,
+            "spec_ref_injected": spec_ref if (bool(phase.get("requires_spec")) and spec_ref) else "",
+        },
+        "task_dispatch_ref": to_repo_rel(task_dispatch_ref, root),
+    }
+
+    auto_dispatch_message = build_dispatch_prompt(
+        process_id=str(manifest.get("process_id") or args.process_id),
+        phase=phase,
+        input_refs=input_refs,
+        task_dispatch_ref=to_repo_rel(task_dispatch_ref, root),
+        extra_instruction=args.dispatch_message,
+    )
 
     dump_json(context_ref, context)
     dump_json(binding_ref, binding)
+    dump_json(dispatch_context_ref, dispatch_context_payload)
+    dump_json(task_dispatch_ref, task_dispatch_payload)
+    dispatch_prompt_ref.write_text(auto_dispatch_message + "\n", encoding="utf-8")
     dump_json(
         transition_ref,
         {
@@ -484,38 +1041,79 @@ def start_command(args: argparse.Namespace) -> int:
             "actor": actor,
             "lineage_ref": lineage_ref,
             "stack_depth": stack_depth,
+            "input_ref": normalized_input_ref,
+            "dispatch_context_ref": to_repo_rel(dispatch_context_ref, root),
+            "task_dispatch_ref": to_repo_rel(task_dispatch_ref, root),
         },
     )
 
-    command = build_dispatch_command(args.openclaw_bin, actor, session_id, args.dispatch_message)
+    command = build_dispatch_command(
+        args.openclaw_bin,
+        actor,
+        session_id,
+        auto_dispatch_message,
+    )
     dispatch_result: Dict[str, Any] = {
         "executed": False,
         "command": command,
         "return_code": None,
         "stdout": "",
         "stderr": "",
+        "timed_out": False,
+        "stalled": False,
+        "stall_reason": "",
+        "actual_session_id": "",
+        "liveness": {},
+        "session_reset": session_reset,
     }
 
     if args.execute_openclaw:
-        proc_result = run_dispatch(command)
+        stall_threshold_seconds = max(MIN_STALL_THRESHOLD_SECONDS, int(args.openclaw_stall_threshold_seconds))
+        proc_result = run_dispatch(
+            command,
+            openclaw_bin=args.openclaw_bin,
+            session_id=session_id,
+            stall_threshold_seconds=stall_threshold_seconds,
+            session_probe_interval_seconds=args.openclaw_probe_interval_seconds,
+        )
+        actual_session_id = extract_actual_session_id(proc_result["stdout"])
         dispatch_result.update(
             {
                 "executed": True,
                 "return_code": proc_result["return_code"],
+                "raw_return_code": proc_result.get("raw_return_code"),
                 "stdout": proc_result["stdout"],
                 "stderr": proc_result["stderr"],
+                "timed_out": bool(proc_result.get("timed_out")),
+                "stalled": bool(proc_result.get("stalled")),
+                "stall_reason": str(proc_result.get("stall_reason") or ""),
+                "actual_session_id": actual_session_id,
+                "liveness": proc_result.get("liveness", {}),
             }
         )
+        if dispatch_result["stalled"]:
+            raise RunnerError(
+                "openclaw_dispatch_stalled:"
+                f"actor={actor}:reason={dispatch_result['stall_reason']}"
+            )
+        if args.strict_session_match and actual_session_id and actual_session_id != session_id:
+            raise RunnerError(
+                "openclaw_session_mismatch:"
+                f"expected={session_id}:actual={actual_session_id}:actor={actor}"
+            )
 
     result = {
         "status": "ok",
         "instance_id": instance_id,
-        "context_ref": str(context_ref.relative_to(root).as_posix()),
-        "session_binding_ref": str(binding_ref.relative_to(root).as_posix()),
-        "state_transition_ref": str(transition_ref.relative_to(root).as_posix()),
+        "context_ref": to_repo_rel(context_ref, root),
+        "session_binding_ref": to_repo_rel(binding_ref, root),
+        "state_transition_ref": to_repo_rel(transition_ref, root),
+        "dispatch_context_ref": to_repo_rel(dispatch_context_ref, root),
+        "task_dispatch_ref": to_repo_rel(task_dispatch_ref, root),
+        "dispatch_prompt_ref": to_repo_rel(dispatch_prompt_ref, root),
         "runtime_state": "running",
         "dispatch": dispatch_result,
-        "evidence_ref": str((instance_dir / "evidence").relative_to(root).as_posix()),
+        "evidence_ref": to_repo_rel(evidence_dir, root),
     }
 
     if args.output:
@@ -853,9 +1451,44 @@ def build_parser() -> argparse.ArgumentParser:
     p_start.add_argument("--objective-ref")
     p_start.add_argument("--initiated-by", default="bpm")
     p_start.add_argument("--input-ref", default="")
-    p_start.add_argument("--dispatch-message", default="execute assigned phase by process-instance-manager contract")
+    p_start.add_argument(
+        "--dispatch-message",
+        default="",
+        help="可选补充自然语言指令，会附加到标准 phase 调度提示词后。",
+    )
     p_start.add_argument("--openclaw-bin", default="openclaw")
+    p_start.add_argument(
+        "--openclaw-stall-threshold-seconds",
+        type=int,
+        default=MIN_STALL_THRESHOLD_SECONDS,
+        help=(
+            "Dispatch stall threshold. Only when stdout/stderr and session activity have no progress "
+            "for >= threshold will the dispatch be treated as stalled and terminated (minimum 900s)."
+        ),
+    )
+    p_start.add_argument(
+        "--openclaw-timeout-seconds",
+        dest="openclaw_stall_threshold_seconds",
+        type=int,
+        help=argparse.SUPPRESS,
+    )
+    p_start.add_argument(
+        "--openclaw-probe-interval-seconds",
+        type=int,
+        default=60,
+        help="Liveness probe interval for `openclaw sessions --json` (minimum 5s).",
+    )
     p_start.add_argument("--execute-openclaw", action="store_true")
+    p_start.add_argument(
+        "--reset-openclaw-session",
+        action="store_true",
+        help="Reset agent session via `openclaw gateway call sessions.reset` before dispatch",
+    )
+    p_start.add_argument(
+        "--strict-session-match",
+        action="store_true",
+        help="Fail when dispatch returned agent session id mismatches context session id",
+    )
     p_start.add_argument("--output")
 
     p_migrate = sub.add_parser("migrate", help="migrate legacy state.json to new schema")

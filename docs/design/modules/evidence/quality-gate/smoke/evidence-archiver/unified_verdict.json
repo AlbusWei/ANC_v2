@@ -1,9 +1,0 @@
-{
-  "gate_decision": "pass",
-  "evidence_ref": "docs/design/modules/evidence/quality-gate/smoke/evidence-archiver",
-  "reasons": [
-    "smoke_pass"
-  ],
-  "profile_id": "quality-gate.baseline@1.0.0",
-  "run_id": "qg-smoke-001"
-}

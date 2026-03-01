@@ -1,6 +1,6 @@
 {
   "process_id": "trigger-schedule-runtime",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [],
@@ -36,8 +36,8 @@
       "phase_id": "p1",
       "name": "normalize-trigger-ingress",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "sys.bpm.trigger-ingress-normalizer",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:trigger-schedule-runtime:p1",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-026-trigger-ingress-normalization.md#ap-026-trigger-ingress-normalization",
       "sipoc": {
@@ -47,14 +47,26 @@
         "output": "canonical_trigger_ref",
         "client": "p2"
       },
-      "acceptance_criteria": "canonical trigger envelope contains required fields"
+      "acceptance_criteria": "canonical trigger envelope contains required fields",
+      "inline_ap": {
+        "ap_id": "inline-ap:trigger-schedule-runtime:p1",
+        "skill_id": "sys.bpm.trigger-ingress-normalizer",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "把外部定时/心跳信号归一成可执行触发上下文，避免下游在异构输入上分叉。",
+      "input_context_ref": "trigger payload",
+      "done_definition": "必须产出 canonical_trigger_ref，且必需字段完整。",
+      "handoff_note": "将 canonical_trigger_ref 交接给 p2。"
     },
     {
       "phase_id": "p2",
       "name": "match-and-dedupe",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "sys.bpm.trigger-matcher-dedupe",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:trigger-schedule-runtime:p2",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-027-trigger-match-and-dedupe.md#ap-027-trigger-match-and-dedupe",
       "sipoc": {
@@ -64,14 +76,26 @@
         "output": "match_result",
         "client": "p3"
       },
-      "acceptance_criteria": "dedupe decision is explicit allow or reject"
+      "acceptance_criteria": "dedupe decision is explicit allow or reject",
+      "inline_ap": {
+        "ap_id": "inline-ap:trigger-schedule-runtime:p2",
+        "skill_id": "sys.bpm.trigger-matcher-dedupe",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "在进入实例创建前完成匹配与去重判定，保证触发决策确定性。",
+      "input_context_ref": "canonical_trigger_ref",
+      "done_definition": "必须产出 match_result，且 dedupe_decision 明确为 allow/reject。",
+      "handoff_note": "将 match_result 交接给 p3（或按拒绝分支流向 p4）。"
     },
     {
       "phase_id": "p3",
       "name": "dispatch-instance",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "sys.bpm.process-instance-manager",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:trigger-schedule-runtime:p3",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-028-trigger-dispatch-and-instance-start.md#ap-028-trigger-dispatch-and-instance-start",
       "sipoc": {
@@ -81,14 +105,26 @@
         "output": "instance_id",
         "client": "p4"
       },
-      "acceptance_criteria": "matched trigger has instance_id and state transition record"
+      "acceptance_criteria": "matched trigger has instance_id and state transition record",
+      "inline_ap": {
+        "ap_id": "inline-ap:trigger-schedule-runtime:p3",
+        "skill_id": "sys.bpm.process-instance-manager",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "将命中触发转化为流程实例启动动作，建立运行入口。",
+      "input_context_ref": "match_result",
+      "done_definition": "必须产出 instance_id，并写入状态迁移记录。",
+      "handoff_note": "将 instance_id 交接给 p4。"
     },
     {
       "phase_id": "p4",
       "name": "record-trigger-evidence",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "sys.bpm.evidence-recorder",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:trigger-schedule-runtime:p4",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-029-trigger-evidence-recording.md#ap-029-trigger-evidence-recording",
       "sipoc": {
@@ -98,14 +134,26 @@
         "output": "trigger_receipt_ref",
         "client": "p5"
       },
-      "acceptance_criteria": "trigger and instance can be traced bidirectionally"
+      "acceptance_criteria": "trigger and instance can be traced bidirectionally",
+      "inline_ap": {
+        "ap_id": "inline-ap:trigger-schedule-runtime:p4",
+        "skill_id": "sys.bpm.evidence-recorder",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "落盘触发回执与追溯链路，确保触发与实例可双向审计。",
+      "input_context_ref": "instance_id",
+      "done_definition": "必须产出 trigger_receipt_ref，且可反查对应实例。",
+      "handoff_note": "将 trigger_receipt_ref 交接给 p5。"
     },
     {
       "phase_id": "p5",
       "name": "schedule-catchup",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "sys.bpm.catchup-scheduler",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:trigger-schedule-runtime:p5",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-030-trigger-catchup-scheduling.md#ap-030-trigger-catchup-scheduling",
       "sipoc": {
@@ -115,14 +163,26 @@
         "output": "catchup_decision",
         "client": "p6"
       },
-      "acceptance_criteria": "catchup decision is deterministic"
+      "acceptance_criteria": "catchup decision is deterministic",
+      "inline_ap": {
+        "ap_id": "inline-ap:trigger-schedule-runtime:p5",
+        "skill_id": "sys.bpm.catchup-scheduler",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "基于策略对漏跑场景做补跑或升级决策，避免触发治理静默失败。",
+      "input_context_ref": "trigger_receipt_ref",
+      "done_definition": "必须产出 catchup_decision，且决策可解释。",
+      "handoff_note": "将 catchup_decision 交接给 p6 或直接结束。"
     },
     {
       "phase_id": "p6",
       "name": "escalate-runtime-anomaly",
       "actor": "bpm",
-      "target_type": "skill",
-      "target_id": "sys.bpm.escalation-handler",
+      "target_type": "subprocess",
+      "target_id": "inline-ap:trigger-schedule-runtime:p6",
       "requires_spec": true,
       "spec_ref": "docs/design/processes/atomic/AP-031-trigger-escalation-handling.md#ap-031-trigger-escalation-handling",
       "sipoc": {
@@ -132,7 +192,19 @@
         "output": "escalation_ref",
         "client": "initiator"
       },
-      "acceptance_criteria": "escalation chain follows actor-owner-bpm-admin-human"
+      "acceptance_criteria": "escalation chain follows actor-owner-bpm-admin-human",
+      "inline_ap": {
+        "ap_id": "inline-ap:trigger-schedule-runtime:p6",
+        "skill_id": "sys.bpm.escalation-handler",
+        "actor": "bpm",
+        "lifecycle": "ephemeral",
+        "pierce_allowed": true,
+        "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
+      },
+      "phase_purpose": "对无法在流程内收敛的异常执行升级闭环，明确责任归属。",
+      "input_context_ref": "catchup_decision",
+      "done_definition": "必须产出 escalation_ref，并满足升级链完整。",
+      "handoff_note": "将 escalation_ref 交接给 initiator。"
     }
   ],
   "control_flow": [
@@ -205,5 +277,12 @@
       "reason",
       "evidence_ref"
     ]
+  },
+  "collaboration_policy": {
+    "mode": "phase-isolated-session",
+    "dispatch_runtime": "openclaw-required",
+    "session_reset": "per-phase-reset",
+    "natural_context_first": true,
+    "ap_migration_strategy": "sequential"
   }
 }

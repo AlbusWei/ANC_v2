@@ -45,7 +45,7 @@
 ## skill_registry.json
 
 - schema_version: `1.1.0`
-- updated_at: `2026-02-23T09:15:52Z`
+- updated_at: `2026-02-24T10:41:02Z`
 - strict mode: `true`
 
 | 字段 | 类型 | 必填 | 约束 | 说明 |
@@ -85,11 +85,11 @@
   "path": "skills/meta/agent-creator/SKILL.md",
   "layer": "meta",
   "owner": "architect",
-  "version": "0.1.0",
-  "status": "draft",
+  "version": "0.2.0",
+  "status": "review",
   "agentskills": {
     "name": "agent-creator",
-    "description": "Create or update agent design assets with lifecycle and registry-ready contracts",
+    "description": "创建或更新 Agent 设计资产，并输出可直接进入 registry 审查的补丁计划",
     "license": "Apache-2.0",
     "compatibility": {
       "openclaw": ">=2026.2",
@@ -115,7 +115,7 @@
 ## process_registry.json
 
 - schema_version: `1.1.0`
-- updated_at: `2026-02-23T09:15:52Z`
+- updated_at: `2026-02-26T00:00:00Z`
 - strict mode: `true`
 
 | 字段 | 类型 | 必填 | 约束 | 说明 |
@@ -141,21 +141,21 @@
 
 ```json
 {
-  "process_id": "ap-001-002-003-bundle",
-  "skill_name": "ap-001-002-003-bundle",
-  "skill_path": "processes/meta/ap-001-002-003-bundle/SKILL.md",
-  "manifest_path": "processes/meta/ap-001-002-003-bundle/process.json",
-  "objective_ref": "obj-m3-ap-001-002-003-bundle",
-  "owner": "bpm",
-  "version": "0.1.0",
-  "status": "draft",
-  "phase_count": 1,
+  "process_id": "construction-plane-governance",
+  "skill_name": "construction-plane-governance",
+  "skill_path": "processes/meta/construction-plane-governance/SKILL.md",
+  "manifest_path": "processes/meta/construction-plane-governance/process.json",
+  "objective_ref": "obj-m6-construction-plane-governance",
+  "owner": "architect",
+  "version": "0.3.0",
+  "status": "review",
+  "phase_count": 5,
   "openclaw": {
     "projection_mode": "bundle",
     "bundle_key": "anc-v2-meta-processes",
     "bundle_source": "processes/meta",
-    "entry_key": "ap-001-002-003-bundle",
-    "source": "processes/meta/ap-001-002-003-bundle",
+    "entry_key": "construction-plane-governance",
+    "source": "processes/meta/construction-plane-governance",
     "allow_draft_projection": true
   }
 }

@@ -14,7 +14,7 @@
 3. `docs/design/skills/construction-plane-skills.md`
 4. `docs/design/processes/construction-plane-governance-process.md`
 5. `docs/design/interfaces/openspec-collaboration-protocol.md`
-6. `docs/design/modules/evidence/construction-plane/README.md`
+6. `runtime_data/execution/evidence/construction-plane/README.md`
 
 ## Phase 1 成功优先级
 

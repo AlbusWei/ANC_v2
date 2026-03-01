@@ -41,7 +41,7 @@
   - `openspec/changes/m1-quality-gate-runtime-closure/proposal.md`
   - `openspec/changes/m1-quality-gate-runtime-closure/design.md`
   - `openspec/changes/m1-quality-gate-runtime-closure/tasks.md`
-  - `docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/{scope_baseline.md,open_questions.md,round-evidence.jsonl,thread_handoff.md}`
+  - `runtime_data/execution/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/{scope_baseline.md,open_questions.md,round-evidence.jsonl,thread_handoff.md}`
 - 依赖: 无。
 - 验收标准:
   - OpenSpec change 目录可见且包含三件套+计划。

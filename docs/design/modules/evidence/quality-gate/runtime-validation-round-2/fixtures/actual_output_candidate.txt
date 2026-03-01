@@ -1,4 +1,0 @@
-module=M3
-gate_decision=pass
-reasons=compile_success
-evidence_ref=candidate_bundle

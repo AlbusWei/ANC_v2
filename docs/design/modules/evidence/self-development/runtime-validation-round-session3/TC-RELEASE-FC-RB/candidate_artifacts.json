@@ -1,6 +1,0 @@
-{
-  "artifacts": [
-    "dist/release-v2.tar.gz"
-  ],
-  "rollback_bundle_ref": "docs/design/modules/evidence/self-development/missing-rollback.json"
-}

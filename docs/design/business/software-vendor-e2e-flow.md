@@ -1,10 +1,10 @@
 # Software Vendor E2E Flow
 
-> 版本: v0.4.0 | 层级: P4
+> 版本: v0.5.0 | 层级: P4
 
 ## 目标
 
-模拟软件开发商承接客户需求、开发、交付并持续服务的业务主线。
+定义软件开发商承接客户需求、交付实施、验收交接和后续支持的业务主线，并在交付阶段强制复用内部 canonical 开发闭环。
 
 ## 阶段
 
@@ -19,11 +19,18 @@
 
 ## 复用规则
 
-1. `delivery-iterations` 必须组合 `/Users/albus/MyProjects/ANC_v2/docs/design/business/internal-productization-e2e-flow.md` 的核心开发闭环。
+1. `delivery-iterations` 必须组合 `docs/design/business/internal-productization-e2e-flow.md` 的核心开发闭环。
 2. 其中质量门禁部分必须按连续性复用：
-   - `/Users/albus/MyProjects/ANC_v2/docs/design/processes/quality-gate-preparation-process.md`
-   - `/Users/albus/MyProjects/ANC_v2/docs/design/processes/quality-gate-evaluation-process.md`
-3. HOLD 治理复用：`/Users/albus/MyProjects/ANC_v2/docs/design/processes/hold-governance-process.md`
+   - `docs/design/processes/quality-gate-preparation-process.md`
+   - `docs/design/processes/quality-gate-evaluation-process.md`
+3. HOLD 治理复用：`docs/design/processes/hold-governance-process.md`
+4. 禁止旁路：未经过 `delivery-iterations` 不得直接进入交付或发布，命中则 Fail-Closed。
+
+## 运行资产
+
+1. process manifest：`processes/business/software-vendor-e2e-flow/process.json`
+2. process 说明：`processes/business/software-vendor-e2e-flow/PROCESS.md`
+3. 在线验证入口：`tests/m3-self-development/session6_external_runner.py`
 
 ## 阶段到原子流程映射
 

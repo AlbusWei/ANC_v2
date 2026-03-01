@@ -1,4 +1,0 @@
-{
-  "priority": ["fail", "hold", "test_invalid", "pass"],
-  "p0_fail_precedence": true
-}

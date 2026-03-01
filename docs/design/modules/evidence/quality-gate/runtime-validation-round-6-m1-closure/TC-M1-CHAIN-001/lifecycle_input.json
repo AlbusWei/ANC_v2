@@ -1,8 +1,0 @@
-{
-  "final_gate_verdict_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/evaluation/p4_aggregate_verdict/final_gate_verdict.json",
-  "target_asset_ref": "docs/design/modules/evidence/quality-gate/runtime-validation-round-6-m1-closure/TC-M1-CHAIN-001/target_asset_snapshot.json",
-  "requested_transition": {
-    "from_status": "review",
-    "to_status": "active"
-  }
-}

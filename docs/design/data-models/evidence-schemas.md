@@ -1,6 +1,6 @@
 # 证据链 Schema
 
-> 版本: v0.1.0 | SSOT 上游: [process_architecture.md](../../architecture/process_architecture.md) §证据链
+> 版本: v0.2.0 | SSOT 上游: [process_architecture.md](../../architecture/process_architecture.md) §证据链
 
 ## 概述
 
@@ -15,8 +15,10 @@
   "phase_id": "string (p1|p2|..., required)",
   "input_ref": "string (输入文件路径, required)",
   "output_ref": "string (输出文件路径, required)",
-  "decision": "string (pass|fail|skip, required)",
-  "reason": "string (决策原因, required)"
+  "decision": "string (pass|fail|hold|retry|debug|continue|test_invalid|skip, required)",
+  "reason": "string (决策原因, required)",
+  "runtime_gate_state": "string (pass|fail|hold|test_invalid, optional)",
+  "liveness_snapshot_ref": "string (optional)"
 }
 ```
 
@@ -29,8 +31,10 @@
 | phase_id | 匹配 process.json 定义 | 阶段标识 |
 | input_ref | 文件路径存在 | 输入文档引用 |
 | output_ref | 文件路径存在 | 输出文档引用 |
-| decision | pass/fail/skip | 阶段判定 |
+| decision | pass/fail/hold/retry/debug/continue/test_invalid/skip | 阶段判定 |
 | reason | 非空字符串 | 判定原因 |
+| runtime_gate_state | pass/fail/hold/test_invalid（可选） | 门禁运行态 |
+| liveness_snapshot_ref | 文件路径存在（可选） | 活性快照 |
 
 ## 证据目录结构
 
@@ -65,5 +69,17 @@ process_instances/{instance_id}/
   },
   "timestamp": "string (ISO8601)",
   "judge_model": "string (LLM 模型标识)"
+}
+```
+
+## 活性快照 Schema（hold/长任务）
+
+```json
+{
+  "timestamp": "string (ISO8601, required)",
+  "progress_signals_ref": "string (required)",
+  "no_progress_duration_seconds": "integer (>=0, required)",
+  "no_progress_window_seconds": "integer (>=900, required)",
+  "termination_rule_ref": "string (required)"
 }
 ```

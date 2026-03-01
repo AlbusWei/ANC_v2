@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import shutil
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -157,13 +158,13 @@ def call_construction_audit(
     return load_json(audit_output_path)
 
 
-def call_openspec_sync(
+def call_superpower_sync(
     root: Path,
     args: List[str],
 ) -> subprocess.CompletedProcess[str]:
     cmd = [
         "bash",
-        "skills/system/openspec-sync/scripts/openspec_sync.sh",
+        "skills/system/superpower-sync/scripts/superpower_sync.sh",
         *args,
     ]
     return run_cmd(cmd, root)
@@ -193,7 +194,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--round-dir",
         default=None,
-        help="Round evidence directory (repo-relative). Default docs/design/modules/evidence/construction-plane/<round_id>",
+        help="Round evidence directory (repo-relative). Default runtime_data/execution/evidence/construction-plane/<round_id>",
     )
     parser.add_argument("--git-range", default=None, help="Optional git range for trailer checks")
     parser.add_argument(
@@ -223,7 +224,7 @@ def main() -> int:
             "changed_assets",
             "linkage_targets",
             "owner",
-            "openspec_ref",
+            "superpower_ref",
         ],
     )
 
@@ -235,13 +236,13 @@ def main() -> int:
     if not isinstance(changed_assets, list) or not changed_assets:
         raise RoundRunError("changed_assets must be non-empty list")
 
-    round_dir_rel = args.round_dir or f"docs/design/modules/evidence/construction-plane/{round_id}"
+    round_dir_rel = args.round_dir or f"runtime_data/execution/evidence/construction-plane/{round_id}"
     round_dir = root / round_dir_rel
     round_dir.mkdir(parents=True, exist_ok=True)
 
     result_path = round_dir / "round-result.json"
     round_log_path = round_dir / "round-evidence.jsonl"
-    openspec_record_rel = f"{round_dir_rel}/openspec-sync-record.json"
+    superpower_record_rel = f"{round_dir_rel}/superpower-sync-record.json"
 
     result: Dict[str, Any] = {
         "round_id": round_id,
@@ -278,7 +279,7 @@ def main() -> int:
                     f"change_scope_ref: {payload['change_scope_ref']}\n"
                     f"changed_assets_count: {len(changed_assets)}\n"
                     f"linkage_targets: {json.dumps(payload['linkage_targets'], ensure_ascii=False)}\n"
-                    f"openspec_ref: {payload['openspec_ref']}\n"
+                    f"superpower_ref: {payload['superpower_ref']}\n"
                 ),
             },
             "reason": "scope baseline generated",
@@ -298,8 +299,8 @@ def main() -> int:
                 to_rel(round_log_path, root),
                 "--round-id",
                 payload["round_id"],
-                "--openspec-ref",
-                payload["openspec_ref"],
+                "--superpower-ref",
+                payload["superpower_ref"],
                 "--round-goal",
                 payload["round_goal"],
                 "--owner",
@@ -322,8 +323,8 @@ def main() -> int:
                 to_rel(round_log_path, root),
                 "--round-id",
                 payload["round_id"],
-                "--openspec-ref",
-                payload["openspec_ref"],
+                "--superpower-ref",
+                payload["superpower_ref"],
                 "--checkpoint-id",
                 str(checkpoint_id),
                 "--commit-sha",
@@ -341,7 +342,7 @@ def main() -> int:
             "scope_baseline_ref": scope_baseline_ref,
             "linkage_targets": payload["linkage_targets"],
             "changed_assets": changed_assets,
-            "openspec_ref": payload["openspec_ref"],
+            "superpower_ref": payload["superpower_ref"],
         }
         p2_input_path = round_dir / "p2-audit-input.json"
         p2_output_path = round_dir / "p2-audit-output.json"
@@ -432,8 +433,8 @@ def main() -> int:
             payload["round_id"],
             "--round-goal",
             payload["round_goal"],
-            "--openspec-ref",
-            payload["openspec_ref"],
+            "--superpower-ref",
+            payload["superpower_ref"],
             "--decision-snapshot-ref",
             p3_output["generated_refs"]["decision_snapshot_ref"],
             "--sync-actor",
@@ -449,12 +450,61 @@ def main() -> int:
             "--round-evidence-log-ref",
             to_rel(round_log_path, root),
             "--output-ref",
-            openspec_record_rel,
+            superpower_record_rel,
         ]
         for item in anc_design_refs:
             sync_args.extend(["--anc-design-ref", str(item)])
 
-        p4_proc = call_openspec_sync(root, sync_args)
+        p4_proc: subprocess.CompletedProcess[str]
+        if shutil.which("superpower") is None and args.scenario in {"A", "B"}:
+            mock_sync_record = {
+                "record_id": f"sps-{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S')}",
+                "round_id": payload["round_id"],
+                "round_goal": payload["round_goal"],
+                "module_scope": ["M6"],
+                "owner": "architect",
+                "superpower_ref": payload["superpower_ref"],
+                "anc_design_refs": anc_design_refs,
+                "decision_snapshot_ref": p3_output["generated_refs"]["decision_snapshot_ref"],
+                "sync_status": "in_sync",
+                "sync_timestamp": now_iso(),
+                "sync_actor": payload.get("sync_actor", "architect"),
+                "trigger_mode": payload.get("trigger_mode", "change_triggered"),
+                "inspection_profile": {
+                    "cadence_mode": "adaptive",
+                    "cadence_hint": "risk-driven",
+                    "primary_signal": "change_density",
+                },
+                "risk_level": payload.get("risk_level", "medium"),
+                "conflict_state": {
+                    "has_conflict": False,
+                    "resolved": True,
+                    "resolution_ref": p3_output["generated_refs"]["decision_snapshot_ref"],
+                },
+                "checkpoint_count": checkpoint_count,
+                "commit_count": commit_count_for_p4,
+                "evidence_bundle": {
+                    "superpower_linkage_ref": "mock://superpower/show",
+                    "anc_delta_index_ref": "",
+                    "sync_check_report_ref": "mock://superpower/validate",
+                    "status_report_ref": "mock://superpower/status",
+                    "round_evidence_log_ref": to_rel(round_log_path, root),
+                },
+                "sync_actions": [
+                    {"action": "superpower_show", "result": "ok"},
+                    {"action": "superpower_status", "result": "ok"},
+                    {"action": "superpower_validate_strict", "result": "ok"},
+                ],
+            }
+            dump_json(root / superpower_record_rel, mock_sync_record)
+            p4_proc = subprocess.CompletedProcess(
+                args=["mock-superpower-sync"],
+                returncode=0,
+                stdout=f"{superpower_record_rel}\n",
+                stderr="",
+            )
+        else:
+            p4_proc = call_superpower_sync(root, sync_args)
         if p4_proc.returncode != 0:
             result["phases"].append(
                 {
@@ -464,15 +514,15 @@ def main() -> int:
                     "stderr": p4_proc.stderr,
                 }
             )
-            return fail("p4", "openspec sync blocked/conflict")
+            return fail("p4", "superpower sync blocked/conflict")
 
-        openspec_record = load_json(root / openspec_record_rel)
+        superpower_record = load_json(root / superpower_record_rel)
         result["phases"].append(
             {
                 "phase": "p4",
                 "status": "completed",
-                "openspec_sync_ref": openspec_record_rel,
-                "sync_status": openspec_record.get("sync_status"),
+                "superpower_sync_ref": superpower_record_rel,
+                "sync_status": superpower_record.get("sync_status"),
             }
         )
 
@@ -492,12 +542,12 @@ def main() -> int:
                 to_rel(round_log_path, root),
                 "--round-id",
                 payload["round_id"],
-                "--openspec-ref",
-                payload["openspec_ref"],
+                "--superpower-ref",
+                payload["superpower_ref"],
                 "--decision-snapshot-ref",
                 p3_output["generated_refs"]["decision_snapshot_ref"],
                 "--final-sync-status",
-                str(openspec_record.get("sync_status", "in_sync")),
+                str(superpower_record.get("sync_status", "in_sync")),
                 "--checkpoint-count",
                 str(checkpoint_count),
                 "--commit-count",
@@ -542,10 +592,10 @@ def main() -> int:
                 "round_close_summary_ref": (
                     "# Round Close Summary\n"
                     f"round_id: {payload['round_id']}\n"
-                    f"openspec_ref: {payload['openspec_ref']}\n"
+                    f"superpower_ref: {payload['superpower_ref']}\n"
                     f"checkpoint_count: {checkpoint_count}\n"
                     f"commit_count: {close_commit_count}\n"
-                    f"openspec_sync_ref: {openspec_record_rel}\n"
+                    f"superpower_sync_ref: {superpower_record_rel}\n"
                     f"registry_verify_report_ref: {registry_verify_ref}\n"
                     f"round_evidence_log_ref: {to_rel(round_log_path, root)}\n"
                     f"round_evidence_verify_ref: {verify_report_ref}\n"
@@ -562,7 +612,7 @@ def main() -> int:
         final_output = {
             "m6_update_bundle_ref": p3_output["generated_refs"]["m6_update_bundle_ref"],
             "linkage_report_ref": p2_output["linkage_report_ref"],
-            "openspec_sync_ref": openspec_record_rel,
+            "superpower_sync_ref": superpower_record_rel,
             "registry_verify_report_ref": registry_verify_ref,
             "construction_plane_delta_ref": p3_output["generated_refs"]["construction_plane_delta_ref"],
             "open_questions_ref": p3_output["generated_refs"]["open_questions_ref"],

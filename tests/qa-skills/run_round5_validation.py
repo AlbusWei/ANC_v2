@@ -145,7 +145,7 @@ def make_preparation_bundle(
 
 def main() -> int:
     repo_root = Path(__file__).resolve().parents[2]
-    evidence_root = repo_root / "docs/design/modules/evidence/quality-gate/runtime-validation-round-5"
+    evidence_root = repo_root / "runtime_data/execution/evidence/quality-gate/runtime-validation-round-5"
     fixtures_dir = evidence_root / "fixtures"
     outputs_dir = evidence_root / "outputs"
     ensure_dir(fixtures_dir)
@@ -155,10 +155,10 @@ def main() -> int:
     spec_ref = "docs/design/modules/M1-openjudge-adapter-spec.md"
     profile = "quality-gate.baseline@1.0.0"
 
-    rule_test_doc = "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/TEST_rule.md"
-    actual_output_pass = "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_pass.txt"
-    actual_output_baseline = "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_baseline.txt"
-    actual_output_candidate = "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/actual_output_candidate.txt"
+    rule_test_doc = "tests/fixtures/quality-gate/TEST_rule.md"
+    actual_output_pass = "tests/fixtures/quality-gate/actual_output_pass.txt"
+    actual_output_baseline = "tests/fixtures/quality-gate/actual_output_baseline.txt"
+    actual_output_candidate = "tests/fixtures/quality-gate/actual_output_candidate.txt"
 
     results: List[CaseResult] = []
 
@@ -304,7 +304,7 @@ def main() -> int:
 
     objective_eval_ref = eval_objective_dir / "raw_eval.json"
     regression_eval_ref = eval_regression_dir / "raw_eval.json"
-    aggregation_rules_ref = repo_root / "docs/design/modules/evidence/quality-gate/runtime-validation-round-2/fixtures/aggregation_rules.json"
+    aggregation_rules_ref = repo_root / "tests/fixtures/quality-gate/aggregation_rules.json"
 
     verdict_pass_dir = outputs_dir / "verdict-normalizer-pass"
     verdict_test_invalid_dir = outputs_dir / "verdict-normalizer-test-invalid"

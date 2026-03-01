@@ -1,6 +1,0 @@
-{
-  "release_package_ref": "docs/design/modules/evidence/self-development/runtime-validation-round-session3/TC-RELEASE-HP/release_package.json",
-  "changelog_ref": "docs/design/modules/evidence/self-development/runtime-validation-round-session3/TC-RELEASE-HP/release_changelog.json",
-  "release_decision": "approved",
-  "rollback_bundle_ref": "docs/design/modules/evidence/self-development/runtime-validation-round-session3/fixtures/rollback_bundle.json"
-}
