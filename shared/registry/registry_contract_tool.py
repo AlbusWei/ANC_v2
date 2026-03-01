@@ -38,8 +38,8 @@ BPM_PROTOCOL_PATH = ROOT / "docs" / "design" / "interfaces" / "bpm-actor-protoco
 CONTEXT_SCHEMAS_PATH = ROOT / "docs" / "design" / "data-models" / "context-schemas.md"
 PROCESS_SCHEMAS_PATH = ROOT / "docs" / "design" / "data-models" / "process-instance-schemas.md"
 ROLE_HANDOFF_PATH = ROOT / "docs" / "design" / "interfaces" / "role-handoff-protocol.md"
-OPENSPEC_PROTOCOL_PATH = ROOT / "docs" / "design" / "interfaces" / "openspec-collaboration-protocol.md"
-OPENSPEC_SCHEMA_PATH = ROOT / "docs" / "design" / "data-models" / "openspec-collaboration-schema.json"
+SUPERPOWER_PROTOCOL_PATH = ROOT / "docs" / "design" / "interfaces" / "superpower-collaboration-protocol.md"
+SUPERPOWER_SCHEMA_PATH = ROOT / "docs" / "design" / "data-models" / "superpower-collaboration-schema.json"
 CONSTRUCTION_PLANE_PATH = ROOT / "docs" / "architecture" / "construction_plane.md"
 M2_PROCESS_INVENTORY_PATH = ROOT / "docs" / "design" / "inventories" / "process-inventory.md"
 M2_SKILL_INVENTORY_PATH = ROOT / "docs" / "design" / "inventories" / "skill-inventory.md"
@@ -892,28 +892,28 @@ def check_protocol_consistency(
         raise ContractError("\n".join(errors))
 
 
-def check_openspec_collaboration_consistency(
+def check_superpower_collaboration_consistency(
     skills_payload: Dict[str, Any],
     processes_payload: Dict[str, Any],
 ) -> None:
     errors: List[str] = []
 
-    if not OPENSPEC_SCHEMA_PATH.exists():
-        errors.append(f"{OPENSPEC_SCHEMA_PATH}: missing schema file")
+    if not SUPERPOWER_SCHEMA_PATH.exists():
+        errors.append(f"{SUPERPOWER_SCHEMA_PATH}: missing schema file")
     else:
-        schema_payload = load_json(OPENSPEC_SCHEMA_PATH)
+        schema_payload = load_json(SUPERPOWER_SCHEMA_PATH)
         if not isinstance(schema_payload, dict):
-            errors.append(f"{OPENSPEC_SCHEMA_PATH}: schema root must be object")
+            errors.append(f"{SUPERPOWER_SCHEMA_PATH}: schema root must be object")
         else:
             required_top = ["$schema", "$id", "type", "required", "properties", "additionalProperties"]
             for key in required_top:
                 if key not in schema_payload:
-                    errors.append(f"{OPENSPEC_SCHEMA_PATH}: missing top-level key {key!r}")
+                    errors.append(f"{SUPERPOWER_SCHEMA_PATH}: missing top-level key {key!r}")
 
             if schema_payload.get("type") != "object":
-                errors.append(f"{OPENSPEC_SCHEMA_PATH}: type must be 'object'")
+                errors.append(f"{SUPERPOWER_SCHEMA_PATH}: type must be 'object'")
             if schema_payload.get("additionalProperties") is not False:
-                errors.append(f"{OPENSPEC_SCHEMA_PATH}: additionalProperties must be false")
+                errors.append(f"{SUPERPOWER_SCHEMA_PATH}: additionalProperties must be false")
 
             expected_required = {
                 "record_id",
@@ -921,7 +921,7 @@ def check_openspec_collaboration_consistency(
                 "round_goal",
                 "module_scope",
                 "owner",
-                "openspec_ref",
+                "superpower_ref",
                 "anc_design_refs",
                 "decision_snapshot_ref",
                 "sync_status",
@@ -939,63 +939,63 @@ def check_openspec_collaboration_consistency(
             required_fields = set(schema_payload.get("required", []))
             if required_fields != expected_required:
                 errors.append(
-                    f"{OPENSPEC_SCHEMA_PATH}: required fields must exactly match complete schema set "
+                    f"{SUPERPOWER_SCHEMA_PATH}: required fields must exactly match complete schema set "
                     f"(expected {sorted(expected_required)!r}, got {sorted(required_fields)!r})"
                 )
 
             props = schema_payload.get("properties", {})
             if not isinstance(props, dict):
-                errors.append(f"{OPENSPEC_SCHEMA_PATH}: properties must be object")
+                errors.append(f"{SUPERPOWER_SCHEMA_PATH}: properties must be object")
             else:
                 round_id_pattern = props.get("round_id", {}).get("pattern")
                 if round_id_pattern != "^R-\\d{8}-M6-[a-z0-9-]+-\\d{2}$":
                     errors.append(
-                        f"{OPENSPEC_SCHEMA_PATH}: round_id pattern must be "
+                        f"{SUPERPOWER_SCHEMA_PATH}: round_id pattern must be "
                         "'^R-\\\\d{8}-M6-[a-z0-9-]+-\\\\d{2}$'"
                     )
 
                 sync_status_enum = props.get("sync_status", {}).get("enum", [])
                 if sync_status_enum != ["in_sync", "needs_sync", "conflict", "blocked"]:
                     errors.append(
-                        f"{OPENSPEC_SCHEMA_PATH}: sync_status enum must be "
+                        f"{SUPERPOWER_SCHEMA_PATH}: sync_status enum must be "
                         "['in_sync','needs_sync','conflict','blocked']"
                     )
 
                 trigger_mode_enum = props.get("trigger_mode", {}).get("enum", [])
                 if trigger_mode_enum != ["change_triggered", "analyst_inspection"]:
                     errors.append(
-                        f"{OPENSPEC_SCHEMA_PATH}: trigger_mode enum must be "
+                        f"{SUPERPOWER_SCHEMA_PATH}: trigger_mode enum must be "
                         "['change_triggered','analyst_inspection']"
                     )
 
                 conflict_required = props.get("conflict_state", {}).get("required", [])
                 if set(conflict_required) != {"has_conflict", "resolved", "resolution_ref"}:
                     errors.append(
-                        f"{OPENSPEC_SCHEMA_PATH}: conflict_state.required must include "
+                        f"{SUPERPOWER_SCHEMA_PATH}: conflict_state.required must include "
                         "'has_conflict', 'resolved', 'resolution_ref'"
                     )
 
                 evidence_required = props.get("evidence_bundle", {}).get("required", [])
                 if set(evidence_required) != {
-                    "openspec_linkage_ref",
+                    "superpower_linkage_ref",
                     "anc_delta_index_ref",
                     "sync_check_report_ref",
                     "status_report_ref",
                     "round_evidence_log_ref",
                 }:
                     errors.append(
-                        f"{OPENSPEC_SCHEMA_PATH}: evidence_bundle.required must include all evidence refs"
+                        f"{SUPERPOWER_SCHEMA_PATH}: evidence_bundle.required must include all evidence refs"
                     )
 
-    if not OPENSPEC_PROTOCOL_PATH.exists():
-        errors.append(f"{OPENSPEC_PROTOCOL_PATH}: missing protocol document")
+    if not SUPERPOWER_PROTOCOL_PATH.exists():
+        errors.append(f"{SUPERPOWER_PROTOCOL_PATH}: missing protocol document")
     else:
-        protocol_text = OPENSPEC_PROTOCOL_PATH.read_text(encoding="utf-8")
-        if "docs/design/data-models/openspec-collaboration-schema.json" not in protocol_text:
-            errors.append(f"{OPENSPEC_PROTOCOL_PATH}: must reference OpenSpec collaboration schema path")
+        protocol_text = SUPERPOWER_PROTOCOL_PATH.read_text(encoding="utf-8")
+        if "docs/design/data-models/superpower-collaboration-schema.json" not in protocol_text:
+            errors.append(f"{SUPERPOWER_PROTOCOL_PATH}: must reference OpenSpec collaboration schema path")
 
     skill_ids = {entry["skill_id"] for entry in skills_payload.get("entries", [])}
-    for required_skill in ["sys.arch.construction-audit", "system.integration.openspec-sync"]:
+    for required_skill in ["sys.arch.construction-audit", "system.integration.superpower-sync"]:
         if required_skill not in skill_ids:
             errors.append(f"skill_registry: missing required OpenSpec governance skill {required_skill!r}")
 
@@ -1017,29 +1017,29 @@ def check_openspec_collaboration_consistency(
         output_required = set(m6_manifest.get("output_contract", {}).get("required", []))
         if "round_id" not in input_required:
             errors.append(f"{M6_MANIFEST_PATH}: input_contract.required must include 'round_id'")
-        if "openspec_ref" not in input_required:
-            errors.append(f"{M6_MANIFEST_PATH}: input_contract.required must include 'openspec_ref'")
-        if "openspec_sync_ref" not in output_required:
-            errors.append(f"{M6_MANIFEST_PATH}: output_contract.required must include 'openspec_sync_ref'")
+        if "superpower_ref" not in input_required:
+            errors.append(f"{M6_MANIFEST_PATH}: input_contract.required must include 'superpower_ref'")
+        if "superpower_sync_ref" not in output_required:
+            errors.append(f"{M6_MANIFEST_PATH}: output_contract.required must include 'superpower_sync_ref'")
         if "round_evidence_log_ref" not in output_required:
             errors.append(f"{M6_MANIFEST_PATH}: output_contract.required must include 'round_evidence_log_ref'")
         if "round_close_summary_ref" not in output_required:
             errors.append(f"{M6_MANIFEST_PATH}: output_contract.required must include 'round_close_summary_ref'")
 
         phases = m6_manifest.get("phases", [])
-        has_openspec_phase = False
+        has_superpower_phase = False
         for phase in phases:
             if not isinstance(phase, dict):
                 continue
             inline_ap = phase.get("inline_ap")
             inline_skill_id = inline_ap.get("skill_id") if isinstance(inline_ap, dict) else None
-            if inline_skill_id == "system.integration.openspec-sync":
-                has_openspec_phase = True
+            if inline_skill_id == "system.integration.superpower-sync":
+                has_superpower_phase = True
                 break
-        if not has_openspec_phase:
+        if not has_superpower_phase:
             errors.append(
                 f"{M6_MANIFEST_PATH}: phases must include a phase using inline_ap.skill_id "
-                "'system.integration.openspec-sync'"
+                "'system.integration.superpower-sync'"
             )
 
     if errors:
@@ -1147,19 +1147,19 @@ def _validate_round_evidence(
 
     for idx, event in enumerate(events):
         round_id = event.get("round_id")
-        openspec_ref = event.get("openspec_ref")
+        superpower_ref = event.get("superpower_ref")
         if not isinstance(round_id, str) or re.match(ROUND_ID_RE, round_id) is None:
             errors.append(f"round evidence event[{idx}] invalid round_id: {round_id!r}")
-        if not isinstance(openspec_ref, str) or not openspec_ref.strip():
-            errors.append(f"round evidence event[{idx}] openspec_ref must be non-empty string")
+        if not isinstance(superpower_ref, str) or not superpower_ref.strip():
+            errors.append(f"round evidence event[{idx}] superpower_ref must be non-empty string")
 
     round_ids = {event.get("round_id") for event in events}
-    openspec_refs = {event.get("openspec_ref") for event in events}
+    superpower_refs = {event.get("superpower_ref") for event in events}
     if len(round_ids) != 1:
         errors.append(f"round evidence must contain single round_id, found {sorted(round_ids)!r}")
-    if len(openspec_refs) != 1:
+    if len(superpower_refs) != 1:
         errors.append(
-            f"round evidence must contain single openspec_ref, found {sorted(openspec_refs)!r}"
+            f"round evidence must contain single superpower_ref, found {sorted(superpower_refs)!r}"
         )
 
     checkpoint_events = [e for e in events if e.get("event") == "checkpoint_synced"]
@@ -1308,7 +1308,7 @@ def _validate_m2_doc_linkage(errors: List[str]) -> None:
 def _run_verify_m2_cmd(args: argparse.Namespace) -> int:
     agents_payload, skills_payload, processes_payload = validate_all_registries()
     check_protocol_consistency(skills_payload, processes_payload)
-    check_openspec_collaboration_consistency(skills_payload, processes_payload)
+    check_superpower_collaboration_consistency(skills_payload, processes_payload)
 
     errors: List[str] = []
     round_dir = Path(args.round_dir)
@@ -1349,7 +1349,7 @@ def _run_verify_m2_cmd(args: argparse.Namespace) -> int:
 def _run_verify_m6_cmd(args: argparse.Namespace) -> int:
     _, skills_payload, processes_payload = validate_all_registries()
     check_protocol_consistency(skills_payload, processes_payload)
-    check_openspec_collaboration_consistency(skills_payload, processes_payload)
+    check_superpower_collaboration_consistency(skills_payload, processes_payload)
 
     errors: List[str] = []
     round_dir = Path(args.round_dir)
@@ -1380,18 +1380,18 @@ def _run_verify_m6_cmd(args: argparse.Namespace) -> int:
     events = _load_jsonl_events(evidence_path)
     _validate_round_evidence(events, git_range=args.git_range, errors=errors)
 
-    openspec_sync_ref = round_output.get("openspec_sync_ref")
-    if not isinstance(openspec_sync_ref, str) or not openspec_sync_ref.strip():
-        errors.append("round output missing openspec_sync_ref")
+    superpower_sync_ref = round_output.get("superpower_sync_ref")
+    if not isinstance(superpower_sync_ref, str) or not superpower_sync_ref.strip():
+        errors.append("round output missing superpower_sync_ref")
     else:
-        openspec_path = _resolve_artifact_path(round_dir, openspec_sync_ref)
-        if not openspec_path.exists():
-            errors.append(f"openspec_sync_ref file missing: {openspec_path}")
+        superpower_path = _resolve_artifact_path(round_dir, superpower_sync_ref)
+        if not superpower_path.exists():
+            errors.append(f"superpower_sync_ref file missing: {superpower_path}")
         else:
-            record = load_json(openspec_path)
-            schema_payload = load_json(OPENSPEC_SCHEMA_PATH)
+            record = load_json(superpower_path)
+            schema_payload = load_json(SUPERPOWER_SCHEMA_PATH)
             schema_errors: List[str] = []
-            validate_by_schema(record, schema_payload, "openspec_sync_record", schema_errors)
+            validate_by_schema(record, schema_payload, "superpower_sync_record", schema_errors)
             if schema_errors:
                 errors.extend(schema_errors)
 
@@ -1784,7 +1784,7 @@ def _run_project_cmd(args: argparse.Namespace) -> int:
 def _run_protocol_consistency_cmd(_args: argparse.Namespace) -> int:
     _, skills_payload, processes_payload = validate_all_registries()
     check_protocol_consistency(skills_payload, processes_payload)
-    check_openspec_collaboration_consistency(skills_payload, processes_payload)
+    check_superpower_collaboration_consistency(skills_payload, processes_payload)
     print("Protocol consistency passed.")
     return 0
 
@@ -1792,7 +1792,7 @@ def _run_protocol_consistency_cmd(_args: argparse.Namespace) -> int:
 def _run_verify_cmd(_args: argparse.Namespace) -> int:
     agents_payload, skills_payload, processes_payload = validate_all_registries()
     check_protocol_consistency(skills_payload, processes_payload)
-    check_openspec_collaboration_consistency(skills_payload, processes_payload)
+    check_superpower_collaboration_consistency(skills_payload, processes_payload)
 
     docs_content = generate_docs(agents_payload, skills_payload, processes_payload)
     docs_changed = write_if_changed(DOC_PATH, docs_content, check=True)
