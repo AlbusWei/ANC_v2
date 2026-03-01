@@ -1010,6 +1010,13 @@
       "context": "",
       "content_hash": "/1d/6482db3e4a/7/content_hash.txt",
       "prompt": ""
+    },
+    {
+      "metadata": "/1d/6482db3e4a/8/metadata.json",
+      "transcript": "/1d/6482db3e4a/8/full.jsonl",
+      "context": "",
+      "content_hash": "/1d/6482db3e4a/8/content_hash.txt",
+      "prompt": ""
     }
   ]
 }
