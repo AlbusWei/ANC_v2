@@ -115,6 +115,20 @@ OpenJudge 仅负责 raw eval 执行，M1 adapter 负责 unified verdict 与 gate
 3. `docs/design/modules/module-dependency-matrix.md`
 4. `docs/architecture/construction_plane.md`
 
+### 5.7 已完成的模块级对齐（2026-03-01）
+
+1. `docs/design/modules/M3-self-development.md`
+   - 输入契约加入 `superpower_ref` 必填。
+   - 输出契约加入 `superpower_sync_ref`，并要求证据包可追溯到 `superpower_ref + superpower_sync_ref`。
+   - Fail-Closed 明确 `superpower_ref` 缺失/不可解析/不可追溯时阻断。
+   - 验收口径去 OpenSpec 化（`M3-AC-05` 改为 superpower 会话工件与上下文注入契约校验）。
+2. `docs/design/modules/M4-lifecycle-management.md`
+   - 语义切换为 `ProductVersionInstance` 生命周期迁移与版本角色切换治理。
+   - lifecycle-review 输入契约加入 `superpower_ref`。
+   - 明确与 registry 资产 5 态并存，不替代。
+3. `docs/design/modules/module-dependency-matrix.md`
+   - `M3 + M4 -> M5` 汇合门加入 `superpower_ref` 追溯闭环约束。
+
 ## 6) In Scope / Out of Scope
 
 ### In Scope
@@ -141,3 +155,4 @@ OpenJudge 仅负责 raw eval 执行，M1 adapter 负责 unified verdict 与 gate
 ## 8) 设计变更日志
 
 - 2026-03-01：重写为“Superpower 完全替代 OpenSpec”的单源设计基线。
+- 2026-03-01：完成 M3/M4 模块文档与依赖矩阵对齐，补齐 `superpower_ref/superpower_sync_ref` 追溯与 fail-closed 口径。

@@ -41,14 +41,15 @@
 
 `preparation_bundle` 索引最小字段：
 
-1. `objective_ref`
-2. `spec_ref`
-3. `test_doc_ref`
-4. `test_datapoints_ref`
-5. `tc_profile_map_ref`
-6. `compile_report_ref`
-7. `producer_process_id`
-8. `timestamps`
+1. `superpower_ref`
+2. `objective_ref`
+3. `spec_ref`
+4. `test_doc_ref`
+5. `test_datapoints_ref`
+6. `tc_profile_map_ref`
+7. `compile_report_ref`
+8. `producer_process_id`
+9. `timestamps`
 
 ## 4. CLI 契约（quality_eval_runner）
 

@@ -1,6 +1,6 @@
 ---
 name: "entire-codex-sync"
-description: "Synchronize Codex development turns into Entire checkpoints by bridging Gemini lifecycle hooks; use when Codex tasks require Entire-Checkpoint linkage and session evidence."
+description: "Synchronize Codex development turns into Entire checkpoints by bridging Gemini lifecycle hooks; Codex-only (must not be used from Claude Code runtime)."
 license: "Apache-2.0"
 compatibility:
   openclaw: ">=2026.2"
@@ -44,6 +44,7 @@ output_contract:
     - .entire/codex-bridge/session.json exists
     - .entire/codex-bridge/transcript.json exists
 fail_closed_rules:
+  - running inside Claude Code runtime (would mis-attribute provider as gemini)
   - entire command unavailable or not enabled
   - repository preconditions fail
   - bridge script returns non-zero exit

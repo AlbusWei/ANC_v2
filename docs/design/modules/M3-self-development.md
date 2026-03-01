@@ -1,6 +1,6 @@
 # M3 — 反身自开发模块详细设计
 
-> 版本: v0.7.0 | 建设优先级: P1 | 最后更新: 2026-02-23
+> 版本: v0.7.1 | 建设优先级: P1 | 最后更新: 2026-03-01
 
 ## 模块定位
 
@@ -63,13 +63,14 @@
 
 ## 输入契约（统一开发任务包）
 
-1. `objective_ref`
-2. `scope_baseline_ref`
-3. `spec_ref`
-4. `test_doc_ref`
-5. `change_type`（`full-development|hotfix|refactor`）
-6. `risk_level`
-7. `lifecycle_target`
+1. `superpower_ref`（required）
+2. `objective_ref`
+3. `scope_baseline_ref`
+4. `spec_ref`
+5. `test_doc_ref`
+6. `change_type`（`full-development|hotfix|refactor`）
+7. `risk_level`
+8. `lifecycle_target`
 
 ## 输出契约（统一交付包）
 
@@ -77,8 +78,9 @@
 2. `final_gate_verdict_ref`
 3. `lifecycle_transition_ref`
 4. `registry_sync_ref`
-5. `release_package_ref`（可选，按 O7 义务触发）
-6. `m3_evidence_bundle_ref`
+5. `superpower_sync_ref`
+6. `release_package_ref`（可选，按 O7 义务触发）
+7. `m3_evidence_bundle_ref`（必须可追溯到 `superpower_ref + superpower_sync_ref`）
 
 ## 依赖关系（类型化）
 
@@ -101,11 +103,12 @@
 
 ## Fail-Closed 规则
 
-1. Objective/Spec/Test 任一断链，拒绝进入实现阶段。
-2. phase 映射不闭合或引用流程不可达，拒绝流程实例启动。
-3. `gate_decision` 为 `fail|test_invalid`，或 `runtime_gate_state=hold` 且未完成治理回填，拒绝进入 lifecycle 阶段。
-4. lifecycle 证据缺失，拒绝状态迁移并升级 `actor -> owner -> bpm -> admin -> human`。
-5. 外部交付流程绕过 `M3` canonical 流程时直接阻断。
+1. `superpower_ref` 缺失、不可解析或不可追溯时，拒绝进入实现阶段与门禁联动。
+2. Objective/Spec/Test 任一断链，拒绝进入实现阶段。
+3. phase 映射不闭合或引用流程不可达，拒绝流程实例启动。
+4. `gate_decision` 为 `fail|test_invalid`，或 `runtime_gate_state=hold` 且未完成治理回填，拒绝进入 lifecycle 阶段。
+5. lifecycle 证据缺失，拒绝状态迁移并升级 `actor -> owner -> bpm -> admin -> human`。
+6. 外部交付流程绕过 `M3` canonical 流程时直接阻断。
 
 ## 风险与缓解
 
@@ -122,13 +125,14 @@
 
 最小字段：
 
-1. `objective_ref`
-2. `spec_ref`
-3. `test_doc_ref`
-4. `lifecycle_target`（本轮上限 `review`）
-5. `fail_closed_rules_ref`
-6. `required_evidence_refs`
-7. `gate_contract_ref`（指向 `M1 OpenJudge Adapter` 契约）
+1. `superpower_ref`
+2. `objective_ref`
+3. `spec_ref`
+4. `test_doc_ref`
+5. `lifecycle_target`（本轮上限 `review`）
+6. `fail_closed_rules_ref`
+7. `required_evidence_refs`
+8. `gate_contract_ref`（指向 `M1 OpenJudge Adapter` 契约）
 
 Fail-Closed：
 

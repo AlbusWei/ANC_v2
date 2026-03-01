@@ -51,9 +51,11 @@ Fail closed when:
 
 ## Compatibility Caveat
 
-This bridge depends on internal hook commands that Entire marks as non-user-facing.
-Future Entire versions may change these contracts. If behavior breaks, re-validate
-against:
+This bridge is **Codex-only** and intentionally drives `gemini` hook compatibility paths.
+Do not call it from Claude Code runtime; Claude Code has native `claude-code` hooks and
+using this bridge there will mis-attribute provider identity to Gemini.
+
+If this behavior changes in future Entire versions, re-validate against:
 
 - `entire version`
 - `entire hooks --help`

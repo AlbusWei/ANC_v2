@@ -65,8 +65,9 @@ OpenJudge 在 `M1` 中定位为评测执行内核，不直接承担治理决策�
 1. `TEST.md` 是唯一测试定义源：
    - 模板基线：`tests/template/TEST.md`
 2. 交接输入采用 `preparation_bundle_ref`。
-3. 评测流程的运行输入为 `preparation_bundle_ref + superpower_ref + actual_output_refs`。
-4. `tc_id -> profile_id` 必须显式映射并纳入证据包。
+3. `preparation_bundle_ref` 必须包含并可追溯 `superpower_ref`（由 M3 SDD 上下文产出）。
+4. 评测流程的运行输入为 `preparation_bundle_ref + superpower_ref + actual_output_refs`。
+5. `tc_id -> profile_id` 必须显式映射并纳入证据包。
 
 ## 输出契约（Unified Verdict）
 

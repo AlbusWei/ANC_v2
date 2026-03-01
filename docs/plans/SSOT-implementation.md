@@ -68,9 +68,16 @@ Supersedes:
    - `evaluation-runner` 输入契约加入 `superpower_ref`
 4. 修改 `docs/design/skills/self-development-skills.md`
    - SDD 输出契约补 `superpower_ref`
-5. 修改 `processes/meta/quality-gate-evaluation/scripts/quality_gate_evaluation_runner.py`
+5. 修改 `docs/design/modules/M3-self-development.md`
+   - 输入契约补 `superpower_ref` 必填
+   - 输出契约补 `superpower_sync_ref` 与追溯约束
+   - 验收矩阵去 OpenSpec 化（`M3-AC-05` 改为 superpower 会话工件校验）
+6. 修改 `docs/design/modules/M4-lifecycle-management.md`
+   - 切换为 `ProductVersionInstance` 治理语义
+   - lifecycle-review 输入契约补 `superpower_ref`
+7. 修改 `processes/meta/quality-gate-evaluation/scripts/quality_gate_evaluation_runner.py`
    - 证据链校验加入 `superpower_ref` 可达性校验
-6. 修改 `tests/m1-runtime/run_post_dev_regression.py`
+8. 修改 `tests/m1-runtime/run_post_dev_regression.py`
    - 新增 `missing_superpower_ref -> fail-closed` 用例
 
 验证：

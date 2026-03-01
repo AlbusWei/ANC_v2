@@ -192,6 +192,7 @@ def run_tc_001(
             "spec_ref": "docs/design/processes/full-development-process.md",
             "test_doc_ref": test_doc_ref,
             "risk_focus": ["P0", "P1"],
+            "superpower_ref": superpower_ref,
         },
     )
     dump_json(
@@ -616,6 +617,7 @@ def run_tc_003(
             "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
             "test_doc_ref": test_doc_ref,
             "risk_focus": ["P0", "P1"],
+            "superpower_ref": superpower_ref,
         },
     )
     runtime_log_ref.write_text("subjective_check_pending\n", encoding="utf-8")
@@ -1013,6 +1015,7 @@ def run_tc_005(
             "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
             "test_doc_ref": test_doc_ref,
             "risk_focus": ["P0", "P1"],
+            "superpower_ref": superpower_ref,
         },
     )
     runtime_log_ref.write_text("subjective_check_pending_auto_retest\n", encoding="utf-8")
