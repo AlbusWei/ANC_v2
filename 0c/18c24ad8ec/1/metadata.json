@@ -1,9 +1,11 @@
 {
   "cli_version": "0.4.5",
   "checkpoint_id": "0c18c24ad8ec",
+  "session_id": "codex-6cb0d62853be",
   "strategy": "manual-commit",
+  "created_at": "2026-03-01T13:33:18.925601Z",
   "branch": "codex/review-layers-modules",
-  "checkpoints_count": 1,
+  "checkpoints_count": 0,
   "files_touched": [
     "docs/design/modules/M1-openjudge-adapter-spec.md",
     "docs/design/modules/M1-test-system.md",
@@ -12,27 +14,26 @@
     "docs/design/modules/module-dependency-matrix.md",
     "processes/meta/quality-gate-preparation/scripts/quality_gate_preparation_runner.py"
   ],
-  "sessions": [
-    {
-      "metadata": "/0c/18c24ad8ec/0/metadata.json",
-      "transcript": "/0c/18c24ad8ec/0/full.jsonl",
-      "context": "/0c/18c24ad8ec/0/context.md",
-      "content_hash": "/0c/18c24ad8ec/0/content_hash.txt",
-      "prompt": "/0c/18c24ad8ec/0/prompt.txt"
-    },
-    {
-      "metadata": "/0c/18c24ad8ec/1/metadata.json",
-      "transcript": "/0c/18c24ad8ec/1/full.jsonl",
-      "context": "/0c/18c24ad8ec/1/context.md",
-      "content_hash": "/0c/18c24ad8ec/1/content_hash.txt",
-      "prompt": "/0c/18c24ad8ec/1/prompt.txt"
-    }
-  ],
+  "agent": "Gemini CLI",
+  "turn_id": "ab5612231e92",
+  "transcript_identifier_at_start": "gemini-e355255754",
+  "checkpoint_transcript_start": 162,
+  "transcript_lines_at_start": 162,
   "token_usage": {
     "input_tokens": 0,
     "cache_creation_tokens": 0,
     "cache_read_tokens": 0,
     "output_tokens": 0,
     "api_call_count": 0
-  }
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-01T13:33:18.543632Z",
+    "agent_lines": 0,
+    "human_added": 113,
+    "human_modified": 59,
+    "human_removed": 0,
+    "total_committed": 113,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2_worktrees/review-layers-modules/.entire/codex-bridge/transcript.json"
 }
