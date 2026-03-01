@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Tuple
 
 DEFAULT_EVIDENCE_ROOT = Path(
-    "runtime_data/execution/evidence/self-development/runtime-validation-round-meta-assets/latest"
+    "tmp/runtime_data/execution/evidence/self-development/runtime-validation-round-meta-assets/latest"
 )
 DEFAULT_REPORT_NAME = "meta_qa_online_report.json"
 DEFAULT_SUMMARY_NAME = "meta_qa_online_summary.md"

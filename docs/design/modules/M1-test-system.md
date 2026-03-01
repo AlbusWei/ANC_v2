@@ -14,8 +14,8 @@ OpenJudge 在 `M1` 中定位为评测执行内核，不直接承担治理决策�
 3. 准备流程：`docs/design/processes/quality-gate-preparation-process.md`
 4. 评测流程：`docs/design/processes/quality-gate-evaluation-process.md`
 5. HOLD 治理流程：`docs/design/processes/hold-governance-process.md`
-6. Thread-3 运行级闭环证据：`runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/runtime_summary.json`
-7. 真实服务语义评审证据：`runtime_data/execution/evidence/quality-gate/runtime-validation-round-8-semantic-service/runtime_summary.json`
+6. Thread-3 运行级闭环证据：`tmp/runtime_data/execution/evidence/quality-gate/runtime-validation-round-6-m1-closure/runtime_summary.json`
+7. 真实服务语义评审证据：`tmp/runtime_data/execution/evidence/quality-gate/runtime-validation-round-8-semantic-service/runtime_summary.json`
 
 ## Phase 1 成功优先级
 

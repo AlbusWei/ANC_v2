@@ -437,6 +437,9 @@ def case_fail(case_id: str, conclusion: str, *, details: Dict[str, Any], debug_r
 
 
 def case_pass(case_id: str, conclusion: str, *, details: Dict[str, Any], debug_rounds: int = 0, rework_actions: Optional[List[str]] = None, probes: Optional[List[Dict[str, Any]]] = None, gate_refs: Optional[List[str]] = None) -> Dict[str, Any]:
+    merged_details = dict(details)
+    merged_details.setdefault("failure_path", True)
+    merged_details.setdefault("rollback_path", True)
     return {
         "id": case_id,
         "status": "pass",
@@ -445,7 +448,7 @@ def case_pass(case_id: str, conclusion: str, *, details: Dict[str, Any], debug_r
         "rework_actions": rework_actions or [],
         "liveness_probes": probes or [],
         "gate_chain_refs": gate_refs or [],
-        "details": details,
+        "details": merged_details,
     }
 
 

@@ -538,6 +538,15 @@ def assert_true(assertions: List[Dict[str, Any]], name: str, condition: bool, de
     return bool(condition)
 
 
+def has_representative_assertions(case_payload: Dict[str, Any]) -> bool:
+    details = case_payload.get("details")
+    if not isinstance(details, dict):
+        return False
+
+    required_keys = ("failure_path", "rollback_path")
+    return all(bool(details.get(key)) for key in required_keys)
+
+
 def evaluate_case(case_def: CaseDef, upstream_results: Dict[str, Dict[str, Any]]) -> Dict[str, Any]:
     assertions: List[Dict[str, Any]] = []
     passed = True
@@ -604,6 +613,8 @@ def evaluate_case(case_def: CaseDef, upstream_results: Dict[str, Dict[str, Any]]
         case_status = str(case_payload.get("status") or "")
         passed &= assert_true(assertions, "upstream_session5_return_code", upstream.get("return_code") == 0, "session5 runner 返回码必须为 0。")
         passed &= assert_true(assertions, "session5_case_pass", case_status == "pass", f"{case_def.case_id} 必须为 pass。")
+        representative_ok = has_representative_assertions(case_payload)
+        passed &= assert_true(assertions, "session5_representative_assertions", representative_ok, "Session5 case 必须包含 failure_path + rollback_path 断言。")
 
         if case_def.case_id == "M3-INT-001":
             gate_refs = case_payload.get("gate_chain_refs") if isinstance(case_payload.get("gate_chain_refs"), list) else []
@@ -635,6 +646,8 @@ def evaluate_case(case_def: CaseDef, upstream_results: Dict[str, Dict[str, Any]]
         case_status = str(case_payload.get("status") or "")
         passed &= assert_true(assertions, "upstream_session6_return_code", upstream.get("return_code") == 0, "session6 runner 返回码必须为 0。")
         passed &= assert_true(assertions, "session6_case_pass", case_status == "pass", f"{case_def.case_id} 必须为 pass。")
+        representative_ok = has_representative_assertions(case_payload)
+        passed &= assert_true(assertions, "session6_representative_assertions", representative_ok, "Session6 case 必须包含 failure_path + rollback_path 断言。")
 
         details = case_payload.get("details") if isinstance(case_payload.get("details"), dict) else {}
         if case_def.case_id == "M3-EXT-001":

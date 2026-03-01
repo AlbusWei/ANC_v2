@@ -85,7 +85,7 @@
 
 证据根目录：
 
-`runtime_data/execution/evidence/self-development/runtime-validation-round-meta-assets/`
+`tmp/runtime_data/execution/evidence/self-development/runtime-validation-round-meta-assets/`
 
 运行结构：
 
