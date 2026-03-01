@@ -9,6 +9,12 @@
   },
   "skills": {
     "entries": {
+      "private-superpower-processes": {
+        "source": "runtime_data/private-assets/superpower-processes"
+      },
+      "private-superpower-skills": {
+        "source": "runtime_data/private-assets/superpower-skills"
+      },
       "private-anc-processes": {
         "source": "runtime_data/private-assets/processes"
       },

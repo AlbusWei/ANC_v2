@@ -1064,6 +1064,17 @@ def _load_jsonl_events(path: Path) -> List[Dict[str, Any]]:
     return events
 
 
+def _resolve_round_owner_root(round_dir: Path) -> Optional[Path]:
+    parts = round_dir.resolve().parts
+    marker = ("runtime_data", "execution", "evidence", "construction-plane")
+    for idx in range(0, len(parts) - len(marker) + 1):
+        if tuple(parts[idx : idx + len(marker)]) == marker:
+            if idx == 0:
+                return Path("/")
+            return Path(*parts[:idx])
+    return None
+
+
 def _resolve_artifact_path(round_dir: Path, ref: str) -> Path:
     ref_path = Path(ref)
     if ref_path.is_absolute():
@@ -1071,7 +1082,18 @@ def _resolve_artifact_path(round_dir: Path, ref: str) -> Path:
     root_candidate = ROOT / ref_path
     if root_candidate.exists():
         return root_candidate
-    return (round_dir / ref_path).resolve()
+    owner_root = _resolve_round_owner_root(round_dir)
+    if owner_root is not None:
+        owner_candidate = owner_root / ref_path
+        if owner_candidate.exists():
+            return owner_candidate
+    round_candidate = (round_dir / ref_path).resolve()
+    if round_candidate.exists():
+        return round_candidate
+    fallback_name_candidate = (round_dir / ref_path.name).resolve()
+    if fallback_name_candidate.exists():
+        return fallback_name_candidate
+    return round_candidate
 
 
 def _validate_m6_phase_ap_coverage(manifest: Dict[str, Any], errors: List[str]) -> None:

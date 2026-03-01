@@ -20,7 +20,7 @@
 
 1. 文档级设计先行：先把治理契约、协作边界、同步机制定义清晰，再进入运行级验证。
 2. 联动门禁可执行：module/layer 变化能触发 design + inventory + registry + 施工平面同回合闭合。
-3. 语义一致性优先：通过 Architect 主责 + OpenSpec 协同防止语义漂移。
+3. 语义一致性优先：通过 Architect 主责 + Superpower SDD 协同防止语义漂移。
 4. 开放问题可治理：未决项必须带 owner、阶段与下一步，不允许隐性搁置。
 
 ## 模块边界
@@ -44,10 +44,10 @@
 |---|---|---|
 | construction board | `docs/architecture/construction_plane.md` | 已落盘（active） |
 | linkage auditor | `sys.arch.construction-audit` | 运行级验证通过（review） |
-| openspec sync executor | `system.integration.openspec-sync` | 运行级验证通过（review） |
+| superpower sync executor | `system.integration.superpower-sync` | 运行级验证通过（review） |
 | governance flow | `construction-plane-governance` | 运行级验证通过（review） |
-| OpenSpec sync protocol | `docs/design/interfaces/openspec-collaboration-protocol.md` | 本轮新增（draft） |
-| OpenSpec sync schema | `docs/design/data-models/openspec-collaboration-schema.json` | 本轮新增（draft） |
+| Superpower sync protocol | `docs/design/interfaces/openspec-collaboration-protocol.md` | 迁移中（review） |
+| Superpower sync schema | `docs/design/data-models/openspec-collaboration-schema.json` | 迁移中（review） |
 | dependency baseline | `docs/design/modules/module-dependency-matrix.md` | 已落盘（active） |
 | module detailed spec | `docs/design/modules/M6-construction-plane.md` | 运行级收口（v1.0.0） |
 
@@ -56,25 +56,25 @@
 1. 范围基线段：`scope-intake-and-baseline`（AP-032）。
 2. 联动审计段：`run-construction-audit`（AP-033）。
 3. 联动补齐段：`execute-linked-updates`（AP-034）。
-4. OpenSpec 同步段：`sync-openspec-state`（AP-035）。
+4. Superpower SDD 协同段：`sync-superpower-sdd-state`（AP-035）。
 5. 收口校验段：`verify-and-close`（AP-036）。
 6. 连续性约束：单复合流程只覆盖施工治理连续段，不跨非连续生命周期断点。
 7. phase 闭合约束：每个 phase 必须映射到已定义 skill 或已定义子流程。
 
-## Hybrid OpenSpec 协同契约
+## Superpower SDD 协同契约
 
-1. Hybrid 原则：ANC 本地设计文档负责治理契约与落盘真相；OpenSpec 负责协同提案、评审线程与变更对齐。
-2. 同步方向：采用“双向引用、单点裁决”模式。
-   - 本地文档记录 `openspec_ref` 与决议快照。
-   - OpenSpec 记录对应 ANC 文档路径与版本锚点。
-3. 裁决权：当两侧语义冲突时，以 `architect` 在 ANC 文档落盘的裁决为准，再回写 OpenSpec。
-4. 禁止项：禁止仅更新 OpenSpec 而不更新 ANC 设计文档；禁止仅更新 ANC 而不回填 OpenSpec 映射。
-5. 完整 Schema：同步记录必须满足 `openspec-collaboration-schema.json`，禁止只保留最小字段。
+1. 协同原则：ANC 本地设计文档负责治理契约与落盘真相；Superpower SDD 会话负责方案探索、执行编排、评审与验证闭环。
+2. 同步方向：采用“上下文注入 + 单点裁决”模式。
+   - 本地文档记录 `superpower_session_ref` 与决议快照。
+   - Superpower 会话记录对应 ANC 文档路径、上下文包与执行锚点。
+3. 裁决权：当会话输出与 ANC 文档语义冲突时，以 `architect` 在 ANC 文档落盘的裁决为准，再回写会话结论。
+4. 禁止项：禁止仅更新 Superpower 会话结论而不更新 ANC 设计文档；禁止仅更新 ANC 而不回填会话映射。
+5. 完整 Schema：同步记录必须满足 `openspec-collaboration-schema.json`（迁移期承载 Superpower 会话同步），禁止只保留最小字段。
 
 ## 回合追溯主键与协同约束
 
-1. 绑定规则：`1 round = 1 OpenSpec change = N Entire checkpoints = N git commits`。
-2. 同一 `round_id` 下，`openspec_ref` 必须保持单值一致，禁止跨 change 混写。
+1. 绑定规则：`1 round = 1 Superpower SDD session = N Entire checkpoints = N git commits`。
+2. 同一 `round_id` 下，`superpower_session_ref` 必须保持单值一致，禁止跨 change 混写。
 3. 每次代码提交必须对应一次 Entire 同步记录；checkpoint 与 commit 一一映射。
 4. 提交流水以 `JSONL` 证据日志追加；`construction_plane.md` 仅在回合关闭时写入摘要。
 5. 任一 checkpoint 只能归属一个 `round_id`，禁止跨回合复用。
@@ -83,7 +83,7 @@
 
 1. 格式：`R-YYYYMMDD-M6-<change_key>-NN`。
 2. 正则：`^R-\d{8}-M6-[a-z0-9-]+-\d{2}$`。
-3. `change_key` 从 `openspec_ref` 派生稳定短键，仅允许小写字母、数字与 `-`。
+3. `change_key` 从 `superpower_session_ref` 派生稳定短键，仅允许小写字母、数字与 `-`。
 4. `NN` 递增范围按“同一 `change_key`”计数，不做当天全局序号。
 
 ## 输入契约（施工回合输入包）
@@ -94,13 +94,13 @@
 4. `changed_assets`
 5. `linkage_targets`
 6. `owner`
-7. `openspec_ref`（架构相关变更必填）
+7. `superpower_session_ref`（架构相关变更必填）
 
 ## 输出契约（施工回合输出包）
 
 1. `m6_update_bundle_ref`
 2. `linkage_report_ref`
-3. `openspec_sync_ref`
+3. `superpower_sync_ref`
 4. `registry_verify_report_ref`
 5. `construction_plane_delta_ref`
 6. `open_questions_ref`
@@ -110,17 +110,17 @@
 ## 回合证据日志（JSONL）
 
 1. 事件类型固定为：`round_open`、`checkpoint_synced`、`round_close`。
-2. `round_open` 最小字段：`event`、`round_id`、`openspec_ref`、`round_goal`、`owner`、`ts`。
-3. `checkpoint_synced` 最小字段：`event`、`round_id`、`openspec_ref`、`entire_checkpoint_id`、`commit_sha`、`changed_files`、`sync_status`、`ts`。
-4. `round_close` 最小字段：`event`、`round_id`、`openspec_ref`、`decision_snapshot_ref`、`final_sync_status`、`checkpoint_count`、`commit_count`、`verdict`、`ts`。
-5. 建议 commit trailers：`Entire-Checkpoint`、`Round-ID`、`OpenSpec-Change`。
+2. `round_open` 最小字段：`event`、`round_id`、`superpower_session_ref`、`round_goal`、`owner`、`ts`。
+3. `checkpoint_synced` 最小字段：`event`、`round_id`、`superpower_session_ref`、`entire_checkpoint_id`、`commit_sha`、`changed_files`、`sync_status`、`ts`。
+4. `round_close` 最小字段：`event`、`round_id`、`superpower_session_ref`、`decision_snapshot_ref`、`final_sync_status`、`checkpoint_count`、`commit_count`、`verdict`、`ts`。
+5. 建议 commit trailers：`Entire-Checkpoint`、`Round-ID`、`Superpower-Session`。
 
 ## 依赖关系（类型化）
 
 1. 观测 `M2`（`E`）：消费流程实例与运行证据，用于进度与风险判断（非阻断前置）。
 2. 观测 `M1`（`E`）：消费质量门禁结果，用于里程碑判定（非阻断前置）。
 3. 观测 `M4`（`G/E`）：消费生命周期状态与审批证据（非阻断前置）。
-4. 依赖 `OpenSpec`（`E/G`）：消费协同评审状态并回写 ANC 裁决与映射。
+4. 依赖 `Superpower SDD`（`E/G`）：消费会话评审状态并回写 ANC 裁决与映射。
 5. 输出给 `M1/M2/M3/M4/M5`（`E`）：提供统一施工状态、风险与开放问题上下文。
 
 ## Fail-Closed 规则
@@ -129,11 +129,11 @@
 2. design/inventory/registry 任一缺项，施工状态不得标记为 Done。
 3. `registry_contract_tool.py verify` 或 `registry_contract_tool.py verify-m6 --round-dir <round-dir>` 失败，默认阻断并升级 `actor -> owner -> bpm -> admin -> human`。
 4. 开放问题缺失 owner 或下一步，禁止从 In Progress 迁移到 Done。
-5. 架构相关变更缺失 `openspec_ref` 或双向映射，禁止回合关闭。
-6. OpenSpec 与 ANC 文档语义冲突且未形成 architect 裁决，禁止推进。
+5. 架构相关变更缺失 `superpower_session_ref` 或双向映射，禁止回合关闭。
+6. Superpower 会话与 ANC 文档语义冲突且未形成 architect 裁决，禁止推进。
 7. 任一代码提交缺失 `Entire-Checkpoint`，禁止回合关闭。
 8. `checkpoint_count` 与 `commit_count` 不一致，禁止回合关闭。
-9. 同一 `round_id` 出现多个 `openspec_ref`，禁止回合关闭。
+9. 同一 `round_id` 出现多个 `superpower_session_ref`，禁止回合关闭。
 10. `round_close` 缺失或未处于日志末尾，禁止回合关闭。
 
 ## 风险与缓解
@@ -149,13 +149,13 @@
 
 - [x] `construction-plane-governance` 已注册并可被 BPM 调度
 - [x] `sys.arch.construction-audit` 已注册且具备 Capability Contract + test_mount
-- [x] `system.integration.openspec-sync` 已注册并可产出 schema 合法记录
+- [x] `system.integration.superpower-sync` 已注册并可产出 schema 合法记录
 - [x] 修改 module/layer 设计时，联动门禁可在同回合闭合
 - [x] 施工回合可产出最小证据包并可追溯
-- [x] 施工回合遵循 `1 round = 1 OpenSpec change = N Entire checkpoints`
+- [x] 施工回合遵循 `1 round = 1 Superpower SDD session = N Entire checkpoints`
 - [x] `round_id` 与 `JSONL` 证据日志可被脚本稳定解析
 - [x] 开放问题具备 owner、计划阶段与下一步动作
-- [x] 架构相关回合具备 OpenSpec 双向映射且无语义漂移
+- [x] 架构相关回合具备 Superpower 会话映射且无语义漂移
 
 ## 已定决策（2026-02-21）
 
@@ -163,7 +163,7 @@
 2. `D-M6-002`：M6 语义 owner 固定为 `architect`，优先防止语义漂移。
 3. `D-M6-003`：巡检采用“变更触发 + system-analyst 可调频巡检”，前期优先降低遗漏风险。
 4. `D-M6-004`：生命周期状态推进唯一由 `M4` 承担；`M6` 不承担状态机推进职责。
-5. `D-M6-005`：施工协同主键固定为 `1 round = 1 OpenSpec change = N Entire checkpoints = N commits`。
+5. `D-M6-005`：施工协同主键固定为 `1 round = 1 Superpower SDD session = N Entire checkpoints = N commits`。
 6. `D-M6-006`：提交粒度证据采用 JSONL 追加，施工平面主文档仅在回合关闭时汇总。
 7. `D-M6-007`：`round_id` 采用 `R-YYYYMMDD-M6-<change_key>-NN`，且 `NN` 按同一 `change_key` 递增。
 

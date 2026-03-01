@@ -34,37 +34,37 @@
 - [x] 完成 M2 触发运行时骨架落盘：`trigger-schedule-runtime` + `trigger-event-runtime` + AP-026~AP-031 + 6 个 `sys.bpm.*` 核心技能
 - [x] 完成 M3 自开发骨架落盘：`full-development/hotfix/refactor` 流程资产 + `objective-writer/agent-creator/process-creator/template-validator/skill-creator` 技能注册
 - [x] 完成 M6 施工治理资产落盘：`construction-plane-governance` 流程 + `sys.arch.construction-audit` 技能 + M6 详细设计重构
-- [x] 建立 M6 × OpenSpec Hybrid 协同协议并明确 Architect 语义 owner 机制
-- [x] 完成 OpenSpec 协同完整 schema 与包装技能落盘：`openspec-collaboration-schema` + `system.integration.openspec-sync`
+- [x] 建立 M6 × Superpower SDD 协同协议并明确 Architect 语义 owner 机制
+- [x] 完成 Superpower 协同完整 schema 与包装技能落盘：`openspec-collaboration-schema` + `system.integration.superpower-sync`
 - [x] 完成 M1 第一批技能开发：`sys.qa.*` 七个技能统一迁移到 `skills/system/qa/*`，补齐 Capability Contract、最小可执行脚本、P0 测试与 registry 联动
 - [x] 完成模板基座标准化：升级 `skills/template` 与 `skills/skill-creator`，形成本地化标准脚手架与 review/smoke 评审基线
 - [x] 完成 M1 QA 技能运行级复核：OpenJudge 真执行链路与 LLM-as-Judge Fail-Closed 在 `runtime-validation-round-2` 落盘（objective/regression pass，subjective hold，llm-missing-key test_invalid）
 - [x] 完成 M1 QA 动态评测补强：`evaluation-runner` 增加 listwise 主观盲测与 judge 错误分类（unsupported model -> `test_invalid`），并在 `runtime-validation-round-3` 落盘 strict config 证据
 - [x] 完成 LLM-as-Judge 跑通验证：模型切换 `gpt-5.3-codex` 后，objective + subjective(listwise) 均在 `runtime-validation-round-4` 真实通过
 - [x] 新增多 worktree 分支协同技能：`system.ops.git-worktree-sync`（`source -> parent -> siblings`，冲突/大规模 WIP 均 Fail-Closed）
-- [x] 锁定回合追溯主键：`1 round = 1 OpenSpec change = N Entire checkpoints = N commits`
+- [x] 锁定回合追溯主键：`1 round = 1 Superpower SDD session = N Entire checkpoints = N commits`
 - [x] 锁定证据写入策略：提交级证据进入 `round-evidence.jsonl`，施工平面主文档仅在回合关闭时汇总
 - [x] 锁定 `round_id` 规范：`R-YYYYMMDD-M6-<change_key>-NN`，`NN` 按同一 `change_key` 递增
 - [x] 完成 M6 AP 化补齐：新增 AP-032~AP-036 并将 `construction-plane-governance` 全 phase 映射到专用 AP
 - [x] 完成 M6 执行闭环脚本：`manual_task_runner` + `construction_audit` + `round_evidence_tool` + `run_round`
 - [x] 完成 M6 专项门禁：`registry_contract_tool.py verify-m6`
 - [x] 完成 M6 首轮运行级 dry-run（A 通过，B/C Fail-Closed），并落盘证据索引 `runtime_data/execution/evidence/construction-plane/README.md`
-- [x] 将 `construction-plane-governance`、`sys.arch.construction-audit`、`system.integration.openspec-sync` 生命周期从 `draft` 提升到 `review`
+- [x] 将 `construction-plane-governance`、`sys.arch.construction-audit`、`system.integration.superpower-sync` 生命周期从 `draft` 提升到 `review`
 - [x] 完成 `m2-bpm-runtime-hardening` W2 配置治理闭环：`governed-config-change`/`config-change-gatekeeper`/`system-config-updater` 可执行，`TC-GCC-001~003` 运行级通过并落盘证据（`runtime_data/execution/evidence/bpm-runtime/w2_*`）
 - [x] 完成 `m2-bpm-runtime-hardening` W5（门禁收口与状态提升）：新增 `verify-m2` 专项校验，`verify/verify-m2/verify-m6` 与 post-dev regression 同回合通过，关闭 `Q-001`，并将 `system-analyst`、`sys.arch.system-feedback-digest`、`runtime-policy-calibration` 生命周期统一收敛到 `review`（不推进 `active`）
 - [x] 新增 `lifecycle-review` 最小可执行流程资产（owner=`hr`，status=`draft`），并完成 design/inventory/registry/施工平面联动更新（Thread-2）
 - [x] 完成 Thread-4 状态联动收口：`qa/bpm/admin/architect/hr` 生命周期统一推进到 `review`；`lifecycle-review` 由 `draft` 推进到 `review`；`system-analyst` 保持“分析输入，不做 lifecycle owner”边界
 - [x] 完成 `R-20260222-M6-m1-quality-gate-runtime-closure-01` 回合关闭包：`round-output.json`、`round-evidence.jsonl`、`round_close_summary.md`、`openspec-sync-record.json`、`registry_verify.log`，并通过 `verify` 与 `verify-m6`
-- [x] 完成 `m1-quality-gate-runtime-closure` OpenSpec 归档：补齐 `specs/**` deltas 与 Scenario，`openspec validate` 通过并归档至 `openspec/changes/archive/2026-02-22-m1-quality-gate-runtime-closure/`
-- [x] 完成 `m3-self-development-e2e-online` Session3 运行资产落地：新增 `impact-analyzer/release-manager` 技能、`registry-sync/escalation` 流程、`release-manager-agent` 目录，并完成 registry/OpenSpec/施工平面联动
+- [x] 完成 `m1-quality-gate-runtime-closure` 历史 OpenSpec 归档：补齐 `specs/**` deltas 与 Scenario，`openspec validate` 通过并归档至 `openspec/changes/archive/2026-02-22-m1-quality-gate-runtime-closure/`
+- [x] 完成 `m3-self-development-e2e-online` Session3 运行资产落地：新增 `impact-analyzer/release-manager` 技能、`registry-sync/escalation` 流程、`release-manager-agent` 目录，并完成 registry/Superpower SDD/施工平面联动
 - [x] 完成 `m3-self-development-e2e-online` Session4 测试基座：新增 `tests/m3-self-development/{TEST.md,live_cases.md,run_tc_online.py}`，复用 `m3-runtime + m1-runtime` runner 形成四类断言并预留 Session5/6 case 体系
 - [x] 完成 `m3-self-development-e2e-online` Session5 内部主线 E2E（2026-02-25）：`M3-INT-001/002/003` 在线套件通过，形成 `tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session5/` 证据包，`session6_readiness=ready`
 - [x] 完成 `m3-self-development-e2e-online` Session6 外部主线 E2E（2026-02-26）：`M3-EXT-001/002/003 + M3-FC-101/102/103` 在线套件通过，形成 `tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session6/` 证据包，`session7_readiness=ready`
-- [x] 完成 `m3-self-development-e2e-online` Session7 全链路收口（2026-02-26）：OpenSpec/registry/construction plane/evidence 四向对账通过，形成 `tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session7/` 证据包，生命周期结论维持 `draft/review`
+- [x] 完成 `m3-self-development-e2e-online` Session7 全链路收口（2026-02-26）：Superpower SDD 会话/registry/construction plane/evidence 四向对账通过，形成 `tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session7/` 证据包，生命周期结论维持 `draft/review`
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase2 流程资产重构：7 个历史包装流程全部退役，`full-development/hotfix/refactor/development-process` 全量替换为现行 P5 子流程链，并完成 process registry、process inventory、施工平面同步
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase3 元技能执行级升级：8 个目标元技能统一推进到 `review`，4 个 creator/validator runner 统一为 `--input/--output/[--report]` 契约，并落地 `meta-skill-creator` 运行名治理（`skill-creator` 仓库内软禁用）
-- [x] 完成 `m3-meta-asset-quality-hardening` Phase4 联动闭合：design + inventory + registry + OpenSpec + 施工平面对齐，11 个流程生命周期统一收敛到 `review`，并明确本轮不推进 `active`
-- [x] 完成 `m3-meta-asset-quality-hardening` Phase7 最终收口：OpenSpec/registry/design docs/runtime evidence 四向对账一致；Meta Skills（8）与 Meta Processes（20）生命周期统一收敛到 `review`（`draft=0`、`active=0`）；最终门禁（`registry verify` + `openspec validate` + `final-regression`）全部通过
+- [x] 完成 `m3-meta-asset-quality-hardening` Phase4 联动闭合：design + inventory + registry + Superpower SDD + 施工平面对齐，11 个流程生命周期统一收敛到 `review`，并明确本轮不推进 `active`
+- [x] 完成 `m3-meta-asset-quality-hardening` Phase7 最终收口：Superpower SDD 会话/registry/design docs/runtime evidence 四向对账一致；Meta Skills（8）与 Meta Processes（20）生命周期统一收敛到 `review`（`draft=0`、`active=0`）；最终门禁（`registry verify` + `final-regression`）全部通过
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase9 `full-development` 首轮运行级真实分发 dry-run：`TC-FULL-DEV-PROC-001` 在 8 phase 下通过，真实 openclaw 分发 + 同 actor 跨 phase 会话隔离校验通过
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase10 AP 语义统一：18 份流程 manifest 去除 `target_type=skill`，统一为 `target_type=subprocess` + `inline_ap` 临时 AP 语法，并启用“同 Actor 可穿透执行”规则
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase11 `hotfix/refactor` 首轮运行级真实分发 dry-run：`TC-HOTFIX-PROC-001` 与 `TC-REFACTOR-PROC-001` 均通过，phase 全量分发、session 严格匹配、同 actor 跨 phase 隔离全部通过（证据：`runtime_data/execution/evidence/bpm-runtime/w3d_tc_hotfix_refactor_proc_report.json`）
@@ -98,7 +98,7 @@
 7. 进行 trigger runtime 动态策略回放并回写 `catchup_policy_ref` 校准证据。
 8. 将 M1 测试时长估计与 M2 动态策略问题统一纳入 `runtime-policy-calibration` 治理回路。
 9. 收敛 M6 周期审查节奏与 owner 责任模型，并写入治理流程基线。
-10. 与 OpenSpec 协同线程联调一次“冲突裁决 -> 双向回写”演练。
+10. 与 Superpower SDD 协同线程联调一次“冲突裁决 -> 双向回写”演练。
 11. 收敛 `verify-m2`/`verify-m6` 与 CI/pre-close gate 集成方式，避免人工绕过。
 
 ## m3-self-development-e2e-online 会话推进计划（Session2~Session7）
@@ -141,9 +141,9 @@
 | Q-009 | `construction-plane-governance` 在 Phase 1 先文档级演练还是直接运行级 dry-run？ | Phase 1 | Closed（文档级先行，运行级后置） |
 | Q-010 | `sys.arch.construction-audit` 长期 owner 固定 architect 还是 architect+bpm 双 owner？ | Phase 1 | Closed（architect 为语义 owner，bpm 负责编排执行） |
 | Q-011 | M6 审查节奏采用“变更触发”还是“周节奏+变更触发”双轨？ | Phase 1 | Closed（变更触发 + system-analyst 可调频巡检） |
-| Q-012 | OpenSpec 双向映射的最小字段是否固化为强制 schema（如 `openspec_ref/decision_snapshot_ref/sync_status`）？ | Phase 1 | Closed（已升级为完整强制 schema） |
-| Q-013 | OpenSpec 巡检触发阈值如何分级（变更密度、风险等级、未决项数量）？ | Phase 1 | system-analyst -> architect |
-| Q-014 | OpenSpec 与施工回合绑定粒度是否固定为 `1 round = 1 change`？ | Phase 1 | Closed（固定为 `1 round = 1 change`） |
+| Q-012 | Superpower SDD 双向映射的最小字段是否固化为强制 schema（如 `superpower_session_ref/decision_snapshot_ref/sync_status`）？ | Phase 1 | Closed（已升级为完整强制 schema） |
+| Q-013 | Superpower SDD 巡检触发阈值如何分级（变更密度、风险等级、未决项数量）？ | Phase 1 | system-analyst -> architect |
+| Q-014 | Superpower SDD 与施工回合绑定粒度是否固定为 `1 round = 1 session`？ | Phase 1 | Closed（固定为 `1 round = 1 session`） |
 | Q-015 | 提交证据应实时写施工平面主文档还是独立日志？ | Phase 1 | Closed（提交级进入 JSONL，主文档仅关回合汇总） |
 
 ## 更新纪律

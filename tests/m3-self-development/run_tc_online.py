@@ -191,9 +191,74 @@ def repo_root() -> Path:
     return Path(proc.stdout.strip()).resolve()
 
 
+def resolve_repo_artifact_path(root: Path, relative_path: str) -> Path:
+    direct = (root / relative_path).resolve()
+    if direct.exists():
+        return direct
+
+    root_parts = root.resolve().parts
+    if ".worktrees" in root_parts:
+        idx = root_parts.index(".worktrees")
+        workspace_root = Path(*root_parts[:idx]) if idx > 0 else Path("/")
+        workspace_candidate = (workspace_root / relative_path).resolve()
+        if workspace_candidate.exists():
+            return workspace_candidate
+
+    proc = subprocess.run(
+        ["git", "rev-parse", "--git-common-dir"],
+        cwd=str(root),
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if proc.returncode != 0:
+        return direct
+
+    common_dir_raw = proc.stdout.strip()
+    if not common_dir_raw:
+        return direct
+
+    common_dir = Path(common_dir_raw)
+    if not common_dir.is_absolute():
+        common_dir = (root / common_dir).resolve()
+    else:
+        common_dir = common_dir.resolve()
+
+    parent_repo_root: Optional[Path] = None
+    if common_dir.name == ".git":
+        parent_repo_root = common_dir.parent
+    elif common_dir.parent.name == "worktrees" and common_dir.parent.parent.name == ".git":
+        parent_repo_root = common_dir.parent.parent.parent
+
+    if parent_repo_root is None:
+        return direct
+
+    candidate = (parent_repo_root / relative_path).resolve()
+    if candidate.exists():
+        return candidate
+    return direct
+
+
+def resolve_session5_report_path(root: Path) -> Path:
+    return resolve_repo_artifact_path(
+        root,
+        "tmp/runtime_data/execution/evidence/construction-plane/"
+        "R-20260222-M6-m3-self-development-e2e-online-01/session5/session5_report.json",
+    )
+
+
 def split_csv(raw: str) -> List[str]:
     values = [item.strip() for item in raw.split(",")]
     return [item for item in values if item]
+
+
+def path_arg_for_root(path: Path, root: Path) -> str:
+    resolved = path.resolve()
+    root_resolved = root.resolve()
+    try:
+        return resolved.relative_to(root_resolved).as_posix()
+    except ValueError:
+        return str(resolved)
 
 
 def to_rel(path: Path, root: Path) -> str:
@@ -442,11 +507,7 @@ def run_upstream_session6(root: Path, evidence_root: Path, selected_case_ids: Li
     """运行 Session6 外部主线执行器，并将报告写入当前 evidence_root。"""
     upstream_root = evidence_root / "upstream" / "session6-runtime"
     upstream_root.mkdir(parents=True, exist_ok=True)
-    session5_report = (
-        root
-        / "tmp/runtime_data/execution/evidence/construction-plane/"
-        "R-20260222-M6-m3-self-development-e2e-online-01/session5/session5_report.json"
-    ).resolve()
+    session5_report = resolve_session5_report_path(root)
     session6_case_ids = [item for item in selected_case_ids if CASE_BY_ID[item].session == "session6"]
     report_path = (evidence_root / "session6_report.json").resolve()
     if report_path.exists():
@@ -487,7 +548,7 @@ def run_upstream_session6(root: Path, evidence_root: Path, selected_case_ids: Li
         "--report",
         "session6_report.json",
         "--session5-report",
-        to_rel(session5_report, root),
+        path_arg_for_root(session5_report, root),
     ]
     if session6_case_ids:
         cmd.extend(["--cases", ",".join(session6_case_ids)])

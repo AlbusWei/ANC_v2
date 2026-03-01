@@ -89,7 +89,12 @@ def resolve_path(root: Path, raw: str) -> Path:
 
 
 def to_rel(path: Path, root: Path) -> str:
-    return path.resolve().relative_to(root).as_posix()
+    resolved = path.resolve()
+    root_resolved = root.resolve()
+    try:
+        return resolved.relative_to(root_resolved).as_posix()
+    except ValueError:
+        return str(resolved)
 
 
 def run_cmd(cmd: List[str], cwd: Path) -> subprocess.CompletedProcess[str]:
@@ -205,6 +210,79 @@ def extract_session5_base_chain(session5_report: Dict[str, Any]) -> Dict[str, st
     if missing:
         raise Session6Error("session5_base_chain_missing:" + ",".join(missing))
     return {key: str(details.get(key) or "") for key in required}
+
+
+def resolve_repo_artifact_path(root: Path, relative_path: str) -> Path:
+    direct = (root / relative_path).resolve()
+    if direct.exists():
+        return direct
+
+    root_parts = root.resolve().parts
+    if ".worktrees" in root_parts:
+        idx = root_parts.index(".worktrees")
+        workspace_root = Path(*root_parts[:idx]) if idx > 0 else Path("/")
+        workspace_candidate = (workspace_root / relative_path).resolve()
+        if workspace_candidate.exists():
+            return workspace_candidate
+
+    proc = subprocess.run(
+        ["git", "rev-parse", "--git-common-dir"],
+        cwd=str(root),
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if proc.returncode != 0:
+        return direct
+
+    common_dir_raw = proc.stdout.strip()
+    if not common_dir_raw:
+        return direct
+
+    common_dir = Path(common_dir_raw)
+    if not common_dir.is_absolute():
+        common_dir = (root / common_dir).resolve()
+    else:
+        common_dir = common_dir.resolve()
+
+    parent_repo_root: Optional[Path] = None
+    if common_dir.name == ".git":
+        parent_repo_root = common_dir.parent
+    elif common_dir.parent.name == "worktrees" and common_dir.parent.parent.name == ".git":
+        parent_repo_root = common_dir.parent.parent.parent
+
+    if parent_repo_root is not None:
+        candidate = (parent_repo_root / relative_path).resolve()
+        if candidate.exists():
+            return candidate
+
+    return direct
+
+
+def resolve_session5_base_chain_paths(root: Path, base_chain: Dict[str, str]) -> Dict[str, str]:
+    resolved: Dict[str, str] = {}
+    for key, value in base_chain.items():
+        raw = str(value or "").strip()
+        if not raw:
+            resolved[key] = raw
+            continue
+        path = Path(raw)
+        if path.is_absolute():
+            resolved[key] = str(path.resolve())
+            continue
+
+        candidate = resolve_repo_artifact_path(root, raw)
+        if candidate.exists():
+            resolved[key] = str(candidate.resolve())
+            continue
+
+        alt = resolve_repo_artifact_path(root, raw.replace("/tmp/", "/.worktrees/m1-m3-gate-authenticity/tmp/"))
+        if alt.exists():
+            resolved[key] = str(alt.resolve())
+            continue
+
+        resolved[key] = raw
+    return resolved
 
 
 def extract_lifecycle_to_status(root: Path, lifecycle_transition_ref: str) -> str:
@@ -993,6 +1071,7 @@ def main() -> int:
         selected_case_ids = parse_selected_cases(args.cases)
         session5_report = ensure_session5_ready(root, session5_report_path)
         session5_base_chain = extract_session5_base_chain(session5_report)
+        session5_base_chain = resolve_session5_base_chain_paths(root, session5_base_chain)
         session5_gate_refs = [str(item) for item in session5_report.get("gate_chain_refs", []) if str(item).strip()] if isinstance(session5_report.get("gate_chain_refs"), list) else []
         s5 = load_session5_module(root)
 

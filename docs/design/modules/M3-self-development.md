@@ -116,6 +116,26 @@
 3. 风险：开发型流程违反连续性约束。  
 缓解：拆分断点前后流程并由上级流程编排，禁止顺序链硬拼。
 
+## Superpower 上下文注入契约（superpower_context_envelope）
+
+`M3` 采用 Superpower-first 执行时，必须在进入 `brainstorming/executing-plans/requesting-code-review/verification-before-completion` 前注入统一上下文包。
+
+最小字段：
+
+1. `objective_ref`
+2. `spec_ref`
+3. `test_doc_ref`
+4. `lifecycle_target`（本轮上限 `review`）
+5. `fail_closed_rules_ref`
+6. `required_evidence_refs`
+7. `gate_contract_ref`（指向 `M1 OpenJudge Adapter` 契约）
+
+Fail-Closed：
+
+1. 任一必填字段缺失或不可解析，拒绝进入实现阶段。
+2. `lifecycle_target` 越级（超出 `review`）时，直接阻断。
+3. `gate_contract_ref` 缺失时，拒绝进入 `M1` 门禁联动。
+
 ## 验收矩阵（Session2 设计闭合版）
 
 | 验收 ID | 验收条目 | 验证命令 | 证据路径 | 通过判据 | 失败判据 |
@@ -124,7 +144,7 @@
 | M3-AC-02 | `registry-sync/escalation` 设计文档闭合（含输入/输出/Fail-Closed/test_mount/生命周期） | `rg -n "输入契约|输出契约|Fail-Closed|test_mount|生命周期" docs/design/processes/{registry-sync-process.md,escalation-process.md}` | `docs/design/processes/registry-sync-process.md`<br>`docs/design/processes/escalation-process.md` | 两份文档均命中全部契约关键字 | 缺任一关键字段即不通过 |
 | M3-AC-03 | M3 技能包补齐系统治理依赖技能接口 | `rg -n "impact-analyzer|release-manager|系统治理依赖技能" docs/design/skills/{system-skills.md,self-development-skills.md}` | `docs/design/skills/system-skills.md`<br>`docs/design/skills/self-development-skills.md` | 两个技能定义卡字段完整且生命周期收敛到 `review`（不推进 `active`） | 仅出现名称、未出现契约字段 |
 | M3-AC-04 | `release-manager-agent` 达到可运行资产口径（设计） | `rg -n "bound_skills|participating_processes|release_request_in|release_delivery_out|release_reject_out|Fail-Closed|test_mount" docs/design/agents/app/delivery/release-manager-agent.md` | `docs/design/agents/app/delivery/release-manager-agent.md` | 输入/成功输出/拒绝输出三类契约均完整 | 缺少任一输出结构或 Fail-Closed 路径 |
-| M3-AC-05 | OpenSpec 与 gap 基线对齐且可校验 | `openspec validate m3-self-development-e2e-online --json` | `openspec/changes/m3-self-development-e2e-online/design.md`<br>`openspec/changes/m3-self-development-e2e-online/tasks.md`<br>`openspec/changes/m3-self-development-e2e-online/m3-gap-baseline.md` | validate 返回 `valid=true` 且 Session2 条目状态一致 | validate 失败或文档状态冲突 |
+| M3-AC-05 | Superpower SDD 会话工件与上下文注入契约闭合且可校验 | `rg -n "superpower_context_envelope|brainstorming|executing-plans|requesting-code-review|verification-before-completion" docs/design/modules/M3-self-development.md` | `docs/design/modules/M3-self-development.md`（上下文注入契约）<br>`docs/architecture/construction_plane.md`（会话计划与回合证据） | 命中会话工件与上下文注入字段，且 Session2 条目状态一致 | 缺少会话工件字段、上下文契约字段或状态冲突 |
 | M3-AC-06 | registry 契约门禁通过（设计层联动无破坏） | `python3 shared/registry/registry_contract_tool.py verify` | `shared/registry/*.json`（只读门禁） | verify 通过且无 contract/projection 破坏 | verify 非零退出或契约报错 |
 
 说明：
