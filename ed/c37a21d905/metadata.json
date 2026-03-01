@@ -3,7 +3,7 @@
   "checkpoint_id": "edc37a21d905",
   "strategy": "manual-commit",
   "branch": "rebuild",
-  "checkpoints_count": 7,
+  "checkpoints_count": 8,
   "files_touched": [
     "docs/architecture/construction_plane.md",
     "docs/design/modules/M1-test-system.md",
@@ -39,6 +39,13 @@
       "context": "/ed/c37a21d905/3/context.md",
       "content_hash": "/ed/c37a21d905/3/content_hash.txt",
       "prompt": "/ed/c37a21d905/3/prompt.txt"
+    },
+    {
+      "metadata": "/ed/c37a21d905/4/metadata.json",
+      "transcript": "/ed/c37a21d905/4/full.jsonl",
+      "context": "/ed/c37a21d905/4/context.md",
+      "content_hash": "/ed/c37a21d905/4/content_hash.txt",
+      "prompt": "/ed/c37a21d905/4/prompt.txt"
     }
   ],
   "token_usage": {
