@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "f0a7d7e15c40",
+  "session_id": "codex-ef280e997b8a",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-01T13:39:53.813435Z",
+  "branch": "rebuild",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "shared/registry/registry_contract_tool.py"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "278bae1b30c5",
+  "transcript_identifier_at_start": "gemini-6695312f6e",
+  "initial_attribution": {
+    "calculated_at": "2026-03-01T13:39:53.798842Z",
+    "agent_lines": 0,
+    "human_added": 368,
+    "human_modified": 1,
+    "human_removed": 0,
+    "total_committed": 368,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2/.entire/codex-bridge/transcript.json"
+}
