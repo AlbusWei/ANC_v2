@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "ef9b7563d9ec",
+  "session_id": "c67cf18f-d159-4e9f-8be2-7e178cba9581",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-02T15:15:11.218321Z",
+  "branch": "rebuild",
+  "checkpoints_count": 8,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/inventories/process-inventory.md"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "788fe92f14eb",
+  "token_usage": {
+    "input_tokens": 21501210,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 3712384,
+    "output_tokens": 138711,
+    "api_call_count": 245
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-02T15:15:09.653901Z",
+    "agent_lines": 22,
+    "human_added": 318,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 340,
+    "agent_percentage": 6.470588235294119
+  },
+  "transcript_path": ".claude/projects/-Users-albus-MyProjects-ANC-v2/c67cf18f-d159-4e9f-8be2-7e178cba9581.jsonl"
+}
