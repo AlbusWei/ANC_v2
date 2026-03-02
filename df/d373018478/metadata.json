@@ -36,6 +36,13 @@
       "context": "/df/d373018478/3/context.md",
       "content_hash": "/df/d373018478/3/content_hash.txt",
       "prompt": "/df/d373018478/3/prompt.txt"
+    },
+    {
+      "metadata": "/df/d373018478/4/metadata.json",
+      "transcript": "/df/d373018478/4/full.jsonl",
+      "context": "/df/d373018478/4/context.md",
+      "content_hash": "/df/d373018478/4/content_hash.txt",
+      "prompt": "/df/d373018478/4/prompt.txt"
     }
   ],
   "token_usage": {
