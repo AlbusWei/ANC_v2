@@ -3,7 +3,7 @@
   "checkpoint_id": "dfd373018478",
   "strategy": "manual-commit",
   "branch": "rebuild",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     "tests/m1-runtime/run_post_dev_regression.py",
     "tests/m1-runtime/test_ssot_superpower_batch2.py"
@@ -43,6 +43,13 @@
       "context": "/df/d373018478/4/context.md",
       "content_hash": "/df/d373018478/4/content_hash.txt",
       "prompt": "/df/d373018478/4/prompt.txt"
+    },
+    {
+      "metadata": "/df/d373018478/5/metadata.json",
+      "transcript": "/df/d373018478/5/full.jsonl",
+      "context": "/df/d373018478/5/context.md",
+      "content_hash": "/df/d373018478/5/content_hash.txt",
+      "prompt": "/df/d373018478/5/prompt.txt"
     }
   ],
   "token_usage": {
