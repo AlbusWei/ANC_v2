@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "dfd373018478",
+  "session_id": "codex-ef280e997b8a",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-02T20:12:22.036634Z",
+  "branch": "rebuild",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "tests/m1-runtime/test_ssot_superpower_batch2.py",
+    "tests/m1-runtime/run_post_dev_regression.py"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "278bae1b30c5",
+  "transcript_identifier_at_start": "gemini-6695312f6e",
+  "checkpoint_transcript_start": 4,
+  "transcript_lines_at_start": 4,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-02T20:12:22.018393Z",
+    "agent_lines": 80,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 80,
+    "agent_percentage": 100
+  },
+  "transcript_path": "MyProjects/ANC_v2/.entire/codex-bridge/transcript.json"
+}
