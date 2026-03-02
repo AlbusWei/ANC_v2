@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "dfd373018478",
+  "strategy": "manual-commit",
+  "branch": "rebuild",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "tests/m1-runtime/run_post_dev_regression.py",
+    "tests/m1-runtime/test_ssot_superpower_batch2.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/df/d373018478/0/metadata.json",
+      "transcript": "/df/d373018478/0/full.jsonl",
+      "context": "/df/d373018478/0/context.md",
+      "content_hash": "/df/d373018478/0/content_hash.txt",
+      "prompt": "/df/d373018478/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 21501210,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 3712384,
+    "output_tokens": 138711,
+    "api_call_count": 245
+  }
+}
