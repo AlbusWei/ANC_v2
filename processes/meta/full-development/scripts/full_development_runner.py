@@ -85,10 +85,10 @@ PHASE_OUTPUT_FIELDS: Dict[str, List[str]] = {
 PHASE_INPUT_KEYS: Dict[str, List[str]] = {
     "p1": ["objective_context_ref", "input_payload"],
     "p2": ["objective_ref", "scope_baseline_ref"],
-    "p3": ["spec_ref"],
+    "p3": ["spec_ref", "superpower_ref"],
     "p4": ["spec_ref", "test_plan_ref"],
-    "p5": ["candidate_artifacts_ref", "preparation_bundle_ref"],
-    "p6": ["final_gate_verdict_ref", "lifecycle_target"],
+    "p5": ["candidate_artifacts_ref", "preparation_bundle_ref", "superpower_ref"],
+    "p6": ["final_gate_verdict_ref", "lifecycle_target", "superpower_ref"],
     "p7": ["candidate_artifacts_ref", "final_gate_verdict_ref", "lifecycle_transition_ref", "registry_sync_ref"],
     "p8": ["release_package_ref", "final_gate_verdict_ref", "lifecycle_transition_ref"],
 }
@@ -396,7 +396,7 @@ def main() -> int:
     produced_refs: Dict[str, str] = {}
 
     try:
-        required = ["objective_context_ref", "input_payload", "target_asset_type", "lifecycle_target"]
+        required = ["objective_context_ref", "input_payload", "target_asset_type", "lifecycle_target", "superpower_ref"]
         missing = [key for key in required if key not in request]
         if missing:
             raise FullDevelopmentError(f"missing required input fields: {','.join(missing)}")

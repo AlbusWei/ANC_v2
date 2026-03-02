@@ -1,6 +1,6 @@
 {
   "process_id": "hotfix",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [
@@ -23,7 +23,8 @@
     "format": "json",
     "required": [
       "incident_context_ref",
-      "target_asset_ref"
+      "target_asset_ref",
+      "superpower_ref"
     ]
   },
   "output_contract": {
@@ -88,14 +89,14 @@
       "spec_ref": "docs/design/processes/quality-gate-preparation-process.md#quality-gate-preparation-process",
       "sipoc": {
         "supplier": "p2",
-        "input": "spec_ref",
+        "input": "spec_ref + superpower_ref",
         "process": "prepare p0-focused hotfix tests",
         "output": "test_plan_ref and preparation_bundle_ref",
         "client": "p4"
       },
       "acceptance_criteria": "test_plan_ref is explicitly linked to spec_ref",
       "phase_purpose": "围绕 hotfix 规格快速建立验证准备，优先覆盖线上风险链路。",
-      "input_context_ref": "spec_ref,hotfix_scope_baseline_ref",
+      "input_context_ref": "spec_ref,hotfix_scope_baseline_ref,superpower_ref",
       "done_definition": "必须产出 test_plan_ref 与 preparation_bundle_ref，并覆盖高风险回归点。",
       "handoff_note": "将 test_plan_ref 与 preparation_bundle_ref 交接给 p4。"
     },
@@ -130,14 +131,14 @@
       "spec_ref": "docs/design/processes/quality-gate-evaluation-process.md#quality-gate-evaluation-process",
       "sipoc": {
         "supplier": "p4",
-        "input": "candidate_artifacts_ref",
+        "input": "candidate_artifacts_ref + superpower_ref",
         "process": "evaluate objective and regression gates",
         "output": "final_gate_verdict_ref",
         "client": "p6"
       },
       "acceptance_criteria": "gate decision is pass/fail and evidence complete",
       "phase_purpose": "给出 hotfix 是否可放行的门禁结论，避免带病发布。",
-      "input_context_ref": "candidate_artifacts_ref,implementation_ref,preparation_bundle_ref",
+      "input_context_ref": "candidate_artifacts_ref,implementation_ref,preparation_bundle_ref,superpower_ref",
       "done_definition": "必须产出 final_gate_verdict_ref，结论可解释且证据完整。",
       "handoff_note": "门禁通过后将 final_gate_verdict_ref 交接给 p6；失败回流 p4。"
     },
@@ -151,14 +152,14 @@
       "spec_ref": "docs/design/processes/atomic/AP-011-registry-sync.md#ap-011-registry-sync",
       "sipoc": {
         "supplier": "p5",
-        "input": "final_gate_verdict_ref",
+        "input": "final_gate_verdict_ref + superpower_ref",
         "process": "validate lifecycle and registry handoff package",
         "output": "lifecycle_transition_ref and registry_sync_ref",
         "client": "p7"
       },
       "acceptance_criteria": "lifecycle and registry handoff package is complete",
       "phase_purpose": "在发布前完成生命周期与 registry 治理收口，确保状态迁移可审计。",
-      "input_context_ref": "final_gate_verdict_ref,target_asset_ref,lifecycle_target",
+      "input_context_ref": "final_gate_verdict_ref,target_asset_ref,lifecycle_target,superpower_ref",
       "done_definition": "必须产出 lifecycle_transition_ref 与 registry_sync_ref。",
       "handoff_note": "将 lifecycle_transition_ref 与 registry_sync_ref 交接给 p7。"
     },

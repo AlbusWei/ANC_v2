@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import unittest
 from pathlib import Path
 
@@ -10,6 +11,8 @@ M1_TEST_SYSTEM = REPO_ROOT / "docs/design/modules/M1-test-system.md"
 QUALITY_GATE_SKILLS = REPO_ROOT / "docs/design/skills/quality-gate-skills.md"
 SELF_DEV_SKILLS = REPO_ROOT / "docs/design/skills/self-development-skills.md"
 QUALITY_GATE_RUNNER = REPO_ROOT / "processes/meta/quality-gate-evaluation/scripts/quality_gate_evaluation_runner.py"
+QUALITY_GATE_PREPARATION_PROCESS = REPO_ROOT / "processes/meta/quality-gate-preparation/process.json"
+QUALITY_GATE_EVALUATION_PROCESS = REPO_ROOT / "processes/meta/quality-gate-evaluation/process.json"
 M1_REGRESSION = REPO_ROOT / "tests/m1-runtime/run_post_dev_regression.py"
 
 
@@ -31,6 +34,17 @@ class TestSsotSuperpowerBatch2(unittest.TestCase):
 
         self.assertIn('required = ["preparation_bundle_ref", "actual_output_refs", "superpower_ref"]', script)
         self.assertIn('raise QualityGateEvaluationError("superpower_ref_unreachable")', script)
+
+    def test_quality_gate_manifests_require_superpower_ref(self) -> None:
+        prep_manifest = json.loads(QUALITY_GATE_PREPARATION_PROCESS.read_text(encoding="utf-8"))
+        eval_manifest = json.loads(QUALITY_GATE_EVALUATION_PROCESS.read_text(encoding="utf-8"))
+
+        prep_required = prep_manifest.get("input_contract", {}).get("required", [])
+        eval_required = eval_manifest.get("input_contract", {}).get("required", [])
+
+        self.assertIn("superpower_ref", prep_required)
+        self.assertIn("superpower_ref", eval_required)
+        self.assertNotIn("profile_set", eval_required)
 
     def test_m1_runtime_regression_contains_missing_superpower_ref_fail_closed_case(self) -> None:
         script = M1_REGRESSION.read_text(encoding="utf-8")

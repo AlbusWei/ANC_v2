@@ -1,6 +1,6 @@
 # Quality Gate Evaluation Process
 
-> 版本: v0.4.0 | 层级: P4 | 类型: 复合流程 | process_id: quality-gate-evaluation
+> 版本: v0.4.1 | 层级: P4 | 类型: 复合流程 | process_id: quality-gate-evaluation
 
 ## 目标
 
@@ -58,8 +58,9 @@
 
 1. `preparation_bundle_ref`
 2. `actual_output_refs`
-3. `profile_set`（可选覆盖）
-4. `max_auto_retest_cycles`（可选，默认 `0`；`>0` 时允许按预算自动回路）
+3. `superpower_ref`（必填，必须可达）
+4. `profile_set`（可选覆盖）
+5. `max_auto_retest_cycles`（可选，默认 `0`；`>0` 时允许按预算自动回路）
 
 ## 输出契约
 
@@ -84,6 +85,7 @@
 3. 判定不可解析 -> `fail`
 4. 证据不可追溯 -> `fail`
 5. 任一 P0 `fail` -> 总体 `fail`
+6. `superpower_ref` 缺失或不可达 -> `fail`
 
 ## 依赖流程
 
@@ -113,9 +115,9 @@
 
 | phase_id | Actor | 阶段目的 | 输入语义 | 完成标准 | 交接语义 |
 |---|---|---|---|---|---|
-| `p1` | `qa` | 执行客观评测 profile。 | preparation_bundle_ref + actual_output_refs | 产出 objective_eval_ref，并满足：目标评测结论可解析且可追溯 | 将 objective_eval_ref 交接给 p2 |
-| `p2` | `qa` | 默认执行盲评主观评测。 | preparation_bundle_ref + actual_output_refs + subjective_plan | 产出 subjective_eval_ref，并满足：主观评测记录包含 seed 轮次与结论 | 将 subjective_eval_ref 交接给 p3 |
-| `p3` | `qa` | 执行跨模块回归评测。 | preparation_bundle_ref + profile_set + actual_output_refs | 产出 regression_eval_ref，并满足：回归报告包含模块级结论 | 将 regression_eval_ref 交接给 p4 |
+| `p1` | `qa` | 执行客观评测 profile。 | preparation_bundle_ref + actual_output_refs + superpower_ref | 产出 objective_eval_ref，并满足：目标评测结论可解析且可追溯 | 将 objective_eval_ref 交接给 p2 |
+| `p2` | `qa` | 默认执行盲评主观评测。 | preparation_bundle_ref + actual_output_refs + subjective_plan + superpower_ref | 产出 subjective_eval_ref，并满足：主观评测记录包含 seed 轮次与结论 | 将 subjective_eval_ref 交接给 p3 |
+| `p3` | `qa` | 执行跨模块回归评测。 | preparation_bundle_ref + profile_set(可选) + actual_output_refs + superpower_ref | 产出 regression_eval_ref，并满足：回归报告包含模块级结论 | 将 regression_eval_ref 交接给 p4 |
 | `p4` | `qa` | 汇总形成统一门禁结论。 | objective_eval_ref + subjective_eval_ref + regression_eval_ref | 产出 gate_decision + runtime_gate_state，并满足：门禁决策遵循统一 verdict 枚举与 P0 优先规则 | 将 gate_decision + runtime_gate_state 交接给 initiator |
 | `p5` | `bpm` | 将 hold 案例路由至 hold 治理子流程并判定是否自动回测。 | hold_case_ref + final_gate_verdict_ref | 产出 hold_resolution_ref + retest_recommendation，并满足：hold 案例在证据支撑下被解决或升级且回测路由明确 | 若 `retest_recommendation=auto-retest` 且预算未耗尽则回路到 p2，否则交接给 initiator |
 <!-- phase-semantics-v2:end -->

@@ -134,6 +134,11 @@ def parse_args() -> argparse.Namespace:
         default="quality-gate.baseline@1.0.0",
         help="Comma-separated profile ids",
     )
+    parser.add_argument(
+        "--superpower-ref",
+        default="docs/plans/SuperPower.md",
+        help="Repo-relative superpower reference document",
+    )
     return parser.parse_args()
 
 
@@ -157,6 +162,10 @@ def main() -> int:
         raise RuntimeError(f"test doc fixture not found: {test_doc_path}")
     if not actual_output_path.exists():
         raise RuntimeError(f"actual output fixture not found: {actual_output_path}")
+    superpower_path = (root / args.superpower_ref).resolve()
+    if not superpower_path.exists():
+        raise RuntimeError(f"superpower ref not found: {superpower_path}")
+    superpower_ref = str(superpower_path.relative_to(root))
 
     if evidence_root.exists():
         shutil.rmtree(evidence_root)
@@ -177,6 +186,7 @@ def main() -> int:
             "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
             "test_doc_ref": str(test_doc_path.relative_to(root)),
             "risk_focus": ["P0", "P1"],
+            "superpower_ref": superpower_ref,
         },
     )
 
@@ -225,6 +235,7 @@ def main() -> int:
                 "actual_output_refs": [str(actual_output_path.relative_to(root))],
                 "profile_set": parse_refs(args.profile_set),
                 "force_hold": False,
+                "superpower_ref": superpower_ref,
             },
         )
 
@@ -279,6 +290,7 @@ def main() -> int:
             "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
             "test_doc_ref": str(test_doc_path.relative_to(root)),
             "risk_focus": ["P0", "P1"],
+            "superpower_ref": superpower_ref,
         },
     )
 
@@ -321,6 +333,7 @@ def main() -> int:
                 "actual_output_refs": [str(actual_output_path.relative_to(root))],
                 "profile_set": parse_refs(args.profile_set),
                 "force_hold": True,
+                "superpower_ref": superpower_ref,
                 **hold_inputs,
             },
         )
@@ -393,6 +406,7 @@ def main() -> int:
             "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
             "test_doc_ref": str(test_doc_path.relative_to(root)),
             "risk_focus": ["P0", "P1"],
+            "superpower_ref": superpower_ref,
         },
     )
 
@@ -436,6 +450,7 @@ def main() -> int:
                 "profile_set": parse_refs(args.profile_set),
                 "force_hold": True,
                 "max_auto_retest_cycles": 1,
+                "superpower_ref": superpower_ref,
                 **hold_inputs,
             },
         )

@@ -1,6 +1,6 @@
 {
   "process_id": "full-development",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [
@@ -26,7 +26,8 @@
       "objective_context_ref",
       "input_payload",
       "target_asset_type",
-      "lifecycle_target"
+      "lifecycle_target",
+      "superpower_ref"
     ]
   },
   "output_contract": {
@@ -92,14 +93,14 @@
       "spec_ref": "docs/design/processes/quality-gate-preparation-process.md#quality-gate-preparation-process",
       "sipoc": {
         "supplier": "p2",
-        "input": "spec_ref",
+        "input": "spec_ref + superpower_ref",
         "process": "design tests and compile preparation bundle",
         "output": "test_plan_ref and preparation_bundle_ref",
         "client": "p4"
       },
       "acceptance_criteria": "test_plan_ref is explicit and traceable to spec_ref",
       "phase_purpose": "围绕规格构建测试准备包，明确后续验证基线。",
-      "input_context_ref": "spec_ref",
+      "input_context_ref": "spec_ref,superpower_ref",
       "done_definition": "必须产出 test_plan_ref 与 preparation_bundle_ref。",
       "handoff_note": "将 test_plan_ref 与 preparation_bundle_ref 交接给 p4。"
     },
@@ -134,14 +135,14 @@
       "spec_ref": "docs/design/processes/quality-gate-evaluation-process.md#quality-gate-evaluation-process",
       "sipoc": {
         "supplier": "p4",
-        "input": "candidate_artifacts_ref",
+        "input": "candidate_artifacts_ref + superpower_ref",
         "process": "evaluate candidate artifacts against objective and tests",
         "output": "final_gate_verdict_ref",
         "client": "p6"
       },
       "acceptance_criteria": "gate decision is parseable and evidence is auditable",
       "phase_purpose": "执行质量门禁评测并形成统一门禁结论。",
-      "input_context_ref": "candidate_artifacts_ref,preparation_bundle_ref",
+      "input_context_ref": "candidate_artifacts_ref,preparation_bundle_ref,superpower_ref",
       "done_definition": "必须产出 final_gate_verdict_ref，且门禁结论可解释。",
       "handoff_note": "若门禁通过，则将 final_gate_verdict_ref 交接给 p6。"
     },
@@ -155,14 +156,14 @@
       "spec_ref": "docs/design/processes/atomic/AP-010-lifecycle-transition.md#ap-010-lifecycle-transition",
       "sipoc": {
         "supplier": "p5",
-        "input": "final_gate_verdict_ref",
+        "input": "final_gate_verdict_ref + superpower_ref",
         "process": "validate lifecycle handoff and registry sync package",
         "output": "lifecycle_transition_ref and registry_sync_ref",
         "client": "p7"
       },
       "acceptance_criteria": "lifecycle and registry payload are both complete",
       "phase_purpose": "完成生命周期治理与 registry 同步前置校验。",
-      "input_context_ref": "final_gate_verdict_ref,lifecycle_target",
+      "input_context_ref": "final_gate_verdict_ref,lifecycle_target,superpower_ref",
       "done_definition": "必须产出 lifecycle_transition_ref 与 registry_sync_ref。",
       "handoff_note": "将 lifecycle_transition_ref 与 registry_sync_ref 交接给 p7。"
     },

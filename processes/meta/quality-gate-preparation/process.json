@@ -1,6 +1,6 @@
 {
   "process_id": "quality-gate-preparation",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [],
@@ -18,7 +18,8 @@
       "objective_ref",
       "spec_ref",
       "test_doc_ref",
-      "risk_focus"
+      "risk_focus",
+      "superpower_ref"
     ]
   },
   "output_contract": {
@@ -40,7 +41,7 @@
       "spec_ref": "docs/design/processes/quality-gate-preparation-process.md#阶段定义",
       "sipoc": {
         "supplier": "initiator",
-        "input": "objective_ref + spec_ref + test_doc_ref",
+        "input": "objective_ref + spec_ref + test_doc_ref + superpower_ref",
         "process": "design objective aligned tests with P0 coverage",
         "output": "test_plan_ref",
         "client": "p2"
@@ -55,7 +56,7 @@
         "pierce_rule": "allow_when_parent_actor_equals_ap_actor"
       },
       "phase_purpose": "设计与目标对齐且覆盖 P0 风险的测试",
-      "input_context_ref": "objective_ref + spec_ref + test_doc_ref",
+      "input_context_ref": "objective_ref + spec_ref + test_doc_ref + superpower_ref",
       "done_definition": "必须产出 test_plan_ref，并满足“P0 风险覆盖显式且可追溯”",
       "handoff_note": "将 test_plan_ref 交接给 p2"
     },

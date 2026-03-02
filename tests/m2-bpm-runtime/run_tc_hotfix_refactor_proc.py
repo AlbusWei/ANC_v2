@@ -116,10 +116,15 @@ def parse_args() -> argparse.Namespace:
         default="runtime_data/execution/evidence/bpm-runtime/w3d_hotfix_refactor_cases",
         help="Repo-relative evidence root",
     )
+    parser.add_argument(
+        "--superpower-ref",
+        default="docs/plans/SuperPower.md",
+        help="Repo-relative superpower reference document",
+    )
     return parser.parse_args()
 
 
-def run_hotfix_case(root: Path, runner: Path, case_dir: Path) -> Dict[str, Any]:
+def run_hotfix_case(root: Path, runner: Path, case_dir: Path, superpower_ref: str) -> Dict[str, Any]:
     case_id = "TC-HOTFIX-PROC-001"
 
     incident_context = case_dir / "incident_context.md"
@@ -141,6 +146,7 @@ def run_hotfix_case(root: Path, runner: Path, case_dir: Path) -> Dict[str, Any]:
             "incident_context_ref": to_rel(incident_context, root),
             "target_asset_ref": to_rel(target_asset, root),
             "lifecycle_target": "review",
+            "superpower_ref": superpower_ref,
         },
     )
 
@@ -230,7 +236,7 @@ def run_hotfix_case(root: Path, runner: Path, case_dir: Path) -> Dict[str, Any]:
     }
 
 
-def run_refactor_case(root: Path, runner: Path, case_dir: Path) -> Dict[str, Any]:
+def run_refactor_case(root: Path, runner: Path, case_dir: Path, superpower_ref: str) -> Dict[str, Any]:
     case_id = "TC-REFACTOR-PROC-001"
 
     objective_context = case_dir / "objective_context.md"
@@ -258,6 +264,7 @@ def run_refactor_case(root: Path, runner: Path, case_dir: Path) -> Dict[str, Any
             "tech_debt_ref": to_rel(tech_debt, root),
             "target_asset_ref": to_rel(target_asset, root),
             "lifecycle_target": "review",
+            "superpower_ref": superpower_ref,
         },
     )
 
@@ -355,6 +362,10 @@ def main() -> int:
         raise RuntimeError(f"hotfix runner not found: {hotfix_runner}")
     if not refactor_runner.exists():
         raise RuntimeError(f"refactor runner not found: {refactor_runner}")
+    superpower_path = (root / args.superpower_ref).resolve()
+    if not superpower_path.exists():
+        raise RuntimeError(f"superpower ref not found: {superpower_path}")
+    superpower_ref = to_rel(superpower_path, root)
 
     if evidence_root.exists():
         shutil.rmtree(evidence_root)
@@ -367,8 +378,8 @@ def main() -> int:
     refactor_case_dir.mkdir(parents=True, exist_ok=True)
 
     cases = [
-        run_hotfix_case(root, hotfix_runner, hotfix_case_dir),
-        run_refactor_case(root, refactor_runner, refactor_case_dir),
+        run_hotfix_case(root, hotfix_runner, hotfix_case_dir, superpower_ref),
+        run_refactor_case(root, refactor_runner, refactor_case_dir, superpower_ref),
     ]
 
     passed = sum(1 for case in cases if case["status"] == "pass")

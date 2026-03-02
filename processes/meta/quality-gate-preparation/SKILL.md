@@ -9,7 +9,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
-version: "0.1.0"
+version: "0.1.1"
 ---
 
 # quality-gate-preparation
@@ -27,7 +27,7 @@ version: "0.1.0"
 ## Input Contract
 
 - Format: json
-- Required fields: objective_ref, spec_ref, test_doc_ref, risk_focus
+- Required fields: objective_ref, spec_ref, test_doc_ref, risk_focus, superpower_ref
 
 ## Output Contract
 

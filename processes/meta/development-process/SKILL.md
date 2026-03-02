@@ -9,7 +9,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
-version: "0.5.0"
+version: "0.5.1"
 ---
 
 # development-process
@@ -27,7 +27,7 @@ version: "0.5.0"
 ## Input Contract
 
 - Format: json
-- Required fields: objective_context_ref, target_asset_ref, requested_transition
+- Required fields: objective_context_ref, target_asset_ref, requested_transition, superpower_ref
 
 ## Output Contract
 

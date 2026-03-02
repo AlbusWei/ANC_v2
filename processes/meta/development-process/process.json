@@ -1,6 +1,6 @@
 {
   "process_id": "development-process",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "process_level": "P4",
   "parent_process_id": null,
   "composed_processes": [
@@ -24,7 +24,8 @@
     "required": [
       "objective_context_ref",
       "target_asset_ref",
-      "requested_transition"
+      "requested_transition",
+      "superpower_ref"
     ]
   },
   "output_contract": {
@@ -92,14 +93,14 @@
       "spec_ref": "docs/design/processes/quality-gate-preparation-process.md#quality-gate-preparation-process",
       "sipoc": {
         "supplier": "p2",
-        "input": "spec_ref",
+        "input": "spec_ref + superpower_ref",
         "process": "prepare quality gate test plan",
         "output": "test_plan_ref",
         "client": "p4"
       },
       "acceptance_criteria": "test plan is complete and traceable",
       "phase_purpose": "在实现前完成测试准备，确保实现阶段不是盲写代码，而是对齐可验证目标。",
-      "input_context_ref": "spec_ref",
+      "input_context_ref": "spec_ref,superpower_ref",
       "done_definition": "必须产出 test_plan_ref，并明确关键链路的验证方法。",
       "handoff_note": "将 test_plan_ref 交接给 p4，作为实现阶段的验证约束。"
     },
@@ -134,14 +135,14 @@
       "spec_ref": "docs/design/processes/quality-gate-evaluation-process.md#quality-gate-evaluation-process",
       "sipoc": {
         "supplier": "p4",
-        "input": "implementation_ref",
+        "input": "implementation_ref + superpower_ref",
         "process": "evaluate candidate against objective and test conditions",
         "output": "final_gate_verdict_ref",
         "client": "initiator"
       },
       "acceptance_criteria": "verdict has pass/fail and evidence references",
       "phase_purpose": "输出可执行的放行结论，让上层业务流程决定是否继续生命周期、发布或回退。",
-      "input_context_ref": "implementation_ref,test_plan_ref,objective_ref",
+      "input_context_ref": "implementation_ref,test_plan_ref,objective_ref,superpower_ref",
       "done_definition": "必须产出 final_gate_verdict_ref，包含 pass/fail 与关键证据。",
       "handoff_note": "门禁通过则交接给 p6 进入生命周期治理；失败按回路回流 p4 迭代修复。"
     },
@@ -155,14 +156,14 @@
       "spec_ref": "docs/design/processes/lifecycle-review-process.md#目标",
       "sipoc": {
         "supplier": "p5",
-        "input": "final_gate_verdict_ref + target_asset_ref + requested_transition",
+        "input": "final_gate_verdict_ref + target_asset_ref + requested_transition + superpower_ref",
         "process": "execute lifecycle review and registry sync",
         "output": "lifecycle_transition_ref and registry_sync_ref",
         "client": "initiator"
       },
       "acceptance_criteria": "lifecycle transition and registry sync records are both complete and traceable",
       "phase_purpose": "在开发闭环内完成最小生命周期治理收口，确保通过门禁的资产具备可审计状态迁移记录。",
-      "input_context_ref": "final_gate_verdict_ref,target_asset_ref,requested_transition",
+      "input_context_ref": "final_gate_verdict_ref,target_asset_ref,requested_transition,superpower_ref",
       "done_definition": "必须产出 lifecycle_transition_ref 与 registry_sync_ref，并满足生命周期评审报告可追溯。",
       "handoff_note": "将 lifecycle_transition_ref 与 registry_sync_ref 交接给 initiator。"
     }

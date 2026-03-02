@@ -9,7 +9,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
-version: "0.3.0"
+version: "0.3.1"
 ---
 
 # quality-gate-evaluation
@@ -27,8 +27,8 @@ version: "0.3.0"
 ## Input Contract
 
 - Format: json
-- Required fields: preparation_bundle_ref, actual_output_refs, profile_set
-- Optional fields: max_auto_retest_cycles（默认 0，>0 时启用自动回测回路）
+- Required fields: preparation_bundle_ref, actual_output_refs, superpower_ref
+- Optional fields: profile_set（可覆盖默认 profile），max_auto_retest_cycles（默认 0，>0 时启用自动回测回路）
 
 ## Output Contract
 

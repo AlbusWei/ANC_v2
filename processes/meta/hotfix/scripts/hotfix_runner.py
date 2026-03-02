@@ -84,10 +84,10 @@ PHASE_OUTPUT_FIELDS: Dict[str, List[str]] = {
 PHASE_INPUT_KEYS: Dict[str, List[str]] = {
     "p1": ["incident_context_ref", "target_asset_ref"],
     "p2": ["hotfix_objective_ref", "impact_scope_ref", "rollback_direction_ref"],
-    "p3": ["spec_ref", "hotfix_scope_baseline_ref"],
+    "p3": ["spec_ref", "hotfix_scope_baseline_ref", "superpower_ref"],
     "p4": ["spec_ref", "test_plan_ref", "preparation_bundle_ref"],
-    "p5": ["candidate_artifacts_ref", "implementation_ref", "preparation_bundle_ref"],
-    "p6": ["final_gate_verdict_ref", "target_asset_ref", "lifecycle_target"],
+    "p5": ["candidate_artifacts_ref", "implementation_ref", "preparation_bundle_ref", "superpower_ref"],
+    "p6": ["final_gate_verdict_ref", "target_asset_ref", "lifecycle_target", "superpower_ref"],
     "p7": ["candidate_artifacts_ref", "final_gate_verdict_ref", "lifecycle_transition_ref", "registry_sync_ref"],
 }
 
@@ -394,7 +394,7 @@ def main() -> int:
     produced_refs: Dict[str, str] = {}
 
     try:
-        required = ["incident_context_ref", "target_asset_ref"]
+        required = ["incident_context_ref", "target_asset_ref", "superpower_ref"]
         missing = [key for key in required if key not in request]
         if missing:
             raise HotfixError(f"missing required input fields: {','.join(missing)}")

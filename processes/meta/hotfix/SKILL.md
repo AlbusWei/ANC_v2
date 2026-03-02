@@ -9,7 +9,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
-version: "0.2.0"
+version: "0.2.1"
 ---
 
 # hotfix
@@ -27,7 +27,7 @@ version: "0.2.0"
 ## Input Contract
 
 - Format: json
-- Required fields: incident_ref, objective_ref, impact_scope, rollback_plan, target_asset_ref
+- Required fields: incident_context_ref, target_asset_ref, superpower_ref
 
 ## Output Contract
 

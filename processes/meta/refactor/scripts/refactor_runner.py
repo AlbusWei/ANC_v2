@@ -83,10 +83,10 @@ PHASE_OUTPUT_FIELDS: Dict[str, List[str]] = {
 PHASE_INPUT_KEYS: Dict[str, List[str]] = {
     "p1": ["objective_context_ref", "tech_debt_ref", "target_asset_ref"],
     "p2": ["objective_ref", "scope_baseline_ref"],
-    "p3": ["spec_ref"],
+    "p3": ["spec_ref", "superpower_ref"],
     "p4": ["spec_ref", "test_plan_ref", "preparation_bundle_ref"],
-    "p5": ["candidate_artifacts_ref", "implementation_ref", "preparation_bundle_ref"],
-    "p6": ["final_gate_verdict_ref", "target_asset_ref", "lifecycle_target"],
+    "p5": ["candidate_artifacts_ref", "implementation_ref", "preparation_bundle_ref", "superpower_ref"],
+    "p6": ["final_gate_verdict_ref", "target_asset_ref", "lifecycle_target", "superpower_ref"],
 }
 
 
@@ -392,7 +392,7 @@ def main() -> int:
     produced_refs: Dict[str, str] = {}
 
     try:
-        required = ["objective_context_ref", "tech_debt_ref", "target_asset_ref"]
+        required = ["objective_context_ref", "tech_debt_ref", "target_asset_ref", "superpower_ref"]
         missing = [key for key in required if key not in request]
         if missing:
             raise RefactorError(f"missing required input fields: {','.join(missing)}")

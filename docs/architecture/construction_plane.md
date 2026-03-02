@@ -1,6 +1,6 @@
 # ANC v2 施工平面（Construction Plane）
 
-最后更新：2026-02-26
+最后更新：2026-03-02
 
 > 本文档是 ANC v2 的活施工板，记录当前进展、下一步计划、边界和风险。
 
@@ -55,13 +55,15 @@
 - [x] 完成 `m2-bpm-runtime-hardening` W5（门禁收口与状态提升）：新增 `verify-m2` 专项校验，`verify/verify-m2/verify-m6` 与 post-dev regression 同回合通过，关闭 `Q-001`，并将 `system-analyst`、`sys.arch.system-feedback-digest`、`runtime-policy-calibration` 生命周期统一收敛到 `review`（不推进 `active`）
 - [x] 新增 `lifecycle-review` 最小可执行流程资产（owner=`hr`，status=`draft`），并完成 design/inventory/registry/施工平面联动更新（Thread-2）
 - [x] 完成 Thread-4 状态联动收口：`qa/bpm/admin/architect/hr` 生命周期统一推进到 `review`；`lifecycle-review` 由 `draft` 推进到 `review`；`system-analyst` 保持“分析输入，不做 lifecycle owner”边界
-- [x] 完成 `R-20260222-M6-m1-quality-gate-runtime-closure-01` 回合关闭包：`round-output.json`、`round-evidence.jsonl`、`round_close_summary.md`、`openspec-sync-record.json`、`registry_verify.log`，并通过 `verify` 与 `verify-m6`
-- [x] 完成 `m1-quality-gate-runtime-closure` 历史 OpenSpec 归档：补齐 `specs/**` deltas 与 Scenario，`openspec validate` 通过并归档至 `openspec/changes/archive/2026-02-22-m1-quality-gate-runtime-closure/`
+- [x] 完成 `R-20260222-M6-m1-quality-gate-runtime-closure-01` 回合关闭包：`round-output.json`、`round-evidence.jsonl`、`round_close_summary.md`、`superpower-sync-record.json`（历史回合中部分产物命名仍沿用 openspec 字样）、`registry_verify.log`，并通过 `verify` 与 `verify-m6`
+- [x] 完成 `m1-quality-gate-runtime-closure` 历史协同资产归档（非主链）：补齐 `specs/**` deltas 与 Scenario，历史 `openspec validate` 通过并归档至 `openspec/changes/archive/2026-02-22-m1-quality-gate-runtime-closure/`
 - [x] 完成 `m3-self-development-e2e-online` Session3 运行资产落地：新增 `impact-analyzer/release-manager` 技能、`registry-sync/escalation` 流程、`release-manager-agent` 目录，并完成 registry/Superpower SDD/施工平面联动
 - [x] 完成 `m3-self-development-e2e-online` Session4 测试基座：新增 `tests/m3-self-development/{TEST.md,live_cases.md,run_tc_online.py}`，复用 `m3-runtime + m1-runtime` runner 形成四类断言并预留 Session5/6 case 体系
 - [x] 完成 `m3-self-development-e2e-online` Session5 内部主线 E2E（2026-02-25）：`M3-INT-001/002/003` 在线套件通过，形成 `tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session5/` 证据包，`session6_readiness=ready`
 - [x] 完成 `m3-self-development-e2e-online` Session6 外部主线 E2E（2026-02-26）：`M3-EXT-001/002/003 + M3-FC-101/102/103` 在线套件通过，形成 `tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session6/` 证据包，`session7_readiness=ready`
 - [x] 完成 `m3-self-development-e2e-online` Session7 全链路收口（2026-02-26）：Superpower SDD 会话/registry/construction plane/evidence 四向对账通过，形成 `tmp/runtime_data/execution/evidence/construction-plane/R-20260222-M6-m3-self-development-e2e-online-01/session7/` 证据包，生命周期结论维持 `draft/review`
+- [x] 完成 `m3-self-development-e2e-online` Superpower 合同贯通修复（2026-03-02）：`quality-gate-preparation/evaluation` 与 `full-development/hotfix/refactor/development-process` 输入契约统一补齐 `superpower_ref`，并同步 runner 输入拼装与 M2/M3 测试构造。
+- [x] 完成在线入口防伪在线收口（2026-03-02）：`tests/m3-self-development/run_tc_online.py` 增加 `--force-online`，默认 Session6 禁止复用历史报告，仅 `--allow-upstream-reuse` 显式开启时允许复用。
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase2 流程资产重构：7 个历史包装流程全部退役，`full-development/hotfix/refactor/development-process` 全量替换为现行 P5 子流程链，并完成 process registry、process inventory、施工平面同步
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase3 元技能执行级升级：8 个目标元技能统一推进到 `review`，4 个 creator/validator runner 统一为 `--input/--output/[--report]` 契约，并落地 `meta-skill-creator` 运行名治理（`skill-creator` 仓库内软禁用）
 - [x] 完成 `m3-meta-asset-quality-hardening` Phase4 联动闭合：design + inventory + registry + Superpower SDD + 施工平面对齐，11 个流程生命周期统一收敛到 `review`，并明确本轮不推进 `active`
@@ -104,7 +106,7 @@
 
 ## m3-self-development-e2e-online 会话推进计划（Session2~Session7）
 
-> 前置约束：Session1 仅完成审计与基座，不做功能开发；生命周期目标上限为 `review`（禁止推进 `active`）。
+> 前置约束：Session1 仅完成审计与基座，不做功能开发；生命周期目标上限为 `review`（禁止推进 `active`）。以下 Session2~Session7 为历史会话记录，涉及 OpenSpec 术语仅用于追溯，现行主链以 Superpower 协同协议为准。
 
 | 会话 | 依赖 | 会话目标 | 输入（必须具备） | 输出（必须落盘） | DoD（命令化门禁） |
 |---|---|---|---|---|---|

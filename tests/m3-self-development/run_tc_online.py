@@ -342,6 +342,16 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="List supported cases and exit",
     )
+    parser.add_argument(
+        "--force-online",
+        action="store_true",
+        help="Force fresh upstream execution and disable reusable upstream reports",
+    )
+    parser.add_argument(
+        "--allow-upstream-reuse",
+        action="store_true",
+        help="Allow reusing existing upstream reports when compatible",
+    )
     return parser.parse_args()
 
 
@@ -503,14 +513,20 @@ def run_upstream_session5(root: Path) -> Dict[str, Any]:
     }
 
 
-def run_upstream_session6(root: Path, evidence_root: Path, selected_case_ids: List[str]) -> Dict[str, Any]:
+def run_upstream_session6(
+    root: Path,
+    evidence_root: Path,
+    selected_case_ids: List[str],
+    *,
+    allow_reuse: bool,
+) -> Dict[str, Any]:
     """运行 Session6 外部主线执行器，并将报告写入当前 evidence_root。"""
     upstream_root = evidence_root / "upstream" / "session6-runtime"
     upstream_root.mkdir(parents=True, exist_ok=True)
     session5_report = resolve_session5_report_path(root)
     session6_case_ids = [item for item in selected_case_ids if CASE_BY_ID[item].session == "session6"]
     report_path = (evidence_root / "session6_report.json").resolve()
-    if report_path.exists():
+    if allow_reuse and report_path.exists():
         report_payload = load_json(report_path)
         cases_raw = report_payload.get("cases", []) if isinstance(report_payload, dict) else []
         case_map: Dict[str, Dict[str, Any]] = {}
@@ -864,6 +880,7 @@ def main() -> int:
 
     upstream_results: Dict[str, Dict[str, Any]] = {}
     if not global_errors:
+        session6_allow_reuse = args.allow_upstream_reuse and (not args.force_online)
         for upstream in sorted(select_upstreams(selected_case_ids)):
             if upstream == "m1-runtime":
                 upstream_results[upstream] = run_upstream_m1(root, evidence_root)
@@ -872,7 +889,12 @@ def main() -> int:
             elif upstream == "session5-runtime":
                 upstream_results[upstream] = run_upstream_session5(root)
             elif upstream == "session6-runtime":
-                upstream_results[upstream] = run_upstream_session6(root, evidence_root, selected_case_ids)
+                upstream_results[upstream] = run_upstream_session6(
+                    root,
+                    evidence_root,
+                    selected_case_ids,
+                    allow_reuse=session6_allow_reuse,
+                )
 
     for case_id in selected_case_ids:
         case_def = CASE_BY_ID[case_id]
@@ -981,6 +1003,13 @@ def main() -> int:
                 "command_trace": value.get("command_trace"),
             }
             for key, value in upstream_results.items()
+        },
+        "execution_mode": {
+            "force_online": bool(args.force_online),
+            "allow_upstream_reuse": bool(args.allow_upstream_reuse),
+            "session6_reuse_effective": bool(
+                args.allow_upstream_reuse and (not args.force_online) and "session6-runtime" in upstream_results
+            ),
         },
         "debug_rounds": debug_rounds,
         "rework_actions": rework_actions,

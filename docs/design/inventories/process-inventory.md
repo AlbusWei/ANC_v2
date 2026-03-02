@@ -84,7 +84,7 @@
 
 ## 历史迁移说明（Phase4）
 
-1. 以下 7 个历史包装流程已在迁移回合退役，仅保留追溯说明，不作为运行态能力单元（具体映射见 `openspec/changes/m3-meta-asset-quality-hardening/meta-gap-baseline.md` 的历史矩阵）。
+1. 以下 7 个历史包装流程已在迁移回合退役，仅保留追溯说明，不作为运行态能力单元（具体映射见历史迁移矩阵记录）。
 2. 目标态能力单元统一以现行 P5 子流程表达（`objective-scope-baseline`、`hotfix-intake-normalization`、`hotfix-scope-spec-baseline`、`spec-authoring-contract`、`implementation-execution-core`、`release-packaging-governed`、`evolution-feedback-planning`）。
 3. 本轮生命周期收敛上限为 `review`，不推进 `active`。
 4. Phase7 收口后，Meta Processes 现态已收敛为 `draft=0`、`active=0`（含 `registry-sync`、`escalation`、`governed-config-change` 均为 `review`）。
@@ -142,14 +142,14 @@ Session3 已落地治理流程设计文档与运行资产：
 ## W2 联动备注（M2 BPM Runtime Hardening）
 
 1. `governed-config-change` 新增可执行 runner：`processes/meta/governed-config-change/scripts/governed_config_change_runner.py`。
-2. `governed-config-change` registry 版本由 `0.1.0` 升级到 `0.2.0`，当时生命周期保持 `draft`（Phase7 已推进到 `review`）。
+2. `governed-config-change` registry 版本由 `0.1.0` 升级到 `0.2.0`，当时生命周期保持 `draft`（当前以 `shared/registry/process_registry.json` 为准）。
 3. 运行级测试入口：`tests/m2-bpm-runtime/run_tc_gcc.py`，覆盖 `TC-GCC-001~003`。
 
 ## W3 联动备注（M2 BPM Runtime Hardening）
 
 1. `trigger-schedule-runtime` 新增可执行 runner：`processes/control/trigger-schedule-runtime/scripts/trigger_schedule_runtime_runner.py`。
 2. `trigger-event-runtime` 新增可执行 runner：`processes/control/trigger-event-runtime/scripts/trigger_event_runtime_runner.py`。
-3. 两项流程 registry 版本由 `0.1.0` 升级到 `0.2.0`，当时生命周期保持 `draft`（Phase7 已推进到 `review`）。
+3. 两项流程 registry 版本由 `0.1.0` 升级到 `0.2.0`，当时生命周期保持 `draft`（当前以 `shared/registry/process_registry.json` 为准）。
 4. 运行级测试入口：`tests/m2-bpm-runtime/run_tc_tg.py`，覆盖 `TG-SCH-001~004`、`TG-EVT-001~003`。
 
 ## W3-B 联动备注（M2 BPM Runtime Hardening）
@@ -258,3 +258,16 @@ Session3 已落地治理流程设计文档与运行资产：
 2. `hold-governance` 版本升级 `0.2.0 -> 0.3.0`：新增输出 `triage_action + retest_recommendation`，供上级流程机器消费。
 3. `TC-QA-PROC` 与 `M1 runtime` 用例统一到“对外 fail、运行态 hold”语义，移除 `gate_decision=hold` 旧断言。
 4. QA 回归 fixture 迁移到 `tests/fixtures/quality-gate/`，避免依赖未纳管的 `runtime_data` 路径。
+
+## W19 联动备注（Superpower 合同贯通与在线回归防复用）
+
+1. `quality-gate-preparation` 与 `quality-gate-evaluation` 输入契约强制要求 `superpower_ref`，并在 phase 语义中明确传递路径。
+2. `full-development`、`hotfix`、`refactor`、`development-process` 输入契约补齐 `superpower_ref`，上游流程到质量门禁链路实现贯通。
+3. 流程版本同步升级（manifest + SKILL + process_registry）：
+   - `quality-gate-preparation`: `0.1.0 -> 0.1.1`
+   - `quality-gate-evaluation`: `0.3.0 -> 0.3.1`
+   - `full-development`: `0.3.0 -> 0.3.1`
+   - `hotfix`: `0.2.0 -> 0.2.1`
+   - `refactor`: `0.2.0 -> 0.2.1`
+   - `development-process`: `0.5.0 -> 0.5.1`
+4. 在线入口 `tests/m3-self-development/run_tc_online.py` 新增 `--force-online` 与 `--allow-upstream-reuse`，默认 Session6 禁止复用历史报告，仅显式允许时可复用。

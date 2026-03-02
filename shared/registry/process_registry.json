@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "registry": "process_registry",
-  "updated_at": "2026-02-26T00:00:00Z",
+  "updated_at": "2026-03-02T00:00:00Z",
   "entry_contract": {
     "required": [
       "process_id",
@@ -138,7 +138,7 @@
       "manifest_path": "processes/meta/development-process/process.json",
       "objective_ref": "obj-phase1-min-loop",
       "owner": "bpm",
-      "version": "0.5.0",
+      "version": "0.5.1",
       "status": "review",
       "phase_count": 6,
       "openclaw": {
@@ -176,7 +176,7 @@
       "manifest_path": "processes/meta/evolution-feedback-planning/process.json",
       "objective_ref": "obj-m3-evolution-feedback-planning",
       "owner": "bpm",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "status": "review",
       "phase_count": 4,
       "openclaw": {
@@ -195,7 +195,7 @@
       "manifest_path": "processes/meta/full-development/process.json",
       "objective_ref": "obj-m3-full-development-loop",
       "owner": "bpm",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "status": "review",
       "phase_count": 8,
       "openclaw": {
@@ -252,7 +252,7 @@
       "manifest_path": "processes/meta/hotfix/process.json",
       "objective_ref": "obj-m3-hotfix-loop",
       "owner": "bpm",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "status": "review",
       "phase_count": 7,
       "openclaw": {
@@ -366,7 +366,7 @@
       "manifest_path": "processes/meta/quality-gate-evaluation/process.json",
       "objective_ref": "obj-m1-unified-quality-gate",
       "owner": "bpm",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "status": "review",
       "phase_count": 5,
       "openclaw": {
@@ -385,7 +385,7 @@
       "manifest_path": "processes/meta/quality-gate-preparation/process.json",
       "objective_ref": "obj-m1-unified-quality-gate",
       "owner": "bpm",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "review",
       "phase_count": 3,
       "openclaw": {
@@ -404,7 +404,7 @@
       "manifest_path": "processes/meta/refactor/process.json",
       "objective_ref": "obj-m3-refactor-loop",
       "owner": "bpm",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "status": "review",
       "phase_count": 6,
       "openclaw": {

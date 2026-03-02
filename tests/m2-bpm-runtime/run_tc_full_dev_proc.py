@@ -66,6 +66,11 @@ def parse_args() -> argparse.Namespace:
         default="runtime_data/execution/evidence/bpm-runtime/w3c_full_development_cases",
         help="Repo-relative evidence root",
     )
+    parser.add_argument(
+        "--superpower-ref",
+        default="docs/plans/SuperPower.md",
+        help="Repo-relative superpower reference document",
+    )
     return parser.parse_args()
 
 
@@ -85,6 +90,10 @@ def main() -> int:
     runner = (root / args.runner).resolve()
     if not runner.exists():
         raise RuntimeError(f"runner not found: {runner}")
+    superpower_path = (root / args.superpower_ref).resolve()
+    if not superpower_path.exists():
+        raise RuntimeError(f"superpower ref not found: {superpower_path}")
+    superpower_ref = to_rel(superpower_path, root)
 
     report_path = (root / args.report).resolve()
     evidence_root = (root / args.evidence_root).resolve()
@@ -120,6 +129,7 @@ def main() -> int:
             "input_payload": to_rel(input_payload, root),
             "target_asset_type": "process",
             "lifecycle_target": "review",
+            "superpower_ref": superpower_ref,
         },
     )
 

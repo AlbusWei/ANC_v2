@@ -9,7 +9,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
-version: "0.3.0"
+version: "0.3.1"
 ---
 
 # full-development
@@ -28,7 +28,7 @@ version: "0.3.0"
 ## Input Contract
 
 - Format: json
-- Required fields: objective_ref, input_payload, target_asset_type, lifecycle_target
+- Required fields: objective_context_ref, input_payload, target_asset_type, lifecycle_target, superpower_ref
 
 ## Output Contract
 

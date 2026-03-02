@@ -20,6 +20,7 @@ spec.loader.exec_module(module)
 
 
 run_quality_gate_evaluation = module.run_quality_gate_evaluation
+run_quality_gate_preparation = module.run_quality_gate_preparation
 case_success_payload = module.case_success_payload
 
 
@@ -84,6 +85,7 @@ class Session5InternalRunnerTests(unittest.TestCase):
                     case_dir=case_dir,
                     preparation_bundle_ref=prep.relative_to(root).as_posix(),
                     actual_output_refs=[impl.relative_to(root).as_posix()],
+                    superpower_ref="docs/plans/SuperPower.md",
                     dispatch_trace_ref=dispatch.relative_to(root).as_posix(),
                     case_report_ref=case_report.relative_to(root).as_posix(),
                     phase_outputs=[
@@ -96,10 +98,50 @@ class Session5InternalRunnerTests(unittest.TestCase):
             payload = json.loads(input_path.read_text(encoding="utf-8"))
             self.assertEqual(payload.get("dispatch_trace_ref"), dispatch.relative_to(root).as_posix())
             self.assertEqual(payload.get("case_report_ref"), case_report.relative_to(root).as_posix())
+            self.assertEqual(payload.get("superpower_ref"), "docs/plans/SuperPower.md")
             self.assertEqual(
                 payload.get("phase_outputs"),
                 [prep.relative_to(root).as_posix(), impl.relative_to(root).as_posix()],
             )
+
+    def test_quality_gate_preparation_input_includes_superpower_ref(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir).resolve()
+            case_dir = root / "tmp/runtime_data/execution/evidence/case-002"
+            case_dir.mkdir(parents=True, exist_ok=True)
+
+            test_doc = case_dir / "fixtures/test_doc.md"
+            test_doc.parent.mkdir(parents=True, exist_ok=True)
+            test_doc.write_text("# test", encoding="utf-8")
+
+            def _fake_run_cmd(_cmd: list[str], _cwd: Path):
+                output_path = case_dir / "quality-gate-preparation/output.json"
+                output_path.parent.mkdir(parents=True, exist_ok=True)
+                output_path.write_text(
+                    json.dumps({"status": "ok", "verdict": "pass", "preparation_bundle_ref": "bundle.json"}),
+                    encoding="utf-8",
+                )
+
+                class _Proc:
+                    returncode = 0
+                    stdout = ""
+                    stderr = ""
+
+                return _Proc()
+
+            with patch.object(module, "run_cmd", side_effect=_fake_run_cmd):
+                run_quality_gate_preparation(
+                    root=root,
+                    case_dir=case_dir,
+                    objective_ref="objective.json",
+                    spec_ref="spec.json",
+                    test_doc_ref=test_doc.relative_to(root).as_posix(),
+                    superpower_ref="docs/plans/SuperPower.md",
+                )
+
+            prep_input = case_dir / "quality-gate-preparation/input.json"
+            payload = json.loads(prep_input.read_text(encoding="utf-8"))
+            self.assertEqual(payload.get("superpower_ref"), "docs/plans/SuperPower.md")
 
 
 if __name__ == "__main__":

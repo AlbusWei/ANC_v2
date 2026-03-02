@@ -36,6 +36,7 @@ DEFAULT_REPORT_NAME = "session5_report.json"
 DEFAULT_SUMMARY_NAME = "session5_summary.md"
 DEFAULT_FAIL_REWORK_NAME = "session5_fail_rework_case.md"
 DEFAULT_RISK_NAME = "session5_risk_for_session6.md"
+DEFAULT_SUPERPOWER_REF = "docs/plans/SuperPower.md"
 SESSION5_CASE_IDS = ("M3-INT-001", "M3-INT-002", "M3-INT-003")
 
 
@@ -430,6 +431,7 @@ def run_quality_gate_preparation(
     objective_ref: str,
     spec_ref: str,
     test_doc_ref: str,
+    superpower_ref: str,
 ) -> Dict[str, Any]:
     stage_dir = case_dir / "quality-gate-preparation"
     stage_dir.mkdir(parents=True, exist_ok=True)
@@ -444,6 +446,7 @@ def run_quality_gate_preparation(
             "spec_ref": spec_ref,
             "test_doc_ref": test_doc_ref,
             "risk_focus": ["P0", "P1"],
+            "superpower_ref": superpower_ref,
         },
     )
 
@@ -519,6 +522,7 @@ def run_quality_gate_evaluation(
     case_dir: Path,
     preparation_bundle_ref: str,
     actual_output_refs: List[str],
+    superpower_ref: str,
     dispatch_trace_ref: str,
     case_report_ref: str,
     phase_outputs: List[str],
@@ -535,6 +539,7 @@ def run_quality_gate_evaluation(
         {
             "preparation_bundle_ref": preparation_bundle_ref,
             "actual_output_refs": actual_output_refs,
+            "superpower_ref": superpower_ref,
             "regression_scope": "M3",
             "profile_set": ["quality-gate.baseline@1.0.0"],
             "aggregation_rules_ref": to_rel(rules_path, root),
@@ -846,6 +851,7 @@ def run_canonical_chain(
     root: Path,
     case_dir: Path,
     objective_missing_context: bool,
+    superpower_ref: str,
     objective_context_variant: str = "",
     dispatch_openclaw: bool = True,
 ) -> Dict[str, Any]:
@@ -913,13 +919,14 @@ def run_canonical_chain(
         }
 
     test_doc = create_test_doc(case_dir)
-    _dispatch("quality-gate-preparation", [spec_ref])
+    _dispatch("quality-gate-preparation", [spec_ref, superpower_ref])
     quality_prep = run_quality_gate_preparation(
         root=root,
         case_dir=case_dir,
         objective_ref=objective_ref,
         spec_ref=spec_ref,
         test_doc_ref=to_rel(test_doc, root),
+        superpower_ref=superpower_ref,
     )
     if quality_prep["return_code"] != 0:
         return {
@@ -956,7 +963,7 @@ def run_canonical_chain(
             "implementation": impl,
         }
 
-    _dispatch("quality-gate-evaluation", [preparation_bundle_ref, implementation_ref])
+    _dispatch("quality-gate-evaluation", [preparation_bundle_ref, implementation_ref, superpower_ref])
     quality_gate_dispatch_ref = str(stage_traces[-1].get("dispatch_output_ref") or "") if stage_traces else ""
 
     case_report_path = case_dir / "quality-gate-evaluation" / "case_report.json"
@@ -982,6 +989,7 @@ def run_canonical_chain(
         case_dir=case_dir,
         preparation_bundle_ref=preparation_bundle_ref,
         actual_output_refs=[str(item) for item in actual_output_refs],
+        superpower_ref=superpower_ref,
         dispatch_trace_ref=quality_gate_dispatch_ref,
         case_report_ref=to_rel(case_report_path, root),
         phase_outputs=[
@@ -1013,7 +1021,7 @@ def run_canonical_chain(
             "quality_eval": quality_eval,
         }
 
-    _dispatch("lifecycle-review", [final_gate_verdict_ref])
+    _dispatch("lifecycle-review", [final_gate_verdict_ref, superpower_ref])
     lifecycle = run_lifecycle_review(
         root=root,
         case_dir=case_dir,
@@ -1169,7 +1177,7 @@ def build_case1_base_chain(case: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     }
 
 
-def run_case_001(root: Path, evidence_root: Path) -> Dict[str, Any]:
+def run_case_001(root: Path, evidence_root: Path, superpower_ref: str) -> Dict[str, Any]:
     case_id = "M3-INT-001"
     case_dir = evidence_root / "cases" / case_id
     case_dir.mkdir(parents=True, exist_ok=True)
@@ -1178,6 +1186,7 @@ def run_case_001(root: Path, evidence_root: Path) -> Dict[str, Any]:
         root=root,
         case_dir=case_dir,
         objective_missing_context=False,
+        superpower_ref=superpower_ref,
         objective_context_variant="M3-INT-001-happy",
         dispatch_openclaw=True,
     )
@@ -1270,7 +1279,7 @@ def run_case_001(root: Path, evidence_root: Path) -> Dict[str, Any]:
     return case_payload
 
 
-def run_case_002(root: Path, evidence_root: Path) -> Dict[str, Any]:
+def run_case_002(root: Path, evidence_root: Path, superpower_ref: str) -> Dict[str, Any]:
     case_id = "M3-INT-002"
     case_dir = evidence_root / "cases" / case_id
     case_dir.mkdir(parents=True, exist_ok=True)
@@ -1283,6 +1292,7 @@ def run_case_002(root: Path, evidence_root: Path) -> Dict[str, Any]:
         root=root,
         case_dir=case_dir / "round1_fail",
         objective_missing_context=True,
+        superpower_ref=superpower_ref,
         objective_context_variant="M3-INT-002-round1-fail",
         dispatch_openclaw=True,
     )
@@ -1311,6 +1321,7 @@ def run_case_002(root: Path, evidence_root: Path) -> Dict[str, Any]:
         root=root,
         case_dir=round2_dir,
         objective_missing_context=False,
+        superpower_ref=superpower_ref,
         objective_context_variant="M3-INT-002-round2-rework-full-rerun",
         dispatch_openclaw=True,
     )
@@ -1390,7 +1401,12 @@ def run_case_002(root: Path, evidence_root: Path) -> Dict[str, Any]:
     return payload
 
 
-def run_case_003(root: Path, evidence_root: Path, base_chain: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+def run_case_003(
+    root: Path,
+    evidence_root: Path,
+    superpower_ref: str,
+    base_chain: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
     case_id = "M3-INT-003"
     case_dir = evidence_root / "cases" / case_id
     case_dir.mkdir(parents=True, exist_ok=True)
@@ -1421,6 +1437,7 @@ def run_case_003(root: Path, evidence_root: Path, base_chain: Optional[Dict[str,
             root=root,
             case_dir=case_dir,
             objective_missing_context=False,
+            superpower_ref=superpower_ref,
             objective_context_variant="M3-INT-003-branch-validation",
             dispatch_openclaw=True,
         )
@@ -1604,6 +1621,11 @@ def parse_args() -> argparse.Namespace:
         default=",".join(SESSION5_CASE_IDS),
         help="Comma-separated case ids. Supported: M3-INT-001,M3-INT-002,M3-INT-003",
     )
+    parser.add_argument(
+        "--superpower-ref",
+        default=DEFAULT_SUPERPOWER_REF,
+        help="Repo-relative superpower reference document path",
+    )
     return parser.parse_args()
 
 
@@ -1654,6 +1676,23 @@ def release_run_lock(lock_dir: Path) -> None:
 def main() -> int:
     args = parse_args()
     root = repo_root()
+    superpower_path = resolve_path(root, args.superpower_ref)
+    if not superpower_path.exists():
+        print(
+            json.dumps(
+                {
+                    "status": "fail_closed",
+                    "reason": "superpower_ref_unreachable",
+                    "superpower_ref": args.superpower_ref,
+                },
+                ensure_ascii=False,
+            )
+        )
+        return 2
+    try:
+        superpower_ref = superpower_path.resolve().relative_to(root).as_posix()
+    except ValueError:
+        superpower_ref = str(superpower_path.resolve())
 
     evidence_root = (root / args.evidence_root).resolve()
     evidence_root.mkdir(parents=True, exist_ok=True)
@@ -1670,12 +1709,17 @@ def main() -> int:
         selected_case_ids = parse_selected_cases(args.cases)
         case_map: Dict[str, Dict[str, Any]] = {}
         if "M3-INT-001" in selected_case_ids:
-            case_map["M3-INT-001"] = run_case_001(root, evidence_root)
+            case_map["M3-INT-001"] = run_case_001(root, evidence_root, superpower_ref)
         if "M3-INT-002" in selected_case_ids:
-            case_map["M3-INT-002"] = run_case_002(root, evidence_root)
+            case_map["M3-INT-002"] = run_case_002(root, evidence_root, superpower_ref)
         if "M3-INT-003" in selected_case_ids:
             base_chain = build_case1_base_chain(case_map["M3-INT-001"]) if "M3-INT-001" in case_map else None
-            case_map["M3-INT-003"] = run_case_003(root, evidence_root, base_chain=base_chain)
+            case_map["M3-INT-003"] = run_case_003(
+                root,
+                evidence_root,
+                superpower_ref,
+                base_chain=base_chain,
+            )
         cases = [case_map[case_id] for case_id in selected_case_ids]
 
         passed = sum(1 for item in cases if item.get("status") == "pass")
@@ -1750,6 +1794,7 @@ def main() -> int:
             "failed": failed,
             "cases": cases,
             "evidence_root": to_rel(evidence_root, root),
+            "superpower_ref": superpower_ref,
             "debug_rounds": debug_rounds,
             "rework_actions": all_rework,
             "liveness_probes": all_probes,

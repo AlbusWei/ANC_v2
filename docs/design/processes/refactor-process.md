@@ -1,6 +1,6 @@
 # Refactor Process
 
-> 版本: v0.3.0 | 层级: P4 | 类型: 复合流程 | process_id: refactor | process_type: dev.refactor
+> 版本: v0.3.1 | 层级: P4 | 类型: 复合流程 | process_id: refactor | process_type: dev.refactor
 
 ## 目标
 
@@ -54,6 +54,7 @@
 1. `objective_context_ref`
 2. `tech_debt_ref`
 3. `target_asset_ref`
+4. `superpower_ref`（必填，贯通 P3/P5/P6 的执行上下文）
 
 ## 输出契约
 
@@ -84,8 +85,8 @@
 |---|---|---|---|---|---|
 | `p1` | `architect` | 明确重构目标与范围基线。 | objective_context_ref + tech_debt_ref | 产出 objective_ref + scope_baseline_ref，并满足：目标与非目标明确 | 将 objective_ref + scope_baseline_ref 交接给 p2 |
 | `p2` | `architect` | 编写受架构约束的重构规格。 | objective_ref + scope_baseline_ref | 产出 spec_ref，并满足：规格文档明确不变量边界与回滚方案 | 将 spec_ref 交接给 p3 |
-| `p3` | `qa` | 准备以回归验证为核心的测试。 | spec_ref | 产出 test_plan_ref + preparation_bundle_ref，并满足：test_plan_ref 明确关联 refactor spec | 将 test_plan_ref + preparation_bundle_ref 交接给 p4 |
+| `p3` | `qa` | 准备以回归验证为核心的测试。 | spec_ref + superpower_ref | 产出 test_plan_ref + preparation_bundle_ref，并满足：test_plan_ref 明确关联 refactor spec | 将 test_plan_ref + preparation_bundle_ref 交接给 p4 |
 | `p4` | `kernel-dev` | 执行结构性重构改动。 | spec_ref + test_plan_ref | 产出 implementation_ref + candidate_artifacts_ref，并满足：实现与规格及约束保持关联 | 将 implementation_ref + candidate_artifacts_ref 交接给 p5 |
-| `p5` | `qa` | 执行目标与回归门禁检查。 | candidate_artifacts_ref | 产出 final_gate_verdict_ref，并满足：回归结果明确且证据完整 | 将 final_gate_verdict_ref 交接给 p6 |
-| `p6` | `hr` | 校验生命周期与 registry 同步包。 | final_gate_verdict_ref | 产出 lifecycle_transition_ref + registry_sync_ref，并满足：registry 同步载荷与生命周期证据完整 | 将 lifecycle_transition_ref + registry_sync_ref 交接给 initiator |
+| `p5` | `qa` | 执行目标与回归门禁检查。 | candidate_artifacts_ref + superpower_ref | 产出 final_gate_verdict_ref，并满足：回归结果明确且证据完整 | 将 final_gate_verdict_ref 交接给 p6 |
+| `p6` | `hr` | 校验生命周期与 registry 同步包。 | final_gate_verdict_ref + superpower_ref | 产出 lifecycle_transition_ref + registry_sync_ref，并满足：registry 同步载荷与生命周期证据完整 | 将 lifecycle_transition_ref + registry_sync_ref 交接给 initiator |
 <!-- phase-semantics-v2:end -->

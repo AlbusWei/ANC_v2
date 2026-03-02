@@ -1,6 +1,6 @@
 # Quality Gate Preparation Process
 
-> 版本: v0.1.0 | 层级: P4 | 类型: 复合流程 | process_id: quality-gate-preparation
+> 版本: v0.1.1 | 层级: P4 | 类型: 复合流程 | process_id: quality-gate-preparation
 
 ## 目标
 
@@ -38,6 +38,7 @@
 2. `spec_ref`
 3. `test_doc_ref`（唯一源 `TEST.md`）
 4. `risk_focus`（必须覆盖 P0）
+5. `superpower_ref`（必须可达，用于对齐 Superpower 主链执行上下文）
 
 ## 输出契约
 
@@ -61,6 +62,7 @@
 2. 编译期或运行前契约错误 -> `test_invalid`
 3. `tc_id -> profile_id` 映射缺失 -> `fail`
 4. 准备包证据不可追溯 -> `fail`
+5. `superpower_ref` 缺失或不可达 -> `fail`
 
 ## 依赖流程
 
@@ -87,7 +89,7 @@
 
 | phase_id | Actor | 阶段目的 | 输入语义 | 完成标准 | 交接语义 |
 |---|---|---|---|---|---|
-| `p1` | `qa` | 设计与目标对齐且覆盖 P0 风险的测试。 | objective_ref + spec_ref + test_doc_ref | 产出 test_plan_ref，并满足：P0 风险覆盖显式且可追溯 | 将 test_plan_ref 交接给 p2 |
+| `p1` | `qa` | 设计与目标对齐且覆盖 P0 风险的测试。 | objective_ref + spec_ref + test_doc_ref + superpower_ref | 产出 test_plan_ref，并满足：P0 风险覆盖显式且可追溯 | 将 test_plan_ref 交接给 p2 |
 | `p2` | `qa` | 将 TEST.md 编译为可执行数据点。 | test_plan_ref + test_doc_ref | 产出 test_datapoints_ref + compile_report_ref，并满足：编译报告完整且数据点可执行 | 将 test_datapoints_ref + compile_report_ref 交接给 p3 |
-| `p3` | `qa` | 绑定 tc_id 与 profile_id 并打包准备集。 | test_datapoints_ref + compile_report_ref + profile_set | 产出 preparation_bundle_ref，并满足：tc_id 与 profile_id 映射一一对应且可追溯 | 将 preparation_bundle_ref 交接给 initiator |
+| `p3` | `qa` | 绑定 tc_id 与 profile_id 并打包准备集。 | test_datapoints_ref + compile_report_ref + profile_set + superpower_ref | 产出 preparation_bundle_ref，并满足：tc_id 与 profile_id 映射一一对应且可追溯 | 将 preparation_bundle_ref 交接给 initiator |
 <!-- phase-semantics-v2:end -->

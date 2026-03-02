@@ -1,6 +1,6 @@
 # development-process 流程设计
 
-> 版本: v0.1.0 | 分类: Meta Process | 层级: P4 | process_id: development-process | process_type: dev.prototype | 生命周期: review | 最后更新: 2026-02-26
+> 版本: v0.1.1 | 分类: Meta Process | 层级: P4 | process_id: development-process | process_type: dev.prototype | 生命周期: review | 最后更新: 2026-03-02
 
 ## 目标
 
@@ -41,6 +41,7 @@
 1. `objective_context_ref`
 2. `target_asset_ref`
 3. `requested_transition`
+4. `superpower_ref`（必填，贯通 p3/p5/p6 上下文）
 
 ## 输出契约
 
@@ -88,3 +89,4 @@
 2. 门禁结论非 `pass` 时禁止进入 lifecycle。
 3. `lifecycle-review` 输出不完整（缺 `lifecycle_transition_ref` 或 `registry_sync_ref`）。
 4. 证据链断裂或 rule_refs 不可追溯。
+5. `superpower_ref` 缺失或不可达。
