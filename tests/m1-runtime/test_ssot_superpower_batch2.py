@@ -50,8 +50,11 @@ class TestSsotSuperpowerBatch2(unittest.TestCase):
         script = M1_REGRESSION.read_text(encoding="utf-8")
 
         self.assertIn("TC-M1-CHAIN-006", script)
+        self.assertIn("TC-M1-CHAIN-006-prep", script)
         self.assertIn("missing_superpower_ref", script)
         self.assertIn("superpower_ref_unreachable", script)
+        self.assertIn('"m5_request_ref": to_rel(m5_request_input, root),', script)
+        self.assertIn('"superpower_ref": superpower_ref,', script)
 
 
 if __name__ == "__main__":

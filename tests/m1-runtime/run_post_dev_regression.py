@@ -814,6 +814,7 @@ def run_tc_004(
             "test_doc_ref": test_doc_ref,
             "risk_focus": ["P0", "P1"],
             "m5_request_ref": to_rel(m5_request_input, root),
+            "superpower_ref": superpower_ref,
         },
     )
     inputs.extend([m5_request_input, prep_input])
@@ -1201,9 +1202,12 @@ def run_tc_006(
     *,
     root: Path,
     evidence_root: Path,
+    prep_runner: Path,
     eval_runner: Path,
+    test_doc_ref: str,
     actual_output_ref: str,
     profile_set: str,
+    superpower_ref: str,
 ) -> Dict[str, Any]:
     case_id = "TC-M1-CHAIN-006"
     case_dir = evidence_root / case_id
@@ -1215,13 +1219,81 @@ def run_tc_006(
     logs: List[Path] = []
     notes: List[str] = []
 
+    prep_input = case_dir / "prep_input.json"
+    prep_output = case_dir / "prep_output.json"
     eval_input = case_dir / "eval_input_missing_superpower_ref.json"
     eval_output = case_dir / "eval_output.json"
 
     dump_json(
+        prep_input,
+        {
+            "objective_ref": "obj-m1-chain-006-missing-superpower",
+            "spec_ref": "docs/design/modules/M1-openjudge-adapter-spec.md",
+            "test_doc_ref": test_doc_ref,
+            "risk_focus": ["P0", "P1"],
+            "superpower_ref": superpower_ref,
+        },
+    )
+    inputs.append(prep_input)
+
+    prep_cmd = [
+        sys.executable,
+        to_rel(prep_runner, root),
+        "--input",
+        to_rel(prep_input, root),
+        "--output",
+        to_rel(prep_output, root),
+        "--evidence-dir",
+        to_rel(case_dir / "preparation", root),
+        "--run-id",
+        "TC-M1-CHAIN-006-prep",
+        "--profile-set",
+        profile_set,
+    ]
+    prep_proc = exec_step(root=root, case_dir=case_dir, step="prep", cmd=prep_cmd, commands=commands)
+    logs.extend([case_dir / "prep.stdout.txt", case_dir / "prep.stderr.txt"])
+    outputs.append(prep_output)
+
+    if prep_proc.returncode != 0 or not prep_output.exists():
+        notes.append("TC-M1-CHAIN-006 preparation 未通过，无法验证 superpower fail-closed。")
+        return finalize_case(
+            root=root,
+            case_dir=case_dir,
+            case_id=case_id,
+            status="fail",
+            gate_decision="unknown",
+            decision_class="fail_closed",
+            commands=commands,
+            inputs=inputs,
+            outputs=outputs,
+            logs=logs,
+            critical_refs={},
+            notes=notes,
+        )
+
+    prep_payload = load_json(prep_output)
+    preparation_bundle_ref = str(prep_payload.get("preparation_bundle_ref") or "")
+    if str(prep_payload.get("verdict") or "") != "pass" or not preparation_bundle_ref:
+        notes.append("TC-M1-CHAIN-006 preparation 未产出可用 bundle。")
+        return finalize_case(
+            root=root,
+            case_dir=case_dir,
+            case_id=case_id,
+            status="fail",
+            gate_decision=str(prep_payload.get("verdict") or "unknown"),
+            decision_class="fail_closed",
+            commands=commands,
+            inputs=inputs,
+            outputs=outputs,
+            logs=logs,
+            critical_refs={"prep_output_ref": to_rel(prep_output, root)},
+            notes=notes,
+        )
+
+    dump_json(
         eval_input,
         {
-            "preparation_bundle_ref": "tests/fixtures/quality-gate/TEST_rule.md",
+            "preparation_bundle_ref": preparation_bundle_ref,
             "superpower_ref": "tests/fixtures/quality-gate/missing_superpower_ref.md",
             "actual_output_refs": [actual_output_ref],
             "profile_set": parse_profile_set(profile_set),
@@ -1277,6 +1349,7 @@ def run_tc_006(
         outputs=outputs,
         logs=logs,
         critical_refs={
+            "prep_output_ref": to_rel(prep_output, root),
             "eval_output_ref": to_rel(eval_output, root),
             "fail_closed_record_ref": fail_closed_record_ref,
             "reason": reasons[0] if reasons else "",
@@ -1529,9 +1602,12 @@ def main() -> int:
         run_tc_006(
             root=root,
             evidence_root=evidence_root,
+            prep_runner=prep_runner,
             eval_runner=eval_runner,
+            test_doc_ref=to_rel(test_doc_path, root),
             actual_output_ref=to_rel(actual_output_path, root),
             profile_set=args.profile_set,
+            superpower_ref=to_rel(superpower_path, root),
         )
     )
 
