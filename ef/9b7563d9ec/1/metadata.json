@@ -1,0 +1,37 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "ef9b7563d9ec",
+  "session_id": "codex-05ca0b86f87b",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-02T15:15:11.550582Z",
+  "branch": "rebuild",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/design/inventories/process-inventory.md",
+    "docs/design/processes/quality-gate-evaluation-process.md",
+    "docs/design/processes/quality-gate-preparation-process.md",
+    "processes/meta/development-process/process.json",
+    "shared/registry/process_registry.json"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "ff22a130620c",
+  "transcript_identifier_at_start": "gemini-05415d6f2c",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-02T15:15:11.53229Z",
+    "agent_lines": 52,
+    "human_added": 288,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 340,
+    "agent_percentage": 15.294117647058824
+  },
+  "transcript_path": "MyProjects/ANC_v2/.entire/codex-bridge/transcript.json"
+}
