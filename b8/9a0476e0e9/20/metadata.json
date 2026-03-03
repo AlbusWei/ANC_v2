@@ -1,0 +1,48 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "b89a0476e0e9",
+  "session_id": "codex-e00ff6cf356d",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-03T17:19:36.35938Z",
+  "branch": "rebuild",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "runtime_data/private-assets/hooks/anc-lifecycle-events/hooks/lifecycle-event-bridge/HOOK.md",
+    "tests/m5-self-evolution/TC-ONLINE.md",
+    "tests/m5-self-evolution/run_tc_online.py",
+    "tests/m5-self-evolution/TC-M5.md",
+    "tests/m5-self-evolution/TEST.md",
+    "tests/m5-self-evolution/test_hook_bridge_pack.py",
+    "agents/app/entry/personal-assistant/HEARTBEAT.md",
+    "docs/plans/SSOT-implementation.md",
+    "runtime_data/private-assets/hooks/anc-lifecycle-events/hooks/lifecycle-event-bridge/handler.js",
+    "tests/m5-self-evolution/test_event_policy_runtime.py",
+    "agents/kernel/admin/HEARTBEAT.md",
+    "docs/architecture/construction_plane.md",
+    "runtime_data/private-assets/hooks/anc-lifecycle-events/package.json",
+    "tests/m5-self-evolution/test_domain_event_emission.py",
+    "tests/m5-self-evolution/test_m5_admission_regression.py"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "ed6f952d5edd",
+  "transcript_identifier_at_start": "gemini-fa3f24e0f8",
+  "checkpoint_transcript_start": 6,
+  "transcript_lines_at_start": 6,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-03T17:19:36.331453Z",
+    "agent_lines": 2514,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 2514,
+    "agent_percentage": 100
+  },
+  "transcript_path": "MyProjects/ANC_v2/.entire/codex-bridge/transcript.json"
+}
