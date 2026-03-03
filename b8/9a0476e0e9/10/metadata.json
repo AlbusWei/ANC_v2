@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "b89a0476e0e9",
+  "session_id": "codex-9e7858987f27",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-03T17:19:31.68945Z",
+  "branch": "rebuild",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/plans/SSOT-implementation.md"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "2bebdfa3182d",
+  "transcript_identifier_at_start": "gemini-2b437bf99c",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-03T17:19:31.663509Z",
+    "agent_lines": 31,
+    "human_added": 2481,
+    "human_modified": 1,
+    "human_removed": 0,
+    "total_committed": 2513,
+    "agent_percentage": 1.2335853561480303
+  },
+  "transcript_path": "MyProjects/ANC_v2/.entire/codex-bridge/transcript.json"
+}
