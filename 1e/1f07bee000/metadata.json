@@ -159,6 +159,13 @@
       "context": "/1e/1f07bee000/13/context.md",
       "content_hash": "/1e/1f07bee000/13/content_hash.txt",
       "prompt": "/1e/1f07bee000/13/prompt.txt"
+    },
+    {
+      "metadata": "/1e/1f07bee000/14/metadata.json",
+      "transcript": "/1e/1f07bee000/14/full.jsonl",
+      "context": "/1e/1f07bee000/14/context.md",
+      "content_hash": "/1e/1f07bee000/14/content_hash.txt",
+      "prompt": "/1e/1f07bee000/14/prompt.txt"
     }
   ],
   "token_usage": {
