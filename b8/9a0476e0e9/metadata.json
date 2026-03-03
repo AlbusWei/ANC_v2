@@ -3,7 +3,7 @@
   "checkpoint_id": "b89a0476e0e9",
   "strategy": "manual-commit",
   "branch": "rebuild",
-  "checkpoints_count": 10,
+  "checkpoints_count": 11,
   "files_touched": [
     "agents/app/entry/personal-assistant/HEARTBEAT.md",
     "agents/kernel/admin/HEARTBEAT.md",
@@ -189,6 +189,13 @@
       "context": "/b8/9a0476e0e9/23/context.md",
       "content_hash": "/b8/9a0476e0e9/23/content_hash.txt",
       "prompt": "/b8/9a0476e0e9/23/prompt.txt"
+    },
+    {
+      "metadata": "/b8/9a0476e0e9/24/metadata.json",
+      "transcript": "/b8/9a0476e0e9/24/full.jsonl",
+      "context": "/b8/9a0476e0e9/24/context.md",
+      "content_hash": "/b8/9a0476e0e9/24/content_hash.txt",
+      "prompt": "/b8/9a0476e0e9/24/prompt.txt"
     }
   ],
   "token_usage": {
