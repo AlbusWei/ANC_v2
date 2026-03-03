@@ -1,6 +1,6 @@
 # Process 全量清单
 
-> 版本: v1.11.0 | SSOT 上游: `shared/registry/process_registry.json`
+> 版本: v1.12.0 | SSOT 上游: `shared/registry/process_registry.json`
 
 ## Canonical Process Paths
 
@@ -93,9 +93,13 @@
 
 | process_id | 类型 | 规划阶段 | 用途 |
 |---|---|---|---|
+| owner-evolution-governance | 复合（P4） | Phase 4 | owner 运营责任闭环与提案治理主流程 |
 | evolution-loop | 复合 | Phase 4 | 演化闭环 |
 | health-check | 复合 | Phase 4 | 健康检查 |
 | improvement-review | 复合 | Phase 4 | 改进评审 |
+| evolution-proposal-governance | 复合（P5） | Phase 4 | 提案优先级与放行治理 |
+| evolution-loop-orchestration | 复合（P5） | Phase 4 | 演化主链编排与回填 |
+| asset-health-check | 复合（P5） | Phase 4 | 资产健康周期巡检 |
 
 ## P6 原子流程目录
 
@@ -118,6 +122,7 @@
 13. `docs/design/processes/construction-plane-governance-runtime-contract-baseline.md`
 14. `docs/design/processes/lifecycle-review-process.md`
 15. `docs/design/processes/software-vendor-e2e-flow-process.md`
+16. `docs/design/processes/owner-evolution-governance-process.md`
 
 Session3 已落地治理流程设计文档与运行资产：
 

@@ -1,7 +1,7 @@
 # M1/M3 + M4/M5 Executable Gap Closure Implementation Plan
 
 > Status: Superseded
-> Superseded-By: `docs/plans/SSOT-implementation.md`
+> Superseded-By: `docs/architecture/` + `docs/design/` + `docs/architecture/construction_plane.md`
 > Superseded-On: 2026-03-01
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.

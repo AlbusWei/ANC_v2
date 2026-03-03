@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "anc://design/data-models/evolution-hook-event-schema.json",
+  "title": "Evolution Hook Event Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "event_id",
+    "event_name",
+    "event_time",
+    "module",
+    "trigger_source",
+    "severity",
+    "evidence_ref",
+    "owner_agent_id",
+    "dedupe_key"
+  ],
+  "properties": {
+    "contract_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_name": {
+      "type": "string",
+      "enum": [
+        "m1.gate.failed",
+        "m1.gate.hold",
+        "m1.gate.pass",
+        "m3.implementation.failed",
+        "m3.implementation.completed",
+        "m4.lifecycle.transition.approved",
+        "m4.lifecycle.transition.rejected",
+        "m4.lifecycle.rollback.executed",
+        "m5.proposal.rejected",
+        "m5.proposal.accepted",
+        "asset.health.degraded",
+        "asset.health.critical"
+      ]
+    },
+    "event_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "module": {
+      "type": "string",
+      "enum": [
+        "m1",
+        "m3",
+        "m4",
+        "m5",
+        "runtime-monitor"
+      ]
+    },
+    "trigger_source": {
+      "type": "string",
+      "enum": [
+        "platform-hook",
+        "domain-hook",
+        "heartbeat",
+        "cron"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "warning",
+        "critical"
+      ]
+    },
+    "asset_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_product_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "owner_agent_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dedupe_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_instance_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "window_bucket": {
+      "type": "string",
+      "minLength": 1
+    },
+    "trace": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "anyOf": [
+    {
+      "required": [
+        "asset_ref"
+      ]
+    },
+    {
+      "required": [
+        "target_product_id"
+      ]
+    }
+  ]
+}

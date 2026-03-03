@@ -29,12 +29,12 @@ input_contract:
     - scope_baseline_ref
     - changed_assets
     - linkage_targets
-    - openspec_ref
+    - superpower_ref
   validation:
     - scope_baseline_ref must point to a reachable baseline document from AP-032
     - changed_assets must be a non-empty list of repo-relative paths
     - linkage_targets must include design, inventory, registry and construction_plane scopes
-    - openspec_ref must be provided for architecture-affecting changes
+    - superpower_ref must be provided for architecture-affecting changes
 output_contract:
   format: json
   required:
@@ -49,8 +49,8 @@ output_contract:
 fail_closed_rules:
   - missing required input fields
   - linkage_targets does not include registry checks
-  - missing openspec_ref for architecture-affecting rounds
-  - openspec and ANC design semantics conflict without architect decision snapshot
+  - missing superpower_ref for architecture-affecting rounds
+  - superpower and ANC design semantics conflict without architect decision snapshot
   - unresolved blocking risks without owner assignment
   - unreachable evidence references
 test_mount:
@@ -59,6 +59,6 @@ test_mount:
 references:
   module_spec: docs/design/modules/M6-construction-plane.md
   process_spec: docs/design/processes/construction-plane-governance-process.md
-  openspec_protocol: docs/design/interfaces/openspec-collaboration-protocol.md
+  superpower_protocol: docs/design/interfaces/superpower-collaboration-protocol.md
   runner_script: skills/system/construction-audit/scripts/construction_audit.py
 ```

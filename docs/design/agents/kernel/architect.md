@@ -51,7 +51,7 @@ Architect 负责定义与维护目标树，不负责直接执行实现。
 
 | Skill | 用途 | 状态 |
 |---|---|---|
-| spec-writer | 产出架构/方案规格（采用 Hybrid OpenSpec 原则） | review |
+| spec-writer | 产出架构/方案规格（采用 Superpower 协同原则） | review |
 | objective-writer | 维护分层 Objective 与成功标准 | review |
 | agent-creator | 生成 Agent 资产定义与 registry patch 计划 | review |
 | process-creator | 生成 Process 资产与 phase 闭合契约 | review |
@@ -67,11 +67,11 @@ Architect 负责定义与维护目标树，不负责直接执行实现。
 | meta-self-modification-protocol | Step 2 影响分析者 | 对元层改动提供影响分析与风险结论 |
 | construction-plane-governance | 模块 owner / 语义裁决者 | 负责 M6 施工治理语义收敛与冲突裁决 |
 
-## 5.1 Hybrid OpenSpec 协同职责
+## 5.1 Superpower 协同职责
 
-1. Architect 负责 Hybrid OpenSpec 的“单点语义裁决”。
-2. OpenSpec 侧用于协同提案与评审线程，ANC 文档侧用于治理契约落盘。
-3. 若 OpenSpec 与 ANC 语义冲突，Architect 必须先在 ANC 文档写入裁决，再驱动回写 OpenSpec。
+1. Architect 负责 Superpower 协同的“单点语义裁决”。
+2. Superpower 用于协同提案与评审线程，ANC 文档侧用于治理契约落盘。
+3. 若 Superpower 与 ANC 语义冲突，Architect 必须先在 ANC 文档写入裁决，再驱动回写 Superpower。
 4. 缺少双向映射或裁决快照时，Architect 有权阻断回合关闭（Fail-Closed）。
 
 ## 6. 架构迭代闭环

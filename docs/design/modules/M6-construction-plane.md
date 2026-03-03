@@ -13,7 +13,7 @@
 2. `docs/design/modules/module-dependency-matrix.md`
 3. `docs/design/skills/construction-plane-skills.md`
 4. `docs/design/processes/construction-plane-governance-process.md`
-5. `docs/design/interfaces/openspec-collaboration-protocol.md`
+5. `docs/design/interfaces/superpower-collaboration-protocol.md`
 6. `runtime_data/execution/evidence/construction-plane/README.md`
 
 ## Phase 1 成功优先级
@@ -46,8 +46,8 @@
 | linkage auditor | `sys.arch.construction-audit` | 运行级验证通过（review） |
 | superpower sync executor | `system.integration.superpower-sync` | 运行级验证通过（review） |
 | governance flow | `construction-plane-governance` | 运行级验证通过（review） |
-| Superpower sync protocol | `docs/design/interfaces/openspec-collaboration-protocol.md` | 迁移中（review） |
-| Superpower sync schema | `docs/design/data-models/openspec-collaboration-schema.json` | 迁移中（review） |
+| Superpower sync protocol | `docs/design/interfaces/superpower-collaboration-protocol.md` | review |
+| Superpower sync schema | `docs/design/data-models/superpower-collaboration-schema.json` | review |
 | dependency baseline | `docs/design/modules/module-dependency-matrix.md` | 已落盘（active） |
 | module detailed spec | `docs/design/modules/M6-construction-plane.md` | 运行级收口（v1.0.0） |
 
@@ -69,7 +69,7 @@
    - Superpower 会话记录对应 ANC 文档路径、上下文包与执行锚点。
 3. 裁决权：当会话输出与 ANC 文档语义冲突时，以 `architect` 在 ANC 文档落盘的裁决为准，再回写会话结论。
 4. 禁止项：禁止仅更新 Superpower 会话结论而不更新 ANC 设计文档；禁止仅更新 ANC 而不回填会话映射。
-5. 完整 Schema：同步记录必须满足 `openspec-collaboration-schema.json`（迁移期承载 Superpower 会话同步），禁止只保留最小字段。
+5. 完整 Schema：同步记录必须满足 `superpower-collaboration-schema.json`，禁止只保留最小字段。
 
 ## 回合追溯主键与协同约束
 

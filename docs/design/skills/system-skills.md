@@ -23,7 +23,7 @@
 17. sys.qa.verdict-normalizer
 18. sys.qa.hold-triage
 19. sys.arch.construction-audit
-20. system.integration.openspec-sync
+20. system.integration.superpower-sync
 21. system.ops.git-worktree-sync
 22. system.control.config-change-gatekeeper
 23. system.admin.system-config-updater

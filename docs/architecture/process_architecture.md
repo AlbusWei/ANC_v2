@@ -1,7 +1,7 @@
 # ANC v2 流程架构（SSOT-Process）
 
-最后更新：2026-02-24  
-版本：2.2.0-alpha
+最后更新：2026-03-03  
+版本：2.3.0-alpha
 
 > 本文档定义 ANC v2 的流程原语、实例治理、调度协议、门禁规则与证据规范。
 
@@ -267,3 +267,39 @@ lineage:
 2. 外部客户交付主线：`Lead -> Discovery -> Solutioning -> Contract -> Delivery -> Acceptance -> Deployment -> Support -> Feedback`
 
 复用规则：外部主线 `delivery-iterations` 强制复用内部开发闭环。
+
+## 11. M5 触发编排架构（Hook / Cron / Heartbeat）
+
+M5 自进化触发架构采用三平面协同：
+
+1. Hook：事件入口归一。
+2. Heartbeat：常态巡检与上下文感知批处理。
+3. Cron：精确定时动作与独立会话重分析。
+
+### 11.1 双层 Hook 语义（强制）
+
+1. 平台层 Hook：OpenClaw 内置事件，仅桥接外部输入与会话状态变化。
+2. 领域层 Hook：ANC 生命周期自定义事件，是治理判定主信号。
+
+治理链路禁止把平台层事件直接作为提案放行依据。
+
+### 11.2 触发标准路径
+
+`platform/domain event -> trigger-ingress-normalizer -> trigger-event-runtime -> AssetIssue/EvolutionProposal -> M3 -> M1 -> M4`
+
+约束：
+
+1. 统一经 `trigger-ingress-normalizer` 归一，禁止旁路。
+2. 统一经 `trigger-event-runtime` 做匹配、去重、分发、补数/升级。
+3. 事件缺证据或去重冲突不可判定时，Fail-Closed。
+
+### 11.3 Cron 与 Heartbeat 分工
+
+1. Heartbeat 负责周期健康巡检，命中阈值时升级事件。
+2. Cron 负责精确时点评审、提醒与独立任务执行。
+3. 对准点敏感任务必须显式声明时区并做偏移监控，不得依赖默认调度推断。
+
+### 11.4 领域事件契约
+
+领域事件协议：`docs/design/interfaces/evolution-hook-event-protocol.md`  
+领域事件 schema：`docs/design/data-models/evolution-hook-event-schema.json`

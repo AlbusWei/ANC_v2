@@ -78,6 +78,7 @@ def check_legacy_path_refs(root: Path) -> CheckResult:
 
     allowed_prefixes = {
         "AGENTS.md:",
+        "CLAUDE.md:",
         "docs/architecture/release_isolation_policy.md:",
         "runtime_data/README.md:",
         "tools/release/release_isolation_gate.py:",

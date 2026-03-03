@@ -42,7 +42,7 @@ P6 是最小执行单元。每个原子流程定义一个 Actor + 一个 Skill +
 32. AP-032 construction-round-intake-baseline
 33. AP-033 construction-linkage-audit
 34. AP-034 linked-artifacts-update
-35. AP-035 openspec-round-sync
+35. AP-035 superpower-round-sync
 36. AP-036 construction-round-close-verification
 
 ## 统一约束

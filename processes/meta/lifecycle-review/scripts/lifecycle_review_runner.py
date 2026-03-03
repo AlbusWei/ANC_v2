@@ -125,6 +125,89 @@ def run_cmd(cmd: List[str], root: Path) -> subprocess.CompletedProcess[str]:
     return subprocess.run(cmd, cwd=str(root), check=False, capture_output=True, text=True)
 
 
+ALLOWED_EVENT_NAMES = {
+    "m1.gate.failed",
+    "m1.gate.hold",
+    "m1.gate.pass",
+    "m3.implementation.failed",
+    "m3.implementation.completed",
+    "m4.lifecycle.transition.approved",
+    "m4.lifecycle.transition.rejected",
+    "m4.lifecycle.rollback.executed",
+    "m5.proposal.rejected",
+    "m5.proposal.accepted",
+    "asset.health.degraded",
+    "asset.health.critical",
+}
+
+
+def validate_domain_event(event_payload: Dict[str, Any]) -> None:
+    required = [
+        "contract_version",
+        "event_id",
+        "event_name",
+        "event_time",
+        "module",
+        "trigger_source",
+        "severity",
+        "evidence_ref",
+        "owner_agent_id",
+        "dedupe_key",
+    ]
+    missing = [key for key in required if not str(event_payload.get(key) or "").strip()]
+    if missing:
+        raise LifecycleReviewError(f"domain_event_missing_fields:{','.join(missing)}")
+    if event_payload.get("contract_version") != "0.1.0":
+        raise LifecycleReviewError("domain_event_contract_version_invalid")
+    if str(event_payload.get("event_name")) not in ALLOWED_EVENT_NAMES:
+        raise LifecycleReviewError("domain_event_name_invalid")
+    if str(event_payload.get("module")) not in {"m1", "m3", "m4", "m5", "runtime-monitor"}:
+        raise LifecycleReviewError("domain_event_module_invalid")
+    if str(event_payload.get("trigger_source")) not in {"platform-hook", "domain-hook", "heartbeat", "cron"}:
+        raise LifecycleReviewError("domain_event_trigger_source_invalid")
+    if str(event_payload.get("severity")) not in {"info", "warning", "critical"}:
+        raise LifecycleReviewError("domain_event_severity_invalid")
+    if not str(event_payload.get("asset_ref") or event_payload.get("target_product_id") or "").strip():
+        raise LifecycleReviewError("domain_event_target_missing")
+
+
+def emit_domain_event(
+    *,
+    root: Path,
+    event_name: str,
+    severity: str,
+    evidence_ref: str,
+    owner_agent_id: str,
+    asset_ref: str,
+    reason: str,
+) -> str:
+    timestamp = now_iso()
+    bucket = timestamp[:16].replace("-", "").replace(":", "").replace("T", "T")
+    event_id = f"{event_name.replace('.', '-')}-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}-lifecycle-review"
+    payload = {
+        "contract_version": "0.1.0",
+        "event_id": event_id,
+        "event_name": event_name,
+        "event_time": timestamp,
+        "module": "m4",
+        "trigger_source": "domain-hook",
+        "severity": severity,
+        "asset_ref": asset_ref,
+        "evidence_ref": evidence_ref,
+        "owner_agent_id": owner_agent_id,
+        "dedupe_key": f"{event_name}|{asset_ref}|{bucket}",
+        "window_bucket": bucket,
+        "trace": {
+            "process_id": "lifecycle-review",
+            "reason": reason,
+        },
+    }
+    validate_domain_event(payload)
+    event_path = root / "runtime_data/evolution/events" / f"{event_id}.json"
+    dump_json(event_path, payload)
+    return to_rel(event_path, root)
+
+
 def fail_closed(
     *,
     root: Path,
@@ -133,6 +216,7 @@ def fail_closed(
     fail_record_path: Path,
     phase_trace: List[Dict[str, Any]],
     reason: str,
+    target_asset_ref: str = "process:lifecycle-review",
 ) -> int:
     dump_json(
         fail_record_path,
@@ -156,20 +240,30 @@ def fail_closed(
         },
     )
 
-    dump_json(
-        output_path,
-        {
-            "status": "failed",
-            "process_id": "lifecycle-review",
-            "failure_code": "lifecycle_review_failed",
-            "reason": reason,
-            "runtime_trace_ref": to_rel(runtime_trace_path, root),
-            "fail_closed_record_ref": to_rel(fail_record_path, root),
-            "lifecycle_transition_ref": "",
-            "registry_sync_ref": "",
-            "lifecycle_review_report_ref": "",
-        },
-    )
+    output_payload = {
+        "status": "failed",
+        "process_id": "lifecycle-review",
+        "failure_code": "lifecycle_review_failed",
+        "reason": reason,
+        "runtime_trace_ref": to_rel(runtime_trace_path, root),
+        "fail_closed_record_ref": to_rel(fail_record_path, root),
+        "lifecycle_transition_ref": "",
+        "registry_sync_ref": "",
+        "lifecycle_review_report_ref": "",
+    }
+    try:
+        output_payload["domain_event_ref"] = emit_domain_event(
+            root=root,
+            event_name="m4.lifecycle.transition.rejected",
+            severity="critical",
+            evidence_ref=to_rel(runtime_trace_path, root),
+            owner_agent_id="hr",
+            asset_ref=target_asset_ref,
+            reason=reason,
+        )
+    except Exception:
+        pass
+    dump_json(output_path, output_payload)
     print(to_rel(output_path, root))
     return 2
 
@@ -418,6 +512,16 @@ def main() -> int:
             },
         )
 
+        domain_event_ref = emit_domain_event(
+            root=root,
+            event_name="m4.lifecycle.transition.approved",
+            severity="info",
+            evidence_ref=to_rel(runtime_trace_path, root),
+            owner_agent_id="hr",
+            asset_ref=target_asset_ref,
+            reason=f"{current_status}->{requested_to_status}",
+        )
+
         dump_json(
             output_path,
             {
@@ -427,6 +531,7 @@ def main() -> int:
                 "registry_sync_ref": to_rel(registry_sync_path, root),
                 "lifecycle_review_report_ref": to_rel(report_path, root),
                 "runtime_trace_ref": to_rel(runtime_trace_path, root),
+                "domain_event_ref": domain_event_ref,
             },
         )
         print(to_rel(output_path, root))
@@ -440,6 +545,7 @@ def main() -> int:
             fail_record_path=fail_record_path,
             phase_trace=phase_trace,
             reason=str(exc),
+            target_asset_ref=str(request.get("target_asset_ref") or "process:lifecycle-review"),
         )
 
 

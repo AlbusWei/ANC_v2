@@ -1,7 +1,7 @@
 # M1/M3 + M4/M5 从纸面到可执行闭环设计
 
 > Status: Superseded
-> Superseded-By: `docs/plans/SSOT-design.md`
+> Superseded-By: `docs/architecture/system_overview.md` + `docs/design/`
 > Superseded-On: 2026-03-01
 
 > 日期：2026-03-01

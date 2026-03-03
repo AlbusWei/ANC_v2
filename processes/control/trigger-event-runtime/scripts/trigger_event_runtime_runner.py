@@ -156,6 +156,8 @@ def write_fail_closed(
         "runtime_trace_ref": to_rel(runtime_trace_path, root),
         "fail_closed_record_ref": to_rel(fail_record_path, root),
         "backfill_request_ref": to_rel(backfill_request_path, root) if backfill_request_path else "",
+        "escalation_ref": "",
+        "unmatched_event_receipt_ref": "",
     }
     dump_json(output_path, output)
     print(to_rel(output_path, root))
@@ -172,6 +174,268 @@ def load_or_write_default(root: Path, evidence_dir: Path, ref: Any, default_name
     target = evidence_dir / default_name
     dump_json(target, payload)
     return to_rel(target, root)
+
+
+def ensure_ref_exists(root: Path, raw_ref: str, field_name: str) -> str:
+    path = resolve_path(root, raw_ref)
+    if not path.exists():
+        raise TriggerEventRuntimeError(f"{field_name}_unreachable:{raw_ref}")
+    return to_rel(path, root)
+
+
+def route_matches(route: Dict[str, Any], request: Dict[str, Any]) -> bool:
+    match_keys = [
+        "event_name",
+        "module",
+        "trigger_source",
+        "severity",
+        "entity_type",
+        "from_status",
+        "to_status",
+    ]
+    for key in match_keys:
+        expected = route.get(key)
+        if expected is None:
+            continue
+        actual = request.get(key)
+        if str(expected).strip() != str(actual or "").strip():
+            return False
+    return True
+
+
+def resolve_runtime_policy_refs(root: Path, request: Dict[str, Any]) -> Dict[str, Any]:
+    explicit_refs = {
+        "match_policy_ref": request.get("match_policy_ref"),
+        "dedupe_policy_ref": request.get("dedupe_policy_ref"),
+        "catchup_policy_ref": request.get("catchup_policy_ref"),
+    }
+    if all(isinstance(value, str) and value.strip() for value in explicit_refs.values()):
+        return {
+            "matched": True,
+            "source": "explicit",
+            "match_policy_ref": ensure_ref_exists(root, str(explicit_refs["match_policy_ref"]).strip(), "match_policy_ref"),
+            "dedupe_policy_ref": ensure_ref_exists(root, str(explicit_refs["dedupe_policy_ref"]).strip(), "dedupe_policy_ref"),
+            "catchup_policy_ref": ensure_ref_exists(
+                root, str(explicit_refs["catchup_policy_ref"]).strip(), "catchup_policy_ref"
+            ),
+            "routing_policy_ref": "",
+            "route_id": "explicit",
+        }
+
+    routing_policy_raw = str(
+        request.get("event_routing_policy_ref")
+        or "runtime_data/private-assets/evolution/event-routing-policy.json"
+    ).strip()
+    routing_policy_path = resolve_path(root, routing_policy_raw)
+    if not routing_policy_path.exists():
+        raise TriggerEventRuntimeError(f"event_routing_policy_ref_unreachable:{routing_policy_raw}")
+
+    routing_policy = load_json(routing_policy_path)
+    routes = routing_policy.get("routes", [])
+    if not isinstance(routes, list):
+        raise TriggerEventRuntimeError("event_routing_policy_routes_invalid")
+
+    chosen: Dict[str, Any] | None = None
+    for item in routes:
+        if not isinstance(item, dict):
+            raise TriggerEventRuntimeError("event_routing_policy_route_invalid")
+        if route_matches(item, request):
+            chosen = item
+            break
+
+    if chosen is None:
+        fallback = routing_policy.get("default_route")
+        if isinstance(fallback, dict):
+            chosen = fallback
+        else:
+            return {
+                "matched": False,
+                "source": "routing-policy",
+                "routing_policy_ref": to_rel(routing_policy_path, root),
+                "route_id": "",
+            }
+
+    match_policy_ref = str(chosen.get("match_policy_ref") or "").strip()
+    dedupe_policy_ref = str(chosen.get("dedupe_policy_ref") or "").strip()
+    catchup_policy_ref = str(chosen.get("catchup_policy_ref") or "").strip()
+    if not (match_policy_ref and dedupe_policy_ref and catchup_policy_ref):
+        raise TriggerEventRuntimeError("event_routing_policy_route_missing_policy_refs")
+
+    return {
+        "matched": True,
+        "source": "routing-policy",
+        "routing_policy_ref": to_rel(routing_policy_path, root),
+        "route_id": str(chosen.get("route_id") or "default"),
+        "match_policy_ref": ensure_ref_exists(root, match_policy_ref, "match_policy_ref"),
+        "dedupe_policy_ref": ensure_ref_exists(root, dedupe_policy_ref, "dedupe_policy_ref"),
+        "catchup_policy_ref": ensure_ref_exists(root, catchup_policy_ref, "catchup_policy_ref"),
+    }
+
+
+def write_unmatched_receipt_and_output(
+    *,
+    root: Path,
+    output_path: Path,
+    runtime_trace_path: Path,
+    evidence_dir: Path,
+    trace: List[Dict[str, Any]],
+    request: Dict[str, Any],
+    reason: str,
+    dedupe_decision: str = "skip",
+    policy_ref: str = "",
+    match_result: str = "miss",
+) -> int:
+    receipt_path = evidence_dir / "unmatched_event_receipt.json"
+    receipt_payload = {
+        "timestamp": now_iso(),
+        "status": "recorded",
+        "reason": reason,
+        "event_id": request.get("event_id"),
+        "event_name": request.get("event_name") or request.get("canonical_event", ""),
+        "module": request.get("module", ""),
+        "policy_ref": policy_ref,
+        "match_result": match_result,
+        "dedupe_decision": dedupe_decision,
+    }
+    dump_json(receipt_path, receipt_payload)
+
+    runtime_trace = {
+        "timestamp": now_iso(),
+        "status": "ok",
+        "phase_trace": trace,
+        "route_status": "unmatched",
+        "unmatched_event_receipt_ref": to_rel(receipt_path, root),
+    }
+    dump_json(runtime_trace_path, runtime_trace)
+
+    output = {
+        "status": "ok",
+        "trigger_receipt_ref": "",
+        "dedupe_decision": dedupe_decision,
+        "runtime_trace_ref": to_rel(runtime_trace_path, root),
+        "trigger_id": "",
+        "instance_id": "",
+        "event_ref": "",
+        "dedupe_key_ref": "",
+        "dedupe_reject_log_ref": "",
+        "catchup_decision": "",
+        "escalation_ref": "",
+        "unmatched_event_receipt_ref": to_rel(receipt_path, root),
+        "fail_closed_record_ref": "",
+        "backfill_request_ref": "",
+    }
+    dump_json(output_path, output)
+    print(to_rel(output_path, root))
+    return 0
+
+
+def load_event_escalation_policy(root: Path, request: Dict[str, Any]) -> Tuple[Dict[str, Any] | None, str]:
+    raw_ref = str(
+        request.get("event_escalation_policy_ref")
+        or "runtime_data/private-assets/evolution/event-escalation-policy.json"
+    ).strip()
+    if not raw_ref:
+        return None, ""
+    policy_path = resolve_path(root, raw_ref)
+    if not policy_path.exists():
+        if request.get("event_escalation_policy_ref"):
+            raise TriggerEventRuntimeError(f"event_escalation_policy_ref_unreachable:{raw_ref}")
+        return None, ""
+    payload = load_json(policy_path)
+    rules = payload.get("rules", [])
+    if not isinstance(rules, list):
+        raise TriggerEventRuntimeError("event_escalation_policy_rules_invalid")
+    return payload, to_rel(policy_path, root)
+
+
+def escalation_rule_matches(rule: Dict[str, Any], request: Dict[str, Any]) -> bool:
+    for key in ("event_name", "module", "trigger_source"):
+        expected = rule.get(key)
+        if expected is None:
+            continue
+        if str(expected).strip() != str(request.get(key) or "").strip():
+            return False
+    return True
+
+
+def load_counter(path: Path) -> Dict[str, Any]:
+    if not path.exists():
+        return {"entries": {}}
+    payload = load_json(path)
+    entries = payload.get("entries")
+    if not isinstance(entries, dict):
+        raise TriggerEventRuntimeError("escalation_counter_invalid")
+    return payload
+
+
+def evaluate_escalation_rule(
+    *,
+    root: Path,
+    request: Dict[str, Any],
+    rule: Dict[str, Any],
+    counter_path: Path,
+) -> Tuple[bool, str]:
+    strategy = str(rule.get("strategy") or "immediate").strip().lower()
+    if strategy == "immediate":
+        return True, "rule_immediate"
+
+    if strategy == "threshold":
+        try:
+            threshold = int(rule.get("threshold"))
+        except (TypeError, ValueError) as exc:
+            raise TriggerEventRuntimeError("escalation_threshold_invalid") from exc
+        if threshold <= 0:
+            raise TriggerEventRuntimeError("escalation_threshold_invalid")
+
+        counter_key = str(
+            rule.get("counter_key")
+            or f"{request.get('event_name','')}|{request.get('entity_id','')}|{rule.get('rule_id','default')}"
+        ).strip()
+        if not counter_key:
+            raise TriggerEventRuntimeError("escalation_counter_key_empty")
+
+        counter_payload = load_counter(counter_path)
+        entries = counter_payload.setdefault("entries", {})
+        count_raw = entries.get(counter_key, 0)
+        count = int(count_raw) if isinstance(count_raw, int) else 0
+        count += 1
+        entries[counter_key] = count
+        counter_payload["entries"] = entries
+        dump_json(counter_path, counter_payload)
+        return count >= threshold, f"rule_threshold:{count}/{threshold}"
+
+    if strategy == "sla":
+        try:
+            sla_minutes = int(rule.get("hold_sla_minutes") or rule.get("sla_minutes"))
+        except (TypeError, ValueError) as exc:
+            raise TriggerEventRuntimeError("escalation_sla_invalid") from exc
+        try:
+            observed_hold = int(request.get("hold_duration_minutes") or 0)
+        except (TypeError, ValueError) as exc:
+            raise TriggerEventRuntimeError("hold_duration_minutes_invalid") from exc
+        return observed_hold > sla_minutes, f"rule_sla:{observed_hold}>{sla_minutes}"
+
+    raise TriggerEventRuntimeError(f"unsupported_escalation_strategy:{strategy}")
+
+
+def build_escalation_incident(
+    *,
+    request: Dict[str, Any],
+    reason: str,
+    severity: str,
+    requested_target: str,
+) -> Dict[str, Any]:
+    return {
+        "timestamp": now_iso(),
+        "event_id": request.get("event_id"),
+        "event_name": request.get("event_name") or request.get("canonical_event", ""),
+        "severity": severity,
+        "reason": reason,
+        "requested_target": requested_target,
+        "entity_id": request.get("entity_id"),
+        "entity_type": request.get("entity_type"),
+        "module": request.get("module", ""),
+    }
 
 
 def main() -> int:
@@ -204,9 +468,6 @@ def main() -> int:
             "entity_id",
             "from_status",
             "to_status",
-            "match_policy_ref",
-            "dedupe_policy_ref",
-            "catchup_policy_ref",
         ]
         missing = [field for field in required if field not in request]
         if missing:
@@ -235,18 +496,41 @@ def main() -> int:
                 backfill_request_path=backfill_request_path,
             )
 
+        policy_resolution = resolve_runtime_policy_refs(root, request)
+        if not policy_resolution.get("matched"):
+            return write_unmatched_receipt_and_output(
+                root=root,
+                output_path=output_path,
+                runtime_trace_path=runtime_trace_path,
+                evidence_dir=evidence_dir,
+                trace=trace,
+                request=request,
+                reason="route_unmatched",
+                dedupe_decision="skip",
+                policy_ref=str(policy_resolution.get("routing_policy_ref") or ""),
+                match_result="miss",
+            )
+
+        match_policy_ref = str(policy_resolution["match_policy_ref"])
+        dedupe_policy_ref = str(policy_resolution["dedupe_policy_ref"])
+        catchup_policy_ref = str(policy_resolution["catchup_policy_ref"])
+
         event_payload_path = evidence_dir / "event_payload.json"
         dump_json(
             event_payload_path,
             {
                 "event_id": request["event_id"],
+                "event_name": request.get("event_name", ""),
                 "event_time": request["event_time"],
+                "module": request.get("module", ""),
+                "severity": request.get("severity", "info"),
                 "entity_type": request["entity_type"],
                 "entity_id": request["entity_id"],
                 "from_status": request["from_status"],
                 "to_status": request["to_status"],
                 "emitted_by": request.get("emitted_by", "hr"),
-                "canonical_event": request.get("canonical_event", "internal.lifecycle.transitioned"),
+                "owner_agent_id": request.get("owner_agent_id", "owner"),
+                "canonical_event": request.get("canonical_event") or request.get("event_name") or "internal.lifecycle.transitioned",
                 "transition_evidence_ref": transition_evidence_ref,
             },
         )
@@ -263,7 +547,9 @@ def main() -> int:
                 "trigger_source": request.get("trigger_source", "lifecycle"),
                 "payload_ref": to_rel(event_payload_path, root),
                 "received_at": request.get("received_at", ts),
-                "canonical_event": request.get("canonical_event", "internal.lifecycle.transitioned"),
+                "canonical_event": request.get("canonical_event")
+                or request.get("event_name")
+                or "internal.lifecycle.transitioned",
             },
         )
 
@@ -311,8 +597,8 @@ def main() -> int:
             matcher_input,
             {
                 "canonical_trigger_ref": canonical_ref,
-                "match_policy_ref": request["match_policy_ref"],
-                "dedupe_policy_ref": request["dedupe_policy_ref"],
+                "match_policy_ref": match_policy_ref,
+                "dedupe_policy_ref": dedupe_policy_ref,
             },
         )
 
@@ -348,6 +634,20 @@ def main() -> int:
             raise TriggerEventRuntimeError("invalid_match_result")
         if dedupe_decision not in {"allow", "reject"}:
             raise TriggerEventRuntimeError("invalid_dedupe_decision")
+
+        if match_result == "miss":
+            return write_unmatched_receipt_and_output(
+                root=root,
+                output_path=output_path,
+                runtime_trace_path=runtime_trace_path,
+                evidence_dir=evidence_dir,
+                trace=trace,
+                request=request,
+                reason="route_unmatched",
+                dedupe_decision=dedupe_decision,
+                policy_ref=str(policy_resolution.get("routing_policy_ref") or ""),
+                match_result=match_result,
+            )
 
         instance_id = ""
         session_id = ""
@@ -518,7 +818,7 @@ def main() -> int:
             catchup_input,
             {
                 "missed_run_ref": missed_run_ref,
-                "catchup_policy_ref": request["catchup_policy_ref"],
+                "catchup_policy_ref": catchup_policy_ref,
                 "trigger_policy_ref": trigger_policy_ref,
                 "runtime_state_ref": runtime_state_ref,
             },
@@ -563,6 +863,97 @@ def main() -> int:
             )
             dedupe_reject_log_ref = to_rel(dedupe_reject_log, root)
 
+        escalation_ref = ""
+        escalation_decision = "skip"
+        escalation_rule_id = ""
+        escalation_policy, escalation_policy_ref = load_event_escalation_policy(root, request)
+        if escalation_policy is not None:
+            rules = escalation_policy.get("rules", [])
+            if not isinstance(rules, list):
+                raise TriggerEventRuntimeError("event_escalation_policy_rules_invalid")
+
+            counter_ref = str(
+                request.get("escalation_counter_ref")
+                or to_rel(evidence_dir / "p6_escalation_counter.json", root)
+            ).strip()
+            counter_path = resolve_path(root, counter_ref)
+            counter_path.parent.mkdir(parents=True, exist_ok=True)
+
+            for rule in rules:
+                if not isinstance(rule, dict):
+                    raise TriggerEventRuntimeError("event_escalation_rule_invalid")
+                if not escalation_rule_matches(rule, request):
+                    continue
+
+                should_escalate, eval_reason = evaluate_escalation_rule(
+                    root=root,
+                    request=request,
+                    rule=rule,
+                    counter_path=counter_path,
+                )
+                if not should_escalate:
+                    continue
+
+                chain_policy_raw = str(
+                    rule.get("escalation_chain_policy_ref")
+                    or escalation_policy.get("escalation_chain_policy_ref")
+                    or ""
+                ).strip()
+                if not chain_policy_raw:
+                    raise TriggerEventRuntimeError("missing_escalation_chain_policy_ref")
+                chain_policy_ref = ensure_ref_exists(root, chain_policy_raw, "escalation_chain_policy_ref")
+
+                incident_path = evidence_dir / "p6_incident.json"
+                incident_payload = build_escalation_incident(
+                    request=request,
+                    reason=str(rule.get("reason_template") or eval_reason),
+                    severity=str(rule.get("severity") or "high"),
+                    requested_target="",
+                )
+                dump_json(incident_path, incident_payload)
+
+                escalation_input = evidence_dir / "p6_input.json"
+                escalation_output = evidence_dir / "p6_output.json"
+                escalation_record = evidence_dir / "p6_record.json"
+                dump_json(
+                    escalation_input,
+                    {
+                        "incident_ref": to_rel(incident_path, root),
+                        "escalation_policy_ref": chain_policy_ref,
+                        "current_owner": str(request.get("owner_agent_id") or "owner"),
+                        "evidence_ref": trigger_receipt_ref,
+                    },
+                )
+
+                escalation_cmd = [
+                    sys.executable,
+                    "skills/system/escalation-handler/scripts/escalation_handler_runner.py",
+                    "--input",
+                    to_rel(escalation_input, root),
+                    "--output",
+                    to_rel(escalation_output, root),
+                    "--record",
+                    to_rel(escalation_record, root),
+                ]
+                rc, _ = run_phase(root=root, label="p6-escalate-runtime-anomaly", cmd=escalation_cmd, trace=trace)
+                if rc != 0:
+                    return write_fail_closed(
+                        root=root,
+                        output_path=output_path,
+                        runtime_trace_path=runtime_trace_path,
+                        fail_record_path=fail_record_path,
+                        reason="p6_escalation_failed",
+                        trace=trace,
+                    )
+
+                escalation_payload = load_json(escalation_output)
+                escalation_ref = str(escalation_payload.get("escalation_ref") or "").strip()
+                if not escalation_ref:
+                    raise TriggerEventRuntimeError("p6_missing_escalation_ref")
+                escalation_decision = str(escalation_payload.get("escalation_decision") or "escalate")
+                escalation_rule_id = str(rule.get("rule_id") or "")
+                break
+
         runtime_trace = {
             "timestamp": now_iso(),
             "status": "ok",
@@ -573,6 +964,12 @@ def main() -> int:
             "match_result": match_result,
             "dedupe_decision": dedupe_decision,
             "catchup_decision": p5_output.get("catchup_decision"),
+            "escalation_decision": escalation_decision,
+            "escalation_ref": escalation_ref,
+            "escalation_rule_id": escalation_rule_id,
+            "routing_policy_ref": str(policy_resolution.get("routing_policy_ref") or ""),
+            "route_id": str(policy_resolution.get("route_id") or ""),
+            "escalation_policy_ref": escalation_policy_ref,
             "phase_trace": trace,
         }
         dump_json(runtime_trace_path, runtime_trace)
@@ -588,6 +985,8 @@ def main() -> int:
             "dedupe_key_ref": p2_output.get("dedupe_key_ref", ""),
             "dedupe_reject_log_ref": dedupe_reject_log_ref,
             "catchup_decision": p5_output.get("catchup_decision", ""),
+            "escalation_ref": escalation_ref,
+            "unmatched_event_receipt_ref": "",
             "fail_closed_record_ref": "",
             "backfill_request_ref": "",
         }

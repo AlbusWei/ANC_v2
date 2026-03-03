@@ -1,6 +1,6 @@
 # 元流程清单与设计
 
-> 版本: v0.9.0 | 分类: Meta Processes | 最后更新: 2026-02-24
+> 版本: v1.0.0 | 分类: Meta Processes | 最后更新: 2026-03-03
 
 ## 已有元流程
 
@@ -64,7 +64,16 @@
 - canonical_path: `processes/meta/construction-plane-governance/`
 - design_doc: `docs/design/processes/construction-plane-governance-process.md`
 - level: P4
-- phases: scope-intake-and-baseline -> run-construction-audit -> execute-linked-updates -> sync-openspec-state -> verify-and-close
+- phases: scope-intake-and-baseline -> run-construction-audit -> execute-linked-updates -> sync-superpower-state -> verify-and-close
+
+### owner-evolution-governance（规划）
+
+- process_id: owner-evolution-governance
+- canonical_path（目标）: `processes/meta/owner-evolution-governance/`
+- design_doc: `docs/design/processes/owner-evolution-governance-process.md`
+- level: P4
+- phases: health-intake -> proposal-drafting -> governance-review -> implementation-dispatch -> quality-verify -> lifecycle-transition -> retro-close
+- trigger baseline: Hook(领域事件主信号) + Cron(精确动作) + Heartbeat(常态巡检)
 
 ## 现行 P5 子流程库（M3 Phase2）
 

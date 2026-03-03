@@ -9,7 +9,7 @@
 1. `processes/meta/construction-plane-governance/scripts/run_round.py`
 2. `processes/meta/construction-plane-governance/scripts/round_evidence_tool.py`
 3. `skills/system/construction-audit/scripts/construction_audit.py`
-4. `skills/system/openspec-sync/scripts/openspec_sync.sh`
+4. `skills/system/superpower-sync/scripts/superpower_sync.sh`
 5. `shared/registry/registry_contract_tool.py` (`verify` + `verify-m6`)
 6. `skills/system/qa/test-compiler/scripts/compile_test_doc.py`
 7. `skills/system/qa/evaluation-runner/scripts/quality_eval_runner`
@@ -88,11 +88,11 @@
 - Expected: 返回码 `3` 且输出 `decision=fail`
 - Evaluation Method: Exact Match
 
-### TC-010: openspec-sync checkpoint/commit 不一致阻断
+### TC-010: superpower-sync checkpoint/commit 不一致阻断
 
 - Type: Objective
 - Priority: P0
-- Input: `openspec_sync.sh` with `checkpoint_count != commit_count`
+- Input: `superpower_sync.sh` with `checkpoint_count != commit_count`
 - Expected: 返回码 `15`
 - Evaluation Method: Exact Match
 

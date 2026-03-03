@@ -38,6 +38,7 @@ def ensure_dir(path: Path) -> None:
 
 
 def write_json(path: Path, payload: Dict[str, object]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
 
 
@@ -287,10 +288,31 @@ def main() -> int:
     )
 
     scenario_inputs = {
-        "A": "runtime_data/execution/evidence/construction-plane/scenario-A-input.json",
-        "B": "runtime_data/execution/evidence/construction-plane/scenario-B-input.json",
-        "C": "runtime_data/execution/evidence/construction-plane/scenario-C-input.json",
+        "A": f"{round_tmp_rel}/scenario-A-input.json",
+        "B": f"{round_tmp_rel}/scenario-B-input.json",
+        "C": f"{round_tmp_rel}/scenario-C-input.json",
     }
+    for scenario, round_id, goal, scope in [
+        ("A", "R-20260221-M6-m6-construction-round-sync-11", "M6 runtime dry-run scenario A", "docs/plans/SSOT-implementation.md"),
+        ("B", "R-20260221-M6-m6-construction-round-sync-12", "M6 runtime dry-run scenario B", "docs/plans/SSOT-implementation.md"),
+        ("C", "R-20260221-M6-m6-construction-round-sync-13", "M6 runtime dry-run scenario C", "docs/plans/SSOT-implementation.md"),
+    ]:
+        write_json(
+            repo_root / scenario_inputs[scenario],
+            {
+                "round_id": round_id,
+                "round_goal": goal,
+                "change_scope_ref": scope,
+                "changed_assets": [
+                    "docs/design/modules/M6-construction-plane.md",
+                    "docs/design/processes/construction-plane-governance-process.md",
+                    "shared/registry/process_registry.json",
+                ],
+                "linkage_targets": ["design", "inventory", "registry", "construction_plane"],
+                "owner": "architect",
+                "superpower_ref": "docs/plans/SuperPower.md",
+            },
+        )
     for scenario, tc_id, expected_rc, expected_phase in [
         ("A", "TC-002", 0, None),
         ("B", "TC-003", 1, "p5"),
@@ -453,6 +475,22 @@ def main() -> int:
         decision_snapshot,
         "# Decision Snapshot\nconflict_state: resolved\nowner: architect\n",
     )
+    if not (repo_root / round_tmp_rel / "A" / "round-evidence.jsonl").exists():
+        write_text(
+            repo_root / round_tmp_rel / "A" / "round-evidence.jsonl",
+            json.dumps(
+                {
+                    "event": "round_open",
+                    "round_id": "R-20260221-M6-m6-construction-round-sync-11",
+                    "superpower_ref": "docs/plans/SuperPower.md",
+                    "round_goal": "M6 runtime dry-run scenario A",
+                    "owner": "architect",
+                    "ts": now_utc(),
+                },
+                ensure_ascii=False,
+            )
+            + "\n",
+        )
     shutil.copyfile(
         repo_root / round_tmp_rel / "A" / "round-evidence.jsonl",
         round_log_copy,

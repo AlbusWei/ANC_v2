@@ -1,6 +1,6 @@
 # 治理流程清单与设计
 
-> 版本: v1.5.0 | 分类: Governance Processes
+> 版本: v1.6.0 | 分类: Governance Processes
 
 ## 核心治理流程
 
@@ -14,6 +14,7 @@
 8. trigger-runtime-supervisor（P5 模式，规划）
 9. runtime-policy-calibration（P5 治理模式，可执行）
 10. construction-plane-governance
+11. owner-evolution-governance（P4，规划）
 
 ## lifecycle-review（可执行资产，review）
 
@@ -131,10 +132,21 @@ Fail-Closed：
 设计文档：`docs/design/processes/trigger-event-runtime-process.md`
 策略参考：`docs/design/processes/trigger-runtime-policy-guidelines.md`
 
+## owner-evolution-governance（P4，规划）
+
+设计文档：`docs/design/processes/owner-evolution-governance-process.md`
+事件协议：`docs/design/interfaces/evolution-hook-event-protocol.md`
+事件模型：`docs/design/data-models/evolution-hook-event-schema.json`
+
+定位：
+
+1. 将资产 owner 运营责任、提案治理、实施验证、生命周期迁移收敛为单闭环编排流程。
+2. 触发层采用“平台事件桥接 + 领域事件主信号”双层模型，不把 OpenClaw 内置事件直接作为治理判定输入。
+
 ## construction-plane-governance
 
 设计文档：`docs/design/processes/construction-plane-governance-process.md`
-协同协议：`docs/design/interfaces/openspec-collaboration-protocol.md`
+协同协议：`docs/design/interfaces/superpower-collaboration-protocol.md`
 owner：`architect`（语义），`bpm`（编排执行）
 
 关键约束：

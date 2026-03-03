@@ -7,7 +7,7 @@
 - Input:
   - round_id
   - m6_update_bundle_ref
-  - openspec_sync_ref
+  - superpower_sync_ref
   - round_evidence_log_ref
   - open_questions_ref
 - Output:

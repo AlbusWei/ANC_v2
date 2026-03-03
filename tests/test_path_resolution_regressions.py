@@ -22,7 +22,7 @@ def test_registry_tool_falls_back_to_round_dir_filename() -> None:
         parent_repo_root
         / "runtime_data/execution/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01"
     ).resolve()
-    evidence_ref = "docs/design/modules/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/round-evidence.jsonl"
+    evidence_ref = "runtime_data/execution/evidence/construction-plane/R-20260222-M6-m1-quality-gate-runtime-closure-01/round-evidence.jsonl"
 
     resolved = tool._resolve_artifact_path(round_dir, evidence_ref)
 

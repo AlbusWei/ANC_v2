@@ -64,6 +64,89 @@ def run_cmd(cmd: List[str], root: Path) -> subprocess.CompletedProcess[str]:
     return subprocess.run(cmd, cwd=str(root), check=False, capture_output=True, text=True)
 
 
+ALLOWED_EVENT_NAMES = {
+    "m1.gate.failed",
+    "m1.gate.hold",
+    "m1.gate.pass",
+    "m3.implementation.failed",
+    "m3.implementation.completed",
+    "m4.lifecycle.transition.approved",
+    "m4.lifecycle.transition.rejected",
+    "m4.lifecycle.rollback.executed",
+    "m5.proposal.rejected",
+    "m5.proposal.accepted",
+    "asset.health.degraded",
+    "asset.health.critical",
+}
+
+
+def validate_domain_event(event_payload: Dict[str, Any]) -> None:
+    required = [
+        "contract_version",
+        "event_id",
+        "event_name",
+        "event_time",
+        "module",
+        "trigger_source",
+        "severity",
+        "evidence_ref",
+        "owner_agent_id",
+        "dedupe_key",
+    ]
+    missing = [key for key in required if not str(event_payload.get(key) or "").strip()]
+    if missing:
+        raise QualityGateEvaluationError(f"domain_event_missing_fields:{','.join(missing)}")
+    if event_payload.get("contract_version") != "0.1.0":
+        raise QualityGateEvaluationError("domain_event_contract_version_invalid")
+    if str(event_payload.get("event_name")) not in ALLOWED_EVENT_NAMES:
+        raise QualityGateEvaluationError("domain_event_name_invalid")
+    if str(event_payload.get("module")) not in {"m1", "m3", "m4", "m5", "runtime-monitor"}:
+        raise QualityGateEvaluationError("domain_event_module_invalid")
+    if str(event_payload.get("trigger_source")) not in {"platform-hook", "domain-hook", "heartbeat", "cron"}:
+        raise QualityGateEvaluationError("domain_event_trigger_source_invalid")
+    if str(event_payload.get("severity")) not in {"info", "warning", "critical"}:
+        raise QualityGateEvaluationError("domain_event_severity_invalid")
+    if not str(event_payload.get("asset_ref") or event_payload.get("target_product_id") or "").strip():
+        raise QualityGateEvaluationError("domain_event_target_missing")
+
+
+def emit_domain_event(
+    *,
+    root: Path,
+    event_name: str,
+    severity: str,
+    evidence_ref: str,
+    owner_agent_id: str,
+    asset_ref: str,
+    runtime_gate_state: str,
+) -> str:
+    timestamp = now_iso()
+    bucket = timestamp[:16].replace("-", "").replace(":", "").replace("T", "T")
+    event_id = f"{event_name.replace('.', '-')}-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}-quality-gate-evaluation"
+    payload = {
+        "contract_version": "0.1.0",
+        "event_id": event_id,
+        "event_name": event_name,
+        "event_time": timestamp,
+        "module": "m1",
+        "trigger_source": "domain-hook",
+        "severity": severity,
+        "asset_ref": asset_ref,
+        "evidence_ref": evidence_ref,
+        "owner_agent_id": owner_agent_id,
+        "dedupe_key": f"{event_name}|{asset_ref}|{bucket}",
+        "window_bucket": bucket,
+        "trace": {
+            "process_id": "quality-gate-evaluation",
+            "runtime_gate_state": runtime_gate_state,
+        },
+    }
+    validate_domain_event(payload)
+    event_path = root / "runtime_data/evolution/events" / f"{event_id}.json"
+    dump_json(event_path, payload)
+    return to_rel(event_path, root)
+
+
 def parse_last_json(stdout: str) -> Dict[str, Any]:
     for line in reversed([item.strip() for item in stdout.splitlines() if item.strip()]):
         if line.startswith("{") and line.endswith("}"):
@@ -914,6 +997,25 @@ def main() -> int:
             },
         )
 
+        if runtime_gate_state == "pass":
+            event_name = "m1.gate.pass"
+            event_severity = "info"
+        elif runtime_gate_state == "hold":
+            event_name = "m1.gate.hold"
+            event_severity = "warning"
+        else:
+            event_name = "m1.gate.failed"
+            event_severity = "critical"
+        domain_event_ref = emit_domain_event(
+            root=root,
+            event_name=event_name,
+            severity=event_severity,
+            evidence_ref=to_rel(runtime_trace_path, root),
+            owner_agent_id="qa",
+            asset_ref="process:quality-gate-evaluation",
+            runtime_gate_state=runtime_gate_state,
+        )
+
         output = {
             "status": "ok" if gate_decision == "pass" else "failed",
             "process_id": "quality-gate-evaluation",
@@ -925,6 +1027,7 @@ def main() -> int:
             "final_gate_verdict_ref": final_gate_verdict_ref,
             "evidence_ref": to_rel(evidence_dir, root),
             "runtime_trace_ref": to_rel(runtime_trace_path, root),
+            "domain_event_ref": domain_event_ref,
             "hold_routed": hold_routed,
             "hold_governance_output_ref": hold_governance_output_ref,
             "hold_resolution_ref": hold_resolution_ref,
@@ -1001,6 +1104,21 @@ def main() -> int:
             "reasons": [failure_reason],
         }
         dump_json(output_path, output)
+        try:
+            domain_event_ref = emit_domain_event(
+                root=root,
+                event_name="m1.gate.failed",
+                severity="critical",
+                evidence_ref=to_rel(runtime_trace_path, root),
+                owner_agent_id="qa",
+                asset_ref="process:quality-gate-evaluation",
+                runtime_gate_state="fail",
+            )
+            failed_output = load_json(output_path)
+            failed_output["domain_event_ref"] = domain_event_ref
+            dump_json(output_path, failed_output)
+        except Exception:
+            pass
         print(to_rel(output_path, root))
         return 2
 

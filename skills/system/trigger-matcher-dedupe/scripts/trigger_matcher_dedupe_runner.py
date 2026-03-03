@@ -198,6 +198,17 @@ def main() -> int:
         existing_primary = bool(p_tag and p_tag in entries)
         existing_fallback = bool(f_tag and f_tag in entries)
 
+        # Fail-Closed: 主键与回退键都命中但指向不同历史触发时，冲突不可判定。
+        if existing_primary and existing_fallback:
+            primary_entry = entries.get(p_tag)
+            fallback_entry = entries.get(f_tag)
+            if not isinstance(primary_entry, dict) or not isinstance(fallback_entry, dict):
+                raise MatcherError("dedupe_conflict_unresolved")
+            primary_trigger = str(primary_entry.get("trigger_id") or "").strip()
+            fallback_trigger = str(fallback_entry.get("trigger_id") or "").strip()
+            if not primary_trigger or not fallback_trigger or primary_trigger != fallback_trigger:
+                raise MatcherError("dedupe_conflict_unresolved")
+
         selected_mode = "primary" if p_tag else "fallback"
         selected_tag = p_tag if selected_mode == "primary" else f_tag
         existing_selected = existing_primary if selected_mode == "primary" else existing_fallback

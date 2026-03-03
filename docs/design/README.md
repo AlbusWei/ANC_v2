@@ -27,7 +27,10 @@
 2. `docs/design/layers/layer-minimum-definition-matrix.md`
 3. `docs/design/processes/recursive-process-architecture.md`
 4. `docs/design/business/README.md`
-5. inventories 与 interfaces/data-models
+5. `docs/design/processes/owner-evolution-governance-process.md`
+6. `docs/design/interfaces/evolution-hook-event-protocol.md`
+7. `docs/design/data-models/evolution-hook-event-schema.json`
+8. inventories 与 interfaces/data-models
 
 ## 强制规则
 

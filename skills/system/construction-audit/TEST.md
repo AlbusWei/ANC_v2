@@ -10,7 +10,7 @@
 
 - Type: Objective
 - Priority: P0
-- Input: 提供完整 `round_id/scope_baseline_ref/changed_assets/linkage_targets/openspec_ref`
+- Input: 提供完整 `round_id/scope_baseline_ref/changed_assets/linkage_targets/superpower_ref`
 - Expected: 产出 `linkage_report_ref`，`missing_items=[]`，`blocking_risks=[]`
 - Evaluation Method: Exact Match
 
@@ -30,11 +30,11 @@
 - Expected: 返回失败并记录不可达证据引用
 - Evaluation Method: Exact Match
 
-### TC-004: 架构回合缺失 OpenSpec 映射触发 Fail-Closed
+### TC-004: 架构回合缺失 Superpower 映射触发 Fail-Closed
 
 - Type: Objective
 - Priority: P0
-- Input: 架构边界变更但不提供 `openspec_ref`
+- Input: 架构边界变更但不提供 `superpower_ref`
 - Expected: 返回失败并标记同步阻断项
 - Evaluation Method: Exact Match
 

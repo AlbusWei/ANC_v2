@@ -11,7 +11,7 @@
   - changed_assets
   - linkage_targets
   - owner
-  - openspec_ref（架构相关变更必填）
+  - superpower_ref（架构相关变更必填）
 - Output:
   - scope_baseline_ref
 - Fail-Closed:

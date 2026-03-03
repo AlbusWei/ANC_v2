@@ -1,7 +1,7 @@
 # M4/M5 产品化生命周期与自演化设计（内部产品优先）
 
 > Status: Superseded
-> Superseded-By: `docs/plans/SSOT-design.md`
+> Superseded-By: `docs/architecture/system_overview.md` + `docs/design/`
 > Superseded-On: 2026-03-01
 
 > 日期：2026-03-01

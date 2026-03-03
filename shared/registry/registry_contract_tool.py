@@ -992,12 +992,12 @@ def check_superpower_collaboration_consistency(
     else:
         protocol_text = SUPERPOWER_PROTOCOL_PATH.read_text(encoding="utf-8")
         if "docs/design/data-models/superpower-collaboration-schema.json" not in protocol_text:
-            errors.append(f"{SUPERPOWER_PROTOCOL_PATH}: must reference OpenSpec collaboration schema path")
+            errors.append(f"{SUPERPOWER_PROTOCOL_PATH}: must reference Superpower collaboration schema path")
 
     skill_ids = {entry["skill_id"] for entry in skills_payload.get("entries", [])}
     for required_skill in ["sys.arch.construction-audit", "system.integration.superpower-sync"]:
         if required_skill not in skill_ids:
-            errors.append(f"skill_registry: missing required OpenSpec governance skill {required_skill!r}")
+            errors.append(f"skill_registry: missing required Superpower governance skill {required_skill!r}")
 
     process_entries = {entry["process_id"]: entry for entry in processes_payload.get("entries", [])}
     m6_entry = process_entries.get("construction-plane-governance")

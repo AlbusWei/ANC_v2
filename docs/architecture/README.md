@@ -1,6 +1,6 @@
 # ANC v2 架构文档索引
 
-最后更新：2026-02-24
+最后更新：2026-03-03
 
 ## 文档定位
 
@@ -31,6 +31,7 @@
 5. 测试策略变更：同步改 `test_methodology.md`。
 6. 上下文传递规则变更：同步改 `context_protocol.md`。
 7. 阶段计划变化：同步改 `construction_plane.md`。
+8. `docs/plans/` 仅作为回合工作台；长期有效结论必须回写到 `docs/architecture/` 与 `docs/design/`。
 
 ## 当前目标
 

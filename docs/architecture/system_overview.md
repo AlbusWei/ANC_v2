@@ -1,7 +1,7 @@
 # ANC v2 系统架构总览（SSOT）
 
-最后更新：2026-02-21
-版本：2.0.2-alpha
+最后更新：2026-03-03
+版本：2.1.0-alpha
 
 > 本文档是 ANC v2 的架构唯一信源（SSOT）。
 > 任何架构级变更必须先修改本文件，再修改实现与资产。
@@ -102,7 +102,7 @@ L0 Infrastructure Layer
 | M2 BPM 引擎 | 流程编排、实例治理、督办恢复 | P0 |
 | M3 反身自开发 | 系统开发系统的流程与能力 | P1 |
 | M4 生命周期管理 | 注册表、版本、健康度与上下架治理 | P1 |
-| M5 自进化体系 | 监控驱动改进回路 | P2 |
+| M5 自进化体系 | 领域事件驱动提案治理（Hook/Cron/Heartbeat 协同） | P2 |
 | M6 施工平面 | 跨人类/Agent 的共享协作平面 | P0 |
 
 建设顺序建议：
@@ -114,6 +114,14 @@ Phase 1 实施注记（与模块矩阵保持一致）：
 1. `M3` 与 `M4` 可并行建设。
 2. 汇合门：`M3` 产出的新资产进入 `review/active` 前，必须通过 `M4` 生命周期门禁。
 3. `M1` 作为统一测试与门禁平台被 `M3/M4/M5` 复用，不重复建设评估能力。
+
+### 7.1 M5 触发治理基线（新增）
+
+1. M5 触发采用三平面：Hook（入口）、Heartbeat（常态巡检）、Cron（精确动作）。
+2. Hook 采用双层语义：平台事件仅桥接，领域事件作为治理判定主信号。
+3. 领域事件统一进入 `trigger-ingress-normalizer -> trigger-event-runtime`，再升级为 `AssetIssue/EvolutionProposal`。
+4. 主链保持：`M5 proposal -> M3 implement -> M1 verify -> M4 transition`。
+5. 缺证据、缺 owner、去重冲突不可判定时，默认 Fail-Closed。
 
 ## 8. BPM 作为控制中枢
 
