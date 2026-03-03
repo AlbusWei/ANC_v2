@@ -1,9 +1,11 @@
 {
   "cli_version": "0.4.5",
   "checkpoint_id": "1e1f07bee000",
+  "session_id": "codex-05ca0b86f87b",
   "strategy": "manual-commit",
+  "created_at": "2026-03-03T17:21:14.318496Z",
   "branch": "rebuild",
-  "checkpoints_count": 2,
+  "checkpoints_count": 1,
   "files_touched": [
     "docs/architecture/process_architecture.md",
     "docs/architecture/system_overview.md",
@@ -23,10 +25,8 @@
     "docs/design/processes/governance-processes.md",
     "docs/design/processes/meta-processes.md",
     "docs/design/processes/p-levels/P6-atomic-process-catalog.md",
-    "docs/design/processes/samples/construction-plane-governance/m6-runtime-contract-examples.json",
     "docs/design/skills/construction-plane-skills.md",
     "docs/design/skills/system-skills.md",
-    "docs/plans/SSOT-design.md",
     "shared/registry/registry_contract_tool.py",
     "skills/README.md",
     "skills/system/construction-audit/SKILL.md",
@@ -35,31 +35,26 @@
     "skills/system/openspec-sync/TEST.md",
     "skills/system/openspec-sync/scripts/openspec_sync.sh",
     "tests/m6-governance/TEST.md",
-    "tests/m6-governance/run_post_dev_regression.py",
-    "tests/test_path_resolution_regressions.py",
-    "tools/release/release_isolation_gate.py"
+    "tests/m6-governance/run_post_dev_regression.py"
   ],
-  "sessions": [
-    {
-      "metadata": "/1e/1f07bee000/0/metadata.json",
-      "transcript": "/1e/1f07bee000/0/full.jsonl",
-      "context": "/1e/1f07bee000/0/context.md",
-      "content_hash": "/1e/1f07bee000/0/content_hash.txt",
-      "prompt": "/1e/1f07bee000/0/prompt.txt"
-    },
-    {
-      "metadata": "/1e/1f07bee000/1/metadata.json",
-      "transcript": "/1e/1f07bee000/1/full.jsonl",
-      "context": "/1e/1f07bee000/1/context.md",
-      "content_hash": "/1e/1f07bee000/1/content_hash.txt",
-      "prompt": "/1e/1f07bee000/1/prompt.txt"
-    }
-  ],
+  "agent": "Gemini CLI",
+  "turn_id": "ff22a130620c",
+  "transcript_identifier_at_start": "gemini-05415d6f2c",
   "token_usage": {
-    "input_tokens": 21501210,
+    "input_tokens": 0,
     "cache_creation_tokens": 0,
-    "cache_read_tokens": 3712384,
-    "output_tokens": 138711,
-    "api_call_count": 245
-  }
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-03T17:21:14.290355Z",
+    "agent_lines": 188,
+    "human_added": 2289,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 2477,
+    "agent_percentage": 7.589826402906742
+  },
+  "transcript_path": "MyProjects/ANC_v2/.entire/codex-bridge/transcript.json"
 }
