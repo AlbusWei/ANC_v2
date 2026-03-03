@@ -1,0 +1,37 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "b89a0476e0e9",
+  "session_id": "codex-261068fb2318",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-03T17:19:28.867169Z",
+  "branch": "rebuild",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/architecture/construction_plane.md",
+    "docs/plans/SSOT-implementation.md",
+    "tests/m5-self-evolution/TC-ONLINE.md",
+    "tests/m5-self-evolution/run_tc_online.py",
+    "tests/m5-self-evolution/test_domain_event_emission.py",
+    "tests/m5-self-evolution/test_event_policy_runtime.py"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "cd3dde00cce4",
+  "transcript_identifier_at_start": "gemini-3120eaa167",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-03T17:19:28.841689Z",
+    "agent_lines": 545,
+    "human_added": 1913,
+    "human_modified": 28,
+    "human_removed": 0,
+    "total_committed": 2486,
+    "agent_percentage": 21.922767497988737
+  },
+  "transcript_path": "MyProjects/ANC_v2/.entire/codex-bridge/transcript.json"
+}
