@@ -5,7 +5,21 @@
   "branch": "rebuild",
   "checkpoints_count": 1,
   "files_touched": [
-    "docs/plans/SSOT-implementation.md"
+    "agents/app/entry/personal-assistant/HEARTBEAT.md",
+    "agents/kernel/admin/HEARTBEAT.md",
+    "docs/architecture/construction_plane.md",
+    "docs/plans/SSOT-implementation.md",
+    "runtime_data/private-assets/hooks/anc-lifecycle-events/hooks/lifecycle-event-bridge/HOOK.md",
+    "runtime_data/private-assets/hooks/anc-lifecycle-events/hooks/lifecycle-event-bridge/handler.js",
+    "runtime_data/private-assets/hooks/anc-lifecycle-events/package.json",
+    "tests/m5-self-evolution/TC-M5.md",
+    "tests/m5-self-evolution/TC-ONLINE.md",
+    "tests/m5-self-evolution/TEST.md",
+    "tests/m5-self-evolution/run_tc_online.py",
+    "tests/m5-self-evolution/test_domain_event_emission.py",
+    "tests/m5-self-evolution/test_event_policy_runtime.py",
+    "tests/m5-self-evolution/test_hook_bridge_pack.py",
+    "tests/m5-self-evolution/test_m5_admission_regression.py"
   ],
   "sessions": [
     {
@@ -14,6 +28,13 @@
       "context": "/b8/9a0476e0e9/0/context.md",
       "content_hash": "/b8/9a0476e0e9/0/content_hash.txt",
       "prompt": "/b8/9a0476e0e9/0/prompt.txt"
+    },
+    {
+      "metadata": "/b8/9a0476e0e9/1/metadata.json",
+      "transcript": "/b8/9a0476e0e9/1/full.jsonl",
+      "context": "/b8/9a0476e0e9/1/context.md",
+      "content_hash": "/b8/9a0476e0e9/1/content_hash.txt",
+      "prompt": "/b8/9a0476e0e9/1/prompt.txt"
     }
   ],
   "token_usage": {
