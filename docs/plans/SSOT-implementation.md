@@ -1,142 +1,264 @@
-# SSOT Implementation — Superpower-Replacement + OpenJudge SDD/TDD Execution Plan
+# Round Implementation Workspace（非长期SSOT）
 
-> Status: Active SSOT
-> Last Updated: 2026-03-01
-> Required Execution Skill: `superpowers:executing-plans`
+> Status: Working Draft
+> Last Updated: 2026-03-03
+> Scope: 当前回合实施拆分与执行入口（回合结束后归档）
 
-## 1) 权威范围
+## 定位
 
-本文件是该主题唯一实施真相（implementation SSOT）。
+本文件仅用于当前回合的实施拆分与执行节奏管理，不作为长期实施权威。
 
-Supersedes:
-- `docs/plans/archive/2026-02-27-m1-m3-gate-authenticity-implementation.md`
-- `docs/plans/archive/2026-03-01-m4-m5-productized-lifecycle-implementation.md`
-- `docs/plans/archive/2026-03-01-m4-m5-implementation-assets-plan.md`
-- `docs/plans/archive/2026-03-01-m1-m3-m4-m5-executable-gap-closure-implementation.md`
-- 所有依赖 OpenSpec 主链输入输出的历史实施结论
+## 执行期查找规则（强制）
 
-## 2) 总体执行策略
+1. 本回合执行唯一入口：`docs/plans/SSOT-implementation.md`（当前文件）。
+2. `docs/plans/archive/` 仅用于历史追溯，执行时不得作为主依据。
+3. 仅在本回合关闭（全部 batch 结束）后，才将本文件快照归档并开启下一回合工作台。
 
-按 Batch 0 -> 4 线性推进，先改契约字段与流程，再替换技能执行入口，再完成 SDD/TDD 绑定与清理残留，最后统一回归与 SSOT 对账。
+长期实施依据：
 
-- Batch 0: 契约硬切（OpenSpec 字段移除）
-- Batch 1: 技能替换（openspec-sync -> superpower-sync）
-- Batch 2: SDD+TDD 绑定（superpower_ref 强制进入 gate）
-- Batch 3: 主链残留清除（脚本/测试/校验器）
-- Batch 4: 文档索引与 SSOT 收口验证
+1. `docs/architecture/`（机制与约束）
+2. `docs/design/`（流程、接口、模型设计）
+3. `docs/design/inventories/*.md` 与 `shared/registry/*.json`（资产清单与注册契约）
+4. `docs/architecture/construction_plane.md`（阶段推进与准入状态）
 
-## 3) 执行任务（唯一有效任务集）
+## 当前回合实施入口（M5 Hook 专项）
 
-### Batch 0 — 契约硬切（流程与协议）
+1. Batch 5：领域事件协议与 schema 落盘。
+2. Batch 6：事件匹配/去重/升级策略落盘。
+3. Batch 7：runner 结束点领域事件产出适配。
+4. Batch 8：OpenClaw Hook 平台桥接层集成。
+5. Batch 9：Cron/Heartbeat 编排与验证。
+6. Batch 10：端到端准入回归与 Fail-Closed 收口。
 
-1. 修改 `processes/meta/construction-plane-governance/process.json`
-   - `openspec_ref -> superpower_ref`
-   - `openspec_sync_ref -> superpower_sync_ref`
-   - p4 改为 `sync-superpower-state`
-2. 修改 `processes/meta/construction-plane-governance/SKILL.md`
-3. 修改 `processes/meta/construction-plane-governance/PROCESS.md`
-4. 新增 `docs/design/interfaces/superpower-collaboration-protocol.md`
-5. 新增 `docs/design/data-models/superpower-collaboration-schema.json`
-6. 新增 `docs/design/processes/atomic/AP-035-superpower-round-sync.md`
-7. 旧 openspec 协议相关文档标记 superseded 并从主链摘除引用
+## 前置可执行性验证（已完成）
 
-验证：
-- `rg -n "openspec_ref|openspec_sync_ref" processes/meta/construction-plane-governance docs/design/interfaces docs/design/processes/atomic`
-- 期望：主流程目标文件中无旧字段残留。
+本轮已在本地 OpenClaw 2026.2.9 完成前置检查：
 
-### Batch 1 — 技能替换（唯一执行入口）
+1. 工作区切换与配置投影通过：
+   - `python3 tools/openclaw/switch_workspace.py --repo-root . --scope dev`
+   - `openclaw config get agents.defaults.repoRoot --json`
+   - `openclaw config get skills.load.extraDirs --json`
+2. 运行面可达：
+   - `openclaw health --json`（`ok=true`）
+   - `openclaw cron status --json`（`enabled=true`）
+   - `openclaw hooks list --json` / `openclaw hooks check --json`
+3. 能力边界核验：
+   - `openclaw cron add --help`（`--at|--every|--cron`、`--session`、`--system-event|--message`、`--tz`）
+   - `openclaw system heartbeat --help`
+   - `openclaw hooks install --help`
 
-1. 新增 `skills/system/superpower-sync/SKILL.md`
-2. 新增 `skills/system/superpower-sync/TEST.md`
-3. 新增 `skills/system/superpower-sync/scripts/superpower_sync.sh`
-4. 更新 `processes/meta/construction-plane-governance/process.json` p4 `skill_id`
-5. 更新 `shared/registry/skill_registry.json`（注册 superpower-sync，移除 openspec-sync 主链引用）
-6. `skills/system/openspec-sync/*` 从主链引用移除（可归档，不可执行）
+风险备注：
 
-验证：
-- `python3 shared/registry/registry_contract_tool.py verify`
-- `rg -n "system.integration.openspec-sync" processes shared/registry docs/design/inventories`
-- 期望：registry 校验通过；主链引用为 0。
+1. 存在配置告警：`plugins.entries.matrix` 重复定义。当前不阻塞，但在 Batch 8 前需复核 Hook 加载行为未受影响。
 
-### Batch 2 — SDD+TDD 硬绑定
+## 实施总目标（本回合）
 
-1. 修改 `docs/design/modules/M1-openjudge-adapter-spec.md`
-   - 输入契约加入 `superpower_ref` 必填
-2. 修改 `docs/design/modules/M1-test-system.md`
-   - 明确 `superpower_ref + TEST.md` 是 TDD 必需输入
-3. 修改 `docs/design/skills/quality-gate-skills.md`
-   - `evaluation-runner` 输入契约加入 `superpower_ref`
-4. 修改 `docs/design/skills/self-development-skills.md`
-   - SDD 输出契约补 `superpower_ref`
-5. 修改 `docs/design/modules/M3-self-development.md`
-   - 输入契约补 `superpower_ref` 必填
-   - 输出契约补 `superpower_sync_ref` 与追溯约束
-   - 验收矩阵去 OpenSpec 化（`M3-AC-05` 改为 superpower 会话工件校验）
-6. 修改 `docs/design/modules/M4-lifecycle-management.md`
-   - 切换为 `ProductVersionInstance` 治理语义
-   - lifecycle-review 输入契约补 `superpower_ref`
-7. 修改 `processes/meta/quality-gate-evaluation/scripts/quality_gate_evaluation_runner.py`
-   - 证据链校验加入 `superpower_ref` 可达性校验
-8. 修改 `tests/m1-runtime/run_post_dev_regression.py`
-   - 新增 `missing_superpower_ref -> fail-closed` 用例
+1. 把 M5 的“平台桥接 + 领域事件主信号”触发架构落成可执行链路。
+2. 打通 `domain event -> trigger-event-runtime -> AssetIssue/EvolutionProposal -> M3/M1/M4`。
+3. 用回归用例证明主链可跑通、异常链可 Fail-Closed、证据链可审计。
+
+## 批次实施计划（详细）
+
+### Batch 5 — 协议与模型落盘（Schema First）
+
+状态：`completed`（文档层完成，代码层无变更）
+
+输入：
+
+1. `docs/architecture/system_overview.md`
+2. `docs/architecture/process_architecture.md`
+
+产出（已完成）：
+
+1. `docs/design/interfaces/evolution-hook-event-protocol.md`
+2. `docs/design/data-models/evolution-hook-event-schema.json`
+3. `docs/design/processes/owner-evolution-governance-process.md`
+4. 相关索引同步（`governance-processes`、`meta-processes`、`process-inventory`）
 
 验证：
-- `python3 -m pytest tests/m1-runtime -q`
-- `python3 tests/m1-runtime/run_post_dev_regression.py`
-- 期望：缺 superpower_ref 场景 fail；其余链路保持可执行。
 
-### Batch 3 — OpenSpec 主链残留清除
+1. `python3 -m json.tool docs/design/data-models/evolution-hook-event-schema.json`
+2. `rg -n "owner-evolution-governance|evolution-hook-event" docs/design docs/architecture`
 
-1. 修改 `shared/registry/registry_contract_tool.py`
-   - 去掉 openspec 协同 schema 强制校验
-   - 改为 superpower 协同 schema 强制校验
-2. 修改 `tests/m6-governance/run_post_dev_regression.py`
-3. 修改 `tests/m2-bpm-runtime/run_tc_full_dev_proc.py`
-4. 修改 `skills/system/construction-audit/scripts/construction_audit.py`
-5. 修改 `processes/meta/construction-plane-governance/scripts/run_round.py`
-6. 修改 `processes/meta/construction-plane-governance/scripts/round_evidence_tool.py`
+准入：
 
-验证：
-- `rg -n "openspec validate|openspec_ref|openspec_sync_ref" tests processes skills shared docs/design`
-- 期望：主链目录不再依赖 openspec 主字段/主命令。
+1. 协议、schema、流程设计三者字段口径一致。
 
-### Batch 4 — 索引与施工平面对账收口
+### Batch 6 — 事件策略与去重规则实现
 
-1. 修改 `docs/design/inventories/process-inventory.md`
-2. 修改 `docs/design/inventories/skill-inventory.md`
-3. 修改 `docs/design/modules/module-dependency-matrix.md`
-4. 修改 `docs/architecture/construction_plane.md`
-5. 校验 `docs/plans/SSOT-design.md` 与本文件一致
+状态：`completed`（2026-03-03，代码与测试已落盘）
+
+目标：
+
+1. 将协议中的事件匹配、去重和升级规则落实到可执行策略文件。
+
+实施项：
+
+1. 新增策略资产：
+   - `runtime_data/private-assets/evolution/event-routing-policy.json`
+   - `runtime_data/private-assets/evolution/event-escalation-policy.json`
+2. 在 `trigger-event-runtime` runner 增加策略读取与校验入口。
+3. 实现未命中策略时 `unmatched_event_receipt` 强制落盘。
 
 验证：
-- `python3 shared/registry/registry_contract_tool.py verify`
-- `python3 tests/m6-governance/run_post_dev_regression.py`
-- 全仓 grep 检查主链残留
 
-## 4) DoD（完成定义）
+1. `python3 tests/m2-bpm-runtime/run_tc_tg.py`
+2. `python3 -m pytest tests/m5-self-evolution/test_event_policy_runtime.py -q`
+3. 新增用例：`TC-M5-HOOK-POLICY-001~003`（未命中、去重冲突、升级阈值）
 
-1. 主流程字段中无 `openspec_ref/openspec_sync_ref`。
-2. `system.integration.superpower-sync` 成为唯一施工协同同步技能入口。
-3. M1 门禁对缺 `superpower_ref` 明确 fail-closed。
-4. SDD 输出与 TDD 输入通过 `superpower_ref` 形成可追溯闭环。
-5. registry 与关键回归套件通过。
-6. SSOT、inventory、construction plane 同步完成且无漂移。
+准入：
 
-## 5) 执行纪律
+1. 去重冲突不可判定必须 fail。
+2. 未命中策略必须有回执，禁止静默丢弃。
 
-1. 严格 TDD：先失败测试，再最小实现，再回归。
-2. 每个 batch 完成后执行代码审查。
-3. 不做兼容层，不保留双轨入口。
-4. 不引入与本目标无关的重构。
+### Batch 7 — Runner 结束点领域事件产出
 
-## 6) 实施状态追踪
+状态：`completed`（2026-03-03，M1/M3/M4/M5 四类来源事件均已可追溯）
 
-- Batch 0: pending
-- Batch 1: pending
-- Batch 2: pending
-- Batch 3: pending
-- Batch 4: pending
+目标：
 
-## 7) 变更日志
+1. 在关键流程结束点稳定产出领域事件包并进入统一触发路径。
 
-- 2026-03-01：重写为“Superpower 完全替代 OpenSpec + OpenJudge 驱动 SDD/TDD”的执行基线。
+实施项：
+
+1. 在以下 runner 增加 `emit_domain_event`：
+   - `processes/meta/quality-gate-evaluation/scripts/quality_gate_evaluation_runner.py`
+   - `processes/meta/full-development/scripts/full_development_runner.py`（以及 hotfix/refactor 对应 runner）
+   - `processes/meta/lifecycle-review/scripts/lifecycle_review_runner.py`
+2. 事件输出落盘到 `runtime_data/evolution/events/`。
+3. 事件包字段严格按 `evolution-hook-event-schema.json` 生成。
+
+验证：
+
+1. `python3 -m pytest tests/m5-self-evolution -q`
+2. `python3 tests/m2-bpm-runtime/run_tc_tg.py`
+3. `python3 tests/m5-self-evolution/run_tc_online.py`
+
+准入：
+
+1. 至少四类来源事件（M1/M3/M4/M5）各有一条可追溯回执（已完成）。
+
+### Batch 8 — OpenClaw Hook 平台桥接层集成
+
+状态：`completed`（2026-03-03，Hook 包已安装并线上触发验证通过）
+
+目标：
+
+1. 接入平台层 Hook，把外部/会话信号桥接为标准 ingress 包。
+
+实施项：
+
+1. 新增 Hook 包目录：
+   - `runtime_data/private-assets/hooks/anc-lifecycle-events/`
+2. 安装与启用：
+   - `openclaw hooks install --link runtime_data/private-assets/hooks/anc-lifecycle-events`
+3. Hook 行为限制：
+   - 仅桥接事件，不做重计算
+   - 异常本地捕获，不外抛
+
+验证：
+
+1. `openclaw hooks list --json`
+2. `openclaw hooks check --json`
+3. 触发日志检查（含异常隔离）
+
+准入：
+
+1. Hook 故障不会连带影响其他 handler。
+2. 桥接事件能进入 `trigger-event-runtime`。
+
+### Batch 9 — Cron / Heartbeat 编排落地
+
+状态：`completed`（2026-03-03，Cron/Heartbeat 已落地并完成线上运行审计）
+
+目标：
+
+1. 将常态巡检与精确动作在 OpenClaw 中落为可运行任务。
+
+实施项：
+
+1. Cron（isolated）创建 `improvement-review` 周期任务。
+2. Cron（main + systemEvent）创建 owner 评审提醒任务。
+3. Heartbeat 清单增加 `asset-health-check`。
+4. 所有 cron 显式设置 `tz`。
+
+验证：
+
+1. `openclaw cron list --json`
+2. `openclaw cron run <job-id> --expect-final`
+3. `openclaw system heartbeat last`
+
+准入：
+
+1. Heartbeat 与 Cron 职责分离，无重复触发风暴。
+2. 失败 run 能在历史记录中审计。
+
+### Batch 10 — 端到端准入回归
+
+状态：`completed`（2026-03-03，准入门禁全部通过）
+
+目标：
+
+1. 验证 M5 主链可运行，异常链可 Fail-Closed，且证据链完整。
+
+实施项：
+
+1. 完成并执行：
+   - `TC-M5-001~007`（主链与基础异常链）
+   - `TC-M5-HOOK-001~004`（领域事件专项）
+2. 生成自然语言验收结论与风险判断。
+3. 同步更新 `construction_plane` 对应条目状态。
+
+验证：
+
+1. `python3 -m pytest tests/m5-self-evolution tests/m2-bpm-runtime -q`
+2. `python3 shared/registry/registry_contract_tool.py verify`
+3. `python3 tools/release/release_isolation_gate.py`
+
+准入：
+
+1. 主链路与异常链路均可复现。
+2. `review -> active` 附加门禁（观测窗口 + 回滚演练）证据齐备。
+
+执行结果（2026-03-03）：
+
+1. Batch 8 结果：
+   - Hook 包：`runtime_data/private-assets/hooks/anc-lifecycle-events/`
+   - 实装内容：`package.json` + `HOOK.md` + `handler.js`
+   - 线上验证：`openclaw hooks list/check` 可见 `lifecycle-event-bridge`，`gateway restart` 后可产生 bridge ingress/dispatch 与 runtime output。
+2. Batch 9 结果：
+   - Cron 任务：`m5-improvement-review`（isolated）与 `m5-owner-review-reminder`（main + systemEvent）均已创建，`tz=Asia/Shanghai`。
+   - Heartbeat 清单：`agents/app/entry/personal-assistant/HEARTBEAT.md` 增加 `asset-health-check`。
+   - 审计验证：`openclaw cron run --expect-final` + `openclaw cron runs --id` + `openclaw system heartbeat last` 均可给出结构化结果。
+3. Batch 10 结果：
+   - 新增准入回归：`tests/m5-self-evolution/test_m5_admission_regression.py`（`TC-M5-001~007` + `TC-M5-HOOK-001~004`）。
+   - 新增 Hook 包测试：`tests/m5-self-evolution/test_hook_bridge_pack.py`。
+   - 线上套件：`tests/m5-self-evolution/run_tc_online.py`（`TC-M5-HOOK-ONLINE-001~007`）。
+   - 门禁结论：`pytest`、`registry verify`、`release_isolation_gate` 全部通过。
+
+## 里程碑节奏（建议）
+
+1. Milestone A（1 个回合）：完成 Batch 6（策略可执行化）。
+2. Milestone B（1-2 个回合）：完成 Batch 7-8（事件产出 + Hook桥接）。
+3. Milestone C（1 个回合）：完成 Batch 9-10（编排 + 准入回归）。
+
+## 失败回滚策略
+
+1. Hook 回滚：按 entry 禁用或卸载，不回滚核心流程代码。
+2. Cron 回滚：按 job id `disable/rm`。
+3. 事件产出回滚：保留落盘、关闭分发开关，退回“只采集不触发”模式。
+4. 准入失败：保持 `draft/review`，禁止推进 `active`。
+
+## 当前状态追踪
+
+1. Batch 5：completed
+2. Batch 6：completed
+3. Batch 7：completed
+4. Batch 8：completed
+5. Batch 9：completed
+6. Batch 10：completed
+
+## 归档规则
+
+1. 本文件不保留历史批次明细；历史内容统一归档到 `docs/plans/archive/`。
+2. 本轮快照：`docs/plans/archive/2026-03-03-ssot-implementation-working-snapshot.md`。

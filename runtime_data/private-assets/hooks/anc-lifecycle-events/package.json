@@ -1,0 +1,12 @@
+{
+  "name": "@anc-v2/anc-lifecycle-events",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "ANC v2 lifecycle platform hook bridge pack",
+  "openclaw": {
+    "hooks": [
+      "./hooks/lifecycle-event-bridge"
+    ]
+  }
+}

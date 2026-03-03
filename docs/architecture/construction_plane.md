@@ -1,6 +1,6 @@
 # ANC v2 施工平面（Construction Plane）
 
-最后更新：2026-03-02
+最后更新：2026-03-03
 
 > 本文档是 ANC v2 的活施工板，记录当前进展、下一步计划、边界和风险。
 
@@ -79,6 +79,7 @@
 - [x] 完成 M3 生命周期执行权口径统一：`full-development/hotfix/refactor` 的 `lifecycle-gate-sync` 执行 actor 收敛为 `hr`（`admin` 保留高风险审批位）
 - [x] 完成 M1 HOLD 语义收敛：`gate_decision` 对外枚举固定 `pass|fail|test_invalid`，`hold` 下沉为 `runtime_gate_state`，并补齐活性策略三件套（`liveness_policy_ref/no_progress_window_ref/termination_rule_ref`）
 - [x] 完成 M1 HOLD 自动回测闭环最小落盘：`quality-gate-evaluation` 新增 `max_auto_retest_cycles` 回测预算与 `p5 -> p2` 回路语义，`hold-governance` 输出补齐 `triage_action + retest_recommendation`，并将 QA fixture 基线迁移到 `tests/fixtures/quality-gate/`
+- [x] 完成 M5 Hook 专项 Batch8~10（2026-03-03）：`lifecycle-event-bridge` Hook 包接入、`m5-improvement-review`/`m5-owner-review-reminder` Cron 编排与 `asset-health-check` Heartbeat 清单落地，`TC-M5-001~007`、`TC-M5-HOOK-001~004`、`TC-M5-HOOK-ONLINE-001~007` 与准入门禁（pytest/registry/release isolation）全部通过
 
 ## 进行中（In Progress）
 
