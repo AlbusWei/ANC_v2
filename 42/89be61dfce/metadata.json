@@ -1,0 +1,42 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "4289be61dfce",
+  "strategy": "manual-commit",
+  "branch": "rebuild",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/design/data-models/evolution-hook-event-schema.json",
+    "docs/design/interfaces/evolution-hook-event-protocol.md",
+    "docs/design/inventories/process-inventory.md",
+    "docs/design/processes/owner-evolution-governance-process.md",
+    "docs/plans/SSOT-implementation.md",
+    "docs/plans/archive/2026-03-03-ssot-implementation-working-snapshot.md",
+    "processes/control/trigger-event-runtime/scripts/trigger_event_runtime_runner.py",
+    "processes/control/trigger-schedule-runtime/scripts/trigger_schedule_runtime_runner.py",
+    "tests/m5-self-evolution/TC-ONLINE.md",
+    "tests/m5-self-evolution/run_tc_online.py",
+    "tests/m5-self-evolution/test_domain_event_emission.py",
+    "tests/m5-self-evolution/test_hook_bridge_pack.py",
+    "tools/evolution/owner_evolution_governance_runner.py",
+    "tools/openclaw/hooks/anc-lifecycle-events/hooks/lifecycle-event-bridge/HOOK.md",
+    "tools/openclaw/hooks/anc-lifecycle-events/hooks/lifecycle-event-bridge/handler.js",
+    "tools/openclaw/hooks/anc-lifecycle-events/package.json",
+    "tools/openclaw/switch_workspace.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/42/89be61dfce/0/metadata.json",
+      "transcript": "/42/89be61dfce/0/full.jsonl",
+      "context": "/42/89be61dfce/0/context.md",
+      "content_hash": "/42/89be61dfce/0/content_hash.txt",
+      "prompt": "/42/89be61dfce/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
