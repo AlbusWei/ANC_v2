@@ -1,0 +1,50 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "4289be61dfce",
+  "session_id": "codex-ef280e997b8a",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-04T13:11:07.687888Z",
+  "branch": "rebuild",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "docs/design/inventories/process-inventory.md",
+    "processes/control/trigger-schedule-runtime/scripts/trigger_schedule_runtime_runner.py",
+    "tools/openclaw/hooks/anc-lifecycle-events/hooks/lifecycle-event-bridge/handler.js",
+    "tools/openclaw/hooks/anc-lifecycle-events/package.json",
+    "tests/m5-self-evolution/test_hook_bridge_pack.py",
+    "docs/design/processes/owner-evolution-governance-process.md",
+    "tests/m5-self-evolution/TC-ONLINE.md",
+    "tools/openclaw/switch_workspace.py",
+    "docs/design/data-models/evolution-hook-event-schema.json",
+    "docs/plans/SSOT-implementation.md",
+    "docs/plans/archive/2026-03-03-ssot-implementation-working-snapshot.md",
+    "processes/control/trigger-event-runtime/scripts/trigger_event_runtime_runner.py",
+    "tests/m5-self-evolution/test_domain_event_emission.py",
+    "tools/evolution/owner_evolution_governance_runner.py",
+    "docs/design/interfaces/evolution-hook-event-protocol.md",
+    "tools/openclaw/hooks/anc-lifecycle-events/hooks/lifecycle-event-bridge/HOOK.md",
+    "tests/m5-self-evolution/run_tc_online.py"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "278bae1b30c5",
+  "transcript_identifier_at_start": "gemini-6695312f6e",
+  "checkpoint_transcript_start": 28,
+  "transcript_lines_at_start": 28,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-04T13:11:07.656696Z",
+    "agent_lines": 741,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 741,
+    "agent_percentage": 100
+  },
+  "transcript_path": "MyProjects/ANC_v2/.entire/codex-bridge/transcript.json"
+}
