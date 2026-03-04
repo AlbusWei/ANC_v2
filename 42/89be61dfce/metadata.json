@@ -3,7 +3,7 @@
   "checkpoint_id": "4289be61dfce",
   "strategy": "manual-commit",
   "branch": "rebuild",
-  "checkpoints_count": 2,
+  "checkpoints_count": 3,
   "files_touched": [
     "docs/design/data-models/evolution-hook-event-schema.json",
     "docs/design/interfaces/evolution-hook-event-protocol.md",
@@ -114,6 +114,13 @@
       "context": "/42/89be61dfce/12/context.md",
       "content_hash": "/42/89be61dfce/12/content_hash.txt",
       "prompt": "/42/89be61dfce/12/prompt.txt"
+    },
+    {
+      "metadata": "/42/89be61dfce/13/metadata.json",
+      "transcript": "/42/89be61dfce/13/full.jsonl",
+      "context": "/42/89be61dfce/13/context.md",
+      "content_hash": "/42/89be61dfce/13/content_hash.txt",
+      "prompt": "/42/89be61dfce/13/prompt.txt"
     }
   ],
   "token_usage": {
