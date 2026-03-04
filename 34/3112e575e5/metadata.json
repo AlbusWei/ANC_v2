@@ -3,7 +3,7 @@
   "checkpoint_id": "343112e575e5",
   "strategy": "manual-commit",
   "branch": "rebuild",
-  "checkpoints_count": 2,
+  "checkpoints_count": 3,
   "files_touched": [
     "tests/m5-self-evolution/run_tc_online.py",
     "tests/m5-self-evolution/test_instance_backlog_triage.py",
@@ -58,6 +58,13 @@
       "context": "/34/3112e575e5/6/context.md",
       "content_hash": "/34/3112e575e5/6/content_hash.txt",
       "prompt": "/34/3112e575e5/6/prompt.txt"
+    },
+    {
+      "metadata": "/34/3112e575e5/7/metadata.json",
+      "transcript": "/34/3112e575e5/7/full.jsonl",
+      "context": "/34/3112e575e5/7/context.md",
+      "content_hash": "/34/3112e575e5/7/content_hash.txt",
+      "prompt": "/34/3112e575e5/7/prompt.txt"
     }
   ],
   "token_usage": {
