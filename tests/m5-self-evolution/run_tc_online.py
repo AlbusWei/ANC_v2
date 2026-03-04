@@ -338,6 +338,7 @@ def main() -> int:
 
     runtime_output_exists = False
     runtime_output_status = ""
+    runtime_output_wait_seconds = 0.0
     after_count = len(list(dispatch_dir.glob("*.json")))
     newest_dispatch_rel = ""
     if newest_dispatch is not None:
@@ -346,7 +347,14 @@ def main() -> int:
         runtime_output_ref = str((payload_dispatch or {}).get("runtime_output_ref") or "")
         if runtime_output_ref:
             runtime_output_path = (root / runtime_output_ref).resolve()
-            runtime_output_exists = runtime_output_path.exists()
+            output_wait_start = time.time()
+            output_deadline = output_wait_start + 60
+            while time.time() < output_deadline:
+                if runtime_output_path.exists():
+                    runtime_output_exists = True
+                    break
+                time.sleep(0.8)
+            runtime_output_wait_seconds = round(time.time() - output_wait_start, 2)
             if runtime_output_exists:
                 runtime_output_payload = parse_json_from_mixed_output(runtime_output_path.read_text(encoding="utf-8"))
                 runtime_output_status = str((runtime_output_payload or {}).get("status") or "")
@@ -368,6 +376,7 @@ def main() -> int:
             "newest_dispatch_ref": newest_dispatch_rel,
             "runtime_output_exists": runtime_output_exists,
             "runtime_output_status": runtime_output_status,
+            "runtime_output_wait_seconds": runtime_output_wait_seconds,
             "hook_log_exists": log_exists,
         },
     )
