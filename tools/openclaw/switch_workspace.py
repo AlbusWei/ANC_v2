@@ -250,6 +250,17 @@ def _build_patch(repo_root: Path, fragment: Dict[str, Any], current_config: Dict
         "tools": {"agentToAgent": {"allow": agent_id_order}},
     }
 
+    # Hook 包路径在主仓与 worktree 间会变化；随 workspace 切换自动投影，避免旧路径漂移。
+    hook_pack_dir = (repo_root / "tools/openclaw/hooks/anc-lifecycle-events").resolve()
+    if hook_pack_dir.exists():
+        patch["hooks"] = {
+            "internal": {
+                "load": {
+                    "extraDirs": [str(hook_pack_dir)],
+                }
+            }
+        }
+
     # Keep existing binding rules but remap invalid agentId to the selected default.
     existing_bindings = current_config.get("bindings")
     if isinstance(existing_bindings, list):

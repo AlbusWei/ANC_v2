@@ -30,12 +30,27 @@
 11. `asset.health.degraded`
 12. `asset.health.critical`
 
+## 3.1 平台桥接事件命名空间（仅桥接，不参与治理放行）
+
+平台层 Hook 统一使用 `platform.<type>.<action>` 事件名，当前桥接集：
+
+1. `platform.agent.bootstrap`
+2. `platform.command.new`
+3. `platform.command.reset`
+4. `platform.command.stop`
+5. `platform.gateway.startup`
+
+约束：
+
+1. 平台桥接事件只用于入口可观测与追踪，不得直接作为治理放行信号。
+2. 若未配置显式路由，必须走 `unmatched_event_receipt`，禁止静默丢弃。
+
 ## 4. 事件包最小契约（强制）
 
 必填字段：
 
 1. `event_id`：事件唯一主键。
-2. `event_name`：命名空间内标准事件名。
+2. `event_name`：命名空间内标准事件名（领域事件或平台桥接事件）。
 3. `event_time`：RFC3339 时间戳。
 4. `module`：`m1|m3|m4|m5|runtime-monitor`。
 5. `trigger_source`：`platform-hook|domain-hook|heartbeat|cron`。

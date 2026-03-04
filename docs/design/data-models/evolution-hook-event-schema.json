@@ -39,7 +39,12 @@
         "m5.proposal.rejected",
         "m5.proposal.accepted",
         "asset.health.degraded",
-        "asset.health.critical"
+        "asset.health.critical",
+        "platform.agent.bootstrap",
+        "platform.command.new",
+        "platform.command.reset",
+        "platform.command.stop",
+        "platform.gateway.startup"
       ]
     },
     "event_time": {

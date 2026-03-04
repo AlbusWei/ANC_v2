@@ -249,7 +249,7 @@ Supersedes:
 
 任务：
 
-1. 新增 Hook 集成包（建议放在 `runtime_data/private-assets/hooks/anc-lifecycle-events/`）。
+1. 新增 Hook 集成包（建议放在 `tools/openclaw/hooks/anc-lifecycle-events/`）。
 2. 使用 `openclaw hooks install --link <hook-pack-path>` 安装并启用桥接 Hook。
 3. 桥接 Hook 仅负责把平台事件转为标准 ingress 包，不做重计算。
 4. 与 `tools/openclaw/switch_workspace.py` 对齐：定义切 workspace 后 Hook 可用性校验步骤。

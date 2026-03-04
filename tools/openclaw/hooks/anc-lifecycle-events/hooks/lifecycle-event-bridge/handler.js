@@ -42,35 +42,35 @@ function eventMapping(event) {
 
   if (type === "agent" && action === "bootstrap") {
     return {
-      eventName: "m3.implementation.completed",
-      module: "m3",
+      eventName: "platform.agent.bootstrap",
+      module: "runtime-monitor",
       severity: "info",
     };
   }
   if (type === "command" && action === "new") {
     return {
-      eventName: "m5.proposal.accepted",
-      module: "m5",
+      eventName: "platform.command.new",
+      module: "runtime-monitor",
       severity: "info",
     };
   }
   if (type === "command" && action === "reset") {
     return {
-      eventName: "m4.lifecycle.rollback.executed",
-      module: "m4",
-      severity: "critical",
+      eventName: "platform.command.reset",
+      module: "runtime-monitor",
+      severity: "warning",
     };
   }
   if (type === "command" && action === "stop") {
     return {
-      eventName: "m1.gate.hold",
-      module: "m1",
+      eventName: "platform.command.stop",
+      module: "runtime-monitor",
       severity: "warning",
     };
   }
   if (type === "gateway" && action === "startup") {
     return {
-      eventName: "asset.health.degraded",
+      eventName: "platform.gateway.startup",
       module: "runtime-monitor",
       severity: "info",
     };
@@ -109,6 +109,8 @@ function buildIngressPayload({ event, mapped, eventId, eventTime, evidenceRef })
   const sender = String(event?.context?.senderId || "openclaw-hook").trim() || "openclaw-hook";
   const bucket = nowBucket(eventTime);
   const sessionKey = String(event?.sessionKey || "agent:main:main").trim() || "agent:main:main";
+  // 平台层 hook 仅做信号桥接，禁止直接驱动治理分发。
+  const dispatchOpenclaw = false;
 
   return {
     event_id: eventId,
@@ -133,14 +135,42 @@ function buildIngressPayload({ event, mapped, eventId, eventTime, evidenceRef })
     event_escalation_policy_ref: ESCALATION_POLICY_REL,
     dedupe_ledger_ref: DEDUPE_LEDGER_REL,
     escalation_counter_ref: ESCALATION_COUNTER_REL,
+    dispatch_openclaw: dispatchOpenclaw,
+    reset_openclaw_session: dispatchOpenclaw,
+    strict_session_match: dispatchOpenclaw,
+    dispatch_openclaw_bin: "openclaw",
+    dispatch_openclaw_stall_threshold_seconds: 900,
+    dispatch_openclaw_probe_interval_seconds: 30,
     trace: {
       hook_name: "lifecycle-event-bridge",
+      bridge_model: "platform-raw",
       openclaw_event_type: String(event?.type || ""),
       openclaw_event_action: String(event?.action || ""),
       command_source: sourceTag,
       session_key: sessionKey,
     },
   };
+}
+
+function shouldSkipEvent(event) {
+  const type = String(event?.type || "").trim();
+  const action = String(event?.action || "").trim();
+  const sourceTag = String(event?.context?.commandSource || "").trim().toLowerCase();
+  const sessionKey = String(event?.sessionKey || "").trim();
+
+  if (type === "agent" && action === "bootstrap") {
+    const managedSession =
+      sessionKey.startsWith("agent:admin:") ||
+      sessionKey.startsWith("agent:bpm:") ||
+      sessionKey.includes(":cron:") ||
+      sessionKey.includes(":subagent:");
+    const internalSource = sourceTag === "agent" || sourceTag === "cron" || sourceTag === "heartbeat";
+    if (managedSession || internalSource) {
+      return { skip: true, reason: "internal_bootstrap_filtered" };
+    }
+  }
+
+  return { skip: false, reason: "" };
 }
 
 function spawnRuntimeRunner(repoRoot, runId, inputRel, outputRel, evidenceRel) {
@@ -192,6 +222,20 @@ export default async function lifecycleEventBridge(event) {
 
     const repoRoot = await resolveRepoRoot(event);
     if (!repoRoot) {
+      return;
+    }
+
+    const skipDecision = shouldSkipEvent(event);
+    if (skipDecision.skip) {
+      await appendLog(repoRoot, {
+        ts: new Date().toISOString(),
+        status: "skip",
+        reason: skipDecision.reason,
+        hook: "lifecycle-event-bridge",
+        event_type: String(event?.type || ""),
+        event_action: String(event?.action || ""),
+        session_key: String(event?.sessionKey || ""),
+      });
       return;
     }
 

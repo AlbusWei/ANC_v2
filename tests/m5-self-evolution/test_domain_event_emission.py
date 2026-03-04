@@ -191,3 +191,38 @@ def test_lifecycle_review_success_emits_domain_event(tmp_path: Path) -> None:
     output = load_json(runner_output)
     payload = assert_domain_event_schema(root, str(output.get("domain_event_ref") or ""))
     assert payload["event_name"] == "m4.lifecycle.transition.approved"
+
+
+def test_owner_evolution_governance_emits_domain_event(tmp_path: Path) -> None:
+    root = repo_root()
+    case_dir = make_repo_case_dir("owner-governance-event", tmp_path)
+
+    runner_input = case_dir / "input.json"
+    runner_output = case_dir / "output.json"
+    dump_json(
+        runner_input,
+        {
+            "proposal_decision": "accepted",
+            "owner_agent_id": "owner",
+            "asset_ref": "process:owner-evolution-governance",
+        },
+    )
+
+    cmd = [
+        sys.executable,
+        "tools/evolution/owner_evolution_governance_runner.py",
+        "--input",
+        str(runner_input),
+        "--output",
+        str(runner_output),
+        "--evidence-dir",
+        str(case_dir / "execution"),
+        "--run-id",
+        "TC-M5-EVENT-004",
+    ]
+    proc = run_cmd(cmd, root)
+    assert proc.returncode == 0, proc.stderr
+
+    output = load_json(runner_output)
+    payload = assert_domain_event_schema(root, str(output.get("domain_event_ref") or ""))
+    assert payload["event_name"] == "m5.proposal.accepted"

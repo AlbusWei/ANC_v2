@@ -81,7 +81,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--instance-root",
-        default="tmp/m2-bpm-runtime/trigger-runtime-sandbox/instances",
+        default="agents/control/BPM/memory/process_instances",
         help="Instance root used by process-instance-manager",
     )
     parser.add_argument(
@@ -166,6 +166,16 @@ def run_phase(
         }
     )
     return proc.returncode, proc
+
+
+def parse_positive_int(raw: Any, field: str, *, minimum: int = 1) -> int:
+    try:
+        value = int(raw)
+    except (TypeError, ValueError) as exc:
+        raise TriggerScheduleRuntimeError(f"{field}_invalid") from exc
+    if value < minimum:
+        raise TriggerScheduleRuntimeError(f"{field}_invalid")
+    return value
 
 
 def load_or_write_default(root: Path, evidence_dir: Path, ref: Any, default_name: str, payload: Dict[str, Any]) -> str:
@@ -323,6 +333,20 @@ def main() -> int:
         should_dispatch = match_result == "hit" and dedupe_decision == "allow" and not owner_override
         if should_dispatch:
             dispatch_output = evidence_dir / "p3_dispatch_output.json"
+            dispatch_openclaw = bool(request.get("dispatch_openclaw", False))
+            reset_openclaw_session = bool(request.get("reset_openclaw_session", False))
+            strict_session_match = bool(request.get("strict_session_match", False))
+            dispatch_openclaw_bin = str(request.get("dispatch_openclaw_bin") or "openclaw").strip() or "openclaw"
+            openclaw_stall_threshold = parse_positive_int(
+                request.get("dispatch_openclaw_stall_threshold_seconds", 900),
+                "dispatch_openclaw_stall_threshold_seconds",
+                minimum=900,
+            )
+            openclaw_probe_interval = parse_positive_int(
+                request.get("dispatch_openclaw_probe_interval_seconds", 60),
+                "dispatch_openclaw_probe_interval_seconds",
+                minimum=5,
+            )
             dispatch_cmd = [
                 sys.executable,
                 "skills/system/process-instance-manager/scripts/process_instance_runner.py",
@@ -337,9 +361,21 @@ def main() -> int:
                 "bpm",
                 "--input-ref",
                 canonical_ref,
+                "--openclaw-bin",
+                dispatch_openclaw_bin,
+                "--openclaw-stall-threshold-seconds",
+                str(openclaw_stall_threshold),
+                "--openclaw-probe-interval-seconds",
+                str(openclaw_probe_interval),
                 "--output",
                 str(dispatch_output),
             ]
+            if dispatch_openclaw:
+                dispatch_cmd.append("--execute-openclaw")
+                if reset_openclaw_session:
+                    dispatch_cmd.append("--reset-openclaw-session")
+                if strict_session_match:
+                    dispatch_cmd.append("--strict-session-match")
             rc, _ = run_phase(root=root, label="p3-dispatch-instance", cmd=dispatch_cmd, trace=trace)
             if rc != 0:
                 return write_fail_closed(

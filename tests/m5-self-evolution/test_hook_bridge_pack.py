@@ -41,7 +41,7 @@ def make_repo_case_dir(case_key: str, tmp_path: Path) -> Path:
 
 
 def hook_pack_root() -> Path:
-    return repo_root() / "runtime_data/private-assets/hooks/anc-lifecycle-events"
+    return repo_root() / "tools/openclaw/hooks/anc-lifecycle-events"
 
 
 def handler_path() -> Path:
@@ -150,3 +150,43 @@ def test_hook_handler_writes_ingress_and_dispatch_request(tmp_path: Path) -> Non
     assert newest_dispatch is not None, "dispatch 结果未在观察窗口内落盘"
     dispatch_payload = load_json(newest_dispatch)
     assert isinstance(dispatch_payload.get("runtime_output_ref"), str)
+
+
+def test_hook_handler_emits_platform_raw_event_without_dispatch_openclaw(tmp_path: Path) -> None:
+    root = repo_root()
+    case_dir = make_repo_case_dir("hook-platform-raw", tmp_path)
+    workspace = root / "agents/kernel/admin"
+    payload = {
+        "type": "command",
+        "action": "new",
+        "sessionKey": "agent:main:main",
+        "timestamp": "2026-03-04T12:01:00.000Z",
+        "messages": [],
+        "context": {
+            "workspaceDir": str(workspace),
+            "commandSource": "pytest",
+            "senderId": "qa",
+        },
+    }
+
+    before = time.time()
+    proc, result = invoke_handler(payload, case_dir)
+    assert proc.returncode == 0, proc.stderr
+    assert result.get("ok") is True
+
+    ingress_dir = root / "runtime_data/evolution/hooks/ingress"
+    deadline = time.time() + 20
+    newest_ingress: Path | None = None
+    while time.time() < deadline:
+        files = sorted(ingress_dir.glob("*.json"), key=lambda item: item.stat().st_mtime, reverse=True)
+        if files and files[0].stat().st_mtime >= before:
+            newest_ingress = files[0]
+            break
+        time.sleep(0.5)
+
+    assert newest_ingress is not None, "ingress 结果未在观察窗口内落盘"
+    ingress_payload = load_json(newest_ingress)
+    assert ingress_payload.get("event_name") == "platform.command.new"
+    assert ingress_payload.get("module") == "runtime-monitor"
+    assert ingress_payload.get("trigger_source") == "platform-hook"
+    assert ingress_payload.get("dispatch_openclaw") is False

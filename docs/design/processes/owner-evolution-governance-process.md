@@ -84,4 +84,5 @@
 ## 当前状态
 
 1. 设计已落盘，流程资产尚未注册到 `process_registry`。
-2. 生命周期状态目标：`draft`（待 Batch 实施后再推进）。
+2. Phase 1 过渡执行适配器：`tools/evolution/owner_evolution_governance_runner.py` 可产出 `m5.proposal.*` 领域事件，并落盘到 `runtime_data/evolution/events/`。
+3. 生命周期状态目标：`draft`（待专职流程资产注册后再推进）。

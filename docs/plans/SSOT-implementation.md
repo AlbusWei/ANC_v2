@@ -149,9 +149,9 @@
 实施项：
 
 1. 新增 Hook 包目录：
-   - `runtime_data/private-assets/hooks/anc-lifecycle-events/`
+   - `tools/openclaw/hooks/anc-lifecycle-events/`
 2. 安装与启用：
-   - `openclaw hooks install --link runtime_data/private-assets/hooks/anc-lifecycle-events`
+   - `openclaw hooks install --link tools/openclaw/hooks/anc-lifecycle-events`
 3. Hook 行为限制：
    - 仅桥接事件，不做重计算
    - 异常本地捕获，不外抛
@@ -223,7 +223,7 @@
 执行结果（2026-03-03）：
 
 1. Batch 8 结果：
-   - Hook 包：`runtime_data/private-assets/hooks/anc-lifecycle-events/`
+   - Hook 包：`tools/openclaw/hooks/anc-lifecycle-events/`
    - 实装内容：`package.json` + `HOOK.md` + `handler.js`
    - 线上验证：`openclaw hooks list/check` 可见 `lifecycle-event-bridge`，`gateway restart` 后可产生 bridge ingress/dispatch 与 runtime output。
 2. Batch 9 结果：

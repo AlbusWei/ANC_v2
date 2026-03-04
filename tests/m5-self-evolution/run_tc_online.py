@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 
-HOOK_PACK_PATH = "runtime_data/private-assets/hooks/anc-lifecycle-events"
+HOOK_PACK_PATH = "tools/openclaw/hooks/anc-lifecycle-events"
 HOOK_NAME = "lifecycle-event-bridge"
 HOOK_DISPATCH_DIR = "runtime_data/evolution/hooks/dispatch"
 HOOK_LOG_PATH = "runtime_data/evolution/hooks/logs/lifecycle-event-bridge.jsonl"

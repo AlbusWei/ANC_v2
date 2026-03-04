@@ -34,8 +34,8 @@
 
 - 目标: 通过真实 OpenClaw 命令完成 Hook 包安装并确认被网关发现。
 - 输入:
-  - `openclaw hooks install --link runtime_data/private-assets/hooks/anc-lifecycle-events`
-  - `openclaw hooks install runtime_data/private-assets/hooks/anc-lifecycle-events`
+  - `openclaw hooks install --link tools/openclaw/hooks/anc-lifecycle-events`
+  - `openclaw hooks install tools/openclaw/hooks/anc-lifecycle-events`
   - `openclaw gateway restart`
   - `openclaw hooks list --json`
 - 期望:

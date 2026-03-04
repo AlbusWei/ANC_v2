@@ -93,7 +93,7 @@
 
 | process_id | 类型 | 规划阶段 | 用途 |
 |---|---|---|---|
-| owner-evolution-governance | 复合（P4） | Phase 4 | owner 运营责任闭环与提案治理主流程 |
+| owner-evolution-governance | 复合（P4） | Phase 4 | owner 运营责任闭环与提案治理主流程（Phase1 过渡事件适配器：`tools/evolution/owner_evolution_governance_runner.py`） |
 | evolution-loop | 复合 | Phase 4 | 演化闭环 |
 | health-check | 复合 | Phase 4 | 健康检查 |
 | improvement-review | 复合 | Phase 4 | 改进评审 |
