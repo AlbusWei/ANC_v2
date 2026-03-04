@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "343112e575e5",
+  "session_id": "codex-26911901c75f",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-04T13:37:05.828703Z",
+  "branch": "rebuild",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "tests/m5-self-evolution/run_tc_online.py",
+    "tests/m5-self-evolution/test_instance_backlog_triage.py",
+    "tools/evolution/instance_backlog_triage.py"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "d2891ee50b4f",
+  "transcript_identifier_at_start": "gemini-ebef2e5bf4",
+  "checkpoint_transcript_start": 30,
+  "transcript_lines_at_start": 30,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-04T13:37:05.797601Z",
+    "agent_lines": 835,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 835,
+    "agent_percentage": 100
+  },
+  "transcript_path": "MyProjects/ANC_v2/.entire/codex-bridge/transcript.json"
+}
