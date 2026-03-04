@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "343112e575e5",
+  "strategy": "manual-commit",
+  "branch": "rebuild",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "tests/m5-self-evolution/run_tc_online.py",
+    "tests/m5-self-evolution/test_instance_backlog_triage.py",
+    "tools/evolution/instance_backlog_triage.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/34/3112e575e5/0/metadata.json",
+      "transcript": "/34/3112e575e5/0/full.jsonl",
+      "context": "/34/3112e575e5/0/context.md",
+      "content_hash": "/34/3112e575e5/0/content_hash.txt",
+      "prompt": "/34/3112e575e5/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
