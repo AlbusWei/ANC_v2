@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "504134b65c44",
+  "session_id": "codex-261068fb2318",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-05T17:24:07.240114Z",
+  "branch": "rebuild",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "tools/openclaw/hooks/anc-lifecycle-events/hooks/lifecycle-event-bridge/handler.js",
+    "processes/control/trigger-event-runtime/scripts/trigger_event_runtime_runner.py",
+    "processes/control/trigger-schedule-runtime/scripts/trigger_schedule_runtime_runner.py"
+  ],
+  "agent": "Gemini CLI",
+  "turn_id": "cd3dde00cce4",
+  "transcript_identifier_at_start": "gemini-3120eaa167",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-05T17:24:07.212109Z",
+    "agent_lines": 0,
+    "human_added": 75,
+    "human_modified": 8,
+    "human_removed": 0,
+    "total_committed": 75,
+    "agent_percentage": 0
+  },
+  "transcript_path": "MyProjects/ANC_v2/.entire/codex-bridge/transcript.json"
+}
