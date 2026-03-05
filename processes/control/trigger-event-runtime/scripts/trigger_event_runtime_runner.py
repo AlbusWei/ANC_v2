@@ -117,6 +117,22 @@ def parse_positive_int(raw: Any, field: str, *, minimum: int = 1) -> int:
     return value
 
 
+def parse_bool_flag(raw: Any, field: str, *, default: bool = False) -> bool:
+    if raw is None:
+        return default
+    if isinstance(raw, bool):
+        return raw
+    if isinstance(raw, (int, float)):
+        return bool(raw)
+    if isinstance(raw, str):
+        normalized = raw.strip().lower()
+        if normalized in {"1", "true", "yes", "on"}:
+            return True
+        if normalized in {"0", "false", "no", "off", ""}:
+            return False
+    raise TriggerEventRuntimeError(f"{field}_invalid")
+
+
 def write_fail_closed(
     *,
     root: Path,
@@ -667,9 +683,23 @@ def main() -> int:
         should_dispatch = match_result == "hit" and dedupe_decision == "allow"
         if should_dispatch:
             dispatch_output = evidence_dir / "p3_dispatch_output.json"
-            dispatch_openclaw = bool(request.get("dispatch_openclaw", False))
-            reset_openclaw_session = bool(request.get("reset_openclaw_session", False))
-            strict_session_match = bool(request.get("strict_session_match", False))
+            trigger_source = str(request.get("trigger_source") or "").strip().lower()
+            dispatch_default = trigger_source == "platform-hook"
+            dispatch_openclaw = parse_bool_flag(
+                request.get("dispatch_openclaw"),
+                "dispatch_openclaw",
+                default=dispatch_default,
+            )
+            reset_openclaw_session = parse_bool_flag(
+                request.get("reset_openclaw_session"),
+                "reset_openclaw_session",
+                default=dispatch_openclaw,
+            )
+            strict_session_match = parse_bool_flag(
+                request.get("strict_session_match"),
+                "strict_session_match",
+                default=dispatch_openclaw,
+            )
             dispatch_openclaw_bin = str(request.get("dispatch_openclaw_bin") or "openclaw").strip() or "openclaw"
             openclaw_stall_threshold = parse_positive_int(
                 request.get("dispatch_openclaw_stall_threshold_seconds", 900),

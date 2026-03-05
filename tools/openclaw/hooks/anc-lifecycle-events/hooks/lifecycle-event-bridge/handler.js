@@ -36,6 +36,21 @@ function nowBucket(isoTs) {
   return isoTs.slice(0, 16).replace(/[-:]/g, "");
 }
 
+function envBool(name, fallback) {
+  const raw = process.env[name];
+  if (raw == null) {
+    return fallback;
+  }
+  const normalized = String(raw).trim().toLowerCase();
+  if (["1", "true", "yes", "on"].includes(normalized)) {
+    return true;
+  }
+  if (["0", "false", "no", "off"].includes(normalized)) {
+    return false;
+  }
+  return fallback;
+}
+
 function eventMapping(event) {
   const type = String(event?.type || "").trim();
   const action = String(event?.action || "").trim();
@@ -109,8 +124,8 @@ function buildIngressPayload({ event, mapped, eventId, eventTime, evidenceRef })
   const sender = String(event?.context?.senderId || "openclaw-hook").trim() || "openclaw-hook";
   const bucket = nowBucket(eventTime);
   const sessionKey = String(event?.sessionKey || "agent:main:main").trim() || "agent:main:main";
-  // 平台层 hook 仅做信号桥接，禁止直接驱动治理分发。
-  const dispatchOpenclaw = false;
+  // Default to active dispatch so matched events can advance instances; allow env override for safe rollback.
+  const dispatchOpenclaw = envBool("ANC_LIFECYCLE_BRIDGE_DISPATCH_OPENCLAW", true);
 
   return {
     event_id: eventId,
