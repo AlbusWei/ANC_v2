@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "504134b65c44",
+  "session_id": "a29d50ee-c7aa-4e94-8f58-cb2dba4571ce",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-05T17:24:05.551008Z",
+  "branch": "rebuild",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "processes/control/trigger-event-runtime/scripts/trigger_event_runtime_runner.py",
+    "processes/control/trigger-schedule-runtime/scripts/trigger_schedule_runtime_runner.py",
+    "tools/openclaw/hooks/anc-lifecycle-events/hooks/lifecycle-event-bridge/handler.js"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "bb89ef2947fb",
+  "token_usage": {
+    "input_tokens": 6114,
+    "cache_creation_tokens": 8418,
+    "cache_read_tokens": 181330,
+    "output_tokens": 4045,
+    "api_call_count": 7
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-05T17:24:05.217268Z",
+    "agent_lines": 0,
+    "human_added": 75,
+    "human_modified": 8,
+    "human_removed": 0,
+    "total_committed": 75,
+    "agent_percentage": 0
+  },
+  "transcript_path": ".claude/projects/-Users-albus-MyProjects-ANC-v2/a29d50ee-c7aa-4e94-8f58-cb2dba4571ce.jsonl"
+}
